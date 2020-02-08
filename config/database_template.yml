@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: database_name
+  database: database_nameta
   username: database_username
   password: database_password
 
