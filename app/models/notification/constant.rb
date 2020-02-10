@@ -1,0 +1,3 @@
+class Notification::Constant
+
+end

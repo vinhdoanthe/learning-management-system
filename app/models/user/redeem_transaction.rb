@@ -1,5 +1,3 @@
-module User
-  class RedeemTransaction < ApplicationRecord
-    belongs_to :user
-  end
+class User::RedeemTransaction < ApplicationRecord
+  belongs_to :user
 end

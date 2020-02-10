@@ -1,5 +1,3 @@
-module User
-  class UserNotification < ApplicationRecord
-    belongs_to :user
-  end
+class User::UserNotification < ApplicationRecord
+  belongs_to :user
 end

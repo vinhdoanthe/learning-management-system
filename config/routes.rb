@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: 'user/home#dashboard'
   namespace :user do
     get 'login' => 'sessions#new'
     post 'login' => 'sessions#create'

@@ -1,0 +1,3 @@
+class Admission::Constant
+
+end

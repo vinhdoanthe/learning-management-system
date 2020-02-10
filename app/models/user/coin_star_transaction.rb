@@ -1,5 +1,3 @@
-module User
-  class CoinStarTransaction < ApplicationRecord
-    belongs_to :user
-  end
+class User::CoinStarTransaction < ApplicationRecord
+  belongs_to :user
 end

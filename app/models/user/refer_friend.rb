@@ -1,5 +1,3 @@
-module User
-  class ReferFriend < ApplicationRecord
-    belongs_to :user
-  end
+class User::ReferFriend < ApplicationRecord
+  belongs_to :user
 end

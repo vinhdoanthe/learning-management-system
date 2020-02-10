@@ -1,0 +1,3 @@
+class Learning::Constant
+
+end
