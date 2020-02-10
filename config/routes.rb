@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     post 'login' => 'sessions#create'
     delete 'logout'  => 'sessions#destroy'
     post 'reset_password' => 'sessions#reset_password'
+    get 'information' => 'users#information'
+    get 'my_class' => 'users#my_class'
+
     resources :users
     resources :op_students, only: [:index, :new]
   end

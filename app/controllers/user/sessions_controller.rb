@@ -16,7 +16,7 @@ module User
 
     def destroy
       log_out
-      redirect_to root_url
+      redirect_to user_login_path
     end
 
     def reset_password
