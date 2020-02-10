@@ -9,11 +9,24 @@
     <!-- <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> -->
   </head>
 
-  <body style="background:#f2f2f2">
-    <%= yield %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </body>
+  <% if current_user %>
+    <body class='fixed-topbar fixed-sidebar theme-sdtl color-default dashboard' style="background:#f2f2f2">
+      <%= render "partials/sidenav" %>
+      <div class="main-content">
+        <%= render 'partials/topnav' %>
+        <%= yield %>
+      </div>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-  <%= debug(params) if Rails.env.development? %>
+      <%= debug(params) if Rails.env.development? %>
+    </body>
+  <% else %>
+    <body style="background:#f2f2f2">
+      <%= yield %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+      <%= debug(params) if Rails.env.development? %>
+    </body>
+  <% end %>
 
 </html>
