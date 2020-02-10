@@ -1,3 +1,3 @@
-class Admission::Constant
+module Admission::Constant
 
 end

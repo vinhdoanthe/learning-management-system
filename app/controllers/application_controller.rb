@@ -1,18 +1,14 @@
 class ApplicationController < ActionController::Base
-  before_action :user_validated!
-  helper_method :current_user
+  protect_from_forgery with: :exception
+  include User::SessionsHelper
+
+  before_action :authenticate_user!
 
 
-  def user_validated!
-
+  # Validated user!
+  def authenticate_user!
+    if current_user.nil?
+      redirect_to user_login_path
+    end
   end
-
-  def current_user
-    # if session[:user_id]
-    #   @current_user ||= User.find(session[:user_id])
-    # else
-    #   @current_user = nil
-    # end
-  end
-
 end

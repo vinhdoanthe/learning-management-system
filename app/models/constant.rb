@@ -1,4 +1,4 @@
-class Constant
+module Constant
   include User::Constant
   include Activity::Constant
   include Admission::Constant

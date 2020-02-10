@@ -1,3 +1,3 @@
-class Learning::Constant
+module Learning::Constant
 
 end

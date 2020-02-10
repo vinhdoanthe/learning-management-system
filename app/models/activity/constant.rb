@@ -1,3 +1,3 @@
-class Activity::Constant
+module Activity::Constant
 
 end

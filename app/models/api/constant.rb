@@ -1,3 +1,3 @@
-class Api::Constant
+module Api::Constant
 
 end

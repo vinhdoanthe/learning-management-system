@@ -1,2 +1,5 @@
-module User::UsersHelper
+module User
+  module UsersHelper
+
+  end
 end

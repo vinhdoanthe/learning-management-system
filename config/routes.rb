@@ -8,6 +8,4 @@ Rails.application.routes.draw do
     resources :users
     resources :op_students, only: [:index, :new]
   end
-
-  # root to: 'user/sessions#new'
 end

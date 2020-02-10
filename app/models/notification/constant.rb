@@ -1,3 +1,3 @@
-class Notification::Constant
+module Notification::Constant
 
 end
