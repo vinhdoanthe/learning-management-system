@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   # Validated user!
   def authenticate_user!
     if current_user.nil?
-      redirect_to root_path
+      redirect_to user_login_path
+      return
     end
   end
 end

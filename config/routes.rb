@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get 'login' => 'sessions#new'
     post 'login' => 'sessions#create'
     delete 'logout'  => 'sessions#destroy'
+    get 'logout' => 'sessions#destroy'
     post 'reset_password' => 'sessions#reset_password'
     get 'information' => 'users#information'
     get 'my_class' => 'users#my_class'
