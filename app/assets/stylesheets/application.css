@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+@import 'global/css/style.css';
+@import 'global/css/ui.css';
+@import 'global/css/style_other.css';
+@import 'global/plugins/bootstrap-loading/lada.min.css';
