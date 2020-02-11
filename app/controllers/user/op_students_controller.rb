@@ -2,6 +2,7 @@ module User
 
   class OpStudentsController < ApplicationController
 
+    before_action :authenticate_student!, :student_info
     def index
       @op_students = OpStudent.all
     end
@@ -13,6 +14,7 @@ module User
     def student_info
 
     end
+
   end
 
 end

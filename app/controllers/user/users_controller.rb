@@ -1,6 +1,8 @@
 module User
   class UsersController < ApplicationController
 
+    before_action :authenticate_student!, :my_class
+
     def information
 
     end

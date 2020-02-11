@@ -13,15 +13,3 @@
  *= require_tree .
  *= require_self
  */
-@import 'global/css/style.css';
-@import 'global/css/ui.css';
-@import 'global/css/style_other.css';
-@import 'global/plugins/bootstrap-loading/lada.min.css';
-@import 'global/css/jquery.FlowupLabels.css';
-@import 'layout.css';
-@import 'global/plugins/metrojs/metrojs.min.css';
-@import 'global/plugins/maps-amcharts/ammap/ammap.css';
-@import 'global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css';
-@import 'global/plugins/rateit/rateit.css';
-@import 'global/css/owl.carousel.css';
-@import 'global/css/custom.css';

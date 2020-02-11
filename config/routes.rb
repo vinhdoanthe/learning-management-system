@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     delete 'logout'  => 'sessions#destroy'
     post 'reset_password' => 'sessions#reset_password'
     get 'information' => 'users#information'
+    get 'teacher_info' => 'op_teachers#teacher_info'
     get 'my_class' => 'users#my_class'
 
     resources :users

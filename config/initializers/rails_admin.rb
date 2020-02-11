@@ -2,7 +2,6 @@ RailsAdmin.config do |config|
 
   config.parent_controller = "::ApplicationController"
 
-
   config.authenticate_with do
     unless current_user&.is_admin?
       redirect_to(
@@ -11,6 +10,8 @@ RailsAdmin.config do |config|
       )
     end
   end
+
+  config.current_user_method(&:current_user)
 
   ### Popular gems integration
 

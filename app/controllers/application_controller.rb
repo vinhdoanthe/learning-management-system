@@ -13,4 +13,20 @@ class ApplicationController < ActionController::Base
       redirect_to user_login_path
     end
   end
+
+  def authenticate_student!
+    if current_user.is_student?
+
+    else
+      redirect_to root_path
+    end
+  end
+
+  def authenticate_faculty!
+    if current_user.is_teacher?
+
+    else
+      redirect_to root_path
+    end
+  end
 end
