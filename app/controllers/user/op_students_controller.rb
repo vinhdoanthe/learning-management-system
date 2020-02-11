@@ -9,6 +9,10 @@ module User
     def new
 
     end
+
+    def student_info
+
+    end
   end
 
 end
