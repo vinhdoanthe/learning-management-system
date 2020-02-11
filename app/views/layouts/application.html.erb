@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>TEKY LMS</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>TEKY Learning Management System</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <!-- <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> -->
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <!-- <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> -->
+</head>
 
-  <% if current_user&.is_student? %>
-    <body class='fixed-topbar fixed-sidebar theme-sdtl color-default dashboard' style="background:#f2f2f2">
-      <%= render "partials/sidenav" %>
-      <div class="main-content">
-        <%= render 'partials/topnav' %>
-        <%= yield %>
-      </div>
-      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<% if current_user&.is_student? %>
+  <body class='fixed-topbar fixed-sidebar theme-sdtl color-default dashboard' style="background:#f2f2f2">
+  <%= render "partials/sidenav" %>
+  <div class="main-content">
+    <%= render 'partials/topnav' %>
+    <%= yield %>
+  </div>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-      <%= debug(params) if Rails.env.development? %>
-    </body>
-  <% else %>
-    <body style="background:#f2f2f2">
-      <%= yield %>
-      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= debug(params) if Rails.env.development? %>
+  </body>
+<% else %>
+  <body style="background:#f2f2f2">
+  <%= yield %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-      <%= debug(params) if Rails.env.development? %>
-    </body>
-  <% end %>
+  <%= debug(params) if Rails.env.development? %>
+  </body>
+<% end %>
 
 </html>
