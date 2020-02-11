@@ -1,94 +1,101 @@
 <div class="sidebar">
-    <div class="logopanel"><h1><a href="dashboard.html"></a></h1></div>
-    <div class="sidebar-inner">
-        <div class="noti-avatar">
-            <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
-                <li class="nav-active">
-                    <a href="">
-                        <%= image_tag "global/images/avatar.png" %> 
+  <div class="logopanel"><h1><a href="dashboard.html"></a></h1></div>
+  <div class="sidebar-inner">
+    <div class="noti-avatar">
+      <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
+        <li class="nav-active">
+          <a href="">
+            <%= image_tag "global/images/avatar.png" %>
+            <% if current_user.is_student? %>
                         <span>
                             <label for=""><%= current_user.op_student.full_name %></label>
                             <p><%= current_user.op_student.code %></p>
                         </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="noti-nav">
-            <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
-                <li class="nav-active">
-                    <a href="">
-                        <%= image_tag "global/images/active/icon-Setting.png" %> 
-                        <span>Cấu hình</span>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="#">
-                        <%= image_tag "global/images/active/Icon-Bell.png" %> 
-                        <span>Bài tập & Ôn bài</span>
-                        <span class="nn-alert">12</span>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="#">
-                        <%= image_tag "global/images/active/Icon-Inbox.png" %> 
-                        <span>Tiến độ học tập</span>
-                        <span class="nn-alert">3</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-            
-        <ul class="nav nav-sidebar nav-sidebar-edit">
-            <li class="nav-active activea">
-                <a href="dashboard.html">
-                    <%= image_tag "global/images/no-active/ico-Dashboard.png", class: "img-changes" %> 
-                    <%= image_tag "global/images/active/ico-Dashboard.png", class: "img-change-color" %> 
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="">
-                <a href="#">
-                    <%= image_tag "global/images/no-active/ico-BaiTapOnBai.png", class: "img-changes" %> 
-                    <%= image_tag "global/images/active/ico-BaiTapOnBai.png", class: "img-change-color" %> 
-                    <span>Bài tập & Ôn bài</span>
-                </a>
-            </li>
-            <li class="">
-                <a href="#">
-                    <%= image_tag "global/images/no-active/ico-TienDoHocTap.png", class: "img-changes" %> 
-                    <%= image_tag "global/images/active/ico-TienDoHocTap.png", class: 'img-change-color' %> 
-                    <span>Tiến độ học tập</span>
-                </a>
-            </li>
-            <li class="">
-                <a href="#">
-                    <%= image_tag "global/images/no-active/ico-Certificate.png", class: 'img-changes' %> 
-                    <%= image_tag "global/images/active/ico-Certificate.png", class: 'img-change-color' %> 
-                    <span>Chứng chỉ</span>
-                </a>
-            </li>
-            <li class="">
-                <a href="#">
-                    <%= image_tag "global/images/no-active/ico-SPhocsinh.png", class: 'img-changes' %> 
-                    <%= image_tag "global/images/active/ico-SPhocsinh.png", class: 'img-change-color' %> 
-                    <span>Sản phẩm của học sinh</span>
-                </a>
-            </li>
-            <li class="">
-                <a href="#">
-                    <%= image_tag "global/images/no-active/ico-Redem.png", class: 'img-changes' %> 
-                    <%= image_tag "global/images/active/ico-Redem.png", class: 'img-change-color' %> 
-                    <span>Đổi điểm lấy quà </span>
-                </a>
-            </li>
-            <li class="">
-                <a href="#">
-                    <%= image_tag "global/images/no-active/ico-Invoice.png", class: "img-changes" %> 
-                    <%= image_tag "global/images/active/ico-Invoice.png", class: "img-change-color" %> 
-                    <span>Hoá đơn</span>
-                </a>
-            </li>
-        </ul>
+            <% elsif current_user.is_teacher? %>
+<span>
+                            <label for=""><%= current_user.op_faculty.full_name %></label>
+                            <p><%= current_user.op_faculty.full_name %></p>
+                        </span>
+            <% end %>
+          </a>
+        </li>
+      </ul>
     </div>
+    <div class="noti-nav">
+      <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
+        <li class="nav-active">
+          <a href="">
+            <%= image_tag "global/images/active/icon-Setting.png" %>
+            <span>Cấu hình</span>
+          </a>
+        </li>
+        <li class="">
+          <a href="#">
+            <%= image_tag "global/images/active/Icon-Bell.png" %>
+            <span>Bài tập & Ôn bài</span>
+            <span class="nn-alert">12</span>
+          </a>
+        </li>
+        <li class="">
+          <a href="#">
+            <%= image_tag "global/images/active/Icon-Inbox.png" %>
+            <span>Tiến độ học tập</span>
+            <span class="nn-alert">3</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <ul class="nav nav-sidebar nav-sidebar-edit">
+      <li class="nav-active activea">
+        <a href="dashboard.html">
+          <%= image_tag "global/images/no-active/ico-Dashboard.png", class: "img-changes" %>
+          <%= image_tag "global/images/active/ico-Dashboard.png", class: "img-change-color" %>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="">
+        <a href="#">
+          <%= image_tag "global/images/no-active/ico-BaiTapOnBai.png", class: "img-changes" %>
+          <%= image_tag "global/images/active/ico-BaiTapOnBai.png", class: "img-change-color" %>
+          <span>Bài tập & Ôn bài</span>
+        </a>
+      </li>
+      <li class="">
+        <a href="#">
+          <%= image_tag "global/images/no-active/ico-TienDoHocTap.png", class: "img-changes" %>
+          <%= image_tag "global/images/active/ico-TienDoHocTap.png", class: 'img-change-color' %>
+          <span>Tiến độ học tập</span>
+        </a>
+      </li>
+      <li class="">
+        <a href="#">
+          <%= image_tag "global/images/no-active/ico-Certificate.png", class: 'img-changes' %>
+          <%= image_tag "global/images/active/ico-Certificate.png", class: 'img-change-color' %>
+          <span>Chứng chỉ</span>
+        </a>
+      </li>
+      <li class="">
+        <a href="#">
+          <%= image_tag "global/images/no-active/ico-SPhocsinh.png", class: 'img-changes' %>
+          <%= image_tag "global/images/active/ico-SPhocsinh.png", class: 'img-change-color' %>
+          <span>Sản phẩm của học sinh</span>
+        </a>
+      </li>
+      <li class="">
+        <a href="#">
+          <%= image_tag "global/images/no-active/ico-Redem.png", class: 'img-changes' %>
+          <%= image_tag "global/images/active/ico-Redem.png", class: 'img-change-color' %>
+          <span>Đổi điểm lấy quà </span>
+        </a>
+      </li>
+      <li class="">
+        <a href="#">
+          <%= image_tag "global/images/no-active/ico-Invoice.png", class: "img-changes" %>
+          <%= image_tag "global/images/active/ico-Invoice.png", class: "img-change-color" %>
+          <span>Hoá đơn</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
