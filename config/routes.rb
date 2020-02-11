@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   namespace :user do
     get 'login' => 'sessions#new'
     post 'login' => 'sessions#create'
-    delete 'logout'  => 'sessions#destroy'
+    get 'parent_selection' => 'sessions#new_parent_selection'
+    post 'parent_selection' => 'sessions#create_parent_selection'
     get 'logout' => 'sessions#destroy'
+    delete 'logout'  => 'sessions#destroy'
     post 'reset_password' => 'sessions#reset_password'
     get 'information' => 'users#information'
     get 'my_class' => 'users#my_class'

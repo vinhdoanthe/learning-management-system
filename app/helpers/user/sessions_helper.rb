@@ -6,6 +6,10 @@ module User
       session[:user_id] = user.id
     end
 
+    def logged_in?
+      !current_user.nil?
+    end
+
     # Get current logged_in user
     def current_user
       if session[:user_id]

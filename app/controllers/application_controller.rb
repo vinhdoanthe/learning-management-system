@@ -4,12 +4,13 @@ class ApplicationController < ActionController::Base
 
   # before_action :authenticate_user!
 
-
   # Validated user!
   def authenticate_user!
-    if current_user.nil?
+    if logged_in?
+      # redirect_to root_path
+    else
+      p 'something'
       redirect_to user_login_path
-      return
     end
   end
 end

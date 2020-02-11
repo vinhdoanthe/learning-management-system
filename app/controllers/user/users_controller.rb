@@ -1,13 +1,12 @@
 module User
   class UsersController < ApplicationController
 
-
     def information
 
     end
 
     def my_class
-
+      @batches = current_user.op_student.op_batches
     end
 
     # TODO: return general information of a student

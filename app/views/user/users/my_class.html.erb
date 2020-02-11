@@ -1,78 +1,114 @@
 <div class="page-content page-thin">
 
-                <!-- InstanceBeginEditable name="EditRegion1" -->
-                <div class="panel panel-edits bg-232837">
-                    <div class="panel-heading">
-                        <!-- <div class="ph-img">
-                            <span><img src="assets/global/images/avatar.svg" alt=""></span>
-                        </div> -->
-                        <div class="ph-text">
-                            <h2 class="color-fff text-transform">Lớp học của tôi</h2>
-                        </div>
-                    </div>
-                </div>
-				<div class="panel m-t--70">
-                    
-                    <div class="panel-content">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="scl-detail">
-                                    <div class="scl-img">
-                                        <img src="assets/global/images/banner1.png" alt="">
-                                        <span class="scl-danger">đã nghỉ</span>
-                                    </div>
-                                    <div class="scl-text">
-                                        <div class="scl-left">
-                                            <label for="">KHÁM PHÁ ROBOT</label>
-                                            <p>Mã lớp: <span>HN-NTT-C-PA-1116-BTLA-0060</span></p>
-                                            <p>18:00 Thứ 7 hàng tuần Tại <span>TEKY Cầu Giấy</span></p>
-                                        </div>
-                                        <div class="scl-right">
-                                            <ul>
-                                                <li><img src="assets/global/images/laurel-wreath.png" alt=""></li>
-                                                <li><img src="assets/global/images/files-and-folders-2.png" alt=""></li>
-                                                <li><a href="" class="btn btn-default btn-embossed btn-edit bg-505050"><img src="assets/global/images/come-in.png" alt="">Xem lại</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="scl-detail">
-                                    <div class="scl-img">
-                                        <img src="assets/global/images/banner2.png" alt="">
-                                        <span class="scl-success">đang học</span>
-                                    </div>
-                                    <div class="scl-text">
-                                        <div class="scl-left">
-                                            <label for="">KHÁM PHÁ ROBOT</label>
-                                            <p>Mã lớp: <span>HN-NTT-C-PA-1116-BTLA-0060</span></p>
-                                            <p>18:00 Thứ 7 hàng tuần Tại <span>TEKY Cầu Giấy</span></p>
-                                        </div>
-                                        <div class="scl-right">
-                                            <ul>
-                                                <li><img src="assets/global/images/files-and-folders-2.png" alt=""></li>
-                                                <li><a href="Student_TienDoHocTap.html" class="btn btn-default btn-embossed btn-edit bg-5DC2A7"><img src="assets/global/images/come-in.png" alt="">Vào lớp</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                            
-                    </div>
-                </div>
-				<!-- InstanceEndEditable -->   
+  <!-- InstanceBeginEditable name="EditRegion1" -->
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <!-- <div class="ph-img">
+          <span><img src="assets/global/images/avatar.svg" alt=""></span>
+      </div> -->
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Lớp học của tôi</h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
 
-              	<div class="footer">
-                    <div class="copyright">
-                        <p class="pull-left sm-pull-reset">
-                            <span>Copyright <span class="copyright">©</span> 2020 </span>
-                            <span>THEMES BACKEND TEKY. </span>
-                            <span>All rights reserved. </span>
-                        </p>
-                        <p class="pull-right sm-pull-reset">
-                            <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
-                        </p>
-                    </div>
+    <div class="panel-content">
+
+      <div class="row">
+        <% @batches.each do |batch| %>
+          <div class="col-md-6">
+            <div class="scl-detail">
+              <div class="scl-img">
+                <img src="assets/global/images/banner1.png" alt="">
+<!--                TODO: update helper method-->
+                <% if get_stage(batch.id) == "off" %>
+                  <span class="scl-danger">Nghỉ học</span>
+                <% else %>
+                  <span class="scl-success">Đang học</span>
+                <% end %>
+              </div>
+              <div class="scl-text">
+                <div class="scl-left">
+                  <label for=""><%= batch.op_course.name %></label>
+                  <p>Mã lớp: <span><%= batch.code %></span></p>
+                  <p>18:00 Thứ 7 hàng tuần Tại <span><%= batch.res_company.name %></span></p>
                 </div>
+                <div class="scl-right">
+                  <ul>
+                    <li><img src="assets/global/images/laurel-wreath.png" alt=""></li>
+                    <li><img src="assets/global/images/files-and-folders-2.png" alt=""></li>
+                    <li>
+                      <a href="" class="btn btn-default btn-embossed btn-edit bg-505050"><img src="assets/global/images/come-in.png" alt="">Xem
+                        lại</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
+          </div>
+        <% end %>
+        <!--        <div class="col-md-6">-->
+        <!--          <div class="scl-detail">-->
+        <!--            <div class="scl-img">-->
+        <!--              <img src="assets/global/images/banner1.png" alt="">-->
+        <!--              <span class="scl-danger">đã nghỉ</span>-->
+        <!--            </div>-->
+        <!--            <div class="scl-text">-->
+        <!--              <div class="scl-left">-->
+        <!--                <label for="">KHÁM PHÁ ROBOT</label>-->
+        <!--                <p>Mã lớp: <span>HN-NTT-C-PA-1116-BTLA-0060</span></p>-->
+        <!--                <p>18:00 Thứ 7 hàng tuần Tại <span>TEKY Cầu Giấy</span></p>-->
+        <!--              </div>-->
+        <!--              <div class="scl-right">-->
+        <!--                <ul>-->
+        <!--                  <li><img src="assets/global/images/laurel-wreath.png" alt=""></li>-->
+        <!--                  <li><img src="assets/global/images/files-and-folders-2.png" alt=""></li>-->
+        <!--                  <li>-->
+        <!--                    <a href="" class="btn btn-default btn-embossed btn-edit bg-505050"><img src="assets/global/images/come-in.png" alt="">Xem-->
+        <!--                      lại</a></li>-->
+        <!--                </ul>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--        <div class="col-md-6">-->
+        <!--          <div class="scl-detail">-->
+        <!--            <div class="scl-img">-->
+        <!--              <img src="assets/global/images/banner2.png" alt="">-->
+        <!--              <span class="scl-success">đang học</span>-->
+        <!--            </div>-->
+        <!--            <div class="scl-text">-->
+        <!--              <div class="scl-left">-->
+        <!--                <label for="">KHÁM PHÁ ROBOT</label>-->
+        <!--                <p>Mã lớp: <span>HN-NTT-C-PA-1116-BTLA-0060</span></p>-->
+        <!--                <p>18:00 Thứ 7 hàng tuần Tại <span>TEKY Cầu Giấy</span></p>-->
+        <!--              </div>-->
+        <!--              <div class="scl-right">-->
+        <!--                <ul>-->
+        <!--                  <li><img src="assets/global/images/files-and-folders-2.png" alt=""></li>-->
+        <!--                  <li>-->
+        <!--                    <a href="Student_TienDoHocTap.html" class="btn btn-default btn-embossed btn-edit bg-5DC2A7"><img src="assets/global/images/come-in.png" alt="">Vào-->
+        <!--                      lớp</a></li>-->
+        <!--                </ul>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+    </div>
+  </div>
+  <!-- InstanceEndEditable -->
+
+  <!--  <div class="footer">-->
+  <!--    <div class="copyright">-->
+  <!--      <p class="pull-left sm-pull-reset">-->
+  <!--        <span>Copyright <span class="copyright">©</span> 2020 </span>-->
+  <!--        <span>THEMES BACKEND TEKY. </span>-->
+  <!--        <span>All rights reserved. </span>-->
+  <!--      </p>-->
+  <!--      <p class="pull-right sm-pull-reset">-->
+  <!--        <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>-->
+  <!--      </p>-->
+  <!--    </div>-->
+  <!--  </div>-->
+</div>
