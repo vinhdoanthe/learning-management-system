@@ -13,6 +13,9 @@ gem 'bcrypt', '~> 3.1.7'
 # Use for store enums
 gem 'enumerize'
 
+# User for administration
+gem 'rails_admin', '~> 2.0'
+
 ## End manual added gems
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

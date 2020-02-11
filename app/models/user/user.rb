@@ -19,34 +19,50 @@ module User
     enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
 
     def is_admin?
-      if self.account_role == Constant::ADMIN
-        true
-      else
+      if self.nil?
         false
+      else
+        if self.account_role == Constant::ADMIN
+          true
+        else
+          false
+        end
       end
     end
 
     def is_teacher?
-      if self.account_role == Constant::TEACHER
-        true
-      else
+      if self.nil?
         false
+      else
+        if self.account_role == Constant::TEACHER
+          true
+        else
+          false
+        end
       end
     end
 
     def is_parent?
-      if self.account_role == Constant::PARENT
-        true
-      else
+      if self.nil?
         false
+      else
+        if self.account_role == Constant::PARENT
+          true
+        else
+          false
+        end
       end
     end
 
     def is_student?
-      if self.account_role == Constant::STUDENT
-        true
-      else
+      if self.nil?
         false
+      else
+        if self.account_role == Constant::STUDENT
+          true
+        else
+          false
+        end
       end
     end
   end
