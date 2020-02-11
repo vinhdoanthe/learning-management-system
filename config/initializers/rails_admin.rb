@@ -1,9 +1,14 @@
 RailsAdmin.config do |config|
 
+  config.parent_controller = "::ApplicationController"
+
+
   config.authenticate_with do
-    authenticate_or_request_with_http_basic('Login required') do |username, password|
-      user = User::User.where(username: username).first
-      user.authenticate(password) && user.is_admin? if user
+    unless current_user&.is_admin?
+      redirect_to(
+          main_app.root_path,
+          alert: "You are not permitted to view this page"
+      )
     end
   end
 
