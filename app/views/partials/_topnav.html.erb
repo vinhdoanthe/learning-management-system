@@ -14,21 +14,21 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#" data-lang="en"><img src="assets/global/images/flags/usa.png" alt="flag-english"> <span>English</span>
+                        <a href="#" data-lang="en"><%= image_tag "global/images/flags/usa.png" %><span>English</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-lang="es"><img src="assets/global/images/flags/spanish.png" alt="flag-english"> <span>Español</span>
+                        <a href="#" data-lang="es"><%= image_tag "global/images/flags/spanish.png" %> <span>Español</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-lang="fr"><img src="assets/global/images/flags/french.png" alt="flag-english"> <span>Français</span>
+                        <a href="#" data-lang="fr"><%= image_tag "global/images/flags/french.png" %><span>Français</span>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="dropdown" id="teky-logout">
-            	<%= link_to '<img src="assets/global/images/logout.png" alt="user image">'.html_safe, user_logout_path, method: :delete %>
+                <%=link_to image_tag("global/images/logout.png", border: 0), user_logout_path %>
             </li>
         </ul>
     </div>
