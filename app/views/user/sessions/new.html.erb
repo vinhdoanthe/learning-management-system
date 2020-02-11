@@ -2,7 +2,7 @@
   <div class="container" id="login-block">
     <div class="account-info">
       <%= link_to '', root_path, :class => 'logo' %>
-      <%= image_tag('global/images/Login.png', alt: '', style: 'width: 100%; margin-top: 0') %>
+      <%= image_tag("global/images/Login.png", style: "margin: 0; width: 50%") %>
     </div>
     <div class="account-form">
       <%= form_for :session, url: user_login_path, :html => {class: "form-signin"} do |f| %>

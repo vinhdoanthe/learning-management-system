@@ -15,6 +15,7 @@ module User
 
     belongs_to :op_student, required: false, foreign_key: 'student_id'
     belongs_to :op_parent, required: false, foreign_key: 'parent_id'
+    belongs_to :op_faculty, required: false, foreign_key: 'faculty_id'
 
     enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
 
