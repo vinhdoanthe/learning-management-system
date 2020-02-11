@@ -4,11 +4,11 @@
   <title>TEKY Learning Management System</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-
+  <%= favicon_link_tag 'Logo-fav.ico' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
 
-<% if current_user&.is_student? %>
+<% if current_user && !current_user.is_parent? %>
   <body class='fixed-topbar fixed-sidebar theme-sdtl color-default dashboard' style="background:#f2f2f2">
   <%= render "partials/sidenav" %>
   <div class="main-content">
