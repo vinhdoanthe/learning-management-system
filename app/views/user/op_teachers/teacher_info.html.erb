@@ -1,0 +1,291 @@
+<% teacher = current_user.op_faculty %>
+<% res_partner = teacher.res_partner %>
+<div class="page-content page-thin">
+
+    <!-- InstanceBeginEditable name="EditRegion1" -->
+    <div class="panel panel-edits bg-232837">
+        <div class="panel-heading">
+            <!-- <div class="ph-img">
+                <span><img src="assets/global/images/avatar.svg" alt=""></span>
+            </div> -->
+            <div class="ph-text">
+                <h2 class="color-fff text-transform">hồ sơ giảng viên</h2>
+            </div>
+        </div>
+    </div>
+    <div class="panel m-t--70">
+        <div class="panel-content">
+            <div class="box-profile">
+                <div class="bp-photo">
+                    <span><img src="assets/global/images/avatars/user3.jpg" alt=""></span>
+                    <p>Giảng viên Fultime</p>
+                    <label><%= teacher.full_name %></label>
+                </div>
+                <div class="bp-tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Thông tin chung</a></li>
+                        <li class=""><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Năng lực giảng viên</a></li>
+                        <li class=""><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Thiết bị học tập</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="home">
+                            <form id='formBody' class='FlowupLabels'>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class='fl_wrap'>
+                                            <label class='fl_label' for='rf_name'>Quản lý:</label>
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="In Comming" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class='fl_wrap'>
+                                            <label class='fl_label' for='rf_name'>Học viện tham gia dạy:</label>
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="<%= teacher.res_company.name %>" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class='fl_wrap'>
+                                            <label class='fl_label' for='rf_name'>Ngôn ngữ:</label>
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="In Comming" readonly />
+                                            <!--  -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class='fl_wrap'>
+                                            <label class='fl_label' for='rf_name'>Ngày sinh:</label>
+                                            <input type="text" name="timepicker" class="b-datepicker fl_input" id='rf_name' readonly value="<%= teacher.birth_date %>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class='fl_wrap'>
+                                            <label class='fl_label' for='rf_name'>Giới tính:</label>
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="<%= teacher.gender %>" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class='fl_wrap'>
+                                            <label class='fl_label' for='rf_name'>Số điện thoại:</label>
+                                            <input class='fl_input' type='text' id='rf_name' readonly value="<%= res_partner.phone || res_partner.mobile %>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class='fl_wrap'>
+                                            <label class='fl_label' for='rf_name'>Địa chỉ:</label>
+                                            <input class='fl_input' type='text' id='rf_name' readonly value="<%= res_partner.street %>"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class='fl_wrap'>
+                                            <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.street2 %>" disabled="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class='fl_wrap'>
+                                            <label class='fl_label' for='rf_name'>Quốc gia:</label>
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.res_country ? res_partner.res_country.name : 'None' %>" disabled="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane in" id="profile">
+                            <div class="box-nangluc">
+                                <ul class="">
+                                    <li class="">
+                                        <div class="bn-detail">
+                                            <h3>35 điểm</h3>
+                                            <p>Tổng điểm năng lực của bạn là</p>
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class="bn-detail">
+                                            <h3>Không đạt</h3>
+                                            <p>Điểm xếp loại</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                                <table class="table table-list">
+                                    <thead>
+                                        <tr>
+                                            <th class="color-000">Bổ trợ, cập nhật thông tin giảng dạy</th>
+                                            <th><span class="color-F16357">08</span>/25</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-list">
+                                    <thead>
+                                        <tr>
+                                            <th class="color-000">Bổ trợ, cập nhật thông tin giảng dạy</th>
+                                            <th><span class="color-F16357">08</span>/25</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-list">
+                                    <thead>
+                                        <tr>
+                                            <th class="color-000">Bổ trợ, cập nhật thông tin giảng dạy</th>
+                                            <th><span class="color-F16357">08</span>/25</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điểm danh học viên mỗi buổi học và hoàn thành công tác điểm danh trong vòng 12 giờ sau khi buổi học kết thúc.</td>
+                                            <td><span class="label label-default">3/5</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-list">
+                                    <thead>
+                                        <tr>
+                                            <th class="color-000" style="width: 50%">Chỉ số học sinh đánh giá lớp học</th>
+                                            <th style="width: 50%">
+                                                <form id='formBody' class='FlowupLabels'>
+                                                    <div class='fl_wrap' style="width: 30%;float: right;">
+                                                        <label class='fl_label' for='rf_name'>Thời gian:</label>
+                                                        <select class='fl_input' id='rf_name' >
+                                                            <option value=""></option>
+                                                            <option value="">Ca Sáng</option>
+                                                            <option value="">Ca chiều</option>
+                                                            <option value="">Ca tối</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                                    
+                        </div>
+                        <div class="tab-pane active" id="messages">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Tài sản</th>
+                                            <th>Từ cơ sở</th>
+                                            <th>Đến cơ sở</th>
+                                            <th style="text-align: center;">Ngày mượn</th>
+                                            <th style="text-align: center;">Ngày trả</th>
+                                            <th style="text-align: center;">Ngày thực tế trả</th>
+                                            <th>trạng thái</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>12 thiết bị</td>
+                                            <td>Teky cầu giấy</td>
+                                            <td>Teky cầu giấy</td>
+                                            <td align="center">12.03.2022<br/>12:03:00</td>
+                                            <td align="center">12.03.2022<br/>12:03:00</td>
+                                            <td align="center">12.03.2022<br/>12:03:00</td>
+                                            <td>Confirm</td>
+                                            <td align="right"><span class="label-edit label label-primary">Đang diễn ra</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>12 thiết bị</td>
+                                            <td>Teky cầu giấy</td>
+                                            <td>Teky cầu giấy</td>
+                                            <td align="center">12.03.2022<br/>12:03:00</td>
+                                            <td align="center">12.03.2022<br/>12:03:00</td>
+                                            <td align="center">12.03.2022<br/>12:03:00</td>
+                                            <td>Confirm</td>
+                                            <td align="right"><span class="label-edit label label-danger"> Đã hủy</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>12 thiết bị</td>
+                                            <td>Teky cầu giấy</td>
+                                            <td>Teky cầu giấy</td>
+                                            <td align="center">12.03.2022<br/>12:03:00</td>
+                                            <td align="center">12.03.2022<br/>12:03:00</td>
+                                            <td align="center">12.03.2022<br/>12:03:00</td>
+                                            <td>Confirm</td>
+                                            <td align="right"><span class="label-edit label label-stop">Hoàn thành</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- InstanceEndEditable -->   
+
+    <div class="footer">
+        <div class="copyright">
+            <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2020 </span>
+                <span>THEMES BACKEND TEKY. </span>
+                <span>All rights reserved. </span>
+            </p>
+            <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+            </p>
+        </div>
+    </div>
+</div>

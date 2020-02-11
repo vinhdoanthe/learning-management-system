@@ -9,7 +9,7 @@ module User
         elsif current_user.is_parent?
           redirect_to user_parent_selection_path
         elsif current_user.is_teacher?
-
+          redirect_to user_teacher_info_path
         elsif current_user.is_admin?
           redirect_to rails_admin_path
         end
