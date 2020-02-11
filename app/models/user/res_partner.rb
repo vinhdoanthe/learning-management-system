@@ -4,5 +4,6 @@ module User
   self.inheritance_column = 'object_type'
 
   has_one :op_parent
-end
+  belongs_to :res_country, :class_name => 'Common::ResCountry', :foreign_key => 'country_id'
+  end
 end
