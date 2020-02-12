@@ -1,1 +1,19 @@
-<h1>Form for choosing student's account</h1>
+<div class="sidebar-top account2 font-regular" id="session_login" style="background:#f2f2f2">
+  <div class="container" id="login-block">
+    <div class="account-info">
+      <%= link_to '', root_path, :class => 'logo' %>
+      <%= image_tag("global/images/Login.png", style: "margin: 0; width: 50%") %>
+    </div>
+    <div class="account-form">
+      <h3>Chọn tài khoản con </h3>
+      <% if children_account.count > 1 %>
+        <% children_account.each do |child| %>
+          <%= link_to child.username, user_parent_selection_path(:child => child), { class: 'btn btn-primary', style: 'width: 150px; color: white; margin-top: 15px' ,method: :post} %>
+          <br/>
+        <% end %>
+      <% end %>
+      <%= link_to "Quay lại đăng nhập", user_logout_path, {style: "float: right; color:#8acf8f; margin-top: 30px"} %>
+    </div>
+
+  </div>
+</div>

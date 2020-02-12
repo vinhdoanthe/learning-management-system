@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     get 'teacher_info' => 'op_teachers#teacher_info'
     get 'my_class' => 'users#my_class'
     get 'batch_detail/:batch_id' => 'users#batch_detail', as: 'batch_detail'
+    get 'teacher_class' => 'op_teachers#teacher_class'
+
     resources :users
     resources :op_students, only: [:index, :new]
   end

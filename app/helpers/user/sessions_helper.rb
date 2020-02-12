@@ -23,5 +23,11 @@ module User
       session.delete(:user_id)
       @current_user = nil
     end
+
+    def children_account
+      if current_user.account_role = 'Parent'
+        @children_account = User.where(:parent_account_id => current_user.id)
+      end
+    end
   end
 end

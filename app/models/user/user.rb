@@ -19,6 +19,9 @@ module User
     belongs_to :op_parent, required: false, foreign_key: 'parent_id'
     belongs_to :op_faculty, required: false, foreign_key: 'faculty_id'
 
+    belongs_to :user, class_name: 'User::User', foreign_key: 'parent_account_id'
+    has_many :users, class_name: 'User::User', foreign_key: 'parent_account_id'
+
     enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
 
     def is_admin?
