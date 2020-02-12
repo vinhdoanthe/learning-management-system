@@ -13,6 +13,8 @@ module User
     has_many :redeem_transactions
     has_many :user_notifications
 
+    has_one_attached :avatar
+
     belongs_to :op_student, required: false, foreign_key: 'student_id'
     belongs_to :op_parent, required: false, foreign_key: 'parent_id'
     belongs_to :op_faculty, required: false, foreign_key: 'faculty_id'

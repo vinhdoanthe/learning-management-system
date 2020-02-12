@@ -1,10 +1,15 @@
 module User
   class UsersController < ApplicationController
 
-    before_action :authenticate_student!, :my_class
+    before_action :authenticate_student!, only: [:my_class, :batch_detail]
 
     def information
 
+    end
+
+    def batch_detail
+      @batch_detail = Learning::Batch::OpBatchService.batch_detail(params[:batch_id])
+      # p @batch_detail
     end
 
     def my_class

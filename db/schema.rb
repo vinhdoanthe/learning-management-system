@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_093115) do
+ActiveRecord::Schema.define(version: 2020_02_12_034533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1456,6 +1456,27 @@ ActiveRecord::Schema.define(version: 2020_02_11_093115) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
   create_table "admission_analysis", id: :serial, comment: "admission.analysis", force: :cascade do |t|
@@ -10291,6 +10312,7 @@ ActiveRecord::Schema.define(version: 2020_02_11_093115) do
   add_foreign_key "accounting_report", "res_company", column: "company_id", name: "accounting_report_company_id_fkey", on_delete: :nullify
   add_foreign_key "accounting_report", "res_users", column: "create_uid", name: "accounting_report_create_uid_fkey", on_delete: :nullify
   add_foreign_key "accounting_report", "res_users", column: "write_uid", name: "accounting_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "admission_analysis", "op_course", column: "course_id", name: "admission_analysis_course_id_fkey", on_delete: :nullify
   add_foreign_key "admission_analysis", "res_users", column: "create_uid", name: "admission_analysis_create_uid_fkey", on_delete: :nullify
   add_foreign_key "admission_analysis", "res_users", column: "write_uid", name: "admission_analysis_write_uid_fkey", on_delete: :nullify

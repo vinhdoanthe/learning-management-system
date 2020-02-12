@@ -16,6 +16,12 @@ gem 'enumerize'
 # User for administration
 gem 'rails_admin', '~> 2.0'
 
+# Image processing
+gem 'image_processing'
+
+# jQuery
+gem 'jquery-rails'
+
 ## End manual added gems
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

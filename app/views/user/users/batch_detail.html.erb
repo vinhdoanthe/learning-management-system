@@ -6,50 +6,64 @@
       </div>
     </div>
   </div>
+  <% op_batch = @batch_detail.instance_variable_get(:@op_batch) %>
   <div class="panel m-t--70">
     <div class="panel-content">
-      <a href="" class="PC-back">
+      <a href="<%= user_my_class_path %>" class="PC-back">
         <%= image_tag('global/images/quaylai.svg') %>
-<!--        <img src="assets/global/images/quaylai.svg" alt="">-->
         Quay lại
       </a>
       <ul class="nav nav-tabs nav-primary tab-menu">
-        <li class=""><a href="#tab2_1" data-toggle="tab">Thông tin lớp học</a></li>
-        <li class="active"><a href="#tab2_2" data-toggle="tab">Quá trình học tập</a></li>
+        <li class="active"><a href="#tab2_1" data-toggle="tab">Thông tin lớp học</a></li>
+        <li class=""><a href="#tab2_2" data-toggle="tab">Quá trình học tập</a></li>
       </ul>
       <div class="tab-content p-0 tab-all-content m-t-20">
-        <div class="tab-pane fade" id="tab2_1">
+        <div class="tab-pane fade active in" id="tab2_1">
           <div class="bo-table">
             <div class="form-content">
               <div class="fc-header">
-                <h3><span class="color-F16357">LỚP HỌC:</span> Bé tập làm APP</h3>
+                <h3><span class="color-F16357">LỚP HỌC:</span> <%= op_batch.op_course.name %></h3>
               </div>
               <div class="box-progress">
                 <div class="row">
                   <div class="col-md-6">
                     <ul>
-                      <li><img src="assets/global/images/qr-code.png" alt="">
-                        <p><span class="span-text">Mã lớp học: </span>HN-NTT-C-PA-1116-BTLA-0060</p></li>
-                      <li><img src="assets/global/images/calendar-4.png" alt="">
-                        <p><span class="span-text">Thời gian học: </span>09/11/2019 đến 26/03/2021</p></li>
-                      <li><img src="assets/global/images/clock.png" alt="">
-                        <p><span class="span-text">Lịch học: </span>18:00, Thứ 7 hàng tuần</p></li>
-                      <li><img src="assets/global/images/professor.png" alt="">
-                        <p><span class="span-text">Giảng viên: </span><a href="">Lê Quang Tuấn</a></p></li>
+                      <li>
+                        <%= image_tag('global/images/qr-code.png') %>
+                        <p><span class="span-text">Mã lớp học: </span><%= op_batch.code %></p></li>
+                      <li>
+                        <%= image_tag('global/images/calendar-4.png') %>
+                        <p><span class="span-text">Thời gian học: </span><%= op_batch.start_date %>
+                          đến <%= op_batch.end_date %></p></li>
+                      <li>
+                        <%= image_tag('global/images/clock.png') %>
+                        <p><span class="span-text">Lịch học: </span>Chưa lấy thông tin này</p></li>
+                      <li>
+                        <%= image_tag('global/images/professor.png') %>
+                        <p><span class="span-text">Giảng viên: </span><a href="">Chưa có thông tin này</a></p></li>
                     </ul>
                   </div>
                   <div class="col-md-6">
                     <ul>
-                      <li><img src="assets/global/images/Combined-Shape.png" alt="">
-                        <p><span class="span-text">Môn học: </span>Khám phá ROBOT</p></li>
-                      <li><img src="assets/global/images/steps.png" alt="">
+                      <li>
+                        <%= image_tag('global/images/Combined-Shape.png') %>
+                        <p><span class="span-text">Môn học: </span><%= op_batch.op_course.name %></p></li>
+                      <li>
+                        <%= image_tag('global/images/steps.png') %>
                         <p>
-                          <span class="span-text">Học phần: </span><span class="label-course label label-default">01</span>
-                          <span class="label-course label label-default">01</span></p></li>
-                      <li><img src="assets/global/images/group-of-students.png" alt="">
-                        <p><span class="span-text">Loại lớp học: </span>Group Class</p></li>
-                      <li><img src="assets/global/images/hotel.png" alt="">
-                        <p><span class="span-text">Trung tâm: </span><a href="">TEKY Cầu Giấy</a></p></li>
+                          <span class="span-text">Học phần: </span>
+                          <span class="label-course label label-default">01</span>
+                          <span class="label-course label label-default">01</span>
+                          <span class="label-course label label-default">Cần lấy</span>
+                        </p>
+                      </li>
+                      <li>
+                        <%= image_tag('global/images/group-of-students.png') %>
+                        <p><span class="span-text">Loại lớp học: </span><%= op_batch.op_batch_type.name %></p></li>
+                      <li>
+                        <%= image_tag('global/images/hotel.png') %>
+                        <p><span class="span-text">Trung tâm: </span><a href=""><%= op_batch.res_company.name %></a></p>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -100,7 +114,7 @@
             </div>
           </div>
         </div>
-        <div class="tab-pane fade active in" id="tab2_2">
+        <div class="tab-pane fade" id="tab2_2">
 
           <div class="filter-box FlowupLabels" id='formBody'>
             <div class="row">
