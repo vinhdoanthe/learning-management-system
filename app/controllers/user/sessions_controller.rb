@@ -28,8 +28,17 @@ module User
         redirect_to user_login_path unless logged_in?
     end
 
-    def parent_selection
+    def new_parent_selection
+      if children_account.count == 1
+        log_in(children_account[0])
+        redirect_to root_path
+      end
+    end
 
+    def create_parent_selection
+      child = User.find(params[:child])
+      log_in(child)
+      redirect_to root_path
     end
   end
 end
