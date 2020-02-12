@@ -1,5 +1,11 @@
-//= require global/plugins/jquery/jquery-3.1.0.min.js
-//= require global/plugins/jquery/jquery-migrate-3.0.0.min.js
+//= require jquery
+//= require jquery_ujs
+//= require jquery-ui
+//= require turbolinks
+// = require_tree .
+
+// = require global/plugins/jquery/jquery-3.1.0.min.js
+// = require global/plugins/jquery/jquery-migrate-3.0.0.min.js
 //= require global/plugins/jquery-ui/jquery-ui.min.js
 //= require global/plugins/gsap/main-gsap.min.js
 //= require global/plugins/tether/js/tether.min.js
@@ -45,14 +51,8 @@
 //= require global/plugins/rateit/jquery.rateit.min.js
 //= require global/js/pages/form_plugins.js
 //= require global/plugins/colorpicker/spectrum.min.js
-//= require global/plugins/rateit/jquery.rateit.min.js
 //= require global/js/pages/form_plugins.js
 //= require global/js/owl.carousel.min.js
 //= require layout.js
 //= require global/plugins/bootstrap-loading/lada.min.js
 //= require global/js/pages/login-v2.js
-
-
-//= require rails-ujs
-//= require turbolinks
-//// = require_tree .
