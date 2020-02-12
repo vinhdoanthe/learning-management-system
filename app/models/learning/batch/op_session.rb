@@ -1,0 +1,11 @@
+module Learning
+  module Batch
+    class OpSession < ApplicationRecord
+      self.table_name = 'op_session'
+      self.inheritance_column = 'object_type'
+
+      belongs_to :op_faculty, :class_name => 'User::OpFaculty', foreign_key: 'id'
+      belongs_to :op_batch, :class_name => 'Learning::Batch::OpBatch', foreign_key: 'batch_id'
+    end
+  end
+end
