@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get 'information' => 'users#information'
     get 'teacher_info' => 'op_teachers#teacher_info'
     get 'my_class' => 'users#my_class'
+    get 'teacher_class' => 'op_teachers#teacher_class'
 
     resources :users
     resources :op_students, only: [:index, :new]
