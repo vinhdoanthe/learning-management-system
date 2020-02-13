@@ -56,3 +56,6 @@
 //= require layout.js
 //= require global/plugins/bootstrap-loading/lada.min.js
 //= require global/js/pages/login-v2.js
+
+
+//=require custom_js/opteacherjs.js
