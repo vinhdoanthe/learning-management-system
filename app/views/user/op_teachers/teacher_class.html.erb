@@ -70,7 +70,7 @@
                                 <td><%= batch.start_date.to_s + ' - ' + batch.end_date.to_s %></td>
                                 <td>4/12 - Học phần 1</td>
                                 <td align="right">
-                                    <% if batch.active == 'false' %>
+                                    <% if !batch.active %>
                                         <span class="label-edit label label-stop">Đã hoàn thành</span>
                                     <% else %>
                                         <span class="label-edit label label-primary">Đang diễn ra</span>

@@ -8,7 +8,7 @@ class User::OpTeachersService
 		if params[:start_date]
 			query += "start_date >= '#{params[:start_time].to_time.utc.strftime('%Y-%m-%d %H:%M:%S')}' AND "
 		else
-			query += "start_date >= '#{(Time.now - 10.days).to_time.utc.strftime('%Y-%m-%d %H:%M:%S')}' AND "
+			query += "start_date >= '#{(Time.now - 1000.days).to_time.utc.strftime('%Y-%m-%d %H:%M:%S')}' AND "
 		end
 
 		if params[:end_date] && params[:end_date].to_time <= Time.now
