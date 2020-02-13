@@ -2,6 +2,7 @@ module User
   class OpTeachersController < ApplicationController
 
     before_action :authenticate_faculty!, :teacher_info
+    before_action :find_teacher
     skip_before_action :verify_authenticity_token, only: :teacher_class
 
     def teacher_info
@@ -9,7 +10,6 @@ module User
     end
 
     def teacher_class
-      @teacher = current_user.op_faculty
       all_batches ||= @teacher.op_batches
       company_id = []
       all_batches.each{ |b| company_id << b.company_id}
@@ -26,8 +26,12 @@ module User
     end
 
     def teaching_schedule
-      teacher = OpFaculty.last
-      @session = teacher.op_sessions
+      @session = @teacher.op_sessions
+    end
+
+    private
+    def find_teacher
+      @teacher = current_user.op_faculty
     end
   end
 
