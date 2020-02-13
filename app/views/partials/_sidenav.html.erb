@@ -37,11 +37,19 @@
           </a>
         </li>
         <li class="">
-          <a href="#">
-            <%= image_tag "global/images/active/Icon-Inbox.png" %>
-            <span>Tiến độ học tập</span>
-            <span class="nn-alert">3</span>
-          </a>
+          <% if current_user.account_role == User::Constant::TEACHER %>
+            <a href="/user/teaching_schedule">
+              <%= image_tag "global/images/active/Icon-Inbox.png" %>
+              <span>Lịch giảng dạy</span>
+              <span class="nn-alert">3</span>
+            </a>
+          <% else %>
+            <a href="/user/my_class">
+              <%= image_tag "global/images/active/Icon-Inbox.png" %>
+              <span>Tiến độ học tập</span>
+              <span class="nn-alert">3</span>
+            </a>
+          <% end %>
         </li>
       </ul>
     </div>
