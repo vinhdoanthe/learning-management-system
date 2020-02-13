@@ -25,7 +25,7 @@ module User
     end
 
     def children_account
-      if current_user.account_role = 'Parent'
+      if current_user.account_role == Constant::PARENT
         @children_account = User.where(:parent_account_id => current_user.id)
       end
     end

@@ -9,3 +9,6 @@ Secure Video Player:
   * VdoCipher: https://www.vdocipher.com/blog/2015/09/videos-in-rails-with-vdocipher-gem/
   * DIY Sample 1: https://www.pubnub.com/blog/building-video-sharing-app-server-messaging-ruby/
   * DIY Sample 2: https://yalantis.com/blog/simple-video-processing-with-ffmpeg-and-ruby-on-rails/
+  
+Deployment notes:
+  * Have to installed: sudo apt-get install libmagickwand-dev

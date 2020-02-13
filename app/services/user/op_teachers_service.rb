@@ -1,6 +1,6 @@
 class User::OpTeachersService
 	def self.filter_batch(teacher, params)
-		@batches ||= teacher.op_batchs
+		@batches ||= teacher.op_batches
 		query = ''
 		if params[:active] && params[:active] != 'all'
 			query += "active = '#{params[:active]}' AND "

@@ -8,7 +8,7 @@ module User
     end
 
     def batch_detail
-      @batch_detail = Learning::Batch::OpBatchService.batch_detail(params[:batch_id])
+      @batch = Learning::Batch::OpBatch.find(params[:batch_id])
     end
 
     def my_class

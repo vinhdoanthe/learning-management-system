@@ -10,7 +10,7 @@ module User
 
     def teacher_class
       @teacher = current_user.op_faculty
-      all_batches ||= @teacher.op_batchs
+      all_batches ||= @teacher.op_batches
       company_id = []
       all_batches.each{ |b| company_id << b.company_id}
       @company = Common::ResCompany.where(:id => company_id)
