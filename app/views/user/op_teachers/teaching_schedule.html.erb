@@ -1,0 +1,54 @@
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+        <div class="ph-text">
+            <h2 class="color-fff text-transform">Lịch giảng dậy</h2>
+        </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <%= month_calendar events: @session do |date, sessions| %>
+        <%= date %>
+
+        <% sessions.each do |session| %>
+          <div style="position: relative;">
+            <a href = "" class="ct-detail teaching_schedule">
+              <span><img src="global/images/changes.png" alt="">
+              </span>
+              <%= session.name %>
+            </a>
+
+            <div class="schedule_detail" style="width: 350px; padding: 10px; background: #c1c1c1; position: absolute; bottom: 80px; display: none; border-radius: 5px; z-index: 1">
+              <ul class='ctd-popover'>
+                
+                  <li><span><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M') + ' | ' +  session.end_datetime.strftime('%Y-%m-%d') %></span></li>
+                  <li><strong>Học viện: </strong><%= Common::ResCompany.find(session.company_id).name %></li>
+                  <li><strong>Môn học: </strong><%= session.op_subject.name + ' - Level' + session.op_subject.level.to_s %></li>
+                  <li><strong>Khoá học: </strong> <%= session.op_batch.name %></li>
+                  <li><strong>Lớp: </strong> <%= session.op_batch.op_course.code%></li>
+                  <li><strong>Số buổi: </strong> (5/12)</li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      </div>
+  	<!-- InstanceEndEditable -->   
+
+    	<div class="footer">
+          <div class="copyright">
+              <p class="pull-left sm-pull-reset">
+                  <span>Copyright <span class="copyright">©</span> 2020 </span>
+                  <span>THEMES BACKEND TEKY. </span>
+                  <span>All rights reserved. </span>
+              </p>
+              <p class="pull-right sm-pull-reset">
+                  <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+              </p>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
