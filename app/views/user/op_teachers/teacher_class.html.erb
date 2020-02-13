@@ -41,7 +41,7 @@
                             <div class='fl_wrap m-t-0'>
                                 <label class='fl_label' for='rf_name'>Cơ sở:</label>
                                 <select class='fl_input' id='filter_company' >
-                                    <option value='all'>Tất cả</option>
+                                    <option value='all' selected>Tất cả</option>
                                     <% @company.each do |ct| %>
                                         <option value="<%= ct.name %>"><%= ct.name %></option>
                                     <% end %>
@@ -62,15 +62,15 @@
                         </tr>
                     </thead>
                     <tbody id="batch_list">
-                        <% @batchs.each do |batch| %>
-                            <tr>
+                        <% @batches.each do |batch| %>
+                            <tr class='batch_info'>
                                 <td><%= batch.code %></td>
                                 <td><%= batch.name %></td>
                                 <td>4</td>
                                 <td><%= batch.start_date.to_s + ' - ' + batch.end_date.to_s %></td>
                                 <td>4/12 - Học phần 1</td>
                                 <td align="right">
-                                    <% if batch.active = 'f' %>
+                                    <% if batch.active == 'false' %>
                                         <span class="label-edit label label-stop">Đã hoàn thành</span>
                                     <% else %>
                                         <span class="label-edit label label-primary">Đang diễn ra</span>
