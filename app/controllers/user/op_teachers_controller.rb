@@ -20,6 +20,15 @@ module User
         render json: {data: @batches}, status: 200
       end
     end
+
+    def teacher_class_detail
+
+    end
+
+    def teaching_schedule
+      teacher = OpFaculty.last
+      @session = teacher.op_sessions
+    end
   end
 
 end

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get 'batch_detail/:batch_id' => 'users#batch_detail', as: 'batch_detail'
     get 'teacher_class' => 'op_teachers#teacher_class'
     post 'teacher_class' => 'op_teachers#teacher_class'
+    get 'teaching_schedule' => 'op_teachers#teaching_schedule'
     resources :users
     resources :op_students, only: [:index, :new]
   end

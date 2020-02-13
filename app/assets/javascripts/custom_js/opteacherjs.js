@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	// Filter class
 	function call_api(data){
 	    $.ajax({
 	        type: "POST",
@@ -37,6 +38,20 @@ $(document).ready(function(){
 			'company': company
 		}
 		call_api(data)
+	});
+
+	// Teaching schedule
+	$('.teaching_schedule').click(function(e){
+		e.preventDefault();
+		$(this).parent().find($('.schedule_detail')).css('display','block')
+	})
+
+	$(document).mouseup(function(e) {
+	    var container = $(".schedule_detail");
+	    if (!container.is(e.target) && container.has(e.target).length === 0) 
+	    {
+	        container.hide();
+	    }
 	});
 })
 
