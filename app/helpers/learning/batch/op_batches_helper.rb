@@ -28,6 +28,10 @@ module Learning
         end
         levels
       end
+
+      def teachers_name(batch_id)
+        Learning::Batch::OpBatchService.get_teachers_name(batch_id)
+      end
     end
   end
 end

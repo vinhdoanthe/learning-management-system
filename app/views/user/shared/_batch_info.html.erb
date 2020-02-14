@@ -20,7 +20,14 @@
                 <p><span class="span-text">Lịch học: </span>Chưa lấy thông tin này</p></li>
               <li>
                 <%= image_tag('global/images/professor.png') %>
-                <p><span class="span-text">Giảng viên: </span><a href="">Chưa có thông tin này</a></p></li>
+                <p><span class="span-text">Giảng viên: </span>
+                  <% teachers_name = teachers_name(batch.id) %>
+                  <% unless teachers_name.nil? %>
+                    <% teachers_name.each do |name| %>
+                      <a href=""><%= name %>></a>
+                    <% end %>
+                  <% end %>
+                </p></li>
             </ul>
           </div>
           <div class="col-md-6">

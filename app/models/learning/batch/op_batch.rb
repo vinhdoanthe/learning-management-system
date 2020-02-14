@@ -9,6 +9,7 @@ module Learning
       belongs_to :op_batch_type, :foreign_key => 'type_id'
 
       has_many :op_sessions, class_name: 'Learning::Batch::OpSession', foreign_key: 'id'
+      has_many :op_faculties, :class_name => 'User::OpFaculty', through: :op_sessions
     end
   end
 end
