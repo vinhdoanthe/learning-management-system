@@ -7,18 +7,16 @@ class User::OpTeachersService
 			query += "active = '#{params[:active]}' AND "
 		end
 
-		if params[:start_date]
-			query += "start_date >= '#{params[:start_date].to_time.utc.strftime('%Y-%m-%d %H:%M:%S')}' AND "
-		else
-			query += "start_date >= '#{(Time.now - 1000.days).to_time.utc.strftime('%Y-%m-%d %H:%M:%S')}' AND "
-		end
-
-		if params[:end_date] && params[:end_date].to_time <= Time.now
-			query += "end_date <= '#{params[:end_date].to_time.end_of_day.utc.strftime('%Y-%m-%d %H:%M:%S')}' AND "
-		end
-
 		query += "op_batch.company_id = #{params[:company]} AND " unless params[:company].blank? || params[:company] == 'all' 
 		query = query[0..-5]
-		@class = @batches.where(query)
+		total_class = @batches.where(query)
+
+		if params[:start_date]
+			@class = total_class.where.not('start_date >= ? OR end_date <= ?', params[:end_date].to_time.utc.strftime('%Y-%m-%d'), params[:start_date].to_time.utc.strftime('%Y-%m-%d'))
+		else
+			query = "start_date >= '#{(Time.now - 1000.days).to_time.utc.strftime('%Y-%m-%d')}'"
+			@class = total_class.where(query)
+		end
+		@class
 	end
 end
