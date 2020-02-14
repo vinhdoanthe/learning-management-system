@@ -43,7 +43,7 @@
                                 <select class='fl_input' id='filter_company' >
                                     <option value='all' selected>Tất cả</option>
                                     <% @company.each do |ct| %>
-                                        <option value="<%= ct.name %>"><%= ct.name %></option>
+                                        <option value="<%= ct.id %>"><%= ct.name %></option>
                                     <% end %>
                                 </select>
                             </div>
