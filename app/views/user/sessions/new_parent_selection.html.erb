@@ -8,7 +8,7 @@
       <h3>Chọn tài khoản con </h3>
       <% if children_account.count > 1 %>
         <% children_account.each do |child| %>
-          <%= link_to child.username, user_parent_selection_path(:child => child), { class: 'btn btn-primary', style: 'width: 150px; color: white; margin-top: 15px' ,method: :post} %>
+          <%= link_to child.op_student.full_name, user_parent_selection_path(:child => child), { class: 'btn btn-primary', style: 'color: white; margin-top: 15px' ,method: :post} %>
           <br/>
         <% end %>
       <% end %>
