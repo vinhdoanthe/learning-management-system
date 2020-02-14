@@ -15,8 +15,7 @@ class User::OpTeachersService
 			query += "end_date <= '#{params[:end_time].to_time.utc.strftime('%Y-%m-%d %H:%M:%S')}' AND "
 		end
 
-		query += "company_id = '#{params[:company_id]}'" unless params[:company_id].blank? || params[:company_id] == 'all' 
-		
+		query += "op_batch.company_id = #{params[:company]} AND " unless params[:company].blank? || params[:company] == 'all' 
 		query = query[0..-5]
 		@class = @batches.where(query)
 	end
