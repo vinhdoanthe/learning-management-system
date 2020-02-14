@@ -22,6 +22,8 @@
   <link href="/global/css/owl.carousel.css" rel="stylesheet">
     <!-- END PAGE STYLE -->
   <script src="/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+  <link rel="stylesheet" href="/global/css/daterangepicker.css" />
+
 </head>
 
 <% if current_user && !current_user.is_parent? %>
@@ -83,6 +85,8 @@
   <script type="text/javascript" src='/global/js/owl.carousel.min.js'></script>
   <script type="text/javascript" src='/global/plugins/bootstrap-loading/lada.min.js'></script>
   <script type="text/javascript" src='/global/js/pages/login-v2.js'></script>
+  <script type="text/javascript" src="/global/js/daterangepicker/moment.min.js"></script>
+  <script type="text/javascript" src="/global/js/daterangepicker/daterangepicker.js"></script>
   <%= debug(params) if Rails.env.development? %>
   </body>
 <% else %>
