@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+	$('#date_range_pick_form').addClass('populated');
 	// Filter class
 	function call_api(data){
 	    $.ajax({
@@ -20,24 +22,37 @@ $(document).ready(function(){
 	}
 	var active = $('#filter_type').val();
 	var company = $('#filter_company').val();
+	var start_date = '';
+	var end_date = '';
+
+	data = {
+		'active': active,
+		'company': company,
+		'start_date': start_date,
+		'end_date': end_date
+	}
+
+	$('#daterange_pick').daterangepicker();
+    $('#daterange_pick').on('apply.daterangepicker', function(ev, picker) {
+    	start_date = picker.startDate.format('YYYY-MM-DD');
+    	end_date = picker.endDate.format('YYYY-MM-DD');
+    	data.start_date = start_date;
+    	data.end_date = end_date;
+    	$('.batch_info').remove();
+    	call_api(data);
+    });
 
 	$('#filter_type').on('change', function(){
 		active = $('#filter_type').val();
 		$('.batch_info').remove();
-		data = {
-			'active': active,
-			'company': company
-		}
-		call_api(data)
+		data.active = active;
+		call_api(data);
 	});
 	$('#filter_company').on('change', function(){
 		company = $('#filter_company').val();
 		$('.batch_info').remove();
-		data = {
-			'active': active,
-			'company': company
-		}
-		call_api(data)
+		data.company = company;
+		call_api(data);
 	});
 
 	// Teaching schedule
