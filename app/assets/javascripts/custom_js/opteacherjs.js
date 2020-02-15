@@ -9,7 +9,7 @@ $(document).ready(function(){
 	        data: data,
 	        success: function (response){
 	          $.each(response.data, function(i, batch){
-	            if (batch.active == true){
+	            if (batch.check_status == true){
 	                $('#batch_list').append("<tr class='batch_info'><td>"+ batch.code +"</td><td>" + batch.name +" </td><td>4</td><td>" +batch.start_date + " - " + batch.end_date + "</td><td>4/12 - Học phần 1</td><td align='right'><span class='label-edit label label-primary'>Đang diễn ra</span></td></tr>")
 	            }
 	            else {

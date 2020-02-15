@@ -1,0 +1,190 @@
+<div class="page-content page-thin">
+
+    <!-- InstanceBeginEditable name="EditRegion1" -->
+    <div class="panel panel-edits bg-232837">
+        <div class="panel-heading">
+            <!-- <div class="ph-img">
+                <span><img src="assets/global/images/avatar.svg" alt=""></span>
+            </div> -->
+            <div class="ph-text">
+                <h2 class="color-fff text-transform">Danh sách lớp học</h2>
+            </div>
+        </div>
+    </div>
+    <div class="panel m-t--70">
+        <div class="panel-content">
+            <%= render "user/shared/batch_info", { batch: @batch } %>
+            <div class="box-lession">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="bl-title text-right">
+                            <label>Học phần <%= @subject.level %> </label>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="bl-content">
+                            <ul id="session_time_table">
+                                <% @sessions.each_with_index do |session, index| %>
+                                    <% if @session_index == index %>
+                                        <li>
+                                            <p class="active">
+                                                <span class="tag-time"><%= index + 1 %></span>
+                                                <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M')%></span>
+                                                <span class="last-time"><%=  session.start_datetime.strftime('%Y.%m.%d') %></span>
+                                            </p>
+                                        </li>
+                                        <% else %>
+                                        <li>
+                                            <p>
+                                                <span class="tag-time"><%= index + 1%></span>
+                                                <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M')%></span>
+                                                <span class="last-time"><%=  session.start_datetime.strftime('%Y.%m.%d') %></span>
+                                            </p>
+                                        </li>
+                                    <% end %>
+                                <% end %>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bo-table m-t-20">
+                <div class="redem-tab class-tab">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <% for i in 1..@sessions.length %>
+                            <% if i == (@session_index + 1)%>
+                                <li class="active"><a href="<%= '#buoi' + i.to_s %>" data-toggle="tab"><%= 'Buổi ' + i.to_s %></a></li>
+                            <% else %>
+                                <li><a href="<%= '#buoi' + i.to_s %>" data-toggle="tab"><%= 'Buổi ' + i.to_s %></a></li>
+                            <% end %>
+                        <% end %>
+
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active in" id="<%= 'buoi' + (@session_index + 1).to_s %>">
+                            <div class="table-responsive">
+                                <table class="table table-link">
+                                    <tbody>
+                                        <tr>
+                                            <td width="90">
+                                                <div class="calenda-box">
+                                                    <div class="cb-tit">
+                                                        <p>december</p>
+                                                    </div>
+                                                    <div class="cb-con">
+                                                        <strong>07</strong>
+                                                        <p>18:00 - 20:00<br/>Thứ 7</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td width="130">
+                                                <div class="photo-box">
+                                                    <span><img src="" alt=""></span>
+                                                </div>
+                                            </td>
+                                            <!-- TO DO -->
+                                            <td>
+                                                <strong><%= 'BÀI ' + @session.timing_id.to_s %></strong><br/>
+                                                <%= @session.name %><br/>
+                                                Kiến thức học được: TODO
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <div class="table-responsive">
+                                    <div class="fc-header clearfix">
+                                        <div class="pull-left">
+                                            <h3>Học phần 4 - Buổi học: 4</h3>
+                                            <p>18:00 - 20:00   |   18/12/2019</p>
+                                        </div>
+                                        <div class="fc-list-btn pull-right">
+                                            <ul>
+                                                <li><button type="button" class="btn btn-default btn-embossed">Học cụ</button></li>
+                                                <li><button type="button" class="btn btn-default btn-embossed">Check-in</button></li>
+                                                <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#diemdanh">Điểm danh</button></li>
+                                                <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#hoclieu">Học liệu</button></li>
+                                                <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#thuonghocsinh">Thưởng</button></li>
+                                                <li><button type="button" class="btn btn-default btn-embossed">Chụp ảnh</button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                        
+                                </div>
+                                <hr>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Mã học sinh</th>
+                                                <th>Họ và tên</th>
+                                                <th class="text-center">Điểm danh</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>[HCM-CT-000625]</td>
+                                                <td><span class="table-img"><img src="assets/global/images/Group.png" alt=""></span><span class="table-name">Kiều Chí Công</span></td>
+                                                <td align="center">
+                                                    <img src="assets/global/images/remove.png" style="width: 20px" alt=""><br/>
+                                                    <strong>Lý do:</strong>Phụ huỳnh đã xin nghỉ
+                                                </td>
+                                                <td align="right"><span class="label-edit label label-primary">đang học</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>[HCM-CT-000625]</td>
+                                                <td><span class="table-img"><img src="assets/global/images/Group-12.png" alt=""></span><span class="table-name">Kiều Chí Công</span></td>
+                                                <td align="center"><img src="assets/global/images/check.png" style="width: 20px" alt=""></td>
+                                                <td align="right"><span class="label-edit label label-danger"> nghỉ học</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>[HCM-CT-000625]</td>
+                                                <td><span class="table-img"><img src="assets/global/images/Group-29.png" alt=""></span><span class="table-name">Kiều Chí Công</span></td>
+                                                <td align="center"><img src="assets/global/images/check.png" style="width: 20px" alt=""></td>
+                                                <td align="right"><span class="label-edit label label-stop">bảo lưu</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>[HCM-CT-000625]</td>
+                                                <td><span class="table-img"><img src="assets/global/images/Group-30.png" alt=""></span><span class="table-name">Kiều Chí Công</span></td>
+                                                <td align="center"><img src="assets/global/images/check.png" style="width: 20px" alt=""></td>
+                                                <td align="right"><span class="label-edit label label-stop">bảo lưu</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="buoi2">...</div>
+                        <div class="tab-pane" id="buoi3">...</div>
+                        <div class="tab-pane" id="buoi4">...</div>
+                        <div class="tab-pane" id="buoi5">...</div>
+                        <div class="tab-pane" id="buoi6">...</div>
+                        <div class="tab-pane" id="buoi7">...</div>
+                        <div class="tab-pane" id="buoi8">...</div>
+                        <div class="tab-pane" id="buoi9">...</div>
+                        <div class="tab-pane" id="buoi10">...</div>
+                        <div class="tab-pane" id="buoi11">...</div>
+                        <div class="tab-pane" id="buoi12">...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  	<div class="footer">
+        <div class="copyright">
+            <p class="pull-left sm-pull-reset">
+                <span>Copyright <span class="copyright">©</span> 2020 </span>
+                <span>THEMES BACKEND TEKY. </span>
+                <span>All rights reserved. </span>
+            </p>
+            <p class="pull-right sm-pull-reset">
+                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+            </p>
+        </div>
+    </div>
+</div>

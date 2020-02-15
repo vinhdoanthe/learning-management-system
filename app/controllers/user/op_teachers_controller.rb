@@ -17,12 +17,22 @@ module User
       @batches = OpTeachersService.filter_batch @teacher, params
 
       if request.method == 'POST'
-        render json: {data: @batches}, status: 200
+        data = []
+        @batches.each{|b| data << {code: b.code, name: b.name, start_date: b.start_date, end_date: b.end_date, status: b.check_status}}
+        render json: {data: data}, status: 200
       end
     end
 
     def teacher_class_detail
+      @batch = Learning::Batch::OpBatch.find(params[:batch_id])
+      @sessions = @batch.op_sessions.order(start_datetime: 'ASC')
+      @session = @sessions.where('start_datetime >= ?', Time.now).first
+      @session_index = @sessions.index(@session)
+      @subject = @session.op_subject
 
+      if request.method == 'POST'
+        render json: {batch: @batch, session: @session, session_index: @session_index}
+      end
     end
 
     def teaching_schedule

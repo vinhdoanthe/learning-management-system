@@ -10,6 +10,11 @@ module Learning
 
       has_many :op_sessions, class_name: 'Learning::Batch::OpSession', foreign_key: 'batch_id'
       has_many :op_faculties, -> { distinct }, :class_name => 'User::OpFaculty', through: :op_sessions
+      
+      # TO DO batch status
+      def check_status
+        self.active
+      end
     end
   end
 end
