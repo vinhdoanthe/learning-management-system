@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     get 'teacher_class' => 'op_teachers#teacher_class'
     post 'teacher_class' => 'op_teachers#teacher_class'
     get 'teaching_schedule' => 'op_teachers#teaching_schedule'
+    get 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
+    post 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
     resources :users
     resources :op_students, only: [:index, :new]
   end
