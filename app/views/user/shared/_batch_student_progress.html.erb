@@ -3,314 +3,40 @@
     <div class="row">
       <div class="col-md-offset-2 col-md-3">
         <div class='fl_wrap m-t-0'>
-          <label class='fl_label' for='rf_name'>Khóa học:</label>
-          <select class='fl_input' id='rf_name'>
-            <option value=""></option>
-            <option value="">sss</option>
-            <option value="">sss</option>
-            <option value="">sss</option>
-          </select>
+          <label class='fl_label' for='rf_name'>Khóa học: <%= batch.op_course.name %></label>
         </div>
       </div>
       <div class="col-md-3">
         <div class='fl_wrap m-t-0'>
-          <label class='fl_label' for='rf_name'>Lớp học:</label>
-          <select class='fl_input' id='rf_name'>
-            <option value=""></option>
-            <option value="">sss</option>
-            <option value="">sss</option>
-            <option value="">sss</option>
-          </select>
+          <label class='fl_label' for='rf_name'>Lớp học: <%= batch.code %></label>
         </div>
       </div>
       <div class="col-md-2">
         <div class='fl_wrap m-t-0'>
           <label class='fl_label' for='rf_name'>Học phần:</label>
-          <select class='fl_input' id='rf_name'>
-            <option value=""></option>
-            <option value="">sss</option>
-            <option value="">sss</option>
-            <option value="">sss</option>
-          </select>
+          <% subjects = get_list_subject_pairs(student_id: current_user.op_student.id, batch_id: batch.id) %>
+          <% unless subjects.nil? %>
+            <select class='fl_input' id='rf_name'>
+              <option value=""></option>
+              <% subjects.each do |subject| %>
+                <option value="<%= subject.id %>"><%= subject.level %></option>
+              <% end %>
+            </select>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
-  <div class="table-responsive bo-table m-b-20">
-    <div class="fc-header">
-      <h3>Buổi học <span class="color-F16357">Sắp diễn ra</span></h3>
-    </div>
-    <table class="table m-b-0">
-      <tbody>
-      <tr>
-        <td>
-          <p>BÀI 6: Ứng dụng chuyển đổi nhiệt độ</p>
-        </td>
-        <td align="right"><p class="text-right">18:00 đến 20:00 | Thứ 7, 20/11/2019</p></td>
-        <td width="135">
-          <div id="clockdiv">
-            <div>
-              <span class="hours"></span>
-            </div>
-            <div>
-              <span class="minutes"></span>
-            </div>
-            <div>
-              <span class="seconds"></span>
-            </div>
-          </div>
-        </td>
-        <td align="right">
-          <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7">Đăng ký xin nghỉ</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="table-responsive bo-table m-b-20">
-    <div class="fc-header">
-      <h3>Buổi học <span class="color-16BD56">đã diễn ra</span></h3>
-    </div>
-    <table class="table  table-link">
-      <thead>
-      <tr>
-        <th width="90">&nbsp;</th>
-        <th width="140"></th>
-        <th></th>
-        <th class="text-center">Điểm danh</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>
-          <div class="calenda-box">
-            <div class="cb-tit">
-              <p>december</p>
-            </div>
-            <div class="cb-con">
-              <strong>07</strong>
-              <p>18:00 - 20:00<br/>Thứ 7</p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="photo-box">
-            <span><img src="" alt=""></span>
-          </div>
-        </td>
-        <td>
-          <strong>BÀI 1</strong><br/>
-          HELLO WORLD<br/>
-          Kiến thức buổi học: …
 
-        </td>
-        <td align="center">
-          <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
-        </td>
-        <td align="right">
-          <a href="#">
-            <%= image_tag('global/images/add-comment-button.png', style: 'width: 20px;margin-right: 10px') %>
-          </a>
-          <a href="#">
-            <%= image_tag('global/images/more-4.png', style: 'width: 20px') %>
-          </a>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="calenda-box">
-            <div class="cb-tit">
-              <p>december</p>
-            </div>
-            <div class="cb-con">
-              <strong>07</strong>
-              <p>18:00 - 20:00<br/>Thứ 7</p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="photo-box">
-            <span><img src="" alt=""></span>
-          </div>
-        </td>
-        <td>
-          <strong>BÀI 1</strong><br/>
-          HELLO WORLD<br/>
-          Kiến thức buổi học: …
+  <% coming_soon_session = get_coming_session_by_student(student_id: current_user.op_student.id, checkpoint_datetime: Time.now) %>
+  <%= render 'user/shared/session/coming_session', {:coming_soon_session => coming_soon_session} %>
 
-        </td>
-        <td align="center">
-          <%= image_tag('global/images/check.png', style: 'width: 20px') %>
-        </td>
-        <td align="right">
-          <a href="#">
-            <%= image_tag('global/images/add-comment-button.png', style: 'width: 20px; margin-right: 10px') %>
-          </a>
-          <a href="#">
-            <%= image_tag('global/images/more-4.png', style: 'width: 20px') %>
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <% todo_sessions = todo_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %>
+  <%= render 'user/shared/session/todo_sessions', {:todo_sessions => todo_sessions} %>
 
-  <div class="table-responsive bo-table m-b-20">
-    <div class="fc-header">
-      <h3>Buổi học <span class="color-FFC400">Chưa diễn ra</span></h3>
-    </div>
-    <table class="table  table-link">
-      <thead>
-      <tr>
-        <th width="90">&nbsp;</th>
-        <th width="140"></th>
-        <th></th>
-        <th class="text-center">Điểm danh</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>
-          <div class="calenda-box">
-            <div class="cb-tit">
-              <p>december</p>
-            </div>
-            <div class="cb-con">
-              <strong>07</strong>
-              <p>18:00 - 20:00<br/>Thứ 7</p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="photo-box">
-            <span><img src="" alt=""></span>
-          </div>
-        </td>
-        <td>
-          <strong>BÀI 1</strong><br/>
-          HELLO WORLD<br/>
-          Kiến thức buổi học: …
+  <% done_sessions = done_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %>
+  <%= render 'user/shared/session/done_sessions', {:done_sessions => done_sessions} %>
 
-        </td>
-        <td align="center">
-          <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
-        </td>
-        <td align="right">
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="calenda-box">
-            <div class="cb-tit">
-              <p>december</p>
-            </div>
-            <div class="cb-con">
-              <strong>07</strong>
-              <p>18:00 - 20:00<br/>Thứ 7</p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="photo-box">
-            <span><img src="" alt=""></span>
-          </div>
-        </td>
-        <td>
-          <strong>BÀI 1</strong><br/>
-          HELLO WORLD<br/>
-          Kiến thức buổi học: …
-
-        </td>
-        <td align="center">
-          <%= image_tag('global/images/check.png', style: 'width: 20px') %>
-        </td>
-        <td align="right">
-
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="table-responsive bo-table">
-    <div class="fc-header">
-      <h3>Buổi học <span class="color-F16357">đã hủy</span></h3>
-    </div>
-    <table class="table  table-link">
-      <thead>
-      <tr>
-        <th width="90">&nbsp;</th>
-        <th width="140"></th>
-        <th></th>
-        <th class="text-center">Điểm danh</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>
-          <div class="calenda-box">
-            <div class="cb-tit">
-              <p>december</p>
-            </div>
-            <div class="cb-con">
-              <strong>07</strong>
-              <p>18:00 - 20:00<br/>Thứ 7</p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="photo-box">
-            <span><img src="" alt=""></span>
-          </div>
-        </td>
-        <td>
-          <strong>BÀI 1</strong><br/>
-          HELLO WORLD<br/>
-          Kiến thức buổi học: …
-
-        </td>
-        <td align="center">
-          <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
-        </td>
-        <td align="right">
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="calenda-box">
-            <div class="cb-tit">
-              <p>december</p>
-            </div>
-            <div class="cb-con">
-              <strong>07</strong>
-              <p>18:00 - 20:00<br/>Thứ 7</p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="photo-box">
-            <span><img src="" alt=""></span>
-          </div>
-        </td>
-        <td>
-          <strong>BÀI 1</strong><br/>
-          HELLO WORLD<br/>
-          Kiến thức buổi học: …
-
-        </td>
-        <td align="center">
-          <%= image_tag('global/images/check.png', style: 'width: 20px') %>
-        </td>
-        <td align="right">
-
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <% cancel_sessions = cancel_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %>
+  <%= render 'user/shared/session/cancel_sessions', {:cancel_sessions => cancel_sessions} %>
 </div>

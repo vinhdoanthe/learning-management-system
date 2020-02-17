@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_12_034533) do
+ActiveRecord::Schema.define(version: 2020_02_15_025806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2465,6 +2465,7 @@ ActiveRecord::Schema.define(version: 2020_02_12_034533) do
     t.datetime "date_last_assign", comment: "Last Assigned"
     t.datetime "date_sale", comment: "First SO Confirmed"
     t.datetime "date_invoice", comment: "First SO Invoiced"
+    t.boolean "cocall", comment: "Check Cocall"
     t.index ["company_id"], name: "crm_lead_company_id_index"
     t.index ["convert_uid"], name: "crm_lead_convert_uid_index"
     t.index ["date_last_stage_update"], name: "crm_lead_date_last_stage_update_index"
@@ -3812,6 +3813,8 @@ ActiveRecord::Schema.define(version: 2020_02_12_034533) do
     t.boolean "many_day", comment: "Multiple day"
     t.float "number_of_many_day", comment: "Số ngày nghỉ nhiều"
     t.string "shift_work_do", comment: "Phân loại nhân viên"
+    t.string "hcns_bgd", comment: "HCNS/BGĐ xác nhận"
+    t.text "hcns_bgd_note", comment: "Lý do của HCNS/BGĐ"
     t.index ["date_from"], name: "hr_holidays_date_from_index"
     t.index ["employee_id"], name: "hr_holidays_employee_id_index"
     t.index ["type"], name: "hr_holidays_type_index"
@@ -4983,6 +4986,17 @@ ActiveRecord::Schema.define(version: 2020_02_12_034533) do
     t.index ["cv_id", "job_id"], name: "job_cv_rel_cv_id_job_id_key", unique: true
     t.index ["cv_id"], name: "job_cv_rel_cv_id_idx"
     t.index ["job_id"], name: "job_cv_rel_job_id_idx"
+  end
+
+  create_table "learning_materials", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "material_type"
+    t.string "learning_type"
+    t.bigint "op_lession_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["op_lession_id"], name: "index_learning_materials_on_op_lession_id"
   end
 
   create_table "link_tracker", id: :serial, comment: "link.tracker", force: :cascade do |t|
@@ -6385,6 +6399,8 @@ ActiveRecord::Schema.define(version: 2020_02_12_034533) do
     t.integer "register_id", comment: "Admission Register"
     t.integer "sesion_per_week", comment: "Session per week"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.string "note_time", comment: "Giờ học dự kiến"
+    t.text "lesson_link", comment: "Link bài tập"
     t.index ["code"], name: "op_batch_unique_batch_code", unique: true
   end
 
@@ -7038,6 +7054,9 @@ ActiveRecord::Schema.define(version: 2020_02_12_034533) do
     t.integer "logistic_line_count", comment: "Logistic Count"
     t.string "logistic_note", comment: "Note"
     t.text "logistic_comment", comment: "Comment"
+    t.float "salary_before", comment: "Lương trước khi phạt"
+    t.float "salary_per_hour", comment: "Lương theo giờ"
+    t.boolean "active", comment: "Active"
   end
 
   create_table "op_session_change_faculty", id: :serial, comment: "op.session.change.faculty", force: :cascade do |t|
@@ -7124,6 +7143,7 @@ ActiveRecord::Schema.define(version: 2020_02_12_034533) do
     t.string "birth_dd", comment: "Birth Day"
     t.string "birth_mm", comment: "Birth Month"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.string "parent_email", comment: "Parent email"
   end
 
   create_table "op_student_attendance_report", id: :serial, comment: "student report", force: :cascade do |t|
@@ -7162,6 +7182,8 @@ ActiveRecord::Schema.define(version: 2020_02_12_034533) do
     t.integer "categ_id", comment: "Course Category"
     t.string "gender", comment: "Gender"
     t.date "birth_date", comment: "Birth Date"
+    t.text "lesson_link", comment: "Link bài tập"
+    t.string "parent_email", comment: "Parent email"
     t.index ["roll_number", "course_id", "batch_id", "student_id"], name: "op_student_course_unique_name_roll_number_id", unique: true
     t.index ["roll_number", "course_id", "batch_id"], name: "op_student_course_unique_name_roll_number_course_id", unique: true
     t.index ["student_id", "course_id", "batch_id"], name: "op_student_course_unique_name_roll_number_student_id", unique: true
@@ -9311,6 +9333,9 @@ ActiveRecord::Schema.define(version: 2020_02_12_034533) do
     t.integer "partner_id", comment: "Customer"
     t.integer "survey_id", comment: "Survey"
     t.integer "input_id", comment: "Input"
+    t.string "test_type", null: false, comment: "Test Type"
+    t.datetime "test_time", comment: "Test Time"
+    t.text "test_note", comment: "Test note"
   end
 
   create_table "student_test_wizard", id: :serial, comment: "student.test.wizard", force: :cascade do |t|
@@ -11199,6 +11224,7 @@ ActiveRecord::Schema.define(version: 2020_02_12_034533) do
   add_foreign_key "issue_media", "res_users", column: "write_uid", name: "issue_media_write_uid_fkey", on_delete: :nullify
   add_foreign_key "job_cv_rel", "hr_job", column: "job_id", name: "job_cv_rel_job_id_fkey", on_delete: :cascade
   add_foreign_key "job_cv_rel", "ir_attachment", column: "cv_id", name: "job_cv_rel_cv_id_fkey", on_delete: :cascade
+  add_foreign_key "learning_materials", "op_lession"
   add_foreign_key "link_tracker", "mail_mass_mailing", column: "mass_mailing_id", name: "link_tracker_mass_mailing_id_fkey", on_delete: :nullify
   add_foreign_key "link_tracker", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "link_tracker_mass_mailing_campaign_id_fkey", on_delete: :nullify
   add_foreign_key "link_tracker", "res_users", column: "create_uid", name: "link_tracker_create_uid_fkey", on_delete: :nullify

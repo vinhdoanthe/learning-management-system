@@ -15,6 +15,11 @@ module Learning
         levels
       end
 
+      def get_list_subject_pairs(student_id:, batch_id:)
+        op_student_course = Learning::Batch::OpStudentCourse.where(student_id:student_id, batch_id:batch_id).first
+        op_student_course.op_subjects
+      end
+
       def list_subject_level_of_batch(batch_id)
         op_batch = Learning::Batch::OpBatch.find(batch_id)
         subjects = op_batch.op_course.op_subjects
@@ -31,6 +36,43 @@ module Learning
 
       def teachers_name(batch_id)
         Learning::Batch::OpBatchService.get_teachers_name(batch_id)
+      end
+
+      def batch_active?(batch_id)
+        batch = Learning::Batch::OpBatch.find(batch_id)
+        student_courses = batch.op_student_courses
+        is_active = false
+        unless student_courses.nil?
+          student_courses.each do |student_course|
+            unless student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF
+              is_active = true
+            end
+          end
+        end
+        is_active
+      end
+
+      def get_coming_session_by_student(student_id:, checkpoint_datetime:)
+        Learning::Batch::OpBatchService.get_coming_session_student(student_id: student_id,
+                                                                   checkpoint_datetime: checkpoint_datetime)
+      end
+
+      def coming_session_student_batch(student_id:, batch_id:, checkpoint_datetime:)
+        Learning::Batch::OpBatchService.coming_session_student_batch(student_id: student_id,
+                                                                     batch_id: batch_id,
+                                                                     checkpoint_datetime: checkpoint_datetime)
+      end
+
+      def done_session_student_batch(student_id:, batch_id:)
+        Learning::Batch::OpBatchService.done_session_student_batch(student_id: student_id, batch_id: batch_id)
+      end
+
+      def todo_session_student_batch(student_id:, batch_id:)
+        Learning::Batch::OpBatchService.todo_session_student_batch(student_id: student_id, batch_id: batch_id)
+      end
+
+      def cancel_session_student_batch(student_id:, batch_id:)
+        Learning::Batch::OpBatchService.cancel_session_student_batch(student_id: student_id, batch_id: batch_id)
       end
     end
   end

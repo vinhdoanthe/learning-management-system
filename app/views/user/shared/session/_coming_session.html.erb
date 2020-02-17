@@ -1,0 +1,36 @@
+<div class="table-responsive bo-table m-b-20">
+  <div class="fc-header">
+    <h3>Buổi học <span class="color-F16357">Sắp diễn ra</span></h3>
+  </div>
+  <% if !coming_soon_session.nil? and !coming_session.empty? %>
+    <table class="table m-b-0">
+      <tbody>
+      <tr>
+        <td>
+          <p><%= coming_soon_session.op_subject.name %></p>
+        </td>
+        <td align="right"><p class="text-right"><%= coming_soon_session.start_datetime.strftime('%H-%M') %>
+          - <%= coming_soon_session.end_datetime.strftime('%H-%M') %> | Thứ 7, 20/11/2019</p></td>
+        <td width="135">
+          <div id="clockdiv">
+            <div>
+              <span class="hours"></span>
+            </div>
+            <div>
+              <span class="minutes"></span>
+            </div>
+            <div>
+              <span class="seconds"></span>
+            </div>
+          </div>
+        </td>
+        <td align="right">
+          <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7">Đăng ký xin nghỉ</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  <% else %>
+    <div>Không có buổi học tiếp theo nào</div>
+  <% end %>
+</div>
