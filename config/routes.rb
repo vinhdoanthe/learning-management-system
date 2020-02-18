@@ -9,7 +9,6 @@ Rails.application.routes.draw do
     get 'logout' => 'sessions#destroy'
     delete 'logout'  => 'sessions#destroy'
     post 'reset_password' => 'sessions#reset_password'
-    get 'information' => 'users#information'
     get 'teacher_info' => 'op_teachers#teacher_info'
     get 'my_class' => 'users#my_class'
     get 'batch_detail/:batch_id' => 'users#batch_detail', as: 'batch_detail'
@@ -18,6 +17,8 @@ Rails.application.routes.draw do
     get 'teaching_schedule' => 'op_teachers#teaching_schedule'
     get 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
     post 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
+    post 'student_update_nickname' => 'users#update_nickname'
+    get 'student_info' => 'op_students#student_info'
     resources :users
     resources :op_students, only: [:index, :new]
   end

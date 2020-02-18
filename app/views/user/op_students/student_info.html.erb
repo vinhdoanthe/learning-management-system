@@ -3,180 +3,166 @@
 <% res_partner ||= current_user.op_student.op_parents.first.res_partner %>
 
 <div class="page-content page-thin">
-    <!-- InstanceBeginEditable name="EditRegion1" -->
-    <div class="panel panel-edits bg-232837">
-        <div class="panel-heading">
-            <div class="ph-img">
-                <span><img src="assets/global/images/avatar.svg" alt=""></span>
-            </div>
-            <div class="ph-text">
-                <h3 class="color-FCF055 m-0"><%= current_user.username %></h3>
-                <label for=""><%= student.full_name %></label>
-                <p><strong class="color-FCF055">Mã học viên:</strong> <%= student.code %></p>
-            </div>
-        </div>
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-img">
+        <span>
+        <%= image_tag(get_avatar) %>
+        </span>
+      </div>
+      <div class="ph-text">
+        <h3 class="color-FCF055 m-0"><%= current_user.username %></h3>
+        <label for=""><%= student.full_name %></label>
+        <p><strong class="color-FCF055">Mã học viên:</strong> <%= student.code %></p>
+      </div>
     </div>
-	<div class="panel m-t--70">
-        
-        <div class="panel-content">
-            <ul class="nav nav-tabs nav-primary tab-menu">
-                <li class=""><a href="#tab2_1" data-toggle="tab">Thông tin chung</a></li>
-                <li class="active"><a href="#tab2_2" data-toggle="tab">Thông tin phụ khuynh</a></li>
-                <li class=""><a href="#tab2_3" data-toggle="tab">Quá trình học tập</a></li>
-                <li class=""><a href="#tab2_4" data-toggle="tab">Bài tập về nhà</a></li>
-                <li class=""><a href="#tab2_5" data-toggle="tab">Quà tặng</a></li>
-                <li class=""><a href="#tab2_6" data-toggle="tab">Học phí</a></li>
-            </ul>
-            <div class="tab-content p-0 tab-all-content">
-                <div class="tab-pane fade" id="tab2_1">
-                    <form id='formBody' class='FlowupLabels'>
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                <a href="" class="change-password">Đổi mật khẩu</a>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Họ và tên:</label>
-                                    	<input class='fl_input' readonly id='rf_name' value="<%= student.full_name.to_s %>">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Giới tính:</label>
-                                    <% if student.gender = 'f' %>
-										<input class='fl_input' readonly id='rf_gender' value="Nam">
-									<% else %>
-										<input class='fl_input' readonly id='rf_gender' value="Nữ">
-                                    <% end %>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Ngày sinh:</label>
-                                        <input class='fl_input' readonly id='rf_name' value="<%= student.birth_date %>">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Nickname:</label>
-                                    	<input class='fl_input' readonly id='rf_name' value="<%= current_user.username %>">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Quốc tịch:</label>
-                                    	<input class='fl_input' readonly id='rf_name' value="<%= Common::ResCountry.find(student.nationality).name %>">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Học viện:</label>
-                                     	<input class='fl_input' readonly id='rf_name' value="<%= student.code.to_s %>">
-                                </div>
-                            </div>
-                            <% if res_partner %>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Địa chỉ:</label>
-                                    	<input class='fl_input' readonly id='rf_name' value="<%= res_partner.street %>" >
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
-                                    	<input class='fl_input' readonly id='rf_name' value="<%= res_partner.street2 %>" >
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Quốc gia:</label>
-                                    	<input class='fl_input' id='rf_name' readonly value="<%= student.res_country.name %>">
-                                </div>
-                            </div>
-                            <% end %>
-                        </div>
-                    </form>
-                </div>
+  </div>
+  <div class="panel m-t--70">
 
-                <% if res_partner && parent %>
-                <div class="tab-pane fade active in" id="tab2_2">
-                    <form id='formBody' class='FlowupLabels'>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Họ và tên phụ huynh:</label>
-                                    	<input class='fl_input' type='text' id='rf_name' readonly value="<%= res_partner.name %> ">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Quan hệ:</label>
-                                        <input class='fl_input' type="text" readonly id='rf_name' value="Cha/Mẹ">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Email:</label>
-                                    	<input class='fl_input' type='text' id='rf_name' readonly value="<%= parent.email %>" >
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Di động:</label>
-                                    	<input class='fl_input' type='text' readonly id='rf_name' value="<%= parent.phone ? parent.phone : parent.mobile %> ">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Địa chỉ:</label>
-                                    	<input class='fl_input' readonly type='text' id='rf_name' value="<%= res_partner.street2 %>" >
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
-                                    	<input class='fl_input' readonly type='text' id='rf_name' value="<%= res_partner.city %>" >
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class='fl_wrap'>
-                                    <label class='fl_label' for='rf_name'>Quốc gia:</label>
-                                    	<input class='fl_input' readonly type='text' id='rf_name' value="<%= res_partner.res_country ? res_partner.res_country.name : 'None' %>"  >
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
+    <div class="panel-content">
+      <ul class="nav nav-tabs nav-primary tab-menu">
+        <li class="active"><a href="#tab2_1" data-toggle="tab">Thông tin chung</a></li>
+        <li class=""><a href="#tab2_2" data-toggle="tab">Thông tin phụ khuynh</a></li>
+        <li class=""><a href="#tab2_3" data-toggle="tab">Quá trình học tập</a></li>
+        <li class=""><a href="#tab2_4" data-toggle="tab">Bài tập về nhà</a></li>
+        <li class=""><a href="#tab2_5" data-toggle="tab">Quà tặng</a></li>
+        <li class=""><a href="#tab2_6" data-toggle="tab">Học phí</a></li>
+      </ul>
+      <div class="tab-content p-0 tab-all-content">
+        <div class="tab-pane fade  active in" id="tab2_1">
+          <%= form_for :user, url: user_student_update_nickname_path, :html => {:class => 'FlowupLabels'} do |f| %>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <a href="" class="change-password">Đổi mật khẩu</a>
+              </div>
+              <div class="col-md-4">
+                <div class='fl_wrap'>
+                  <label class='fl_label' for='rf_name'>Họ và tên:</label>
+                  <input class='fl_input' readonly id='rf_name' value="<%= student.full_name.to_s %>">
                 </div>
-                <% end %>
-                <div class="tab-pane fade" id="tab2_3">
+              </div>
+              <div class="col-md-4">
+                <div class='fl_wrap'>
+                  <label class='fl_label' for='rf_name'>Giới tính:</label>
+                  <% if student.gender = 'f' %>
+                    <input class='fl_input' readonly id='rf_gender' value="Nam">
+                  <% else %>
+                    <input class='fl_input' readonly id='rf_gender' value="Nữ">
+                  <% end %>
                 </div>
-                <div class="tab-pane fade" id="tab2_4">
+              </div>
+              <div class="col-md-4">
+                <div class='fl_wrap'>
+                  <label class='fl_label' for='rf_name'>Ngày sinh:</label>
+                  <input class='fl_input' readonly id='rf_name' value="<%= student.birth_date %>">
                 </div>
-                <div class="tab-pane fade" id="tab2_5">
+              </div>
+              <div class="col-md-4">
+                <div class='fl_wrap'>
+                  <%= f.label 'Nickname:', class: 'fl_label' %>
+                  <%= f.text_field :username, class: 'fl_input', :value => current_user.username %>
                 </div>
-                <div class="tab-pane fade" id="tab2_6">
+              </div>
+              <div class="col-md-4">
+                <div class='fl_wrap'>
+                  <label class='fl_label' for='rf_name'>Quốc tịch:</label>
+                  <input class='fl_input' readonly id='rf_name' value="<%= get_nationality(student.id) %>">
                 </div>
+              </div>
+              <div class="col-md-4">
+                <div class='fl_wrap'>
+                  <label class='fl_label' for='rf_name'>Học viện:</label>
+                  <input class='fl_input' readonly id='rf_name' value="<%= student.res_company.name.to_s %>">
+                </div>
+              </div>
+              <% if res_partner %>
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Địa chỉ:</label>
+                    <input class='fl_input' readonly id='rf_name' value="<%= res_partner.street %>">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
+                    <input class='fl_input' readonly id='rf_name' value="<%= res_partner.street2 %>">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Quốc gia:</label>
+                    <input class='fl_input' id='rf_name' readonly value="<%= get_nationality(student.id) %>">
+                  </div>
+                </div>
+              <% end %>
             </div>
+            <div class="panel-footer bg-D7DFE9 text-right ">
+              <%= link_to "Hủy", user_student_info_path, class: 'btn btn-danger btn-embossed bg-F16357' %>
+              <%= f.submit "Cập nhật", class: "btn btn-primary btn-embossed bg-5DC2A7", remote: true %>
+            </div>
+          <% end %>
         </div>
-        <div class="panel-footer bg-D7DFE9 text-right ">
-            <button type="submit" class="btn btn-danger btn-embossed bg-F16357">Hủy</button>
-            <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7">Cập nhật</button>
-        </div>
+        <% if res_partner && parent %>
+          <div class="tab-pane fade" id="tab2_2">
+            <form id='formBody' class='FlowupLabels'>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Họ và tên phụ huynh:</label>
+                    <input class='fl_input' type='text' id='rf_name' readonly value="<%= res_partner.name %> ">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Quan hệ:</label>
+                    <input class='fl_input' type="text" readonly id='rf_name' value="Cha/Mẹ">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Email:</label>
+                    <input class='fl_input' type='text' id='rf_name' readonly value="<%= parent.email %>">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Di động:</label>
+                    <input class='fl_input' type='text' readonly id='rf_name' value="<%= parent.phone ? parent.phone : parent.mobile %> ">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Địa chỉ:</label>
+                    <input class='fl_input' readonly type='text' id='rf_name' value="<%= res_partner.street2 %>">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
+                    <input class='fl_input' readonly type='text' id='rf_name' value="<%= res_partner.city %>">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class='fl_wrap'>
+                    <label class='fl_label' for='rf_name'>Quốc gia:</label>
+                    <input class='fl_input' readonly type='text' id='rf_name' value="<%= res_partner.res_country ? res_partner.res_country.name : 'None' %>">
+                  </div>
+                </div>
+              </div>
 
-    </div>
-	<!-- InstanceEndEditable -->   
-
-  	<div class="footer">
-        <div class="copyright">
-            <p class="pull-left sm-pull-reset">
-                <span>Copyright <span class="copyright">©</span> 2020 </span>
-                <span>THEMES BACKEND TEKY. </span>
-                <span>All rights reserved. </span>
-            </p>
-            <p class="pull-right sm-pull-reset">
-                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
-            </p>
+            </form>
+          </div>
+        <% end %>
+        <div class="tab-pane fade" id="tab2_3">
         </div>
+        <div class="tab-pane fade" id="tab2_4">
+        </div>
+        <div class="tab-pane fade" id="tab2_5">
+        </div>
+        <div class="tab-pane fade" id="tab2_6">
+        </div>
+      </div>
     </div>
+
+  </div>
 </div>
