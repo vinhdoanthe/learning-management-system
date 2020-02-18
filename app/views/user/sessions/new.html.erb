@@ -26,7 +26,7 @@
           Nếu bạn không đăng nhập được hay gọi cho <br/>chúng tôi: +8424 7109 6668
         </p>
       <% end %>
-      <%= form_with(url: user_reset_password_path, :html => {class: "form-password", method: "post"}) do |f| %>
+      <%= form_with(url: password_resets_path, method: "post", :html => {class: "form-password"}) do |f| %>
         <h3><strong>Reset</strong> your password</h3>
         <div class="append-icon m-b-20">
           <%= f.text_field :email, name: "email", class: "form-control", placeholder: "Email", required: true %>

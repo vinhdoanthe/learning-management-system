@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     post 'parent_selection' => 'sessions#create_parent_selection'
     get 'logout' => 'sessions#destroy'
     delete 'logout'  => 'sessions#destroy'
-    post 'reset_password' => 'sessions#reset_password'
     get 'teacher_info' => 'op_teachers#teacher_info'
     get 'my_class' => 'users#my_class'
     get 'batch_detail/:batch_id' => 'users#batch_detail', as: 'batch_detail'
@@ -24,4 +23,5 @@ Rails.application.routes.draw do
     resources :users
     resources :op_students, only: [:index, :new]
   end
+  resources :password_resets,     only: [:new, :create, :edit, :update]
 end
