@@ -13,7 +13,6 @@ $(window).resize(function() {
 });
 
 $(function() {
-
     copyrightPos();
     if($('#session_login')){
 

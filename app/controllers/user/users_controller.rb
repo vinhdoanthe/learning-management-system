@@ -44,15 +44,16 @@ module User
             flash.now[:danger] = 'Nickname đã tồn tại'
           end
         end
-        respond_to do |format|
-          format.html { render :template => 'user/op_students/student_info' }
-        end
-
-        # render :html => 'user/op_students/student_info'
+        redirect_to user_student_info_path
+        # end
       end
     end
 
+    def change_password
+    end
+
     def update_password
+      # TODO: update code for this controller
     end
   end
 end

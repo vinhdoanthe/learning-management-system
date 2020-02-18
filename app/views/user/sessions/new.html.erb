@@ -21,12 +21,12 @@
         </div>
         <%= f.submit "Đăng nhập", class: "btn btn-primary", 'data-style' => 'expand-left' %>
 
-        <span class="forgot-password"><a id="password" href="account-forgot-password.html">Quên mật khẩu?</a></span>
+        <span class="forgot-password"><a id="password" href="">Quên mật khẩu?</a></span>
         <p style="text-align: right;color: #939393;font-size: 12px;" class="m-t-20">
           Nếu bạn không đăng nhập được hay gọi cho <br/>chúng tôi: +8424 7109 6668
         </p>
       <% end %>
-      <%= form_with(url: user_reset_password_path, method: "post", :html => {class: "form-password"}) do |f| %>
+      <%= form_with(url: user_reset_password_path, :html => {class: "form-password", method: "post"}) do |f| %>
         <h3><strong>Reset</strong> your password</h3>
         <div class="append-icon m-b-20">
           <%= f.text_field :email, name: "email", class: "form-control", placeholder: "Email", required: true %>
@@ -36,20 +36,9 @@
           Password Reset Link
         </button>
         <div class="clearfix m-t-60">
-          <p class="pull-left m-t-20 m-b-0"><a id="login" href="#">Have an account? Sign In</a></p>
+          <p class="pull-left m-t-20 m-b-0"><a id="login" href="user_login_path">Have an account? Sign In</a></p>
         </div>
       <% end %>
-      <!--  <form class="form-password" role="form">
-           <h3><strong>Reset</strong> your password</h3>
-           <div class="append-icon m-b-20">
-               <input type="password" name="password" class="form-control form-white password" placeholder="Password" required>
-               <i class="icon-lock"></i>
-           </div>
-           <button type="submit" id="submit-password" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Send Password Reset Link</button>
-           <div class="clearfix m-t-60">
-               <p class="pull-left m-t-20 m-b-0"><a id="login" href="#">Have an account? Sign In</a></p>
-           </div>
-       </form> -->
     </div>
 
   </div>
