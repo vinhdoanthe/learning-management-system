@@ -4,14 +4,18 @@ module User
     def new
     end
 
-    # TODO: Update login by username (Not by email)
     def create
-      user = User.find_by(email: params[:session][:email])
-      if user && user.authenticate(params[:session][:password])
-        log_in(user)
-        redirect_to root_path
+      user = User.find_by(username: params[:session][:username])
+      if user.nil?
+        flash.now[:danger] = 'Tên đăng nhập không tồn tại'
       else
-        render 'new'
+        if user.authenticate(params[:session][:password])
+          log_in(user)
+          redirect_to root_path
+        else
+          flash.now[:danger] = 'Mật khẩu không đúng'
+          render 'new'
+        end
       end
     end
 

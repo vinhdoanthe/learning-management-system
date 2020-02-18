@@ -91,6 +91,7 @@
   </body>
 <% else %>
   <body style="background:#f2f2f2">
+  <%= render 'shared/common/messages' %>
   <%= yield %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 

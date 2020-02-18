@@ -7,7 +7,7 @@
     <div class="account-form">
       <%= form_for :session, url: user_login_path, :html => {class: "form-signin"} do |f| %>
         <div class="append-icon">
-          <%= f.text_field :email, class: 'form-control', placeholder: "E-mail", required: true %>
+          <%= f.text_field :username, class: 'form-control', placeholder: "Username", required: true %>
           <i class="icon-user"></i>
         </div>
         <div class="append-icon">
