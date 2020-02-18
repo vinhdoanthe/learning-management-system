@@ -3,7 +3,7 @@ module User
 
     before_action :authenticate_faculty!, :teacher_info
     before_action :find_teacher
-    skip_before_action :verify_authenticity_token, only: [:teacher_class, :teacher_class_detail]
+    skip_before_action :verify_authenticity_token, only: [:teacher_class, :teacher_class_detail, :teaching_schedule]
 
     def teacher_info
 
@@ -45,7 +45,11 @@ module User
     end
 
     def teaching_schedule
-      @session = @teacher.op_sessions
+      @sessions = @teacher.op_sessions
+      schedules = OpTeachersService.teching_schedule(@sessions, params)
+      if request.method == 'POST'
+        render json: { schedules: schedules}
+      end
     end
 
     private
