@@ -10,10 +10,10 @@ $(document).ready(function(){
 	        success: function (response){
 	          $.each(response.data, function(i, batch){
 	            if (batch.check_status == true){
-	                $('#batch_list').append("<tr class='batch_info'><td>"+ batch.code +"</td><td>" + batch.name +" </td><td>4</td><td>" +batch.start_date + " - " + batch.end_date + "</td><td>4/12 - Học phần 1</td><td align='right'><span class='label-edit label label-primary'>Đang diễn ra</span></td></tr>")
+	                $('#batch_list').append("<tr class='batch_info'><td><a href='/user/teacher_class_detail?batch_id='" + batch.id + "'>"+ batch.code +"</a></td><td>" + batch.name +" </td><td>4</td><td>" +batch.start_date + " - " + batch.end_date + "</td><td>4/12 - Học phần 1</td><td align='right'><span class='label-edit label label-primary'>Đang diễn ra</span></td></tr>")
 	            }
 	            else {
-	                $('#batch_list').append("<tr class='batch_info'><td>"+ batch.code +"</td><td>" + batch.name +" </td><td>4</td><td>" +batch.start_date + " - " + batch.end_date + "</td><td>4/12 - Học phần 1</td><td align='right'><span class='label-edit label label-stop'>Đã hoàn thành</span></td></tr>")
+	                $('#batch_list').append("<tr class='batch_info'><td><a href='/user/teacher_class_detail?batch_id='" + batch.id + "'>"+ batch.code +"</td><td>" + batch.name +" </td><td>4</td><td>" +batch.start_date + " - " + batch.end_date + "</td><td>4/12 - Học phần 1</td><td align='right'><span class='label-edit label label-stop'>Đã hoàn thành</span></td></tr>")
 	            }
 	          })
 	        },
@@ -96,23 +96,31 @@ $(document).ready(function(){
 		w_day = week_days[start_time.wday]
 		$('#calendar-box').html('<div class="cb-tit"><p>'+ month +'</p></div><div class="cb-con"><strong>'+ start_time.day +'</strong><p>'+ start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min +'<br/>'+ w_day +'</p></div>')
 
-	    for (var i = 0; i < res.students.length; i++) {
-	        html = '<tr><td>' + res.students[i].code +'</td><td><span class="table-img"><img src="assets/global/images/Group.png" alt=""></span><span class="table-name">' + res.students[i].name + '<td align="center"><img src="assets/global/images/remove.png" style="width: 20px" alt=""><br/>' + res.students[i].note + '</td></span></td>'
-	        switch(res.students[i].status) {
-			  case 'cancel':
-			    html += '<td align="right"><span class="label-edit label label-danger">Đã huỷ</span></td></tr>'
+		// TO DO: add image for student
+	    $.each(res.students, function(index, student) {
+	    	if (student.attendance == ''){
+	        	html = '<tr><td>' + student.code +'</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><br/>' + student.note + '</td></span></td>'
+	        }else if (student.attendance == true){
+	        	html = '<tr><td>' + student.code +'</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
+	        }else{
+	        	html = '<tr><td>' + student.code +'</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
+	        }
+
+	        switch(student.status) {
+			  case 'off':
+			    html += '<td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td></tr>'
 			    break;
-			  case 'done':
-			    html += '<td align="right"><span class="label-edit label label-stop">Đã diễn ra</span></td></tr>'
+			  case 'on':
+			    html += '<td align="right"><span class="label-edit label label-primary">Đang học</span></td></tr>'
 			    break;
-			  case 'confirm':
-			  	html += '<td align="right"><span class="label-edit label label-primary">Sắp diễn ra</span></td></tr>'
+			  case 'save':
+			  	html += '<td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td></tr>'
 			    break;
 			  default:
 			    null
 			}
     		$('#student_attendance').append(html)
-    	}
+    	})
 	}
 			    
 
@@ -140,6 +148,6 @@ $(document).ready(function(){
 		fill_data(lesson_data);
 	})
 
-	fill_data(lesson_data)
+	fill_data(lesson_data);
 })
 
