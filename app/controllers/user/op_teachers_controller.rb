@@ -18,7 +18,7 @@ module User
 
       if request.method == 'POST'
         data = []
-        @batches.each{|b| data << {code: b.code, name: b.name, start_date: b.start_date, end_date: b.end_date, status: b.check_status}}
+        @batches.each{|b| data << {id: b.id, code: b.code, name: b.name, start_date: b.start_date, end_date: b.end_date, status: b.check_status}}
         render json: {data: data}, status: 200
       end
     end
@@ -33,32 +33,14 @@ module User
         @session = @sessions.where('start_datetime >= ?', Time.now).first
       end
       
+      @session = @sessions.last unless @session
       @session_index = @sessions.index(@session)
       @subject = @session.op_subject
 
-      @note = {}
-      students = []
-
-      if @session.state != 'done'
-        @session_students = @session.op_session_students
-        @session_students.each do |st|
-          student = st.op_student_course.op_student
-          student_info = {:note => st.note, :status => @session.state, :code => student.code, :name => student.full_name}
-          students << student_info
-        end
-      else
-        @session_students = @session.op_attendance_lines
-        @session_students.each do |st|
-          note = st.note_1
-          note = st.note_2 unless note
-          student = st.op_student
-          student_info = {:note => note, :status => 'done', :code => student.code, :name => student.full_name}
-          students << student_info
-        end
-      end
+      all_students = OpTeachersService.new.teacher_class_detail @batch, @session
 
       if request.method == 'POST'
-        render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: students}
+        render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students}
       end
     end
 
