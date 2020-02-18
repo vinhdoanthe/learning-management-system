@@ -1,5 +1,6 @@
 module User
   class User < ApplicationRecord
+    attr_accessor :reset_token
     extend Enumerize
     include Constant
 
@@ -23,6 +24,23 @@ module User
     has_many :users, class_name: 'User::User', foreign_key: 'parent_account_id'
 
     enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
+
+    # Sets the password reset attributes.
+    def create_reset_digest
+      self.reset_token = User.new_token
+      update_attribute(:reset_digest,  User.digest(reset_token))
+      update_attribute(:reset_sent_at, Time.zone.now)
+    end
+
+    # Sends password reset email.
+    def send_password_reset_email
+      UserMailer.password_reset(self).deliver_now
+    end
+
+
+    def User.new_token
+      SecureRandom.urlsafe_base64
+    end
 
     def is_admin?
       if self.nil?
