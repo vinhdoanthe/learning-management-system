@@ -1,0 +1,3 @@
+action_mailer:
+  gmail_username: 'username@example.org'
+  gmail_password: 'password'

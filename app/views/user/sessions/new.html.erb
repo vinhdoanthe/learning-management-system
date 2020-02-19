@@ -15,31 +15,29 @@
           <i class="icon-lock"></i>
         </div>
         <div class="append-icon m-b-20 m-t-10">
-          <label class=" font-regular">
-            <input type="checkbox"> Ghi nhớ đăng nhập cho lần sau
-          </label>
         </div>
         <%= f.submit "Đăng nhập", class: "btn btn-primary", 'data-style' => 'expand-left' %>
 
-        <span class="forgot-password"><a id="password" href="">Quên mật khẩu?</a></span>
+        <span class="forgot-password">
+              <a id="password" href="">Quên mật khẩu?</a>
+        </span>
         <p style="text-align: right;color: #939393;font-size: 12px;" class="m-t-20">
           Nếu bạn không đăng nhập được hay gọi cho <br/>chúng tôi: +8424 7109 6668
         </p>
       <% end %>
-      <%= form_with(url: password_resets_path, method: "post", :html => {class: "form-password"}) do |f| %>
+      <%= form_for(:password_reset, url: password_resets_path, :html => {display: 'block', class: "form-password"}) do |f| %>
         <h3><strong>Reset</strong> your password</h3>
         <div class="append-icon m-b-20">
-          <%= f.text_field :email, name: "email", class: "form-control", placeholder: "Email", required: true %>
+          <%= f.text_field :username, class: "form-control", placeholder: "Username", required: true %>
           <i class="icon-lock"></i>
         </div>
-        <button type="submit" id="submit-password" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Send
-          Password Reset Link
-        </button>
+        <%= f.submit 'Send Password Reset Link', class: "btn btn-lg btn-danger btn-block ladda-button", 'data-style': "expand-left" %>
         <div class="clearfix m-t-60">
-          <p class="pull-left m-t-20 m-b-0"><a id="login" href="user_login_path">Have an account? Sign In</a></p>
+          <p class="pull-left m-t-20 m-b-0">
+            <a id="login" href="">Have an account? Sign In</a>
+          </p>
         </div>
       <% end %>
     </div>
-
   </div>
 </div>

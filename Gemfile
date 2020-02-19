@@ -22,6 +22,9 @@ gem 'image_processing'
 # jQuery
 gem 'jquery-rails'
 
+# Used for storing secret variables
+gem 'config'
+
 ## End manual added gems
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

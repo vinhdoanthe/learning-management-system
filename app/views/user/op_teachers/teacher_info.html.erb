@@ -12,7 +12,9 @@
         <div class="panel-content">
             <div class="box-profile">
                 <div class="bp-photo">
-                    <span><img src="assets/global/images/avatars/user3.jpg" alt=""></span>
+                    <span>
+                      <%= current_user.avatar.attached? ? current_user.avatar.variant(resize_to_limit: [80, 80]) : image_tag('global/images/avatars/user3.jpg') %>
+                    </span>
                     <p>Giảng viên Fultime</p>
                     <label><%= teacher.full_name %></label>
                 </div>
@@ -25,6 +27,9 @@
                     <div class="tab-content ">
                         <div class="tab-pane active" id="home">
                             <form id='formBody' class='FlowupLabels'>
+                              <div class="col-md-12 text-center">
+                                <%= link_to "Đổi mật khẩu", user_change_password_path, class: 'change-password' %>
+                              </div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class='fl_wrap'>
