@@ -12,3 +12,11 @@
  *
  *= require simple_calendar
  */
+
+span.subject_id.active{
+	background-color: #5DC2A7;
+}
+
+span.subject_id {
+	cursor: pointer;
+}

@@ -22,15 +22,14 @@ module Learning
 
       def list_subject_level_of_batch(batch_id)
         op_batch = Learning::Batch::OpBatch.find(batch_id)
-        subjects = op_batch.op_course.op_subjects
-        levels = Array.new
-        if subjects.nil?
-          levels = nil
-        else
-          subjects.each do |subject|
-            levels.append subject.level
-          end
+        sessions = op_batch.op_sessions
+        levels = {}
+        
+        level = sessions.each do |session|
+          subject = session.op_subject
+          levels.merge!({subject.id => subject.level}) if subject.present?
         end
+
         levels
       end
 

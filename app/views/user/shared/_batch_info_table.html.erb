@@ -1,0 +1,42 @@
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Mã học sinh</th>
+      <th>Họ và tên</th>
+      <th>Học phần</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% op_student_courses = batch.op_student_courses %>
+    <% op_student_courses.each do |op_student_course| %>
+      <tr>
+        <td><%= op_student_course.op_student.code %></td>
+        <td><%= op_student_course.op_student.full_name %></td>
+
+        <% levels = list_subject_level_of_student(op_student_course.id) %>
+        <td>
+          <% unless levels.nil? %>
+            <% levels.each do |level| %>
+              <span class="label-course label label-default"><%= level %></span>
+            <% end %>
+          <% end %>
+        </td>
+
+        <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
+          <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
+        <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
+          <td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td>
+        <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
+          <td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td>
+        <% else %>
+          <td align="right"><span class="label-edit label label-stop">Đang cập nhật</span></td>
+        <% end %>
+
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
