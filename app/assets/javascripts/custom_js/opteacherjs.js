@@ -9,11 +9,11 @@ $(document).ready(function(){
 	        data: data,
 	        success: function (response){
 	          $.each(response.data, function(i, batch){
-	            if (batch.check_status == true){
-	                $('#batch_list').append("<tr class='batch_info'><td><a href='/user/teacher_class_detail?batch_id='" + batch.id + "'>"+ batch.code +"</a></td><td>" + batch.name +" </td><td>4</td><td>" +batch.start_date + " - " + batch.end_date + "</td><td>4/12 - Học phần 1</td><td align='right'><span class='label-edit label label-primary'>Đang diễn ra</span></td></tr>")
+	            if (batch.status == true){
+	                $('#batch_list').append("<tr class='batch_info'><td><a href='/user/teacher_class_detail?batch_id=" + batch.id + "'>"+ batch.code +"</a></td><td>" + batch.name +" </td><td>" + batch.student_count + "</td><td>" +batch.start_date + " - " + batch.end_date + "</td><td>" + batch.progress + "</td><td align='right'><span class='label-edit label label-primary'>Đang diễn ra</span></td></tr>")
 	            }
 	            else {
-	                $('#batch_list').append("<tr class='batch_info'><td><a href='/user/teacher_class_detail?batch_id='" + batch.id + "'>"+ batch.code +"</td><td>" + batch.name +" </td><td>4</td><td>" +batch.start_date + " - " + batch.end_date + "</td><td>4/12 - Học phần 1</td><td align='right'><span class='label-edit label label-stop'>Đã hoàn thành</span></td></tr>")
+	                $('#batch_list').append("<tr class='batch_info'><td><a href='/user/teacher_class_detail?batch_id=" + batch.id + "'>"+ batch.code +"</td><td>" + batch.name +" </td><td>" + batch.student_count + "</td><td>" +batch.start_date + " - " + batch.end_date + "</td><td>" + batch.progress + "</td><td align='right'><span class='label-edit label label-stop'>Đã hoàn thành</span></td></tr>")
 	            }
 	          })
 	        },
@@ -75,7 +75,7 @@ $(document).ready(function(){
 
 	function change_view(res, data){
 		$('#student_attendance').html('');
-		$('#lesson_title').html("<strong>BÀI " + res.session.timing_id.toString() + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: TODO");
+		$('#lesson_title').html("<strong>BÀI TODO" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: TODO");
 		start_time = change_time(res.session.start_datetime);
 		end_time = change_time(res.session.end_datetime);
 		$('.lesson_info').html("<h3>Học phần " + res.subject.level + " - Buổi học: " + (parseInt(data.session_index) + 1).toString()  + "</h3><p>" + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + " | " + start_time.day + "/" + start_time.month + "/" + start_time.year + "</p>")
@@ -88,7 +88,7 @@ $(document).ready(function(){
 	    	if (student.attendance == ''){
 	        	html = '<tr><td>' + student.code +'</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><br/>' + student.note + '</td></span></td>'
 	        }else if (student.attendance == true){
-	        	html = '<tr><td>' + student.code +'</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
+	        	html = '<tr><td>' + student.code +'</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
 	        }else{
 	        	html = '<tr><td>' + student.code +'</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
 	        }

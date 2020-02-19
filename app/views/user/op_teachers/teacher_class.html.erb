@@ -61,7 +61,7 @@
             <tr class='batch_info'>
               <td><a href="<%='/user/teacher_class_detail?batch_id=' + batch.id.to_s %>"><%= batch.code %></a></td>
               <td><%= batch.op_course.name %></td>
-              <td>4</td>
+              <td><%= batch.op_student_courses.where(:state => 'on').count %></td>
               <td><%= batch.start_date.to_s + ' - ' + batch.end_date.to_s %></td>
               <td><%= batch.current_session_level %></td>
               <td align="right">
