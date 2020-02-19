@@ -78,11 +78,24 @@ $(document).ready(function(){
 		$('#lesson_title').html("<strong>BÀI TODO" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: TODO");
 		start_time = change_time(res.session.start_datetime);
 		end_time = change_time(res.session.end_datetime);
-		$('.lesson_info').html("<h3>Học phần " + res.subject.level + " - Buổi học: " + (parseInt(data.session_index) + 1).toString()  + "</h3><p>" + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + " | " + start_time.day + "/" + start_time.month + "/" + start_time.year + "</p>")
+
+		$('.lesson_info').html("<h3>Học phần " + res.subject.level + " - Buổi học: " + (parseInt(res.session_index) + 1).toString()  + "</h3><p>" + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + " | " + start_time.day + "/" + start_time.month + "/" + start_time.year + "</p>")
+		
 		month = months[parseInt(start_time.month) - 1]
 		w_day = week_days[start_time.wday]
+
 		$('#calendar-box').html('<div class="cb-tit"><p>'+ month +'</p></div><div class="cb-con"><strong>'+ start_time.day +'</strong><p>'+ start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min +'<br/>'+ w_day +'</p></div>')
 
+		$('#session_time_table').html('');
+		$.each(res.sessions_time, function(index, time) {
+			start = new Date(time[0]);
+			end = new Date(time[1]);
+			html = '<li><p class="lesson_link"><input type="hidden" name="lesson_id" value="' + index + '"><span class="tag-time">' + (index + 1).toString() + '</span><span class="first-time">' +  start.getHours().toString() + ':' + start.getMinutes().toString() + ' - ' + end.getHours().toString() + ':' + end.getMinutes().toString() + '</span><span class="last-time">' + end.getFullYear() + '.' + end.getMonth() + '.' + end.getDate() + '</span></p></li>';
+			$('#session_time_table').append(html)
+			if (index == res.session_index){
+				$('input[name="lesson_id"][value="' + index.toString() + '"]').parent().addClass('active')
+			}
+		})
 		// TO DO: add image for student
 	    $.each(res.students, function(index, student) {
 	    	if (student.attendance == ''){
@@ -122,22 +135,31 @@ $(document).ready(function(){
 		})
 	}
 
-	var session_index = $('.lesson_link.active').find('input[name="lesson_id"]').val();
+	var session_index = '';
 	var batch_id = $("#batch_id").val();
-	var lesson_data = {'session_index': session_index, 'batch_id': batch_id};
+	var lesson_data = {'session_index': '', 'batch_id': batch_id};
+	var subject_id = $(".subject_id").find('input[name="subject_id"]').val();
 
-	$('.lesson_link').click(function(e){
+	$('#session_time_table').on('click', '.lesson_link', function(e){
 		e.preventDefault();
 		$('.lesson_link').removeClass('active');
 		$(this).addClass('active');
 		var session_index = $('.lesson_link.active').find('input[name="lesson_id"]').val();
-		lesson_data = {'session_index': session_index, 'batch_id': batch_id}
+		lesson_data = {'session_index': session_index, 'batch_id': batch_id, 'subject_id': subject_id}
 		fill_data(lesson_data);
 	})
 
 	if(window.location.href.includes('user/teacher_class_detail')){
 		fill_data(lesson_data);
 	}
+
+	$('#subject_id_span').on('click', '.subject_id', function(){
+		$('.subject_id').removeClass('active');
+		$(this).addClass('active');
+		subject_id = $(".subject_id.active").find('input[name="subject_id"]').val();
+		lesson_data = {'session_index': session_index, 'batch_id': batch_id, 'subject_id': subject_id}
+		fill_data(lesson_data);
+	})
 
 	//Teaching schedule calendar
 	function get_date_month(fullDate){
