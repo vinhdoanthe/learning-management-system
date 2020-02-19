@@ -17,7 +17,7 @@ class User::OpTeachersService
       query = "start_date >= '#{(Time.now - 1000.days).to_time.utc.strftime('%Y-%m-%d')}'"
       @class = total_class.where(query)
     end
-    @class
+    @class.uniq
   end
 
   def teacher_class_detail (batch, session)
