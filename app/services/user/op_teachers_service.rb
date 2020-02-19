@@ -4,7 +4,11 @@ class User::OpTeachersService
     query = ''
 
     if params[:active] && params[:active] != 'all'
-      query += "active = '#{params[:active]}' AND "
+      if params[:active] == 'true'
+        query += "op_session.active = true AND "
+      else
+        query += "op_session.active = false AND "
+      end
     end
 
     query += "op_batch.company_id = #{params[:company]} AND " unless params[:company].blank? || params[:company] == 'all' 

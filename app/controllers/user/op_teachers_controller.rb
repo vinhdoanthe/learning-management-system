@@ -18,7 +18,7 @@ module User
 
       if request.method == 'POST'
         data = []
-        @batches.each do|b| 
+        @batches.each do |b|
           data << {
                     id: b.id || '',
                     code: b.code || '',

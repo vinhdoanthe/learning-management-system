@@ -38,23 +38,23 @@
               <div class="col-md-4">
                 <div class='fl_wrap'>
                   <label class='fl_label' for='rf_name'>Họ và tên:</label>
-                  <input class='fl_input' readonly id='rf_name' value="<%= student.full_name.to_s %>">
+                  <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= student.full_name.to_s %>">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
                   <label class='fl_label' for='rf_name'>Giới tính:</label>
                   <% if student.gender = 'f' %>
-                    <input class='fl_input' readonly id='rf_gender' value="Nam">
+                    <input class='fl_input bg-f2f2f2' readonly id='rf_gender' value="Nam">
                   <% else %>
-                    <input class='fl_input' readonly id='rf_gender' value="Nữ">
+                    <input class='fl_input bg-f2f2f2' readonly id='rf_gender' value="Nữ">
                   <% end %>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
                   <label class='fl_label' for='rf_name'>Ngày sinh:</label>
-                  <input class='fl_input' readonly id='rf_name' value="<%= student.birth_date %>">
+                  <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= student.birth_date %>">
                 </div>
               </div>
               <div class="col-md-4">
@@ -67,32 +67,32 @@
               <div class="col-md-4">
                 <div class='fl_wrap'>
                   <label class='fl_label' for='rf_name'>Quốc tịch:</label>
-                  <input class='fl_input' readonly id='rf_name' value="<%= get_nationality(student.id) %>">
+                  <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= get_nationality(student.id) %>">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
                   <label class='fl_label' for='rf_name'>Học viện:</label>
-                  <input class='fl_input' readonly id='rf_name' value="<%= student.res_company.name.to_s %>">
+                  <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= student.res_company.name.to_s %>">
                 </div>
               </div>
               <% if res_partner %>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Địa chỉ:</label>
-                    <input class='fl_input' readonly id='rf_name' value="<%= res_partner.street %>">
+                    <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= res_partner.street %>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
-                    <input class='fl_input' readonly id='rf_name' value="<%= res_partner.street2 %>">
+                    <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= res_partner.street2 %>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Quốc gia:</label>
-                    <input class='fl_input' id='rf_name' readonly value="<%= get_nationality(student.id) %>">
+                    <input class='fl_input bg-f2f2f2' id='rf_name' readonly value="<%= get_nationality(student.id) %>">
                   </div>
                 </div>
               <% end %>
@@ -110,47 +110,46 @@
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Họ và tên phụ huynh:</label>
-                    <input class='fl_input' type='text' id='rf_name' readonly value="<%= res_partner.name %> ">
+                    <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.name %> ">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Quan hệ:</label>
-                    <input class='fl_input' type="text" readonly id='rf_name' value="Cha/Mẹ">
+                    <input class='fl_input bg-f2f2f2' type="text" readonly id='rf_name' value="Cha/Mẹ">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Email:</label>
-                    <input class='fl_input' type='text' id='rf_name' readonly value="<%= parent.email %>">
+                    <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= parent.email %>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Di động:</label>
-                    <input class='fl_input' type='text' readonly id='rf_name' value="<%= parent.phone ? parent.phone : parent.mobile %> ">
+                    <input class='fl_input bg-f2f2f2' type='text' readonly id='rf_name' value="<%= parent.phone ? parent.phone : parent.mobile %> ">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Địa chỉ:</label>
-                    <input class='fl_input' readonly type='text' id='rf_name' value="<%= res_partner.street2 %>">
+                    <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner.street2 %>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
-                    <input class='fl_input' readonly type='text' id='rf_name' value="<%= res_partner.city %>">
+                    <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner.city %>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Quốc gia:</label>
-                    <input class='fl_input' readonly type='text' id='rf_name' value="<%= res_partner.res_country ? res_partner.res_country.name : 'None' %>">
+                    <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner.res_country ? res_partner.res_country.name : 'None' %>">
                   </div>
                 </div>
               </div>
-
             </form>
           </div>
         <% end %>
