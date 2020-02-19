@@ -63,9 +63,9 @@
               <td><%= batch.op_course.name %></td>
               <td>4</td>
               <td><%= batch.start_date.to_s + ' - ' + batch.end_date.to_s %></td>
-              <td>4/12 - Học phần 1</td>
+              <td><%= batch.current_session_level %></td>
               <td align="right">
-                <% if batch_active?(batch.id) %>
+                <% if batch.check_status %>
                   <span class="label-edit label label-primary">Đang diễn ra</span>
                 <% else %>
                   <span class="label-edit label label-stop">Đã hoàn thành</span>
