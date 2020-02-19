@@ -11,7 +11,7 @@ class User::OpTeachersService
       end
     end
 
-    query += "op_batch.company_id = #{params[:company]} AND " unless params[:company].blank? || params[:company] == 'all' 
+    query += "op_batch.company_id = #{params[:company]} AND " unless params[:company].blank? || params[:company] == 'all'
     query = query[0..-5]
     total_class = @batches.where(query)
 
@@ -54,14 +54,15 @@ class User::OpTeachersService
       end
     end
 
-    all_students.each do |k,_|
+    all_students.each do |k, _|
       all_students[k] = students[k] if students[k].present?
     end
 
     all_students
   end
 
-  def self.teching_schedule session_list, params
+  def self.teaching_schedule session_list, params
+
     if params[:date].present?
       sessions = session_list.where(:start_datetime => params[:date].to_time.all_week)
     else
@@ -84,8 +85,8 @@ class User::OpTeachersService
       lesson = '5/12'
       status = session.state
 
-      session_info = { name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
-      record = { time.wday => session_info}
+      session_info = {name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
+      record = {time.wday => session_info}
 
       case time.hour.to_i
       when 8..10
@@ -100,6 +101,8 @@ class User::OpTeachersService
         schedule_hash['t1'].merge!(record)
       when 18.20
         schedule_hash['t2'].merge!(record)
+      else
+        # type code here
       end
     end
 

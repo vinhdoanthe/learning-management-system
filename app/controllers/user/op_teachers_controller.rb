@@ -57,7 +57,7 @@ module User
 
     def teaching_schedule
       @sessions = @teacher.op_sessions
-      schedules = OpTeachersService.teching_schedule(@sessions, params)
+      schedules = OpTeachersService.teaching_schedule(@sessions, params)
       if request.method == 'POST'
         render json: { schedules: schedules}
       end
