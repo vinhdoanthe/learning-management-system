@@ -135,10 +135,11 @@ $(document).ready(function(){
 		fill_data(lesson_data);
 	})
 
-	fill_data(lesson_data);
+	if(window.location.href.includes('user/teacher_class_detail')){
+		fill_data(lesson_data);
+	}
 
 	//Teaching schedule calendar
-	//// TEST
 	function get_date_month(fullDate){
 	  twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
 	  str_date = fullDate.getDate() + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
@@ -180,7 +181,7 @@ $(document).ready(function(){
 			success: function(res){
 				$('.schedule_info').remove();
 				$.each(res.schedules, function(key, schedule){
-						for(var i = 0; i <= 6; i++){
+						for(var i = 1; i <= 7; i++){
 							if(schedule[i.toString()]){
 								info = schedule[i.toString()]
 								html = '<td class="bg-eaeaea schedule_info"><a data-placement="top" class="ct-detail ctd-cs3 schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li><span>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.subject + ' - Level ' + info.level +' </li><li><strong>Khoá học: </strong> ' + info.batch + '</li><li><strong>Lớp: </strong> ' + info.course + '</li><li><strong>Số buổi: </strong> ' + info.lesson + '</li></ul>"><span></span>'
