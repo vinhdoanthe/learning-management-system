@@ -1,7 +1,8 @@
 module User
   class UsersController < ApplicationController
 
-    before_action :authenticate_student!, only: [:my_class, :batch_detail, :update_nickname, :update_password]
+    before_action :authenticate_user!, only: [:my_class, :batch_detail, :update_nickname, :update_password]
+    before_action :authenticate_student!, only: [:my_class, :batch_detail, :update_nickname]
 
     def batch_detail
       @batch = Learning::Batch::OpBatch.find(params[:batch_id])
@@ -42,7 +43,6 @@ module User
     def update_password
       binding.pry
       if !params[:user][:password].nil?
-        binding.pry
         current_user.authenticate(params[:user][:password])
         if !(params[:user][:new_password].nil? || params[:user][:password_confirmation].nil?)
           if params[:user][:new_password] == params[:user][:password_confirmation]
