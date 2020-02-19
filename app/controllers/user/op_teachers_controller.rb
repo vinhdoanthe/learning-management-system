@@ -18,7 +18,18 @@ module User
 
       if request.method == 'POST'
         data = []
-        @batches.each{|b| data << {id: b.id, code: b.code, name: b.name, start_date: b.start_date, end_date: b.end_date, status: b.check_status}}
+        @batches.each do|b| 
+          data << {
+                    id: b.id || '',
+                    code: b.code || '',
+                    name: b.name || '',
+                    start_date: b.start_date,
+                    end_date: b.end_date,
+                    status: b.check_status,
+                    student_count: b.op_student_courses.where(:state => 'on').count.to_s,
+                    progress: b.current_session_level
+                  }
+        end
         render json: {data: data}, status: 200
       end
     end

@@ -7,7 +7,7 @@
                 <span><img src="assets/global/images/avatar.svg" alt=""></span>
             </div> -->
             <div class="ph-text">
-                <h2 class="color-fff text-transform">Danh sách lớp học</h2>
+                <h2 class="color-fff text-transform"><%= link_to 'Danh sách lớp học', user_teacher_class_path %></h2>
             </div>
         </div>
     </div>
@@ -136,7 +136,7 @@
                                             </td>
                                             <!-- TO DO -->
                                             <td id='lesson_title'>
-                                                <strong><%= 'BÀI ' + @session.timing_id.to_s %></strong><br/>
+                                                <strong><%= 'BÀI TODO' %></strong><br/>
                                                 <%= @session.name %><br/>
                                                 Kiến thức học được: TODO
                                             </td>
