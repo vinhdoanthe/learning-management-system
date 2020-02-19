@@ -1,199 +1,203 @@
 <div class="page-content page-thin">
 
-    <!-- InstanceBeginEditable name="EditRegion1" -->
-    <div class="panel panel-edits bg-232837">
-        <div class="panel-heading">
-            <!-- <div class="ph-img">
-                <span><img src="assets/global/images/avatar.svg" alt=""></span>
-            </div> -->
-            <div class="ph-text">
-                <h2 class="color-fff text-transform"><%= link_to 'Danh sách lớp học', user_teacher_class_path %></h2>
-            </div>
-        </div>
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Danh sách lớp học</h2>
+      </div>
     </div>
-    <div class="panel m-t--70">
-        <div class="panel-content">
-          <div class="bo-table">
-            <div class="fc-header">
-              <h3><span class="color-F16357">LỚP HỌC:</span> <%= @batch.op_course.name %></h3>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <a href="<%= user_teacher_class_path %>" class="PC-back">
+        <span><%= image_tag('global/images/quaylai.svg') %>Quay lại</span>
+      </a>
+
+      <div class="bo-table">
+        <div class="fc-header">
+          <h3><span class="color-F16357">LỚP HỌC:</span> <%= @batch.op_course.name %></h3>
+        </div>
+        <div class="box-progress">
+          <div class="row">
+            <div class="col-md-6">
+              <ul>
+                <li>
+                  <%= image_tag('global/images/qr-code.png') %>
+                  <p><span class="span-text">Mã lớp học: </span><%= @batch.code %></p></li>
+                <li>
+                  <%= image_tag('global/images/calendar-4.png') %>
+                  <p><span class="span-text">Thời gian học: </span><%= @batch.start_date %>
+                    đến <%= @batch.end_date %></p></li>
+                <li>
+                  <%= image_tag('global/images/clock.png') %>
+                  <p><span class="span-text">Lịch học: </span>Chưa lấy thông tin này</p></li>
+                <li>
+                  <%= image_tag('global/images/professor.png') %>
+                  <p><span class="span-text">Giảng viên: </span>
+                    <% teachers_name = teachers_name(@batch.id) %>
+                    <% unless teachers_name.nil? %>
+                      <% teachers_name.each do |name| %>
+                        <a href=""><%= name %></a>
+                      <% end %>
+                    <% end %>
+                  </p></li>
+              </ul>
             </div>
-            <div class="box-progress">
-              <div class="row">
-                <div class="col-md-6">
-                  <ul>
-                    <li>
-                      <%= image_tag('global/images/qr-code.png') %>
-                      <p><span class="span-text">Mã lớp học: </span><%= @batch.code %></p></li>
-                    <li>
-                      <%= image_tag('global/images/calendar-4.png') %>
-                      <p><span class="span-text">Thời gian học: </span><%= @batch.start_date %>
-                        đến <%= @batch.end_date %></p></li>
-                    <li>
-                      <%= image_tag('global/images/clock.png') %>
-                      <p><span class="span-text">Lịch học: </span>Chưa lấy thông tin này</p></li>
-                    <li>
-                      <%= image_tag('global/images/professor.png') %>
-                      <p><span class="span-text">Giảng viên: </span>
-                        <% teachers_name = teachers_name(@batch.id) %>
-                        <% unless teachers_name.nil? %>
-                          <% teachers_name.each do |name| %>
-                            <a href=""><%= name %></a>
-                          <% end %>
-                        <% end %>
-                      </p></li>
-                  </ul>
-                </div>
-                <div class="col-md-6">
-                  <ul>
-                    <li>
-                      <%= image_tag('global/images/Combined-Shape.png') %>
-                      <p><span class="span-text">Môn học: </span><%= @batch.op_course.name %></p></li>
-                    <li>
-                      <%= image_tag('global/images/steps.png') %>
-                      <p>
-                        <span class="span-text">Học phần: </span>
-                        <% levels = list_subject_level_of_batch(@batch.id) %>
-                        <% unless levels.nil? %>
-                          <% levels.each do |level| %>
-                            <span class="label-course label label-default"><%= level %></span>
-                          <% end %>
-                        <% end %>
-                      </p>
-                    </li>
-                    <li>
-                      <%= image_tag('global/images/group-of-students.png') %>
-                      <p>
-                        <span class="span-text">Loại lớp học: </span><%= @batch.op_batch_type.nil? ? 'Đang cập nhật' : @batch.op_batch_type.name %>
-                      </p></li>
-                    <li>
-                      <%= image_tag('global/images/hotel.png') %>
-                      <p>
-                        <span class="span-text">Trung tâm: </span><a href=""><%= @batch.res_company.nil? ? 'Đang cập nhật' : @batch.res_company.name %></a>
-                      </p>
-                    </li>
-                  </ul>
+            <div class="col-md-6">
+              <ul>
+                <li>
+                  <%= image_tag('global/images/Combined-Shape.png') %>
+                  <p><span class="span-text">Môn học: </span><%= @batch.op_course.name %></p></li>
+                <li>
+                  <%= image_tag('global/images/steps.png') %>
+                  <p>
+                    <span class="span-text">Học phần: </span>
+                    <% levels = list_subject_level_of_batch(@batch.id) %>
+                    <% unless levels.nil? %>
+                      <% levels.each do |level| %>
+                        <span class="label-course label label-default"><%= level %></span>
+                      <% end %>
+                    <% end %>
+                  </p>
+                </li>
+                <li>
+                  <%= image_tag('global/images/group-of-students.png') %>
+                  <p>
+                    <span class="span-text">Loại lớp học: </span><%= @batch.op_batch_type.nil? ? 'Đang cập nhật' : @batch.op_batch_type.name %>
+                  </p></li>
+                <li>
+                  <%= image_tag('global/images/hotel.png') %>
+                  <p>
+                    <span class="span-text">Trung tâm: </span><a href=""><%= @batch.res_company.nil? ? 'Đang cập nhật' : @batch.res_company.name %></a>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bo-table" style="margin-top: 30px">
+        <div class="box-lession">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="bl-title text-right">
+                <label>Học phần <%= @subject.level %> </label>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="bl-content">
+                <ul id="session_time_table">
+                  <% @sessions.each_with_index do |session, index| %>
+                    <% if @session_index == index %>
+                      <li>
+                        <p class="lesson_link active">
+                          <input type="hidden" name="lesson_id" value="<%= index %>">
+                          <span class="tag-time"><%= index + 1 %></span>
+                          <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M') %></span>
+                          <span class="last-time"><%= session.start_datetime.strftime('%Y.%m.%d') %></span>
+                        </p>
+                      </li>
+                    <% else %>
+                      <li>
+                        <p class="lesson_link">
+                          <input type="hidden" name="lesson_id" value="<%= index %>">
+                          <span class="tag-time"><%= index + 1 %></span>
+                          <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M') %></span>
+                          <span class="last-time"><%= session.start_datetime.strftime('%Y.%m.%d') %></span>
+                        </p>
+                      </li>
+                    <% end %>
+                  <% end %>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="m-t-20">
+          <div class="redem-tab class-tab">
+            <!-- Nav tabs -->
+            <input type="hidden" id='batch_id' value="<%= @batch.id %>">
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane active in" id="<%= 'buoi' + (@session_index + 1).to_s %>">
+                <div class="table-responsive">
+                  <table class="table table-link">
+                    <tbody>
+                    <tr>
+                      <td width="90">
+                        <div class="calenda-box" id='calendar-box'>
+                        </div>
+                      </td>
+                      <td width="130" id='lesson_img'>
+                        <div class="photo-box">
+                          <span><img src="" alt=""></span>
+                        </div>
+                      </td>
+                      <!-- TO DO -->
+                      <td id='lesson_title'>
+                        <strong><%= 'BÀI TODO' %></strong><br/>
+                        <%= @session.name %><br/>
+                        Kiến thức học được: TODO
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <hr>
+                  <div class="table-responsive">
+                    <div class="fc-header clearfix">
+                      <div class="pull-left lesson_info">
+                      </div>
+                      <div class="fc-list-btn pull-right">
+                        <ul>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed">Học cụ</button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed">Check-in</button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#diemdanh">Điểm
+                              danh
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#hoclieu">Học
+                              liệu
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#thuonghocsinh">Thưởng</button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed">Chụp ảnh</button>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                  </div>
+                  <hr>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                      <tr>
+                        <th>Mã học sinh</th>
+                        <th>Họ và tên</th>
+                        <th class="text-center">Điểm danh</th>
+                        <th></th>
+                      </tr>
+                      </thead>
+                      <tbody id='student_attendance'>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="bo-table" style="margin-top: 30px">
-            <div class="box-lession">
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="bl-title text-right">
-                            <label>Học phần <%= @subject.level %> </label>
-                        </div>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="bl-content">
-                            <ul id="session_time_table">
-                                <% @sessions.each_with_index do |session, index| %>
-                                    <% if @session_index == index %>
-                                        <li>
-                                            <p class="lesson_link active">
-                                                <input type="hidden" name="lesson_id" value="<%= index %>">
-                                                <span class="tag-time"><%= index + 1 %></span>
-                                                <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M')%></span>
-                                                <span class="last-time"><%=  session.start_datetime.strftime('%Y.%m.%d') %></span>
-                                            </p>
-                                        </li>
-                                        <% else %>
-                                        <li>
-                                            <p class="lesson_link">
-                                                <input type="hidden" name="lesson_id" value="<%= index %>">
-                                                <span class="tag-time"><%= index + 1%></span>
-                                                <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M')%></span>
-                                                <span class="last-time"><%=  session.start_datetime.strftime('%Y.%m.%d') %></span>
-                                            </p>
-                                        </li>
-                                    <% end %>
-                                <% end %>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="m-t-20">
-                <div class="redem-tab class-tab">
-                    <!-- Nav tabs -->
-                    <input type="hidden" id='batch_id' value="<%= @batch.id %>">
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane active in" id="<%= 'buoi' + (@session_index + 1).to_s %>">
-                            <div class="table-responsive">
-                                <table class="table table-link">
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="calenda-box" id='calendar-box'>
-                                                </div>
-                                            </td>
-                                            <td width="130" id='lesson_img'>
-                                                <div class="photo-box">
-                                                    <span><img src="" alt=""></span>
-                                                </div>
-                                            </td>
-                                            <!-- TO DO -->
-                                            <td id='lesson_title'>
-                                                <strong><%= 'BÀI TODO' %></strong><br/>
-                                                <%= @session.name %><br/>
-                                                Kiến thức học được: TODO
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <hr>
-                                <div class="table-responsive">
-                                    <div class="fc-header clearfix">
-                                        <div class="pull-left lesson_info">
-                                        </div>
-                                        <div class="fc-list-btn pull-right">
-                                            <ul>
-                                                <li><button type="button" class="btn btn-default btn-embossed">Học cụ</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed">Check-in</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#diemdanh">Điểm danh</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#hoclieu">Học liệu</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#thuonghocsinh">Thưởng</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed">Chụp ảnh</button></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                        
-                                </div>
-                                <hr>
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã học sinh</th>
-                                                <th>Họ và tên</th>
-                                                <th class="text-center">Điểm danh</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id='student_attendance'>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
         </div>
+      </div>
     </div>
-  	<div class="footer">
-        <div class="copyright">
-            <p class="pull-left sm-pull-reset">
-                <span>Copyright <span class="copyright">©</span> 2020 </span>
-                <span>THEMES BACKEND TEKY. </span>
-                <span>All rights reserved. </span>
-            </p>
-            <p class="pull-right sm-pull-reset">
-                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
-            </p>
-        </div>
-    </div>
+  </div>
 </div>

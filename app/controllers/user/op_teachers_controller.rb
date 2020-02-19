@@ -26,7 +26,7 @@ module User
                     start_date: b.start_date,
                     end_date: b.end_date,
                     status: b.check_status,
-                    student_count: b.op_student_courses.where(:state => 'on').count.to_s,
+                    student_count: b.op_student_courses.count.to_s,
                     progress: b.current_session_level
                   }
         end
