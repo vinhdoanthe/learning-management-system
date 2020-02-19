@@ -1,110 +1,71 @@
-<div class="tab-pane fade active in" id="tab2_1">
-  <div class="bo-table">
-    <div class="form-content">
-      <div class="fc-header">
-        <h3><span class="color-F16357">LỚP HỌC:</span> <%= batch.op_course.name %></h3>
-      </div>
-      <div class="box-progress">
-        <div class="row">
-          <div class="col-md-6">
-            <ul>
-              <li>
-                <%= image_tag('global/images/qr-code.png') %>
-                <p><span class="span-text">Mã lớp học: </span><%= batch.code %></p></li>
-              <li>
-                <%= image_tag('global/images/calendar-4.png') %>
-                <p><span class="span-text">Thời gian học: </span><%= batch.start_date %>
-                  đến <%= batch.end_date %></p></li>
-              <li>
-                <%= image_tag('global/images/clock.png') %>
-                <p><span class="span-text">Lịch học: </span>Chưa lấy thông tin này</p></li>
-              <li>
-                <%= image_tag('global/images/professor.png') %>
-                <p><span class="span-text">Giảng viên: </span>
-                  <% teachers_name = teachers_name(batch.id) %>
-                  <% unless teachers_name.nil? %>
-                    <% teachers_name.each do |name| %>
-                      <a href=""><%= name %></a>
-                    <% end %>
-                  <% end %>
-                </p></li>
-            </ul>
-          </div>
-          <div class="col-md-6">
-            <ul>
-              <li>
-                <%= image_tag('global/images/Combined-Shape.png') %>
-                <p><span class="span-text">Môn học: </span><%= batch.op_course.name %></p></li>
-              <li>
-                <%= image_tag('global/images/steps.png') %>
-                <p>
-                  <span class="span-text">Học phần: </span>
-                  <% levels = list_subject_level_of_batch(batch.id) %>
-                  <% unless levels.nil? %>
-                    <% levels.each do |level| %>
-                      <span class="label-course label label-default"><%= level %></span>
-                    <% end %>
-                  <% end %>
-                </p>
-              </li>
-              <li>
-                <%= image_tag('global/images/group-of-students.png') %>
-                <p>
-                  <span class="span-text">Loại lớp học: </span><%= batch.op_batch_type.nil? ? 'Đang cập nhật' : batch.op_batch_type.name %>
-                </p></li>
-              <li>
-                <%= image_tag('global/images/hotel.png') %>
-                <p>
-                  <span class="span-text">Trung tâm: </span><a href=""><%= batch.res_company.nil? ? 'Đang cập nhật' : batch.res_company.name %></a>
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead>
-          <tr>
-            <th>Mã học sinh</th>
-            <th>Họ và tên</th>
-            <th>Học phần</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-
-          <% op_student_courses = batch.op_student_courses %>
-          <% op_student_courses.each do |op_student_course| %>
-            <tr>
-              <td><%= op_student_course.op_student.code %></td>
-              <td><%= op_student_course.op_student.full_name %></td>
-
-              <% levels = list_subject_level_of_student(op_student_course.id) %>
-              <td>
-                <% unless levels.nil? %>
-                  <% levels.each do |level| %>
-                    <span class="label-course label label-default"><%= level %></span>
-                  <% end %>
-                <% end %>
-              </td>
-
-              <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-                <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
-              <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
-                <td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td>
-              <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
-                <td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td>
-              <% else %>
-                <td align="right"><span class="label-edit label label-stop">Đang cập nhật</span></td>
+<div class="fc-header">
+  <h3><span class="color-F16357">LỚP HỌC:</span> <%= batch.op_course.name %></h3>
+</div>
+<div class="box-progress">
+  <div class="row">
+    <div class="col-md-6">
+      <ul>
+        <li>
+          <%= image_tag('global/images/qr-code.png') %>
+          <p><span class="span-text">Mã lớp học: </span><%= batch.code %></p></li>
+        <li>
+          <%= image_tag('global/images/calendar-4.png') %>
+          <p><span class="span-text">Thời gian học: </span><%= batch.start_date %>
+            đến <%= batch.end_date %></p></li>
+        <li>
+          <%= image_tag('global/images/clock.png') %>
+          <p><span class="span-text">Lịch học: </span>Chưa lấy thông tin này</p></li>
+        <li>
+          <%= image_tag('global/images/professor.png') %>
+          <p><span class="span-text">Giảng viên: </span>
+            <% teachers_name = teachers_name(batch.id) %>
+            <% unless teachers_name.nil? %>
+              <% teachers_name.each do |name| %>
+                <a href=""><%= name %></a>
               <% end %>
-
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
+            <% end %>
+          </p></li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <ul>
+        <li>
+          <%= image_tag('global/images/Combined-Shape.png') %>
+          <p><span class="span-text">Môn học: </span><%= batch.op_course.name %></p></li>
+        <li>
+          <%= image_tag('global/images/steps.png') %>
+          <p id="subject_id_span">
+            <span class="span-text">Học phần: </span>
+            <% levels = list_subject_level_of_batch(batch.id) %>
+            <% unless levels.blank? %>
+              <% levels.each do |id, level| %>
+                <% if id == @current_subject_id %>
+                  <span class="label-course label label-default subject_id active">
+                    <input type='hidden' name='subject_id' value="<%= id %>" >
+                    <%= level %>
+                  </span>
+                <% else %>
+                  <span class="label-course label label-default subject_id">
+                    <input type='hidden' name='subject_id' value="<%= id %>" >
+                    <%= level %>
+                  </span>
+                <% end %>
+              <% end %>
+            <% end %>
+          </p>
+        </li>
+        <li>
+          <%= image_tag('global/images/group-of-students.png') %>
+          <p>
+            <span class="span-text">Loại lớp học: </span><%= batch.op_batch_type.nil? ? 'Đang cập nhật' : batch.op_batch_type.name %>
+          </p></li>
+        <li>
+          <%= image_tag('global/images/hotel.png') %>
+          <p>
+            <span class="span-text">Trung tâm: </span><a href=""><%= batch.res_company.nil? ? 'Đang cập nhật' : batch.res_company.name %></a>
+          </p>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
