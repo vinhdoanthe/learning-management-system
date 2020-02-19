@@ -11,19 +11,6 @@ module User
       @batches = current_user.op_student.op_batches
     end
 
-    # TODO: return general information of a student
-    def general_information
-
-      render :json => {}
-    end
-
-
-    # TODO: return parent information of a student
-    def parent_information
-
-      render :json => {}
-    end
-
     def update_nickname
       unless params[:user][:username].nil?
         new_username = params[:user][:username]
@@ -53,7 +40,31 @@ module User
     end
 
     def update_password
-      # TODO: update code for this controller
+      binding.pry
+      if !params[:user][:password].nil?
+        binding.pry
+        current_user.authenticate(params[:user][:password])
+        if !(params[:user][:new_password].nil? || params[:user][:password_confirmation].nil?)
+          if params[:user][:new_password] == params[:user][:password_confirmation]
+            current_user.update(password: params[:user][:new_password])
+            if current_user.errors.full_messages.any?
+              flash.now[:danger] = current_user.errors.full_message.to_s
+              render 'change_password'
+            else
+              redirect_to root_path
+            end
+          else
+            flash.now[:danger] = 'Mật khẩu mới không khớp'
+            render 'change_password'
+          end
+        else
+          flash.now[:danger] = 'Mật khẩu hiện tại không đúng'
+          render 'change_password'
+        end
+      else
+        flash.now[:danger] = 'Đã có lỗi xảy ra. Vui lòng thử lại'
+        render 'change_password'
+      end
     end
   end
 end

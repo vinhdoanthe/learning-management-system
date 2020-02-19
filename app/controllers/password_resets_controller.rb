@@ -7,7 +7,6 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    binding.pry
     @user = User::User.find_by(username: params[:password_reset][:username].downcase)
     if @user
       @user.create_reset_digest
