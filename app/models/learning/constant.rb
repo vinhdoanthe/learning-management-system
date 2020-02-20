@@ -18,6 +18,12 @@ module Learning::Constant
       STATE_DONE = 'done'
       STATE_CONFIRM = 'confirm'
       STATE_CANCEL = 'cancel'
+
+      MINUTES_BEFORE_ALLOW_CHECKIN = 15
+
+      CHECKIN_STATE_NONE = 'none'
+      CHECKIN_STATE_GOOD = 'good'
+      CHECKIN_STATE_BAD = 'bad'
     end
   end
 end
