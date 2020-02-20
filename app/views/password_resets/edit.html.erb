@@ -1,16 +1,19 @@
 <% provide(:title, 'Reset password') %>
-<h1>Reset password</h1>
+<div class='reset-password'>  
+  <h1>Reset password</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
-      <%= hidden_field_tag :username, @user.username %>
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
+  <div class="row reset-pass-form panel-content">
+    <div class="col-md-6 col-md-offset-3">
+      <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
+        <%= hidden_field_tag :username, @user.username %>
+        <%= f.label :password, class: 'line-pass' %>
+        <%= f.password_field :password, class: 'form-control line-pass' %>
+        <%= f.label :password_confirmation, "Confirmation", class: 'line-pass' %>
+        <%= f.password_field :password_confirmation, class: 'form-control line-pass' %>
 
-      <%= f.submit "Update password", class: "btn btn-primary" %>
-    <% end %>
+        <%= f.submit "Update password", class: "btn btn-primary" %>
+        <%= link_to 'Cancel', root_path, class: 'btn btn-danger cancel-reset', style: 'float: right' %>
+      <% end %>
+    </div>
   </div>
 </div>

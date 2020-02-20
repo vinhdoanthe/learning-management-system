@@ -23,14 +23,12 @@ module Api
         else
           session.check_in_state = Learning::Constant::Batch::Session::CHECKIN_STATE_BAD
         end
-        binding.pry
         session.save
         if session.errors.full_messages.any?
           return session.errors.full_messages.to_s
           # flash.now[:danger] = session.errors.full_messages.to_s
         end
       else
-        binding.pry
         return errors
         # flash.now[:danger] = errors
       end
