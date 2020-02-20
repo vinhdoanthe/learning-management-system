@@ -1,3 +1,8 @@
 action_mailer:
   gmail_username: 'username@example.org'
   gmail_password: 'password'
+odoo:
+  url: 'http://erpdev.teky.edu.vn:8100'
+  db: 'teky'
+  username: 'username'
+  password: 'password'
