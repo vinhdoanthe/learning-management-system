@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="assets/global/images/favicon.png" type="image/png">
+    <title>Teky Backend</title>
+    <link href="assets/global/css/style.css" rel="stylesheet">
+    <link href="assets/global/css/style_other.css" rel="stylesheet">
+	<link href="assets/global/css/custom.css" rel="stylesheet">
+	<link href="assets/global/css/jquery.FlowupLabels.css" rel="stylesheet"> 
+    <link href="assets/global/css/theme.css" rel="stylesheet">
+    <link href="assets/global/css/ui.css" rel="stylesheet">
+    <link href="assets/admin/layout1/css/layout.css" rel="stylesheet"> 
+    <!-- BEGIN PAGE STYLE -->
+    <link href="assets/global/plugins/metrojs/metrojs.min.css" rel="stylesheet">
+    <link href="assets/global/plugins/maps-amcharts/ammap/ammap.css" rel="stylesheet">
+	<link href="assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="assets/global/plugins/rateit/rateit.css" rel="stylesheet">
+	<link href="assets/global/css/owl.carousel.css" rel="stylesheet">
+    <!-- END PAGE STYLE -->
+    <script src="assets/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+</head>
+
+<body class="fixed-topbar fixed-sidebar theme-sdtl color-default dashboard">
+    <section>
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar">
+            <div class="logopanel"><h1><a href="dashboard.html"></a></h1></div>
+            <div class="sidebar-inner">
+                <div class="noti-avatar">
+                    <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
+                        <li class="nav-active">
+                            <a href="">
+                                <img src="assets/global/images/avatar.png" alt="">
+                                <span class="hover-ava">
+                                    <label for="">Kiều Chí Công</label>
+                                    <p>TK-0022934</p>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="noti-nav">
+                    <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
+                        <li class="nav-active">
+                            <a href="">
+                                <img src="assets/global/images/active/icon-Setting.png" alt="">
+                                <span>Cấu hình</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="#">
+                                <img src="assets/global/images/active/Icon-Bell.png" alt="">
+                                <span>Bài tập & Ôn bài</span>
+                                <span class="nn-alert">12</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="#">
+                                <img src="assets/global/images/active/Icon-Inbox.png" alt="">
+                                <span>Tiến độ học tập</span>
+                                <span class="nn-alert">3</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                    
+                <ul class="nav nav-sidebar nav-sidebar-edit">
+                    <li class="nav-active activea">
+                        <a href="dashboard.html">
+                            <img class="img-changes" src="assets/global/images/no-active/ico-Dashboard.png" alt="">
+                            <img class="img-change-color" src="assets/global/images/active/ico-Dashboard.png" alt="">
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#">
+                            <img class="img-changes" src="assets/global/images/no-active/ico-BaiTapOnBai.png" alt="">
+                            <img class="img-change-color" src="assets/global/images/active/ico-BaiTapOnBai.png" alt="">
+                            <span>Bài tập & Ôn bài</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#">
+                            <img class="img-changes" src="assets/global/images/no-active/ico-TienDoHocTap.png" alt="">
+                            <img class="img-change-color" src="assets/global/images/active/ico-TienDoHocTap.png" alt="">
+                            <span>Tiến độ học tập</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#">
+                            <img class="img-changes" src="assets/global/images/no-active/ico-Certificate.png" alt="">
+                            <img class="img-change-color" src="assets/global/images/active/ico-Certificate.png" alt="">
+                            <span>Chứng chỉ</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#">
+                            <img class="img-changes" src="assets/global/images/no-active/ico-SPhocsinh.png" alt="">
+                            <img class="img-change-color" src="assets/global/images/active/ico-SPhocsinh.png" alt="">
+                            <span>Sản phẩm của học sinh</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#">
+                            <img class="img-changes" src="assets/global/images/no-active/ico-Redem.png" alt="">
+                            <img class="img-change-color" src="assets/global/images/active/ico-Redem.png" alt="">
+                            <span>Đổi điểm lấy quà </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#">
+                            <img class="img-changes" src="assets/global/images/no-active/ico-Invoice.png" alt="">
+                            <img class="img-change-color" src="assets/global/images/active/ico-Invoice.png" alt="">
+                            <span>Hoá đơn</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- END SIDEBAR -->
+        <div class="main-content">
+            <!-- BEGIN TOPBAR -->
+            <div class="topbar">
+                <div class="header-left">
+                    <div class="topnav">
+                        <a class="menutoggle" href="#" data-toggle="sidebar-collapsed"><span class="menu__handle"><span>Menu</span></span></a>
+                        
+                    </div>
+                </div>
+                <div class="header-right">
+                    <ul class="header-menu nav navbar-nav">
+                        <!-- BEGIN USER DROPDOWN -->
+                        <li class="dropdown" id="language-header">
+                            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <i class="icon-globe"></i>
+                                <span>Ngôn ngữ</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#" data-lang="en"><img src="assets/global/images/flags/usa.png" alt="flag-english"> <span>English</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-lang="es"><img src="assets/global/images/flags/spanish.png" alt="flag-english"> <span>Español</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-lang="fr"><img src="assets/global/images/flags/french.png" alt="flag-english"> <span>Français</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END USER DROPDOWN -->
+                        <!-- BEGIN USER DROPDOWN -->
+                        <li class="dropdown" id="teky-logout">
+                            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <img src="assets/global/images/logout.png" alt="user image">
+                            </a>
+                            <!-- <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#"><i class="icon-user"></i><span>My Profile</span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-calendar"></i><span>My Calendar</span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-settings"></i><span>Account Settings</span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-logout"></i><span>Logout</span></a>
+                                </li>
+                            </ul> -->
+                        </li>
+                        <!-- END USER DROPDOWN -->
+                        
+                    </ul>
+                </div>
+                <!-- header-right -->
+            </div>
+            <!-- END TOPBAR -->
+            <!-- BEGIN PAGE CONTENT -->
+            <div class="page-content page-thin">
+
+              	<div class="footer">
+                    <div class="copyright">
+                        <p class="pull-left sm-pull-reset">
+                            <span>Copyright <span class="copyright">©</span> 2020 </span>
+                            <span>THEMES BACKEND TEKY. </span>
+                            <span>All rights reserved. </span>
+                        </p>
+                        <p class="pull-right sm-pull-reset">
+                            <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END MAIN CONTENT -->
+        
+    </section>
+    
+    
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a>
+    <script src="assets/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="assets/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+    <script src="assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="assets/global/plugins/gsap/main-gsap.min.js"></script>
+    <script src="assets/global/plugins/tether/js/tether.min.js"></script>
+    <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/global/plugins/appear/jquery.appear.js"></script>
+    <script src="assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+	<script src="assets/global/js/jquery.FlowupLabels.js"></script>
+	<script src="assets/global/js/style_other.js"></script>
+    <!-- Jquery Cookies, for theme -->
+    <script src="assets/global/plugins/jquery-block-ui/jquery.blockUI.min.js"></script>
+    <!-- simulate synchronous behavior when using AJAX -->
+    <script src="assets/global/plugins/bootbox/bootbox.min.js"></script>
+    <!-- Modal with Validation -->
+    <script src="assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Custom Scrollbar sidebar -->
+    <script src="assets/global/plugins/bootstrap-dropdown/bootstrap-hover-dropdown.min.js"></script>
+    <!-- Show Dropdown on Mouseover -->
+    <script src="assets/global/plugins/charts-sparkline/sparkline.min.js"></script>
+    <!-- Charts Sparkline -->
+    <script src="assets/global/plugins/retina/retina.min.js"></script>
+    <!-- Retina Display -->
+<!--    <script src="../assets/global/plugins/select2/dist/js/select2.full.min.js"></script>-->
+    <!-- Select Inputs -->
+<!--    <script src="../assets/global/plugins/icheck/icheck.min.js"></script>-->
+    <!-- Checkbox & Radio Inputs -->
+    <script src="assets/global/plugins/backstretch/backstretch.min.js"></script>
+    <!-- Background Image -->
+    <script src="assets/global/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- Animated Progress Bar -->
+    <script src="assets/global/js/builder.js"></script>
+    <!-- Theme Builder -->
+    <script src="assets/global/js/sidebar_hover.js"></script>
+    <!-- Sidebar on Hover -->
+    <script src="assets/global/js/application.js"></script>
+    <!-- Main Application Script -->
+    <script src="assets/global/js/plugins.js"></script>
+    <!-- Main Plugin Initialization Script -->
+    <script src="assets/global/js/widgets/notes.js"></script>
+    <!-- Notes Widget -->
+    <!-- BEGIN PAGE SCRIPT -->
+    <script src="assets/global/plugins/metrojs/metrojs.min.js"></script>
+    <!-- Flipping Panel -->
+    <script src="assets/global/plugins/noty/jquery.noty.packaged.min.js"></script>
+    <!-- Notifications -->
+    <script src="assets/global/plugins/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+    <!-- Inline Edition X-editable -->
+    <script src="assets/global/plugins/bootstrap-context-menu/bootstrap-contextmenu.min.js"></script>
+    <!-- Context Menu -->
+    <script src="assets/global/plugins/multidatepicker/multidatespicker.min.js"></script>
+    <!-- Multi dates Picker -->
+    <script src="assets/global/plugins/charts-chartjs/Chart.min.js"></script>
+    <!-- ChartJS Chart -->
+    <script src="assets/global/plugins/charts-highstock/js/highstock.js"></script>
+    <!-- financial Charts -->
+    <script src="assets/global/plugins/charts-highstock/js/modules/exporting.js"></script>
+    <!-- Financial Charts Export Tool -->
+    <script src="assets/global/plugins/maps-amcharts/ammap/ammap.js"></script>
+    <!-- Vector Map -->
+    <script src="assets/global/plugins/maps-amcharts/ammap/maps/js/worldLow.js"></script>
+    <!-- Vector World Map  -->
+    <script src="assets/global/plugins/maps-amcharts/ammap/themes/black.js"></script>
+    <!-- Vector Map Black Theme -->
+    <script src="assets/global/plugins/skycons/skycons.min.js"></script>
+    <!-- Animated Weather Icons -->
+    <script src="assets/global/plugins/simple-weather/jquery.simpleWeather.js"></script>
+    <!-- Weather Plugin -->
+    <script src="assets/global/js/widgets/todo_list.js"></script>
+    <script src="assets/global/js/widgets/widget_weather.js"></script>
+    <script src="assets/global/js/pages/dashboard.js"></script>
+    <!-- END PAGE SCRIPT -->
+	<script src="assets/global/plugins/timepicker/jquery-ui-timepicker-addon.min.js"></script> <!-- Time Picker -->
+    <script src="assets/global/plugins/multidatepicker/multidatespicker.min.js"></script> <!-- Multi dates Picker -->
+    <script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script> <!-- >Bootstrap Date Picker -->
+    <script src="assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script> <!-- >Bootstrap Date Picker in Spanish (can be removed if not use) -->
+    <script src="assets/global/plugins/colorpicker/spectrum.min.js"></script> <!-- Color Picker -->
+    <script src="assets/global/plugins/rateit/jquery.rateit.min.js"></script> <!-- Rating star plugin -->
+    <script src="assets/global/js/pages/form_plugins.js"></script>
+    <!-- END PAGE SCRIPT -->
+    <script src="assets/admin/layout1/js/layout.js"></script>
+	<script src="assets/global/plugins/colorpicker/spectrum.min.js"></script> <!-- Color Picker -->
+    <script src="assets/global/plugins/rateit/jquery.rateit.min.js"></script> <!-- Rating star plugin -->
+    <script src="assets/global/js/pages/form_plugins.js"></script>
+	<script src="assets/global/js/owl.carousel.min.js"></script>
+</body>
+</html>
