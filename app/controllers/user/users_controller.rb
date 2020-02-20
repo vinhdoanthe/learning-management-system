@@ -41,24 +41,28 @@ module User
     end
 
     def update_password
-      binding.pry
       if !params[:user][:password].nil?
-        current_user.authenticate(params[:user][:password])
-        if !(params[:user][:new_password].nil? || params[:user][:password_confirmation].nil?)
-          if params[:user][:new_password] == params[:user][:password_confirmation]
-            current_user.update(password: params[:user][:new_password])
-            if current_user.errors.full_messages.any?
-              flash.now[:danger] = current_user.errors.full_message.to_s
-              render 'change_password'
+        if current_user.authenticate(params[:user][:password])
+          if !(params[:user][:new_password].nil? || params[:user][:password_confirmation].nil?)
+            if params[:user][:new_password] == params[:user][:password_confirmation]
+              current_user.update(password: params[:user][:new_password])
+              if current_user.errors.full_messages.any?
+                flash.now[:danger] = current_user.errors.full_message.to_s
+                render 'change_password'
+              else
+                flash[:success] = 'Đổi mật khẩu thành công'
+                redirect_to root_path
+              end
             else
-              redirect_to root_path
+              flash.now[:danger] = 'Mật khẩu mới không khớp'
+              render 'change_password'
             end
           else
-            flash.now[:danger] = 'Mật khẩu mới không khớp'
+            flash.now[:danger] = 'Mật khẩu hiện tại không đúng'
             render 'change_password'
           end
         else
-          flash.now[:danger] = 'Mật khẩu hiện tại không đúng'
+          flash.now[:danger] = 'Mật khẩu không đúng'
           render 'change_password'
         end
       else
