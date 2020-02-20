@@ -15,7 +15,6 @@ module Api
     def self.checkin(session_id:, faculty_id:, check_in_time:)
       errors = validate_before_checkin(session_id, faculty_id, check_in_time)
       if errors.empty?
-
         session = Learning::Batch::OpSession.find(session_id)
         session.check_in_time = check_in_time
         if check_in_time <= session.start_datetime
@@ -26,11 +25,9 @@ module Api
         session.save
         if session.errors.full_messages.any?
           return session.errors.full_messages.to_s
-          # flash.now[:danger] = session.errors.full_messages.to_s
         end
       else
         return errors
-        # flash.now[:danger] = errors
       end
     end
 
