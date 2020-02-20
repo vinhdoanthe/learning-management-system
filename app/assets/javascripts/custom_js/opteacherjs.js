@@ -244,5 +244,49 @@ $(document).ready(function(){
 		set_date_filter(used_date);
 		get_teaching_schedule(save_date);
 	})
+
+	//Teacher Check-in
+	function get_active_session(){
+		var response;
+		$.ajax({
+			method: 'get',
+			url: '/user/teacher_active_session',
+			success: function(res){
+				change_checkin_form(res);
+			}
+		})
+	}
+
+	function change_checkin_form(res){
+		$('.checkin_sesion').html((res.session_index + 1).toString());
+		$('.checkin_subject').html((res.subject_level).toString());
+		start_time = change_time(res.session.start_datetime)
+		time = new Date(res.session.start_datetime)
+		date = get_date_month(time)
+		end_time = change_time(res.session.end_datetime)
+		$('.checkin_start').html(start_time.hour + ':' + start_time.min + '  ' + date);
+		$('.checkin_end').html(end_time.hour + ':' + end_time.min + '  ' + date);
+		$('.checkin_state').html(res.session.state);
+		$('input[name="checkin_session_id"]').val(res.session.id)
+	}
+
+	$('#teacher_checkin').on('click', function(){
+		get_active_session();
+	})
+
+	$('#teacher_checkin_confirm').on('click', function(){
+		teacher = $('input[name="teacher_id"]').val();
+		time = new Date()
+		session_id = $('input[name="checkin_session_id"]').val()
+		$.ajax({
+			method: 'post',
+			url: '/user/teacher_checkin',
+			data: {'falcuty_id': teacher, 'time': time, 'session_id': session_id},
+			success: function(){
+				
+			}
+		})
+	})
+
 })
 

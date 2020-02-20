@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     get 'change_password' => 'users#change_password'
     post 'change_password' => 'users#update_password'
     get 'student_info' => 'op_students#student_info'
+    get 'teacher_active_session' => 'op_teachers#active_session'
+    post 'teacher_checkin' => 'op_teachers#teacher_checkin'
 
     resources :users
     resources :op_students, only: [:index, :new]

@@ -3,8 +3,8 @@ module User
 
     before_action :authenticate_faculty!, :teacher_info
     before_action :find_teacher
-    skip_before_action :verify_authenticity_token, only: [:teacher_class, :teacher_class_detail, :teaching_schedule]
-
+    skip_before_action :verify_authenticity_token, only: [:teacher_class, :teacher_class_detail, :teaching_schedule, :teacher_checkin]
+    before_action :instance_session, only: [:active_session]
     def teacher_info
 
     end
@@ -37,6 +37,7 @@ module User
     def teacher_class_detail
       @batch = Learning::Batch::OpBatch.find(params[:batch_id].to_i)
       @sessions = @batch.op_sessions.order(start_datetime: 'ASC')
+
       if params[:subject_id].present?
         @current_subject_id = params[:subject_id].to_i
         @sessions = @sessions.where(:subject_id => params[:subject_id].to_i)
@@ -52,13 +53,13 @@ module User
       else
         @session = @sessions.where('start_datetime >= ?', Time.now).first
       end
-      
-      @session = @sessions.last unless @session
+      @session = @sessions.last if @session.blank?
       @session_index = @sessions.index(@session)
       @subject = @session.op_subject
       sessions_time = @sessions.pluck(:start_datetime, :end_datetime)
-
       all_students = OpTeachersService.new.teacher_class_detail @batch, @session
+      
+      teacher_class_detail_active_session(@session.id, @subject.id, @session_index)
 
       if request.method == 'POST'
         render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students, sessions_time: sessions_time}
@@ -73,7 +74,22 @@ module User
       end
     end
 
+    def active_session
+      render json: { session: @session, subject_level: @subject.level, session_index: @session_index }
+    end
+
+    def teacher_checkin
+      Api::Odoo.checkin(session_id: params[:session_id], faculty_id: params[:teacher], check_in_time: params[:time])
+    end
+
     private
+
+    def instance_session
+      @session = Learning::Batch::OpSession.find(session[:active_session_id])
+      @subject = Learning::Course::OpSubject.find(session[:active_session_subject_id])
+      @session_index = session[:active_session_index]
+    end
+
     def find_teacher
       @teacher = current_user.op_faculty
     end
