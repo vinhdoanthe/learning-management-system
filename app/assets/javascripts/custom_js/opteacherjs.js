@@ -297,8 +297,10 @@ $(document).ready(function(){
 	function change_attendance_form(res){
 		$('.attendance_student').remove();
 		$.each(res.students, function(i, student){
-            html = "<tr class='attendance_student'><td>" + student.name + "</td><td><input type='checkbox' name='attendance' value='" + i.toString() + "'></td><td><input style='width: 100%' type='text' name='teacher_note' placeholder='Ghi chú của giảng viên'></td></tr>"
-            $('#attendance_table').append(html)
+			if(student.status == 'on'){
+	            html = "<tr class='attendance_student'><td>" + student.name + "</td><td><input type='checkbox' name='attendance' value='" + i.toString() + "'></td><td><input style='width: 100%' type='text' name='teacher_note' placeholder='Ghi chú của giảng viên'></td></tr>"
+	            $('#attendance_table').append(html)
+	        }
         })
 	}
 
