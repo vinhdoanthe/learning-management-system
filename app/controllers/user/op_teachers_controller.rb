@@ -80,7 +80,14 @@ module User
 
     def teacher_checkin
       errors = Api::Odoo.checkin(session_id: params[:session_id], faculty_id: params[:teacher], check_in_time: params[:time])
-      render json: {errors: errors}
+      
+      if errors.blank?
+        error = { type: 'success', message: 'Checkin thành công'}
+      else 
+        error = { type: 'danger', message: errors[0]}
+      end
+
+      render json: {error: error}
     end
 
     def teacher_attendance
