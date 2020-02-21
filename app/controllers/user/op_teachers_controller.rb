@@ -79,7 +79,7 @@ module User
     end
 
     def teacher_checkin
-      errors = Api::Odoo.checkin(session_id: params[:session_id], faculty_id: params[:teacher], check_in_time: params[:time])
+      errors = Api::Odoo.checkin(session_id: params[:session_id], faculty_id: params[:faculty_id], check_in_time: params[:time])
       
       if errors.blank?
         error = { type: 'success', message: 'Checkin thành công'}

@@ -18,6 +18,7 @@ gem 'rails_admin', '~> 2.0'
 
 # Image processing
 gem 'image_processing'
+gem 'active_storage_validations'
 
 # jQuery
 gem 'jquery-rails'
@@ -25,6 +26,7 @@ gem 'jquery-rails'
 # Used for storing secret variables
 gem 'config'
 
+# Used to call to oDoo
 gem 'xmlrpc'
 
 ## End manual added gems

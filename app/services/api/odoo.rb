@@ -31,14 +31,10 @@ module Api
       end
     end
 
-    def self.attendance(op_student_id:, session_id:, **args)
-      # TODO: implement here
-      uid = self.authenticate
-      if uid
-
-      else
-        # TODO: raise errors here
-      end
+    def self.attendance(session_id:, faculty_id:, attendance_lines:)
+      # Step 1: Create Attendance Register
+      # Step 2: Create Attendance Sheet
+      # Create Attendance Lines
     end
 
     private
@@ -73,6 +69,10 @@ module Api
         end
       end
       errors
+    end
+
+    def self.validate_before_attendance(session_id, faculty_id, attendance_lines)
+      # if ()
     end
   end
 end
