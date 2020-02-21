@@ -282,8 +282,8 @@ $(document).ready(function(){
 			method: 'post',
 			url: '/user/teacher_checkin',
 			data: {'faculty_id': teacher, 'time': time, 'session_id': session_id},
-			success: function(){
-				
+			success: function(res){
+				display_noti(res.error)
 			}
 		})
 	})
@@ -303,26 +303,36 @@ $(document).ready(function(){
 	}
 
 	$('#teacher_attendance_confirm').on('click', function(){
-		data = []
+		faculty_id = $('input[name="teacher_id"]').val();
+		session_id = $('input[name="checkin_session_id"').val()
+		data = {'faculty_id': faculty_id, 'session_id': session_id, 'student': []}
 		$('.attendance_student').each(function(i, element){
+			student_id = $(this).find($('input[name="attendance"]')).val();
+			note = $(this).find($('input[name="teacher_note"]')).val();
+			check = false
 			if($(element).find($('input[name="attendance"]:checked')).length > 0){
-				student_id = $(this).find($('input[name="attendance"]')).val();
-				faculty_id = $('input[name="teacher_id"]').val();
-				note = $(this).find($('input[name="teacher_note"]')).val();
-				session_id = $('input[name="checkin_session_id"').val()
-				data.push({ 'student_id': student_id, 'faculty_id': faculty_id, 'note': note, 'session_id': session_id })
-			}	
+				check = true;
+			}
+			data['student'].push({ 'student_id': student_id, 'note': note, 'check': check })
 		})
 
 		$.ajax({
 			method: 'post',
 			url: '/user/teacher_attendance',
-			data: {'attendance': data},
-			success: function(){
-				alert('eqwrqwerqw')
+			data: data,
+			success: function(res){
+				display_noti(res.error)
 			}
 		})
 	})
+
+	function display_noti(error){
+		html='<div class="alert alert-' + error.type + '"><a href="#" class="close" data-dismiss="alert">×</a><div id="flash_' + error.type+ '">' + error.message + '</div></div>'
+		$('#noti-message').html(html);
+		setTimeout(function() {
+		    $('#noti-message').html('');
+		}, 3000);
+	}
 
 })
 
