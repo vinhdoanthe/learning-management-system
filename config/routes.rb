@@ -28,4 +28,5 @@ Rails.application.routes.draw do
     resources :op_students, only: [:index, :new]
   end
   resources :password_resets,     only: [:new, :create, :edit, :update]
+  post 'add_photo_attachment' => 'sessions#add_photo_attachment'
 end

@@ -93,3 +93,15 @@
 		}
 	}
 }
+
+#upload_photo{
+	.photo_review{
+		max-height: 150px;
+		max-width: 150px;
+	}
+}
+
+#photo_review{
+	max-height: 400px;
+	overflow: scroll;
+}

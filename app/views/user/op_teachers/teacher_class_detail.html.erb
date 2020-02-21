@@ -70,7 +70,7 @@
                                                 <li><button type="button" class="btn btn-default btn-embossed" id="teacher_attendance" data-toggle="modal" data-target="#modal_attendance">Điểm danh</button></li>
                                                 <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#hoclieu">Học liệu</button></li>
                                                 <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#thuonghocsinh">Thưởng</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed">Chụp ảnh</button></li>
+                                                <li><button type="button" id='upload_session_photo' class="btn btn-default btn-embossed" data-toggle="modal" data-target="#upload_photo">Chụp ảnh</button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -114,4 +114,5 @@
 
     <%= render 'user/op_teachers/modals/teacher_checkin' %>
     <%= render 'user/op_teachers/modals/teacher_attendance' %>
+    <%= render 'user/op_teachers/modals/upload_photo' %>
 </div>

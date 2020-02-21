@@ -296,6 +296,10 @@ $(document).ready(function(){
 
 	function change_attendance_form(res){
 		$('.attendance_student').remove();
+		start_time = change_time(res.session.start_datetime);
+		end_time = change_time(res.session.end_datetime);
+
+		$('.attendance_session_info').html("<h4><strong>Học phần " + res.subject_level + " - Buổi học: " + (parseInt(res.session_index) + 1).toString()  + "</strong></h4><p>" + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + " | " + start_time.day + "/" + start_time.month + "/" + start_time.year + "</p>")
 		$.each(res.students, function(i, student){
 			if(student.status == 'on'){
 	            html = "<tr class='attendance_student'><td>" + student.name + "</td><td><input type='checkbox' name='attendance' value='" + i.toString() + "'></td><td><input style='width: 100%' type='text' name='teacher_note' placeholder='Ghi chú của giảng viên'></td></tr>"
@@ -336,5 +340,27 @@ $(document).ready(function(){
 		}, 3000);
 	}
 
+	//Upload photo
+	function readURL(input) {
+	  if (input.files) {
+	  	$.each(input.files, function(i, photo){
+	  		var reader = new FileReader();
+		    reader.onload = function(e) {
+		      $('#photo_review').append('<img class="photo_review" src="' + e.target.result + '" alt="" />');
+		    }
+		    
+		    reader.readAsDataURL(photo);
+	  	})
+	  }
+	}
+
+	$("#photos_attachment").change(function() {
+		$('#photo_review').html('');
+	  readURL(this);
+	});
+
+	$('#upload_session_photo').on('click', function(){
+		$('#photo_review').html('')
+	})
 })
 
