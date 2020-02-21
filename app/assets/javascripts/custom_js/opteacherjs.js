@@ -138,7 +138,7 @@ $(document).ready(function(){
 	var session_index = '';
 	var batch_id = $("#batch_id").val();
 	var lesson_data = {'session_index': '', 'batch_id': batch_id};
-	var subject_id = $(".subject_id").find('input[name="subject_id"]').val();
+	var subject_id = $(".subject_id.active").find('input[name="subject_id"]').val();
 
 	$('#session_time_table').on('click', '.lesson_link', function(e){
 		e.preventDefault();
@@ -247,12 +247,12 @@ $(document).ready(function(){
 
 	//Teacher Check-in
 	function get_active_session(){
-		var response;
 		$.ajax({
 			method: 'get',
 			url: '/user/teacher_active_session',
 			success: function(res){
 				change_checkin_form(res);
+				change_attendance_form(res);
 			}
 		})
 	}
@@ -281,9 +281,45 @@ $(document).ready(function(){
 		$.ajax({
 			method: 'post',
 			url: '/user/teacher_checkin',
-			data: {'falcuty_id': teacher, 'time': time, 'session_id': session_id},
+			data: {'faculty_id': teacher, 'time': time, 'session_id': session_id},
 			success: function(){
 				
+			}
+		})
+	})
+
+
+	//Teacher attendance
+	$('#teacher_attendance').on('click', function(){
+		get_active_session();
+	})
+
+	function change_attendance_form(res){
+		$('.attendance_student').remove();
+		$.each(res.students, function(i, student){
+            html = "<tr class='attendance_student'><td>" + student.name + "</td><td><input type='checkbox' name='attendance' value='" + i.toString() + "'></td><td><input style='width: 100%' type='text' name='teacher_note' placeholder='Ghi chú của giảng viên'></td></tr>"
+            $('#attendance_table').append(html)
+        })
+	}
+
+	$('#teacher_attendance_confirm').on('click', function(){
+		data = []
+		$('.attendance_student').each(function(i, element){
+			if($(element).find($('input[name="attendance"]:checked')).length > 0){
+				student_id = $(this).find($('input[name="attendance"]')).val();
+				faculty_id = $('input[name="teacher_id"]').val();
+				note = $(this).find($('input[name="teacher_note"]')).val();
+				session_id = $('input[name="checkin_session_id"').val()
+				data.push({ 'student_id': student_id, 'faculty_id': faculty_id, 'note': note, 'session_id': session_id })
+			}	
+		})
+
+		$.ajax({
+			method: 'post',
+			url: '/user/teacher_attendance',
+			data: {'attendance': data},
+			success: function(){
+				alert('eqwrqwerqw')
 			}
 		})
 	})

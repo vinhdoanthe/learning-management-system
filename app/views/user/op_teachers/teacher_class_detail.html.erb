@@ -67,7 +67,7 @@
                                             <ul>
                                                 <li><button type="button" class="btn btn-default btn-embossed">Học cụ</button></li>
                                                 <li><button type="button" class="btn btn-default btn-embossed" id="teacher_checkin" data-toggle="modal" data-target="#modal_checkin">Check-in</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#diemdanh">Điểm danh</button></li>
+                                                <li><button type="button" class="btn btn-default btn-embossed" id="teacher_attendance" data-toggle="modal" data-target="#modal_attendance">Điểm danh</button></li>
                                                 <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#hoclieu">Học liệu</button></li>
                                                 <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#thuonghocsinh">Thưởng</button></li>
                                                 <li><button type="button" class="btn btn-default btn-embossed">Chụp ảnh</button></li>
@@ -111,54 +111,7 @@
             </p>
         </div>
     </div>
-    <div class="modal fade" id="modal_checkin" role="dialog">
-        <div class="modal-dialog">
-        
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Thông tin buổi học</h4>
-            </div>
-            <div class="modal-body">
-              <table style="width: 100%">
-                <tr>
-                    <td><strong>Giáo viên: </strong></td>
-                    <td class='teacher_id'>
-                        <%= @session.op_faculty.full_name %>
-                        <input type='hidden' name='teacher_id' value='<%= @session.op_faculty.id %>'>
-                        </td>
-                </tr>
-                <tr>
-                    <td><strong>Học phần: </strong></td>
-                    <td class='checkin_subject'></td>
-                </tr>
-                <tr>
-                    <td><strong>Buổi học: </strong>
-                        <input type="hidden" name="checkin_session_id" value=''>
-                    </td>
-                    <td class='checkin_sesion'></td>
-                </tr>
-                <tr>
-                    <td><strong>Trạng thái lớp học: </strong></td>
-                    <td class="checkin_state"></td>
-                </tr>
-                <tr>
-                    <td><strong>Thời gian bắt đầu: </strong></td>
-                    <td class="checkin_start"></td>
-                </tr>
-                <tr>
-                    <td><strong>Thời gian kết thúc: </strong></td>
-                    <td class="checkin_end"></td>
-                </tr>
-              </table>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id='teacher_checkin_confirm'>Check-in</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-          
-        </div>
-      </div>
+
+    <%= render 'user/op_teachers/modals/teacher_checkin' %>
+    <%= render 'user/op_teachers/modals/teacher_attendance' %>
 </div>

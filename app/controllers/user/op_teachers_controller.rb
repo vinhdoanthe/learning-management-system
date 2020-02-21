@@ -3,7 +3,7 @@ module User
 
     before_action :authenticate_faculty!, :teacher_info
     before_action :find_teacher
-    skip_before_action :verify_authenticity_token, only: [:teacher_class, :teacher_class_detail, :teaching_schedule, :teacher_checkin]
+    skip_before_action :verify_authenticity_token
     before_action :instance_session, only: [:active_session]
     def teacher_info
 
@@ -58,8 +58,8 @@ module User
       @subject = @session.op_subject
       sessions_time = @sessions.pluck(:start_datetime, :end_datetime)
       all_students = OpTeachersService.new.teacher_class_detail @batch, @session
-      
-      teacher_class_detail_active_session(@session.id, @subject.id, @session_index)
+
+      teacher_class_detail_active_session(@session.id, @subject.id, @session_index, all_students)
 
       if request.method == 'POST'
         render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students, sessions_time: sessions_time}
@@ -75,11 +75,16 @@ module User
     end
 
     def active_session
-      render json: { session: @session, subject_level: @subject.level, session_index: @session_index }
+      render json: { session: @session, subject_level: @subject.level, session_index: @session_index, students: @student_list }
     end
 
     def teacher_checkin
-      Api::Odoo.checkin(session_id: params[:session_id], faculty_id: params[:teacher], check_in_time: params[:time])
+      errors = Api::Odoo.checkin(session_id: params[:session_id], faculty_id: params[:teacher], check_in_time: params[:time])
+      render json: {errors: errors}
+    end
+
+    def teacher_attendance
+
     end
 
     private
@@ -88,6 +93,7 @@ module User
       @session = Learning::Batch::OpSession.find(session[:active_session_id])
       @subject = Learning::Course::OpSubject.find(session[:active_session_subject_id])
       @session_index = session[:active_session_index]
+      @student_list = session[:student_list]
     end
 
     def find_teacher

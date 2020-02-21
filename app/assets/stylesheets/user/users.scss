@@ -65,3 +65,31 @@
 		width: 50%
 	}
 }
+
+#modal_attendance{
+	table{
+		width: 100%;
+		margin-top: 20px;
+
+		tr{
+			border-bottom: 1px solid #d8e0ea;
+			padding: 5px;
+			height: 50px;
+			input[name='attendance']{
+				margin-left: 4rem;
+			}
+			input[name='teacher_note']{
+				width: 100%;
+				height: 35px;
+				padding: 10px;
+			}
+			td{
+				padding: 5px
+			}
+		}
+		tr:first-child{
+			color: #7f868f;
+			border-bottom: 2px solid #d8e0ea;
+		}
+	}
+}
