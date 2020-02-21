@@ -6,8 +6,10 @@ module User
 
     def create
       user = User.find_by(username: params[:session][:username])
+      user
       if user.nil?
         flash.now[:danger] = 'Tên đăng nhập không tồn tại'
+        render 'new'
       else
         if user.authenticate(params[:session][:password])
           log_in(user)

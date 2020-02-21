@@ -5,6 +5,7 @@ module User
     before_action :find_teacher
     skip_before_action :verify_authenticity_token
     before_action :instance_session, only: [:active_session]
+
     def teacher_info
 
     end
@@ -12,7 +13,7 @@ module User
     def teacher_class
       all_batches ||= @teacher.op_batches
       company_id = []
-      all_batches.each{ |b| company_id << b.company_id}
+      all_batches.each {|b| company_id << b.company_id}
       @company = Common::ResCompany.where(:id => company_id)
       @batches = OpTeachersService.filter_batch @teacher, params
 
@@ -20,15 +21,15 @@ module User
         data = []
         @batches.each do |b|
           data << {
-                    id: b.id || '',
-                    code: b.code || '',
-                    name: b.name || '',
-                    start_date: b.start_date,
-                    end_date: b.end_date,
-                    status: b.check_status,
-                    student_count: b.op_student_courses.count.to_s,
-                    progress: b.current_session_level
-                  }
+              id: b.id || '',
+              code: b.code || '',
+              name: b.name || '',
+              start_date: b.start_date,
+              end_date: b.end_date,
+              status: b.check_status,
+              student_count: b.op_student_courses.count.to_s,
+              progress: b.current_session_level
+          }
         end
         render json: {data: data}, status: 200
       end
@@ -70,28 +71,41 @@ module User
       @sessions = @teacher.op_sessions
       schedules = OpTeachersService.teaching_schedule(@sessions, params)
       if request.method == 'POST'
-        render json: { schedules: schedules}
+        render json: {schedules: schedules}
       end
     end
 
     def active_session
-      render json: { session: @session, subject_level: @subject.level, session_index: @session_index, students: @student_list }
+      render json: {session: @session, subject_level: @subject.level, session_index: @session_index, students: @student_list}
     end
 
     def teacher_checkin
       errors = Api::Odoo.checkin(session_id: params[:session_id], faculty_id: params[:faculty_id], check_in_time: params[:time])
-      
+
       if errors.blank?
-        error = { type: 'success', message: 'Checkin thành công'}
-      else 
-        error = { type: 'danger', message: errors[0]}
+        error = {type: 'success', message: 'Checkin thành công'}
+      else
+        error = {type: 'danger', message: errors[0]}
       end
 
       render json: {error: error}
     end
 
     def teacher_attendance
-
+      # binding.pry
+      lines = []
+      unless params[:student].blank?
+        params[:student].each_value do |student_params|
+          # binding.pry
+          line = {}
+          line[:student_id] = (student_params['student_id']).to_i
+          line[:is_present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
+          line[:note] = student_params['note'].to_s
+          lines.append line
+        end
+      end
+      binding.pry
+      errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: params[:faculty_id].to_i, attendance_time: Time.now, attendance_lines: lines)
     end
 
     private
