@@ -74,10 +74,11 @@ module Learning
         Learning::Batch::OpBatchService.cancel_session_student_batch(student_id: student_id, batch_id: batch_id)
       end
 
-      def teacher_class_detail_active_session(session_id, subject_id, session_index)
+      def teacher_class_detail_active_session(session_id, subject_id, session_index, all_students)
         session[:active_session_id] = session_id
         session[:active_session_subject_id] = subject_id
         session[:active_session_index] = session_index
+        session[:student_list] = all_students
       end
 
       # def teacher_class_detail_current_session
