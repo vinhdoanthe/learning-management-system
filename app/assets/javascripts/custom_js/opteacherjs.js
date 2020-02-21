@@ -138,7 +138,7 @@ $(document).ready(function(){
 	var session_index = '';
 	var batch_id = $("#batch_id").val();
 	var lesson_data = {'session_index': '', 'batch_id': batch_id};
-	var subject_id = $(".subject_id").find('input[name="subject_id"]').val();
+	var subject_id = $(".subject_id.active").find('input[name="subject_id"]').val();
 
 	$('#session_time_table').on('click', '.lesson_link', function(e){
 		e.preventDefault();
@@ -281,7 +281,7 @@ $(document).ready(function(){
 		$.ajax({
 			method: 'post',
 			url: '/user/teacher_checkin',
-			data: {'falcuty_id': teacher, 'time': time, 'session_id': session_id},
+			data: {'faculty_id': teacher, 'time': time, 'session_id': session_id},
 			success: function(){
 				
 			}
