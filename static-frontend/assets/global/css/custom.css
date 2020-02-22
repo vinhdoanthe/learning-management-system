@@ -154,10 +154,43 @@
 .fc-header{
 	border-bottom: 2px solid #D7DFE9;
 	    padding: 10px 0 15px;
+	    position: relative;
 }
 .fc-header h3{
 	color: #000;
 	font-size: 14px;
+	font-family: 'Montserrat-Bold';
+}
+.fc-header .fc-step{
+	position: absolute;
+	right: 0;
+	top: 8px;
+}
+.fc-step li{}
+.fc-step li button{}
+
+.list-first{
+	position: relative;
+}
+.list-first p{}
+.list-first p label{
+	display: block;
+}
+.list-first p span{}
+.list-first .icheck-inline{
+	position: absolute;
+	right: 0;
+	top: 25%;
+}
+
+.table-star img{
+	width: 20px;
+	margin-right: 5px;
+}
+.table-star{
+	display: inline-block;
+	font-size: 14px;
+	color: #FFC400;
 	font-family: 'Montserrat-Bold';
 }
 .fc-other{
@@ -1328,62 +1361,6 @@ position: absolute;
 .table-list{
 	margin-top: 20px
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .calendar-teach table tbody tr td{
 	height: 50px;
 	padding: 0;
@@ -1600,6 +1577,214 @@ ul.ctd-popover li strong{
 .append-icon input{
 	padding-right: 0 !important
 }
+
+.bo-lession{
+	border: 1px solid #D7DFE9;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+.bol-step-all{}
+.bol-step1{}
+.bo-step-title{
+	position: relative;
+}
+.bo-step-title h3{}
+.bo-step-title .line-title{
+	/*position: absolute;*/
+}
+.bo-step-title .line-title li{
+	display: inline-block;
+}
+.bo-step-title .line-title li .dot1{
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: #F5A623;
+	display: inline-block;
+}
+.bo-step-title .line-title li .dot2{
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: #FCF055;
+	display: inline-block;
+}
+.bo-step-title .line-title li .dot3{
+	width: 30px;
+	height: 5px;
+	border-radius: 10px;
+	background: #5DC2A7;
+	display: inline-block;
+}
+
+.bo-step-content{}
+ul.bsc-list{
+    margin-top: 20px;
+}
+ul.bsc-list li{
+	padding-left: 20px;
+	position: relative;
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+ul.bsc-list li:before{
+	position: absolute;
+	content: '';
+	top: 8px;
+	left: 0;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #5DC2A7
+}
+ul.bsc-list li:after{
+position: absolute;
+    content: '';
+    top: 10px;
+    left: 2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FCF055;
+}
+.bsc-img{
+	width: 70%;
+	margin: 20px auto;
+	text-align: center;
+}
+.bsc-img p{
+	position: relative;
+	text-align: center;
+	font-size: 12px;
+	padding: 0 50px;
+    margin-top: 30px;
+}
+.bsc-img p:before{
+	position: absolute;
+	content: '';
+	width: 50px;
+	height: 50px;
+	background: url(../images/quote-left.png) no-repeat;
+	top: -20px;
+	left: 0;
+}
+.bsc-img p:after{
+	position: absolute;
+	content: '';
+	width: 50px;
+	height: 50px;
+	background: url(../images/quote-right.png) no-repeat;
+	top: 0;
+	right: 0;
+}
+
+.bos-detail{
+	margin-top: 20px;
+}
+.bos-detail ul.bsc-list{
+	margin-top: 0
+}
+.bos-detail label{
+	margin-bottom: 10px;
+	position: relative;
+	padding-left: 20px;
+}
+.bos-detail label:before{
+	position: absolute;
+	content: '';
+	top: 2px;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	background: url(../images/success.png) no-repeat;
+}
+
+.box-product{
+	margin-top: 20px;
+}
+.prod-detail{
+	border: 1px solid #dcdcdc;
+	border-radius: 5px;
+	margin-bottom: 10px;
+
+}
+.prod-detail .prod-img{
+	max-height: 175px;
+	display: table;
+	vertical-align: middle;
+	width: 100%;
+	text-align: center;
+}
+.prod-detail .prod-img span{
+	max-height: 175px;
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+	text-align: center;
+}
+.prod-detail .prod-img span img{}
+.prod-detail .prod-text{
+	padding: 20px 10px;
+	display: inline-block;
+    width: 100%;
+}
+.prod-detail .prod-text label{
+	margin-bottom: 10px;
+}
+.prod-detail .prod-text p{
+	margin-bottom: 10px;
+	color: #6D7278;
+
+}
+.prod-detail .prod-text a{
+	position: relative;
+	display: inline-block;color: #0654BA;
+	font-size: 12px;
+	padding-right: 35px;
+	float: right;
+}
+.prod-detail .prod-text a:before{
+	position: absolute;
+	content: '';
+	width: 27px;
+	height: 12px;
+	background: url(../images/next.png) no-repeat;
+	top: 4px;
+	right: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

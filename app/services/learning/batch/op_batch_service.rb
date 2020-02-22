@@ -102,6 +102,26 @@ module Learning
         end
         cancel_sessions
       end
+
+
+      def self.match_session_with_lesson
+        errors = []
+        done_sessions = Learning::Batch::OpSession.where(state: Learning::Constant::Batch::Session::STATE_DONE)
+        binding.pry
+        unless done_sessions.blank?
+          done_sessions.each do |session|
+            att_sheet = session.op_attendance_sheets.last
+            unless att_sheet.nil?
+              session.lession_id = att_sheet.lession_id
+              session.save
+              if session.errors.full_messages.any?
+                errors << session.errors.full_messages.to_s
+              end
+            end
+          end
+        end
+        binding.pry
+      end
     end
   end
 end

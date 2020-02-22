@@ -1,24 +1,10 @@
 <!--Local variable: to_be_session -->
 
 <tr>
-  <td>
-    <div class="calenda-box">
-      <% start_datetime = session.start_datetime %>
-      <% end_datetime = session.end_datetime %>
-      <div class="cb-tit">
-        <p><%= start_datetime.strftime('%B') %></p>
-      </div>
-      <div class="cb-con">
-        <strong><%= start_datetime.strftime('%d') %></strong>
-        <p><%= start_datetime.strftime('%H-%M') %> - <%= end_datetime.strftime('%H-%M') %><br/>Thứ 7</p>
-      </div>
-    </div>
-  </td>
-  <td>
-    <div class="photo-box">
-      <span><img src="" alt=""></span>
-    </div>
-  </td>
+  <%= render 'user/shared/session/row/session_calendar_box', {:session => session} %>
+  <% lesson = session.op_lession %>
+
+  <%= render 'user/shared/session/row/session_lesson_thumbnail_box', {:lesson => lesson} %>
   <td>
     <strong>Cần lấy dữ liệu này</strong><br/>
     Cần lấy dữ liệu này <br/>

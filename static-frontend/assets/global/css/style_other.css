@@ -67,6 +67,10 @@ body p strong {
 body > .pace > .pace-activity {
   display: none !important;
 }
+img{
+	max-height: 100%;
+	max-width: 100%;
+}
 input,
 select,
 textarea {
@@ -376,6 +380,9 @@ td,th{
 }
 .bg-F4F6F8{
 	background: #F4F6F8 !important;
+}
+.bg-f5f5f5{
+	background: #f5f5f5 !important;
 }
 .bg-232837{
 	background: #232837 !important;
