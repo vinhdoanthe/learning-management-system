@@ -92,11 +92,9 @@ module User
     end
 
     def teacher_attendance
-      # binding.pry
       lines = []
       unless params[:student].blank?
         params[:student].each_value do |student_params|
-          # binding.pry
           line = {}
           line[:student_id] = (student_params['student_id']).to_i
           line[:is_present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
@@ -104,7 +102,7 @@ module User
           lines.append line
         end
       end
-      binding.pry
+
       errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: params[:faculty_id].to_i, attendance_time: Time.now, attendance_lines: lines)
     end
 
