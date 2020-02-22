@@ -362,5 +362,10 @@ $(document).ready(function(){
 	$('#upload_session_photo').on('click', function(){
 		$('#photo_review').html('')
 	})
+
+	$('#upload_photo_confirm').on('click', function(){
+		$('#upload_photo').modal('hide');
+	})
+	
 })
 

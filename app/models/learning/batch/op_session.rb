@@ -4,7 +4,10 @@ module Learning
       self.table_name = 'op_session'
       self.inheritance_column = 'object_type'
 
-      attr_accessor :delete_photos
+      attr_accessor :remove_photos
+      after_save do
+        Array(remove_photos).each {|id| photos.find_by_id(id).try(:purge)}
+      end
 
       belongs_to :op_faculty, :class_name => 'User::OpFaculty', foreign_key: 'faculty_id'
       belongs_to :op_batch, :class_name => 'Learning::Batch::OpBatch', foreign_key: 'batch_id'
