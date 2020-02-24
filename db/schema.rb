@@ -7057,6 +7057,7 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
     t.float "salary_before", comment: "Lương trước khi phạt"
     t.float "salary_per_hour", comment: "Lương theo giờ"
     t.boolean "active", comment: "Active"
+    t.integer "lession_id", comment: "Lesson"
   end
 
   create_table "op_session_change_faculty", id: :serial, comment: "op.session.change.faculty", force: :cascade do |t|

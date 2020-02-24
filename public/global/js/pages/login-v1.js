@@ -1,9 +1,8 @@
-function copyrightPos(){
+function copyrightPos() {
     var windowHeight = $(window).height();
-    if(windowHeight < 700) {
+    if (windowHeight < 700) {
         $('.account-copyright').css('position', 'relative').css('margin-top', 40);
-    }
-    else {
+    } else {
         $('.account-copyright').css('position', '').css('margin-top', '');
     }
 }
@@ -15,7 +14,7 @@ $(window).resize(function() {
 $(function() {
 
     copyrightPos();
-    if($('body').data('page') == 'login'){
+    if ($('body').data('page') == 'login') {
 
         /* Show / Hide Password Recover Form */
         $('#password').on('click', function(e) {
@@ -30,7 +29,49 @@ $(function() {
                 $('.form-signin').slideDown(300);
             });
         });
-        $('#submit-form, #submit-password').click(function(e) {
+
+        var form = $(".form-signin");
+        $('#submit-form').click(function(e) {
+            form.validate({
+                rules: {
+                    username: {
+                        required: true,
+                        minlength: 3,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 16
+                    }
+                },
+                messages: {
+                    username: {
+                        required: 'Enter your username'
+                    },
+                    password: {
+                        required: 'Write your password'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element);
+                }
+            });
+            e.preventDefault();
+            if (form.valid()) {
+                $(this).addClass('ladda-button');
+                var l = Ladda.create(this);
+                l.start();
+                setTimeout(function() {
+                    window.location.href = "dashboard.html";
+                }, 2000);
+            } else {
+                $('body').addClass('boxed');
+                // alert('not valid');
+            }
+        });
+
+        $('#submit-form, #submit-password').click(function() {
+
             e.preventDefault();
             var l = Ladda.create(this);
             l.start();
@@ -38,18 +79,17 @@ $(function() {
                 window.location.href = "dashboard.html";
             }, 2000);
         });
-        $.backstretch(["../assets/global/images/gallery/login.jpg"],
-        {
-            fade: 600,
-            duration: 4000
-        });
 
+        $.backstretch(["../assets/global/images/gallery/login4.jpg", "../assets/global/images/gallery/login3.jpg", "../assets/global/images/gallery/login2.jpg", "../assets/global/images/gallery/login.jpg"], {
+                    fade: 600,
+                    duration: 4000
+                });
 
         /***** DEMO CONTENT, CAN BE REMOVED ******/
         $("#account-builder").on('mouseenter', function() {
             TweenMax.to($(this), 0.35, {
                 css: {
-                    height: 130,
+                    height: 160,
                     width: 500,
                     left: '37%',
                     'border-bottom-left-radius': 0,
@@ -80,10 +120,29 @@ $(function() {
                 $('.social-btn').slideDown(function() {
                     $('body').removeClass('no-social');
                 });
-            }
-            else {
+            } else {
                 $('.social-btn').slideUp(function() {
                     $('body').addClass('no-social');
+                });
+            }
+        });
+        /* Hide / Show Boxed Form */
+        $('#boxed-cb').change(function() {
+            if ($(this).is(":checked")) {
+                TweenMax.to($('.account-wall'), 0.5, {
+                    backgroundColor: 'rgba(255, 255, 255,1)',
+                    ease: Circ.easeInOut,
+                    onComplete: function() {
+                        $('body').addClass('boxed');
+                    }
+                });
+            } else {
+                TweenMax.to($('.account-wall'), 0.5, {
+                    backgroundColor: 'rgba(255, 255, 255,0)',
+                    ease: Circ.easeInOut,
+                    onComplete: function() {
+                        $('body').removeClass('boxed');
+                    }
                 });
             }
         });
@@ -95,8 +154,7 @@ $(function() {
                     duration: 4000
                 });
                 $('#slide-cb').attr('checked', false);
-            }
-            else $.backstretch("destroy");
+            } else $.backstretch("destroy");
         });
         /* Add / Remove Slide Image */
         $('#slide-cb').change(function() {
@@ -106,9 +164,50 @@ $(function() {
                     duration: 4000
                 });
                 $('#image-cb').attr('checked', false);
-            }
-            else {
+            } else {
                 $.backstretch("destroy");
+            }
+        });
+        /* Separate Inputs */
+        $('#input-cb').change(function() {
+            if ($(this).is(":checked")) {
+                TweenMax.to($('.username'), 0.3, {
+                    css: {
+                        marginBottom: 8,
+                        'border-bottom-left-radius': 2,
+                        'border-bottom-right-radius': 2
+                    },
+                    ease: Circ.easeInOut,
+                    onComplete: function() {
+                        $('body').addClass('separate-inputs');
+                    }
+                });
+                TweenMax.to($('.password'), 0.3, {
+                    css: {
+                        'border-top-left-radius': 2,
+                        'border-top-right-radius': 2
+                    },
+                    ease: Circ.easeInOut
+                });
+            } else {
+                TweenMax.to($('.username'), 0.3, {
+                    css: {
+                        marginBottom: -1,
+                        'border-bottom-left-radius': 0,
+                        'border-bottom-right-radius': 0
+                    },
+                    ease: Circ.easeInOut,
+                    onComplete: function() {
+                        $('body').removeClass('separate-inputs');
+                    }
+                });
+                TweenMax.to($('.password'), 0.3, {
+                    css: {
+                        'border-top-left-radius': 0,
+                        'border-top-right-radius': 0
+                    },
+                    ease: Circ.easeInOut
+                });
             }
         });
         /* Hide / Show User Image */
@@ -118,8 +217,7 @@ $(function() {
                     opacity: 0,
                     ease: Circ.easeInOut
                 });
-            }
-            else {
+            } else {
                 TweenMax.to($('.user-img'), 0.3, {
                     opacity: 1,
                     ease: Circ.easeInOut
@@ -128,18 +226,17 @@ $(function() {
         });
 
     }
-    if($('body').data('page')== 'signup'){
+    if ($('body').data('page') == 'signup') {
 
         var form = $(".form-signup");
-        $.backstretch(["../assets/global/images/gallery/login.jpg"],
-        {
+        $.backstretch(["../assets/global/images/gallery/login.jpg"], {
             fade: 600,
             duration: 4000
         });
         $("#account-builder").on('mouseenter', function() {
             TweenMax.to($(this), 0.35, {
                 css: {
-                    height: 130,
+                    height: 160,
                     width: 500,
                     left: '37%',
                     'border-bottom-left-radius': 0,
@@ -170,10 +267,29 @@ $(function() {
                 $('.social-btn').slideDown(function() {
                     $('body').removeClass('no-social');
                 });
-            }
-            else {
+            } else {
                 $('.social-btn').slideUp(function() {
                     $('body').addClass('no-social');
+                });
+            }
+        });
+        /* Hide / Show Boxed Form */
+        $('#boxed-cb').change(function() {
+            if ($(this).is(":checked")) {
+                TweenMax.to($('.account-wall'), 0.5, {
+                    backgroundColor: 'rgba(255, 255, 255,1)',
+                    ease: Circ.easeInOut,
+                    onComplete: function() {
+                        $('body').addClass('boxed');
+                    }
+                });
+            } else {
+                TweenMax.to($('.account-wall'), 0.5, {
+                    backgroundColor: 'rgba(255, 255, 255,0)',
+                    ease: Circ.easeInOut,
+                    onComplete: function() {
+                        $('body').removeClass('boxed');
+                    }
                 });
             }
         });
@@ -185,8 +301,7 @@ $(function() {
                     duration: 4000
                 });
                 $('#slide-cb').attr('checked', false);
-            }
-            else $.backstretch("destroy");
+            } else $.backstretch("destroy");
         });
         /* Add / Remove Slide Image */
         $('#slide-cb').change(function() {
@@ -196,9 +311,20 @@ $(function() {
                     duration: 4000
                 });
                 $('#image-cb').attr('checked', false);
-            }
-            else {
+            } else {
                 $.backstretch("destroy");
+            }
+        });
+        /* Hide / Show Terms Checkbox */
+        $('#terms-cb').change(function() {
+            if ($(this).is(":checked")) {
+                $('.terms').slideDown(function() {
+                    $('body').removeClass('no-terms');
+                });
+            } else {
+                $('.terms').slideUp(function() {
+                    $('body').addClass('no-terms');
+                });
             }
         });
         /* Hide / Show User Image */
@@ -208,8 +334,7 @@ $(function() {
                     opacity: 0,
                     ease: Circ.easeInOut
                 });
-            }
-            else {
+            } else {
                 TweenMax.to($('.user-img'), 0.3, {
                     opacity: 1,
                     ease: Circ.easeInOut
@@ -219,13 +344,11 @@ $(function() {
         $('#submit-form').click(function(e) {
             form.validate({
                 rules: {
-                    firstname:
-                    {
+                    firstname: {
                         required: true,
                         minlength: 3,
                     },
-                    lastname:
-                    {
+                    lastname: {
                         required: true,
                         minlength: 4,
                     },
@@ -270,7 +393,7 @@ $(function() {
                         required: 'Write your password',
                         minlength: 'Minimum 6 characters',
                         maxlength: 'Maximum 16 characters',
-                        equalTo: 'Password don\'t match'
+                        equalTo: '2 passwords must be the same'
                     },
                     terms: {
                         required: 'You must agree with terms'
@@ -279,8 +402,7 @@ $(function() {
                 errorPlacement: function(error, element) {
                     if (element.is(":radio") || element.is(":checkbox")) {
                         element.closest('.option-group').after(error);
-                    }
-                    else {
+                    } else {
                         error.insertAfter(element);
                     }
                 }
@@ -288,14 +410,16 @@ $(function() {
             e.preventDefault();
             if (form.valid()) {
                 $(this).addClass('ladda-button');
+                alert('valide');
                 var l = Ladda.create(this);
                 l.start();
                 setTimeout(function() {
                     window.location.href = "dashboard.html";
                 }, 2000);
+            } else {
+                // alert('not valid');
             }
         });
 
     }
-    
 });

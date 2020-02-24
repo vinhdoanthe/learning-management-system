@@ -1714,6 +1714,7 @@ position: absolute;
 	vertical-align: middle;
 	width: 100%;
 	text-align: center;
+	position: relative;
 }
 .prod-detail .prod-img span{
 	max-height: 175px;
@@ -1723,6 +1724,31 @@ position: absolute;
 	text-align: center;
 }
 .prod-detail .prod-img span img{}
+.prod-detail .prod-img .name-card{
+}
+.name-card{
+	display: inline-block;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	background: #D7DFE9;
+	padding: 10px 10px 0px;
+}
+.name-card p{
+	position: relative;
+	margin-bottom: 10px;
+	padding-left: 25px;
+}
+.name-card p span.nc-img{
+	width: 22px;
+	margin-right: 5px;
+	display: inline-block;
+	float: left;
+	position: absolute;
+	left: 0;
+	top: -4px;
+}
+
 .prod-detail .prod-text{
 	padding: 20px 10px;
 	display: inline-block;
@@ -1753,22 +1779,226 @@ position: absolute;
 	right: 0;
 }
 
+.lession-video{
+    border-bottom: 1px dashed #dcdcdc;
+}
+.lv-title{
+	text-align: center;
+}
+.lv-title h3{
+	font-size: 24px !important;
+	color: #5DC2A7;
+	text-transform: uppercase;
+	font-family: 'Montserrat-Bold';
+	margin-bottom: 10px !important;
+	margin-top: 25px !important;;
+	position: relative;
+	display: inline-block;
+}
+.lv-title h3 span.lvt-tag{
+	position: absolute;
+    right: -30px;
+    top: -25px;
+    background: url(../images/tag.png) no-repeat;
+    width: 30px;
+    height: 33px;
+    font-size: 15px;
+    font-family: 'Montserrat-Regular';
+    color: #000;
+    padding: 5px 8px;
+}
+.lv-title p{
+	font-size: 14px;
+	text-align: center;
+}
+.lv-title p b{
+	font-family: 'Montserrat-Bold';
+}
+.lv-title ul{
+	text-align: center;
+	margin: 10px 0 20px;
+}
+.lv-title ul li{
+	display: inline-block;
+}
+.lv-title ul li span.lvt-img{}
+.lv-title ul li span.lvt-img img{}
 
+.lv-slide{
+	padding: 0 30px;
+}
+.lvs-detail{
+	border: 1px solid #dcdcdc;
+	margin: 5px 0;
+	border-radius: 8px;
+	display: inline-block;
+}
+.lvs-detail span.lvd-img{}
+.lvs-detail span.lvd-img img{}
+.lvs-detail p{
+	margin-top: 10px;
+	color: #000;
+	text-transform: uppercase;
+	padding: 5px 10px
+}
+.lvs-detail .lvd-footer{
+	padding: 5px 10px;
+	background: #EDEDED;
+	    display: inline-block;
+    width: 100%;
+    margin-bottom: -5px;
+}
+.lvf-left{
+	float: left;
+}
+.lvf-left ul{
+	display: inline-block;
+	margin-left: 10px;
+}
+.lvf-left ul li{
+	display: inline-block;
+}
+.lvf-left ul li span{
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	display: inline-block;
+}
 
+.lvf-right{
+	float: left;
+	margin-left: 20px;
+}
+.lvf-right span.chart-line{
+	display: inline-block;
+	width: 100px;
+	height: 10px;
+	border: 1px solid #2D2D2D;
+	background: #2D2D2D;
+	position: relative;
+	border-radius: 10px;
+}
+.lvf-right span.chart-line span.chart-line-child{
+	position: absolute;
+	top: 0px;
+	height: 8px;
+	background: #FCF055;
+	border-radius: 10px 0 0 10px
+}
+.lvf-right b{}
+.lv-btn{
+	text-align: center;
+	margin-top: 20px;
+}
+.lv-btn a{
+    height: 50px !important;
+    font-size: 10px;
+}
+.lv-btn a span.lvb-text{
+	font-size: 14px;
+}
 
+.box-technology{
+    margin-top: 35px;
+}
+.bt-title{
+	margin-bottom: 5px;
+}
+.bt-title h3{
+	color: #5DC2A7;
+}
+.bt-content{}
+.bt-left{}
+.box-imglist{
+	border-bottom: 1px dashed #dcdcdc;
+	padding-bottom: 20px;
+}
+.box-imglist span{}
+.box-imglist span img{}
+.box-imglist label{
+	font-size: 14px;
+	font-family: 'Montserrat-Medium';
+	margin-top: 10px;
+}
+.box-imglist ul{
+	margin-top: 0 !important
+}
+.box-imglist ul li{
+	margin-bottom: 0;
+}
+.box-imglist ul li b{
+	color: #000;
+}
+.box-about{
+	margin-top: 20px;
+	position: relative;
+	border-bottom: 1px dashed #dcdcdc;
+	padding-bottom: 20px;
+}
+a.ba-more{
+	background-image:linear-gradient(to top, rgba(255,255,255,1) 40%, rgba(255,255,255,0.5));
+	display: inline-block;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	text-align: right;
+	padding: 50px 10px 20px 10px;
+	text-transform: uppercase;
+}
+.box-quest{
+	margin-top: 20px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+.bt-right{}
+.bt-right ul{
+	margin-left: -15px;
+}
+.bt-right ul li{
+	float: left;
+	width: 245px;
+	height: 245px;
+	padding-left: 15px; 
+	margin-bottom: 15px
+}
+.btr-detail{
+	position: relative;
+	display: inline-block;
+}
+.btr-detail span{
+	display: inline-block;
+	width: 100%;
+	
+}
+.btr-detail span.btd-img1{}
+.btr-detail span.btd-img1 img{}
+.btr-detail span.btd-img2{
+position: absolute;
+    z-index: 8;
+    background: rgba(0,0,0,0.5);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    text-align: center;
+    padding: 85px 0;
+        border-radius: 5px;
+}
+.btr-detail span.btd-img2 img{}
+.btr-detail span.btd-text{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	    padding: 13px 16px;
+	    z-index: 9;
+}
+.btr-detail span.btd-text p{
+	color: #ffff;
+	font-family: 'Montserrat-Bold';
+}
+.btr-detail-active.btr-detail span.btd-img2{
+	display: none;
+} 
 
 
 

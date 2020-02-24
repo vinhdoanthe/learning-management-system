@@ -29,6 +29,9 @@ gem 'config'
 # Used to call to oDoo
 gem 'xmlrpc'
 
+# Google Drive API
+gem 'google-api-client', '~> 0.34'
+
 ## End manual added gems
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
