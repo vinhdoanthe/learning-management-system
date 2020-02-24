@@ -4,8 +4,13 @@
   <%= render 'user/shared/session/row/session_calendar_box', {:session => session} %>
 
   <% lesson = session.op_lession %>
-  <%= render 'user/shared/session/row/session_lesson_thumbnail_box', {:lesson => lesson} %>
-
+  <td>
+    <div class="photo-box">
+        <span>
+          <%= thumbnail_tag  lesson%>
+        </span>
+    </div>
+  </td>
   <td>
     <strong><%= lesson.nil? ? 'Chưa có dữ liệu' : 'Bài ' + lesson.lession_number.to_s %></strong><br/>
     <%= lesson.nil? ? 'Chưa có dữ liệu' : lesson.name %> <br/>

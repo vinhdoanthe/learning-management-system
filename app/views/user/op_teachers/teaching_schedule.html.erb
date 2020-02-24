@@ -18,7 +18,7 @@
                         <div class="table-responsive calendar-teach" style="overflow-x: initial;">
                             <div class="filter-box FlowupLabels b-b-1-869fb229 m-b-20" id='formBody'>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <label class="filter-title">Toàn bộ <span class="color-16BD56">Lớp học</span></label>
                                     </div>
                                     <div class="col-md-3">
@@ -31,26 +31,33 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class='fl_wrap m-t-0'>
+                                        <div class='fl_wrap m-t-0 chosen_month'>
                                             <label class='fl_label' for='rf_name'>Xem theo:</label>
-                                            <select class='fl_input' id='rf_name' >
+                                            <select class='fl_input month_teaching_schedule' id='rf_name' >
                                                 <option value=""></option>
-                                                <option value="">Tháng 1</option>
-                                                <option value="">Tháng 2</option>
-                                                <option value="">Tháng 3</option>
-                                                <option value="">Tháng 4</option>
-                                                <option value="">Tháng 5</option>
-                                                <option value="">Tháng 6</option>
-                                                <option value="">Tháng 7</option>
-                                                <option value="">Tháng 8</option>
-                                                <option value="">Tháng 9</option>
-                                                <option value="">Tháng 10</option>
-                                                <option value="">Tháng 11</option>
-                                                <option value="">Tháng 12</option>
+                                                <option value="1">Tháng 1</option>
+                                                <option value="2">Tháng 2</option>
+                                                <option value="3">Tháng 3</option>
+                                                <option value="4">Tháng 4</option>
+                                                <option value="5">Tháng 5</option>
+                                                <option value="6">Tháng 6</option>
+                                                <option value="7">Tháng 7</option>
+                                                <option value="8">Tháng 8</option>
+                                                <option value="9">Tháng 9</option>
+                                                <option value="10">Tháng 10</option>
+                                                <option value="11">Tháng 11</option>
+                                                <option value="12">Tháng 12</option>
                                             </select>
                                         </div>
                                     </div>
-                                    
+                                    <div class="col-md-3">
+                                        <div class="chosse-date">
+                                            <p>
+                                                <a class="cd-left schedule_year_previous"><i class="fa fa-caret-square-o-left"></i></a><span><strong class="year_teaching_schedule">
+                                               <%= Time.now.year %></strong></span><a class="cd-right schedule_year_next"><i class="fa fa-caret-square-o-right"></i></a>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <table class="table table-bordered">

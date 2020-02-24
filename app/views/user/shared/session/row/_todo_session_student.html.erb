@@ -3,8 +3,13 @@
 <tr>
   <%= render 'user/shared/session/row/session_calendar_box', {:session => session} %>
   <% lesson = session.op_lession %>
-
-  <%= render 'user/shared/session/row/session_lesson_thumbnail_box', {:lesson => lesson} %>
+  <td>
+    <div class="photo-box">
+        <span>
+          <%= thumbnail_tag  lesson%>
+        </span>
+    </div>
+  </td>
   <td>
     <strong>Cần lấy dữ liệu này</strong><br/>
     Cần lấy dữ liệu này <br/>
