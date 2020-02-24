@@ -59,21 +59,21 @@
 
     <ul class="nav nav-sidebar nav-sidebar-edit">
       <li class="nav-active activea">
-        <a href="">
+        <a href="<%= current_user.is_student? ? root_path : user_teacher_info_path %>">
           <%= image_tag "global/images/no-active/ico-Dashboard.png", class: "img-changes" %>
           <%= image_tag "global/images/active/ico-Dashboard.png", class: "img-change-color" %>
           <span>Dashboard</span>
         </a>
       </li>
       <li class="">
-        <a href="">
+        <a href="<%= current_user.is_student? ? user_student_homework_path : user_teacher_info_path %>">
           <%= image_tag "global/images/no-active/ico-BaiTapOnBai.png", class: "img-changes" %>
           <%= image_tag "global/images/active/ico-BaiTapOnBai.png", class: "img-change-color" %>
           <span>Bài tập & Ôn bài</span>
         </a>
       </li>
       <li class="">
-        <a href="">
+        <a href="<%= current_user.is_student? ? '/user/my_class' : user_teacher_info_path %>">
           <%= image_tag "global/images/no-active/ico-TienDoHocTap.png", class: "img-changes" %>
           <%= image_tag "global/images/active/ico-TienDoHocTap.png", class: 'img-change-color' %>
           <span>Tiến độ học tập</span>
@@ -87,21 +87,21 @@
         </a>
       </li>
       <li class="">
-        <a href="">
+        <a href="<%= current_user.is_student? ? user_student_product_path : user_teacher_info_path %>">
           <%= image_tag "global/images/no-active/ico-SPhocsinh.png", class: 'img-changes' %>
           <%= image_tag "global/images/active/ico-SPhocsinh.png", class: 'img-change-color' %>
           <span>Sản phẩm của học sinh</span>
         </a>
       </li>
       <li class="">
-        <a href="">
+        <a href="<%= current_user.is_student? ? user_student_redeem_path : user_teacher_info_path %>">
           <%= image_tag "global/images/no-active/ico-Redem.png", class: 'img-changes' %>
           <%= image_tag "global/images/active/ico-Redem.png", class: 'img-change-color' %>
           <span>Đổi điểm lấy quà </span>
         </a>
       </li>
       <li class="">
-        <a href="">
+        <a href="<%= current_user.is_student? ? user_student_invoice_path : user_teacher_info_path %>">
           <%= image_tag "global/images/no-active/ico-Invoice.png", class: "img-changes" %>
           <%= image_tag "global/images/active/ico-Invoice.png", class: "img-change-color" %>
           <span>Hoá đơn</span>
