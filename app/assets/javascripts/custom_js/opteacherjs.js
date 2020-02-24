@@ -76,6 +76,7 @@ $(document).ready(function(){
 	function change_view(res, data){
 		$('#student_attendance').html('');
 		$('#lesson_title').html("<strong>BÀI TODO" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: TODO");
+		$('.lesson_thumbnail').attr('src', res.img_src)
 		start_time = change_time(res.session.start_datetime);
 		end_time = change_time(res.session.end_datetime);
 
@@ -209,7 +210,7 @@ $(document).ready(function(){
 								info = schedule[i.toString()]
 								html = '<td class="bg-eaeaea schedule_info"><a data-placement="top" class="ct-detail ctd-cs3 schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li><span>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.subject + ' - Level ' + info.level +' </li><li><strong>Khoá học: </strong> ' + info.batch + '</li><li><strong>Lớp: </strong> ' + info.course + '</li><li><strong>Số buổi: </strong> ' + info.lesson + '</li></ul>"><span></span>'
 								if(info.state == 'cancel'){
-									html += '<img src="assets/global/images/close.png" alt="">' + info.name + ' </a></td>'
+									html += '<img src="/global/images/close.png" alt="">' + info.name + ' </a></td>'
 								}else{
 									html += info.name + ' </a></td>'
 								}

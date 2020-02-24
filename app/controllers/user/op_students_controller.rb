@@ -15,6 +15,21 @@ module User
 
     end
 
+    def student_homework
+
+    end
+
+    def student_product
+
+    end
+
+    def student_redeem
+
+    end
+
+    def student_invoice
+
+    end
   end
 
 end
