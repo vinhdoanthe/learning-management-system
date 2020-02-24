@@ -231,18 +231,40 @@ $(document).ready(function(){
 
 	get_teaching_schedule(save_date);
 
-	$('.schedule_time_previous').click(function(e){
-		save_date.setDate(save_date.getDate() - 7)
+	function fill_table(save_date){
 		used_date = new Date(save_date.getTime());
 		set_date_filter(used_date);
 		get_teaching_schedule(save_date);
+	}
+	$('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
+	$('.chosen_month').addClass('populated')
+	$('.schedule_time_previous').click(function(e){
+		save_date.setDate(save_date.getDate() - 7);
+		$('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
+		fill_table(save_date);
 	})
 
 	$('.schedule_time_next').click(function(e){
-		save_date.setDate(save_date.getDate() + 7)
-		used_date = new Date(save_date.getTime());
-		set_date_filter(used_date);
-		get_teaching_schedule(save_date);
+		save_date.setDate(save_date.getDate() + 7);
+		$('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
+		fill_table(save_date);
+	})
+
+	$('.month_teaching_schedule').on('change', function(){
+		save_date = new Date($('.month_teaching_schedule').val() + '/' + '01' + '/' + $('.year_teaching_schedule').html());
+		fill_table(save_date);
+	})
+
+	$('.schedule_year_previous').on('click', function(){
+		save_date.setYear(save_date.getFullYear() - 1);
+		$('.year_teaching_schedule').html(save_date.getFullYear().toString())
+		fill_table(save_date);
+	})
+
+	$('.schedule_year_next').on('click', function(){
+		save_date.setYear(save_date.getFullYear() + 1);
+		$('.year_teaching_schedule').html(save_date.getFullYear().toString())
+		fill_table(save_date);
 	})
 
 	//Teacher Check-in
@@ -364,8 +386,7 @@ $(document).ready(function(){
 	})
 
 	$('#upload_photo_confirm').on('click', function(){
-		$('#upload_photo').modal('hide');
+		$('#upload_photo').modal('hide')
 	})
-	
 })
 
