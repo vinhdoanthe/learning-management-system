@@ -58,12 +58,13 @@ module User
       @session_index = @sessions.index(@session)
       @subject = @session.op_subject
       sessions_time = @sessions.pluck(:start_datetime, :end_datetime)
+      @lesson = @session.op_lession
       all_students = OpTeachersService.new.teacher_class_detail @batch, @session
 
       teacher_class_detail_active_session(@session.id, @subject.id, @session_index, all_students)
 
       if request.method == 'POST'
-        render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students, sessions_time: sessions_time}
+        render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students, sessions_time: sessions_time, lesson: {learning_device: 'this is learning device'}}
       end
     end
 

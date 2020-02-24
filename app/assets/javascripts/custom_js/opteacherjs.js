@@ -87,6 +87,7 @@ $(document).ready(function(){
 		$('#calendar-box').html('<div class="cb-tit"><p>'+ month +'</p></div><div class="cb-con"><strong>'+ start_time.day +'</strong><p>'+ start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min +'<br/>'+ w_day +'</p></div>')
 
 		$('#session_time_table').html('');
+		$('.learning_device_content').html(res.lesson.learning_device);
 		$.each(res.sessions_time, function(index, time) {
 			start = new Date(time[0]);
 			end = new Date(time[1]);
@@ -163,7 +164,7 @@ $(document).ready(function(){
 
 	//Teaching schedule calendar
 	function get_date_month(fullDate){
-	  twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+	  twoDigitMonth = (fullDate.getMonth().toString().length !== 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
 	  str_date = fullDate.getDate() + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
 	  return str_date;
 	}
@@ -241,17 +242,19 @@ $(document).ready(function(){
 	$('.schedule_time_previous').click(function(e){
 		save_date.setDate(save_date.getDate() - 7);
 		$('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
+		$('.year_teaching_schedule').val(save_date.getFullYear().toString());
 		fill_table(save_date);
 	})
 
 	$('.schedule_time_next').click(function(e){
 		save_date.setDate(save_date.getDate() + 7);
 		$('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
+		$('.year_teaching_schedule').val(save_date.getFullYear().toString());
 		fill_table(save_date);
 	})
 
 	$('.month_teaching_schedule').on('change', function(){
-		save_date = new Date($('.month_teaching_schedule').val() + '/' + '01' + '/' + $('.year_teaching_schedule').html());
+		save_date = new Date($('.month_teaching_schedule').val() + '/' + save_date.getDate().toString() + '/' + $('.year_teaching_schedule').html());
 		fill_table(save_date);
 	})
 
