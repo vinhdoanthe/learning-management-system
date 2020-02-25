@@ -15,9 +15,16 @@ module Learning
         levels
       end
 
-      def get_list_subject_pairs(student_id:, batch_id:)
-        op_student_course = Learning::Batch::OpStudentCourse.where(student_id:student_id, batch_id:batch_id).first
-        op_student_course.op_subjects
+      def get_list_subject_pairs( batch_id:)
+        sessions = Learning::Batch::OpBatch.find(batch_id).op_sessions
+        subject_session_hash = {}
+
+        sessions.each do |session| 
+          subject = session.op_subject
+          subject_session_hash.merge!({subject.id => subject.level})
+        end
+
+        subject_session_hash
       end
 
       def list_subject_level_of_batch(batch_id)
@@ -81,6 +88,10 @@ module Learning
         session[:student_list] = all_students
       end
 
+      def group_session_subjects(sessions)
+        subject_groups = sessions.group_by{ |session| session.subject_id }
+        subject_session = subject_group.each{|k, v| subject_id[k] = v.pluck(:id)}
+      end
       # def teacher_class_detail_current_session
 
       # end

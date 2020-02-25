@@ -107,7 +107,6 @@ module Learning
       def self.match_session_with_lesson
         errors = []
         done_sessions = Learning::Batch::OpSession.where(state: Learning::Constant::Batch::Session::STATE_DONE)
-        binding.pry
         unless done_sessions.blank?
           done_sessions.each do |session|
             att_sheet = session.op_attendance_sheets.last
@@ -120,7 +119,6 @@ module Learning
             end
           end
         end
-        binding.pry
       end
     end
   end
