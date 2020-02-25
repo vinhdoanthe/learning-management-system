@@ -196,11 +196,12 @@ $(document).ready(function(){
 	var used_date = new Date();
 	used_date.setDate(used_date.getDate() - used_date.getDay());
 	set_date_filter(used_date);
+	var url = window.location.href.includes('teaching_schedule') ? '/user/teaching_schedule' : '/user/student_timetable'
 
-	function get_teaching_schedule(date){
+	function get_schedule(date){
 		$.ajax({
 			method: 'post',
-			url: '/user/teaching_schedule',
+			url: url,
 			data: {'date': date},
 			success: function(res){
 				$('.schedule_info').remove();
@@ -231,12 +232,46 @@ $(document).ready(function(){
 		})
 	}
 
-	get_teaching_schedule(save_date);
+	// function get_teaching_schedule(date){
+	// 	$.ajax({
+	// 		method: 'post',
+	// 		url: '/user/teaching_schedule',
+	// 		data: {'date': date},
+	// 		success: function(res){
+	// 			$('.schedule_info').remove();
+	// 			$.each(res.schedules, function(key, schedule){
+	// 					for(var i = 1; i <= 7; i++){
+	// 						if(schedule[i.toString()]){
+	// 							info = schedule[i.toString()]
+	// 							html = '<td class="bg-eaeaea schedule_info"><a data-placement="top" class="ct-detail ctd-cs3 schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li><span>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.subject + ' - Level ' + info.level +' </li><li><strong>Khoá học: </strong> ' + info.batch + '</li><li><strong>Lớp: </strong> ' + info.course + '</li><li><strong>Số buổi: </strong> ' + info.lesson + '</li></ul>"><span></span>'
+	// 							if(info.state == 'cancel'){
+	// 								html += '<img src="/global/images/close.png" alt="">' + info.name + ' </a></td>'
+	// 							}else{
+	// 								html += info.name + ' </a></td>'
+	// 							}
+	// 						}else{
+	// 							html = '<td class="bg-fff schedule_info"></td>'
+	// 						}
+
+	// 						$('.' + key).append(html);
+	// 						$('.schedule_link').click(function(e){ 
+	// 							$(this).popover('show');
+	// 						})
+	// 					}
+	// 			})
+	// 		},
+	// 		error: function(res){
+	// 			console.log(res);
+	// 		}
+	// 	})
+	// }
+
+	get_schedule(save_date);
 
 	function fill_table(save_date){
 		used_date = new Date(save_date.getTime());
 		set_date_filter(used_date);
-		get_teaching_schedule(save_date);
+		get_schedule(save_date);
 	}
 	$('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
 	$('.chosen_month').addClass('populated')
@@ -379,6 +414,29 @@ $(document).ready(function(){
 	  	})
 	  }
 	}
+
+	$('#upload_photo_confirm').on('click', function(){
+		params = $('#photo_upload_form').serializeArray()
+		var formData = new FormData();
+
+		params.forEach(function(p) {
+			formData.append(p['name'], p['value'])
+		})
+		$.each($('#photos_attachment')[0].files, function(i, file){
+			formData.append("photos[]", file);
+		})
+		
+		$.ajax({
+			method: 'POST',
+			url: '/add_photo_attachment',
+			data: formData,
+			contentType: false,
+			processData: false,
+			success: function(res){
+				display_noti(res)
+			}
+		})
+	})
 
 	$("#photos_attachment").change(function() {
 		$('#photo_review').html('');

@@ -2,7 +2,9 @@ module User
 
   class OpStudentsController < ApplicationController
 
-    before_action :authenticate_student!, :student_info
+    before_action :authenticate_student!, :student_info, :find_student
+    skip_before_action :verify_authenticity_token
+
     def index
       @op_students = OpStudent.all
     end
@@ -29,6 +31,31 @@ module User
 
     def student_invoice
 
+    end
+
+    def student_timetable
+      batches = @student.op_batches
+      @sessions = []
+      session = []
+
+      batches.each do |batch|
+        @sessions << batch.op_sessions
+        session << batch.op_sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).last
+      end
+
+      @session = session[0]
+      session.each{|s| @session = s if s.present? && @session.start_datetime <= s.start_datetime}
+      schedules = OpTeachersService.teaching_schedule(@sessions, params)
+
+      if request.method == 'POST'
+        render json: {schedules: schedules}
+      end
+    end
+
+    private
+
+    def find_student
+      @student = current_user.op_student
     end
   end
 

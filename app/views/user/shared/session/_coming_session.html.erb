@@ -2,15 +2,16 @@
   <div class="fc-header">
     <h3>Buổi học <span class="color-F16357">Sắp diễn ra</span></h3>
   </div>
-  <% if !coming_soon_session.nil? and !coming_session.empty? %>
+  <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
     <table class="table m-b-0">
       <tbody>
       <tr>
         <td>
           <p><%= coming_soon_session.op_subject.name %></p>
         </td>
-        <td align="right"><p class="text-right"><%= coming_soon_session.start_datetime.strftime('%H-%M') %>
-          - <%= coming_soon_session.end_datetime.strftime('%H-%M') %> | Thứ 7, 20/11/2019</p></td>
+        <% start = coming_soon_session.start_datetime %>
+        <td align="right"><p class="text-right"><%= start.strftime('%H-%M') %>
+          - <%= coming_soon_session.end_datetime.strftime('%H-%M') %> | <%= start.strftime('%A') + ', ' + start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %></p></td>
         <td width="135">
           <div id="clockdiv">
             <div>
@@ -34,3 +35,4 @@
     <div>Không có buổi học tiếp theo nào</div>
   <% end %>
 </div>
+<%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true%>

@@ -65,6 +65,13 @@
           <span>Dashboard</span>
         </a>
       </li>
+      <li class="nav-active activea">
+        <a href="<%= current_user.is_student? ? user_student_timetable_path : user_teacher_info_path %>">
+          <%= image_tag "global/images/no-active/ico-Dashboard.png", class: "img-changes" %>
+          <%= image_tag "global/images/active/ico-Dashboard.png", class: "img-change-color" %>
+          <span>Thời khoá biểu</span>
+        </a>
+      </li>
       <li class="">
         <a href="<%= current_user.is_student? ? user_student_homework_path : user_teacher_info_path %>">
           <%= image_tag "global/images/no-active/ico-BaiTapOnBai.png", class: "img-changes" %>
