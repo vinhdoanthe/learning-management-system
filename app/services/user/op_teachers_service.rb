@@ -64,11 +64,23 @@ class User::OpTeachersService
   def self.teaching_schedule session_list, params
 
     if params[:date].present?
-      sessions = session_list.where(:start_datetime => params[:date].to_time.all_week)
+      if session_list.kind_of?(Array)
+        sessions = []
+        session_list.each{|list| sessions << list.where(:start_datetime => params[:date].to_time.all_week)}
+      else
+        sessions = session_list.where(:start_datetime => params[:date].to_time.all_week)
+      end
     else
-      sessions = session_list.where(:start_datetime => Time.now.all_week)
+      if session_list.kind_of?(Array)
+        sessions = []
+        session_list.each{|list| sessions << list.where(:start_datetime => Time.now.all_week)}
+      else
+        sessions = session_list.where(:start_datetime => Time.now.all_week)
+      end
     end
 
+    sessions.flatten!
+    sessions.select!{ |session| session if session.present?}
     schedule_hash = {'s1' => {}, 's2' => {}, 'c1' => {}, 'c2' => {}, 't1' => {}, 't2' => {}}
 
     sessions.each do |session|
