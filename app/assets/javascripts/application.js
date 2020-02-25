@@ -2,6 +2,8 @@
 //=require jquery_ujs
 //= require layout.js
 //=require custom_js/opteacherjs.js
+//=require custom_js/opstudent.js
+
 
 
 $(document).ready( function() {

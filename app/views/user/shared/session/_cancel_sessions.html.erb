@@ -15,7 +15,9 @@
       </thead>
       <tbody>
       <% cancel_sessions.each do |cancel_session| %>
+        <tr class="student_subject_level <%= 'subject_level_' + cancel_session.op_subject.id.to_s %>">
         <%= render 'user/shared/session/row/cancel_session_student', {:session => cancel_session} %>
+        <tr>
       <% end %>
       </tbody>
     </table>

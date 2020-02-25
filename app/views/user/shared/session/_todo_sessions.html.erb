@@ -14,7 +14,9 @@
       </thead>
       <tbody>
       <% todo_sessions.each do |todo_session| %>
-        <%= render 'user/shared/session/row/todo_session_student', {:session => todo_session} %>
+        <tr class="student_subject_level <%='subject_level_' + todo_session.op_subject.id.to_s %>">
+          <%= render 'user/shared/session/row/todo_session_student', {:session => todo_session} %>
+        </tr>
       <% end %>
       </tbody>
     </table>
