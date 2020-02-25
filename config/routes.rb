@@ -26,6 +26,11 @@ Rails.application.routes.draw do
     post 'teacher_attendance' => 'op_teachers#teacher_attendance'
     resources :users
     resources :op_students, only: [:index, :new]
+
+    get 'student_homework' => 'op_students#student_homework'
+    get 'student_product' => 'op_students#student_product'
+    get 'student_redeem' => 'op_students#student_redeem'
+    get 'student_invoice' => 'op_students#student_invoice'
   end
   resources :password_resets,     only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'sessions#add_photo_attachment'

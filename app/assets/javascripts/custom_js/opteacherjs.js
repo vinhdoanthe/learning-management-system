@@ -76,6 +76,7 @@ $(document).ready(function(){
 	function change_view(res, data){
 		$('#student_attendance').html('');
 		$('#lesson_title').html("<strong>BÀI TODO" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: TODO");
+		$('.lesson_thumbnail').attr('src', res.img_src)
 		start_time = change_time(res.session.start_datetime);
 		end_time = change_time(res.session.end_datetime);
 
@@ -87,6 +88,7 @@ $(document).ready(function(){
 		$('#calendar-box').html('<div class="cb-tit"><p>'+ month +'</p></div><div class="cb-con"><strong>'+ start_time.day +'</strong><p>'+ start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min +'<br/>'+ w_day +'</p></div>')
 
 		$('#session_time_table').html('');
+		$('.learning_device_content').html(res.lesson.learning_device);
 		$.each(res.sessions_time, function(index, time) {
 			start = new Date(time[0]);
 			end = new Date(time[1]);
@@ -163,7 +165,7 @@ $(document).ready(function(){
 
 	//Teaching schedule calendar
 	function get_date_month(fullDate){
-	  twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+	  twoDigitMonth = (fullDate.getMonth().toString().length !== 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
 	  str_date = fullDate.getDate() + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
 	  return str_date;
 	}
@@ -208,7 +210,7 @@ $(document).ready(function(){
 								info = schedule[i.toString()]
 								html = '<td class="bg-eaeaea schedule_info"><a data-placement="top" class="ct-detail ctd-cs3 schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li><span>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.subject + ' - Level ' + info.level +' </li><li><strong>Khoá học: </strong> ' + info.batch + '</li><li><strong>Lớp: </strong> ' + info.course + '</li><li><strong>Số buổi: </strong> ' + info.lesson + '</li></ul>"><span></span>'
 								if(info.state == 'cancel'){
-									html += '<img src="assets/global/images/close.png" alt="">' + info.name + ' </a></td>'
+									html += '<img src="/global/images/close.png" alt="">' + info.name + ' </a></td>'
 								}else{
 									html += info.name + ' </a></td>'
 								}
@@ -241,17 +243,19 @@ $(document).ready(function(){
 	$('.schedule_time_previous').click(function(e){
 		save_date.setDate(save_date.getDate() - 7);
 		$('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
+		$('.year_teaching_schedule').val(save_date.getFullYear().toString());
 		fill_table(save_date);
 	})
 
 	$('.schedule_time_next').click(function(e){
 		save_date.setDate(save_date.getDate() + 7);
 		$('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
+		$('.year_teaching_schedule').val(save_date.getFullYear().toString());
 		fill_table(save_date);
 	})
 
 	$('.month_teaching_schedule').on('change', function(){
-		save_date = new Date($('.month_teaching_schedule').val() + '/' + '01' + '/' + $('.year_teaching_schedule').html());
+		save_date = new Date($('.month_teaching_schedule').val() + '/' + save_date.getDate().toString() + '/' + $('.year_teaching_schedule').html());
 		fill_table(save_date);
 	})
 

@@ -46,7 +46,7 @@
                                             </td>
                                             <td width="130" id='lesson_img'>
                                                 <div class="photo-box">
-                                                    <span><img src="" alt=""></span>
+                                                    <span><img class='lesson_thumbnail' src="" alt=""></span>
                                                 </div>
                                             </td>
                                             <!-- TO DO -->
@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="fc-list-btn pull-right">
                                             <ul>
-                                                <li><button type="button" class="btn btn-default btn-embossed">Học cụ</button></li>
+                                                <li><button type="button" class="btn btn-default btn-embossed" id="learning_device" data-toggle="modal" data-target="#modal_learning_device">Học cụ</button></li>
                                                 <li><button type="button" class="btn btn-default btn-embossed" id="teacher_checkin" data-toggle="modal" data-target="#modal_checkin">Check-in</button></li>
                                                 <li><button type="button" class="btn btn-default btn-embossed" id="teacher_attendance" data-toggle="modal" data-target="#modal_attendance">Điểm danh</button></li>
                                                 <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#hoclieu">Học liệu</button></li>
@@ -115,4 +115,5 @@
     <%= render 'user/op_teachers/modals/teacher_checkin' %>
     <%= render 'user/op_teachers/modals/teacher_attendance' %>
     <%= render 'user/op_teachers/modals/upload_photo' %>
+    <%= render 'user/op_teachers/modals/learning_device' %>
 </div>
