@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     get 'parent_selection' => 'sessions#new_parent_selection'
     post 'parent_selection' => 'sessions#create_parent_selection'
     get 'logout' => 'sessions#destroy'
-    delete 'logout'  => 'sessions#destroy'
+    delete 'logout' => 'sessions#destroy'
     get 'teacher_info' => 'op_teachers#teacher_info'
     get 'my_class' => 'users#my_class'
     get 'batch_detail/:batch_id' => 'users#batch_detail', as: 'batch_detail'
@@ -34,6 +34,10 @@ Rails.application.routes.draw do
     get 'student_timetable' => 'op_students#student_timetable'
     post 'student_timetable' => 'op_students#student_timetable'
   end
-  resources :password_resets,     only: [:new, :create, :edit, :update]
+
+  namespace :learning do
+    get 'view_learning_material/:material_id' => 'learning_materials#view_learning_material'
+  end
+  resources :password_resets, only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'sessions#add_photo_attachment'
 end

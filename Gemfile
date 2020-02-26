@@ -18,7 +18,6 @@ gem 'rails_admin', '~> 2.0'
 
 # Image processing
 gem 'image_processing'
-gem 'active_storage_validations'
 
 # jQuery
 gem 'jquery-rails'
@@ -30,7 +29,8 @@ gem 'config'
 gem 'xmlrpc'
 
 # Google Drive API
-gem 'google-api-client', '~> 0.34'
+gem 'pdfjs_viewer-rails'
+gem "aws-sdk-s3", require: false
 
 ## End manual added gems
 
