@@ -1,0 +1,28 @@
+$(document).ready(function () {
+    function get_lesson_materials(lesson_id) {
+        $.ajax({
+            type: "GET",
+            url: "/learning/pdf_materials",
+            data: 'lesson_id=' + lesson_id,
+            success: function (response) {
+                if (response.success) {
+                    $('#modal_materials_list_file_titles').html('')
+                    $.each(response.data, function (material) {
+                        $('#modal_materials_list_file_titles').html("<%= render 'learning/material/modal_header' %>")
+                    });
+                    let first_material = response.data[0]
+                    $('#modal_materials_file_content').html("<%= render 'learning/material/modal_body' %>")
+                } else {
+
+                }
+            }
+
+        })
+    }
+
+    $('#modal_materials').on('show.bs.modal', function (e) {
+        let lesson_id = $('#modal_materials').data('lesson-id')
+        alert(lesson_id)
+        get_lesson_materials()
+    })
+})
