@@ -13,7 +13,7 @@
       <tbody>
       <% @batches.each do |batch| %>
         <tr>
-          <td><%= batch.op_course.name %>></td>
+          <td><%= batch.op_course.name %></td>
           <td><%= batch.code %></td>
           <% sessions = batch.op_sessions %>
           <% subjects = [] %>

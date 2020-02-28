@@ -1,28 +1,46 @@
 $(document).ready(function () {
+    var lesson_id = $('#modal_materials').data('lesson-id');
+    $.on('shown.bs.modal', function () {
+        get_lesson_materials(lesson_id);
+    })
+
+//Teacher Check-in
+    function active_session() {
+        $.ajax({
+            method: 'get',
+            url: '/user/teacher_active_session',
+            success: function (res) {
+               update_learning_material_modal(res)
+            }
+        })
+    }
+
+    
+    function update_learning_material_modal(res) {
+        get_lesson_materials(res.session_index)
+    }
     function get_lesson_materials(lesson_id) {
         $.ajax({
             type: "GET",
             url: "/learning/pdf_materials",
-            data: 'lesson_id=' + lesson_id,
+            data: 'session_id=' + lesson_id,
             success: function (response) {
                 if (response.success) {
-                    $('#modal_materials_list_file_titles').html('')
-                    $.each(response.data, function (material) {
-                        $('#modal_materials_list_file_titles').html("<%= render 'learning/material/modal_header' %>")
-                    });
-                    let first_material = response.data[0]
-                    $('#modal_materials_file_content').html("<%= render 'learning/material/modal_body' %>")
+                    alert(response.data)
+                $('#modal_materials_list_file_titles').html('')
+                $.each(response.data, function (material) {
+                    $('#modal_materials_list_file_titles').html("<%= render 'learning/material/modal_header' %>")
+                });
+                let first_material = response.data[0]
+                $('#modal_materials_file_content').html("<%= render 'learning/material/modal_body' %>")
                 } else {
 
                 }
             }
-
         })
     }
 
-    $('#modal_materials').on('show.bs.modal', function (e) {
-        let lesson_id = $('#modal_materials').data('lesson-id')
-        alert(lesson_id)
-        get_lesson_materials()
+    $('#btn_view_materials').on('click', function () {
+        active_session()
     })
 })

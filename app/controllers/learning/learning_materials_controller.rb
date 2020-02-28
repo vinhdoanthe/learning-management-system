@@ -1,6 +1,7 @@
 module Learning
   class LearningMaterialsController < ApplicationController
-    include Rails.application.routes.url_helpers
+    before_action :authenticate_faculty!, only: [:view_learning_material, :pdf_materials]
+
 
     def view_learning_material
       if params[:material_id].present?
@@ -17,9 +18,34 @@ module Learning
       end
     end
 
-    def test_send_pdf_data
-      @learning_material = Learning::Course::LearningMaterial.find(7)
-      send_data @learning_material.material_file, type: @learning_material.material_file.content_type, disposition: 'inline'
+    def pdf_materials
+      if params[:session_id].present?
+        session = Learning::Batch::OpSession.find(params[:session_id])
+        if session.nil?
+          render :json => {'success': false,
+                           'code': '',
+                           'message': 'Không tìm được session'}
+        else
+          @pdf_materials = Learning::Course::LearningMaterial.where(:op_lession_id => session.lession_id).to_a
+          if !@pdf_materials.blank?
+            render :json => {
+                'success': true,
+                'code': '',
+                'message': 'Lấy dữ liệu thành công',
+                'data': @pdf_materials
+            }
+          else
+            render :json => {'success': true,
+                             'code': '',
+                             'message': 'Lesson này chưa có học liệu',
+                             'data': []}
+          end
+        end
+      else
+        render :json => {'success': false,
+                         'code': '',
+                         'message': 'Không có session ID'}
+      end
     end
   end
 end

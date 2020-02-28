@@ -1,121 +1,132 @@
 <div class="page-content page-thin">
-    <div class="panel panel-edits bg-232837">
-        <div class="panel-heading">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
 
-            <div class="ph-text">
-                <h2 class="color-fff text-transform"><%= link_to 'Danh sách lớp học', user_teacher_class_path %></h2>
-            </div>
-        </div>
+      <div class="ph-text">
+        <h2 class="color-fff text-transform"><%= link_to 'Danh sách lớp học', user_teacher_class_path %></h2>
+      </div>
     </div>
-    <div class="panel m-t--70">
-        <div class="panel-content">
-          <div class="bo-table">
-            <%= render 'user/shared/batch_info', {:batch => @batch} %>
-          </div>
-          <div class="bo-table" style="margin-top: 30px">
-            <div class="box-lession">
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="bl-title text-right">
-                            <label>Học phần <%= @subject.level %> </label>
-                        </div>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="bl-content">
-                            <ul id="session_time_table">
-                            
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="bo-table">
+        <%= render 'user/shared/batch_info', {:batch => @batch} %>
+      </div>
+      <div class="bo-table" style="margin-top: 30px">
+        <div class="box-lession">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="bl-title text-right">
+                <label>Học phần <%= @subject.level %> </label>
+              </div>
             </div>
-            <div class="m-t-20">
-                <div class="redem-tab class-tab">
-                    <!-- Nav tabs -->
-                    <input type="hidden" id='batch_id' value="<%= @batch.id %>">
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane active in" id="<%= 'buoi' + (@session_index + 1).to_s %>">
-                            <div class="table-responsive">
-                                <table class="table table-link">
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="calenda-box" id='calendar-box'>
-                                                </div>
-                                            </td>
-                                            <td width="130" id='lesson_img'>
-                                                <div class="photo-box">
-                                                    <span><img class='lesson_thumbnail' src="" alt=""></span>
-                                                </div>
-                                            </td>
-                                            <!-- TO DO -->
-                                            <td id='lesson_title'>
-                                                <strong><%= 'BÀI TODO' %></strong><br/>
-                                                <%= @session.name %><br/>
-                                                Kiến thức học được: TODO
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <hr>
-                                <div class="table-responsive">
-                                    <div class="fc-header clearfix">
-                                        <div class="pull-left lesson_info">
-                                        </div>
-                                        <div class="fc-list-btn pull-right">
-                                            <ul>
-                                                <li><button type="button" class="btn btn-default btn-embossed" id="learning_device" data-toggle="modal" data-target="#modal_learning_device">Học cụ</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed" id="teacher_checkin" data-toggle="modal" data-target="#modal_checkin">Check-in</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed" id="teacher_attendance" data-toggle="modal" data-target="#modal_attendance">Điểm danh</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#hoclieu">Học liệu</button></li>
-                                                <li><button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#thuonghocsinh">Thưởng</button></li>
-                                                <li><button type="button" id='upload_session_photo' class="btn btn-default btn-embossed" data-toggle="modal" data-target="#upload_photo">Chụp ảnh</button></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                        
-                                </div>
-                                <hr>
-                                <div class="table-responsive">
-                                    <table class="table table-hover" id="table_student">
-                                        <thead>
-                                            <tr>
-                                                <th>Mã học sinh</th>
-                                                <th>Họ và tên</th>
-                                                <th class="text-center">Điểm danh</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id='student_attendance'>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-10">
+              <div class="bl-content">
+                <ul id="session_time_table">
+
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-    </div>
-  	<div class="footer">
-        <div class="copyright">
-            <p class="pull-left sm-pull-reset">
-                <span>Copyright <span class="copyright">©</span> 2020 </span>
-                <span>THEMES BACKEND TEKY. </span>
-                <span>All rights reserved. </span>
-            </p>
-            <p class="pull-right sm-pull-reset">
-                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
-            </p>
-        </div>
-    </div>
+        <div class="m-t-20">
+          <div class="redem-tab class-tab">
+            <!-- Nav tabs -->
+            <input type="hidden" id='batch_id' value="<%= @batch.id %>">
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane active in" id="<%= 'buoi' + (@session_index + 1).to_s %>">
+                <div class="table-responsive">
+                  <table class="table table-link">
+                    <tbody>
+                    <tr>
+                      <td width="90">
+                        <div class="calenda-box" id='calendar-box'>
+                        </div>
 
-    <%= render 'user/op_teachers/modals/teacher_checkin' %>
-    <%= render 'user/op_teachers/modals/teacher_attendance' %>
-    <%= render 'user/op_teachers/modals/upload_photo' %>
-    <%= render 'user/op_teachers/modals/learning_device' %>
-    <%= render 'user/op_teachers/modals/teacher_evaluate' %>
+                      </td>
+                      <td width="130" id='lesson_img'>
+                        <div class="photo-box">
+                          <span><img class='lesson_thumbnail' src="" alt=""></span>
+                        </div>
+                      </td>
+                      <!-- TO DO -->
+                      <td id='lesson_title'>
+                        <strong><%= 'BÀI TODO' %></strong><br/>
+                        <%= @session.name %><br/>
+                        Kiến thức học được: TODO
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <hr>
+                  <div class="table-responsive">
+                    <div class="fc-header clearfix">
+                      <div class="pull-left lesson_info">
+                      </div>
+                      <div class="fc-list-btn pull-right">
+                        <ul>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed" id="learning_device" data-toggle="modal" data-target="#modal_learning_device">Học
+                              cụ
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed" id="teacher_checkin" data-toggle="modal" data-target="#modal_checkin">Check-in</button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance" data-toggle="modal" data-target="#modal_attendance">Điểm
+                              danh
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#hoclieu">Học
+                              liệu
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#thuonghocsinh">Thưởng</button>
+                          </li>
+                          <li>
+                            <button type="button" id='upload_session_photo' class="btn btn-default btn-embossed" data-toggle="modal" data-target="#upload_photo">Chụp
+                              ảnh
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                  </div>
+                  <hr>
+                  <div class="table-responsive">
+                    <table class="table table-hover" id="table_student">
+                      <thead>
+                      <tr>
+                        <th>Mã học sinh</th>
+                        <th>Họ và tên</th>
+                        <th class="text-center">Điểm danh</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                      </thead>
+                      <tbody id='student_attendance'>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'user/op_teachers/modals/teacher_checkin' %>
+  <%= render 'user/op_teachers/modals/teacher_attendance' %>
+  <%= render 'user/op_teachers/modals/upload_photo' %>
+  <%= render 'user/op_teachers/modals/learning_device' %>
+  <%= render 'user/op_teachers/modals/teacher_evaluate' %>
+  <%= render 'learning/modal_materials' %>
+
 </div>

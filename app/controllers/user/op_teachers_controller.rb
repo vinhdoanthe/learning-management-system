@@ -62,7 +62,7 @@ module User
       if @lesson && @lesson.thumbnail.attached?
         img_src = @lesson.thumbnail.service_url
       else
-        img_src = ActionController::Base.helpers.asset_path('default_lesson_thumbnail.jpg')
+        active = ActionController::Base.helpers.asset_path('default_lesson_thumbnail.jpg')
       end
 
       all_students = OpTeachersService.new.teacher_class_detail @batch, @session

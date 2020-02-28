@@ -49,6 +49,7 @@ $(document).ready(function () {
         data.active = active;
         call_api(data);
     });
+
     $('#filter_company').on('change', function () {
         company = $('#filter_company').val();
         $('.batch_info').remove();
@@ -410,6 +411,7 @@ $(document).ready(function () {
     $("#photos_attachment").change(function () {
         $('#photo_review').html('');
         readURL(this);
+
     });
 
     $('#upload_session_photo').on('click', function () {
@@ -418,26 +420,25 @@ $(document).ready(function () {
 
     $('#upload_photo_confirm').on('click', function () {
         $('#upload_photo').modal('hide')
-    })
+    });
 
     //Teacher evaluate
     var student_id = ''
-    $('#table_student').on('click', '.student_evaluate', function(){
+    $('#table_student').on('click', '.student_evaluate', function () {
         student_id = $(this).data('value');
     })
 
-    $('#teacher_evaluate_confirm').on('click', function(){
+    $('#teacher_evaluate_confirm').on('click', function () {
         info = $('#teacher_evaluate_session').serializeArray();
         info.push({name: 'student_id', value: student_id})
         $.ajax({
             url: '/user/teacher_evaluate',
             method: 'POST',
             data: info,
-            success: function(res){
+            success: function (res) {
                 display_noti(res);
             }
         })
     })
-
 })
 
