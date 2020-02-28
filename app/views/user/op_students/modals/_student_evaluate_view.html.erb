@@ -1,0 +1,40 @@
+<% company_id = current_user.op_student.company_id %>
+<div id="modal_student_evaluate_view" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Phiếu đánh giá học sinh</h4>
+      </div>
+      <div class="modal-body learning_device_content">
+        <div class='student_info'>
+          <p><strong>Học sinh: </strong><%= current_user.username %></p>
+          <p><strong>Khoá học: </strong><%= batch.op_course.name %></p>
+          <p><strong>Lớp: </strong><%= batch.name %></p>
+          <p><strong>Cơ sở: </strong><%= Common::ResCompany.where(id: company_id).first.name %></p>
+        </div>
+        <hr>
+        <div class='student_evaluate_view_content'>
+        	<div>
+        		<h3><strong>KIẾN THỨC:</strong></h3>
+        		<div class='student_knowledge'>
+        		</div>
+        	</div>
+        	<div>
+        		<h3><strong>THÁI ĐỘ:</strong></h3>
+        		<div class='student_attitude'>
+        		</div>
+        	</div>
+        	<div>
+        		<h3><strong>KĨ NĂNG:</strong></h3>
+        		<div class='student_skill'>
+        		</div>
+        	</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

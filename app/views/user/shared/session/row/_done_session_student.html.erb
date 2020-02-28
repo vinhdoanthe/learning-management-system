@@ -3,6 +3,7 @@
   <%= render 'user/shared/session/row/session_calendar_box', {:session => session} %>
 
   <% lesson = session.op_lession %>
+  <% batch = session.op_batch %>
   <td>
     <div class="photo-box">
         <span>
@@ -16,13 +17,18 @@
     <%= lesson.nil? ? 'Chưa có dữ liệu' : sanitize(truncate(lesson.note, :length => 50)) %>
   </td>
   <td align="center">
-    <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
+    <% if Learning::Batch::OpAttendanceLine.where(session_id: session.id, student_id: current_user.op_student.id).blank? %>
+      <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
+    <% else %>
+      <%= image_tag('global/images/check.png', style: 'width: 20px') %>
+    <% end %>
   </td>
   <td align="right">
-    <a href="">
+    <a class='student_evaluate_view' data-session='<%= session.id %>' data-student='<%= current_user.id %>' data-toggle="modal" data-target="#modal_student_evaluate_view">
       <%= image_tag('global/images/add-comment-button.png', style: 'width: 20px;margin-right: 10px') %>
     </a>
     <a href="">
       <%= image_tag('global/images/more-4.png', style: 'width: 20px') %>
     </a>
   </td>
+<%= render 'user/op_students/modals/student_evaluate_view', {batch: batch} %>
