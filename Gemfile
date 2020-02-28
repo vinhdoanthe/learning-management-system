@@ -6,31 +6,28 @@ ruby '2.6.5'
 ## Manual added gems
 # For Translation
 gem 'i18n'
-
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-
 # Use for store enums
 gem 'enumerize'
-
 # User for administration
 gem 'rails_admin', '~> 2.0'
-
 # Image processing
 gem 'image_processing'
-
 # jQuery
 gem 'jquery-rails'
-
 # Used for storing secret variables
 gem 'config'
-
 # Used to call to oDoo
 gem 'xmlrpc'
-
 # Google Drive API
 gem 'pdfjs_viewer-rails'
 gem "aws-sdk-s3", require: false
+# Deployment gems
+gem 'capistrano', '~> 3.11'
+gem 'capistrano-rails', '~> 1.4'
+gem 'capistrano-passenger', '~> 0.2.0'
+gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 
 ## End manual added gems
 
