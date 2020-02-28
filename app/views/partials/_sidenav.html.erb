@@ -65,13 +65,15 @@
           <span>Dashboard</span>
         </a>
       </li>
+      <% if current_user.is_student? %>
       <li class="nav-active activea">
-        <a href="<%= current_user.is_student? ? user_student_timetable_path : user_teacher_info_path %>">
+        <a href="<%= user_student_timetable_path %>">
           <%= image_tag "global/images/no-active/ico-Dashboard.png", class: "img-changes" %>
           <%= image_tag "global/images/active/ico-Dashboard.png", class: "img-change-color" %>
           <span>Thời khoá biểu</span>
         </a>
       </li>
+        <% end %>
       <li class="">
         <a href="<%= current_user.is_student? ? user_student_homework_path : user_teacher_info_path %>">
           <%= image_tag "global/images/no-active/ico-BaiTapOnBai.png", class: "img-changes" %>
@@ -107,6 +109,7 @@
           <span>Đổi điểm lấy quà </span>
         </a>
       </li>
+      <% if current_user.is_student? %>
       <li class="">
         <a href="<%= current_user.is_student? ? user_student_invoice_path : user_teacher_info_path %>">
           <%= image_tag "global/images/no-active/ico-Invoice.png", class: "img-changes" %>
@@ -114,6 +117,7 @@
           <span>Hoá đơn</span>
         </a>
       </li>
+      <% end %>
     </ul>
   </div>
 </div>

@@ -108,3 +108,33 @@
 	width: 130px;
 	height: 82px
 }
+
+#teacher_evaluate_session{
+	margin: 10px;
+	div{
+		margin: 10px;
+	}
+	textarea {
+		width: 100%;
+		margin: auto;
+	}
+	select {
+		width: 100%;
+		font-size: 15px;
+    	border-radius: 5px;
+    	padding: 10px;
+    	color: #CFCFCF;
+    	font-weight: 600;
+    	background: white
+	}
+	label {
+		margin-top: 10px;
+		font-size: 15px;
+	}
+	button{
+		background-color: #5cc3a8;
+	    color: white;
+	    font-size: 18px;
+	    font-weight: 600;
+	}
+}

@@ -2,7 +2,7 @@ module User
 
   class OpStudentsController < ApplicationController
 
-    before_action :authenticate_student!, :student_info, :find_student
+    before_action :authenticate_student!, :find_student
     skip_before_action :verify_authenticity_token
 
     def index
@@ -14,7 +14,8 @@ module User
     end
 
     def student_info
-
+      @batches = @student.op_batches
+      @batch_states = OpStudentsService.batch_state @student
     end
 
     def student_homework
@@ -50,6 +51,25 @@ module User
       if request.method == 'POST'
         render json: {schedules: schedules}
       end
+    end
+
+    def student_homework_detail
+
+    end
+
+    def student_videos
+
+    end
+
+    def student_video_subs
+
+    end
+
+    def refer_friend
+
+    end
+
+    def student_attendance_line
     end
 
     private

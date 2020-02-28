@@ -10,9 +10,9 @@
     </div>
   </td>
   <td>
-    <strong>Cần lấy dữ liệu này</strong><br/>
-    Cần lấy dữ liệu này <br/>
-    Cần lấy dữ liệu này
+    <strong><%= lesson.nil? ? 'Chưa có dữ liệu' : 'Bài ' + lesson.lession_number.to_s %></strong><br/>
+    <%= lesson.nil? ? 'Chưa có dữ liệu' : lesson.name %> <br/>
+    <%= lesson.nil? ? 'Chưa có dữ liệu' : sanitize(truncate(lesson.note, :length => 50)) %>
   </td>
 
   <td align="right">

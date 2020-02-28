@@ -1,0 +1,42 @@
+<div class="panel-content">
+  <div class="table-responsive bo-table">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Khóa học</th>
+        <th>Lớp học</th>
+        <th>Học phần</th>
+        <th>Loại</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @batches.each do |batch| %>
+        <tr>
+          <td><%= batch.op_course.name %>></td>
+          <td><%= batch.code %></td>
+          <% sessions = batch.op_sessions %>
+          <% subjects = [] %>
+          <% sessions.each { |session| subjects << session.op_subject.level } %>
+          <td>
+            <% subjects.uniq.each do |level| %>
+              <span class="label-course label label-default"><%= level %></span>
+            <% end %>
+          </td>
+          <td>
+            <%= batch.op_batch_type.name %>
+          </td>
+          <% if @batch_states[batch.id] == 'on' %>
+            <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
+          <% elsif @batch_states[batch.id] == 'off' %>
+            <td align="right"><span class="label-edit label label-danger">Đã nghỉ</span></td>
+          <% else %>
+            <td align="right"><span class="label-edit label label-stop">Đã bảo lưu</span></td>
+          <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
