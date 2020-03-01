@@ -11,7 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  */
-@import 'user/users.scss';
+@import 'user';
 
 span.subject_id.active{
 	background-color: #5DC2A7;
