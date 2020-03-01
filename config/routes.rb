@@ -47,4 +47,6 @@ Rails.application.routes.draw do
   end
   resources :password_resets, only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'sessions#add_photo_attachment'
+
+  delete 'sign_out', :to => 'user/sessions#destroy', as: 'logout'
 end
