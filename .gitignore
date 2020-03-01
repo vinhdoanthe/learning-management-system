@@ -33,7 +33,7 @@
 yarn-debug.log*
 .yarn-integrity
 
-
+config/storage.yml
 /config/storage.yml
 /config/database.yml
 /config/secrets.yml
