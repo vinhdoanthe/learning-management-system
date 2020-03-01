@@ -6,13 +6,21 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
-  # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:
   service: S3
-  access_key_id: 'AKIAIELWY2W2MPK7ZKOQ'
-  secret_access_key: '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'
-  region: 'ap-southeast-1'
-  bucket: 'tekylmsdev'
+  access_key_id: 'FXW3O5ANHUN57I2JVLMV'
+  secret_access_key: 'qiy+gL5s2ojnlq2C62Ll3xsQ8+4Z0/NPCqQddpK8CSk'
+  region: 'sgp1'
+  bucket: 'devlms'
+  endpoint: 'https://sgp1.digitaloceanspaces.com'
+
+  # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+#amazon:
+#  service: S3
+#  access_key_id: 'AKIAIELWY2W2MPK7ZKOQ'
+#  secret_access_key: 'MZKLPOpzte5vhjvoCDJ7/7J0pgx+JTAJzJ8lNJOm'
+#  region: 'ap-southeast-1'
+#  bucket: 'tekylmsdev'
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:

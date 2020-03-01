@@ -1,7 +1,7 @@
 module Learning
   class LearningMaterialsController < ApplicationController
-    before_action :authenticate_faculty!, only: [:view_learning_material, :pdf_materials]
-
+    before_action :authenticate_faculty!, only: [:pdf_materials]
+    skip_before_action :authenticate_user!, only: [:view_learning_material]
 
     def view_learning_material
       if params[:material_id].present?

@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    var lesson_id = $('#modal_materials').data('lesson-id');
-    $.on('shown.bs.modal', function () {
-        get_lesson_materials(lesson_id);
+    var session_id = $('#modal_materials').data('session-id');
+    $('#modal_materials').on('shown.bs.modal', function () {
+        get_lesson_materials(session_id);
     })
 
 //Teacher Check-in
@@ -10,32 +10,40 @@ $(document).ready(function () {
             method: 'get',
             url: '/user/teacher_active_session',
             success: function (res) {
-               update_learning_material_modal(res)
+                update_learning_material_modal(res)
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error: " + errorThrown);
             }
         })
     }
 
-    
+
     function update_learning_material_modal(res) {
         get_lesson_materials(res.session_index)
     }
-    function get_lesson_materials(lesson_id) {
+
+    function get_lesson_materials(session_id) {
         $.ajax({
-            type: "GET",
+            method: 'get',
             url: "/learning/pdf_materials",
-            data: 'session_id=' + lesson_id,
+            data: 'session_id=' + session_id,
             success: function (response) {
+                alert('Success')
                 if (response.success) {
                     alert(response.data)
-                $('#modal_materials_list_file_titles').html('')
-                $.each(response.data, function (material) {
-                    $('#modal_materials_list_file_titles').html("<%= render 'learning/material/modal_header' %>")
-                });
-                let first_material = response.data[0]
-                $('#modal_materials_file_content').html("<%= render 'learning/material/modal_body' %>")
+                    $('#modal_materials_list_file_titles').html('')
+                    $.each(response.data, function (material) {
+                        $('#modal_materials_list_file_titles').html("<%= render 'learning/material/modal_header' %>")
+                    });
+//                let first_material = response.data[0]
+                    // $('#modal_materials_file_content').html("<%= render 'learning/material/modal_body' %>")
                 } else {
 
                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error: " + errorThrown);
             }
         })
     }

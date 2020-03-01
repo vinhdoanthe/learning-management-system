@@ -6,7 +6,8 @@
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
-
+server 'lms.teky.vn', user: 'deploy', roles: %w{app db web}
+set :deploy_to, "/home/deploy/#{fetch :application}"
 
 
 # role-based syntax
@@ -22,7 +23,6 @@
 # role :db,  %w{deploy@example.com}
 
 
-
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
@@ -30,7 +30,9 @@
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
+set :stage, :production
+set :branch, 'master'
+set :rails_env, 'production'
 
 
 # Custom SSH Options

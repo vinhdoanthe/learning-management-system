@@ -276,18 +276,29 @@ $(document).ready(function () {
         fill_table(save_date);
     })
 
-    //Teacher Check-in
-    function get_active_session() {
+    // Get current active session in view and update hidden modals
+    function call_active_session() {
         $.ajax({
             method: 'get',
             url: '/user/teacher_active_session',
             success: function (res) {
                 change_checkin_form(res);
                 change_attendance_form(res);
+                change_learning_materials_form(res);
             }
         })
     }
 
+    // Update teaching materials
+    $('#btn_view_materials').on('click', function () {
+        call_active_session();
+    });
+
+    function change_learning_materials_form(res) {
+        // Update learning material
+    }
+
+    //Teacher Check-in
     function change_checkin_form(res) {
         $('.checkin_sesion').html((res.session_index + 1).toString());
         $('.checkin_subject').html((res.subject_level).toString());
@@ -302,7 +313,7 @@ $(document).ready(function () {
     }
 
     $('#teacher_checkin').on('click', function () {
-        get_active_session();
+        call_active_session();
     })
 
     $('#teacher_checkin_confirm').on('click', function () {
@@ -322,7 +333,7 @@ $(document).ready(function () {
 
     //Teacher attendance
     $('#teacher_attendance').on('click', function () {
-        get_active_session();
+        call_active_session();
     })
 
     function change_attendance_form(res) {
