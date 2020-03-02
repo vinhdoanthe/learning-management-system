@@ -77,10 +77,31 @@ $(document).ready(function () {
 
     function change_view(res, data) {
         $('#student_attendance').html('');
-        $('#lesson_title').html("<strong>BÀI TODO" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: TODO");
+
+        if(res.lesson){
+            $('#lesson_title').html("<strong>" + res.lesson.name + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: " + res.lesson.note );
+            $('.learning_device_content').html(res.lesson.learning_device);
+        }else{
+            $('#lesson_title').html("<strong>BÀI: Chưa có dữ liệu" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: Chưa có dũ liệu" );
+            $('.learning_device_content').html('Không có learning device');
+        }
+
         $('.lesson_thumbnail').attr('src', res.img_src)
         start_time = change_time(res.session.start_datetime);
         end_time = change_time(res.session.end_datetime);
+
+        if (res.session.state == 'confirm'){
+            $('#teacher_checkin').prop('disabled', false);
+        }else{
+            $('#teacher_checkin').prop('disabled', true);
+        }
+        if (res.session.state == 'confirm' || res.session.state == 'done'){
+            $('#teacher_attendance').prop('disabled', false);
+            $('#upload_session_photo').prop('disabled', false);
+        }else{
+            $('#teacher_attendance').prop('disabled', true);
+            $('#upload_session_photo').prop('disabled', true);
+        }
 
         $('.lesson_info').html("<h3>Học phần " + res.subject.level + " - Buổi học: " + (parseInt(res.session_index) + 1).toString() + "</h3><p>" + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + " | " + start_time.day + "/" + start_time.month + "/" + start_time.year + "</p>")
 
@@ -91,7 +112,7 @@ $(document).ready(function () {
         $('#calendar-box').html('<div class="cb-tit"><p>' + month + '</p></div><div class="cb-con"><strong>' + start_time.day + '</strong><p>' + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + '<br/>' + w_day + '</p></div>')
 
         $('#session_time_table').html('');
-        $('.learning_device_content').html(res.lesson.learning_device);
+
         $.each(res.sessions_time, function (index, time) {
             start = new Date(time[0]);
             end = new Date(time[1]);
@@ -113,13 +134,13 @@ $(document).ready(function () {
 
             switch (student.status) {
                 case 'off':
-                    html += '<td style="text-align: center"><a><img src="/global/images/add-comment-button.png" style="width: 20px;margin-right: 10px"></a></td><td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td></tr>'
+                    html += '<td style="text-align: center; opacity: 0.3;"><a><img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px"></a></td><td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td></tr>'
                     break;
                 case 'on':
-                    html += '<td style="text-align: center"><a class="student_evaluate" data-value="' + index + '" data-toggle="modal" data-target="#modal_evaluate"><img src="/global/images/add-comment-button.png" style="width: 20px;margin-right: 10px"></a></td><td align="right"><span class="label-edit label label-primary">Đang học</span></td></tr>'
+                    html += '<td style="text-align: center"><a class="student_evaluate" data-value="' + index + '" data-toggle="modal" data-target="#modal_evaluate"><img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px; cursor: pointer;"></a></td><td align="right"><span class="label-edit label label-primary">Đang học</span></td></tr>'
                     break;
                 case 'save':
-                    html += '<td style="text-align: center"><a><img src="/global/images/add-comment-button.png" style="width: 20px;margin-right: 10px"></a></td><td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td></tr>'
+                    html += '<td style="text-align: center; opacity: 0.3;"><a><img src="/global/images/add-comment-button.png" style="min-width: 20px; width: 20px; margin-right: 10px"></a></td><td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td></tr>'
                     break;
                 default:
                     null
@@ -169,7 +190,8 @@ $(document).ready(function () {
     //Teaching schedule calendar
     function get_date_month(fullDate) {
         twoDigitMonth = (fullDate.getMonth().toString().length !== 1) ? (fullDate.getMonth() + 1) : '0' + (fullDate.getMonth() + 1);
-        str_date = fullDate.getDate() + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+        twoDigitDate = (fullDate.getDate().toString().length !== 1) ? fullDate.getDate() : '0' + fullDate.getDate()
+        str_date = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
         return str_date;
     }
 

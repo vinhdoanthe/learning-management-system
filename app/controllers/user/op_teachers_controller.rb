@@ -62,7 +62,7 @@ module User
       if @lesson && @lesson.thumbnail.attached?
         img_src = @lesson.thumbnail.service_url
       else
-        active = ActionController::Base.helpers.asset_path('default_lesson_thumbnail.jpg')
+        img_src = ActionController::Base.helpers.asset_path('default_lesson_thumbnail.jpg')
       end
 
       all_students = OpTeachersService.new.teacher_class_detail @batch, @session
@@ -70,7 +70,7 @@ module User
       teacher_class_detail_active_session(@session.id, @subject.id, @session_index, all_students)
 
       if request.method == 'POST'
-        render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students, sessions_time: sessions_time, lesson: {learning_device: 'this is learning device'}, img_src: img_src}
+        render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students, sessions_time: sessions_time, lesson: @lesson, img_src: img_src}
       end
     end
 
