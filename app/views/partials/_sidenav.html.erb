@@ -7,7 +7,7 @@
       <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
         <li class="nav-active">
           <a href="<%= root_path %>">
-            <%= image_tag "global/images/avatar.png" %>
+            <%= current_user.avatar.attached? ? image_tag(current_user.avatar.variant(resize_to_limit: [100, 100])) : image_tag('global/images/avatars/user3.jpg') %>
             <% if current_user.is_student? %>
               <span>
                 <label for=""><%= current_user.op_student.full_name %></label>
@@ -37,7 +37,7 @@
             <a href="/user/teacher_class">
               <%= image_tag "global/images/active/Icon-Bell.png" %>
               <span>Danh sách lớp học</span>
-              <span class="nn-alert"><%= current_user.op_faculty.op_batches.count %></span>
+              <span class="nn-alert"><%= current_user.op_faculty.op_batches.uniq.count %></span>
             </a>
           <% else %>
             <a href="/user/student_homework">
