@@ -23,7 +23,7 @@ module Learning
           'Chưa có buổi học nào diễn ra'
         else
           if last_done_session.op_subject.nil?
-            last_done_session.count.to_s + 'Chưa có dữ liệu Subject'
+            last_done_session.count.to_s + 'Đang cập nhật Subject'
           else
             last_done_session.count.to_s + ' - Level ' + last_done_session.op_subject.level.to_s
           end

@@ -82,7 +82,7 @@ $(document).ready(function () {
             $('#lesson_title').html("<strong>" + res.lesson.name + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: " + res.lesson.note );
             $('.learning_device_content').html(res.lesson.learning_device);
         }else{
-            $('#lesson_title').html("<strong>BÀI: Chưa có dữ liệu" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: Chưa có dũ liệu" );
+            $('#lesson_title').html("<strong>BÀI: Đang cập nhật" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: Chưa có dũ liệu" );
             $('.learning_device_content').html('Không có learning device');
         }
 
