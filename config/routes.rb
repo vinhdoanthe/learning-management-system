@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     get 'pdf_materials' => 'learning_materials#pdf_materials'
   end
   resources :password_resets, only: [:new, :create, :edit, :update]
-  post 'add_photo_attachment' => 'sessions#add_photo_attachment'
+  post 'add_photo_attachment' => 'learning/batch/sessions#add_photo_attachment'
 
   delete 'sign_out', :to => 'user/sessions#destroy', as: 'logout'
 end

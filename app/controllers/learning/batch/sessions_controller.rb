@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Learning::Batch::SessionsController < ApplicationController
     def add_photo_attachment
     	@session = Learning::Batch::OpSession.find(params[:session_id])
     	if @session.photos.attach(params[:photos])
