@@ -13,7 +13,7 @@
             <div class="box-profile">
                 <div class="bp-photo">
                     <span>
-                      <%= current_user.avatar.attached? ? current_user.avatar.variant(resize_to_limit: [80, 80]) : image_tag('global/images/avatars/user3.jpg') %>
+                      <%= current_user.avatar.attached? ? image_tag(current_user.avatar.variant(resize_to_limit: [80, 80])) : image_tag('global/images/avatars/user3.jpg') %>
                     </span>
                     <p>Giảng viên Fultime</p>
                     <label><%= teacher.full_name %></label>

@@ -35,7 +35,7 @@ function initializeClock(id, endtime) {
   function updateClock() {
     var t = getTimeRemaining(endtime);
 
-    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+    hoursSpan.innerHTML = t.hours.toString();
     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
     secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
