@@ -111,6 +111,8 @@ GEM
       xpath (~> 3.2)
     childprocess (3.0.0)
     coderay (1.1.2)
+    composite_primary_keys (12.0.1)
+      activerecord (~> 6.0.0)
     concurrent-ruby (1.1.6)
     config (2.2.1)
       deep_merge (~> 1.2, >= 1.2.1)
@@ -363,6 +365,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.4)
   capistrano-rbenv (~> 2.1, >= 2.1.4)
   capybara (>= 2.15)
+  composite_primary_keys (~> 12.0)
   config
   enumerize
   i18n

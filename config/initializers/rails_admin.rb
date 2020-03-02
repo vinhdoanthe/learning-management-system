@@ -1,5 +1,5 @@
 RailsAdmin.config do |config|
-
+  config.main_app_name = ['LMS SYSTEM']
   config.parent_controller = "::ApplicationController"
 
   config.authenticate_with do
@@ -12,6 +12,98 @@ RailsAdmin.config do |config|
   end
 
   config.current_user_method(&:current_user)
+
+
+  ActiveRecord::Base.descendants.each do |imodel|
+    config.model "#{imodel.name}" do
+      list do
+        exclude_fields :created_at, :updated_at
+      end
+    end
+  end
+  config.included_models = %w(Learning::Course::OpCourse Learning::Course::OpSubject Learning::Course::OpLession Learning::Course::LearningMaterial
+                              Learning::Batch::OpBatch Learning::Batch::OpSession
+                              User::User)
+
+
+  config.model 'Learning::Course::OpCourse' do
+    show do
+      field :name
+      field :code
+      field :section
+      field :op_subjects
+      field :thumbnail
+    end
+    edit do
+      field :name
+      field :code
+      field :section
+      field :op_subjects
+      field :thumbnail
+    end
+  end
+
+  config.model 'Learning::Course::OpSubject' do
+    show do
+      field :op_course
+      field :name
+      field :code
+      field :level
+      field :op_lessions
+    end
+
+    edit do
+      field :op_course
+      field :name
+      field :code
+      field :level
+      field :op_lessions
+    end
+  end
+
+  config.model 'Learning::Course::OpLession' do
+    show do
+      field :op_subject
+      field :lession_number
+      field :code
+      field :name
+      field :note
+      field :thumbnail
+      field :learning_materials
+    end
+    edit do
+      field :op_subject
+      field :lession_number
+      field :code
+      field :name
+      field :note
+      field :thumbnail
+      field :learning_materials
+    end
+  end
+
+  config.model 'User::User' do
+    show do
+      field :username
+      field :email
+      field :account_role
+      field :avatar
+      field :op_faculty
+      field :op_parent
+      field :op_student
+    end
+
+    edit do
+      field :username
+      field :email
+      field :password
+      field :account_role
+      field :avatar
+      field :op_faculty
+      field :op_parent
+      field :op_student
+    end
+  end
 
   ### Popular gems integration
 
@@ -37,20 +129,22 @@ RailsAdmin.config do |config|
   # config.show_gravatar = true
 
   config.actions do
+
     dashboard # mandatory
     index # mandatory
     new
-    export
+    # export
     # bulk_delete
     show
     edit
-    # delete
+    delete do
+      only ['Learning::Course::LearningMaterial']
+    end
     # show_in_app
 
     ## With an audit adapter, you can add:
     # history_index
     # history_show
-    # config.excluded_models = %w(Learning::Batch::OpStudentCourse User::OpParentOpStudentRel)
   end
 
 
