@@ -2,7 +2,7 @@
   <div class="fc-header">
     <h3>Buổi học <span class="color-16BD56">đã diễn ra</span></h3>
   </div>
-  <% if !done_sessions.nil? and !done_sessions.empty?%>
+  <% if !done_sessions.nil? and !done_sessions.empty? %>
     <table class="table  table-link">
       <thead>
       <tr>
@@ -15,10 +15,12 @@
       </thead>
       <tbody>
       <% done_sessions.each do |done_session| %>
-        <tr class=" student_subject_level <%= 'subject_level_' + done_session.op_subject.id.to_s %>">
-          <%= render 'user/shared/session/row/done_session_student', {:session => done_session} %>
-        </tr>
+        <% unless done_session.op_lession.nil? %>
+          <tr class=" student_subject_level <%= 'subject_level_' + done_session.op_subject.id.to_s %>">
+            <%= render 'user/shared/session/row/done_session_student', {:session => done_session} %>
+          </tr>
         <% end %>
+      <% end %>
       </tbody>
     </table>
   <% else %>

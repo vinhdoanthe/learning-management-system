@@ -26,12 +26,12 @@
     </div>
     <div class="noti-nav">
       <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
-        <li class="nav-active">
-          <a href="<%= current_user.is_student? ? user_student_info_path : user_teacher_info_path %>">
-            <%= image_tag "global/images/active/icon-Setting.png" %>
-            <span>Cấu hình</span>
-          </a>
-        </li>
+<!--        <li class="nav-active">-->
+<!--          <a href="<%#= current_user.is_student? ? user_student_info_path : user_teacher_info_path %>">-->
+            <%#= image_tag "global/images/active/icon-Setting.png" %>
+<!--            <span>Cấu hình</span>-->
+<!--          </a>-->
+<!--        </li>-->
         <li class="">
           <% if current_user.is_teacher? %>
             <a href="/user/teacher_class">

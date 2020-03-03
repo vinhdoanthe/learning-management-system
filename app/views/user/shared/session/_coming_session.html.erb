@@ -15,6 +15,9 @@
         <td width="135">
           <div id="clockdiv">
             <div>
+              <span class="days"></span>
+            </div>
+            <div>
               <span class="hours"></span>
             </div>
             <div>
@@ -35,4 +38,4 @@
     <div>Không có buổi học tiếp theo nào</div>
   <% end %>
 </div>
-<%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true%>
+

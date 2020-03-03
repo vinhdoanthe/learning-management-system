@@ -1,6 +1,6 @@
 <% student = current_user.op_student %>
 <% parent ||= current_user.op_student.op_parents.last %>
-<% res_partner ||= current_user.op_student.op_parents.first.res_partner %>
+<% res_partner = parent.nil? ? nil  : current_user.op_student.op_parents.first.res_partner %>
 
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
