@@ -66,14 +66,14 @@ class User::OpTeachersService
     if params[:date].present?
       if session_list.kind_of?(Array)
         sessions = []
-        session_list.each{|list| sessions << list.where(:start_datetime => params[:date].to_time.all_week)}
+        session_list.each {|list| sessions << list.where(:start_datetime => params[:date].to_time.all_week)}
       else
         sessions = session_list.where(:start_datetime => params[:date].to_time.all_week)
       end
     else
       if session_list.kind_of?(Array)
         sessions = []
-        session_list.each{|list| sessions << list.where(:start_datetime => Time.now.all_week)}
+        session_list.each {|list| sessions << list.where(:start_datetime => Time.now.all_week)}
       else
         sessions = session_list.where(:start_datetime => Time.now.all_week)
       end
@@ -81,13 +81,13 @@ class User::OpTeachersService
 
     sessions = sessions.to_a
     sessions.flatten!
-    sessions.select!{ |session| session if session.present?}
+    sessions.select! {|session| session if session.present?}
     schedule_hash = {'s1' => {}, 's2' => {}, 'c1' => {}, 'c2' => {}, 't1' => {}, 't2' => {}}
 
     sessions.each do |session|
-      time = session.end_datetime.localtime
+      time = session.end_datetime
       name = session.name
-      start_time = session.start_datetime.localtime.strftime('%H:%M')
+      start_time = session.start_datetime.strftime('%H:%M')
       end_time = time.strftime('%H:%M')
       day = time.strftime('%Y-%m-%d')
       company = Common::ResCompany.find(session.company_id).name
@@ -98,8 +98,8 @@ class User::OpTeachersService
       lesson = session.count
       status = session.state
 
-      session_info = { name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
-      record = { time.wday => session_info}
+      session_info = {name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
+      record = {time.wday => session_info}
       record['7'] = record['0']
 
       case time.hour.to_i
@@ -127,15 +127,15 @@ class User::OpTeachersService
     attendance_line = Learning::Batch::OpAttendanceLine.where(:session_id => params[:session_id].to_i, :student_id => params[:student_id].to_s)
     return {type: 'danger', message: 'Vui lòng điểm danh trước!'} if attendance_line.blank?
     error = attendance_line.update(
-      "knowledge1"=>params['knowledge1'].to_i,
-      "knowledge2"=>params['knowledge2'].to_i,
-      "knowledge3"=>params['knowledge3'].to_i,
-      "knowledge4"=>params['knowledge4'].to_i,
-      "attitude1"=>params['attitude1'].to_i,
-      "attitude2"=>params['attitude2'].to_i,
-      "skill1"=>params['skill1'].to_i,
-      "skill2"=>params['skill2'].to_i,
-      "note_1"=>params['teacher_note']
+        "knowledge1" => params['knowledge1'].to_i,
+        "knowledge2" => params['knowledge2'].to_i,
+        "knowledge3" => params['knowledge3'].to_i,
+        "knowledge4" => params['knowledge4'].to_i,
+        "attitude1" => params['attitude1'].to_i,
+        "attitude2" => params['attitude2'].to_i,
+        "skill1" => params['skill1'].to_i,
+        "skill2" => params['skill2'].to_i,
+        "note_1" => params['teacher_note']
     )
 
     if error
