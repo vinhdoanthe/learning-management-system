@@ -5,13 +5,14 @@ module Learning
 
     def show_pdf
       # binding.pry
-      fallback_pdf_file = Learning::Course::LearningMaterial.last
+      fallback_pdf_file = Learning::Course::LearningMaterial.where(material_type: Learning::Constant::Course::MATERIAL_TYPE_FILE).last
       if params[:session_id].present?
         session = Learning::Batch::OpSession.find(params[:session_id])
         if session.nil?
           @pdf_file = fallback_pdf_file
         else
-          @pdf_file = Learning::Course::LearningMaterial.where(:op_lession_id => session.lession_id).first
+          @pdf_file = Learning::Course::LearningMaterial.where(material_type: Learning::Constant::Course::MATERIAL_TYPE_FILE,
+                                                               :op_lession_id => session.lession_id).first
           if @pdf_file.blank?
             @pdf_file = fallback_pdf_file
           end
@@ -26,6 +27,28 @@ module Learning
       # respond js
       respond_to do |format|
         format.js {render 'learning/show_pdf'}
+      end
+    end
+
+    def show_video
+      fallback_video = Learning::Course::LearningMaterial.where(material_type: Learning::Constant::Course::MATERIAL_TYPE_VIDEO).last
+      if params[:session_id].present?
+        session = Learning::Batch::OpSession.find(params[:session_id])
+        if session.nil?
+          @video_file = fallback_video
+        else
+          @video_file = Learning::Course::LearningMaterial.where(material_type: Learning::Constant::Course::MATERIAL_TYPE_VIDEO,
+                                                                 :op_lession_id => session.lession_id).first
+          if @pdf_file.blank?
+            @video_file = fallback_video
+          end
+        end
+      else
+        @video_file = fallback_video
+      end
+
+      respond_to do |format|
+        format.js {render 'learning/show_video'}
       end
     end
 
