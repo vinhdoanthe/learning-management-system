@@ -44,7 +44,7 @@ module User
         session << batch.op_sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).last
       end
 
-      @session = session[0]
+      @session = @student.op_sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :DESC).first
       session.each{|s| @session = s if s.present? && @session.start_datetime <= s.start_datetime}
       schedules = OpTeachersService.teaching_schedule(@sessions, params)
 

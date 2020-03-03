@@ -25,5 +25,9 @@ module User
         asset_path('global/images/avatar.svg')
       end
     end
+
+    def count_sessions_week reference
+      current_user.send(reference).op_sessions.where('start_datetime >= ? AND end_datetime <= ?', Time.now.beginning_of_week, Time.now.end_of_week).count
+    end
   end
 end

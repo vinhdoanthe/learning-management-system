@@ -36,8 +36,7 @@
           <% if current_user.is_teacher? %>
             <a href="/user/teacher_class">
               <%= image_tag "global/images/active/Icon-Bell.png" %>
-              <span>Danh sách lớp học</span>
-              <span class="nn-alert"><%= current_user.op_faculty.op_batches.uniq.count %></span>
+              <span>Danh sách lớp học<span style="float: right; color: red"><%= current_user.op_faculty.op_batches.uniq.count %></span></span>
             </a>
           <% else %>
             <a href="/user/student_homework">
@@ -51,14 +50,12 @@
           <% if current_user.account_role == User::Constant::TEACHER %>
             <a href="/user/teaching_schedule">
               <%= image_tag "global/images/active/Icon-Inbox.png" %>
-              <span>Lịch giảng dạy</span>
-              <span class="nn-alert">3</span>
+              <span>Lịch giảng dạy<span style="float: right; color: red"><%= count_sessions_week 'op_faculty' %></span></span>
             </a>
           <% else %>
             <a href="/user/my_class">
               <%= image_tag "global/images/active/Icon-Inbox.png" %>
-              <span>Danh sách lớp</span>
-              <span class="nn-alert"><%= current_user.op_student.op_batches.count %></span>
+              <span>Danh sách lớp<span style="float: right; color: red"><%= current_user.op_student.op_batches.count %></span></span>
             </a>
           <% end %>
         </li>
@@ -66,7 +63,7 @@
           <li class="">
             <a href="/user/student_timetable">
               <%= image_tag "global/images/no-active/ico-TienDoHocTap.png" %>
-              <span>Thời khoá biểu</span>
+              <span>Thời khoá biểu<span style="float: right; color: red"><%= count_sessions_week 'op_student' %></span></span>
             </a>
           </li>
         <% end %>
