@@ -98,9 +98,9 @@ class User::OpTeachersService
       lesson = session.count
       status = session.state
 
-      session_info = {name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
-      record = {time.wday => session_info}
-      record['7'] = record['0']
+      session_info = { name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
+      record = { time.wday => session_info}
+      record[7] = record[0]
 
       case time.hour.to_i
       when 8..10

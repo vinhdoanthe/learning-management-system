@@ -80,9 +80,9 @@ $(document).ready(function () {
 
         if (res.lesson) {
             $('#lesson_title').html("<strong>" + res.lesson.name + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: " + res.lesson.note);
-            $('.learning_device_content').html(res.lesson.learning_device);
-        } else {
-            $('#lesson_title').html("<strong>BÀI: Đang cập nhật" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: Đang cập nhật");
+            $('.learning_device_content').html(res.lesson.learning_devices);
+        }else{
+            $('#lesson_title').html("<strong>BÀI: Đang cập nhật" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: Đang cập nhật" );
             $('.learning_device_content').html('Không có learning device');
         }
 
