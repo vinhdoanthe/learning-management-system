@@ -15,6 +15,8 @@ gem 'rails_admin', '~> 2.0'
 gem 'composite_primary_keys', '~> 12.0'
 # Image processing
 gem 'image_processing'
+gem 'videojs_rails'
+
 # jQuery
 gem 'jquery-rails'
 # Used for storing secret variables

@@ -3,6 +3,32 @@ module Learning
     before_action :authenticate_faculty!, only: [:pdf_materials]
     skip_before_action :authenticate_user!, only: [:view_learning_material]
 
+    def show_pdf
+      # binding.pry
+      fallback_pdf_file = Learning::Course::LearningMaterial.last
+      if params[:session_id].present?
+        session = Learning::Batch::OpSession.find(params[:session_id])
+        if session.nil?
+          @pdf_file = fallback_pdf_file
+        else
+          @pdf_file = Learning::Course::LearningMaterial.where(:op_lession_id => session.lession_id).first
+          if @pdf_file.blank?
+            @pdf_file = fallback_pdf_file
+          end
+        end
+      else
+        @pdf_file = fallback_pdf_file
+      end
+      # respond html
+      # respond_to do |format|
+      #   format.html {render :template => "learning/pdf_material", locals: {:pdf_file => @pdf_file}}
+      # end
+      # respond js
+      respond_to do |format|
+        format.js {render 'learning/show_pdf'}
+      end
+    end
+
     def view_learning_material
       if params[:material_id].present?
         @learning_material = Learning::Course::LearningMaterial.find(params[:material_id].to_i)

@@ -68,8 +68,9 @@ RailsAdmin.config do |config|
       field :code
       field :name
       field :note
-      field :thumbnail
+      field :learning_devices
       field :learning_materials
+      field :thumbnail
     end
     edit do
       field :op_subject
@@ -77,8 +78,9 @@ RailsAdmin.config do |config|
       field :code
       field :name
       field :note
-      field :thumbnail
+      field :learning_devices
       field :learning_materials
+      field :thumbnail
     end
   end
 

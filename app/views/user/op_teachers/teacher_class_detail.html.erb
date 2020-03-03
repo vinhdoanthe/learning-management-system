@@ -78,10 +78,8 @@
                               danh
                             </button>
                           </li>
-                          <li>
-                            <button type="button" class="btn btn-default btn-embossed" id="btn_view_materials" data-toggle="modal" data-target="#modal_materials">Học
-                              liệu
-                            </button>
+                          <li id="btn_view_materials">
+                            <%= link_to 'Học liệu', learning_show_single_pdf_path(@session.id), {:class => 'btn btn-default btn-embossed', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
                           </li>
                           <li>
                             <button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#thuonghocsinh">Thưởng</button>

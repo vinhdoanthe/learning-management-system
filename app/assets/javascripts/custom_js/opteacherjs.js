@@ -78,11 +78,11 @@ $(document).ready(function () {
     function change_view(res, data) {
         $('#student_attendance').html('');
 
-        if(res.lesson){
-            $('#lesson_title').html("<strong>" + res.lesson.name + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: " + res.lesson.note );
+        if (res.lesson) {
+            $('#lesson_title').html("<strong>" + res.lesson.name + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: " + res.lesson.note);
             $('.learning_device_content').html(res.lesson.learning_device);
-        }else{
-            $('#lesson_title').html("<strong>BÀI: Đang cập nhật" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: Chưa có dũ liệu" );
+        } else {
+            $('#lesson_title').html("<strong>BÀI: Đang cập nhật" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: Đang cập nhật");
             $('.learning_device_content').html('Không có learning device');
         }
 
@@ -90,15 +90,15 @@ $(document).ready(function () {
         start_time = change_time(res.session.start_datetime);
         end_time = change_time(res.session.end_datetime);
 
-        if (res.session.state == 'confirm'){
+        if (res.session.state == 'confirm') {
             $('#teacher_checkin').prop('disabled', false);
-        }else{
+        } else {
             $('#teacher_checkin').prop('disabled', true);
         }
-        if (res.session.state == 'confirm' || res.session.state == 'done'){
+        if (res.session.state == 'confirm' || res.session.state == 'done') {
             $('#teacher_attendance').prop('disabled', false);
             $('#upload_session_photo').prop('disabled', false);
-        }else{
+        } else {
             $('#teacher_attendance').prop('disabled', true);
             $('#upload_session_photo').prop('disabled', true);
         }
@@ -110,8 +110,12 @@ $(document).ready(function () {
 
 
         $('#calendar-box').html('<div class="cb-tit"><p>' + month + '</p></div><div class="cb-con"><strong>' + start_time.day + '</strong><p>' + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + '<br/>' + w_day + '</p></div>')
-
         $('#session_time_table').html('');
+
+        html_str = "<a type='button' class='btn btn-default btn-embossed' data-toggle='modal' data-target='#modal_materials' data-remote='true' href='/learning/show_pdf/" + res.session.id + "'> Học liệu </a>"
+        $('#btn_view_materials').html('');
+        $('#btn_view_materials').html(html_str);
+
 
         $.each(res.sessions_time, function (index, time) {
             start = new Date(time[0]);
@@ -306,18 +310,9 @@ $(document).ready(function () {
             success: function (res) {
                 change_checkin_form(res);
                 change_attendance_form(res);
-                change_learning_materials_form(res);
+                // update_materials(res);
             }
         })
-    }
-
-    // Update teaching materials
-    $('#btn_view_materials').on('click', function () {
-        call_active_session();
-    });
-
-    function change_learning_materials_form(res) {
-        // Update learning material
     }
 
     //Teacher Check-in

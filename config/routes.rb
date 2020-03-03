@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   namespace :learning do
     get 'view_learning_material/:material_id' => 'learning_materials#view_learning_material'
     get 'pdf_materials' => 'learning_materials#pdf_materials'
+    get 'show_pdf/:session_id' => 'learning_materials#show_pdf', as: 'show_single_pdf'
   end
   resources :password_resets, only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'learning/batch/sessions#add_photo_attachment'
