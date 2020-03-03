@@ -39,3 +39,4 @@
   <% end %>
 </div>
 
+<%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true%>
