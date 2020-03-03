@@ -37,10 +37,11 @@ function initializeClock(id, endtime) {
   function updateClock() {
     var t = getTimeRemaining(endtime);
 
-    daysSpan.innerHTML = t.days.toString();
-    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+    days = (t.hours - t.hours % 24) / 24
+    $('.days').html(days.toString() + 'd');
+    hoursSpan.innerHTML = t.hours % 24 + 'h';
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2) + 'm';
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2) + 's';
 
     if (t.total <= 0) {
       clearInterval(timeinterval);

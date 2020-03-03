@@ -54,11 +54,13 @@ module User
       else
         @session = @sessions.where('start_datetime >= ?', Time.now).first
       end
+
       @session = @sessions.last if @session.blank?
       @session_index = @sessions.index(@session)
       @subject = @session.op_subject
       sessions_time = @sessions.pluck(:start_datetime, :end_datetime)
       @lesson = @session.op_lession
+
       if @lesson && @lesson.thumbnail.attached?
         img_src = @lesson.thumbnail.service_url
       else
