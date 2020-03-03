@@ -12,7 +12,7 @@
         <% start = coming_soon_session.start_datetime %>
         <td align="right"><p class="text-right"><%= start.strftime('%H-%M') %>
           - <%= coming_soon_session.end_datetime.strftime('%H-%M') %> | <%= start.strftime('%A') + ', ' + start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %></p></td>
-        <td width="135">
+        <td width="210px">
           <div id="clockdiv">
             <div>
               <span class="days"></span>
