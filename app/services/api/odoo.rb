@@ -60,7 +60,7 @@ module Api
         else
           attendance_sheet.state = '-1'
         end
-        # binding.pry
+
         attendance_sheet.save
         if attendance_sheet.errors.full_messages.any?
           errors << attendance_sheet.errors.full_messages.to_s
@@ -84,7 +84,7 @@ module Api
                 op_att_line.attendance_date = attendance_sheet.attendance_date
                 # op_att_line.session_id = session.id
                 op_att_line.note = att_line[:note] unless att_line[:note].blank?
-                # binding.pry
+
                 op_att_line.save
                 if op_att_line.errors.full_messages.any?
                   errors << op_att_line.errors.full_messages.to_s
