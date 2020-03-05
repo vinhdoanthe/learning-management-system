@@ -19,7 +19,14 @@ module User
     end
 
     def student_homework
-
+      data = OpStudentsService.student_homework params, @student
+      @courses = @student.op_courses
+      @session = data[:session]
+      
+      respond_to do |format|
+        format.html
+        format.js {render 'user/op_students/partials/table_homework_list', :locals => data}
+      end
     end
 
     def student_product
