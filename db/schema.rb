@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_18_081837) do
+ActiveRecord::Schema.define(version: 2020_03_04_104123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1498,6 +1498,18 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
     t.integer "student_id", null: false, comment: "Student"
   end
 
+  create_table "answer_marks", force: :cascade do |t|
+    t.bigint "user_answer_id"
+    t.text "mark_content"
+    t.boolean "answer_is_right"
+    t.bigint "teacher_id"
+    t.datetime "mark_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["teacher_id"], name: "index_answer_marks_on_teacher_id"
+    t.index ["user_answer_id"], name: "index_answer_marks_on_user_answer_id"
+  end
+
   create_table "asset_depreciation_confirmation_wizard", id: :serial, comment: "asset.depreciation.confirmation.wizard", force: :cascade do |t|
     t.date "date", null: false, comment: "Account Date"
     t.integer "create_uid", comment: "Created by"
@@ -1677,6 +1689,7 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
     t.text "ccbs_moved0", comment: "ĐK nghỉ: Chấm công bổ sung"
     t.integer "ccbs", comment: "Số lần làm chấm công bổ sung"
     t.float "hours_of_ctv", comment: "Số giờ của CTV"
+    t.string "employee_code", comment: "Mã nhân viên"
   end
 
   create_table "attendance_tutor", id: :serial, comment: "attendance.tutor", force: :cascade do |t|
@@ -2317,6 +2330,17 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string "data_file_name", null: false
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.string "data_fingerprint"
+    t.string "type", limit: 30
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
   create_table "course_categ", id: :serial, comment: "course.categ", force: :cascade do |t|
@@ -3668,6 +3692,7 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
     t.string "shift_work_do", comment: "Phân loại nhân viên"
     t.integer "contract_id", comment: "Current Contract"
     t.string "contract_state", comment: "Status"
+    t.string "employee_code", comment: "Employee Code"
     t.index ["barcode"], name: "hr_employee_barcode_uniq", unique: true
     t.index ["company_id"], name: "hr_employee_company_id_index"
     t.index ["resource_id"], name: "hr_employee_resource_id_index"
@@ -6747,6 +6772,7 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.text "learning_devices", comment: "Learning Devices"
   end
 
   create_table "op_library_card", id: :serial, comment: "Library Card", force: :cascade do |t|
@@ -8077,6 +8103,25 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
     t.index ["project_id"], name: "project_task_type_rel_project_id_idx"
     t.index ["type_id", "project_id"], name: "project_task_type_rel_type_id_project_id_key", unique: true
     t.index ["type_id"], name: "project_task_type_rel_type_id_idx"
+  end
+
+  create_table "question_choices", force: :cascade do |t|
+    t.bigint "question_id"
+    t.boolean "is_right_choice"
+    t.string "choice_content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_question_choices_on_question_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.bigint "op_lession_id"
+    t.text "question"
+    t.string "question_type"
+    t.boolean "is_active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["op_lession_id"], name: "index_questions_on_op_lession_id"
   end
 
   create_table "rating_rating", id: :serial, comment: "Rating", force: :cascade do |t|
@@ -9631,6 +9676,29 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
     t.index ["timetable_line_id"], name: "timetable_line_faculty_rel_timetable_line_id_idx"
   end
 
+  create_table "user_answers", force: :cascade do |t|
+    t.bigint "user_question_id"
+    t.bigint "question_choice_id"
+    t.text "answer_content"
+    t.string "state"
+    t.datetime "answer_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_choice_id"], name: "index_user_answers_on_question_choice_id"
+    t.index ["user_question_id"], name: "index_user_answers_on_user_question_id"
+  end
+
+  create_table "user_questions", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "question_id"
+    t.bigint "op_batch_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["op_batch_id"], name: "index_user_questions_on_op_batch_id"
+    t.index ["question_id"], name: "index_user_questions_on_question_id"
+    t.index ["student_id"], name: "index_user_questions_on_student_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -10346,6 +10414,7 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
   add_foreign_key "admission_sent_email", "op_student", column: "student_id", name: "admission_sent_email_student_id_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "res_users", column: "create_uid", name: "admission_sent_email_create_uid_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "res_users", column: "write_uid", name: "admission_sent_email_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "answer_marks", "user_answers"
   add_foreign_key "asset_depreciation_confirmation_wizard", "res_users", column: "create_uid", name: "asset_depreciation_confirmation_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_depreciation_confirmation_wizard", "res_users", column: "write_uid", name: "asset_depreciation_confirmation_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_mass_create", "bt_asset_category", column: "category_id", name: "asset_mass_create_category_id_fkey", on_delete: :nullify
@@ -11775,6 +11844,7 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
   add_foreign_key "op_session", "op_faculty", column: "assessor", name: "op_session_assessor_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_faculty", column: "faculty_id", name: "op_session_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_faculty", column: "observe_faculty", name: "op_session_observe_faculty_fkey", on_delete: :nullify
+  add_foreign_key "op_session", "op_lession", column: "lession_id", name: "op_session_lession_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_student_course", column: "student_course_id", name: "op_session_student_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_subject", column: "subject_id", name: "op_session_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_timing", column: "timing_id", name: "op_session_timing_id_fkey", on_delete: :nullify
@@ -12053,6 +12123,8 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
   add_foreign_key "project_task_type", "res_users", column: "write_uid", name: "project_task_type_write_uid_fkey", on_delete: :nullify
   add_foreign_key "project_task_type_rel", "project_project", column: "project_id", name: "project_task_type_rel_project_id_fkey", on_delete: :cascade
   add_foreign_key "project_task_type_rel", "project_task_type", column: "type_id", name: "project_task_type_rel_type_id_fkey", on_delete: :cascade
+  add_foreign_key "question_choices", "questions"
+  add_foreign_key "questions", "op_lession"
   add_foreign_key "rating_rating", "ir_model", column: "parent_res_model_id", name: "rating_rating_parent_res_model_id_fkey", on_delete: :nullify
   add_foreign_key "rating_rating", "ir_model", column: "res_model_id", name: "rating_rating_res_model_id_fkey", on_delete: :cascade
   add_foreign_key "rating_rating", "mail_message", column: "message_id", name: "rating_rating_message_id_fkey", on_delete: :nullify
@@ -12424,6 +12496,11 @@ ActiveRecord::Schema.define(version: 2020_02_18_081837) do
   add_foreign_key "time_table_report", "res_users", column: "write_uid", name: "time_table_report_write_uid_fkey", on_delete: :nullify
   add_foreign_key "timetable_line_faculty_rel", "gen_time_table_line", column: "timetable_line_id", name: "timetable_line_faculty_rel_timetable_line_id_fkey", on_delete: :cascade
   add_foreign_key "timetable_line_faculty_rel", "op_faculty", column: "faculty_id", name: "timetable_line_faculty_rel_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "user_answers", "question_choices"
+  add_foreign_key "user_answers", "user_questions"
+  add_foreign_key "user_questions", "op_batch"
+  add_foreign_key "user_questions", "questions"
+  add_foreign_key "user_questions", "users", column: "student_id"
   add_foreign_key "utm_campaign", "res_users", column: "create_uid", name: "utm_campaign_create_uid_fkey", on_delete: :nullify
   add_foreign_key "utm_campaign", "res_users", column: "write_uid", name: "utm_campaign_write_uid_fkey", on_delete: :nullify
   add_foreign_key "utm_medium", "res_users", column: "create_uid", name: "utm_medium_create_uid_fkey", on_delete: :nullify

@@ -12,10 +12,15 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'enumerize'
 # User for administration
 gem 'rails_admin', '~> 2.0'
+gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'composite_primary_keys', '~> 12.0'
+
 # Image processing
+gem "aws-sdk-s3", require: false
+
 gem 'image_processing'
 gem 'videojs_rails'
+gem 'pdfjs_viewer-rails'
 
 # jQuery
 gem 'jquery-rails'
@@ -23,9 +28,7 @@ gem 'jquery-rails'
 gem 'config'
 # Used to call to oDoo
 gem 'xmlrpc'
-# Google Drive API
-gem 'pdfjs_viewer-rails'
-gem "aws-sdk-s3", require: false
+
 # Deployment gems
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'
@@ -82,6 +85,10 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
+
+# group :assets do
+#   gem 'coffee-rails', '~> 4.1.0'
+# end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -4,12 +4,17 @@ module Learning::Constant
   STUDENT_BATCH_STATUS_OFF = 'off'
   STUDENT_BATCH_STATUS_SAVE = 'save'
 
-  module Course
+  module Material
     MATERIAL_TYPE_VIDEO = 'video'
     MATERIAL_TYPE_FILE = 'file'
 
-    LEARNING_TYPE_TEACH = 'teach'
-    LEARNING_TYPE_REVIEW = 'review'
+    MATERIAL_TYPE_TEACH = 'teach'
+    MATERIAL_TYPE_REVIEW = 'review'
+
+    QUESTION_TEXT_RESPONSE = 'text'
+    QUESTION_SINGLE_CHOICE = 'single'
+    QUESTION_MULTIPLE_CHOICES = 'multiple'
+
   end
 
   module Batch

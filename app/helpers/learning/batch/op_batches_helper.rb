@@ -15,11 +15,11 @@ module Learning
         levels
       end
 
-      def get_list_subject_pairs( batch_id:)
+      def get_list_subject_pairs(batch_id:)
         sessions = Learning::Batch::OpBatch.find(batch_id).op_sessions
         subject_session_hash = {}
 
-        sessions.each do |session| 
+        sessions.each do |session|
           subject = session.op_subject
           subject_session_hash.merge!({subject.id => subject.level})
         end
@@ -31,7 +31,7 @@ module Learning
         op_batch = Learning::Batch::OpBatch.find(batch_id)
         sessions = op_batch.op_sessions
         levels = {}
-        
+
         level = sessions.each do |session|
           subject = session.op_subject
           levels.merge!({subject.id => subject.level}) if subject.present?
@@ -41,7 +41,7 @@ module Learning
       end
 
       def teachers_name(batch_id)
-        Learning::Batch::OpBatchService.get_teachers_name(batch_id)
+        OpBatchService.get_teachers_name(batch_id)
       end
 
       def batch_active?(batch_id)
@@ -89,8 +89,8 @@ module Learning
       end
 
       def group_session_subjects(sessions)
-        subject_groups = sessions.group_by{ |session| session.subject_id }
-        subject_session = subject_group.each{|k, v| subject_id[k] = v.pluck(:id)}
+        subject_groups = sessions.group_by {|session| session.subject_id}
+        subject_session = subject_group.each {|k, v| subject_id[k] = v.pluck(:id)}
       end
       # def teacher_class_detail_current_session
 

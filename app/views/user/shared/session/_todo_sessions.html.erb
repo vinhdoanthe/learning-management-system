@@ -14,11 +14,11 @@
       </thead>
       <tbody>
       <% todo_sessions.each do |todo_session| %>
-        <% unless todo_session.op_lession.nil? %>
+
           <tr class="student_subject_level <%= 'subject_level_' + todo_session.op_subject.id.to_s %>">
             <%= render 'user/shared/session/row/todo_session_student', {:session => todo_session} %>
           </tr>
-        <% end %>
+
       <% end %>
       </tbody>
     </table>

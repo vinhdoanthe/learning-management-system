@@ -21,8 +21,8 @@ RailsAdmin.config do |config|
       end
     end
   end
-  config.included_models = %w(Learning::Course::OpCourse Learning::Course::OpSubject Learning::Course::OpLession Learning::Course::LearningMaterial
-                              Learning::Batch::OpBatch Learning::Batch::OpSession
+  config.included_models = %w(Learning::Course::OpCourse Learning::Course::OpSubject Learning::Course::OpLession Learning::Material::LearningMaterial
+                              Learning::Batch::OpBatch Learning::Batch::OpSession Learning::Material::Question Learning::Material::QuestionChoice
                               User::User)
 
 
@@ -70,6 +70,7 @@ RailsAdmin.config do |config|
       field :note
       field :learning_devices
       field :learning_materials
+      field :questions
       field :thumbnail
     end
     edit do
@@ -80,6 +81,7 @@ RailsAdmin.config do |config|
       field :note
       field :learning_devices
       field :learning_materials
+      field :questions
       field :thumbnail
     end
   end
@@ -104,6 +106,30 @@ RailsAdmin.config do |config|
       field :op_faculty
       field :op_parent
       field :op_student
+    end
+  end
+
+  config.model 'Learning::Material::Question' do
+    show do
+      field :op_lession
+      field :question do
+        pretty_value do
+          value.html_safe
+        end
+      end
+      field :question_type
+      field :question_choices
+      field :is_active
+    end
+
+    edit do
+      field :op_lession
+      field :question, :ck_editor do
+        config_js ActionController::Base.helpers.asset_path('ckeditor/config.js')
+      end
+      field :question_type
+      field :question_choices
+      field :is_active
     end
   end
 
@@ -140,7 +166,7 @@ RailsAdmin.config do |config|
     show
     edit
     delete do
-      only ['Learning::Course::LearningMaterial']
+      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
     end
     # show_in_app
 
