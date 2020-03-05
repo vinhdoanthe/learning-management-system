@@ -42,8 +42,9 @@ module Learning
         @video_file = fallback_video
       end
 
+      name = session.op_lession ? session.op_lession.name : session.name
       respond_to do |format|
-        format.js {render 'learning/show_video'}
+        format.js {render 'learning/show_video', :locals => {:target => params[:target], name: name}}
       end
     end
 
