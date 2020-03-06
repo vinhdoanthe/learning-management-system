@@ -133,6 +133,19 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'Learning::Material::QuestionChoice' do
+    show do
+      field :question
+      field :is_right_choice
+      field :choice_content
+    end
+
+    edit do
+      field :question
+      field :is_right_choice
+      field :choice_content
+    end
+  end
   ### Popular gems integration
 
   ## == Devise ==

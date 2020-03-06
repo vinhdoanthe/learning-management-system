@@ -3,7 +3,7 @@ module Learning
     class LearningMaterial < ApplicationRecord
       extend Enumerize
 
-      belongs_to :op_lession, class_name: 'Learning::Course::OpLession'
+      belongs_to :op_lession, class_name: 'Learning::Course::OpLession', inverse_of: :learning_materials
 
       enumerize :material_type, in: [Learning::Constant::Material::MATERIAL_TYPE_FILE, Learning::Constant::Material::MATERIAL_TYPE_VIDEO]
       enumerize :learning_type, in: [Learning::Constant::Material::MATERIAL_TYPE_TEACH, Learning::Constant::Material::MATERIAL_TYPE_REVIEW]

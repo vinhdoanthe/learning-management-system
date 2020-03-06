@@ -1,7 +1,12 @@
-$(document).ready(function () {
-    $('form[data-remote]').bind('ajax:before', function () {
+$(document).ready(function() {
+    return $(document).on('mousedown', '.save-action', function(e) {
+        var editor, instance;
         for (instance in CKEDITOR.instances) {
-            CKEDITOR.instances[instance].updateElement();
+            editor = CKEDITOR.instances[instance];
+            if (editor.checkDirty()) {
+                editor.updateElement();
+            }
         }
+        return true;
     });
 });
