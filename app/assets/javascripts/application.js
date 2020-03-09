@@ -5,7 +5,6 @@
 //=require custom_js/opteacherjs.js
 //=require custom_js/opstudent.js
 //=require rails_admin/custom/ckeditor_ajax.js
-//= require rails-jwplayer
 
 
 $(document).ready(function () {
