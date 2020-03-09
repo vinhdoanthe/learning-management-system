@@ -21,7 +21,8 @@ gem "aws-sdk-s3", require: false
 gem 'image_processing'
 gem 'videojs_rails'
 gem 'pdfjs_viewer-rails'
-gem 'rails-jwplayer'
+# gem 'rails-jwplayer'
+# gem 'jwplayer-rails'
 
 # jQuery
 gem 'jquery-rails'

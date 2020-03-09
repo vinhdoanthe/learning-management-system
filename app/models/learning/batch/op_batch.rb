@@ -12,7 +12,7 @@ module Learning
       has_many :op_subjects, through: 'op_sessions', class_name: 'Learning::Course::OpSubject'
       has_many :op_session_students, class_name: 'Learning::Batch::OpSessionStudent', foreign_key: 'batch_id'
       has_many :op_faculties, -> {distinct}, :class_name => 'User::OpFaculty', through: :op_sessions
-      has_many :user_questions, class_name: 'Learining::LearningRecord::UserQuestion'
+      has_many :user_questions, class_name: 'Learning::LearningRecord::UserQuestion'
 
       has_many_attached :photos
 

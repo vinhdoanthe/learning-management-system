@@ -120,6 +120,12 @@ module Learning
           end
         end
       end
+
+      # Hàm này dùng để update quiz cho toàn bộ các học sinh trong các batches đang diễn ra.
+      # Được thiết kế để chạy khởi tạo dữ liệu cho lần đầu tiên chạy LMS
+      def self.update_quizes_all_batches
+      
+      end
     end
   end
 end
