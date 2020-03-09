@@ -88,44 +88,7 @@ $('document').ready(function () {
         window.location.href = '/user/student_homework?session=' + session_id
     })
 
-    // Student do homework
-    if(window.location.href.includes('/learning/view_question')){
-        question_id = $('input[name="student_question_id"]').val()
-        $.ajax({
-            method: 'GET',
-            url: '/learning/question_content?user_question_id=' + question_id + '&index=0',
-            dataType: 'script',
-        })
-
-        var questions_count = $('input[name="questions_count"').val();
-        $('#question_id_span').html('1/' + questions_count + ' BÀI')
-        $('.question_select').first().addClass('bg-FCF055');
-        // $('.question_select').first().removeClass('bg-CFCFCF');
-        $('.question_select').click(function(){
-            $('.question_select').removeClass('bg-FCF055');
-            $(this).removeClass('bg-CFCFCF');
-            $(this).addClass('bg-FCF055');
-            $('#question_id_span').html($(this).html() + '/' + questions_count + ' BÀI')
-        })
-
-        $('#answer_the_question').on('click', function(){
-            question_choices = $("input[name='student_choise_answer']:checked").map(function(){
-              return $(this).val();
-            }).get()
-
-            if (!question_choices || question_choices !== []){
-                question_choices = $('#text_answer').val();
-            }
-
-            question = $('#question_id').val();
-            user_question = $('#user_question_id').val();
-
-            $.ajax({
-                method: 'POST',
-                url: '/learning/answer_question',
-                data: { question: question, question_choices: question_choices, user_question: user_question},
-                dataType: 'script'
-            })
-        })
-    }
+    // $(document).on('click', '#student_homework_back', function(){
+    //     window.location = document.referrer;
+    // })
 })

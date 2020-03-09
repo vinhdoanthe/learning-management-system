@@ -48,9 +48,6 @@ Rails.application.routes.draw do
     get 'show_pdf/:session_id' => 'learning_materials#show_pdf', as: 'show_single_pdf'
     get 'show_video/:session_id' => 'learning_materials#show_video', as: 'show_single_video'
     get 'view_question' => 'learning_records#view_question'
-    get 'question_content' => 'learning_records#question_content'
-    post 'answer_question' => 'learning_records#answer_question'
-
   end
   resources :password_resets, only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'learning/batch/sessions#add_photo_attachment'
