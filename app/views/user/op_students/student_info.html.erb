@@ -1,5 +1,5 @@
 <% student = current_user.op_student %>
-<% parent ||= student.op_parents.last %>
+<% parent ||= current_user.op_student.op_parents.last %>
 <% res_partner = parent.nil? ? nil  : current_user.op_student.op_parents.first.res_partner %>
 
 <div class="page-content page-thin">
@@ -73,20 +73,20 @@
               <div class="col-md-4">
                 <div class='fl_wrap'>
                   <label class='fl_label' for='rf_name'>Học viện:</label>
-                  <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= student.res_company ? student.res_company.name.to_s : '' %>">
+                  <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= student.res_company.name.to_s %>">
                 </div>
               </div>
               <% if res_partner %>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Địa chỉ:</label>
-                    <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= res_partner ? res_partner.street : '' %>">
+                    <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= res_partner.street %>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
-                    <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= res_partner ? res_partner.street2 : ''%>">
+                    <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= res_partner.street2 %>">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -110,7 +110,7 @@
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Họ và tên phụ huynh:</label>
-                    <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner ? res_partner.name : '' %> ">
+                    <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.name %> ">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -122,7 +122,7 @@
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Email:</label>
-                    <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= parent ? parent.email : '' %>">
+                    <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= parent.email %>">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -134,13 +134,13 @@
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Địa chỉ:</label>
-                    <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner ? res_partner.street2 : '' %>">
+                    <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner.street2 %>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
-                    <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner ? res_partner.city : ''%>">
+                    <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner.city %>">
                   </div>
                 </div>
                 <div class="col-md-4">
