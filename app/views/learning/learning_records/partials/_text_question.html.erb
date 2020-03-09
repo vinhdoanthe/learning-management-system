@@ -1,0 +1,20 @@
+<div class="fco-ques">
+  <div class="fcoq-tit">
+    <label for="">NỘI DUNG BÀI TẬP SỐ <%= index.to_i + 1 %>:</label>
+    <p><%= question.question %></p>
+    <input type="hidden" id='question_id' value="<%= question.id %>">
+    <input type="hidden" id='user_question_id' value="<%= user_question.id %>">
+  </div>
+</div>
+<div class="fco-answ">
+  <div class="fcoa-tit">
+    <label for="">Trả lời</label>
+  </div>
+  <div class="fcoa-con">
+    <textarea rows="4" placeholder="Nhập nội dung câu trả lời" id='text_answer'></textarea>
+    <span class="line-textarea line-textarea1"></span>
+    <span class="line-textarea line-textarea2"></span>
+    <span class="line-textarea line-textarea3"></span>
+    <span class="line-textarea line-textarea4"></span>
+  </div>
+</div>
