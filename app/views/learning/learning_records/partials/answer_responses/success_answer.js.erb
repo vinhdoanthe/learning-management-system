@@ -1,0 +1,5 @@
+<% if state != 'fail' %>
+$('#modal-basic').html("<%= escape_javascript(render partial: 'learning/learning_records/partials/answer_responses/success_answer', locals: { state: state } ) %>");
+<% else %>
+	$('#modal-basic').html("<%= escape_javascript(render partial: 'learning/learning_records/partials/answer_responses/fail_answer' ) %>");
+<% end %>
