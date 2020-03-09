@@ -25,3 +25,18 @@ span.subject_id.active{
 span.subject_id {
 	cursor: pointer;
 }
+
+.active_question{
+	background-color: #FCF055 !important;
+	color: white;
+}
+
+.undone_question{
+	background-color: #CFCFCF;
+	color: white;
+}
+
+.done_question{
+	background-color: #5DC2A7;
+	color: white;
+}

@@ -1,0 +1,38 @@
+<div class="fco-ques">
+  <div class="fcoq-tit">
+    <label for="">NỘI DUNG BÀI TẬP SỐ <%= index.to_i + 1 %>:</label>
+    <p><%= question.question.html_safe %></p>
+    <input type="hidden" id='question_id' value="<%= question.id %>">
+    <input type="hidden" id='user_question_id' value="<%= user_question.id %>">
+  </div>
+</div>
+<div class="fco-answ">
+  <div class="fcoa-tit">
+    <label for="">Trả lời</label>
+  </div>
+  <div class="fcoa-con">
+  	<% question.question_choices.each_with_index do |choice, i| %>
+    	<label class="check-multi"><%= choice.choice_content %>
+        <input type="radio" name="student_choise_answer" value="<%= choice.id %>" >
+        <% choice_key = ('A'.ord + i) %>
+        <span class="checkmark"><%= choice_key.chr %></span>
+      </label>
+    <% end %>
+    <% user_answer = user_question.user_answers.order( created_at: :DESC ).first %>
+    <% if user_answer && user_answer.state == 'right' %>
+      <input type="hidden" name="right_answer" value="<%= user_answer.answer_content %>">
+    <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+  if ($('input[name="right_answer"]')){
+    right_answer = $('input[name="right_answer"]').val();
+    right_answer = JSON.parse("[" + right_answer + "]")
+
+    $('input[name="student_choise_answer"]').each(function(){
+      if(right_answer[0].includes(parseInt($(this).val()))){
+        $(this).prop('checked', true)
+      }
+    })
+  }
+</script>
