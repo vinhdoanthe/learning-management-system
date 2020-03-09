@@ -42,7 +42,7 @@ module Learning
         @video_file = fallback_video
       end
 
-      name = session.op_lession ? session.op_lession.name : session.name
+      name = (session && session.op_lession) ? session.op_lession.name : (session.name || 'Đang cập nhật')
       respond_to do |format|
         format.js {render 'learning/show_video', :locals => {:target => params[:target], name: name}}
       end

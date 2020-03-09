@@ -1,5 +1,5 @@
 <% teacher = current_user.op_faculty %>
-<% res_partner = teacher.res_partner %>
+<% res_partner = teacher.res_partner if teacher.present? %>
 <div class="page-content page-thin">
     <div class="panel panel-edits bg-232837">
         <div class="panel-heading">
@@ -16,7 +16,7 @@
                       <%= current_user.avatar.attached? ? image_tag(current_user.avatar.variant(resize_to_limit: [80, 80])) : image_tag('global/images/avatars/user3.jpg') %>
                     </span>
                     <p>Giảng viên Fultime</p>
-                    <label><%= teacher.full_name %></label>
+                    <label><%= teacher.full_name if teacher.present? %></label>
                 </div>
                 <div class="bp-tab">
                     <ul class="nav nav-tabs" role="tablist">
@@ -40,7 +40,7 @@
                                     <div class="col-md-4">
                                         <div class='fl_wrap'>
                                             <label class='fl_label' for='rf_name'>Học viện tham gia dạy:</label>
-                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="<%= teacher.res_company.name %>" readonly />
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="<%= teacher.res_company.name if teacher.present? && teacher.res_company %>" readonly />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -65,25 +65,25 @@
                                     <div class="col-md-4">
                                         <div class='fl_wrap'>
                                             <label class='fl_label' for='rf_name'>Số điện thoại:</label>
-                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.phone || res_partner.mobile %>">
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.phone || res_partner.mobile if res_partner.present? %>">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class='fl_wrap'>
                                             <label class='fl_label' for='rf_name'>Địa chỉ:</label>
-                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.street %>"/>
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.street if res_partner.present? %>"/>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class='fl_wrap'>
                                             <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
-                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.street2 %>" disabled="" />
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.street2 if res_partner.present? %>" disabled="" />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class='fl_wrap'>
                                             <label class='fl_label' for='rf_name'>Quốc gia:</label>
-                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.res_country ? res_partner.res_country.name : 'None' %>" disabled="" />
+                                            <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= (res_partner.res_country ? res_partner.res_country.name : 'None') if res_partner.present? %>" disabled="" />
                                         </div>
                                     </div>
                                 </div>
