@@ -23,7 +23,7 @@ RailsAdmin.config do |config|
   end
   config.included_models = %w(Learning::Course::OpCourse Learning::Course::OpSubject Learning::Course::OpLession Learning::Material::LearningMaterial
                               Learning::Batch::OpBatch Learning::Batch::OpSession Learning::Material::Question Learning::Material::QuestionChoice
-                              User::User)
+                              User::User Learning::LearningRecord::UserQuestion)
 
 
   config.model 'Learning::Course::OpCourse' do
@@ -146,14 +146,13 @@ RailsAdmin.config do |config|
       field :choice_content
     end
   end
-  
   config.model 'Learning::LearningRecord::UserQuestion' do
     show do
       field :user
       field :question
       field :op_batch
     end
-
+    
     edit do
       field :user
       field :question
@@ -170,6 +169,5 @@ RailsAdmin.config do |config|
     delete do
       only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
     end
-
   end
 end

@@ -1,0 +1,8 @@
+<% case question.question_type %>
+<% when Learning::Constant::Material::QUESTION_TEXT_RESPONSE %>
+	$("#homework_question_content").html("<%= escape_javascript(render partial: 'learning/learning_records/partials/text_question', locals: { question: question, index: index, user_question: user_question } ) %>");
+<% when Learning::Constant::Material::QUESTION_MULTIPLE_CHOICES %>
+	$("#homework_question_content").html("<%= escape_javascript(render partial: 'learning/learning_records/partials/multiple_choices_question', locals: { question: question, index: index, user_question: user_question } ) %>");
+<% when Learning::Constant::Material::QUESTION_SINGLE_CHOICE %>
+	$("#homework_question_content").html("<%= escape_javascript(render partial: 'learning/learning_records/partials/single_choice_question', locals: { question: question, index: index, user_question: user_question } ) %>");
+<% end %>
