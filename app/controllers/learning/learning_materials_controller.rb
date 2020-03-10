@@ -1,27 +1,51 @@
 module Learning
   class LearningMaterialsController < ApplicationController
-    # before_action :authenticate_faculty!, only: [:pdf_materials]
+    before_action :authenticate_faculty!, only: [:show_google_doc_materials]
     # skip_before_action :authenticate_user!, only: [:view_learning_material]
 
     def show_pdf
-      fallback_pdf_file = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE).last
+      file = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE).last
       if params[:session_id].present?
         session = Learning::Batch::OpSession.find(params[:session_id])
         if session.nil?
-          @pdf_file = fallback_pdf_file
+          @files = file
         else
-          @pdf_file = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE,
-                                                                 :op_lession_id => session.lession_id).first
-          if @pdf_file.blank?
-            @pdf_file = fallback_pdf_file
+          @files = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE,
+                                                              :op_lession_id => session.lession_id).first
+          if @files.blank?
+            @files = file
           end
         end
       else
-        @pdf_file = fallback_pdf_file
+        @files = file
       end
 
       respond_to do |format|
         format.js {render 'learning/show_pdf'}
+      end
+    end
+
+    def show_google_doc_materials
+      file = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE).last
+      @files = Array.new
+      if params[:session_id].present?
+        session = Learning::Batch::OpSession.find(params[:session_id])
+        if session.nil?
+          @files = file
+        else
+          @files = Learning::Material::LearningMaterial::get_drive_files(session.lession_id)
+        end
+      else
+        @files = file
+      end
+      @pretty_files = Array.new
+      @files.each do |tmp_file|
+        pretty_file = tmp_file.get_drive_object
+        @pretty_files.append pretty_file unless pretty_file.nil?
+      end
+      # binding.pry
+      respond_to do |format|
+        format.js {render 'learning/show_google_doc_files'}
       end
     end
 

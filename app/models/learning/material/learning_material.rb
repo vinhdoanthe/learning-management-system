@@ -9,6 +9,27 @@ module Learning
       enumerize :learning_type, in: [Learning::Constant::Material::MATERIAL_TYPE_TEACH, Learning::Constant::Material::MATERIAL_TYPE_REVIEW]
 
       has_one_attached :material_file
+
+      def self.get_drive_files(lesson_id)
+        files = Array.new
+        last_uploaded_file = LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE).last
+        queries = LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE,
+            op_lession_id: lesson_id).to_a
+        if queries.blank?
+          files << last_uploaded_file
+        else
+          files = queries
+        end
+        files
+      end
+
+      def get_drive_object
+        unless google_drive_file_id.nil?
+          GoogleDrive::DriveApi.get_drive_api_instance.get_pretty_file(google_drive_file_id)
+        else
+          nil
+        end
+      end
     end
   end
 end

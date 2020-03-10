@@ -21,8 +21,7 @@ gem "aws-sdk-s3", require: false
 gem 'image_processing'
 gem 'videojs_rails'
 gem 'pdfjs_viewer-rails'
-# gem 'rails-jwplayer'
-# gem 'jwplayer-rails'
+gem 'google-api-client', '~> 0.34'
 
 # jQuery
 gem 'jquery-rails'
