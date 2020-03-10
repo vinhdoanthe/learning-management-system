@@ -1,0 +1,47 @@
+<% if attendance.present? %>
+    <div>
+    <h3><strong>KIẾN THỨC:</strong></h3>
+    <div class='student_knowledge'>
+      <div class="knowledge1">
+        <label><%= User::Constant::Evaluate::EVALUATE['KIẾN THỨC']['knowledge1']['label'] %></label>
+        <p><%= User::Constant::Evaluate::EVALUATE['KIẾN THỨC']['knowledge1']['content'][attendance.knowledge1] %></p>
+      </div>
+      <div class="knowledge2">
+        <label><%= User::Constant::Evaluate::EVALUATE['KIẾN THỨC']['knowledge2']['label'] %></label>
+        <p><%= User::Constant::Evaluate::EVALUATE['KIẾN THỨC']['knowledge2']['content'][attendance.knowledge2] %></p>
+      </div>
+      <div class="knowledge3">
+        <label><%= User::Constant::Evaluate::EVALUATE['KIẾN THỨC']['knowledge2']['label'] %></label>
+        <p><%= User::Constant::Evaluate::EVALUATE['KIẾN THỨC']['knowledge1']['content'][attendance.knowledge2] %></p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3><strong>THÁI ĐỘ:</strong></h3>
+    <div class='student_attitude'>
+      <div class="attitude1">
+        <label><%= User::Constant::Evaluate::EVALUATE['THÁI ĐỘ']['attitude1']['label'] %></label>
+        <p><%= User::Constant::Evaluate::EVALUATE['THÁI ĐỘ']['attitude1']['content'][attendance.attitude1] %></p>
+      </div>
+      <div class="attitude1">
+        <label><%= User::Constant::Evaluate::EVALUATE['THÁI ĐỘ']['attitude2']['label'] %></label>
+        <p><%= User::Constant::Evaluate::EVALUATE['THÁI ĐỘ']['attitude2']['content'][attendance.attitude2] %></p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3><strong>KĨ NĂNG:</strong></h3>
+    <div class='student_skill'>
+      <div class="skill1">
+        <label><%= User::Constant::Evaluate::EVALUATE['KĨ NĂNG']['skill1']['label'] %></label>
+        <p><%= User::Constant::Evaluate::EVALUATE['KĨ NĂNG']['skill1']['content'][attendance.skill1] %></p>
+      </div>
+      <div class="skill2">
+        <label><%= User::Constant::Evaluate::EVALUATE['KĨ NĂNG']['skill2']['label'] %></label>
+        <p><%= User::Constant::Evaluate::EVALUATE['KĨ NĂNG']['skill2']['content'][attendance.skill2] %></p>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <p>Đang cập nhật thông tin</p>
+<% end %>
