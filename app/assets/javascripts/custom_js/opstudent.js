@@ -130,4 +130,9 @@ $('document').ready(function () {
     $('.student_evaluate_view').on('click', function(){
         $('.student_evaluate_view_content').html('')
     })
+
+    $('#student_videos_list').on('click', '.student_show_video', function(){
+        $('.student_show_video').parent().parent().removeClass('undone_question')
+        $(this).parent().parent().addClass('undone_question')
+    })
 })
