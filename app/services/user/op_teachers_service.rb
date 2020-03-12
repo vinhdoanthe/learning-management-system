@@ -1,4 +1,6 @@
 class User::OpTeachersService
+  include Rails.application.routes.url_helpers
+
   def self.filter_batch(teacher, params)
     @batches ||= teacher.op_batches
     query = ''
@@ -32,7 +34,8 @@ class User::OpTeachersService
 
     student_courses.each do |sst|
       student = sst.op_student
-      student_info = {student.id => {:note => '', :status => sst.state, :attendance => '', :code => student.code || '', :name => student.full_name || ''}}
+      student_avatar = get_student_avatar student
+      student_info = {student.id => {:note => '', :status => sst.state, :attendance => '', :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
       all_students.merge!(student_info)
     end
 
@@ -40,7 +43,8 @@ class User::OpTeachersService
       session_students = session.op_session_students
       session_students.each do |st|
         student = st.op_student_course.op_student
-        student_info = {student.id => {:note => st.note || '', :attendance => '', :status => st.op_student_course.state, :code => student.code || '', :name => student.full_name}}
+        student_avatar = get_student_avatar student
+        student_info = {student.id => {:note => st.note || '', :attendance => '', :status => st.op_student_course.state, :code => student.code || '', :name => student.full_name, :avatar_src => student_avatar}}
         students.merge!(student_info)
       end
     elsif session.state == Learning::Constant::Batch::Session::STATE_DONE
@@ -49,7 +53,9 @@ class User::OpTeachersService
         note = st.note_1
         note = st.note_2 unless note
         student = st.op_student
-        student_info = {student.id => {:note => note || '', :attendance => st.present, :status => 'on', :code => student.code || '', :name => student.full_name || ''}}
+        student_avatar = get_student_avatar student
+
+        student_info = {student.id => {:note => note || '', :attendance => st.present, :status => 'on', :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
         students.merge!(student_info)
       end
     end
@@ -142,6 +148,22 @@ class User::OpTeachersService
       return {type: 'success', message: 'Gửi đánh giá thành công!'}
     else
       return {type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!'}
+    end
+  end
+
+  def get_student_avatar student
+    user = User::User.where(student_id: student.id).first
+
+    if user.present?
+      student_avatar = rails_blob_path(user.avatar, disposition: "attachment", only_path: true)  
+    else
+      if student.gender == 'm'
+        student_avatar = ActionController::Base.helpers.asset_path('Group-30.png')
+      elsif student.gender == 'f'
+        student_avatar = ActionController::Base.helpers.asset_path('Group-30.png')
+      else
+        student_avatar = ActionController::Base.helpers.asset_path('Group-12.png')
+      end
     end
   end
 

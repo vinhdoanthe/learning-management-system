@@ -64,8 +64,15 @@ module User
 
     end
 
-    def student_videos
-
+    def student_videos_list
+      data = OpStudentsService.student_homework params, @student
+      @courses = @student.op_courses
+      @session = data[:session]
+      
+      respond_to do |format|
+        format.html
+        format.js {render 'user/op_students/partials/student_videos_list', :locals => data}
+      end
     end
 
     def student_video_subs
@@ -77,6 +84,14 @@ module User
     end
 
     def student_attendance_line
+    end
+
+    def student_attendance_content
+      attendance = Learning::Batch::OpAttendanceLine.where(student_id: @student.id, session_id: params[:session_id]).first
+      respond_to do |format|
+        format.html
+        format.js { render 'user/op_students/partials/student_evaluate_content', :locals => {attendance: attendance}}
+      end
     end
 
     private
