@@ -12,9 +12,8 @@ module Sale
       no_subject = 0
       order_lines = order.order_lines.order(:create_date => :asc)
       order_lines.each do |order_line|
-        temp_no_subject = order_line.op_subjects.count
-        if no_subject < temp_no_subject
-          no_subject = temp_no_subject
+        if order_line.price_total > 0
+          no_subject = no_subject + order_line.op_subjects.count
         end
       end
       no_subject
