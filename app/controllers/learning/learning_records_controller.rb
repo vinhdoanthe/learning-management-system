@@ -16,7 +16,13 @@ module Learning
     end
 
     def mark_answer
-
+      mark = Homework::QuestionService.new.mark_answer params, current_user
+      if mark
+        result = { type: 'success', message: "Chấm bài thành công"}
+      else
+        result = { type: 'success', message: "Chấm bài thành công"}
+      end
+      render json: result
     end
 
     def question_content
@@ -40,6 +46,30 @@ module Learning
       respond_to do |format|
         format.html
         format.js { render 'learning/learning_records/partials/answer_responses/success_answer', :locals => { state: state}}
+      end
+    end
+
+    def marking_question
+      @batches = current_user.op_faculty.op_batches.uniq
+      @batches.select!{|batch| batch.user_answers.present?}
+      @sessions = @batches.last.op_sessions if @batches.present?
+    end
+
+    def batch_user_answer_list
+      batch = Learning::Batch::OpBatch.find(params[:batch_id])
+      user_answers = batch.user_answers.where(state: 'waiting')
+      respond_to do |format|
+        format.html
+        format.js { render 'learning/learning_records/marking_question/user_answer_filter', locals: { user_answers: user_answers}}
+      end
+    end
+
+    def get_user_answer
+      user_answer = Learning::LearningRecord::UserAnswer.find(params[:user_answer_id])
+      question = user_answer.user_question.question
+      respond_to do |format|
+        format.html
+        format.js { render 'learning/learning_records/marking_question/user_answer', locals: { question: question, answer: user_answer}}
       end
     end
 

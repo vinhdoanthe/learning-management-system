@@ -67,6 +67,14 @@
             </a>
           </li>
         <% end %>
+        <% if current_user.account_role == User::Constant::TEACHER %>
+          <li>
+            <a href="/learning/marking_question">
+              <%= image_tag "global/images/active/Icon-Inbox.png" %>
+              <span>Chấm bài</span>
+            </a>
+          </li>
+        <% end %>
       </ul>
     </div>
 

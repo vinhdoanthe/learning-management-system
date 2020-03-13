@@ -13,6 +13,7 @@ module Learning
       has_many :op_session_students, class_name: 'Learning::Batch::OpSessionStudent', foreign_key: 'batch_id'
       has_many :op_faculties, -> {distinct}, :class_name => 'User::OpFaculty', through: :op_sessions
       has_many :user_questions, class_name: 'Learning::LearningRecord::UserQuestion'
+      has_many :user_answers, class_name: 'Learning::LearningRecord::UserAnswer', foreign_key: 'batch_id'
 
       has_many_attached :photos
 

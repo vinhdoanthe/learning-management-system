@@ -36,8 +36,33 @@ class Learning::Homework::QuestionService
 		user_answer
 	end
 
+	def mark_answer params, user
+		answer_mark = Learning::LearningRecord::AnswerMark.new
+		user_answer = find_user_answer params[:user_answer_id]
+		answer_mark.user_answer_id = user_answer.id
+		answer_mark.mark_content = params[:teacher_mark_content]
+
+		if params[:teacher_mark] == 'true'
+			user_answer.update(state: 'right')
+			answer_mark.answer_is_right = true
+		else
+			user_answer.update(state: 'waiting')
+			answer_mark.answer_is_right = false
+		end
+
+		answer_mark.mark_time = Time.now
+		answer_mark.teacher_id = user.id
+		answer_mark.save
+	end
+
+	private
+
 	def find_user_question user_question
 		Learning::LearningRecord::UserQuestion.find(user_question)
+	end
+
+	def find_user_answer user_answer
+		Learning::LearningRecord::UserAnswer.find(user_answer)
 	end
 
 	# def find_question_choice question_choice_id

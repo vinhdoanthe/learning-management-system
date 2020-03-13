@@ -53,6 +53,10 @@ Rails.application.routes.draw do
     get 'view_question' => 'learning_records#view_question'
     get 'question_content' => 'learning_records#question_content'
     post 'answer_question' => 'learning_records#answer_question'
+    get 'marking_question' => 'learning_records#marking_question'
+    get 'batch_user_answer_list' => 'learning_records#batch_user_answer_list'
+    get 'get_user_answer' => 'learning_records#get_user_answer'
+    post 'mark_answer' => 'learning_records#mark_answer'
 
   end
   resources :password_resets, only: [:new, :create, :edit, :update]
