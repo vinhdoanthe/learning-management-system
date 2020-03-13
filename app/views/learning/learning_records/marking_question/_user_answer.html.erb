@@ -1,0 +1,21 @@
+<!-- <div class="fc-other"> -->
+  <div class="fco-ques">
+    <div class="fcoq-tit">
+      <label for="">NỘI DUNG BÀI TẬP:</label>
+      <p><%= question.question.html_safe %></p>
+    </div>
+  </div>
+  <div class="fco-answ">
+    <div class="fcoa-tit">
+      <label for="">Trả lời</label>
+    </div>
+    <div class="fcoa-con">
+      <textarea rows="4" readonly placeholder="Nhập nội dung câu trả lời" id='text_answer'><%= answer.answer_content %></textarea>
+      <span class="line-textarea line-textarea1"></span>
+      <span class="line-textarea line-textarea2"></span>
+      <span class="line-textarea line-textarea3"></span>
+      <span class="line-textarea line-textarea4"></span>
+      <input type="hidden" name="marking_text_answer" value="<%= answer.id %>" >
+    </div>
+  </div>
+<!-- </div> -->

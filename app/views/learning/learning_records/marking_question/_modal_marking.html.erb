@@ -1,0 +1,63 @@
+<div id="modal_teacher_marking" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Chấm bài</h4>
+      </div>
+      <div class="modal-body">
+        <div class="fc-other">
+          <div id='marking_question_content'>
+          </div>
+          <hr>
+          <div class="fco-answ">
+            <div class="fcoa-tit">
+                  <label for="">Nhận xét câu trả lời</label>
+              </div>
+            <div class="fcoa-con">
+              <textarea rows="4" placeholder="Nhận xét về câu trả lời" id='teacher_marking_content'></textarea>
+              <span class="line-textarea line-textarea1"></span>
+              <span class="line-textarea line-textarea2"></span>
+              <span class="line-textarea line-textarea3"></span>
+              <span class="line-textarea line-textarea4"></span>
+            </div>
+              <div class="fcoa-tit">
+                  <label for="">Đánh giá câu trả lời</label>
+              </div>
+              <div class="fcoa-con">
+                  <label class="check-multi">Đạt
+                      <input type="radio" name="teacher_mark" value='true'>
+                      <span class="checkmark">A</span>
+                  </label>
+                  <label class="check-multi">Không đạt
+                      <input type="radio" name="teacher_mark" value='false'>
+                      <span class="checkmark">B</span>
+                  </label>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id='teacher_marking_confirm' data-dismiss="modal">Chấm bài</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#teacher_marking_confirm').on('click', function(){
+    user_answer_id = $('input[name="marking_text_answer"]').val()
+    teacher_mark = $('input[name="teacher_mark"]').val()
+    teacher_mark_content = $('#teacher_marking_content').val()
+    $.ajax({
+      method: 'POST',
+      url: '/learning/mark_answer',
+      data: { user_answer_id: user_answer_id, teacher_mark: teacher_mark, teacher_mark_content: teacher_mark_content},
+      success: function(res){
+        display_noti(res)
+      }
+    })
+  })
+</script>

@@ -79,9 +79,6 @@ $('document').ready(function () {
         get_homework({course: course, batch: batch, subject: subject})
     })
 
-    $(document).on('click', '.student_homework_sesison', function(){
-        $('#student_homework_videos').trigger('click');
-    })
 
     $(document).on('click', '.student_homework_watch_videos', function(){
         session_id = $(this).data('session')
@@ -129,4 +126,13 @@ $('document').ready(function () {
             })
         })
     }
+
+    $('.student_evaluate_view').on('click', function(){
+        $('.student_evaluate_view_content').html('')
+    })
+
+    $('#student_videos_list').on('click', '.student_show_video', function(){
+        $('.student_show_video').parent().parent().removeClass('undone_question')
+        $(this).parent().parent().addClass('undone_question')
+    })
 })

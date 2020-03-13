@@ -4,6 +4,7 @@
 //= require video
 //=require custom_js/opteacherjs.js
 //=require custom_js/opstudent.js
+//=require custom_js/learning.js
 //=require rails_admin/custom/ckeditor_ajax.js
 
 

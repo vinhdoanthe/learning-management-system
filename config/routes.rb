@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     post 'student_attendance_line' => 'op_students#student_attendance_line'
     post 'student_timetable' => 'op_students#student_timetable'
     post 'teacher_evaluate' => 'op_teachers#teacher_evaluate'
+    get 'student_evaluate_content' => 'op_students#student_attendance_content'
+    get 'student_videos_list' => 'op_students#student_videos_list'
   end
 
   namespace :learning do
@@ -51,6 +53,10 @@ Rails.application.routes.draw do
     get 'view_question' => 'learning_records#view_question'
     get 'question_content' => 'learning_records#question_content'
     post 'answer_question' => 'learning_records#answer_question'
+    get 'marking_question' => 'learning_records#marking_question'
+    get 'batch_user_answer_list' => 'learning_records#batch_user_answer_list'
+    get 'get_user_answer' => 'learning_records#get_user_answer'
+    post 'mark_answer' => 'learning_records#mark_answer'
 
   end
   resources :password_resets, only: [:new, :create, :edit, :update]

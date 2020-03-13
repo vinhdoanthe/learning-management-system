@@ -129,11 +129,11 @@ $(document).ready(function () {
         // TO DO: add image for student
         $.each(res.students, function (index, student) {
             if (student.attendance == '') {
-                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><br/>' + student.note + '</td></span></td>'
+                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><br/>' + student.note + '</td></span></td>'
             } else if (student.attendance == true) {
-                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
+                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
             } else {
-                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="/global/images/Group.png" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
+                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
             }
 
             switch (student.status) {
@@ -193,7 +193,7 @@ $(document).ready(function () {
 
     //Teaching schedule calendar
     function get_date_month(fullDate) {
-        twoDigitMonth = (fullDate.getMonth().toString().length !== 1) ? (fullDate.getMonth() + 1) : '0' + (fullDate.getMonth() + 1);
+        twoDigitMonth = ((fullDate.getMonth().toString().length !== 1) || fullDate.getMonth() == 9) ? (fullDate.getMonth() + 1) : '0' + (fullDate.getMonth() + 1);
         twoDigitDate = (fullDate.getDate().toString().length !== 1) ? fullDate.getDate() : '0' + fullDate.getDate()
         str_date = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
         return str_date;
@@ -211,7 +211,7 @@ $(document).ready(function () {
 
         for (var i = 0; i <= 6; i++) {
             var a = new Date(save_date.getTime());
-            a.setDate(a.getDate() - a.getDay() + i + 1);
+            a.getDay() == 0 ? a.setDate(a.getDate() + i - 6) : a.setDate(a.getDate() - a.getDay() + i + 1);
             day = get_date_month(a);
             if (i != 6) {
                 $('.thu_' + (i + 2).toString()).html('Thứ ' + (i + 2).toString() + '<br/><span>' + day + '</span>')
@@ -274,14 +274,14 @@ $(document).ready(function () {
     $('.schedule_time_previous').click(function (e) {
         save_date.setDate(save_date.getDate() - 7);
         $('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
-        $('.year_teaching_schedule').val(save_date.getFullYear().toString());
+        $('.year_teaching_schedule').html(save_date.getFullYear().toString());
         fill_table(save_date);
     })
 
     $('.schedule_time_next').click(function (e) {
         save_date.setDate(save_date.getDate() + 7);
         $('.month_teaching_schedule').val((save_date.getMonth() + 1).toString());
-        $('.year_teaching_schedule').val(save_date.getFullYear().toString());
+        $('.year_teaching_schedule').html(save_date.getFullYear().toString());
         fill_table(save_date);
     })
 
@@ -436,8 +436,16 @@ $(document).ready(function () {
         })
     })
 
+    $('#upload_photo_confirm').prop('disabled', true)
+
     $("#photos_attachment").change(function () {
         $('#photo_review').html('');
+
+        if(this.files.length > 0){
+            $('#upload_photo_confirm').prop('disabled', false)
+        }else{
+            $('#upload_photo_confirm').prop('disabled', true)
+        }
         readURL(this);
 
     });
