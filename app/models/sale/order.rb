@@ -75,17 +75,17 @@ module Sale
         order_export.append Order.company_name(order)
         order_export.append order.name
         order_export.append Order.get_no_subjects(order)
-        order_export.append order.date_order
+        order_export.append order.date_order.strftime('%d-%m-%Y')
         total_in = Order.total_in(order)
         total_out = Order.total_out(order)
         order_export.append total_in
         order_export.append total_out
         order_export.append(total_out + total_in)
-        order_export.append Order.admission_start_date(order)
+        order_export.append Order.admission_start_date(order).strftime('%d-%m-%Y')
 
         orders_export.append order_export
       end
-      binding.pry
+      # binding.pry
 
       p = Axlsx::Package.new
       wb = p.workbook
@@ -100,7 +100,7 @@ module Sale
       end
       file_name = 'export.xlsx'
       p.serialize(file_name)
-      binding.pry
+      # binding.pry
     end
   end
 end
