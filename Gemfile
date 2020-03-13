@@ -23,6 +23,8 @@ gem 'videojs_rails'
 gem 'pdfjs_viewer-rails'
 gem 'google-api-client', '~> 0.34'
 
+gem 'axlsx_rails'
+
 # jQuery
 gem 'jquery-rails'
 # Used for storing secret variables
