@@ -66,7 +66,7 @@ module Sale
     end
 
     def self.export_all
-      @orders = Order.all.order(:write_date => :asc)
+      @orders = Order.all.order(:date_order => :asc)
       orders_export = []
 
       @orders.each do |order|
