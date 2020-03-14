@@ -29,7 +29,7 @@ module Learning
 
       def list_subject_level_of_batch(batch_id)
         op_batch = Learning::Batch::OpBatch.find(batch_id)
-        sessions = op_batch.op_sessions
+        sessions = op_batch.op_sessions.order(start_datetime: :ASC)
         levels = {}
 
         level = sessions.each do |session|
