@@ -1,8 +1,8 @@
 module Learning
   module Batch
     module OpBatchesHelper
-      def list_subject_level_of_student(op_student_course_id)
-        op_student_course = Learning::Batch::OpStudentCourse.find(op_student_course_id)
+      def list_subject_level_of_student(op_student_course)
+        # op_student_course = Learning::Batch::OpStudentCourse.find(op_student_course_id)
         subjects = op_student_course.op_subjects
         levels = Array.new
         if subjects.nil?
@@ -15,13 +15,18 @@ module Learning
         levels
       end
 
-      def get_list_subject_pairs(batch_id:)
-        sessions = Learning::Batch::OpBatch.find(batch_id).op_sessions
+      def get_list_subject_pairs(batch)
         subject_session_hash = {}
 
-        sessions.each do |session|
-          subject = session.op_subject
-          subject_session_hash.merge!({subject.id => subject.level})
+        unless batch.nil?
+          sessions = batch.op_sessions
+
+          unless sessions.nil?
+            sessions.each do |session|
+              subject = session.op_subject
+              subject_session_hash.merge!({subject.id => subject.level})
+            end
+          end
         end
 
         subject_session_hash
@@ -58,23 +63,24 @@ module Learning
         is_active
       end
 
-      def get_coming_session_by_student(student_id:, checkpoint_datetime:)
-        Learning::Batch::OpBatchService.get_coming_session_student(student_id: student_id,
-                                                                   checkpoint_datetime: checkpoint_datetime)
+      def get_coming_soon_session(student_id:, batch_id:, checkpoint_datetime:)
+        Learning::Batch::OpBatchService.get_coming_soon_session(student_id: student_id,
+                                                                batch_id: batch_id,
+                                                                checkpoint_datetime: checkpoint_datetime)
       end
 
-      def coming_session_student_batch(student_id:, batch_id:, checkpoint_datetime:)
-        Learning::Batch::OpBatchService.coming_session_student_batch(student_id: student_id,
-                                                                     batch_id: batch_id,
-                                                                     checkpoint_datetime: checkpoint_datetime)
+      # def coming_session_student_batch(student_id:, batch_id:, checkpoint_datetime:)
+      #   Learning::Batch::OpBatchService.coming_session_student_batch(student_id: student_id,
+      #                                                                batch_id: batch_id,
+      #                                                                checkpoint_datetime: checkpoint_datetime)
+      # end
+
+      def todo_session_student_batch(student_id:, batch_id:)
+        Learning::Batch::OpBatchService.todo_session_student_batch(student_id: student_id, batch_id: batch_id)
       end
 
       def done_session_student_batch(student_id:, batch_id:)
         Learning::Batch::OpBatchService.done_session_student_batch(student_id: student_id, batch_id: batch_id)
-      end
-
-      def todo_session_student_batch(student_id:, batch_id:)
-        Learning::Batch::OpBatchService.todo_session_student_batch(student_id: student_id, batch_id: batch_id)
       end
 
       def cancel_session_student_batch(student_id:, batch_id:)

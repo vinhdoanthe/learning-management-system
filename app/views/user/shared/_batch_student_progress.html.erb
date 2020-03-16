@@ -14,7 +14,7 @@
       <div class="col-md-2">
         <div class='fl_wrap m-t-0'>
           <label class='fl_label' for='rf_name'>Học phần:</label>
-          <% subjects = get_list_subject_pairs(batch_id: batch.id) %>
+          <% subjects = get_list_subject_pairs(batch) %>
           <% unless subjects.nil? %>
             <select class='fl_input student_subject_filter' id='rf_name' onchange="showSubjectSessions()">
               <option value="all"></option>
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <% coming_soon_session = get_coming_session_by_student(student_id: current_user.op_student.id, checkpoint_datetime: Time.now) %>
+  <% coming_soon_session = get_coming_soon_session(student_id: current_user.op_student.id, batch_id: batch.id, checkpoint_datetime: Time.now) %>
   <%= render 'user/shared/session/coming_session', {:coming_soon_session => coming_soon_session} %>
 
   <% todo_sessions = todo_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %>

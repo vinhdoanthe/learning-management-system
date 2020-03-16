@@ -13,10 +13,12 @@
     <% op_student_courses = batch.op_student_courses %>
     <% op_student_courses.each do |op_student_course| %>
       <tr>
-        <td><%= op_student_course.op_student.code %></td>
-        <td><%= op_student_course.op_student.full_name %></td>
-
-        <% levels = list_subject_level_of_student(op_student_course.id) %>
+        <% op_student = op_student_course.op_student %>
+        <% unless op_student.nil? %>
+        <td><%= op_student.code %></td>
+        <td><%= op_student.full_name %></td>
+      <% end %>
+        <% levels = list_subject_level_of_student(op_student_course) %>
         <td>
           <% unless levels.nil? %>
             <% levels.each do |level| %>
