@@ -104,7 +104,7 @@ module Learning
 
       name = (session && session.op_lession) ? session.op_lession.name : (session.name || 'Đang cập nhật')
       respond_to do |format|
-        format.js {render 'learning/show_video', :locals => {:target => params[:target], name: name, session_id: session.id}}
+        format.js {render 'learning/show_video', :locals => {:target => params[:target], name: name, session_id: session.id, session: session}}
       end
     end
 

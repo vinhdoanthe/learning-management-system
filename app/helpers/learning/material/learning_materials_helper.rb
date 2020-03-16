@@ -6,7 +6,7 @@ module Learning
 				return false if lesson.blank?
 				questions = lesson.questions
 				return false if questions.blank?
-				user_questions = Learning::LearningRecord::UserQeustion.where(user_id: user.id, question_id: questions.pluck(:id))
+				user_questions = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: questions.pluck(:id))
 				return false if user_questions.blank?
 				true
 			end

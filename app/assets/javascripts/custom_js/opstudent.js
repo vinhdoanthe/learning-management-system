@@ -132,7 +132,7 @@ $('document').ready(function () {
     })
 
     $('#student_videos_list').on('click', '.student_show_video', function(){
-        $('.student_show_video').parent().parent().removeClass('undone_question')
+        $('#student_videos_list td').removeClass('undone_question')
         $(this).parent().parent().addClass('undone_question')
     })
 })
