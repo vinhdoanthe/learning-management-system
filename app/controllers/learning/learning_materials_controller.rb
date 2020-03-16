@@ -44,11 +44,13 @@ module Learning
         drive_object = tmp_file.get_drive_object
         unless drive_object.nil?
           pretty_file = {}
+          pretty_file['id'] = drive_object.id
           pretty_file['has_thumbnail'] = drive_object.has_thumbnail
           pretty_file['icon_link'] = drive_object.icon_link
 
           pretty_file['thumbnail_link'] = drive_object.thumbnail_link
-          pretty_file = tmp_file.get_drive_object
+          pretty_file['web_view_link'] = drive_object.web_view_link
+          # pretty_file = tmp_file.get_drive_object
           pretty_file['google_drive_link'] = tmp_file.google_drive_link
           @pretty_files.append pretty_file
           # @file_publish_link.append tmp_file.google_drive_link
