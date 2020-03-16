@@ -18,16 +18,19 @@
 <!--        Your browser does not support the video tag.-->
 <!--      </video>-->
 
-      <%= # videojs_rails sources: { mp4: "#{url_for(video_file.material_file)}"}, setup: "{}", controls: true, width:"100%" %>
+      <%#= # videojs_rails sources: { mp4: "#{url_for(video_file.material_file)}"}, setup: "{}", controls: true, width:"100%" %>
 <!--    </div>-->
 <!--  </div>-->
 <!--</div>-->
 
-<h1>Videos</h1>
-
-<%= link_to 'Add video', new_video_path %>
-
-<%= render partial: 'learning/material/video', collection: @videos, as: :video %>
+<%#= link_to 'Add video', new_video_path %>
+<%#= render partial: 'learning/material/video', collection: @videos_id, as: :video %>
+<div class="card">
+  <div class="card-block">
+    <ziggeo ziggeo-video='<%= @video_id %>' 
+            style="width:100%; height:100%">
+    </ziggeo>
+</div>
 
 <style>
 

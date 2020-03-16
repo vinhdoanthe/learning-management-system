@@ -2,7 +2,11 @@
   <% sessions.each do |session| %>
     <tr>
       <td width="70%">
-      	<a href="/learning/view_question?session_id=<%= session.id %>" class='student_homework_view'><%= session.op_lession ? session.op_lession.name : session.name%></a>
+        <% if has_homework? current_user, session %>
+      	  <a href="/learning/view_question?session_id=<%= session.id %>" class='student_homework_view'><%= session.op_lession ? session.op_lession.name : session.name%></a>
+        <% else %>
+          <a style='opacity: 0.5'><%= session.op_lession ? session.op_lession.name : session.name%></a>
+        <% end %>
       	<input name='session_homework_name' value="<%= session.id %>" type="hidden">
       </td>
       <td align="right"><%= session.start_datetime.strftime('%H:%M') %> - <%= session.start_datetime.strftime('%d/%m/%y') %></td>

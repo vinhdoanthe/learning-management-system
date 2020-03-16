@@ -85,20 +85,21 @@ module Learning
     # end
 
     def show_video
-      fallback_video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last
+      fallback_video_id = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last.ziggeo_file_id
       if params[:session_id].present?
         session = Learning::Batch::OpSession.find(params[:session_id])
         if session.nil?
-          @video_file = fallback_video
+          @video_id = fallback_video_id
         else
-          @video_file = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO,
-                                                                   :op_lession_id => session.lession_id).first
-          if @pdf_file.blank?
-            @video_file = fallback_video
+          video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => session.lession_id).first
+          if video.present?
+            @video_id = video.ziggeo_file_id
+          else
+            @video_id = fallback_video_id
           end
         end
       else
-        @video_file = fallback_video
+        @video_id = fallback_video_id
       end
 
       name = (session && session.op_lession) ? session.op_lession.name : (session.name || 'Đang cập nhật')
