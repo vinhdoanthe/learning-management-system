@@ -7,7 +7,7 @@
       <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
         <li class="nav-active">
           <a href="<%= root_path %>">
-            <%= current_user.avatar.attached? ? image_tag(current_user.avatar.variant(resize_to_limit: [100, 100])) : image_tag('global/images/avatars/user3.jpg') %>
+            <%= image_tag(get_avatar, size: [80, 80]) %>
             <% if current_user.is_student? %>
               <span>
                 <label for=""><%= current_user.op_student.full_name %></label>

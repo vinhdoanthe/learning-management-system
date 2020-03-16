@@ -19,11 +19,11 @@ module User
     end
 
     def get_avatar
-      if current_user.avatar.attached?
-        current_user.avatar.variant(resize_to_limit: [80, 80])
-      else
-        asset_path('global/images/avatar.svg')
-      end
+      asset_path('global/images/avatar.svg')
+      # if current_user.avatar.attached?
+      #   current_user.avatar.variant(resize_to_limit: [80, 80])
+      # else
+      # end
     end
 
     def count_sessions_week reference

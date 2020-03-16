@@ -28,6 +28,7 @@
     </div>
   </div>
 
+  <!--  TODO: update below render: query 1 time and process by logic-->
   <% coming_soon_session = get_coming_soon_session(student_id: current_user.op_student.id, batch_id: batch.id, checkpoint_datetime: Time.now) %>
   <%= render 'user/shared/session/coming_session', {:coming_soon_session => coming_soon_session} %>
 
