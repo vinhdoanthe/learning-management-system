@@ -11,7 +11,7 @@ class User::OpStudentsService
   	courses = student.op_courses
   	student_course_ids = student.op_courses.pluck(:id)
   	student_batch_ids = student.op_batches.pluck(:id).uniq
-  	query = ''
+  	show_video = false
 
   	if params[:session].present?
 			session = Learning::Batch::OpSession.find(params[:session])
@@ -19,6 +19,7 @@ class User::OpStudentsService
 			course = batch.op_course
 			sessions = batch.op_sessions
 			batches = course.op_batches.where("op_batch.id IN (#{student_batch_ids.join(', ')})")
+			show_video = true
 		else
 	  	if params[:course].blank? && params[:batch].blank? && params[:subject].blank?
 	  		session = student.op_sessions.where('end_datetime <= ? AND op_session.state = ?', Time.now, Learning::Constant::Batch::Session::STATE_DONE).order(start_datetime: :DESC).first
@@ -58,6 +59,6 @@ class User::OpStudentsService
   	end
 
 		sessions = sessions.where(subject_id: subject.id)
-		{batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course}
+		{batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, show_video: show_video}
   end
 end
