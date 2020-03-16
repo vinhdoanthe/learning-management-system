@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     get 'batch_user_answer_list' => 'learning_records#batch_user_answer_list'
     get 'get_user_answer' => 'learning_records#get_user_answer'
     post 'mark_answer' => 'learning_records#mark_answer'
-
+    get 'ziggeos' => 'learning_materials#ziggeo'
   end
   resources :password_resets, only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'learning/batch/sessions#add_photo_attachment'

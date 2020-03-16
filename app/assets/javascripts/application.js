@@ -7,7 +7,6 @@
 //=require custom_js/learning.js
 //=require rails_admin/custom/ckeditor_ajax.js
 
-
 $(document).ready(function () {
     setTimeout(function () {
         $('.alert').remove();

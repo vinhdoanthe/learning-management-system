@@ -33,6 +33,23 @@ module GoogleDrive
       @drive_service.get_file(file_id, fields: 'id, webViewLink, iconLink, hasThumbnail, thumbnailLink')
     end
 
+    def get_published_version(file_id)
+      @file = @drive_service.get_file(file_id, fields: '*')
+      @revision = @drive_service.get_revision(file_id, @file.head_revision_id, fields: '*')
+
+      revision_object = {published: true, published_outside_domain: true, publish_auto: true}
+      @drive_service.update_revision(file_id, @file.head_revision_id, revision_object)
+      @file = @drive_service.get_file(file_id, fields: '*')
+      @revision = @drive_service.get_revision(file_id, @file.head_revision_id, fields: '*')
+
+      # if @revision.nil?
+      #
+      # else
+      #
+      # end
+      binding.pry
+    end
+
     def authorize
       client_id = Google::Auth::ClientId.from_file CREDENTIALS_PATH
       token_store = Google::Auth::Stores::FileTokenStore.new file: TOKEN_PATH

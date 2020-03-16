@@ -30,6 +30,15 @@ module Learning
           nil
         end
       end
+
+      def self.ziggeo_list_video
+        ziggeo_key = Settings.ziggeo['key']
+        ziggeo_secret = Settings.ziggeo['secret']
+        ziggeo_encrypt = Settings.ziggeo['encryption']
+        ziggeo = ziggeo = Ziggeo.new(ziggeo_secret, ziggeo_key, ziggeo_encrypt)
+        @videos = ziggeo.videos.index
+        # binding.pry
+      end
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_104123) do
+ActiveRecord::Schema.define(version: 2020_03_16_023640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5021,6 +5021,9 @@ ActiveRecord::Schema.define(version: 2020_03_04_104123) do
     t.bigint "op_lession_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "google_drive_file_id"
+    t.string "google_drive_link"
+    t.string "ziggeo_file_id"
     t.index ["op_lession_id"], name: "index_learning_materials_on_op_lession_id"
   end
 
@@ -9684,6 +9687,7 @@ ActiveRecord::Schema.define(version: 2020_03_04_104123) do
     t.datetime "answer_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "batch_id"
     t.index ["question_choice_id"], name: "index_user_answers_on_question_choice_id"
     t.index ["user_question_id"], name: "index_user_answers_on_user_question_id"
   end
