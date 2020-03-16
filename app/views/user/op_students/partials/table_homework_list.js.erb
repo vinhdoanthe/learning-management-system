@@ -9,6 +9,8 @@ $('#homework_subject_selection').val("<%= subject.id %>")
 $(document).on('click', '#student_homework_videos', function(){
     $("#homework_video_detail").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_video_detail', locals: {course: course, batch: batch, session: session, subject: subject} ) %>")
     $("#student_videos_list").html("<%= escape_javascript(render partial: 'user/op_students/partials/student_videos_list', locals: { sessions: sessions, session: session } ) %>");
+    
+    $($('input[name="session_homework_name"][value="<%= session.id %>"]')[1]).parent().addClass('undone_question')
 })
 
 <% if show_video %>

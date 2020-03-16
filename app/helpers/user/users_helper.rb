@@ -29,5 +29,13 @@ module User
     def count_sessions_week reference
       current_user.send(reference).op_sessions.where('start_datetime >= ? AND end_datetime <= ?', Time.now.beginning_of_week, Time.now.end_of_week).count
     end
+
+    def count_homework user
+      questions = Learning::LearningRecord::UserQuestion.where(student_id: user.id).pluck(:id)
+      questions_count = questions.count
+
+      user_answers_count = Learning::LearningRecord::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
+      questions_count - user_answers_count
+    end
   end
 end

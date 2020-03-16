@@ -41,7 +41,7 @@
           <% else %>
             <a href="/user/student_homework">
               <%= image_tag "global/images/active/ico-BaiTapOnBai.png" %>
-              <span>Bài tập ôn bài</span>
+              <span>Bài tập ôn bài<span style="float: right; color: red"><%= count_homework current_user %></span></span>
               <!-- <span class="nn-alert"><%= current_user.op_student.op_batches.count %></span> -->
             </a>
           <% end %>

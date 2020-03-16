@@ -46,7 +46,7 @@ class Learning::Homework::QuestionService
 			user_answer.update(state: 'right')
 			answer_mark.answer_is_right = true
 		else
-			user_answer.update(state: 'waiting')
+			user_answer.update(state: 'wrong')
 			answer_mark.answer_is_right = false
 		end
 
