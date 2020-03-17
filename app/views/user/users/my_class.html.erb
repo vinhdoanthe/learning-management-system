@@ -13,21 +13,14 @@
         <% if @batches.nil? %>
           <h4>Bạn chưa có khóa học nào</h4>
         <% else %>
-          <% op_student_id = current_user.op_student.id %>
+          <% op_student_id = current_user.op_student.id %>          
           <% @batches.each do |batch| %>
+          <% student_batch_status = get_student_batch_status(op_student_id, batch.id)%>
             <div class="col-md-6">
               <div class="scl-detail">
                 <div class="scl-img">
                   <%= batch.op_course.thumbnail.attached? ? image_tag(batch.op_course.thumbnail.variant(resize_to_limit: [500, 500])) : '' %>
-                  <% if get_stage(op_student_id, batch.id) == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-                    <span class="scl-success">Đang học</span>
-                  <% elsif get_stage(op_student_id, batch.id) == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
-                    <span class="scl-danger">Nghỉ học</span>
-                  <% elsif get_stage(op_student_id, batch.id) == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
-                    <span class="scl-danger">Bảo lưu</span>
-                  <% else %>
-                    <span class="scl-danger">Đang cập nhật</span>
-                  <% end %>
+                  <%= student_batch_status['status_html'].html_safe%>
                 </div>
                 <div class="scl-text">
                   <div class="scl-left">
@@ -40,15 +33,13 @@
                       <li><%= image_tag('global/images/laurel-wreath.png') %></li>
                       <li><%= image_tag('global/images/files-and-folders-2.png') %></li>
                       <li>
-                        <% if get_stage(op_student_id, batch.id) == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
+                      <% if student_batch_status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
                           <a href="<%= user_batch_detail_path(batch.id) %>" class="btn btn-default btn-embossed btn-edit bg-5DC2A7">
-                            <%= image_tag('global/images/come-in.png') %>
-                            Vào lớp
+                            <%= image_tag('global/images/come-in.png') %> Vào lớp
                           </a>
                         <% else %>
                           <a href="<%= user_batch_detail_path(batch.id) %>" class="btn btn-default btn-embossed btn-edit bg-505050">
-                            <%= image_tag('global/images/come-in.png') %>
-                            Xem lại
+                            <%= image_tag('global/images/come-in.png') %> Xem lại
                           </a>
                         <% end %>
                       </li>

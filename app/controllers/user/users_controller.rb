@@ -9,7 +9,7 @@ module User
     end
 
     def my_class
-      @batches = current_user.op_student.op_batches
+      @batches = current_user.op_student.op_batches      
     end
 
     def update_nickname

@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>TEKY Learning Management System</title>
-
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= favicon_link_tag 'Logo-fav.ico' %>
@@ -97,7 +96,6 @@
     </body>
   <% else %>
     <body style="background:#f2f2f2">
-      <%= render 'partials/messages' %>
       <%= render 'partials/messages' %>
       <%= yield %>
       <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>

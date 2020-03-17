@@ -3,7 +3,11 @@ module User
 
     def get_stage(op_student_id, op_batch_id)
       op_student_course = Learning::Batch::OpStudentCourse.where(student_id: op_student_id, batch_id: op_batch_id).first
-      op_student_course.state
+      if op_student_course.nil?
+        state = '';
+      else
+        state = op_student_course.state.to_s
+      end
     end
 
     def get_nationality(student_id)
@@ -37,5 +41,23 @@ module User
       user_answers_count = Learning::LearningRecord::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
       questions_count - user_answers_count
     end
+
+    # Lay trang thai trong khoa hoc cua hoc sinh
+    def get_student_batch_status(op_student_id, batch_id)
+      status = {}
+      status['status'] = get_stage(op_student_id, batch_id)      
+      if status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_ON
+        status['status_html'] = '<span class="scl-success">Đang học</span>'
+      elsif status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_OFF
+        status['status_html'] = '<span class="scl-danger">Nghỉ học</span>'
+      elsif status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_SAVE
+        status['status_html'] = '<span class="scl-danger">Bảo lưu</span>'
+      else
+        status['status_html'] = '<span class="scl-danger">Đang cập nhật</span>'
+      end
+
+      return status
+    end
+
   end
 end
