@@ -64,6 +64,20 @@ module Sale
       end
     end
 
+    def self.course_name(order)
+      order_lines = order.order_lines.order(:create_date => :asc)
+      courses = []
+      order_lines.each do |order_line|
+        op_course = order_line.op_course
+        unless op_course.nil?
+          unless courses.include?(op_course.name)
+            courses.append op_course.name
+          end
+        end
+      end
+      courses.length() == 0 ? '' : courses.join(",")
+    end
+
     def self.export_all
       @orders = Order.order(:date_order => :asc)
       orders_export = []
@@ -73,6 +87,8 @@ module Sale
 
         order_export.append Order.company_name(order)
         order_export.append order.name
+        order_export.append order.order_mode
+        order_export.append Order.course_name(order) 
         order_export.append Order.get_no_subjects(order)
         order_export.append order.date_order.strftime('%d-%m-%Y')
         total_in = Order.total_in(order)
@@ -89,7 +105,7 @@ module Sale
       p = Axlsx::Package.new
       wb = p.workbook
       wb.add_worksheet(:name => "Basic Worksheet") do |sheet|
-        sheet.add_row ["STT", "Ten TT", "So SO", "So Level Dong Tien", "Ngay Thu Tien", "So Tien Goc", "So Giam Tru", "So Tien Con Lai", "Ngay Khai Giang"]
+        sheet.add_row ["STT", "Ten TT", "So SO","SO Type", "Courses", "So Level Dong Tien", "Ngay Thu Tien", "So Tien Goc", "So Giam Tru", "So Tien Con Lai", "Ngay Khai Giang"]
         index = 0
         orders_export.each do |order_export|
           index = index + 1
