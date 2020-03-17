@@ -1,12 +1,14 @@
 RailsAdmin.config do |config|
+
   config.main_app_name = ['LMS SYSTEM']
   config.parent_controller = "::ApplicationController"
+  config.default_items_per_page = 100
 
   config.authenticate_with do
     unless current_user&.is_admin?
       redirect_to(
-          main_app.root_path,
-          alert: "You are not permitted to view this page"
+        main_app.root_path,
+        alert: "You are not permitted to view this page"
       )
     end
   end
@@ -21,51 +23,71 @@ RailsAdmin.config do |config|
       end
     end
   end
-  config.included_models = %w(Learning::Course::OpCourse Learning::Course::OpSubject Learning::Course::OpLession Learning::Material::LearningMaterial
+  config.included_models = %w(Learning::Course::OpLession Learning::Material::LearningMaterial
                               Learning::Batch::OpBatch Learning::Batch::OpSession Learning::Material::Question Learning::Material::QuestionChoice
                               User::User Learning::LearningRecord::UserQuestion)
 
+  # config.included_models = %w(Learning::Course::OpCourse Learning::Course::OpSubject Learning::Course::OpLession Learning::Material::LearningMaterial
+  #                             Learning::Batch::OpBatch Learning::Batch::OpSession Learning::Material::Question Learning::Material::QuestionChoice
+  #                             User::User Learning::LearningRecord::UserQuestion)
 
-  config.model 'Learning::Course::OpCourse' do
-    show do
-      field :name
-      field :code
-      field :section
-      field :op_subjects
-      field :thumbnail
-    end
-    edit do
-      field :name
-      field :code
-      field :section
-      field :op_subjects
-      field :thumbnail
-    end
-  end
+  # config.model 'Learning::Course::OpCourse' do
+  #   show do
+  #     field :name
+  #     field :code
+  #     field :section
+  #     field :op_subjects
+  #     field :thumbnail
+  #   end
+  #   edit do
+  #     field :name
+  #     field :code
+  #     field :section
+  #     field :op_subjects
+  #     field :thumbnail
+  #   end
+  # end
 
-  config.model 'Learning::Course::OpSubject' do
-    show do
-      field :op_course
-      field :name
-      field :code
-      field :level
-      field :op_lessions
-    end
+  # config.model 'Learning::Course::OpSubject' do
+  #   show do
+  #     field :op_course
+  #     field :name
+  #     field :code
+  #     field :level
+  #     field :op_lessions
+  #   end
 
-    edit do
-      field :op_course
-      field :name
-      field :code
-      field :level
-      field :op_lessions
-    end
-  end
+  #   edit do
+  #     field :op_course
+  #     field :name
+  #     field :code
+  #     field :level
+  #     field :op_lessions
+  #   end
+  # end
 
   config.model 'Learning::Course::OpLession' do
+    list do
+      field :name do
+        formatted_value do
+          path = bindings[:view].show_path(model_name: 'Learning::Course::OpLession', id: bindings[:object].id)
+          bindings[:view].link_to(bindings[:object].name, path)
+        end
+      end
+      field :op_subject do
+        searchable [:name]
+        queryable true
+        filterable true
+      end
+      field :op_course_name
+      field :course_category
+    end
     show do
+      field :course_category
+      field :op_course_name
       field :op_subject
-      field :lession_number
-      field :code
+      # field :lession_number
+      # field :code
       field :name
       field :note
       field :learning_devices
@@ -74,11 +96,11 @@ RailsAdmin.config do |config|
       field :thumbnail
     end
     edit do
-      field :op_subject
-      field :lession_number
-      field :code
-      field :name
-      field :note
+      # field :op_subject
+      # field :lession_number
+      # field :code
+      # field :name
+      # field :note
       field :learning_devices
       field :learning_materials
       field :questions
@@ -152,7 +174,7 @@ RailsAdmin.config do |config|
       field :question
       field :op_batch
     end
-    
+
     edit do
       field :user
       field :question
@@ -163,9 +185,13 @@ RailsAdmin.config do |config|
 
     dashboard
     index
-    new
+    new do
+      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
+    end
     show
-    edit
+    edit do
+      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, Learning::Course::OpLession)
+    end
     delete do
       only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
     end
