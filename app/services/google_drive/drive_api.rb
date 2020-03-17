@@ -47,7 +47,6 @@ module GoogleDrive
       # else
       #
       # end
-      binding.pry
     end
 
     def authorize

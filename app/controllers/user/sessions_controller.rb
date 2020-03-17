@@ -7,7 +7,7 @@ module User
 
     def create
       user = User.find_by(username: params[:session][:username])
-      user
+
       if user.nil?
         flash.now[:danger] = 'Tên đăng nhập không tồn tại'
         render 'new'
