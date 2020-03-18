@@ -1,0 +1,137 @@
+<div class="page-content page-thin">
+
+	<!-- InstanceBeginEditable name="EditRegion1" -->
+	<div class="panel panel-edits bg-232837">
+		<div class="panel-heading">
+			<div class="ph-text">
+				<h2 class="color-fff text-transform">Học liệu Bài <%= @lesson.lession_number %> - Level <%= @subject.level %> - <%= @course.name %></h2>
+			</div>
+		</div>
+	</div>
+	<div class="panel m-t--70">
+		<div class="panel-content">
+			<div class="tab-content p-0 tab-all-content m-t-20">
+	        <div class="tab-pane fade active in">
+	          <div class="bo-table">
+	            <div class="form-content">
+	            	<div class="box-progress">
+								  <div class="row">
+							      <ul>
+							        <li>
+							          <p><span class="span-text"><strong>Course</strong>: <%= @course.name %></span></p>
+							        </li>
+							        <li>
+							          <p><span class="span-text"><strong>Subject</strong>: <%= @subject.name %> </span></p>
+							         </li>
+							        <li>
+							          <p><span class="span-text"><strong>Lesson Name</strong>: <%= @lesson.name %> </span></p>
+							        </li>
+							      </ul>
+								  </div>
+								</div>
+	            </div>
+	          </div>
+	        </div>
+	    </div>
+			<h2 class="text-transform" style="margin-top: 50px; border-bottom: 2px solid gray; padding: 5px">Học liệu</h2>
+			<div class="tab-content p-0 tab-all-content m-t-20">
+				<div class="tab-pane fade active in">
+          <div class="bo-table">
+            <div class="form-content">
+            	<div class="box-progress">
+            			Học liệu để đây
+            	</div>
+            </div>
+          </div>
+        </div>
+    	</div>
+    	<h2 class="text-transform" style="margin-top: 50px; border-bottom: 2px solid gray; padding: 5px">Câu hỏi</h2>
+    	<div class="tab-content p-0 tab-all-content m-t-20">
+				<div class="tab-pane fade active in">
+          <div class="bo-table">
+            <div class="form-content">
+            	<div class="box-progress">
+            		<% if @questions.present? %>
+	            		<% @questions.each_with_index do |question, index| %>
+	            			<% if question.question_type == 'text'%>
+	            				<div class="question_content" style="margin: 10px; padding-bottom: 30px;border-bottom: 2px solid gray">
+		            				<div class="fco-ques">
+												  <div class="fcoq-tit">
+												    <label for="">Câu <%= index.to_i + 1 %> (Text response):</label>
+												    <p><%= question.question.html_safe %></p>
+												  </div>
+												</div>
+											</div>
+	            			<% elsif question.question_type == 'single' %>
+	            				<div class="question_content" style="margin: 10px; padding-bottom: 30px; border-bottom: 2px solid gray">
+		            				<div class="fco-ques">
+												  <div class="fcoq-tit">
+												    <label for="">Bài <%= index.to_i + 1 %> (Single choice):</label>
+												    <p><%= question.question.html_safe %></p>
+												  </div>
+												</div>
+												<div class="fco-answ">
+												  <div class="fcoa-tit">
+												    <label for="">Trả lời</label>
+												  </div>
+												  <div class="fcoa-con">
+												  	<% question.question_choices.each_with_index do |choice, i| %>
+												  		<% if choice.is_right_choice %>
+													    	<label class="check-multi" style="background: #aad3aa"><%= choice.choice_content %>
+													        <input type="radio" name="student_choise_answer" value="<%= choice.id %>" >
+													        <% choice_key = ('A'.ord + i) %>
+													        <span class="checkmark"><%= choice_key.chr %></span>
+													      </label>
+													    <% else %>
+													    	<label class="check-multi"><%= choice.choice_content %>
+													        <input type="radio" >
+													        <% choice_key = ('A'.ord + i) %>
+													        <span class="checkmark"><%= choice_key.chr %></span>
+													      </label>
+												      <% end %>
+												    <% end %>
+												  </div>
+												</div>
+											</div>
+	            			<% else %>
+	            				<div class="question_content" style="margin: 10px; padding-bottom: 30px; border-bottom: 2px solid gray">
+		            				<div class="fco-ques">
+												  <div class="fcoq-tit">
+												    <label for="">Bài <%= index.to_i + 1%> (Multiple choice):</label>
+												    <p><%= question.question.html_safe %></p>
+												  </div>
+												</div>
+												<div class="fco-answ">
+												  <div class="fcoa-tit">
+												    <label for="">Trả lời</label>
+												  </div>
+												  <div class="fcoa-con">
+												    <% question.question_choices.each_with_index do |choice, i| %>
+												    	<% if choice.is_right_choice %>
+													      <label class="check-multi" style="background: #aad3aa"><%= choice.choice_content %>
+													      <input type="checkbox">
+													      <% choice_key = ('A'.ord + i) %>
+													      <span class="checkmark"><%= choice_key.chr %></span>
+													      </label>
+												      <% else %>
+												      	<label class="check-multi"><%= choice.choice_content %>
+													      <input type="checkbox">
+													      <% choice_key = ('A'.ord + i) %>
+													      <span class="checkmark"><%= choice_key.chr %></span>
+													      </label>
+												      <% end %>
+												    <% end %>
+												  </div>
+												</div>
+											</div>
+	            			<% end %>
+	            		<% end %>
+	            	<% end %>
+            	</div>
+            </div>
+          </div>
+        </div>
+    	</div>
+		</div>
+	</div>
+</div>

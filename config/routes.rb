@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     get 'get_user_answer' => 'learning_records#get_user_answer'
     post 'mark_answer' => 'learning_records#mark_answer'
     get 'ziggeos' => 'learning_materials#ziggeo'
+    get 'course/op_lesson/:lession_id' => 'course/op_lession#preview_lesson_material'
   end
   resources :password_resets, only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'learning/batch/sessions#add_photo_attachment'
