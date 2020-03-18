@@ -8,7 +8,7 @@ class Learning::Homework::QuestionService
 			if user_answer && user_answer.state == 'right'
 				return {state: 'done'}
 			else
-				user_answer = create_user_answer user_question, student, params[:question_choices]
+				user_answer = create_user_answer user_question, student, params
 				return { state: user_answer.state }
 			end
 		else
@@ -16,12 +16,15 @@ class Learning::Homework::QuestionService
 		end
 	end
 
-	def create_user_answer user_question, student, choice_content
+	def create_user_answer user_question, student, params
 		question = user_question.question
 		user_answer = Learning::LearningRecord::UserAnswer.new
 		user_answer.user_question_id = user_question.id
 		user_answer.answer_time = Time.now
-		user_answer.answer_content = choice_content
+		user_answer.answer_content = params[:choice_content]
+		session = Learning::Batch::OpSession.find(params[:session_id])
+		user_answer.batch_id = session.batch_id
+		user_answer.faculty_id = session.faculty_id.to_i
 
 		if question.question_type == Learning::Constant::Material::QUESTION_TEXT_RESPONSE
 			user_answer.state = 'waiting'
@@ -31,7 +34,7 @@ class Learning::Homework::QuestionService
 			choice_content.map!{ |choice| choice.to_i }
 			user_answer.state = right_answer_ids == choice_content ? 'right' : 'wrong'
 		end
-
+		
 		user_answer.save
 		user_answer
 	end

@@ -71,7 +71,7 @@
           <li>
             <a href="/learning/marking_question">
               <%= image_tag "global/images/active/Icon-Inbox.png" %>
-              <span>Chấm bài</span>
+              <span>Chấm bài<span style="float: right; color: red"><%= count_mark_question current_user.op_faculty %></span></span>
             </a>
           </li>
         <% end %>

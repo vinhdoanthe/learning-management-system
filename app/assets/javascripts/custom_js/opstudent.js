@@ -33,6 +33,21 @@ function get_homework(data){
     })
 }
 
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
+
 $('document').ready(function () {
     $('.student_evaluate_view').on('click', function () {
         sudent_id = $(this).data('student');
@@ -113,15 +128,16 @@ $('document').ready(function () {
             if (!question_choices || question_choices.length == 0){
                 question_choices = $('#text_answer').val();
             }
-
-            $('#modal-basic').html('')
+            
+					$('#modal-basic').html('')
             question = $('#question_id').val();
             user_question = $('#user_question_id').val();
+					session_id = getUrlParameter('session_id');
 
             $.ajax({
                 method: 'POST',
                 url: '/learning/answer_question',
-                data: { question: question, question_choices: question_choices, user_question: user_question},
+                data: { session_id: session_id, question: question, question_choices: question_choices, user_question: user_question},
                 dataType: 'script'
             })
         })
