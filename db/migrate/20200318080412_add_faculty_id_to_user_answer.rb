@@ -1,6 +1,9 @@
 class AddFacultyIdToUserAnswer < ActiveRecord::Migration[6.0]
-  def change
-    add_column :user_answers, :faculty_id, :string
-    add_column :user_answers, :integer, :string
+  def up
+    add_reference :user_answers, :faculty, foreign_key: {to_table: :op_faculty}
+  end
+
+  def down
+    remove_column :user_answers, :faculty_id if column_exists?(:user_answers, :faculty_id)
   end
 end

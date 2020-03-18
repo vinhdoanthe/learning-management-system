@@ -189,6 +189,9 @@ RailsAdmin.config do |config|
       only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
     end
     show
+    show_in_app do
+      only %w(Learning::Course::OpLession)
+    end
     edit do
       only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, Learning::Course::OpLession)
     end
