@@ -8,6 +8,7 @@ module User
       else
         state = op_student_course.state.to_s
       end
+			state
     end
 
     def get_nationality(student_id)
@@ -41,6 +42,10 @@ module User
       user_answers_count = Learning::LearningRecord::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
       questions_count - user_answers_count
     end
+
+		def count_mark_question teacher
+			teacher.user_answers.where(state: 'waiting').count	
+		end
 
     # Lay trang thai trong khoa hoc cua hoc sinh
     def get_student_batch_status(op_student_id, batch_id)

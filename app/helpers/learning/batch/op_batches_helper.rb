@@ -109,7 +109,6 @@ module Learning
 					sessions_time = [session.start_datetime]
 				end
 
-					sessions_time.map!{|time| time.strftime('%H:%M %A')} if sessions_time.present?
 					sessions_time
 			end
     end

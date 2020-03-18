@@ -27,7 +27,13 @@
                     <label for=""><%= batch.op_course.name %></label>
 										<p>Mã lớp: <span><%= batch.code %></span></p>
 										<% time_line = batch_timeline batch %> 
-										<p><%= time_line.join('\ ') %> hàng tuần Tại <span><%= batch.res_company.name %></span></p>
+										<p>
+											<% time_line.each do |time| %>
+												<%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) %>
+											<% end %>
+											hàng tuần Tại 
+											<span><%= batch.res_company.name %></span>
+										</p>
                   </div>
                   <div class="scl-right">
                     <ul>

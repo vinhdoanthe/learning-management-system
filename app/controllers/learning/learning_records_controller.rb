@@ -56,9 +56,22 @@ module Learning
     end
 
     def batch_user_answer_list
-      batch = Learning::Batch::OpBatch.find(params[:batch_id])
-      user_answers = batch.user_answers.where(state: 'waiting')
-      respond_to do |format|
+#      batch = Learning::Batch::OpBatch.find(params[:batch_id])
+#			sessions = batch.op_sessions.where(faculty_id: current_user.op_faculty).uniq
+#			question_ids = []
+#			
+#			sessions.each do |session|
+#				lesson = session.op_lession
+#				next if lesson.blank?
+#				question_ids << lesson.questions.where(question_type: 'text').pluck(:id)
+#			end
+#
+#			question_ids = question_ids.flatten.uniq
+#			user_questions = Learning::LearningRecord::UserQuestion.where(question_id: question_ids).pluck(:id)
+#			user_answers = Learning::LearningRecord::UserAnswer.where(user_question_id: user_questions).uniq
+			user_answers = current_user.op_faculty.user_answers.where(batch_id: params[:batch_id])
+
+			respond_to do |format|
         format.html
         format.js { render 'learning/learning_records/marking_question/user_answer_filter', locals: { user_answers: user_answers}}
       end
