@@ -25,8 +25,9 @@
                 <div class="scl-text">
                   <div class="scl-left">
                     <label for=""><%= batch.op_course.name %></label>
-                    <p>Mã lớp: <span><%= batch.code %></span></p>
-                    <p>18:00 Thứ 7 hàng tuần Tại <span><%= batch.res_company.name %></span></p>
+										<p>Mã lớp: <span><%= batch.code %></span></p>
+										<% time_line = batch_timeline batch %> 
+										<p><%= time_line.join('\ ') %> hàng tuần Tại <span><%= batch.res_company.name %></span></p>
                   </div>
                   <div class="scl-right">
                     <ul>

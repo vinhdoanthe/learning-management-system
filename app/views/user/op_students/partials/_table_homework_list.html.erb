@@ -1,17 +1,26 @@
 <tbody>
   <% sessions.each do |session| %>
     <tr>
-      <td width="70%">
-        <% if has_homework? current_user, session %>
+      <% if has_homework? current_user, session %>
+        <td width="70%">
       	  <a href="/learning/view_question?session_id=<%= session.id %>" class='student_homework_view'><%= session.op_lession ? session.op_lession.name : session.name%></a>
+          <input name='session_homework_name' value="<%= session.id %>" type="hidden">
+        </td>
+        <td align="right"><%= session.start_datetime.strftime('%H:%M') %> - <%= session.start_datetime.strftime('%d/%m/%y') %></td>
+        <% if done_homework? current_user, session %>
+          <td align="right"><span class="label-edit label label-danger">Đã làm</span></td>
         <% else %>
-          <a style='opacity: 0.5'><%= session.op_lession ? session.op_lession.name : session.name%></a>
+        <td align="right"><span class="label-edit label label-primary">Chưa làm</span></td>
         <% end %>
-      	<input name='session_homework_name' value="<%= session.id %>" type="hidden">
+      <% else %>
+        <td width="70%">
+          <a style='opacity: 0.5'><%= session.op_lession ? session.op_lession.name : session.name%></a>
+          <input name='session_homework_name' value="<%= session.id %>" type="hidden">
+        </td>
+        <td align="right"><%= session.start_datetime.strftime('%H:%M') %> - <%= session.start_datetime.strftime('%d/%m/%y') %></td>
+        <td align="right"><span class="label-edit label label-stop">Không có bài tập</span></td>
+        <% end %>
       </td>
-      <td align="right"><%= session.start_datetime.strftime('%H:%M') %> - <%= session.start_datetime.strftime('%d/%m/%y') %></td>
-      <td align="right"><span class="label-edit label label-primary">Cần lấy dữ liệu</span></td>
-      <td align="right"></td>
     </tr>
   <% end %>
 </tbody>

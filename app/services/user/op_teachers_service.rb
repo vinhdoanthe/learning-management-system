@@ -26,7 +26,7 @@ class User::OpTeachersService
     @class.uniq
   end
 
-  def teacher_class_detail (batch, session)
+  def teacher_class_detail batch, session
     students = {}
     all_students = {}
 
@@ -101,7 +101,7 @@ class User::OpTeachersService
       level = session.op_subject.level.to_s
       batch = session.op_batch.name
       course = session.op_batch.op_course.code
-      lesson = session.count
+			lesson = session.op_batch.current_session_level
       status = session.state
 
       session_info = { name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
@@ -165,6 +165,7 @@ class User::OpTeachersService
         student_avatar = ActionController::Base.helpers.asset_path('Group-12.png')
       end
     end
+		student_avatar
   end
 
 end
