@@ -149,6 +149,6 @@ $('document').ready(function () {
 
     $('#student_videos_list').on('click', '.student_show_video', function(){
         $('#student_videos_list td').removeClass('undone_question')
-        $(this).parent().parent().addClass('undone_question')
+        $(this).parent().addClass('undone_question')
     })
 })
