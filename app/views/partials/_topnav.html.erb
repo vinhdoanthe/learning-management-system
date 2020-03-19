@@ -1,10 +1,12 @@
 <div class="topbar">
+	<% if !current_user.is_admin? %>
     <div class="header-left">
         <div class="topnav">
             <a class="menutoggle" href="" data-toggle="sidebar-collapsed"><span class="menu__handle"><span>Menu</span></span></a>
             
         </div>
-    </div>
+		</div>
+	<% end %>
     <div class="header-right">
         <ul class="header-menu nav navbar-nav">
             <!-- <li class="dropdown" id="language-header">
