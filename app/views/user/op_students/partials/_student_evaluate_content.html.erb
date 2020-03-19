@@ -41,7 +41,11 @@
         <p><%= User::Constant::Evaluate::EVALUATE['KĨ NĂNG']['skill2']['content'][attendance.skill2] %></p>
       </div>
     </div>
-  </div>
+	</div>
+	<div>
+		<h3><strong>NHẬN XÉT KHÁC:</strong></h3>
+		<p><%= attendance.note_1 %></p>
+	</div>
 <% else %>
   <p>Đang cập nhật thông tin</p>
 <% end %>
