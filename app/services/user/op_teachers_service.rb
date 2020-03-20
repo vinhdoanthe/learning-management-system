@@ -158,11 +158,11 @@ class User::OpTeachersService
       student_avatar = rails_blob_path(user.avatar, disposition: "attachment", only_path: true)  
     else
       if student.gender == 'm'
-        student_avatar = ActionController::Base.helpers.asset_path('Group-30.png')
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
       elsif student.gender == 'f'
-        student_avatar = ActionController::Base.helpers.asset_path('Group-30.png')
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
       else
-        student_avatar = ActionController::Base.helpers.asset_path('Group-12.png')
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
       end
     end
 		student_avatar

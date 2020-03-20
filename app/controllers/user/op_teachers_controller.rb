@@ -38,16 +38,16 @@ module User
     def teacher_class_detail
       @batch = Learning::Batch::OpBatch.find(params[:batch_id].to_i)
       @sessions = @batch.op_sessions.order(start_datetime: 'ASC')
-
-      if params[:subject_id].present?
-        @current_subject_id = params[:subject_id].to_i
-        @sessions = @sessions.where(:subject_id => params[:subject_id].to_i)
-      else
-        current_subject = @sessions.where.not('state = ? OR state = ?', Learning::Constant::Batch::Session::STATE_DONE, Learning::Constant::Batch::Session::STATE_CANCEL).first
-        current_subject = @sessions.last if current_subject.blank?
-        @current_subject_id = current_subject.subject_id
-        @sessions = @sessions.where(subject_id: @current_subject_id)
-      end
+      
+			if params[:subject_id].present?
+				@current_subject_id = params[:subject_id].to_i
+				@sessions = @sessions.where(:subject_id => params[:subject_id].to_i).where(faculty_id: @teacher.id)
+			else
+				current_subject = @sessions.where.not('state = ? OR state = ?', Learning::Constant::Batch::Session::STATE_DONE, Learning::Constant::Batch::Session::STATE_CANCEL).first
+				current_subject = @sessions.last if current_subject.blank?
+				@current_subject_id = current_subject.subject_id
+				@sessions = @sessions.where(subject_id: @current_subject_id, faculty_id: @teacher.id)
+			end
 
       if params[:session_index].present?
         @session = @sessions[params[:session_index].to_i]

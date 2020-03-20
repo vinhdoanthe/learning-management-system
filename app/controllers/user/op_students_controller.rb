@@ -46,12 +46,15 @@ module User
       @sessions = []
       session = []
 
-      batches.each do |batch|
-        @sessions << batch.op_sessions
+			student_subject_ids = Learning::Course::OpSubject.joins(op_student_courses: :op_student).where(op_student: {id: @student.id}).pluck(:id)	
+      
+			batches.each do |batch|
+				@sessions << batch.op_sessions.where(subject_id: student_subject_ids)
+				#@sessions << batch.op_sessions
         session << batch.op_sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).last
       end
-
-      @session = @student.op_sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :DESC).first
+    
+			@session = @student.op_sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :DESC).first
       session.each{|s| @session = s if s.present? && @session.start_datetime <= s.start_datetime}
       schedules = OpTeachersService.teaching_schedule(@sessions, params)
 
