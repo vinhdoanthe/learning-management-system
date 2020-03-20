@@ -2,16 +2,27 @@
   <div class="fc-header">
     <h3>Buổi học <span class="color-F16357">Sắp diễn ra</span></h3>
   </div>
-  <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
-    <table class="table m-b-0">
-      <tbody>
+  <table class="table m-b-0">
+    <tbody>
       <tr>
         <td>
-          <p><%= coming_soon_session.op_subject.name %></p>
+          <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
+            <p><%= coming_soon_session.op_subject.name %></p>
+            <% start = coming_soon_session.start_datetime %>
+          <% else %>
+            <div>Không có buổi học nào sắp diễn ra</div>
+            <% start = 0 %>
+          <% end %>
         </td>
-        <% start = coming_soon_session.start_datetime %>
-        <td align="right"><p class="text-right"><%= start.strftime('%H:%M') %>
-          - <%= coming_soon_session.end_datetime.strftime('%H:%M') %> | <%= start.strftime('%A') + ', ' + start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %></p></td>
+
+        <td align="right">
+
+          <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
+            <p class="text-right"><%= start.strftime('%H:%M') %>
+          - <%= coming_soon_session.end_datetime.strftime('%H:%M') %> | <%= start.strftime('%A') + ', ' + start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %>
+            </p>
+          <% end %> 
+        </td>
         <td width="210px">
           <div id="clockdiv">
             <div>
@@ -28,15 +39,9 @@
             </div>
           </div>
         </td>
-        <!-- <td align="right">
-          <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7">Đăng ký xin nghỉ</button>
-        </td> -->
       </tr>
-      </tbody>
-    </table>
-  <% else %>
-    <div>Không có buổi học tiếp theo nào</div>
-  <% end %>
+    </tbody>
+  </table>
 </div>
 
 <%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true%>

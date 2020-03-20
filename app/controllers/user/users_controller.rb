@@ -5,7 +5,9 @@ module User
     before_action :authenticate_student!, only: [:my_class, :batch_detail, :update_nickname]
 
     def batch_detail
-      @batch = Learning::Batch::OpBatch.find(params[:batch_id])
+      if params[:batch_id].present?
+        @batch = Learning::Batch::OpBatch.find(params[:batch_id])
+      end
     end
 
     def my_class
@@ -70,5 +72,6 @@ module User
         render 'change_password'
       end
     end
+
   end
 end

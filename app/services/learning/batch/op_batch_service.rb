@@ -3,18 +3,11 @@ module Learning
     class OpBatchService
 
       def self.get_teachers_name(batch_id)
-        batch = Learning::Batch::OpBatch.find(batch_id)
-        names = Array.new
-        if batch.nil?
-          nil
-        else
-          teachers = batch.op_faculties
-          unless teachers.nil?
-            teachers.each do |teacher|
-              names.append teacher.full_name
-            end
-
-          end
+        names = ''
+        faculty_ids = Learning::Batch::OpSession.where(batch_id: batch_id).pluck(:faculty_id).uniq
+        unless faculty_ids.blank?
+          faculty_names = User::OpFaculty.where(id: faculty_ids).pluck(:full_name)
+          names = faculty_names.join(', ')
         end
         names
       end
@@ -118,11 +111,6 @@ module Learning
         end
       end
 
-      # Hàm này dùng để update quiz cho toàn bộ các học sinh trong các batches đang diễn ra.
-      # Được thiết kế để chạy khởi tạo dữ liệu cho lần đầu tiên chạy LMS
-      def self.update_quizzes_all_batches
-
-      end
     end
   end
 end

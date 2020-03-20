@@ -1,44 +1,66 @@
 <div class="table-responsive">
-  <table class="table table-hover">
+  <table class="table">
     <thead>
-    <tr>
-      <th>Mã học sinh</th>
-      <th>Họ và tên</th>
-      <th>Học phần</th>
-      <th></th>
-    </tr>
+      <tr style="color: black;">
+        <th>Mã học sinh</th>
+        <th>Họ và tên</th>
+        <th>Học phần</th>
+        <th></th>
+      </tr>
     </thead>
     <tbody>
-
-    <% op_student_courses = batch.op_student_courses %>
-    <% op_student_courses.each do |op_student_course| %>
-      <tr>
-        <% op_student = op_student_course.op_student %>
-        <% unless op_student.nil? %>
-        <td><%= op_student.code %></td>
-        <td><%= op_student.full_name %></td>
-      <% end %>
-        <% levels = list_subject_level_of_student(op_student_course) %>
-        <td>
-          <% unless levels.nil? %>
-            <% levels.each do |level| %>
-              <span class="label-course label label-default"><%= level %></span>
+      <% op_student_courses = batch.op_student_courses %>
+      <% op_student_courses.each do |op_student_course| %>
+        <% if current_user.is_student? and current_user.op_student.id == op_student_course.student_id %>
+          <tr style="color: black;">
+            <% op_student = op_student_course.op_student %>
+            <% unless op_student.nil? %>
+              <td><%= op_student.code %></td>
+              <td><%= op_student.full_name %></td>
             <% end %>
-          <% end %>
-        </td>
+            <td>
+              <% levels = list_subject_level_of_student(op_student_course) %>
+              <% unless levels.nil? %>
+                <% levels.each do |level| %>
+                  <span class="label-course label label-default"><%= level %></span>
+                <% end %>
+              <% end %>
+            </td>
 
-        <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-          <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
-        <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
-          <td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td>
-        <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
-          <td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td>
+            <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
+              <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
+            <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
+              <td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td>
+            <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
+              <td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td>
+            <% else %>
+              <td align="right"><span class="label-edit label label-stop">Đang cập nhật</span></td>
+            <% end %>
+
+          </tr>
         <% else %>
-          <td align="right"><span class="label-edit label label-stop">Đang cập nhật</span></td>
-        <% end %>
+          <tr style="background-color: #F5F5F5">
+            <% op_student = op_student_course.op_student %>
+            <% unless op_student.nil? %>
+              <td><%= op_student.code %></td>
+              <td><%= op_student.full_name %></td>
+            <% end %>
+            <td>
+            </td>
 
-      </tr>
-    <% end %>
+            <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
+              <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
+            <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
+              <td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td>
+            <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
+              <td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td>
+            <% else %>
+              <td align="right"><span class="label-edit label label-stop">Đang cập nhật</span></td>
+            <% end %>
+
+          </tr>
+        <% end %>
+      <% end %>
     </tbody>
   </table>
 </div>

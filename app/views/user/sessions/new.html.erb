@@ -26,15 +26,15 @@
         </p>
       <% end %>
       <%= form_for(:password_reset, url: password_resets_path, :html => {display: 'block', class: "form-password"}) do |f| %>
-        <h3><strong>Reset</strong> your password</h3>
+        <h3><strong>Reset</strong> mật khẩu</h3>
         <div class="append-icon m-b-20">
-          <%= f.text_field :username, class: "form-control", placeholder: "Username", required: true %>
+          <%= f.text_field :username, class: "form-control", placeholder: "Tên đăng nhập", required: true %>
           <i class="icon-lock"></i>
         </div>
-        <%= f.submit 'Send Password Reset Link', class: "btn btn-lg btn-danger btn-block ladda-button", 'data-style': "expand-left" %>
+        <%= f.submit 'Gửi link Reset mật khẩu', class: "btn btn-lg btn-danger btn-block ladda-button", 'data-style': "expand-left" %>
         <div class="clearfix m-t-60">
           <p class="pull-left m-t-20 m-b-0">
-            <a id="login" href="">Have an account? Sign In</a>
+            <a id="login" href="">Đã có tài khoản? Đăng nhập</a>
           </p>
         </div>
       <% end %>

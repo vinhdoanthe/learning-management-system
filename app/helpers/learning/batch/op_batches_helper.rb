@@ -1,8 +1,28 @@
 module Learning
   module Batch
     module OpBatchesHelper
+      def subject_ids(user, batch)
+        subject_ids = []
+
+        if user.nil? or batch.nil?
+          return []
+        end
+
+        if user.is_student?
+          op_student = user.op_student
+          student_id = op_student.nil? ? nil : op_student.id
+          
+          unless student_id.nil?
+            student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch.id).last
+          end
+
+          subject_ids = student_course.op_subjects.pluck(:id).uniq
+        end
+
+        subject_ids
+      end
+
       def list_subject_level_of_student(op_student_course)
-        # op_student_course = Learning::Batch::OpStudentCourse.find(op_student_course_id)
         subjects = op_student_course.op_subjects
         levels = Array.new
         if subjects.nil?
@@ -33,13 +53,13 @@ module Learning
       end
 
       def list_subject_level_of_batch(batch_id)
+        levels = []
         op_batch = Learning::Batch::OpBatch.find(batch_id)
-        sessions = op_batch.op_sessions.order(start_datetime: :ASC)
-        levels = {}
-
-        sessions.each do |session|
-          subject = session.op_subject
-          levels.merge!({subject.id => subject.level}) if subject.present?
+        unless op_batch.nil?
+          op_course = op_batch.op_course
+          unless op_course.nil?
+            levels =  Learning::Course::OpSubject.where(course_id: op_course.id).order(:level => :asc).pluck(:id, :level).uniq
+          end
         end
 
         levels
@@ -69,12 +89,6 @@ module Learning
                                                                 checkpoint_datetime: checkpoint_datetime)
       end
 
-      # def coming_session_student_batch(student_id:, batch_id:, checkpoint_datetime:)
-      #   Learning::Batch::OpBatchService.coming_session_student_batch(student_id: student_id,
-      #                                                                batch_id: batch_id,
-      #                                                                checkpoint_datetime: checkpoint_datetime)
-      # end
-
       def todo_session_student_batch(student_id:, batch_id:)
         Learning::Batch::OpBatchService.todo_session_student_batch(student_id: student_id, batch_id: batch_id)
       end
@@ -95,22 +109,22 @@ module Learning
       end
 
       def group_session_subjects(sessions)
-				subject_id = {}
-			 	subject_groups = sessions.group_by {|session| session.subject_id}
+        subject_id = {}
+        subject_groups = sessions.group_by {|session| session.subject_id}
         subject_groups.each {|k, v| subject_id[k] = v.pluck(:id)}
-				subject_id
+        subject_id
       end
 
-			def batch_timeline batch
-				sessions_time = batch.op_sessions.where('start_datetime >= ? AND start_datetime <= ?', Time.now.beginning_of_week, Time.now.end_of_week).pluck(:start_datetime)
-				if sessions_time.blank?
-					session = batch.op_sessions.where('start_datetime >= ?', Time.now).first
-					session = batch.op_sessions.order(start_datetime: :DESC).first if session.blank?	
-					sessions_time = [session.start_datetime]
-				end
+      def batch_timeline batch
+        sessions_time = batch.op_sessions.where('start_datetime >= ? AND start_datetime <= ?', Time.now.beginning_of_week, Time.now.end_of_week).pluck(:start_datetime)
+        if sessions_time.blank?
+          session = batch.op_sessions.where('start_datetime >= ?', Time.now).first
+          session = batch.op_sessions.order(start_datetime: :DESC).first if session.blank?	
+          sessions_time = [session.start_datetime]
+        end
 
-					sessions_time
-			end
+        sessions_time
+      end
     end
   end
 end
