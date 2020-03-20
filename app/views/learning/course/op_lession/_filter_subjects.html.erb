@@ -1,0 +1,3 @@
+<% subjects.each do |subject| %>
+  <li><%= link_to subject[1], learning_lessons_by_subject_path(:subject_id => subject[0]), {:remote => true} %></li>
+<% end %>

@@ -1,0 +1,13 @@
+$('#btnFilterCategory').text('<%= active_category.nil? ? 'All Category' : active_category[1].html_safe %>')
+
+$('#listCategories').html('<%= escape_javascript(render partial: 'learning/course/op_lession/filter_categories', locals: {categories: categories}) %>')
+
+$('#btnFilterCourse').text('<%= active_course.nil? ? 'All Courses' : active_course[1].html_safe %>')
+
+$('#listCourses').html('<%= escape_javascript(render partial: 'learning/course/op_lession/filter_courses', locals: {courses: courses}) %>')
+
+$('#btnFilterSubject').text('<%= active_subject.nil? ? 'All Subjects' : active_subject[1].html_safe %>')
+
+$('#listSubjects').html('<%= escape_javascript(render partial: 'learning/course/op_lession/filter_subjects', locals: {subjects: subjects}) %>')
+
+$('#listLessons').html('<%= escape_javascript(render partial: 'learning/course/op_lession/list_lessons', locals: {lessons: lessons}) %>')

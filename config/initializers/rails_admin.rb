@@ -27,44 +27,6 @@ RailsAdmin.config do |config|
                               Learning::Batch::OpBatch Learning::Batch::OpSession Learning::Material::Question Learning::Material::QuestionChoice
                               User::User Learning::LearningRecord::UserQuestion)
 
-  # config.included_models = %w(Learning::Course::OpCourse Learning::Course::OpSubject Learning::Course::OpLession Learning::Material::LearningMaterial
-  #                             Learning::Batch::OpBatch Learning::Batch::OpSession Learning::Material::Question Learning::Material::QuestionChoice
-  #                             User::User Learning::LearningRecord::UserQuestion)
-
-  # config.model 'Learning::Course::OpCourse' do
-  #   show do
-  #     field :name
-  #     field :code
-  #     field :section
-  #     field :op_subjects
-  #     field :thumbnail
-  #   end
-  #   edit do
-  #     field :name
-  #     field :code
-  #     field :section
-  #     field :op_subjects
-  #     field :thumbnail
-  #   end
-  # end
-
-  # config.model 'Learning::Course::OpSubject' do
-  #   show do
-  #     field :op_course
-  #     field :name
-  #     field :code
-  #     field :level
-  #     field :op_lessions
-  #   end
-
-  #   edit do
-  #     field :op_course
-  #     field :name
-  #     field :code
-  #     field :level
-  #     field :op_lessions
-  #   end
-  # end
 
   config.model 'Learning::Course::OpLession' do
     list do
@@ -81,13 +43,24 @@ RailsAdmin.config do |config|
       end
       field :op_course_name
       field :course_category
+      field :link do
+        formatted_value do
+          path = bindings[:object].link
+          bindings[:view].link_to('Preview', path)
+        end
+      end
     end
+
     show do
+      field :link do
+        formatted_value do
+          path = bindings[:object].link
+          bindings[:view].link_to('Preview', path)
+        end
+      end
       field :course_category
       field :op_course_name
       field :op_subject
-      # field :lession_number
-      # field :code
       field :name
       field :note
       field :learning_devices
@@ -95,12 +68,8 @@ RailsAdmin.config do |config|
       field :questions
       field :thumbnail
     end
+
     edit do
-      # field :op_subject
-      # field :lession_number
-      # field :code
-      # field :name
-      # field :note
       field :learning_devices
       field :learning_materials
       field :questions

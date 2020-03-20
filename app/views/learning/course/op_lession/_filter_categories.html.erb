@@ -1,0 +1,4 @@
+<input class="form-control" id="filterCategory" type="text" placeholder="Search..">
+<% categories.each do |category| %>
+  <li><%= link_to category[1], learning_lessons_by_category_path(:category_id => category[0]), {:remote => true } %></li>
+<% end %>

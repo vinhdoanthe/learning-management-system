@@ -1,6 +1,7 @@
 module ApplicationHelper
 
   include User::SessionsHelper
+  include Learning::Course::OpLessionHelper
   include Learning::Batch::OpBatchesHelper
 	def get_week_day wday
 		case wday

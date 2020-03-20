@@ -1,0 +1,13 @@
+<% index = 0 %>
+<% lessons.each do |lesson| %>
+  <% unless lesson.nil? %>
+    <% index = index + 1 %>
+    <tr>
+      <th><%= index %></th>
+      <th><%= link_to lesson[1], learning_preview_lesson_path(lesson[0]) %></th>
+      <th><%= '' %></th> 
+      <th><%= '' %></th>
+      <th><%= '' %></th>
+    </tr>
+  <% end %>
+<% end %>

@@ -1,0 +1,97 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "learning/lesson_input.js" %>
+<% end %>
+
+<div class="page-content page-thin">
+
+  <!-- InstanceBeginEditable name="EditRegion1" -->
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Danh sách bài học (Lesson)</h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="tab-content p-0 tab-all-content m-t-20">
+        <div class="tab-pane fade active in">
+          <div class="bo-table">
+            <div class="form-content">
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id='btnFilterCategory'>All Categories
+                  <span class="caret"></span></button>
+                <ul class="dropdown-menu" id='listCategories'>
+                  <input class="form-control" id="filterCategory" type="text" placeholder="Search..">
+                  <% @categories.each do |category| %>
+                    <li><%= link_to category[1], learning_lessons_by_category_path(:category_id => category[0]), {:remote => true } %></li>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id='btnFilterCourse'>All Courses
+                  <span class="caret"></span></button>
+                <ul class="dropdown-menu" id='listCourses'>
+                  <input class="form-control" id="filterCourse" type="text" placeholder="Search..">
+                  <% @courses.each do |course| %>
+                    <li><%= link_to course[1], learning_lessons_by_course_path(:course_id => course[0]), {:remote => true} %> </li>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id='btnFilterSubject'>All Subjects
+                  <span class="caret"></span></button>
+                <ul class="dropdown-menu" id='listSubjects'>
+                  <input class="form-control" id="filterSubject" type="text" placeholder="Search..">
+                  <% @subjects.each do |subject| %>
+                    <li><%= link_to subject[1], learning_lessons_by_subject_path(:subject_id => subject[0]), {:remote => true} %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="text-transform" style="margin-top: 50px; border-bottom: 2px solid gray; padding: 5px">Danh sách Lesson</h2>
+      <div class="tab-content p-0 tab-all-content m-t-20">
+        <div class="tab-pane fade active in">
+          <div class="bo-table">
+            <div class="form-content">
+              <div class="box-progress" id='lessons_list'>
+                <div class='table-responsive'>
+                  <table class='table table-hover'>
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Tên bài</th>
+                        <th>Slide</th>
+                        <th>Video Ôn tập</th>
+                        <th>BTVN</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id='listLessons'>
+                      <% index = 0 %>
+                      <% @lessons.each do |lesson| %>
+                        <% unless lesson.nil? %>
+                          <% index = index + 1 %>
+                          <tr>
+                            <th><%= index %></th>
+                            <th><%= link_to lesson[1], learning_preview_lesson_path(lesson[0]) %></th>
+                            <th><%= '' %></th> 
+                            <th><%= '' %></th>
+                            <th><%= '' %></th>
+                          </tr>
+                        <% end %>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
