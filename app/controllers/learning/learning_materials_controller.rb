@@ -87,28 +87,70 @@ module Learning
     # end
 
     def show_video
-      fallback_video_id = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last.ziggeo_file_id
-      if params[:session_id].present?
-        session = Learning::Batch::OpSession.find(params[:session_id])
-        if session.nil?
-          @video_id = fallback_video_id
-        else
-          video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => session.lession_id).first
-          if video.present?
-            @video_id = video.ziggeo_file_id
-          else
-            @video_id = fallback_video_id
-          end
-        end
-      else
-        @video_id = fallback_video_id
-      end
-
+      video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last
+			fallback_video_id = video.ziggeo_file_id
+      
+			if params[:session_id].present?
+				session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+				if session.nil?
+					@video_id = fallback_video_id
+				else
+					session_video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => session.lession_id).order(created_at: :DESC).first
+					if session_video.present?
+						video = session_video
+						@video_id = video.ziggeo_file_id
+					else
+						@video_id = fallback_video_id
+					end
+				end
+			else
+				@video_id = fallback_video_id
+			end
+			#binding.pry
       name = (session && session.op_lession) ? session.op_lession.name : (session.name || 'Đang cập nhật')
       respond_to do |format|
-        format.js {render 'learning/show_video', :locals => {:target => params[:target], name: name, session_id: session.id, session: session}}
+				format.js {render 'learning/show_video', :locals => {:target => params[:target], name: name, session_id: session.id, session: session, video_id: video.id}}
       end
     end
+
+		def next_video
+			session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+			if session.blank?
+				render json: { status: 500, type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau'}
+			else
+					videos = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => session.lession_id).order(created_at: :DESC)
+					#index_value = params[:videos_index].key[0] + params[:video_index].values[0]
+					current_video = Learning::Material::LearningMaterial.find(params[:video_index].to_i)
+					current_video_index = videos.find_index(current_video)
+					index_value = current_video_index + params[:index].to_i
+
+					if index_value < 0 || index_value >= videos.length
+						next_session = find_next_session current_user.op_student, session, params[:index]
+						video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => next_session.lession_id).order(created_at: :DESC).first
+
+						if video.present?
+							@video_id = video.ziggeo_file_id
+						else
+							@video_id = nil
+
+							name = (session && session.op_lession) ? session.op_lession.name : (session.name || 'Đang cập nhật')
+							respond_to do |format|
+								format.js {render 'learning/show_video', :locals => {:target => 'watch_video_box', name: name, session_id: next_session.id, session: next_session, video_id: nil}}
+							end
+							return
+						end
+
+					else
+						video = videos[index_value]
+						@video_id = video.ziggeo_file_id
+					end
+
+					name = (session && session.op_lession) ? session.op_lession.name : (session.name || 'Đang cập nhật')
+					respond_to do |format|
+						format.js {render 'learning/show_video', :locals => {:target => 'watch_video_box', name: name, session_id: next_session.id, session: next_session, video_id: video.id}}
+					end
+			end
+		end
 
     def ziggeo
       @videos = Learning::Material::LearningMaterial.ziggeo_list_video
@@ -150,5 +192,19 @@ module Learning
                          'message': 'Không có session ID'}
       end
     end
+
+		private
+
+		def find_next_session student, session, index
+			batch = session.op_batch
+			subject_ids = [] 
+			student.op_student_courses.each do |sc|
+				subject_ids << sc.op_subjects.pluck(:id)
+			end
+
+			subject_ids.flatten!
+			sessions = batch.op_sessions.joins(:op_lession).where(op_lession: {subject_id: subject_ids}).order(start_datetime: :DESC)
+			session = sessions[sessions.find_index(session) + index.to_i]
+		end
   end
 end
