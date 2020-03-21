@@ -58,6 +58,26 @@ class Learning::Homework::QuestionService
 		answer_mark.save
 	end
 
+  def create_user_question student_course
+    student = student_course.op_student
+    user = User::User.where(student_id: student.id).first
+    user_lesson_ids = student.op_sessions.pluck(:lession_id).uniq.compact!
+    question_ids = Learning::Material::Question.where(op_lession_id: user_lesson_ids).pluck(:id)
+    errors = []
+
+    question_ids.each do |question_id|
+      user_question = Learning::LearningRecord::UserQuestion.new
+      user_question.question_id = question_id
+      user_question.student_id = user.id
+      user_question.op_batch_id = student_course.batch_id
+      unless user_question.save
+        errors << {question_id => user_question.errors}
+      end
+    end
+
+    errors
+  end
+
 	private
 
 	def find_user_question user_question

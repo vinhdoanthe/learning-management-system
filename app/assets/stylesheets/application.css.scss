@@ -52,3 +52,7 @@ span.subject_id {
 #student_videos_list td {
     padding: 5px 0;
 }
+
+button:disabled {
+	color: #616c76 !important;
+}
