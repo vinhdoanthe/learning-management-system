@@ -3,13 +3,16 @@ module Learning
     class OpBatchService
 
       def self.get_teachers_name(batch_id)
-        names = ''
+        # names = ''
         faculty_ids = Learning::Batch::OpSession.where(batch_id: batch_id).pluck(:faculty_id).uniq
-        unless faculty_ids.blank?
-          faculty_names = User::OpFaculty.where(id: faculty_ids).pluck(:full_name)
-          names = faculty_names.join(', ')
-        end
-        names
+        # unless faculty_ids.blank?
+        #   faculty_names = User::OpFaculty.where(id: faculty_ids).pluck(:full_name)
+        #   names = faculty_names.join(', ')
+        # end
+        # names
+        faculty_id = faculty_ids.compact.first
+        faculty = User::OpFaculty.find(faculty_id)
+        faculty.nil? ? '' : faculty.full_name
       end
 
       def self.get_coming_soon_session(student_id:, batch_id:, checkpoint_datetime:)

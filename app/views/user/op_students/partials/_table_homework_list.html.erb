@@ -1,25 +1,45 @@
 <tbody>
   <% sessions.each do |session| %>
     <tr>
-      <% if has_homework? current_user, session %>
+      <% has_homework = has_homework? current_user, session %>
+      <% lesson_name = session.op_lession ? session.op_lession.name : session.op_subject.name %>
+      <% if has_homework %>
         <td width="70%">
-      	  <a href="/learning/view_question?session_id=<%= session.id %>" class='student_homework_view'><%= session.op_lession ? session.op_lession.name : session.name%></a>
+          <a href="/learning/view_question?session_id=<%= session.id %>" class='student_homework_view'><%= lesson_name %></a>
           <input name='session_homework_name' value="<%= session.id %>" type="hidden">
         </td>
-        <td align="right"><%= session.start_datetime.strftime('%H:%M') %> - <%= session.start_datetime.strftime('%d/%m/%y') %></td>
+        <%# <td align="right"><%= session.start_datetime.strftime('%H:%M') %1> - <%= session.start_datetime.strftime('%d/%m/%y') %1></td> %>
         <% if done_homework? current_user, session %>
           <td align="right"><span class="label-edit label label-danger">Đã làm</span></td>
         <% else %>
-        <td align="right"><span class="label-edit label label-primary">Chưa làm</span></td>
+          <td align="right"><span class="label-edit label label-primary">Chưa làm</span></td>
         <% end %>
       <% else %>
         <td width="70%">
-          <a style='opacity: 0.5'><%= session.op_lession ? session.op_lession.name : session.name%></a>
+          <a style='opacity: 0.5'><%= lesson_name %></a>
           <input name='session_homework_name' value="<%= session.id %>" type="hidden">
         </td>
-        <td align="right"><%= session.start_datetime.strftime('%H:%M') %> - <%= session.start_datetime.strftime('%d/%m/%y') %></td>
         <td align="right"><span class="label-edit label label-stop">Không có bài tập</span></td>
+      <% end %>
+      <td align="right">
+        <% if has_homework %>
+          <a class='student_evaluate_view student_homework_watch_videos' href="/learning/show_video/<%= session.id %>?target=watch_video_box" data-remote="true" data-session="<%= session.id %>" title='Làm bài tập về nhà'>
+            <span>
+              <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
+            </span>
+          </a>
+        <% else %>
+          <a style='opacity: 0.5' title='Làm bài tập về nhà'>
+            <span>
+              <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
+            </span>
+          </a>
         <% end %>
+        <a class='student_evaluate_view' href="/user/student_evaluate_content?session_id=<%= session.id %>" data-remote='true' data-toggle="modal" data-target="#modal_student_evaluate_view" title='Nhận xét của giảng viên'>
+          <span>
+            <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
+          </span>
+        </a>
       </td>
     </tr>
   <% end %>
