@@ -9,12 +9,18 @@
 	<% end %>
     <div class="header-right">
         <ul class="header-menu nav navbar-nav">
-            <!-- <li class="dropdown" id="language-header">
-                <a href="" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <i class="icon-globe"></i>
-                    <span>Ngôn ngữ</span>
+            <li class="dropdown" id="language-header">
+                <a href="" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
+                    <%= image_tag "global/images/flags/vietname.png", style:"width:34px;"%>
+                    <span>Việt Nam</span>
                 </a>
                 <ul class="dropdown-menu">
+                    <li>
+                        <a href="" data-lang="vn"><%= image_tag "global/images/flags/usa.png"%>
+                            <span>Vietnamese</span>
+                        </a>
+                    </li>
+
                     <li>
                         <a href="" data-lang="en"><%= image_tag "global/images/flags/usa.png" %><span>English</span>
                         </a>
@@ -28,7 +34,7 @@
                         </a>
                     </li>
                 </ul>
-            </li> -->
+            </li>
             <li class="dropdown" id="teky-logout">
                 <%=link_to image_tag("global/images/logout.png", border: 0), user_logout_path %>
             </li>

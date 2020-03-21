@@ -2018,42 +2018,7 @@ hr.border-sidebar-bottom {margin: 0px;border:0;border-bottom:1px solid #232837;b
 .sidebar .sidebar-inner .nav-sidebar > li > a > span > span.left-badge {float:right!important;color: #F16357; font-size: 14px; font-weight:500;}
 .mCSB_inside>.mCSB_container {margin-right: 0px;}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.topbar .header-left .topnav .menutoggle {color: #fff}
+.topbar .header-left .topnav .menu__handle::before,.topbar .header-left .topnav .menu__handle::after,.menu__handle span {background: #fff}
+.topbar .header-right .header-menu > li > a > span:not(.badge) {display: inline-block; float: none;}
 
