@@ -80,7 +80,7 @@ module User
               {'path' => '#', 
                 'icon' => 'Icon-Bell.png',
                 'title' => 'Thông báo', 
-                'right_content' => '<span style="float: right; color: red">' << count_notification_student(current_user).to_s << '</span>'
+                'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
               }
 
             ]
@@ -122,17 +122,47 @@ module User
                 'title' => 'Dashboard', 
                 'right_content' => ''
               },
+
+              {'path' => user_student_timetable_path, 
+                'icon' => 'ico-TienDoHocTap.png',
+                'title' => 'Thời khoá biểu', 
+                'right_content' => '<span class="left-badge">' << count_sessions_week('op_student').to_s << '</span>'
+              },
+
+              {'path' => user_my_class_path, 
+                'icon' => 'ico-TienDoHocTap.png',
+                'title' => 'Lớp học của tôi', 
+                'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
+              },
               
               {'path' => user_student_homework_path, 
                 'icon' => 'ico-BaiTapOnBai.png',
                 'title' => 'Bài tập & Ôn bài', 
+                'right_content' => ''
+              },
+
+              {'path' => '#', 
+                'icon' => 'ico-Certificate.png',
+                'title' => 'Chứng chỉ', 
+                'right_content' => ''
+              },
+
+              {'path' => user_student_product_path, 
+                'icon' => 'ico-SPhocsinh.png',
+                'title' => 'Sản phẩm của tôi', 
+                'right_content' => ''
+              },
+
+              {'path' => '#', 
+                'icon' => 'ico-SPhocsinh.png',
+                'title' => 'Top thành tích', 
                 'right_content' => ''
               }
 
             ]
 
 
-      tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit">'
+      tag_html = tag_html + '<hr class="border-sidebar-edit"/><ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
 
       menus.each do |menu|
 
@@ -155,6 +185,60 @@ module User
       end
 
       tag_html = tag_html + '</ul>'
+
+      # Khoi menu Diem thuong
+      menus = [
+              {'path' => '#', 
+                'icon' => 'ico-Certificate.png',
+                'title' => 'Huy hiệu', 
+                'right_content' => ''
+              },
+
+              {'path' => user_student_redeem_path, 
+                'icon' => 'ico-Redem.png',
+                'title' => 'Đổi điểm lấy quà', 
+                'right_content' => ''
+              },
+
+              {'path' => '#', 
+                'icon' => 'ico-Redem.png',
+                'title' => 'Giới thiệu phụ huynh', 
+                'right_content' => ''
+              },
+
+              {'path' => user_student_invoice_path, 
+                'icon' => 'ico-Invoice.png',
+                'title' => 'Hóa đơn', 
+                'right_content' => ''
+              },             
+
+            ]
+
+      tag_html = tag_html + '<hr class="border-sidebar-bottom"/><ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
+
+      menus.each do |menu|
+
+        if (menu['path'] == fullpath)
+          tag_html = tag_html + '<li class="nav-active activea">'        
+          tag_html = tag_html + '<a href="' + menu['path'] +'">'
+          tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] +"", class: "img-changes")
+          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
+        else
+          tag_html = tag_html + '<li class="">'        
+          tag_html = tag_html + '<a href="' + menu['path'] +'">'
+          tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] +"", class: "img-changes")
+          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
+        end
+
+        tag_html = tag_html + '<span>'+ menu['title'].concat(menu['right_content']) +'</span>'
+
+        tag_html = tag_html + '</a>'
+        tag_html = tag_html + '</li>'
+      end
+
+      tag_html = tag_html + '</ul>'
+
+
 
       return tag_html
     end
