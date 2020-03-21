@@ -1492,7 +1492,7 @@ ul.ctd-popover li strong{
 
 .nav-sidebar-edit li a img{
 	width: 16px;
-	margin-right: 5px;
+	margin-right: 22px;
 	margin-bottom: 3px;
 }
 
@@ -1998,7 +1998,20 @@ position: absolute;
 }
 .btr-detail-active.btr-detail span.btd-img2{
 	display: none;
-} 
+}
+
+/** BEGIN: Custom font for left menu **/
+.sidebar .sidebar-inner .nav-sidebar > li > a {font-family:inherit;}
+.sidebar .sidebar-inner .nav-sidebar > li > a span:not(.badge) {
+  opacity: 1;
+}
+.sidebar .sidebar-inner .nav-sidebar > li > a {font-size: 14px;font-weight: 500}
+
+.sidebar .sidebar-inner .nav-sidebar > li.activea > a {text-transform: uppercase;color: #FCF055;background:none;font-weight: 700}
+
+.nav-sidebar-edit li.activea a img.img-changes {display: none;}
+.nav-sidebar-edit li.activea a img.img-change-color {display: inline-block;}
+
 
 
 

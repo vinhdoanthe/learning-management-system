@@ -1437,9 +1437,9 @@ ul.ctd-popover li strong{
 }
 
 .noti-nav{
-    padding: 20px 0 20px;
+    padding: 10px 0 20px;
     border-bottom: 1px solid #414348;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .noti-nav ul li a{
 	position: relative;
@@ -1504,9 +1504,7 @@ ul.ctd-popover li strong{
 	padding-right: 0 !important
 }
 
-.sidebar .sidebar-inner .nav-sidebar > li > a span:not(.badge) {
-  opacity: 1;
-}
+
 
 
 

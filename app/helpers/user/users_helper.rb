@@ -139,13 +139,13 @@ module User
         if (menu['path'] == fullpath)
           tag_html = tag_html + '<li class="nav-active activea">'        
           tag_html = tag_html + '<a href="' + menu['path'] +'">'
-          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] +"", class: "img-changes")
+          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
         else
           tag_html = tag_html + '<li class="">'        
           tag_html = tag_html + '<a href="' + menu['path'] +'">'
-          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] +"", class: "img-changes")
+          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
         end
 
         tag_html = tag_html + '<span>'+ menu['title'].concat(menu['right_content']) +'</span>'
