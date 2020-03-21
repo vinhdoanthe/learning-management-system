@@ -24,7 +24,9 @@
             <% end %>
           </td>
           <td>
-            <%= batch.op_batch_type.name %>
+            <% unless batch.op_batch_type.nil?%>
+            <%= batch.op_batch_type.name%>
+            <% end%>
           </td>
           <% if @batch_states[batch.id] == 'on' %>
             <td align="right"><span class="label-edit label label-primary">Đang học</span></td>

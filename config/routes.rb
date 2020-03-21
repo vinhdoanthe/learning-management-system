@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     get 'teacher_active_session' => 'op_teachers#active_session'
     post 'teacher_checkin' => 'op_teachers#teacher_checkin'
     post 'teacher_attendance' => 'op_teachers#teacher_attendance'
+
+    get 'teacher_dashboard' => 'op_teachers#dashboard'
+
     resources :users
     resources :op_students, only: [:index, :new]
 
@@ -45,6 +48,7 @@ Rails.application.routes.draw do
     get 'student_videos_list' => 'op_students#student_videos_list'
 
     get 'student_dashboard' => 'op_students#dashboard'
+
   end
 
   namespace :learning do
