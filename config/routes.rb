@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'user/home#dashboard'
   namespace :user do
+    
     get 'login' => 'sessions#new'
     post 'login' => 'sessions#create'
     get 'parent_selection' => 'sessions#new_parent_selection'
@@ -42,6 +43,8 @@ Rails.application.routes.draw do
     post 'teacher_evaluate' => 'op_teachers#teacher_evaluate'
     get 'student_evaluate_content' => 'op_students#student_attendance_content'
     get 'student_videos_list' => 'op_students#student_videos_list'
+
+    get 'student_dashboard' => 'op_students#dashboard'
   end
 
   namespace :learning do

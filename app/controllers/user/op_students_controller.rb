@@ -5,6 +5,10 @@ module User
     before_action :authenticate_student!, :find_student
     skip_before_action :verify_authenticity_token
 
+    def dashboard
+      
+    end
+
     def index
       @op_students = OpStudent.all
     end

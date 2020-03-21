@@ -1421,7 +1421,7 @@ ul.ctd-popover li strong{
 
 .nav-sidebar-edit li a img{
 	width: 16px;
-	margin-right: 5px;
+	margin-right: 15px;
 	margin-bottom: 3px;
 }
 
@@ -1502,6 +1502,10 @@ ul.ctd-popover li strong{
 }
 .append-icon input{
 	padding-right: 0 !important
+}
+
+.sidebar .sidebar-inner .nav-sidebar > li > a span:not(.badge) {
+  opacity: 1;
 }
 
 

@@ -6,6 +6,7 @@ module User
       else
         if current_user.is_student?
           redirect_to user_my_class_path
+          #redirect_to user_student_dashboard_path
         elsif current_user.is_parent?
           redirect_to user_parent_selection_path
         elsif current_user.is_teacher?

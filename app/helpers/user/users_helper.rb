@@ -47,6 +47,10 @@ module User
 			teacher.user_answers.where(state: 'waiting').count	
 		end
 
+    def count_notification_student user
+      return 0  
+    end
+
     # Lay trang thai trong khoa hoc cua hoc sinh
     def get_student_batch_status(op_student_id, batch_id)
       status = {}
@@ -62,6 +66,97 @@ module User
       end
 
       return status
+    end
+
+    # get Menu for User is Student
+    def get_menus_student(fullpath)
+      menus = [
+              {'path' => user_student_info_path, 
+                'icon' => 'icon-Setting.png',
+                'title' => 'Cấu hình', 
+                'right_content' => ''
+              },
+              
+              {'path' => '#', 
+                'icon' => 'Icon-Bell.png',
+                'title' => 'Thông báo', 
+                'right_content' => '<span style="float: right; color: red">' << count_notification_student(current_user).to_s << '</span>'
+              }
+
+            ]
+
+      # Khoi menu Config
+      tag_html = '<div class="noti-nav">'
+      tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit m-b-0">'
+
+      menus.each do |menu|
+
+        if (menu['path'] == fullpath)
+          tag_html = tag_html + '<li class="nav-active activea">'        
+          tag_html = tag_html + '<a href="' + menu['path'] +'">'
+          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
+          tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] +"", class: "img-changes")
+        else
+          tag_html = tag_html + '<li class="nav-active">'        
+          tag_html = tag_html + '<a href="' + menu['path'] +'">'
+          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
+          tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] +"", class: "img-changes")
+        end
+
+
+        tag_html = tag_html + '<span>'+ menu['title'].concat(menu['right_content']) +'</span>'
+
+
+        tag_html = tag_html + '</a>'
+        tag_html = tag_html + '</li>'
+      end
+
+      tag_html = tag_html + '</ul>'
+
+      tag_html = tag_html + '</div>'
+
+      # Khoi menu Dashboard
+      menus = [
+              {'path' => user_student_dashboard_path, 
+                'icon' => 'ico-Dashboard.png',
+                'title' => 'Dashboard', 
+                'right_content' => ''
+              },
+              
+              {'path' => user_student_homework_path, 
+                'icon' => 'ico-BaiTapOnBai.png',
+                'title' => 'Bài tập & Ôn bài', 
+                'right_content' => ''
+              }
+
+            ]
+
+
+      tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit">'
+
+      menus.each do |menu|
+
+        if (menu['path'] == fullpath)
+          tag_html = tag_html + '<li class="nav-active activea">'        
+          tag_html = tag_html + '<a href="' + menu['path'] +'">'
+          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
+          tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] +"", class: "img-changes")
+        else
+          tag_html = tag_html + '<li class="">'        
+          tag_html = tag_html + '<a href="' + menu['path'] +'">'
+          tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] +"", class: "img-change-color")
+          tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] +"", class: "img-changes")
+        end
+
+        tag_html = tag_html + '<span>'+ menu['title'].concat(menu['right_content']) +'</span>'
+
+        tag_html = tag_html + '</a>'
+        tag_html = tag_html + '</li>'
+      end
+
+      tag_html = tag_html + '</ul>'
+
+      return tag_html
     end
 
   end
