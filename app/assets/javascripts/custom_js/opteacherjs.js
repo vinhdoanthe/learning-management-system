@@ -82,7 +82,7 @@ $(document).ready(function () {
             $('#lesson_title').html("<strong>" + res.lesson.name + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: " + res.lesson.note);
             $('.learning_device_content').html(res.lesson.learning_devices);
         }else{
-            $('#lesson_title').html("<strong>BÀI: Đang cập nhật" + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: Đang cập nhật" );
+            $('#lesson_title').html("<strong>BÀI: " + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: " );
             $('.learning_device_content').html('Không có learning device');
         }
 
@@ -129,11 +129,11 @@ $(document).ready(function () {
         // TO DO: add image for student
         $.each(res.students, function (index, student) {
             if (student.attendance == '') {
-                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><br/>' + student.note + '</td></span></td>'
+                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><br/>' + student.note.substring(0, 49) + '...</td></span></td>'
             } else if (student.attendance == true) {
-                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
+                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""><br/>' + student.note.substring(0, 49) + '...</td></span></td>'
             } else {
-                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note + '</td></span></td>'
+                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note.substring(0, 49) + '...</td></span></td>'
             }
 
             switch (student.status) {

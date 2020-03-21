@@ -125,9 +125,11 @@ module Learning
 					index_value = current_video_index + params[:index].to_i
 
 					if index_value < 0 || index_value >= videos.length
-						next_session = find_next_session current_user.op_student, session, params[:index]
-						video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => next_session.lession_id).order(created_at: :DESC).first
-
+					#	next_session = find_next_session current_user.op_student, session, params[:index]
+					#	video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => next_session.lession_id).order(created_at: :DESC).first
+						data = find_next_video current_user.op_student, session, params[:index]
+						video = data[:video]
+						next_session = data[:session] 
 						if video.present?
 							@video_id = video.ziggeo_file_id
 						else
@@ -195,16 +197,26 @@ module Learning
 
 		private
 
-		def find_next_session student, session, index
+		def find_next_video student, session, index
 			batch = session.op_batch
-			subject_ids = [] 
+			subject_ids = []
+
 			student.op_student_courses.each do |sc|
 				subject_ids << sc.op_subjects.pluck(:id)
 			end
 
 			subject_ids.flatten!
 			sessions = batch.op_sessions.joins(:op_lession).where(op_lession: {subject_id: subject_ids}).order(start_datetime: :DESC)
-			session = sessions[sessions.find_index(session) + index.to_i]
+			video = ''
+			while video.blank? || session == sessions[0] || session == sessions[-1]
+				session_index = sessions.find_index(session)
+				if (session_index + index.to_i) == sessions.length || (session_index + index.to_i) < 0
+					break				
+				end
+				session = sessions[sessions.find_index(session) + index.to_i]
+				video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => session.lession_id).order(created_at: :DESC).first
+			end
+			{ video: video, session: session }
 		end
   end
 end

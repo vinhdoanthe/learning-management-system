@@ -86,6 +86,16 @@ module Learning
       end
     end
 
+		def maping_student_user_question student_course_id
+			student_course = Learning::Batch::OpStudentCourse.where(id: student_course_id).first
+			student_user_question = Homework::QuestionService.new.create_user_question student_course
+			if student_user_question.blank?
+				puts 'done'
+			else
+				student_user_question.each{|error| puts error}
+			end	
+		end
+
     private
 
     def authorize_access_question!
