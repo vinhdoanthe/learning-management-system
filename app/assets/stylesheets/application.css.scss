@@ -56,3 +56,15 @@ span.subject_id {
 button:disabled {
 	color: #616c76 !important;
 }
+
+.close_class {
+  background-color: #7E858E !important
+}
+
+.online_class:before {
+  background: #5DC2A7 !important
+}
+
+.offline_class:before {
+  background: #EB9138 !important
+}
