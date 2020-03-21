@@ -1564,6 +1564,7 @@ ul.ctd-popover li strong{
 }
 #teky-logout a{
     border-left: 1px solid #61D5D1;
+    border-left: 1px solid #49AB91;
 }
 #teky-logout a img{
 	width: 20px;
@@ -2022,3 +2023,10 @@ hr.border-sidebar-bottom {margin: 0px;border:0;border-bottom:1px solid #232837;b
 .topbar .header-left .topnav .menu__handle::before,.topbar .header-left .topnav .menu__handle::after,.menu__handle span {background: #fff}
 .topbar .header-right .header-menu > li > a > span:not(.badge) {display: inline-block; float: none;}
 
+.topbar .header-right .header-menu #teky-coin {border-right: 1px solid #61D5D1;}
+.topbar .header-right .header-menu #language-header {border-right: 1px solid #61D5D1;margin-right:0px;}
+
+li a#li-language {
+    border-left: 1px solid #49AB91;
+}
+li #teky-coin a {color: #fff;}
