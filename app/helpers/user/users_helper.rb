@@ -181,12 +181,12 @@ module User
                 'icon' => 'icon-Setting.png',
                 'title' => 'Cấu hình', 
                 'right_content' => ''
-              },
+              # },
               
-              {'path' => '#', 
-                'icon' => 'Icon-Bell.png',
-                'title' => 'Thông báo', 
-                'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
+              # {'path' => '#', 
+              #   'icon' => 'Icon-Bell.png',
+              #   'title' => 'Thông báo', 
+              #   'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
               }
             ]
 
@@ -221,11 +221,11 @@ module User
 
       # Khoi menu Dashboard
       menus = [
-              {'path' => user_student_dashboard_path, 
-                'icon' => 'ico-Dashboard.png',
-                'title' => 'Dashboard', 
-                'right_content' => ''
-              },
+              # {'path' => user_student_dashboard_path, 
+              #   'icon' => 'ico-Dashboard.png',
+              #   'title' => 'Dashboard', 
+              #   'right_content' => ''
+              # },
 
               {'path' => user_student_timetable_path, 
                 'icon' => 'ico-TienDoHocTap.png',
@@ -245,23 +245,23 @@ module User
                 'right_content' => ''
               },
 
-              {'path' => '#', 
-                'icon' => 'ico-Certificate.png',
-                'title' => 'Chứng chỉ', 
-                'right_content' => ''
-              },
+              # {'path' => '#', 
+              #   'icon' => 'ico-Certificate.png',
+              #   'title' => 'Chứng chỉ', 
+              #   'right_content' => ''
+              # },
 
-              {'path' => user_student_product_path, 
-                'icon' => 'ico-SPhocsinh.png',
-                'title' => 'Sản phẩm của tôi', 
-                'right_content' => ''
-              },
+              # {'path' => user_student_product_path, 
+              #   'icon' => 'ico-SPhocsinh.png',
+              #   'title' => 'Sản phẩm của tôi', 
+              #   'right_content' => ''
+              # },
 
-              {'path' => '#', 
-                'icon' => 'ico-SPhocsinh.png',
-                'title' => 'Top thành tích', 
-                'right_content' => ''
-              }
+              # {'path' => '#', 
+              #   'icon' => 'ico-SPhocsinh.png',
+              #   'title' => 'Top thành tích', 
+              #   'right_content' => ''
+              # }
 
             ]
 
@@ -292,29 +292,29 @@ module User
 
       # Khoi menu Diem thuong
       menus = [
-              {'path' => '#', 
-                'icon' => 'ico-Certificate.png',
-                'title' => 'Huy hiệu', 
-                'right_content' => ''
-              },
+              # {'path' => '#', 
+              #   'icon' => 'ico-Certificate.png',
+              #   'title' => 'Huy hiệu', 
+              #   'right_content' => ''
+              # },
 
-              {'path' => user_student_redeem_path, 
-                'icon' => 'ico-Redem.png',
-                'title' => 'Đổi điểm lấy quà', 
-                'right_content' => ''
-              },
+              # {'path' => user_student_redeem_path, 
+              #   'icon' => 'ico-Redem.png',
+              #   'title' => 'Đổi điểm lấy quà', 
+              #   'right_content' => ''
+              # },
 
-              {'path' => '#', 
-                'icon' => 'ico-Redem.png',
-                'title' => 'Giới thiệu phụ huynh', 
-                'right_content' => ''
-              },
+              # {'path' => '#', 
+              #   'icon' => 'ico-Redem.png',
+              #   'title' => 'Giới thiệu phụ huynh', 
+              #   'right_content' => ''
+              # },
 
-              {'path' => user_student_invoice_path, 
-                'icon' => 'ico-Invoice.png',
-                'title' => 'Hóa đơn', 
-                'right_content' => ''
-              },             
+              # {'path' => user_student_invoice_path, 
+              #   'icon' => 'ico-Invoice.png',
+              #   'title' => 'Hóa đơn', 
+              #   'right_content' => ''
+              # },             
 
             ]
 

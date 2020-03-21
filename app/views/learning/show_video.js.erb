@@ -4,7 +4,7 @@ $('#homework_video_session_name').html('<%= name %>')
 $('input[name="active_lesson_video"]').val('<%= session_id %>')
 
 <% if has_homework? current_user, session %>
-	$('.video_to_homework').html("<a class='btn btn-primary btn-embossed bg-5DC2A7 text-transform video_to_homework' href='/learning/view_question?session_id=<% session_id %>'>Làm bài tập</a>")
+$('.video_to_homework').html("<a class='btn btn-primary btn-embossed bg-5DC2A7 text-transform video_to_homework' href='/learning/view_question?session_id=<% session_id %>'>Làm bài tập</a>")
 <% else %>
-	$('.video_to_homework').html("<a class='btn btn-primary btn-embossed bg-5DC2A7 text-transform video_to_homework' style='display: none;'>Làm bài tập</a>")
+$('.video_to_homework').html("<a class='btn btn-primary btn-embossed bg-5DC2A7 text-transform video_to_homework' style='display: none;'>Làm bài tập</a>")
 <% end %>

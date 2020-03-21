@@ -1,18 +1,18 @@
 <div class="row">
   <div class="col-md-6 col-lg-6">
     <h3>Khóa học <span class="color-F16357"><%= course.name %></span></h3>
-    <p>Lớp <%= batch.name %></p>
-    <p>Học phần <%= subject.level %> - <%= subject.name %></p>
+    <p>Học phần <%= subject.level %> </p>
     <p id='homework_video_session_name'></p>
   </div>
   <div class="col-md-6 col-lg-6">
     <div class="row">
-      <div class="col-md-4 video_to_homework" style='float: right'>
+      <div class="col-md-12 col-lg-12 video_to_homework" style='float: right'>
         <% if has_homework? current_user, @session %>
           <%= link_to '<b>Làm bài tập</b>'.html_safe, learning_view_question_path(session_id: @session.id), class: "btn btn-primary btn-embossed bg-5DC2A7 text-transform" %>
         <% else %>
-          <a class="btn btn-primary btn-embossed bg-5DC2A7 text-transform" style='display: none;'>Làm bài tập</a>
+          <a class="btn btn-primary btn-embossed bg-5DC2A7 text-transform" disabled title='Bài học này không có bài tập'><b>Làm bài tập</b></a>
         <% end %>
+        <%= link_to '<b>Nội dung và kiến thức học được</b>'.html_safe, user_batch_detail_path(batch.id), class: "btn btn-primary btn-embossed bg-5DC2A7 text-transform" %>
       </div>
     </div>
   </div>

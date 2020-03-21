@@ -1,19 +1,23 @@
-<table>
-	<tbody>
-	  <% sessions.each do |session| %>
-	    <tr>
-	      <td width="70%">
-	      	<a class="student_show_video" href="/learning/show_video/<%= session.id %>?target=watch_video_box" data-remote="true" class='student_homework_sesison'><%= session.op_lession ? session.op_lession.name : session.name%></a>
-	      	<input name='session_homework_name' value="<%= session.id %>" type="hidden">
-	      </td>
-	    </tr>
-	  <% end %>
-	</tbody>
+<table class='table'>
+  <thead>
+    <th>TODO: Tên Subject</th>
+  </thead>
+  <tbody>
+    <% sessions.each do |session| %>
+      <% lesson_name = session.op_lession ? session.op_lession.name : session.op_subject.name %>
+      <tr>
+        <td width="70%">
+          <a class="student_show_video" href="/learning/show_video/<%= session.id %>?target=watch_video_box" data-remote="true" class='student_homework_sesison'><%= lesson_name %></a>
+          <input name='session_homework_name' value="<%= session.id %>" type="hidden">
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
-	<script>
-		$(document).ready(function(){
-		$('#student_videos_list').animate({
-        scrollTop: $(".undone_question").offset().top
-		}, 20);
-		})
-	</script>
+<script>
+  $(document).ready(function(){
+    $('#student_videos_list').animate({
+      scrollTop: $(".undone_question").offset().top
+    }, 20);
+  })
+</script>
