@@ -6,6 +6,10 @@ module User
     skip_before_action :verify_authenticity_token
     before_action :instance_session, only: [:active_session]
 
+    def dashboard
+      
+    end
+    
     def teacher_info
 
     end
