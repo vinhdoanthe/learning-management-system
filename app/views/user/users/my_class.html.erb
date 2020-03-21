@@ -19,7 +19,7 @@
             <div class="col-md-6">
               <div class="scl-detail">
                 <div class="scl-img">
-                  <%= batch.op_course.thumbnail.attached? ? image_tag(batch.op_course.thumbnail) : image_tag('global/images/default-course-thumbnail.png') %>
+                  <%= image_tag('global/images/default-course-thumbnail.png') %>
                   <%= student_batch_status['status_html'].html_safe%>
                 </div>
                 <div class="scl-text">

@@ -6,9 +6,9 @@
 <% batch = session.op_batch %>
 <td>
   <div class="photo-box">
-        <span>
-          <%= thumbnail_tag lesson %>
-        </span>
+    <span>
+      <%= thumbnail_tag lesson %>
+    </span>
   </div>
 </td>
 <td>
@@ -17,21 +17,31 @@
   <%= lesson.nil? ? 'Đang cập nhật' : sanitize(truncate(lesson.note, :length => 50)) %>
 </td>
 <td align="center">
-  <% if Learning::Batch::OpAttendanceLine.where(session_id: session.id, student_id: current_user.op_student.id).blank? %>
+  <% attendance_line = attendance_line(session.id, current_user.op_student.id) %>
+  <% if attendance_line.nil? %>
     <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
   <% else %>
     <%= image_tag('global/images/check.png', style: 'width: 20px') %>
   <% end %>
 </td>
 <td align="right">
-  <a class='student_evaluate_view' href="/user/student_evaluate_content?session_id=<%= session.id %>" data-remote='true' data-toggle="modal" data-target="#modal_student_evaluate_view">
-    <%= image_tag('global/images/add-comment-button.png', style: 'width: 20px;margin-right: 10px') %>
+  <a class='student_evaluate_view student_homework_watch_videos' href="/learning/show_video/<%= session.id %>?target=watch_video_box" data-remote="true" data-session="<%= session.id %>" title='Bài tập về nhà, Ôn bài'>
+    <span>
+      <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
+    </span>
   </a>
-  <a class='student_evaluate_view student_homework_watch_videos' href="/learning/show_video/<%= session.id %>?target=watch_video_box" data-remote="true" data-session="<%= session.id %>">
-    <%= image_tag('global/images/right-arrow.png', style: 'width: 20px;margin-right: 10px') %>
-  </a>
-  <a href="">
-    <%= image_tag('global/images/more-4.png', style: 'width: 20px') %>
-  </a>
+  <% if !attendance_line.nil? %>
+    <a class='student_evaluate_view' href="/user/student_evaluate_content?session_id=<%= session.id %>" data-remote='true' data-toggle="modal" data-target="#modal_student_evaluate_view" title='Nhận xét của giảng viên'>
+      <span>
+        <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
+      </span>
+    </a>
+  <% else %>
+    <a style='opacity: 0.2' title='Nhận xét của giảng viên'>
+      <span>
+        <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
+      </span>
+    </a>
+  <% end %>
 </td>
 <%= render 'user/op_students/modals/student_evaluate_view', {batch: batch} %>

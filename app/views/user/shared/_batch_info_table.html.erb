@@ -1,3 +1,5 @@
+<% levels = list_subject_level_of_batch(batch.id) %>
+
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -19,10 +21,14 @@
               <td><%= op_student.full_name %></td>
             <% end %>
             <td>
-              <% levels = list_subject_level_of_student(op_student_course) %>
+              <% paid_levels = list_subject_level_of_student(op_student_course) %>
               <% unless levels.nil? %>
                 <% levels.each do |level| %>
-                  <span class="label-course label label-default"><%= level %></span>
+                  <% if paid_levels.include?(level) %>
+                    <span class="label-course label label-default"><%= level[1] %></span>
+                  <% else %>
+                    <span class="label-course label label-default" style="background: #e0e6eb;"><%= level[1] %></span>
+                  <% end %>
                 <% end %>
               <% end %>
             </td>

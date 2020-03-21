@@ -10,8 +10,8 @@
           <p><span class="span-text">Mã lớp học: </span><%= batch.code %></p></li>
         <li>
           <%= image_tag('global/images/calendar-4.png') %>
-          <p><span class="span-text">Thời gian học: </span><%= batch.start_date %>
-        đến <%= batch.end_date %></p></li>
+          <p><span class="span-text">Thời gian học: </span><%= batch.start_date.strftime('%d/%m/%Y') %>
+        đến <%= batch.end_date.strftime('%d/%m/%Y') %></p></li>
         <li>
           <%= image_tag('global/images/clock.png') %>
           <% time_line = batch_timeline batch %> 
@@ -42,15 +42,15 @@
           <span class="span-text">Học phần: </span>
           <% levels = list_subject_level_of_batch(batch.id) %>
           <% if current_user.is_student? %>
-            <% subject_ids = subject_ids(current_user, batch) %>
+            <% subject_ids = done_subject_ids(batch) %>
             <% unless levels.blank? %>
               <% levels.each do |level| %>
                 <% if subject_ids.include?(level[0]) %>
-                  <span class="label-course label label-default subject_id active">
+                  <span class="label-course label label-default" style="background: #5DC2A7;">
                     <%= level[1] %>
                   </span>
                 <% else %>
-                  <span class="label-course label label-default subject_id">
+                  <span class="label-course label label-default">
                     <%= level[1] %>
                   </span>
                 <% end %>
@@ -84,7 +84,11 @@
             <%= image_tag('global/images/hotel.png') %>
             <p>
             <span class="span-text">Trung tâm: </span><a href=""><%= batch.res_company.nil? ? '' : batch.res_company.name %></a>
+            <% learning_room = learning_room(batch.id) %>
+            <% unless learning_room.blank? %>
+            <span class='span-text'>| (Phòng học: </span><a href=""><%= learning_room %> </a> <span class='span-text'>)</span>
             </p>
+          <% end %>
           </li>
       </ul>
     </div>

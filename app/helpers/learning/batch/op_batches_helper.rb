@@ -1,6 +1,12 @@
 module Learning
   module Batch
     module OpBatchesHelper
+
+      def done_subject_ids(batch)
+        OpSession.where(batch_id: batch.id,
+                                      state: Learning::Constant::Batch::Session::STATE_DONE).pluck(:subject_id).uniq.compact
+      end
+
       def subject_ids(user, batch)
         subject_ids = []
 
@@ -24,12 +30,10 @@ module Learning
 
       def list_subject_level_of_student(op_student_course)
         subjects = op_student_course.op_subjects
-        levels = Array.new
-        if subjects.nil?
-          levels = nil
-        else
+        levels = []
+        unless subjects.nil?
           subjects.each do |subject|
-            levels.append subject.level
+            levels.append [subject.id, subject.level]
           end
         end
         levels
@@ -63,6 +67,13 @@ module Learning
         end
 
         levels
+      end
+
+      def learning_room(batch_id)
+        room_ids = Learning::Batch::OpSession.where(batch_id: batch_id).pluck(:classroom_id).uniq
+        room_id = room_ids.compact.first
+        classroom = room_id.nil? ? nil : Common::OpClassroom.find(room_id)
+        classroom.nil? ? '' : classroom.name
       end
 
       def teachers_name(batch_id)
