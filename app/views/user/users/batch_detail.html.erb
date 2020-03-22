@@ -24,6 +24,16 @@
               <%= render 'user/shared/batch_info_table', {:batch => @batch} %>
             </div>
           </div>
+
+          <div class="bo-lession m-t-20">
+            <% op_course = @batch.op_course %>
+            <% unless op_course.nil? %>
+              <% course_description = op_course.course_description.first %>
+              <% unless course_description.nil? %>
+                <%= course_description.description.html_safe %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
         <%= render 'user/shared/batch_student_progress', {:batch => @batch} %>
       </div>

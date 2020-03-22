@@ -11,7 +11,12 @@ module User
     end
 
     def my_class
-      @batches = current_user.op_student.op_batches      
+      op_student = current_user.op_student
+      if !op_student.nil?
+        @batches = current_user.op_student.op_batches
+      else
+        @batches = []
+      end 
     end
 
     def update_nickname
@@ -72,9 +77,10 @@ module User
         render 'change_password'
       end
     end
-    
+
     def map_student_new_user students
       missing_email_students = []
+
       students.each do |student|
         user = UsersService.new.create_student_user student
         missing_email_students << user[:missing_email_student]

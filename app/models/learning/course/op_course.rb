@@ -9,6 +9,9 @@ module Learning
       has_many :op_subjects, foreign_key: 'course_id'
       has_many :op_sessions, class_name: 'Learning::Batch::OpSession', foreign_key: 'course_id'
 
+      has_many :course_description, foreign_key: :op_course_id, inverse_of: :op_course
+      accepts_nested_attributes_for :course_description, allow_destroy: true
+
       has_one_attached :thumbnail
     end
   end

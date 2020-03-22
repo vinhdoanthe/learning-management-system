@@ -1,5 +1,11 @@
 class User::UsersService
   def create_student_user student
+    
+    existed_user = User::User.where(student_id: student.id).first
+    if existed_user
+      return { missing_email_student: nil, errors: nil }
+    end
+
     user = User::User.new
     errors = []
     missing_email_student = {}
@@ -26,6 +32,7 @@ class User::UsersService
       user.username = username
       user.email = parent_user.email
       user.account_role = User::Constant::STUDENT
+      user.student_id = student.id
       user.save  
     end
 
@@ -35,11 +42,18 @@ class User::UsersService
   end
 
   def create_parent_user parent
+    existed_parent = User::User.where(parent_id: parent.id).first
+    if existed_parent
+      return existed_parent
+    end
+
     parent_user = User::User.new
     parent_user.username = parent.email[/[^@]+/]
-    parent_user.password = parent.mobile ? parent.mobile : '12345678'
+    # parent_user.password = parent.mobile ? parent.mobile : '12345678'
+    parent_user.password = '12345678'
     parent_user.account_role = User::Constant::PARENT
     parent_user.email = parent.email
+    parent_user.parent_id = parent.id
     parent_user.save
     parent_user
   end

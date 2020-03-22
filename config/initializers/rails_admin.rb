@@ -23,10 +23,47 @@ RailsAdmin.config do |config|
       end
     end
   end
-  config.included_models = %w(Learning::Course::OpLession Learning::Material::LearningMaterial
+  config.included_models = %w(Learning::Course::OpCourse Learning::Course::CourseDescription
+                              Learning::Course::OpLession Learning::Material::LearningMaterial
                               Learning::Batch::OpBatch Learning::Batch::OpSession Learning::Material::Question Learning::Material::QuestionChoice
                               User::User Learning::LearningRecord::UserQuestion)
 
+
+  config.model 'Learning::Course::OpCourse' do
+    list do
+      field :id
+      field :name
+    end
+
+    show do
+      field :name
+      field :course_description
+    end
+
+    edit do
+      field :course_description
+    end
+  end
+
+  config.model 'Learning::Course::CourseDescription' do
+    list do
+      
+    end
+
+    show do
+      field :description do
+        pretty_value do
+          value.html_safe
+        end
+      end
+    end
+
+    edit do
+      field :description, :ck_editor do
+        config_js ActionController::Base.helpers.asset_path('ckeditor/config.js')
+      end
+    end
+  end
 
   config.model 'Learning::Course::OpLession' do
     list do
@@ -155,14 +192,14 @@ RailsAdmin.config do |config|
     dashboard
     index
     new do
-      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
+      only %w(Learning::Course::CourseDescription Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
     end
     show
     show_in_app do
       only %w(Learning::Course::OpLession)
     end
     edit do
-      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, Learning::Course::OpLession)
+      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, Learning::Course::OpLession Learning::Course::OpCourse Learning::Course::CourseDescription)
     end
     delete do
       only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
