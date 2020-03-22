@@ -99,5 +99,8 @@ module User
       end
     end
 
+    def map_faculty_create_user faculty
+      UsersService.new.create_teacher_user faculty
+    end
   end
 end

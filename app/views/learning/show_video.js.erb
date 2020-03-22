@@ -1,6 +1,9 @@
 $("#<%= target %>").html("<%= escape_javascript(render partial: 'learning/material/video_content', locals: { video: @video_id, video_id: video_id, session_id: session_id} ) %>");
-$('#homework_video_session_name').html('<%= name %>')
-
+<% if name.present? %>
+  $('#homework_video_session_name').html('<%= name %>')
+<% else %>
+    $('#homework_video_session_name').html($('#student_subject_video_name').html())
+<% end %>
 $('input[name="active_lesson_video"]').val('<%= session_id %>')
 
 <% if has_homework? current_user, session %>
