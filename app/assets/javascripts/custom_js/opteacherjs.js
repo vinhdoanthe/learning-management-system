@@ -127,30 +127,30 @@ $(document).ready(function () {
             }
         })
         // TO DO: add image for student
-        $.each(res.students, function (index, student) {
-            if (student.attendance == '') {
-                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><br/>' + student.note.substring(0, 49) + '...</td></span></td>'
-            } else if (student.attendance == true) {
-                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""><br/>' + student.note.substring(0, 49) + '...</td></span></td>'
-            } else {
-                html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note.substring(0, 49) + '...</td></span></td>'
-            }
+      $.each(res.students, function (index, student) {
+        if (student.attendance == '') {
+          html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><br/>' + student.note.substring(0, 49) + '...</td></span></td>'
+        } else if (student.attendance == true) {
+          html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""><br/>' + student.note.substring(0, 49) + '...</td></span></td>'
+        } else {
+          html = '<tr><td>' + student.code + '</td><td><span class="table-img"><img src="' + student.avatar_src + '" alt=""></span><span class="table-name">' + student.name + '<td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""><br/>' + student.note.substring(0, 49) + '...</td></span></td>'
+        }
 
-            switch (student.status) {
-                case 'off':
-                    html += '<td style="text-align: center; opacity: 0.3;"><a><img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px"></a></td><td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td></tr>'
-                    break;
-                case 'on':
-                    html += '<td style="text-align: center"><a class="student_evaluate" data-value="' + index + '" data-toggle="modal" data-target="#modal_evaluate"><img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px; cursor: pointer;"></a></td><td align="right"><span class="label-edit label label-primary">Đang học</span></td></tr>'
-                    break;
-                case 'save':
-                    html += '<td style="text-align: center; opacity: 0.3;"><a><img src="/global/images/add-comment-button.png" style="min-width: 20px; width: 20px; margin-right: 10px"></a></td><td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td></tr>'
-                    break;
-                default:
-                    null
-            }
-            $('#student_attendance').append(html)
-        })
+        switch (student.status) {
+          case 'off':
+            html += '<td style="text-align: center; opacity: 0.3;"><a><img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px"></a></td><td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td></tr>'
+            break;
+          case 'on':
+            html += '<td style="text-align: center"><a class="student_evaluate" data-value="' + index + '" data-toggle="modal" data-target="#modal_evaluate"><img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px; cursor: pointer;"></a></td><td align="right"><span class="label-edit label label-primary">Đang học</span></td></tr>'
+            break;
+          case 'save':
+            html += '<td style="text-align: center; opacity: 0.3;"><a><img src="/global/images/add-comment-button.png" style="min-width: 20px; width: 20px; margin-right: 10px"></a></td><td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td></tr>'
+            break;
+          default:
+            null
+        }
+        $('#student_attendance').append(html)
+      })
     }
 
 
@@ -236,17 +236,27 @@ $(document).ready(function () {
                 $('.schedule_info').remove();
                 $.each(res.schedules, function (key, schedule) {
                     for (var i = 1; i <= 7; i++) {
-                        if (schedule[i.toString()]) {
-                            info = schedule[i.toString()]
-                            html = '<td class="bg-eaeaea schedule_info"><a data-placement="top" class="ct-detail ctd-cs3 schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li><span>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.subject + ' - Level ' + info.level + ' </li><li><strong>Khoá học: </strong> ' + info.batch + '</li><li><strong>Lớp: </strong> ' + info.course + '</li><li><strong>Số buổi: </strong> ' + info.lesson + '</li></ul>"><span></span>'
-                            if (info.state == 'cancel') {
-                                html += '<img src="/global/images/close.png" alt="">' + info.name + ' </a></td>'
-                            } else {
-                                html += info.name + ' </a></td>'
-                            }
-                        } else {
-                            html = '<td class="bg-fff schedule_info"></td>'
+                      if (schedule[i.toString()]) {
+                        info = schedule[i.toString()]
+                        if (info.status == 'cancel'){
+                          html = '<td class="bg-eaeaea schedule_info close_class">'
+                        }else{
+                          html = '<td class="bg-eaeaea schedule_info">' 
                         }
+                        if (info.batch_class_online){
+                          html += '<a data-placement="top" class="ct-detail ctd-cs3 online_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li><h3>HỌC TRỰC TUYẾN</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.subject + ' - Level ' + info.level + ' </li><li><strong>Khoá học: </strong> ' + info.batch + '</li><li><strong>Lớp: </strong> ' + info.course + '</li><li><strong>Số buổi: </strong> ' + info.lesson + '</li></ul>"><span>'
+                        }else{
+                          html += '<a data-placement="top" class="ct-detail ctd-cs3 offline_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li><h4>HỌC TẠI TRUNG TÂM</h4></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.subject + ' - Level ' + info.level + ' </li><li><strong>Khoá học: </strong> ' + info.batch + '</li><li><strong>Lớp: </strong> ' + info.course + '</li><li><strong>Số buổi: </strong> ' + info.lesson + '</li></ul>"><span>'
+                        }
+
+                        if (info.status == 'cancel') {
+                          html += '<img src="/global/images/close.png" alt=""></span>' + info.name + ' </a></td>'
+                        } else {
+                          html += '</span>' + info.name + ' </a></td>'
+                        }
+                      } else {
+                        html = '<td class="bg-fff schedule_info"></td>'
+                      }
 
                         $('.' + key).append(html);
                         $('.schedule_link').click(function (e) {

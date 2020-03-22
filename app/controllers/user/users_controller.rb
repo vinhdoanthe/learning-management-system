@@ -72,6 +72,26 @@ module User
         render 'change_password'
       end
     end
+    
+    def map_student_new_user students
+      missing_email_students = []
+      students.each do |student|
+        user = UsersService.new.create_student_user student
+        missing_email_students << user[:missing_email_student]
+      end
+
+      missing_email_students.compact!
+      attributes = ['STT', 'ID', 'Full_name', 'Code']
+      csv_file = CSV.generate(headers: true) do |csv|
+        csv << attributes
+        missing_email_students.each do |row|
+          csv << row
+        end
+      end
+      File.open("List_missing_parent_email_students.xlsx", "w+") do |f|
+        f.write(csv_file.force_encoding('iso-8859-1').encode('utf-8').encode('iso-8859-1').force_encoding('utf-8'))
+      end
+    end
 
   end
 end

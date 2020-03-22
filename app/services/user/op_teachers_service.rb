@@ -100,11 +100,13 @@ class User::OpTeachersService
       subject = session.op_subject.name
       level = session.op_subject.level.to_s
       batch = session.op_batch.name
+      batch_class_online = false
+      # batch_class = session.op_batch.is_online_class
       course = session.op_batch.op_course.code
 			lesson = session.op_batch.current_session_level
       status = session.state
 
-      session_info = { name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
+      session_info = { batch_class_online: batch_class_online, name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
       record = { time.wday => session_info}
       record[7] = record[0]
 

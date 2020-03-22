@@ -99,9 +99,27 @@
 	overflow: scroll;
 }
 
+.popover{
+  max-width: 350px;
+  max-height: 180px;
+}
+
 .popover-content{
-	font-size: 10px;
-	color: black;
+  font-size: 12px;
+  color: black;
+  h3{
+    color: #5DC2A7;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  h4{
+    color: #EB9138;
+    font-size: 13px;
+  }
+  b{
+    color: #0051c3;
+    font-size: 13px;
+  }
 }
 
 .lesson_thumbnail{
