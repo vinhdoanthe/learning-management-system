@@ -59,7 +59,6 @@ class Learning::Homework::QuestionService
   end
 
   def create_user_question student_course
-    binding.pry
     student = student_course.op_student
     user = User::User.where(student_id: student.id).first
     user_lesson_ids = student.op_sessions.pluck(:lession_id).uniq.compact!

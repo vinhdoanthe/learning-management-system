@@ -1,7 +1,7 @@
 namespace :map_student_user_question do
   desc 'Mapping User Question to Student'
   task :mapping, [:batch_id] => :environment do |t, arg|
-    batch_id = arg[:batch_id]
+    batch_id = arg[:batch_id].to_i
     if batch_id == -1
       batches = Learning::Batch::OpBatch.all.uniq
     else

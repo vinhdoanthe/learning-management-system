@@ -115,14 +115,23 @@ RailsAdmin.config do |config|
   end
 
   config.model 'User::User' do
+    list do
+      field :id
+      field :username
+      field :email
+      field :account_role
+      field :student_name
+      field :parent_name
+      field :faculty_name
+    end
+    
     show do
       field :username
       field :email
       field :account_role
-      field :avatar
-      field :op_faculty
-      field :op_parent
-      field :op_student
+      field :student_name
+      field :parent_name
+      field :faculty_name
     end
 
     edit do
@@ -134,6 +143,15 @@ RailsAdmin.config do |config|
       field :op_faculty
       field :op_parent
       field :op_student
+    end
+
+    export do
+      field :username
+      field :email
+      field :account_role
+      field :student_name
+      field :parent_name
+      field :faculty_name
     end
   end
 
@@ -203,6 +221,10 @@ RailsAdmin.config do |config|
     end
     delete do
       only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
+    end
+
+    export do
+      only %w(User::User)
     end
   end
 end

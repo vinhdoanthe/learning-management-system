@@ -11,10 +11,7 @@
   <div class="panel m-t--70">
 
     <div class="panel-content">
-      <a class="PC-back" id="student_homework_back" onclick="goBack()">
-        <img src="/assets/global/images/quaylai.svg">
-        Quay lại
-      </a>
+      <%= link_to image_tag('global/images/quaylai.svg').html_safe + " Quay lại", :back, class: 'PC-back', id: 'student_homework_back' %>
       <ul class="nav nav-tabs nav-primary tab-menu">
         <li class="active"><a href="#homework_tab1" data-toggle="tab">Bài tập về nhà</a></li>
         <li class=""><a id="student_homework_videos" href="#homework_tab2" data-toggle="tab">Ôn bài</a></li>

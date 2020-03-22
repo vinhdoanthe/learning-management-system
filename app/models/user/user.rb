@@ -25,6 +25,46 @@ module User
 
     enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
 
+    def student_name
+      if student_id
+        op_student = OpStudent.find(student_id)
+        op_student.full_name
+      else
+        ''
+      end
+    end
+
+    def parent_name
+      if parent_id
+        op_parent = OpParent.find(parent_id)
+        op_parent.full_name
+      else
+        if student_id
+          if parent_account_id
+            parent_user = User.find(parent_account_id)
+            if !parent_user.nil?
+              parent_user.parent_name
+            else
+              ''
+            end
+          else
+            ''
+          end
+        else
+          ''
+        end
+      end
+    end
+
+    def faculty_name
+      if faculty_id
+        op_faculty = OpFaculty.find(faculty_id)
+        op_faculty.full_name
+      else
+        ''
+      end
+    end
+
     # Sets the password reset attributes.
     def create_reset_digest
       self.reset_token = User.new_token
