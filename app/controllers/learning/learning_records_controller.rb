@@ -4,7 +4,7 @@ module Learning
     skip_before_action :verify_authenticity_token
 
     def view_question
-
+      @session = Learning::Batch::OpSession.find(params[:session_id])
     end
 
     def submit_answer
@@ -36,6 +36,7 @@ module Learning
     end
 
     def answer_question
+      binding.pry
       if params[:question_choices].blank? && params[:text_answer].blank?
         state = 'fail'
       else

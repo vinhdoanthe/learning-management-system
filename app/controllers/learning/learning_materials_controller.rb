@@ -205,6 +205,19 @@ module Learning
       end
     end
 
+    def get_video_list
+      session = Learning::Batch::OpSession.find(params[:session])
+      course = Learning::Course::OpCourse.find(session.course_id)
+      batch = session.op_batch
+      subject = session.op_subject
+      sessions = batch.op_sessions.where(subject_id: subject.id)
+      @session = session
+
+      respond_to do |format|
+        format.js { render 'learning/get_list_videos', locals: { sessions: sessions, session: session, course: course, batch: batch, subject: subject }}
+      end
+    end
+
 		private
 
 		def find_next_video student, session, index

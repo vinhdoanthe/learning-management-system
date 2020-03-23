@@ -6,8 +6,9 @@ $("#<%= target %>").html("<%= escape_javascript(render partial: 'learning/materi
 <% end %>
 $('input[name="active_lesson_video"]').val('<%= session_id %>')
 
-<% if has_homework? current_user, session %>
-$('.video_to_homework').html("<a class='btn btn-primary btn-embossed bg-5DC2A7 text-transform video_to_homework' href='/learning/view_question?session_id=<% session_id %>'>Làm bài tập</a>")
+  <% batch = session.op_batch %>
+  <% if has_homework? current_user, session %>
+    $('.video_to_homework').html("<div class='row'><div class='col-md-4'><a class='btn btn-primary btn-embossed bg-5DC2A7 text-transform video_to_homework' href='/learning/view_question?session_id=<% session_id %>'>Làm bài tập</a></div><div class='col-md-6'><a href='/user/batch_detail/<%= batch.id %>' class='btn btn-primary btn-embossed bg-5DC2A7 text-transform'>Nội dung và kiến thức học được'</a></div></div></div>")
 <% else %>
-$('.video_to_homework').html("<a class='btn btn-primary btn-embossed bg-5DC2A7 text-transform video_to_homework' style='display: none;'>Làm bài tập</a>")
+    $('.video_to_homework').html("<div class='row'><div class='col-md-4'><a class='btn btn-secondary text-transform video_to_homework' disabled>Làm bài tập</a></div><div class='col-md-6'><a class='btn btn-primary btn-embossed bg-5DC2A7 text-transform' href='/user/batch_detail/<%= batch.id %>'>Nội dung và kiến thức học được</a></div></div></div>")
 <% end %>
