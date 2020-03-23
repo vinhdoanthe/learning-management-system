@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_075748) do
+ActiveRecord::Schema.define(version: 2020_03_23_085717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2344,12 +2344,16 @@ ActiveRecord::Schema.define(version: 2020_03_23_075748) do
   end
 
   create_table "coin_star_transactions", force: :cascade do |t|
-    t.integer "give_to"
-    t.integer "give_by"
-    t.integer "activity_id"
-    t.string "activity_type", limit: 30
+    t.bigint "give_to"
+    t.bigint "give_by"
+    t.bigint "activity_id"
+    t.string "activity_type", limit: 10
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["activity_id"], name: "index_coin_star_transactions_on_activity_id"
+    t.index ["activity_type"], name: "index_coin_star_transactions_on_activity_type"
+    t.index ["give_by"], name: "index_coin_star_transactions_on_give_by"
+    t.index ["give_to"], name: "index_coin_star_transactions_on_give_to"
   end
 
   create_table "course_categ", id: :serial, comment: "course.categ", force: :cascade do |t|
@@ -8185,6 +8189,33 @@ ActiveRecord::Schema.define(version: 2020_03_23_075748) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+  end
+
+  create_table "redeem_products", force: :cascade do |t|
+    t.string "name", limit: 255, null: false
+    t.decimal "price", precision: 10, scale: 2
+    t.integer "category", null: false
+    t.string "available_color", limit: 255
+    t.string "available_size", limit: 255
+    t.string "brand", limit: 255
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category"], name: "index_redeem_products_on_category"
+    t.index ["name"], name: "index_redeem_products_on_name"
+  end
+
+  create_table "redeem_transactions", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "redeem_product_id", null: false
+    t.string "color", limit: 255, null: false
+    t.integer "size"
+    t.decimal "amount", precision: 10, scale: 2
+    t.decimal "total_paid", precision: 10, scale: 2
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["redeem_product_id"], name: "index_redeem_transactions_on_redeem_product_id"
+    t.index ["student_id"], name: "index_redeem_transactions_on_student_id"
   end
 
   create_table "rel_badge_auth_users", id: false, comment: "RELATION BETWEEN gamification_badge AND res_users", force: :cascade do |t|

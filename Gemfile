@@ -24,6 +24,7 @@ gem 'Ziggeo'
 gem 'pdfjs_viewer-rails'
 gem 'google-api-client', '~> 0.34'
 
+#gem 'axlsx_rails'
 gem 'caxlsx_rails'
 
 # jQuery

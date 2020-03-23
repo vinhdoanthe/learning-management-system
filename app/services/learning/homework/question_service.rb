@@ -21,7 +21,7 @@ class Learning::Homework::QuestionService
     user_answer = Learning::LearningRecord::UserAnswer.new
     user_answer.user_question_id = user_question.id
     user_answer.answer_time = Time.now
-    user_answer.answer_content = params[:choice_content]
+    user_answer.answer_content = params[:question_choices]
     session = Learning::Batch::OpSession.find(params[:session_id])
     user_answer.batch_id = session.batch_id
     user_answer.faculty_id = session.faculty_id.to_i
@@ -31,7 +31,7 @@ class Learning::Homework::QuestionService
     else
       # question_choices = Learning::Material::QuestionChoice.where(id: params[:question_choice])
       right_answer_ids = question.question_choices.where(is_right_choice: true).pluck(:id)
-      choice_content.map!{ |choice| choice.to_i }
+      choice_content = params[:question_choices].map{ |choice| choice.to_i }
       user_answer.state = right_answer_ids == choice_content ? 'right' : 'wrong'
     end
 
