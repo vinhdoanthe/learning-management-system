@@ -44,4 +44,5 @@ yarn-debug.log*
 /config/settings/*.local.yml
 /config/environments/*.local.yml
 
-/data_import_samples/*
+/data_import/*
+/data_export/*

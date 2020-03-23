@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_22_033035) do
+ActiveRecord::Schema.define(version: 2020_03_23_035708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2341,6 +2341,15 @@ ActiveRecord::Schema.define(version: 2020_03_22_033035) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["type"], name: "index_ckeditor_assets_on_type"
+  end
+
+  create_table "coin_star_transactions", force: :cascade do |t|
+    t.integer "give_to"
+    t.integer "give_by"
+    t.integer "activity_id"
+    t.string "activity_type", limit: 30
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "course_categ", id: :serial, comment: "course.categ", force: :cascade do |t|
