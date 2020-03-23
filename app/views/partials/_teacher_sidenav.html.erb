@@ -1,6 +1,9 @@
 <div class="sidebar">
   <div class="logopanel">
-    <h1><%= link_to '', root_path %></h1>
+    <h1>
+      <%= link_to '', root_path, class:"not-sidebar-collapsed-logo" %>
+      <%= image_tag("global/images/logo-small.png",class:"sidebar-collapsed-logo", style:"width:60px;height:60px;") %>
+    </h1>
   </div>
   <div class="sidebar-inner">
     <div class="noti-avatar">
