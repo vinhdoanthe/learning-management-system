@@ -9,8 +9,7 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema.define(version: 2020_03_23_075748) do
+ActiveRecord::Schema.define(version: 2020_03_23_093933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2344,12 +2343,29 @@ ActiveRecord::Schema.define(version: 2020_03_23_075748) do
   end
 
   create_table "coin_star_transactions", force: :cascade do |t|
-    t.integer "give_to"
-    t.integer "give_by"
-    t.integer "activity_id"
-    t.string "activity_type", limit: 30
+    t.bigint "give_to"
+    t.bigint "give_by"
+    t.bigint "activity_id"
+    t.string "activity_type", limit: 10
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["activity_id"], name: "index_coin_star_transactions_on_activity_id"
+    t.index ["activity_type"], name: "index_coin_star_transactions_on_activity_type"
+    t.index ["give_by"], name: "index_coin_star_transactions_on_give_by"
+    t.index ["give_to"], name: "index_coin_star_transactions_on_give_to"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "post_id"
+    t.string "post_type", limit: 50
+    t.bigint "parent_comment_id"
+    t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "course_categ", id: :serial, comment: "course.categ", force: :cascade do |t|
@@ -8144,7 +8160,19 @@ ActiveRecord::Schema.define(version: 2020_03_23_075748) do
     t.index ["op_lession_id"], name: "index_questions_on_op_lession_id"
   end
 
-  create_table "rating_rating", id: :serial, comment: "Rating", force: :cascade do |t|
+  create_table "reactions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "type", null: false
+    t.bigint "post_id", null: false
+    t.string "post_type", limit: 10
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_reactions_on_post_id"
+    t.index ["post_type"], name: "index_reactions_on_post_type"
+    t.index ["user_id"], name: "index_reactions_on_user_id"
+  end
+
+    create_table "rating_rating", id: :serial, comment: "Rating", force: :cascade do |t|
     t.string "res_name", comment: "Resource name"
     t.integer "res_model_id", comment: "Related Document Model"
     t.string "res_model", comment: "Document Model"
@@ -8185,6 +8213,33 @@ ActiveRecord::Schema.define(version: 2020_03_23_075748) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+  end
+
+  create_table "redeem_products", force: :cascade do |t|
+    t.string "name", limit: 255, null: false
+    t.decimal "price", precision: 10, scale: 2
+    t.integer "category", null: false
+    t.string "available_color", limit: 255
+    t.string "available_size", limit: 255
+    t.string "brand", limit: 255
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category"], name: "index_redeem_products_on_category"
+    t.index ["name"], name: "index_redeem_products_on_name"
+  end
+
+  create_table "redeem_transactions", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "redeem_product_id", null: false
+    t.string "color", limit: 255, null: false
+    t.integer "size"
+    t.decimal "amount", precision: 10, scale: 2
+    t.decimal "total_paid", precision: 10, scale: 2
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["redeem_product_id"], name: "index_redeem_transactions_on_redeem_product_id"
+    t.index ["student_id"], name: "index_redeem_transactions_on_student_id"
   end
 
   create_table "rel_badge_auth_users", id: false, comment: "RELATION BETWEEN gamification_badge AND res_users", force: :cascade do |t|
@@ -10649,6 +10704,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_075748) do
   add_foreign_key "change_password_user", "res_users", column: "write_uid", name: "change_password_user_write_uid_fkey", on_delete: :nullify
   add_foreign_key "change_password_wizard", "res_users", column: "create_uid", name: "change_password_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "change_password_wizard", "res_users", column: "write_uid", name: "change_password_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "comments", "users"
   add_foreign_key "course_categ", "res_users", column: "create_uid", name: "course_categ_create_uid_fkey", on_delete: :nullify
   add_foreign_key "course_categ", "res_users", column: "write_uid", name: "course_categ_write_uid_fkey", on_delete: :nullify
   add_foreign_key "course_description", "op_course"
@@ -12158,6 +12214,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_075748) do
   add_foreign_key "project_task_type_rel", "project_task_type", column: "type_id", name: "project_task_type_rel_type_id_fkey", on_delete: :cascade
   add_foreign_key "question_choices", "questions"
   add_foreign_key "questions", "op_lession"
+  add_foreign_key "reactions", "users"
   add_foreign_key "rating_rating", "ir_model", column: "parent_res_model_id", name: "rating_rating_parent_res_model_id_fkey", on_delete: :nullify
   add_foreign_key "rating_rating", "ir_model", column: "res_model_id", name: "rating_rating_res_model_id_fkey", on_delete: :cascade
   add_foreign_key "rating_rating", "mail_message", column: "message_id", name: "rating_rating_message_id_fkey", on_delete: :nullify

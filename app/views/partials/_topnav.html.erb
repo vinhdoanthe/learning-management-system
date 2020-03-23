@@ -12,9 +12,10 @@
             <% if current_user.is_student? %>
             <li class="dropdown" id="teky-coin">
                 <span class="teky-coin-star">
-                    <%= image_tag "global/images/star.png", style:"width:25px;height:24px;"%>&nbsp 120.230
+                    <%= image_tag "global/images/star.png", style:"width:25px;height:24px;"%>
+                    &nbsp <%= number_with_delimiter(current_user.coin.to_i, delimiter: ".") %>
                 </span><span>&#9474;</span>
-                <span class="teky-coin-point">1.369</span><span class="teky-coin-text">  Teky đồng</span>
+                <span class="teky-coin-point"><%= number_with_delimiter(current_user.star.to_i, delimiter: ".")%></span><span class="teky-coin-text">  Teky đồng</span>
             </li>
             <% end%>
             <li class="dropdown" id="language-header">
