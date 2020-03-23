@@ -16,6 +16,6 @@ $(document).on('click', '#student_homework_videos', function(){
     $('#student_homework_videos').trigger('click')
 <% end %>
 
-  $(document).on('click', '.student_homework_sesison', function(){
+  $(document).on('click', '.student_homework_session', function(){
     $("#homework_video_detail").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_video_detail', locals: {course: course, batch: batch, subject: subject} ) %>")
   })
