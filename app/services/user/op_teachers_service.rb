@@ -103,7 +103,7 @@ class User::OpTeachersService
       batch_class_online = false
       # batch_class = session.op_batch.is_online_class
       course = session.op_batch.op_course.code
-			lesson = session.op_batch.current_session_level
+      lesson = session.op_batch.current_session_level
       status = session.state
 
       session_info = { batch_class_online: batch_class_online, name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch, course: course, lesson: lesson, status: status}
@@ -135,15 +135,15 @@ class User::OpTeachersService
     attendance_line = Learning::Batch::OpAttendanceLine.where(:session_id => params[:session_id].to_i, :student_id => params[:student_id].to_s)
     return {type: 'danger', message: 'Vui lòng điểm danh trước!'} if attendance_line.blank?
     error = attendance_line.update(
-        "knowledge1" => params['knowledge1'].to_i,
-        "knowledge2" => params['knowledge2'].to_i,
-        "knowledge3" => params['knowledge3'].to_i,
-        "knowledge4" => params['knowledge4'].to_i,
-        "attitude1" => params['attitude1'].to_i,
-        "attitude2" => params['attitude2'].to_i,
-        "skill1" => params['skill1'].to_i,
-        "skill2" => params['skill2'].to_i,
-        "note_1" => params['teacher_note']
+      "knowledge1" => params['knowledge1'].to_i,
+      "knowledge2" => params['knowledge2'].to_i,
+      "knowledge3" => params['knowledge3'].to_i,
+      "knowledge4" => params['knowledge4'].to_i,
+      "attitude1" => params['attitude1'].to_i,
+      "attitude2" => params['attitude2'].to_i,
+      "skill1" => params['skill1'].to_i,
+      "skill2" => params['skill2'].to_i,
+      "note_1" => params['teacher_note']
     )
 
     if error
@@ -154,11 +154,12 @@ class User::OpTeachersService
   end
 
   def get_student_avatar student
+    ActionController::Base.helpers.asset_path('global/images/avatar.svg')
+=begin
+    Temporary comment. TODO: in version 1.1
     user = User::User.where(student_id: student.id).first
 
     if user.present?
-      student_avatar = rails_blob_path(user.avatar, disposition: "attachment", only_path: true)  
-    else
       if student.gender == 'm'
         student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
       elsif student.gender == 'f'
@@ -167,7 +168,8 @@ class User::OpTeachersService
         student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
       end
     end
-		student_avatar
-  end
 
+    student_avatar
+=end
+  end
 end

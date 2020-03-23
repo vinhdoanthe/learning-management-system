@@ -13,7 +13,7 @@
             <%= image_tag(get_avatar, size: [80, 80]) %>
             <span>
                 <label for=""><%= current_user.op_faculty.full_name %></label>
-                <p>&nbsp<%= current_user.op_faculty.code %></p>
+                <p>Level: &nbsp<%= current_user.op_faculty.faculty_level %></p>
             </span>
           </a>
         </li>

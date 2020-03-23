@@ -1,3 +1,6 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "learning/course_description.js" %>
+<% end %>
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
@@ -25,12 +28,12 @@
             </div>
           </div>
 
-          <div class="bo-lession m-t-20">
+          <div class="bo-lession m-t-20" id='course_description'>
             <% op_course = @batch.op_course %>
             <% unless op_course.nil? %>
               <% course_description = op_course.course_description.first %>
               <% unless course_description.nil? %>
-                <%= course_description.description.html_safe %>
+                <%= raw(course_description.description) %>
               <% end %>
             <% end %>
           </div>
