@@ -1,6 +1,9 @@
 <div class="sidebar">
   <div class="logopanel">
-    <h1><%= link_to '', root_path %></h1>
+    <h1>
+      <%= link_to '', root_path, class:"not-sidebar-collapsed-logo" %>
+      <%= image_tag("global/images/logo-small.png",class:"sidebar-collapsed-logo", style:"width:60px;height:60px;") %>
+    </h1>
   </div>
   <div class="sidebar-inner">
     <div class="noti-avatar">
@@ -10,7 +13,7 @@
             <%= image_tag(get_avatar, size: [80, 80]) %>
             <span>
                 <label for=""><%= current_user.op_faculty.full_name %></label>
-                <p><%= current_user.op_faculty.full_name %></p>
+                <p>&nbsp<%= current_user.op_faculty.code %></p>
             </span>
           </a>
         </li>

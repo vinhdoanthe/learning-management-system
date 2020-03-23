@@ -1281,27 +1281,33 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 }
 .sidebar-collapsed.fixed-topbar .topbar {
   left: 50px;
+  left: 110px;
 }
 @media screen and (min-width: 1025px) {
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle {
     background: rgba(0, 0, 0, 0);
     left: 14px;
     top: 12px;
+
+    left: 18px;
+    top: 16px;
   }
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle::before {
-    -moz-transform: rotate3d(0, 0, 1, 45deg);
+    /*-moz-transform: rotate3d(0, 0, 1, 45deg);
     -webkit-transform: rotate3d(0, 0, 1, 45deg);
     background: #ffffff;
-    transform: rotate3d(0, 0, 1, 45deg);
+    transform: rotate3d(0, 0, 1, 45deg);*/
   }
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle::after {
+    /*
     -moz-transform: rotate3d(0, 0, 1, -45deg);
     -webkit-transform: rotate3d(0, 0, 1, -45deg);
     background: #ffffff;
-    transform: rotate3d(0, 0, 1, -45deg);
+    transform: rotate3d(0, 0, 1, -45deg);*/
+
   }
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle span {
-    opacity: 0;
+    /*opacity: 0;*/
   }
   .sidebar-collapsed .menu__handle span {
     background: #ffffff;
@@ -2707,7 +2713,7 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar > li.nav-paren
     margin-left: -50px;
   }
   .sidebar-collapsed .topbar .header-left .topnav .menutoggle {
-    background: #319db5;
+    /*background: #319db5;*/
     color: #ffffff;
     opacity: 0.9;
     -webkit-transition: all 0s ease-out;
@@ -2727,10 +2733,26 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar > li.nav-paren
     top: 49px;
     width: 50px;
     z-index: 300;
+
+    top: 59px;
+    width: 60px;
   }
   .sidebar-collapsed .sidebar .logopanel {
-    display: none !important;
+    
+    /*display: none !important;*/
+
   }
+  
+  .sidebar-collapsed .sidebar .logopanel .not-sidebar-collapsed-logo, .sidebar-collapsed-logo {
+    
+    display: none !important;
+
+  }
+
+  .sidebar-collapsed .sidebar-collapsed-logo{    
+    display: block!important;
+  }
+  
   .sidebar-collapsed .sidebar .sidebar-top {
     display: none !important;
   }
@@ -2941,6 +2963,7 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar > li.nav-paren
   }
   .sidebar-collapsed .main-content {
     margin-left: 50px;
+    margin-left: 60px;
   }
   .sidebar-collapsed.fixed-sidebar .topbar .header-left .topnav > ul {
     margin-left: 0;
