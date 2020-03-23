@@ -1,0 +1,2 @@
+class CoinStarTransaction < ApplicationRecord
+end

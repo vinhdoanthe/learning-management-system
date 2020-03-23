@@ -57,6 +57,11 @@ module User
       return 0  
     end
 
+    #Lay coin_star_transactions
+    def coin_transactions user
+      return user.coin_star_transactions
+    end
+
     # Lay trang thai trong khoa hoc cua hoc sinh
     def get_student_batch_status(op_student_id, batch_id)
       status = {}

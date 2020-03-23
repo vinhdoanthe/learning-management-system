@@ -2026,10 +2026,23 @@ hr.border-sidebar-bottom {margin: 0px;border:0;border-bottom:1px solid #232837;b
 .topbar .header-left .topnav .menutoggle {color: #fff}
 .topbar .header-left .topnav .menu__handle::before,.topbar .header-left .topnav .menu__handle::after,.menu__handle span {background: #fff}
 .topbar .header-right .header-menu > li > a > span:not(.badge) {display: inline-block; float: none;}
+
+.topbar .header-right .header-menu > li > span {display: inline-block; float: none;line-height:58px;}
+
 .topbar .header-right .header-menu #teky-coin {border-right: 1px solid #61D5D1;}
 .topbar .header-right .header-menu #language-header {border-right: 1px solid #61D5D1;margin-right:0px;}
 li a#li-language {border-left: 1px solid #49AB91;}
 li #teky-coin a {color: #fff;}
+
+#teky-coin {color: #fff;}
+
+#teky-coin span.teky-coin-text {text-transform: uppercase; color: #fff;padding-right: 21px;font-size: 14px; font-weight: 500}
+
+#teky-coin .teky-coin-star {padding-right: 7px;}
+#teky-coin .teky-coin-point {padding-left: 7px;padding-right: 5px;}
+
+#teky-coin .teky-coin-star, #teky-coin .teky-coin-point {font-size:14px;font-weight: 700; color: #FFDC64;}
+
 /*
 .fixed-sidebar .sidebar {width: 250px;}
 .fixed-sidebar .logopanel {width: 250px;}
@@ -2177,6 +2190,7 @@ body:not(.sidebar-fixed, .topbar-fixed) .sidebar .logopanel {
   line-height: 60px;
   padding-bottom: 0;
   padding-top: 0;
+  height: 60px;
 }
 
 .sidebar-collapsed .sidebar .logopanel h1 img {
