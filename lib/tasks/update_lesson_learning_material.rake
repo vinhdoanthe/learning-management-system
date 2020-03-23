@@ -3,7 +3,7 @@ require 'spreadsheet'
 namespace :update_lesson_learning_material do
   desc 'Create Learning Material for lesson'
   task :create_material, [:file, :course_id] => :environment do |t, args|
-    course_id = args[:course_idnd]
+    course_id = args[:course_id]
     file = args[:file]
     
     course = Learning::Course::OpCourse.find(course_id)
