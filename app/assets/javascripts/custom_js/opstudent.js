@@ -151,4 +151,16 @@ $('document').ready(function () {
         $('#student_videos_list td').removeClass('undone_question')
         $(this).parent().addClass('undone_question')
     })
+
+  if (window.location.href.includes('view_question')){
+    session_id = getUrlParameter('session_id');
+    $.ajax({
+      method: 'GET',
+      url: '/learning/get_video_list?session=' + session_id,
+      dataType: 'script'
+    })
+
+    get_video(session_id, 'watch_video_box');
+
+  }
 })
