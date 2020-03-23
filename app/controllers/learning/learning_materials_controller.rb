@@ -107,7 +107,17 @@ module Learning
 				@video_id = fallback_video_id
 			end
 			#binding.pry
-      name = (session && session.op_lession) ? session.op_lession.name : (session.name || 'Đang cập nhật')
+     ##  name = (session && session.op_lession) ? session.op_lession.name : (session.name || 'Đang cập nhật')
+      # if session.present?
+      #   name = session.name
+      #   name = session.op_lession.name if session.op_lession.present?
+      # else
+      #   name = session.op_subject.name
+      # end
+      name = ''
+      name = session.op_subject.name
+      name = session.op_lession.name if session.op_lession.present?
+
       respond_to do |format|
 				format.js {render 'learning/show_video', :locals => {:target => params[:target], name: name, session_id: session.id, session: session, video_id: video.id}}
       end

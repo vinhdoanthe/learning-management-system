@@ -57,4 +57,17 @@ class User::UsersService
     parent_user.save
     parent_user
   end
+
+  def create_teacher_user teacher
+    teacher_user = User::User.new
+    res_user = teacher.res_user
+    return if res_user.blank?
+    teacher_user.username = res_user.login[/[^@]+/]
+    
+    return if User::User.where(username: teacher_user.username).first.present?
+    teacher_user.password = '123456'
+    teacher_user.account_role = User::Constant::TEACHER
+    teacher_user.email = res_user.login
+    teacher.save
+  end
 end

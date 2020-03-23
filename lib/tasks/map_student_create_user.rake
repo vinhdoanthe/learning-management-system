@@ -10,4 +10,18 @@ namespace :map_student_create_user do
 
     User::UsersController.new.map_student_new_user student_list
   end
+
+  task :create_faculty, [:faculty_id] => :environment do |t, arg|
+    faculty_ids = arg[:faculty_id]
+    
+    if faculty_ids == -1
+      faculty_list = User::OpFaculty.all.uniq
+    else
+      faculty_list = User::OpFaculty.where(id: faculty_ids)
+    end
+    binding.pry 
+    faculty_list.each do |faculty|
+      User::UsersController.new.map_faculty_create_user faculty
+    end
+  end
 end
