@@ -16,7 +16,9 @@
 !/log/.keep
 !/tmp/.keep
 
-export.xlsx
+*.swp
+*.swo
+
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep

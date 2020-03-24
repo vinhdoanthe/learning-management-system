@@ -1,0 +1,68 @@
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Danh sách khóa học</h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="tab-content p-0 tab-all-content m-t-20">
+        <div class="tab-pane fade active in">
+          <div class="bo-table">
+            <div class="form-content">
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id='btnFilterCategory'>All Categories
+                  <span class="caret"></span></button>
+                <ul class="dropdown-menu" id='listCategories'>
+                  <input class="form-control" id="filterCategory" type="text" placeholder="Search..">
+                  <% @categs.each do |categ| %>
+                    <li><%= link_to categ[1], learning_courses_by_category_path(:category_id => categ[0]), {:remote => true } %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="text-transform" style="margin-top: 50px; border-bottom: 2px solid gray; padding: 5px">Danh sách Lesson</h2>
+      <div class="tab-content p-0 tab-all-content m-t-20">
+        <div class="tab-pane fade active in">
+          <div class="bo-table">
+            <div class="form-content">
+              <div class="box-progress" id='lessons_list'>
+                <div class='table-responsive'>
+                  <table class='table table-hover'>
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Tên course</th>
+                        <th>Subjects</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id='listLessons'>
+                      <% index = 0 %>
+                      <% @courses.each do |course| %>
+                        <% unless course.nil? %>
+                          <% index = index + 1 %>
+                          <tr>
+                            <th><%= index %></th>
+                            <th><%= link_to course.course_name, learning_show_course_path(course.course_id) %></th>
+                            <th><%= course.course_name %></th> 
+                            <th><%= course.count_subjects %></th>
+                          </tr>
+                        <% end %>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'user/home#dashboard'
   namespace :user do
-    
+
     get 'login' => 'sessions#new'
     post 'login' => 'sessions#create'
     get 'parent_selection' => 'sessions#new_parent_selection'
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     get 'show_pdf/:session_id' => 'learning_materials#show_pdf', as: 'show_single_pdf'
     get 'show_google_doc_materials/:session_id' => 'learning_materials#show_google_doc_materials', as: 'show_google_doc_materials'
     get 'show_video/:session_id' => 'learning_materials#show_video', as: 'show_single_video'
-		get 'video/next_video' => 'learning_materials#next_video'
+    get 'video/next_video' => 'learning_materials#next_video'
     get 'view_question' => 'learning_records#view_question'
     get 'question_content' => 'learning_records#question_content'
     post 'answer_question' => 'learning_records#answer_question'
@@ -67,6 +67,9 @@ Rails.application.routes.draw do
     post 'mark_answer' => 'learning_records#mark_answer'
     get 'ziggeos' => 'learning_materials#ziggeo'
     get 'course/op_lesson/:lession_id' => 'course/op_lession#preview_lesson_material', as: 'preview_lesson'
+    get 'course/op_courses' => 'course/op_courses#index', as: 'list_courses'
+    get 'courses_by_category' => 'course/op_courses#index_by_category', as: 'courses_by_category'
+    get 'course/op_course/show/:course_id' => 'course/op_courses#show', as: 'show_course'
     get 'course/op_lessons' => 'course/op_lession#index', as: 'list_lessons'
     get 'course/op_lesson/edit/:lession_id' => 'course/op_lession#edit', as: 'edit_lesson'
     get 'lessons_by_category' => 'course/op_lession#index_by_category', as: 'lessons_by_category'

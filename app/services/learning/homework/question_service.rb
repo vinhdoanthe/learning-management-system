@@ -60,12 +60,17 @@ class Learning::Homework::QuestionService
 
   def create_user_question student_course
     student = student_course.op_student
+    return [] if student.nil?
     user = User::User.where(student_id: student.id).first
+    return [] if user.nil?
     subject_ids = student_course.op_subjects.pluck(:id)
+    return [] if subject_ids.blank?
     user_lesson_ids = Learning::Batch::OpSession.where(batch_id: student_course.batch_id, subject_id: subject_ids).pluck(:lession_id).uniq.compact!
+    return [] if user_lesson_ids.blank?
     question_ids = Learning::Material::Question.where(op_lession_id: user_lesson_ids).pluck(:id)
     errors = []
 
+    return if question_ids.blank?
     question_ids.each do |question_id|
       existed_user_question = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: question_id).first
       next if existed_user_question
