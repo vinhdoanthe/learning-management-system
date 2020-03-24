@@ -472,6 +472,26 @@ $(document).ready(function () {
     var student_id = ''
     $('#table_student').on('click', '.student_evaluate', function () {
         student_id = $(this).data('value');
+      session_id = $($('#teacher_evaluate_session').find('input[name="session_id"]')).val()
+      $.ajax({
+        method: 'POST',
+        url: '/user/teacher_evaluate_content/',
+        data: { student_id: student_id, session_id: session_id },
+        success: function (res) {
+          if (res != 'null'){
+          $('select[name="knowledge1"').val(res.knowledge1);
+          $('select[name="knowledge2"').val(res.knowledge2);
+          $('select[name="knowledge3"').val(res.knowledge3);
+          $('select[name="knowledge4"').val(res.knowledge4);
+          $('select[name="skill1"').val(res.skill1);
+          $('select[name="skill2"').val(res.skill2);
+          $('select[name="attitude1"').val(res.attitude1);
+          $('select[name="attitude2"').val(res.attitude2);
+          $('select[name="attitude3"').val(res.attitude3);
+          $('textarea[name="teacher_note"]').html(res.note);
+          }
+        }
+      })
     })
 
     $('#teacher_evaluate_confirm').on('click', function () {
