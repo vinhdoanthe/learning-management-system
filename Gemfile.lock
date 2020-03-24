@@ -419,7 +419,6 @@ GEM
       tzinfo (>= 1.0.0)
     uber (0.1.0)
     videojs_rails (4.12.15)
-    wdm (0.1.1)
     web-console (4.0.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -484,7 +483,6 @@ DEPENDENCIES
   turbolinks (~> 5)
   tzinfo-data
   videojs_rails
-  wdm (>= 0.1.0)
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 4.0)
