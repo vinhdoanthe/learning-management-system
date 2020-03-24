@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     post 'student_attendance_line' => 'op_students#student_attendance_line'
     post 'student_timetable' => 'op_students#student_timetable'
     post 'teacher_evaluate' => 'op_teachers#teacher_evaluate'
+    post 'teacher_evaluate_content' => 'op_teachers#teacher_evaluate_content'
     get 'student_evaluate_content' => 'op_students#student_attendance_content'
     get 'student_videos_list' => 'op_students#student_videos_list'
 
