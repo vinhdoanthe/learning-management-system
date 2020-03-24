@@ -72,6 +72,7 @@ Rails.application.routes.draw do
     get 'lessons_by_category' => 'course/op_lession#index_by_category', as: 'lessons_by_category'
     get 'lessons_by_course' => 'course/op_lession#index_by_course', as: 'lessons_by_course'
     get 'lessons_by_subject' => 'course/op_lession#index_by_subject', as: 'lessons_by_subject'
+    get 'get_video_list' => 'learning_materials#get_video_list'
   end
   resources :password_resets, only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'learning/batch/sessions#add_photo_attachment'

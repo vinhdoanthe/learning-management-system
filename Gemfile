@@ -37,6 +37,9 @@ gem 'config'
 # Used to call to oDoo
 gem 'xmlrpc'
 
+# Cookie
+gem 'activerecord-session_store'
+
 # Deployment gems
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'

@@ -86,12 +86,12 @@ module User
                 'icon' => 'icon-Setting.png',
                 'title' => 'Cấu hình', 
                 'right_content' => ''
-              },
+              # },
               
-              {'path' => '#', 
-                'icon' => 'Icon-Bell.png',
-                'title' => 'Thông báo', 
-                'right_content' => '<span class="left-badge">' << count_notification_teacher(current_user).to_s << '</span>'
+              # {'path' => '#', 
+              #   'icon' => 'Icon-Bell.png',
+              #   'title' => 'Thông báo', 
+              #   'right_content' => '<span class="left-badge">' << count_notification_teacher(current_user).to_s << '</span>'
               }
             ]
 
@@ -124,11 +124,11 @@ module User
 
       # Khoi menu Dashboard
       menus = [
-              {'path' => user_teacher_dashboard_path, 
-                'icon' => 'ico-Dashboard.png',
-                'title' => 'Dashboard', 
-                'right_content' => ''
-              },
+              # {'path' => user_teacher_dashboard_path, 
+              #   'icon' => 'ico-Dashboard.png',
+              #   'title' => 'Dashboard', 
+              #   'right_content' => ''
+              # },
 
               {'path' => user_teaching_schedule_path, 
                 'icon' => 'ico-TienDoHocTap.png',
@@ -136,11 +136,11 @@ module User
                 'right_content' => '<span class="left-badge">' << count_sessions_week('op_faculty').to_s << '</span>'
               },
 
-              {'path' => user_teacher_class_path, 
-                'icon' => 'ico-TienDoHocTap.png',
-                'title' => 'Danh sách lớp học', 
-                'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
-              },
+              # {'path' => user_teacher_class_path, 
+              #   'icon' => 'ico-TienDoHocTap.png',
+              #   'title' => 'Danh sách lớp học', 
+              #   'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
+              # },
 
               {'path' => user_teacher_class_path, 
                 'icon' => 'ico-TienDoHocTap.png',

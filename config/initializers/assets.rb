@@ -12,7 +12,7 @@ Rails.application.config.assets.precompile += %w( learning/prevent_inspect_code.
 Rails.application.config.assets.precompile += %w( video-js.swf vjs.eot vjs.svg vjs.ttf vjs.woff )
 Rails.application.config.assets.precompile += %w( ckeditor/config.js )
 Rails.application.config.assets.precompile += %w(ckeditor/*)
-Rails.application.config.assets.precompile += %w( learning/learning_material.js )
+Rails.application.config.assets.precompile += %w( learning/learning_material.js learning/course_description.js )
 Rails.application.config.assets.precompile += %w( learning/lesson_input.js )
 # Rails.application.config.assets.precompile += ['ckeditor/*']
 # Precompile additional assets.

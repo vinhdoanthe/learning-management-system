@@ -1,0 +1,64 @@
+<div class="tab-pane active" id="home">
+  <form id='formBody' class='FlowupLabels'>
+    <div class="col-md-12 text-center">
+      <%= link_to "Đổi mật khẩu", user_change_password_path, class: 'change-password' %>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class='fl_wrap'>
+          <label class='fl_label' for='rf_name'>Quản lý:</label>
+          <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="In Comming" readonly />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class='fl_wrap'>
+          <label class='fl_label' for='rf_name'>Học viện tham gia dạy:</label>
+          <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="<%= teacher.res_company.name if teacher.present? && teacher.res_company %>" readonly />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class='fl_wrap'>
+          <label class='fl_label' for='rf_name'>Ngôn ngữ:</label>
+          <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="In Comming" readonly />
+          <!--  -->
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class='fl_wrap'>
+          <label class='fl_label' for='rf_name'>Ngày sinh:</label>
+          <input type="text" name="timepicker" class="b-datepicker fl_input bg-f2f2f2" id='rf_name' readonly value="<%= teacher.birth_date %>">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class='fl_wrap'>
+          <label class='fl_label' for='rf_name'>Giới tính:</label>
+          <input class='fl_input bg-f2f2f2' type='text' id='rf_name' value="<%= teacher.gender %>" readonly />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class='fl_wrap'>
+          <label class='fl_label' for='rf_name'>Số điện thoại:</label>
+          <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.phone || res_partner.mobile if res_partner.present? %>">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class='fl_wrap'>
+          <label class='fl_label' for='rf_name'>Địa chỉ:</label>
+          <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.street if res_partner.present? %>"/>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class='fl_wrap'>
+          <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
+          <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner.street2 if res_partner.present? %>" disabled="" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class='fl_wrap'>
+          <label class='fl_label' for='rf_name'>Quốc gia:</label>
+          <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= (res_partner.res_country ? res_partner.res_country.name : 'None') if res_partner.present? %>" disabled="" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
