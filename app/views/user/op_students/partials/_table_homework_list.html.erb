@@ -9,10 +9,13 @@
           <input name='session_homework_name' value="<%= session.id %>" type="hidden">
         </td>
         <%# <td align="right"><%= session.start_datetime.strftime('%H:%M') %1> - <%= session.start_datetime.strftime('%d/%m/%y') %1></td> %>
-        <% if done_homework? current_user, session %>
-          <td align="right"><span class="label-edit label label-danger">Đã làm</span></td>
+        <% homework_state = done_homework? current_user, session %> 
+        <% if homework_state[:state] == 'done'%>
+          <td align="right"><span class="label-edit label label-success">Đã làm <%= homework_sate[:progress] %></span></td>
+        <% elsif homework_state == 'undone' %>
+          <td align="right"><span class="label-edit label label-danger">Chưa làm <%= homework_sate[:progress] %></span></td>
         <% else %>
-          <td align="right"><span class="label-edit label label-primary">Chưa làm</span></td>
+          <td align="right"><span class="label-edit label label-primary">Đang làm <%= homework_state[:progress] %></span></td>
         <% end %>
       <% else %>
         <td width="70%">

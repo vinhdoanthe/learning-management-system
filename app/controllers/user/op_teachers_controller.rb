@@ -129,6 +129,11 @@ module User
       render json: result
     end
 
+    def teacher_evaluate_content
+      e = Learning::Batch::OpAttendanceLine.where(student_id: params[:student_id], session_id: params[:session_id]).first
+      render json: {skill1: e.skill1.to_i, skill2: e.skill2.to_i, knowledge1: e.knowledge1.to_i, knowledge2: e.knowledge2.to_i, knowledge3: e.knowledge4.to_i, knowledge4: e.knowledge4.to_i, attitude1: e.attitude1.to_i, attitude2: e.attitude2.to_i, note: e.note_1}
+    end
+
     private
 
     def instance_session
