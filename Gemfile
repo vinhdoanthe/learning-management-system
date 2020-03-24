@@ -3,9 +3,6 @@ git_source(:github) {|repo| "https://github.com/#{repo}.git"}
 
 ruby '2.6.5'
 
-# for win flatform
-gem 'wdm', '>= 0.1.0'
-
 ## Manual added gems
 # For Translation
 gem 'i18n'

@@ -9,7 +9,8 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema.define(version: 2020_03_23_093933) do
+
+ActiveRecord::Schema.define(version: 2020_03_23_085717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2353,19 +2354,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["activity_type"], name: "index_coin_star_transactions_on_activity_type"
     t.index ["give_by"], name: "index_coin_star_transactions_on_give_by"
     t.index ["give_to"], name: "index_coin_star_transactions_on_give_to"
-  end
-
-  create_table "comments", force: :cascade do |t|
-    t.string "content"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
-    t.bigint "post_id"
-    t.string "post_type", limit: 50
-    t.bigint "parent_comment_id"
-    t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
-    t.index ["post_id"], name: "index_comments_on_post_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "course_categ", id: :serial, comment: "course.categ", force: :cascade do |t|
@@ -8160,19 +8148,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["op_lession_id"], name: "index_questions_on_op_lession_id"
   end
 
-  create_table "reactions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "type", null: false
-    t.bigint "post_id", null: false
-    t.string "post_type", limit: 10
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_reactions_on_post_id"
-    t.index ["post_type"], name: "index_reactions_on_post_type"
-    t.index ["user_id"], name: "index_reactions_on_user_id"
-  end
-
-    create_table "rating_rating", id: :serial, comment: "Rating", force: :cascade do |t|
+  create_table "rating_rating", id: :serial, comment: "Rating", force: :cascade do |t|
     t.string "res_name", comment: "Resource name"
     t.integer "res_model_id", comment: "Related Document Model"
     t.string "res_model", comment: "Document Model"
@@ -10704,7 +10680,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "change_password_user", "res_users", column: "write_uid", name: "change_password_user_write_uid_fkey", on_delete: :nullify
   add_foreign_key "change_password_wizard", "res_users", column: "create_uid", name: "change_password_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "change_password_wizard", "res_users", column: "write_uid", name: "change_password_wizard_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "comments", "users"
   add_foreign_key "course_categ", "res_users", column: "create_uid", name: "course_categ_create_uid_fkey", on_delete: :nullify
   add_foreign_key "course_categ", "res_users", column: "write_uid", name: "course_categ_write_uid_fkey", on_delete: :nullify
   add_foreign_key "course_description", "op_course"
@@ -12214,7 +12189,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "project_task_type_rel", "project_task_type", column: "type_id", name: "project_task_type_rel_type_id_fkey", on_delete: :cascade
   add_foreign_key "question_choices", "questions"
   add_foreign_key "questions", "op_lession"
-  add_foreign_key "reactions", "users"
   add_foreign_key "rating_rating", "ir_model", column: "parent_res_model_id", name: "rating_rating_parent_res_model_id_fkey", on_delete: :nullify
   add_foreign_key "rating_rating", "ir_model", column: "res_model_id", name: "rating_rating_res_model_id_fkey", on_delete: :cascade
   add_foreign_key "rating_rating", "mail_message", column: "message_id", name: "rating_rating_message_id_fkey", on_delete: :nullify
