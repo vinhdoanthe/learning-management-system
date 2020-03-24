@@ -61,11 +61,15 @@ class Learning::Homework::QuestionService
   def create_user_question student_course
     student = student_course.op_student
     user = User::User.where(student_id: student.id).first
-    user_lesson_ids = student.op_sessions.pluck(:lession_id).uniq.compact!
+    subject_ids = student_course.op_subjects.pluck(:id)
+    user_lesson_ids = Learning::Batch::OpSession.where(batch_id: student_course.batch_id, subject_id: subject_ids).pluck(:lession_id).uniq.compact!
     question_ids = Learning::Material::Question.where(op_lession_id: user_lesson_ids).pluck(:id)
     errors = []
 
     question_ids.each do |question_id|
+      existed_user_question = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: question_id).first
+      next if existed_user_question
+
       user_question = Learning::LearningRecord::UserQuestion.new
       user_question.question_id = question_id
       user_question.student_id = user.id

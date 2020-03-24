@@ -4,7 +4,7 @@ module Learning
 
       def done_subject_ids(batch)
         OpSession.where(batch_id: batch.id,
-                                      state: Learning::Constant::Batch::Session::STATE_DONE).pluck(:subject_id).uniq.compact
+                        state: Learning::Constant::Batch::Session::STATE_DONE).pluck(:subject_id).uniq.compact
       end
 
       def subject_ids(user, batch)
@@ -17,7 +17,7 @@ module Learning
         if user.is_student?
           op_student = user.op_student
           student_id = op_student.nil? ? nil : op_student.id
-          
+
           unless student_id.nil?
             student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch.id).last
           end
@@ -37,6 +37,25 @@ module Learning
           end
         end
         levels
+      end
+
+      def get_op_student_course(user,batch)
+
+        if user.nil? or batch.nil?
+          return nil
+        end
+
+        if user.is_student?
+          op_student = user.op_student
+          student_id = op_student.nil? ? nil : op_student.id
+
+          unless student_id.nil?
+            student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch.id).last
+          end
+
+        end
+
+        student_course
       end
 
       def get_list_subject_pairs(batch)

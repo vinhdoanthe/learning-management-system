@@ -36,7 +36,7 @@ module Learning
     end
 
     def answer_question
-      binding.pry
+      # binding.pry
       if params[:question_choices].blank? && params[:text_answer].blank?
         state = 'fail'
       else

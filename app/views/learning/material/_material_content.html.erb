@@ -8,15 +8,8 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <div class="tab-pane active in" id="baigiang">
-            <%# <div class="bg-adds"> %>
-            <%#   <% pretty_files.each do |file| %1> %>
-            <%#     <div class="bg-left pull-left baigiang-thumbnail" data-baigiang-id='<%= file['id'] %1>'> %>
-            <%#       <%= link_to "<img src='https://drive.google.com/thumbnail?authuser=0&sz=w320&id=#{file['id']}'>".html_safe, "#", :class => 'baigiang-thumbnail', :'data-baigiang-id' => "#{file['id']}" %1> %>
-            <%#     </div> %>
-            <%#   <% end %1> %>
-            <%# </div> %>
-            <% pretty_files.each do |file| %>
-              <div class="bg-view bo-table baigiang-content" data-baigiang-id="<%= file['id'] %>">
+            <% files.each do |file| %>
+              <div class="bg-view bo-table baigiang-content">
                 <%= file['google_drive_link'].html_safe %>
               </div>
             <% end %>

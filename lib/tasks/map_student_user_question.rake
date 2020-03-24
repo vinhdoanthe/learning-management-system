@@ -3,17 +3,19 @@ namespace :map_student_user_question do
   task :mapping, [:batch_id] => :environment do |t, arg|
     batch_id = arg[:batch_id].to_i
     if batch_id == -1
-      batches = Learning::Batch::OpBatch.all.uniq
+      batch_ids = Learning::Batch::OpBatch.pluck(:id).uniq
     else
-      batches = [Learning::Batch::OpBatch.where(id: batch_id).first]
+      batch_ids = Learning::Batch::OpBatch.where(id: batch_id).pluck(:id)
     end
 
-    batches.each_with_index do |batch, index|
-      student_courses = batch.op_student_courses
-      student_courses.each do |student_course|
-        Learning::LearningRecordsController.new.maping_student_user_question student_course
-        puts "#{index}/#{batches.count}"
+    batch_ids.each_with_index do |batch, index|
+      puts '-'*20
+      student_course_ids = Learning::Batch::OpStudentCourse.where(batch_id: batch).pluck(:id)
+      student_course_ids.each do |student_course_id|
+        Learning::LearningRecordsController.new.maping_student_user_question student_course_id
+        puts "OpStudentCourse id: #{student_course_id}"
       end
+      puts "Batch: #{index+1}/#{batch_ids.count}"
     end
   end
 end

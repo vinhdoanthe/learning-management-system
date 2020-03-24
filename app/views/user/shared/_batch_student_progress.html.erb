@@ -4,24 +4,25 @@
       <div class="col-md-offset-1 col-md-4">
         <div class='fl_wrap m-t-0 course-populated'>
           <label class='fl_label' for='rf_name'>Khóa học: </label>
-					<p class="fl_input"><%= batch.op_course.name %></p>
+          <p class="fl_input"><%= batch.op_course.name %></p>
         </div>
       </div>
       <div class="col-md-4">
         <div class='fl_wrap m-t-0 batch-populated'>
-					<label class='fl_label' for='rf_name'>Lớp học</label>
-					<p class="fl_input"><%= batch.code %></p>
+          <label class='fl_label' for='rf_name'>Lớp học</label>
+          <p class="fl_input"><%= batch.code %></p>
         </div>
       </div>
       <div class="col-md-2">
         <div class='fl_wrap m-t-0'>
           <label class='fl_label' for='rf_name'>Học phần:</label>
-          <% subjects = get_list_subject_pairs(batch) %>
-          <% unless subjects.nil? %>
+          <% student_course = get_op_student_course(current_user,batch) %>
+          <% subjects = list_subject_level_of_student(student_course) %>
+          <% unless subjects.blank? %>
             <select class='fl_input student_subject_filter' id='rf_name' onchange="showSubjectSessions()">
-              <option value="all"></option>
-              <% subjects.each do |k, subject| %>
-                <option value="<%= k %>"><%= subject %></option>
+              <option value="all">Tất cả</option>
+              <% subjects.each do |subject| %>
+                <option value="<%= subject[0] %>"><%= subject[1] %></option>
               <% end %>
             </select>
           <% end %>
@@ -45,8 +46,8 @@
 </div>
 
 <script>
-	$(document).ready(function(){
-		$('.batch-populated').addClass('populated');
-		$('.course-populated').addClass('populated');
-	})
+  $(document).ready(function(){
+    $('.batch-populated').addClass('populated');
+    $('.course-populated').addClass('populated');
+  })
 </script>

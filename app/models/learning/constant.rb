@@ -1,5 +1,6 @@
 module Learning::Constant
 
+
   STUDENT_BATCH_STATUS_ON = 'on'
   STUDENT_BATCH_STATUS_OFF = 'off'
   STUDENT_BATCH_STATUS_SAVE = 'save'
@@ -15,6 +16,7 @@ module Learning::Constant
     QUESTION_SINGLE_CHOICE = 'single'
     QUESTION_MULTIPLE_CHOICES = 'multiple'
 
+    DEFAULT_VIDEO_ID = '0479afd4cf8e006de2599da41d7ee591'
   end
 
   module Batch
