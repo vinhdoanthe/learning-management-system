@@ -14,15 +14,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "postgres_fdw"
-
-  create_table "Tutors", id: false, comment: "RELATION BETWEEN op_session AND op_faculty", force: :cascade do |t|
-    t.integer "op_session_id", null: false
-    t.integer "op_faculty_id", null: false
-    t.index ["op_faculty_id"], name: "Tutors_op_faculty_id_idx"
-    t.index ["op_session_id", "op_faculty_id"], name: "Tutors_op_session_id_op_faculty_id_key", unique: true
-    t.index ["op_session_id"], name: "Tutors_op_session_id_idx"
-  end
 
   create_table "account_account", id: :serial, comment: "Account", force: :cascade do |t|
     t.string "name", null: false, comment: "Name"
@@ -172,12 +163,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "account_analytic_account", id: :serial, comment: "Analytic Account", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Analytic Account"
     t.string "code", comment: "Reference"
     t.boolean "active", comment: "Active"
     t.integer "company_id", comment: "Company"
     t.integer "partner_id", comment: "Customer"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -216,18 +207,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "currency_id", comment: "Account Currency"
     t.decimal "amount_currency", comment: "Amount Currency"
     t.integer "so_line", comment: "Sales Order Line"
-    t.integer "task_id", comment: "Task"
-    t.integer "project_id", comment: "Project"
-    t.integer "employee_id", comment: "Employee"
-    t.integer "department_id", comment: "Department"
-    t.integer "holiday_id", comment: "Leave Request"
-    t.string "timesheet_invoice_type", comment: "Billable Type"
-    t.integer "timesheet_invoice_id", comment: "Invoice"
-    t.decimal "timesheet_revenue", comment: "Revenue"
     t.index ["account_id"], name: "account_analytic_line_account_id_index"
     t.index ["date"], name: "account_analytic_line_date_index"
     t.index ["move_id"], name: "account_analytic_line_move_id_index"
-    t.index ["task_id"], name: "account_analytic_line_task_id_index"
   end
 
   create_table "account_analytic_line_tag_rel", id: false, comment: "RELATION BETWEEN account_analytic_line AND account_analytic_tag", force: :cascade do |t|
@@ -274,7 +256,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "account_asset_asset", id: :serial, comment: "Asset/Revenue Recognition", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Asset Name"
     t.string "code", limit: 32, comment: "Reference"
     t.decimal "value", null: false, comment: "Gross Value"
@@ -295,6 +276,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.boolean "prorata", comment: "Prorata Temporis"
     t.decimal "salvage_value", comment: "Salvage Value"
     t.integer "invoice_id", comment: "Invoice"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -399,7 +381,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "pos_session_id", comment: "Session"
     t.index ["date"], name: "account_bank_statement_date_index"
   end
 
@@ -456,7 +437,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.string "unique_import_id", comment: "Import ID"
-    t.integer "pos_statement_id", comment: "POS statement"
     t.index ["sequence"], name: "account_bank_statement_line_sequence_index"
     t.index ["statement_id"], name: "account_bank_statement_line_statement_id_index"
     t.index ["unique_import_id"], name: "account_bank_statement_line_unique_import_id", unique: true
@@ -482,7 +462,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "default_pos_id", comment: "This cashbox line is used by default when opening or closing a balance for this point of sale"
   end
 
   create_table "account_chart_template", id: :serial, comment: "Templates for Account Chart", force: :cascade do |t|
@@ -555,11 +534,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "account_common_partner_report", id: :serial, comment: "Account Common Partner Report", force: :cascade do |t|
+    t.string "result_selection", null: false, comment: "Partner's"
     t.integer "company_id", comment: "Company"
     t.date "date_from", comment: "Start Date"
     t.date "date_to", comment: "End Date"
     t.string "target_move", null: false, comment: "Target Moves"
-    t.string "result_selection", null: false, comment: "Partner's"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -654,14 +633,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "account_fiscal_position_pos_config_rel", id: false, comment: "RELATION BETWEEN pos_config AND account_fiscal_position", force: :cascade do |t|
-    t.integer "pos_config_id", null: false
-    t.integer "account_fiscal_position_id", null: false
-    t.index ["account_fiscal_position_id"], name: "account_fiscal_position_pos_conf_account_fiscal_position_id_idx"
-    t.index ["pos_config_id", "account_fiscal_position_id"], name: "account_fiscal_position_pos_c_pos_config_id_account_fiscal__key", unique: true
-    t.index ["pos_config_id"], name: "account_fiscal_position_pos_config_rel_pos_config_id_idx"
   end
 
   create_table "account_fiscal_position_res_country_state_rel", id: false, comment: "RELATION BETWEEN account_fiscal_position AND res_country_state", force: :cascade do |t|
@@ -788,12 +759,10 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "team_id", comment: "Sales Channel"
     t.integer "partner_shipping_id", comment: "Delivery Address"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.integer "campaign_id", comment: "Campaign"
     t.integer "source_id", comment: "Source"
     t.integer "medium_id", comment: "Medium"
-    t.integer "payment_tx_id", comment: "Last Transaction"
-    t.integer "payment_acquirer_id", comment: "Payment Acquirer"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.index ["date_due"], name: "account_invoice_date_due_index"
     t.index ["date_invoice"], name: "account_invoice_date_invoice_index"
     t.index ["move_id"], name: "account_invoice_move_id_index"
@@ -934,8 +903,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "journal_user", comment: "Use in Point of Sale"
-    t.float "amount_authorized_diff", comment: "Amount Authorized Difference"
+    t.boolean "check_manual_sequencing", comment: "Manual Numbering"
+    t.integer "check_sequence_id", comment: "Check Sequence"
     t.index ["code", "name", "company_id"], name: "account_journal_code_company_uniq", unique: true
     t.index ["company_id"], name: "account_journal_company_id_index"
   end
@@ -1161,6 +1130,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "payment_transaction_id", comment: "Payment Transaction"
     t.integer "payment_token_id", comment: "Saved payment token"
+    t.string "check_amount_in_words", comment: "Amount in Words"
+    t.integer "check_number", comment: "Check Number"
     t.date "date_due", comment: "Due date"
     t.text "note", comment: "Ghi chú"
   end
@@ -1261,7 +1232,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "account_register_payments", id: :serial, comment: "Register payments on multiple invoices", force: :cascade do |t|
-    t.boolean "multi", comment: "Multi"
     t.string "payment_type", null: false, comment: "Payment Type"
     t.integer "payment_method_id", null: false, comment: "Payment Method Type"
     t.string "partner_type", comment: "Partner Type"
@@ -1271,20 +1241,23 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.date "payment_date", null: false, comment: "Payment Date"
     t.string "communication", comment: "Memo"
     t.integer "journal_id", null: false, comment: "Payment Journal"
+    t.boolean "multi", comment: "Multi"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.string "check_amount_in_words", comment: "Amount in Words"
+    t.integer "check_number", comment: "Check Number"
   end
 
   create_table "account_report_general_ledger", id: :serial, comment: "General Ledger Report", force: :cascade do |t|
+    t.boolean "initial_balance", comment: "Include Initial Balances"
+    t.string "sortby", null: false, comment: "Sort by"
+    t.string "display_account", null: false, comment: "Display Accounts"
     t.integer "company_id", comment: "Company"
     t.date "date_from", comment: "Start Date"
     t.date "date_to", comment: "End Date"
     t.string "target_move", null: false, comment: "Target Moves"
-    t.string "display_account", null: false, comment: "Display Accounts"
-    t.boolean "initial_balance", comment: "Include Initial Balances"
-    t.string "sortby", null: false, comment: "Sort by"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -1362,14 +1335,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "account_tax_pos_order_line_rel", id: false, comment: "RELATION BETWEEN pos_order_line AND account_tax", force: :cascade do |t|
-    t.integer "pos_order_line_id", null: false
-    t.integer "account_tax_id", null: false
-    t.index ["account_tax_id"], name: "account_tax_pos_order_line_rel_account_tax_id_idx"
-    t.index ["pos_order_line_id", "account_tax_id"], name: "account_tax_pos_order_line_re_pos_order_line_id_account_tax_key", unique: true
-    t.index ["pos_order_line_id"], name: "account_tax_pos_order_line_rel_pos_order_line_id_idx"
   end
 
   create_table "account_tax_report", id: :serial, comment: "Tax Report", force: :cascade do |t|
@@ -1479,6 +1444,25 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "activities", force: :cascade do |t|
+    t.string "trackable_type"
+    t.bigint "trackable_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "key"
+    t.text "parameters"
+    t.string "recipient_type"
+    t.bigint "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
+    t.index ["owner_type", "owner_id"], name: "index_activities_on_owner_type_and_owner_id"
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient_type_and_recipient_id"
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
+  end
+
   create_table "admission_analysis", id: :serial, comment: "admission.analysis", force: :cascade do |t|
     t.integer "course_id", null: false, comment: "Course"
     t.date "start_date", null: false, comment: "Start Date"
@@ -1491,11 +1475,18 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
 
   create_table "admission_sent_email", id: :serial, comment: "admission.sent.email", force: :cascade do |t|
     t.integer "batch_id", null: false, comment: "Batch"
+    t.integer "student_id", null: false, comment: "Student"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "student_id", null: false, comment: "Student"
+  end
+
+  create_table "albums", force: :cascade do |t|
+    t.bigint "op_batch_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["op_batch_id"], name: "index_albums_on_op_batch_id"
   end
 
   create_table "answer_marks", force: :cascade do |t|
@@ -1520,7 +1511,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
 
   create_table "asset_mass_create", id: :serial, comment: "Mass create new asset records", force: :cascade do |t|
     t.string "model_name", comment: "Model Name"
-    t.binary "image_medium", comment: "Image"
+    t.binary "image", comment: "Image"
     t.string "ac_prefix", comment: "Prefix"
     t.string "ac_suffix", comment: "Suffix"
     t.integer "ac_padding", null: false, comment: "Sequence Size"
@@ -1540,7 +1531,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.binary "image", comment: "Image"
   end
 
   create_table "asset_modify", id: :serial, comment: "Modify Asset", force: :cascade do |t|
@@ -1554,10 +1544,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "asset_move", id: :serial, comment: "asset.move", force: :cascade do |t|
+  create_table "asset_move", id: :serial, comment: "Asset move", force: :cascade do |t|
+    t.date "activity_date_deadline", comment: "Next Activity Deadline"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.string "name", comment: "Name"
     t.integer "from_loc_id", null: false, comment: "From Location"
-    t.integer "asset_id", comment: "Asset"
     t.integer "to_loc_id", comment: "To Location"
     t.datetime "borrow_date", comment: "Borrow Date"
     t.datetime "pay_date", comment: "Pay Date"
@@ -1566,28 +1558,24 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.float "penalty", comment: "Penalty"
     t.boolean "move", comment: "Move"
     t.datetime "move_date", comment: "Date move"
-    t.string "person", comment: "Student/Faculty/Employee"
-    t.integer "student_id", comment: "Student"
-    t.integer "faculty_id", comment: "Faculty"
-    t.integer "employee_id", comment: "Employee"
-    t.integer "manager_id", comment: "Manager"
-    t.string "state", comment: "State"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
     t.text "note", comment: "Note"
     t.text "employee_note", comment: "Note"
-    t.integer "manager_faculty_id", comment: "Manager"
-    t.string "status", comment: "Status"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.string "person", comment: "Student/Faculty/Employee"
     t.string "asset_location", comment: "Asset Location"
     t.integer "batch_id", comment: "Batch"
     t.integer "course_id", comment: "Course"
     t.integer "company_id", comment: "Company"
     t.string "note_for_faculty", comment: "Note"
+    t.integer "student_id", comment: "Student"
+    t.integer "faculty_id", comment: "Faculty"
+    t.integer "manager_faculty_id", comment: "Manager"
+    t.integer "employee_id", comment: "Employee"
+    t.string "state", comment: "State"
+    t.string "status", comment: "Status"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "asset_move_bt_asset_rel", id: false, comment: "RELATION BETWEEN bt_asset AND asset_move", force: :cascade do |t|
@@ -1598,23 +1586,14 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["bt_asset_id"], name: "asset_move_bt_asset_rel_bt_asset_id_idx"
   end
 
-  create_table "asset_table", id: :serial, comment: "asset.table", force: :cascade do |t|
-    t.string "group", comment: "Name"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.string "name", comment: "Name"
-  end
-
   create_table "assign_lead", id: :serial, comment: "assign.lead", force: :cascade do |t|
     t.integer "team_id", comment: "Sales Channel"
     t.integer "user_id", comment: "Sales Person"
+    t.integer "stage_id", comment: "Stage"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "stage_id", comment: "Stage"
   end
 
   create_table "attendance_company_rel", id: false, comment: "RELATION BETWEEN export_attendance AND res_company", force: :cascade do |t|
@@ -1661,35 +1640,29 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "name", comment: "Tên"
     t.boolean "active", comment: "Active"
     t.integer "employee_id", comment: "Nhân viên"
+    t.integer "job_id", comment: "Vị trí công việc"
+    t.integer "id_employee", comment: "Mã nhân viên"
     t.integer "device_code", comment: "Mã vân tay"
-    t.string "shift_work", comment: "Khối"
+    t.string "shift_work", comment: "Phân loại nhân viên"
     t.integer "company_id", comment: "Công ty"
-    t.float "standard_day", comment: "Ngày công tiêu chuẩn"
     t.float "attend", comment: "Ngày công thực tế"
-    t.float "allowed_vacation", comment: "Nghỉ có xin phép"
-    t.float "day_off", comment: "Nghỉ không xin phép"
-    t.integer "late_in", comment: "Đến muộn"
+    t.integer "late_in", comment: "Đi muộn"
     t.integer "early_out", comment: "Về sớm"
-    t.integer "login_forget", comment: "Không log in"
-    t.integer "logout_forget", comment: "Không log out"
+    t.integer "login_forget", comment: "Số lần không log in"
+    t.integer "logout_forget", comment: "Số lần không log out"
     t.integer "attendance_forget", comment: "Số lần quên chấm công"
-    t.float "normal_day", comment: "Ngày thường"
-    t.float "last_weekend", comment: "Ngày nghỉ"
-    t.float "holiday", comment: "Ngày lễ"
+    t.integer "ccbs", comment: "Số lần làm chấm công bổ sung"
+    t.float "normal_day", comment: "OT ngày thường (Giờ)"
+    t.float "last_weekend", comment: "OT ngày nghỉ (Giờ)"
+    t.float "holiday", comment: "OT ngày lễ (Giờ)"
     t.date "start_date", comment: "Từ ngày"
     t.date "end_date", comment: "Tới ngày"
     t.integer "total_day", comment: "Tổng số ngày"
+    t.float "hours_of_ctv", comment: "Số giờ của CTV"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "job_id", comment: "Vị trí công việc"
-    t.integer "id_employee", comment: "ID Employee"
-    t.float "leave", comment: "ĐK nghỉ: Nghỉ phép"
-    t.text "ccbs_moved0", comment: "ĐK nghỉ: Chấm công bổ sung"
-    t.integer "ccbs", comment: "Số lần làm chấm công bổ sung"
-    t.float "hours_of_ctv", comment: "Số giờ của CTV"
-    t.string "employee_code", comment: "Mã nhân viên"
   end
 
   create_table "attendance_tutor", id: :serial, comment: "attendance.tutor", force: :cascade do |t|
@@ -1698,23 +1671,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "course_id", comment: "Course"
     t.integer "batch_id", comment: "batch"
     t.integer "session_id", comment: "Session"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "auth_oauth_provider", id: :serial, comment: "OAuth2 provider", force: :cascade do |t|
-    t.string "name", null: false, comment: "Provider name"
-    t.string "client_id", comment: "Client ID"
-    t.string "auth_endpoint", null: false, comment: "Authentication URL"
-    t.string "scope", comment: "Scope"
-    t.string "validation_endpoint", null: false, comment: "Validation URL"
-    t.string "data_endpoint", comment: "Data URL"
-    t.boolean "enabled", comment: "Allowed"
-    t.string "css_class", comment: "CSS class"
-    t.string "body", null: false, comment: "Body"
-    t.integer "sequence", comment: "Sequence"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -1957,21 +1913,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["website_id"], name: "base_language_install_website_rel_website_id_idx"
   end
 
-  create_table "base_language_update", id: :serial, comment: "base.language.update", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "base_language_update_ir_module_module_rel", id: false, comment: "RELATION BETWEEN base_language_update AND ir_module_module", force: :cascade do |t|
-    t.integer "base_language_update_id", null: false
-    t.integer "ir_module_module_id", null: false
-    t.index ["base_language_update_id", "ir_module_module_id"], name: "base_language_update_ir_modul_base_language_update_id_ir_mo_key", unique: true
-    t.index ["base_language_update_id"], name: "base_language_update_ir_module_modu_base_language_update_id_idx"
-    t.index ["ir_module_module_id"], name: "base_language_update_ir_module_module_r_ir_module_module_id_idx"
-  end
-
   create_table "base_module_uninstall", id: :serial, comment: "Module Uninstallation", force: :cascade do |t|
     t.boolean "show_all", comment: "Show All"
     t.integer "module_id", null: false, comment: "Module"
@@ -2068,6 +2009,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.text "note", comment: "Internal Notes"
     t.string "state", comment: "State"
     t.datetime "message_last_post", comment: "Last Message Date"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
@@ -2076,11 +2018,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.float "quantity", comment: "Quantity"
     t.integer "asset_status_id", comment: "Tình trạng thiết bị"
     t.integer "company_id", comment: "Company"
-    t.string "asset_state", comment: "Hiện trạng"
+    t.string "asset_state", comment: "Status"
     t.integer "categ_id", comment: "Category"
-    t.integer "asset_table", comment: "Asset Table"
     t.integer "parent_id", comment: "Parent Category"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.text "comment", comment: "Comment"
   end
 
@@ -2130,6 +2070,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
 
   create_table "bt_hr_overtime", id: :serial, comment: "Bt Hr Overtime", force: :cascade do |t|
     t.integer "employee_id", comment: "Employee"
+    t.integer "manager_id", comment: "Manager"
+    t.integer "company_id", comment: "Company"
     t.date "start_date", comment: "Date"
     t.float "overtime_hours", comment: "Overtime Hours"
     t.text "notes", comment: "Notes"
@@ -2139,10 +2081,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "manager_id", comment: "Manager"
-    t.integer "company_id", comment: "Company"
     t.date "overtime_date", comment: "Ngày OT"
-    t.string "type_of_day", comment: "Ngày OT"
+    t.string "type_of_day", null: false, comment: "Ngày OT"
   end
 
   create_table "bus_bus", id: :serial, comment: "bus.bus", force: :cascade do |t|
@@ -2161,20 +2101,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "status", comment: "IM Status"
     t.index ["user_id"], name: "bus_presence_bus_user_presence_unique", unique: true
     t.index ["user_id"], name: "bus_presence_user_id_index"
-  end
-
-  create_table "bve_view", id: :serial, comment: "BI View Editor", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.string "model_name", comment: "Model Name"
-    t.text "note", comment: "Notes"
-    t.string "state", comment: "State"
-    t.text "data", comment: "Data"
-    t.integer "action_id", comment: "Action"
-    t.integer "view_id", comment: "View"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "calendar_alarm", id: :serial, comment: "Event alarm", force: :cascade do |t|
@@ -2209,9 +2135,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.string "google_internal_event_id", comment: "Google Calendar Event Id"
-    t.datetime "oe_synchro_date", comment: "Odoo Synchro Date"
-    t.index ["google_internal_event_id", "partner_id", "event_id"], name: "calendar_attendee_google_id_uniq", unique: true
   end
 
   create_table "calendar_contacts", id: :serial, comment: "calendar.contacts", force: :cascade do |t|
@@ -2273,9 +2196,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "opportunity_id", comment: "Opportunity"
     t.integer "applicant_id", comment: "Applicant"
-    t.datetime "oe_update_date", comment: "Odoo Update Date"
     t.boolean "will_participate", comment: "Will participate"
-    t.integer "phonecall_id", comment: "Phonecall"
   end
 
   create_table "calendar_event_res_partner_rel", id: false, comment: "RELATION BETWEEN calendar_event AND res_partner", force: :cascade do |t|
@@ -2343,7 +2264,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
-<<<<<<< HEAD
   create_table "coin_star_transactions", force: :cascade do |t|
     t.bigint "give_to"
     t.bigint "give_by"
@@ -2370,8 +2290,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-=======
->>>>>>> 66d40abe8699d11d6f62fb7e78371eeea3608d4a
   create_table "course_categ", id: :serial, comment: "course.categ", force: :cascade do |t|
     t.string "name", null: false, comment: "Name"
     t.integer "create_uid", comment: "Created by"
@@ -2389,16 +2307,24 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "crm_claim", id: :serial, comment: "Claim", force: :cascade do |t|
-    t.string "name", null: false, comment: "Claim Subject"
-    t.boolean "active", comment: "Active"
-    t.text "description", comment: "Description"
-    t.text "resolution", comment: "Resolution"
     t.datetime "create_date", comment: "Creation Date"
     t.datetime "write_date", comment: "Update Date"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.integer "create_uid", comment: "Created by"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.date "activity_date_deadline", comment: "Next Activity Deadline"
+    t.string "model_ref_id", comment: "Reference"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.string "code"
+    t.string "name", comment: "Claim Subject"
+    t.boolean "active", comment: "Active"
+    t.string "action_next", comment: "Next Action"
+    t.datetime "date_action_next", comment: "Next Action Date"
+    t.text "description", comment: "Description"
+    t.text "resolution", comment: "Resolution"
     t.date "date_deadline", comment: "Deadline"
     t.datetime "date_closed", comment: "Closed"
     t.datetime "date", comment: "Claim Date"
-    t.string "model_ref_id", comment: "Reference"
     t.integer "categ_id", comment: "Category"
     t.string "priority", comment: "Priority"
     t.string "type_action", comment: "Action Type"
@@ -2408,64 +2334,30 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "company_id", comment: "Company"
     t.integer "partner_id", comment: "Partner"
     t.text "email_cc", comment: "Watchers Emails"
-    t.string "email_from", comment: "Email"
+    t.string "email_from", limit: 128, comment: "Email"
     t.string "partner_phone", comment: "Phone"
     t.integer "stage_id", comment: "Stage"
     t.text "cause", comment: "Root Cause"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.integer "student_id", comment: "Student"
-    t.string "admission_mode", comment: "Admission Mode"
-    t.integer "from_company_id", comment: "From Center"
-    t.integer "from_course_id", comment: "From Course"
-    t.integer "from_batch_id", comment: "From Batch"
-    t.integer "to_company_id", comment: "To Center"
-    t.integer "to_course_id", comment: "To Course"
-    t.integer "to_batch_id", comment: "To Batch"
-    t.string "code", null: false
     t.index ["code"], name: "crm_claim_crm_claim_unique_code", unique: true
-    t.index ["date"], name: "crm_claim_date_index"
-    t.index ["team_id"], name: "crm_claim_team_id_index"
   end
 
   create_table "crm_claim_category", id: :serial, comment: "Category of claim", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "team_id", comment: "Sales Team"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "need_create_admission", comment: "Need Create Admission"
-    t.boolean "need_create_expense", comment: "Need Create Expense"
-    t.boolean "need_confirm_by_bd", comment: "Need Confirm By Bd"
-    t.boolean "need_cross_center_confirm", comment: "Need Cross Center Confirm"
-  end
-
-  create_table "crm_claim_rev", id: false, force: :cascade do |t|
-    t.integer "id"
-    t.text "name"
-  end
-
-  create_table "crm_claim_sale_order_rel", id: false, comment: "RELATION BETWEEN crm_claim AND sale_order", force: :cascade do |t|
-    t.integer "crm_claim_id", null: false
-    t.integer "sale_order_id", null: false
-    t.index ["crm_claim_id", "sale_order_id"], name: "crm_claim_sale_order_rel_crm_claim_id_sale_order_id_key", unique: true
-    t.index ["crm_claim_id"], name: "crm_claim_sale_order_rel_crm_claim_id_idx"
-    t.index ["sale_order_id"], name: "crm_claim_sale_order_rel_sale_order_id_idx"
+    t.string "name", comment: "Name"
+    t.integer "team_id", comment: "Sales Team"
   end
 
   create_table "crm_claim_stage", id: :serial, comment: "Claim stages", force: :cascade do |t|
-    t.string "name", null: false, comment: "Stage Name"
-    t.integer "sequence", comment: "Sequence"
-    t.boolean "case_default", comment: "Common to All Teams"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.string "state", comment: "State"
+    t.string "name", comment: "Stage Name"
+    t.integer "sequence", comment: "Sequence"
+    t.boolean "case_default", comment: "Common to All Teams"
   end
 
   create_table "crm_lead", id: :serial, comment: "Lead/Opportunity", force: :cascade do |t|
@@ -2511,24 +2403,18 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "title", comment: "Title"
     t.integer "company_id", comment: "Company"
     t.integer "lost_reason", comment: "Lost Reason"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "campaign_id", comment: "Campaign"
     t.integer "source_id", comment: "Source"
     t.integer "medium_id", comment: "Medium"
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.integer "create_uid", comment: "Created by"
     t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "date_last_activity_deadline", comment: "Final Deadline"
-    t.integer "convert_uid", comment: "Converted By"
-    t.boolean "assigned_to_leader", comment: "Assign Leader"
-    t.binary "file_name", comment: "Import your file"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.datetime "date_last_assign", comment: "Last Assigned"
-    t.datetime "date_sale", comment: "First SO Confirmed"
-    t.datetime "date_invoice", comment: "First SO Invoiced"
-    t.boolean "cocall", comment: "Check Cocall"
+    t.boolean "assigned_to_leader", comment: "Assign Leader"
+    t.datetime "date_last_activity_deadline", comment: "Final Deadline"
+    t.binary "file_name", comment: "Import your file"
     t.index ["company_id"], name: "crm_lead_company_id_index"
-    t.index ["convert_uid"], name: "crm_lead_convert_uid_index"
     t.index ["date_last_stage_update"], name: "crm_lead_date_last_stage_update_index"
     t.index ["email_from"], name: "crm_lead_email_from_index"
     t.index ["lost_reason"], name: "crm_lead_lost_reason_index"
@@ -2544,11 +2430,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "crm_lead2opportunity_partner", id: :serial, comment: "Lead To Opportunity Partner", force: :cascade do |t|
+    t.string "action", null: false, comment: "Related Customer"
+    t.integer "partner_id", comment: "Customer"
     t.string "name", null: false, comment: "Conversion Action"
     t.integer "user_id", comment: "Salesperson"
     t.integer "team_id", comment: "Sales Channel"
-    t.string "action", null: false, comment: "Related Customer"
-    t.integer "partner_id", comment: "Customer"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -2558,13 +2444,13 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "crm_lead2opportunity_partner_mass", id: :serial, comment: "Mass Lead To Opportunity Partner", force: :cascade do |t|
-    t.integer "partner_id", comment: "Customer"
-    t.string "name", null: false, comment: "Conversion Action"
-    t.integer "user_id", comment: "Salesperson"
     t.integer "team_id", comment: "Sales Channel"
     t.boolean "deduplicate", comment: "Apply deduplication"
     t.string "action", null: false, comment: "Related Customer"
     t.boolean "force_assignation", comment: "Force assignation"
+    t.integer "partner_id", comment: "Customer"
+    t.string "name", null: false, comment: "Conversion Action"
+    t.integer "user_id", comment: "Salesperson"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -2579,6 +2465,17 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["crm_lead2opportunity_partner_mass_id", "res_users_id"], name: "crm_lead2opportunity_partner__crm_lead2opportunity_partner__key", unique: true
     t.index ["crm_lead2opportunity_partner_mass_id"], name: "crm_lead2opportunity_partner__crm_lead2opportunity_partner__idx"
     t.index ["res_users_id"], name: "crm_lead2opportunity_partner_mass_res_users_re_res_users_id_idx"
+  end
+
+  create_table "crm_lead_convert2task", id: :serial, comment: "crm.lead.convert2task", force: :cascade do |t|
+    t.string "action", null: false, comment: "Related Customer"
+    t.integer "partner_id", comment: "Customer"
+    t.integer "lead_id", comment: "Lead"
+    t.integer "project_id", comment: "Project"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "crm_lead_crm_lead2opportunity_partner_mass_rel", id: false, comment: "RELATION BETWEEN crm_lead2opportunity_partner_mass AND crm_lead", force: :cascade do |t|
@@ -2652,80 +2549,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "crm_phonecall", id: :serial, comment: "Phonecall", force: :cascade do |t|
-    t.datetime "date_action_last", comment: "Last Action"
-    t.datetime "date_action_next", comment: "Next Action"
-    t.datetime "create_date", comment: "Creation Date"
-    t.integer "team_id", comment: "Sales Team"
-    t.integer "user_id", comment: "Responsible"
-    t.integer "partner_id", comment: "Contact"
-    t.integer "company_id", comment: "Company"
-    t.text "description", comment: "Description"
-    t.string "state", comment: "Status"
-    t.string "email_from", comment: "Email"
-    t.datetime "date_open", comment: "Opened"
-    t.string "name", null: false, comment: "Call Summary"
-    t.boolean "active", comment: "Active"
-    t.float "duration_moved0", comment: "Duration"
-    t.string "partner_phone", comment: "Phone"
-    t.string "partner_mobile", comment: "Mobile"
-    t.string "priority", comment: "Priority"
-    t.datetime "date_closed", comment: "Closed"
-    t.datetime "date", comment: "Date"
-    t.integer "opportunity_id", comment: "Lead/Opportunity"
-    t.integer "campaign_id", comment: "Campaign"
-    t.integer "source_id", comment: "Source"
-    t.integer "medium_id", comment: "Medium"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.string "uuid", comment: "Call id"
-    t.string "call_direction", comment: "Direction"
-    t.string "caller_id_number", comment: "Caller Number"
-    t.string "caller_destination", comment: "Caller Destination"
-    t.string "origination_callee_id_name", comment: "Origin Callee Number"
-    t.string "last_sent_callee_id_number", comment: "Endpoint Number"
-    t.string "effective_caller_id_number", comment: "Effective Caller Number"
-    t.string "call_result", comment: "Call Status"
-    t.datetime "start_epoch", comment: "Start Time"
-    t.datetime "end_epoch", comment: "End Time"
-    t.datetime "answer_epoch", comment: "Answer Time"
-    t.datetime "bridge_epoch", comment: "Bridge Time"
-    t.integer "billsec", comment: "Call Duration"
-    t.integer "answersec", comment: "Time to Answer"
-    t.string "sip_hangup_disposition", comment: "Sip Hangup Disposition"
-    t.string "call_record", comment: "Record"
-    t.integer "duration", comment: "Total Duration"
-    t.index ["team_id"], name: "crm_phonecall_team_id_index"
-    t.index ["uuid"], name: "crm_phonecall_uuid_unique", unique: true
-  end
-
-  create_table "crm_phonecall2phonecall", id: :serial, comment: "Phonecall To Phonecall", force: :cascade do |t|
-    t.string "name", null: false, comment: "Call summary"
-    t.integer "user_id", comment: "Assign To"
-    t.string "contact_name", comment: "Contact"
-    t.string "phone", comment: "Phone"
-    t.datetime "date", comment: "Date"
-    t.integer "team_id", comment: "Sales Team"
-    t.string "action", null: false, comment: "Action"
-    t.integer "partner_id", comment: "Partner"
-    t.text "note", comment: "Note"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name"], name: "crm_phonecall2phonecall_name_index"
-  end
-
-  create_table "crm_phonecall_tag_rel", id: false, comment: "RELATION BETWEEN crm_phonecall AND crm_lead_tag", force: :cascade do |t|
-    t.integer "phone_id", null: false
-    t.integer "tag_id", null: false
-    t.index ["phone_id", "tag_id"], name: "crm_phonecall_tag_rel_phone_id_tag_id_key", unique: true
-    t.index ["phone_id"], name: "crm_phonecall_tag_rel_phone_id_idx"
-    t.index ["tag_id"], name: "crm_phonecall_tag_rel_tag_id_idx"
-  end
-
   create_table "crm_stage", id: :serial, comment: "Stage of case", force: :cascade do |t|
     t.string "name", null: false, comment: "Stage Name"
     t.integer "sequence", comment: "Sequence"
@@ -2757,13 +2580,13 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.boolean "use_quotations", comment: "Quotations"
+    t.boolean "use_invoices", comment: "Set Invoicing Target"
+    t.integer "invoiced_target", comment: "Invoicing Target"
     t.boolean "use_leads", comment: "Leads"
     t.boolean "use_opportunities", comment: "Pipeline"
     t.integer "alias_id", null: false, comment: "Alias"
     t.string "dashboard_graph_group_pipeline", comment: "Group by"
-    t.boolean "use_quotations", comment: "Quotations"
-    t.boolean "use_invoices", comment: "Set Invoicing Target"
-    t.integer "invoiced_target", comment: "Invoicing Target"
     t.integer "marketing_user_id", comment: "Marketing User"
   end
 
@@ -2794,63 +2617,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "document_page", id: :serial, comment: "Document Page", force: :cascade do |t|
-    t.string "name", null: false, comment: "Title"
-    t.string "type", comment: "Type"
-    t.boolean "active", comment: "Active"
-    t.integer "parent_id", comment: "Category"
-    t.text "template", comment: "Template"
-    t.integer "history_head", comment: "HEAD"
-    t.integer "menu_id", comment: "Menu"
-    t.datetime "content_date", comment: "Last Contribution Date"
-    t.integer "content_uid", comment: "Last Contributor"
-    t.integer "company_id", comment: "Company"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.datetime "approved_date", comment: "Approved Date"
-    t.integer "approved_uid", comment: "Approved by"
-    t.boolean "approval_required", comment: "Require approval"
-    t.integer "approver_gid", comment: "Approver group"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.index ["approved_date"], name: "document_page_approved_date_index"
-    t.index ["approved_uid"], name: "document_page_approved_uid_index"
-    t.index ["company_id"], name: "document_page_company_id_index"
-    t.index ["content_date"], name: "document_page_content_date_index"
-    t.index ["content_uid"], name: "document_page_content_uid_index"
-  end
-
-  create_table "document_page_create_menu", id: :serial, comment: "Wizard Create Menu", force: :cascade do |t|
-    t.string "menu_name", null: false, comment: "Menu Name"
-    t.integer "menu_parent_id", null: false, comment: "Parent Menu"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "document_page_history", id: :serial, comment: "Document Page History", force: :cascade do |t|
-    t.integer "page_id", comment: "Page"
-    t.string "name", comment: "Name"
-    t.string "summary", comment: "Summary"
-    t.text "content", comment: "Content"
-    t.integer "company_id", comment: "Company"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.string "state", comment: "Status"
-    t.datetime "approved_date", comment: "Approved Date"
-    t.integer "approved_uid", comment: "Approved by"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.index ["company_id"], name: "document_page_history_company_id_index"
-    t.index ["name"], name: "document_page_history_name_index"
-    t.index ["summary"], name: "document_page_history_summary_index"
   end
 
   create_table "email_template_attachment_rel", id: false, comment: "RELATION BETWEEN mail_template AND ir_attachment", force: :cascade do |t|
@@ -2910,32 +2676,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["emp_id"], name: "employee_category_rel_emp_id_idx"
   end
 
-  create_table "equipment_tag_rel", id: false, comment: "RELATION BETWEEN maintenance_equipment_tag AND maintenance_equipment", force: :cascade do |t|
-    t.integer "tag_id", null: false
-    t.integer "equipment_id", null: false
-    t.index ["equipment_id"], name: "equipment_tag_rel_equipment_id_idx"
-    t.index ["tag_id", "equipment_id"], name: "equipment_tag_rel_tag_id_equipment_id_key", unique: true
-    t.index ["tag_id"], name: "equipment_tag_rel_tag_id_idx"
-  end
-
-  create_table "event_allowed_track_tags_rel", id: false, comment: "RELATION BETWEEN event_event AND event_track_tag", force: :cascade do |t|
-    t.integer "event_event_id", null: false
-    t.integer "event_track_tag_id", null: false
-    t.index ["event_event_id", "event_track_tag_id"], name: "event_allowed_track_tags_rel_event_event_id_event_track_tag_key", unique: true
-    t.index ["event_event_id"], name: "event_allowed_track_tags_rel_event_event_id_idx"
-    t.index ["event_track_tag_id"], name: "event_allowed_track_tags_rel_event_track_tag_id_idx"
-  end
-
-  create_table "event_answer", id: :serial, comment: "event.answer", force: :cascade do |t|
-    t.string "name", null: false, comment: "Answer"
-    t.integer "question_id", null: false, comment: "Question"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
   create_table "event_confirm", id: :serial, comment: "event.confirm", force: :cascade do |t|
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
@@ -2944,7 +2684,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "event_event", id: :serial, comment: "Event", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Event Name"
     t.boolean "active", comment: "Active"
     t.integer "user_id", comment: "Responsible"
@@ -2974,16 +2713,20 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.text "badge_innerleft", comment: "Badge Inner Left"
     t.text "badge_innerright", comment: "Badge Inner Right"
     t.text "event_logo", comment: "Event Logo"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "website_published", comment: "Visible in Website"
-    t.boolean "website_menu", comment: "Dedicated Menu"
-    t.integer "menu_id", comment: "Event Menu"
     t.string "website_meta_title", comment: "Website meta title"
     t.text "website_meta_description", comment: "Website meta description"
     t.string "website_meta_keywords", comment: "Website meta keywords"
+    t.boolean "website_published", comment: "Visible in Website"
+    t.boolean "website_menu", comment: "Dedicated Menu"
+    t.integer "menu_id", comment: "Event Menu"
+    t.integer "attended_count", comment: "Attended"
+    t.integer "attended_count_1", comment: "Attended"
+    t.integer "count_attendee", comment: "Attended"
   end
 
   create_table "event_lead", id: :serial, comment: "event.lead", force: :cascade do |t|
@@ -3021,18 +2764,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "event_question", id: :serial, comment: "event.question", force: :cascade do |t|
-    t.string "title", null: false, comment: "Title"
-    t.integer "event_type_id", comment: "Event Type"
-    t.integer "event_id", comment: "Event"
-    t.integer "sequence", comment: "Sequence"
-    t.boolean "is_individual", comment: "Ask each attendee"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
   create_table "event_registration", id: :serial, comment: "Attendee", force: :cascade do |t|
     t.string "origin", comment: "Source Document"
     t.integer "event_id", null: false, comment: "Event"
@@ -3056,114 +2787,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["name"], name: "event_registration_name_index"
   end
 
-  create_table "event_registration_answer", id: :serial, comment: "event.registration.answer", force: :cascade do |t|
-    t.integer "event_answer_id", null: false, comment: "Event Answer"
-    t.integer "event_registration_id", null: false, comment: "Event Registration"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "event_sponsor", id: :serial, comment: "Event Sponsor", force: :cascade do |t|
-    t.integer "event_id", null: false, comment: "Event"
-    t.integer "sponsor_type_id", null: false, comment: "Sponsoring Type"
-    t.integer "partner_id", null: false, comment: "Sponsor/Customer"
-    t.string "url", comment: "Sponsor Website"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "event_sponsor_type", id: :serial, comment: "Event Sponsor Type", force: :cascade do |t|
-    t.string "name", null: false, comment: "Sponsor Type"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "event_track", id: :serial, comment: "Event Track", force: :cascade do |t|
-    t.string "name", null: false, comment: "Title"
-    t.boolean "active", comment: "Active"
-    t.integer "user_id", comment: "Responsible"
-    t.integer "partner_id", comment: "Speaker"
-    t.string "partner_name", comment: "Speaker Name"
-    t.string "partner_email", comment: "Speaker Email"
-    t.string "partner_phone", comment: "Speaker Phone"
-    t.text "partner_biography", comment: "Speaker Biography"
-    t.integer "stage_id", null: false, comment: "Stage"
-    t.string "kanban_state", null: false, comment: "Kanban State"
-    t.text "description", comment: "Track Description"
-    t.datetime "date", comment: "Track Date"
-    t.float "duration", comment: "Duration"
-    t.integer "location_id", comment: "Room"
-    t.integer "event_id", null: false, comment: "Event"
-    t.integer "color", comment: "Color Index"
-    t.string "priority", null: false, comment: "Priority"
-    t.string "website_meta_title", comment: "Website meta title"
-    t.text "website_meta_description", comment: "Website meta description"
-    t.string "website_meta_keywords", comment: "Website meta keywords"
-    t.boolean "website_published", comment: "Visible in Website"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["stage_id"], name: "event_track_stage_id_index"
-  end
-
-  create_table "event_track_event_track_tag_rel", id: false, comment: "RELATION BETWEEN event_track_tag AND event_track", force: :cascade do |t|
-    t.integer "event_track_tag_id", null: false
-    t.integer "event_track_id", null: false
-    t.index ["event_track_id"], name: "event_track_event_track_tag_rel_event_track_id_idx"
-    t.index ["event_track_tag_id", "event_track_id"], name: "event_track_event_track_tag_r_event_track_tag_id_event_trac_key", unique: true
-    t.index ["event_track_tag_id"], name: "event_track_event_track_tag_rel_event_track_tag_id_idx"
-  end
-
-  create_table "event_track_location", id: :serial, comment: "Track Location", force: :cascade do |t|
-    t.string "name", comment: "Room"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "event_track_stage", id: :serial, comment: "Track Stage", force: :cascade do |t|
-    t.string "name", null: false, comment: "Stage Name"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "mail_template_id", comment: "Email Template"
-    t.boolean "fold", comment: "Folded in Kanban"
-    t.boolean "is_done", comment: "Accepted Stage"
-    t.boolean "is_cancel", comment: "Canceled Stage"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "event_track_tag", id: :serial, comment: "Track Tag", force: :cascade do |t|
-    t.string "name", comment: "Tag"
-    t.integer "color", comment: "Color Index"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name"], name: "event_track_tag_name_uniq", unique: true
-  end
-
-  create_table "event_track_tags_rel", id: false, comment: "RELATION BETWEEN event_event AND event_track_tag", force: :cascade do |t|
-    t.integer "event_event_id", null: false
-    t.integer "event_track_tag_id", null: false
-    t.index ["event_event_id", "event_track_tag_id"], name: "event_track_tags_rel_event_event_id_event_track_tag_id_key", unique: true
-    t.index ["event_event_id"], name: "event_track_tags_rel_event_event_id_idx"
-    t.index ["event_track_tag_id"], name: "event_track_tags_rel_event_track_tag_id_idx"
-  end
-
   create_table "event_type", id: :serial, comment: "Event Category", force: :cascade do |t|
     t.string "name", null: false, comment: "Event Category"
     t.boolean "has_seats_limitation", comment: "Limited Seats"
@@ -3181,9 +2804,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.boolean "website_menu", comment: "Display a dedicated menu on Website"
-    t.boolean "use_questions", comment: "Questions to Attendees"
-    t.boolean "website_track", comment: "Tracks on Website"
-    t.boolean "website_track_proposal", comment: "Tracks Proposals on Website"
   end
 
   create_table "event_type_mail", id: :serial, comment: "Mail Scheduling on Event Type", force: :cascade do |t|
@@ -3211,11 +2831,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.date "from_date", comment: "From Date"
     t.integer "year_id", comment: "Year"
     t.string "month", comment: "Month"
+    t.string "employee_type", comment: "Employee Type"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.string "employee_type", comment: "Employee Type"
   end
 
   create_table "fees_detail_report_wizard", id: :serial, comment: "fees.detail.report.wizard", force: :cascade do |t|
@@ -3303,7 +2923,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "gamification_challenge", id: :serial, comment: "Gamification challenge", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Challenge Name"
     t.text "description", comment: "Description"
     t.string "state", null: false, comment: "State"
@@ -3326,6 +2945,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.date "last_report_date", comment: "Last Report Date"
     t.date "next_report_date", comment: "Next Report Date"
     t.string "category", null: false, comment: "Appears in"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -3437,26 +3057,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "subject_id", comment: "Subject"
   end
 
-  create_table "google_drive_config", id: :serial, comment: "Google Drive templates config", force: :cascade do |t|
-    t.string "name", null: false, comment: "Template Name"
-    t.integer "model_id", null: false, comment: "Model"
-    t.integer "filter_id", comment: "Filter"
-    t.string "google_drive_template_url", null: false, comment: "Template URL"
-    t.string "name_template", null: false, comment: "Google Drive Name Pattern"
-    t.boolean "active", comment: "Active"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "google_service", id: :serial, comment: "google.service", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
   create_table "hr_applicant", id: :serial, comment: "Applicant", force: :cascade do |t|
     t.string "name", null: false, comment: "Subject / Application Name"
     t.boolean "active", comment: "Active"
@@ -3497,15 +3097,14 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.integer "create_uid", comment: "Created by"
     t.integer "write_uid", comment: "Last Updated by"
-    t.integer "applicant_source_id", comment: "Source"
-    t.integer "source_applicant_id", comment: "Source Applicant"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.integer "applicant_source_id", comment: "Not this"
+    t.integer "source_applicant_id", comment: "Source Applicant"
     t.integer "incomming_email_id", comment: "Incomming email"
     t.index ["create_date"], name: "hr_applicant_create_date_index"
     t.index ["date_closed"], name: "hr_applicant_date_closed_index"
     t.index ["date_last_stage_update"], name: "hr_applicant_date_last_stage_update_index"
     t.index ["date_open"], name: "hr_applicant_date_open_index"
-    t.index ["email_from", "partner_phone", "partner_mobile"], name: "hr_applicant_email_phone_uniq", unique: true
     t.index ["stage_id"], name: "hr_applicant_stage_id_index"
   end
 
@@ -3544,12 +3143,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "company_id", comment: "Company"
     t.string "shift_work", comment: "Phân loại nhân viên"
     t.string "day_of_week", comment: "Day of Week"
-    t.float "day_work", comment: "WorkDay"
-    t.float "work_day", comment: "WorkDay"
     t.float "work_of_day", comment: "WorkDay"
     t.integer "holiday_id", comment: "Leave"
     t.string "holiday_state", comment: "Holiday State"
-    t.float "total_workday", comment: "Work Total"
     t.float "total_work", comment: "Work Total"
     t.float "hours_ctv", comment: "Working Hours"
     t.integer "holiday_hours", comment: "Holiday Hours"
@@ -3600,7 +3196,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.date "date_start", null: false, comment: "Start Date"
     t.date "date_end", comment: "End Date"
     t.date "trial_date_end", comment: "End of Trial Period"
-    t.integer "resource_calendar_id", null: false, comment: "Working Schedule"
+    t.integer "resource_calendar_id", comment: "Working Schedule"
     t.decimal "wage", null: false, comment: "Wage"
     t.text "advantages", comment: "Advantages"
     t.text "notes", comment: "Notes"
@@ -3611,22 +3207,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "struct_id", comment: "Salary Structure"
-    t.string "schedule_pay", comment: "Scheduled Pay"
     t.float "work_hours", comment: "Working Hours"
-    t.index ["schedule_pay"], name: "hr_contract_schedule_pay_index"
-  end
-
-  create_table "hr_contract_advantage_template", id: :serial, comment: "Employee's Advantage on Contract", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.string "code", null: false, comment: "Code"
-    t.float "lower_bound", comment: "Lower Bound"
-    t.float "upper_bound", comment: "Upper Bound"
-    t.float "default_value", comment: "Default value for this advantage"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "hr_contract_type", id: :serial, comment: "Contract Type", force: :cascade do |t|
@@ -3638,19 +3219,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "hr_contribution_register", id: :serial, comment: "Contribution Register", force: :cascade do |t|
-    t.integer "company_id", comment: "Company"
-    t.integer "partner_id", comment: "Partner"
-    t.string "name", null: false, comment: "Name"
-    t.text "note", comment: "Description"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
   create_table "hr_department", id: :serial, comment: "HR Department", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Department Name"
     t.string "complete_name", comment: "Complete Name"
     t.boolean "active", comment: "Active"
@@ -3659,6 +3228,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "manager_id", comment: "Manager"
     t.text "note", comment: "Note"
     t.integer "color", comment: "Color Index"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -3668,7 +3238,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "hr_employee", id: :serial, comment: "Employee", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", comment: "Name"
     t.boolean "active", comment: "Active"
     t.integer "address_home_id", comment: "Private Address"
@@ -3696,6 +3265,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.text "notes", comment: "Notes"
     t.integer "color", comment: "Color Index"
     t.integer "resource_id", null: false, comment: "Resource"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "company_id", comment: "Company"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
@@ -3709,12 +3279,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "children", comment: "Number of Children"
     t.string "vehicle", comment: "Company Vehicle"
     t.integer "vehicle_distance", comment: "Home-Work Dist."
+    t.integer "device_code", comment: "Code in device"
+    t.boolean "shift_doing", comment: "Do shift"
     t.date "start_date", comment: "Ngày bắt đầu làm việc"
     t.date "end_date", comment: "Ngày kết thúc làm việc"
     t.string "state", comment: "Trạng thái"
     t.string "contract_time", comment: "Thời gian hợp đồng"
-    t.integer "device_code", comment: "Code in device"
-    t.boolean "shift_doing", comment: "Do shift"
     t.boolean "already_employee", comment: "Already Employee"
     t.string "presenter", comment: "Người giới thiệu"
     t.integer "presenter_employee", comment: "Presenter"
@@ -3722,14 +3292,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "ngach", comment: "Ngạch"
     t.float "he_so", comment: "Hệ số"
     t.integer "bac", comment: "Bậc"
-    t.string "shift_work", comment: "Khối"
+    t.string "shift_work_do", comment: "Phân loại nhân viên"
     t.float "leaves_day", comment: "Ngày nghỉ phép còn lại"
     t.integer "id_employee", comment: "ID Employee"
-    t.decimal "timesheet_cost", comment: "Timesheet Cost"
-    t.string "shift_work_do", comment: "Phân loại nhân viên"
     t.integer "contract_id", comment: "Current Contract"
     t.string "contract_state", comment: "Status"
-    t.string "employee_code", comment: "Employee Code"
     t.index ["barcode"], name: "hr_employee_barcode_uniq", unique: true
     t.index ["company_id"], name: "hr_employee_company_id_index"
     t.index ["resource_id"], name: "hr_employee_resource_id_index"
@@ -3743,14 +3310,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.index ["name"], name: "hr_employee_category_name_uniq", unique: true
-  end
-
-  create_table "hr_employee_group_rel", id: false, comment: "RELATION BETWEEN hr_payslip_employees AND hr_employee", force: :cascade do |t|
-    t.integer "payslip_id", null: false
-    t.integer "employee_id", null: false
-    t.index ["employee_id"], name: "hr_employee_group_rel_employee_id_idx"
-    t.index ["payslip_id", "employee_id"], name: "hr_employee_group_rel_payslip_id_employee_id_key", unique: true
-    t.index ["payslip_id"], name: "hr_employee_group_rel_payslip_id_idx"
   end
 
   create_table "hr_expense", id: :serial, comment: "Expense", force: :cascade do |t|
@@ -3780,7 +3339,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "sale_order_id", comment: "Sale Order"
     t.integer "manager_id", comment: "Manager"
-    t.integer "claim_id", comment: "Claim"
     t.index ["state"], name: "hr_expense_state_index"
   end
 
@@ -3836,10 +3394,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.string "check_amount_in_words", comment: "Amount in Words"
+    t.integer "check_number", comment: "Check Number"
   end
 
   create_table "hr_holidays", id: :serial, comment: "Leave", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", comment: "Description"
     t.string "state", comment: "Status"
     t.boolean "payslip_status", comment: "Reported in last payslips"
@@ -3861,11 +3420,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "holiday_type", null: false, comment: "Allocation Mode"
     t.integer "first_approver_id", comment: "First Approval"
     t.integer "second_approver_id", comment: "Second Approval"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "company_id", comment: "Company"
     t.datetime "date_from_cp", comment: "Date From Cp"
     t.datetime "date_to_cp", comment: "Date To Cp"
     t.date "date_cr", comment: "Date Cr"
@@ -3875,6 +3434,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.boolean "many_day", comment: "Multiple day"
     t.float "number_of_many_day", comment: "Số ngày nghỉ nhiều"
     t.string "shift_work_do", comment: "Phân loại nhân viên"
+    t.integer "company_id", comment: "Company"
     t.string "hcns_bgd", comment: "HCNS/BGĐ xác nhận"
     t.text "hcns_bgd_note", comment: "Lý do của HCNS/BGĐ"
     t.index ["date_from"], name: "hr_holidays_date_from_index"
@@ -3894,9 +3454,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "timesheet_generate", comment: "Generate Timesheet"
-    t.integer "timesheet_project_id", comment: "Internal Project"
-    t.integer "timesheet_task_id", comment: "Internal Task for timesheet"
     t.string "status", comment: "Status Type"
   end
 
@@ -3919,7 +3476,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "hr_job", id: :serial, comment: "Job Position", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Job Position"
     t.integer "expected_employees", comment: "Total Forecasted Employees"
     t.integer "no_of_employee", comment: "Current Number of Employees"
@@ -3930,6 +3486,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "department_id", comment: "Department"
     t.integer "company_id", comment: "Company"
     t.string "state", null: false, comment: "Status"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -3940,136 +3497,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "hr_responsible_id", comment: "HR Responsible"
     t.integer "alias_id", null: false, comment: "Alias"
     t.integer "color", comment: "Color Index"
-    t.text "website_description", comment: "Website description"
-    t.string "website_meta_title", comment: "Website meta title"
-    t.text "website_meta_description", comment: "Website meta description"
-    t.string "website_meta_keywords", comment: "Website meta keywords"
-    t.boolean "website_published", comment: "Visible in Website"
     t.index ["name", "company_id", "department_id"], name: "hr_job_name_company_uniq", unique: true
     t.index ["name"], name: "hr_job_name_index"
-  end
-
-  create_table "hr_payroll_structure", id: :serial, comment: "Salary Structure", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.string "code", null: false, comment: "Reference"
-    t.integer "company_id", null: false, comment: "Company"
-    t.text "note", comment: "Description"
-    t.integer "parent_id", comment: "Parent"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "hr_payslip", id: :serial, comment: "Pay Slip", force: :cascade do |t|
-    t.integer "struct_id", comment: "Structure"
-    t.string "name", comment: "Payslip Name"
-    t.string "number", comment: "Reference"
-    t.integer "employee_id", null: false, comment: "Employee"
-    t.date "date_from", null: false, comment: "Date From"
-    t.date "date_to", null: false, comment: "Date To"
-    t.string "state", comment: "Status"
-    t.integer "company_id", comment: "Company"
-    t.boolean "paid", comment: "Made Payment Order ? "
-    t.text "note", comment: "Internal Note"
-    t.integer "contract_id", comment: "Contract"
-    t.boolean "credit_note", comment: "Credit Note"
-    t.integer "payslip_run_id", comment: "Payslip Batches"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["state"], name: "hr_payslip_state_index"
-  end
-
-  create_table "hr_payslip_employees", id: :serial, comment: "Generate payslips for all selected employees", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "hr_payslip_input", id: :serial, comment: "Payslip Input", force: :cascade do |t|
-    t.string "name", null: false, comment: "Description"
-    t.integer "payslip_id", null: false, comment: "Pay Slip"
-    t.integer "sequence", null: false, comment: "Sequence"
-    t.string "code", null: false, comment: "Code"
-    t.float "amount", comment: "Amount"
-    t.integer "contract_id", null: false, comment: "Contract"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["payslip_id"], name: "hr_payslip_input_payslip_id_index"
-    t.index ["sequence"], name: "hr_payslip_input_sequence_index"
-  end
-
-  create_table "hr_payslip_line", id: :serial, comment: "Payslip Line", force: :cascade do |t|
-    t.integer "slip_id", null: false, comment: "Pay Slip"
-    t.integer "salary_rule_id", null: false, comment: "Rule"
-    t.integer "employee_id", null: false, comment: "Employee"
-    t.integer "contract_id", null: false, comment: "Contract"
-    t.decimal "rate", comment: "Rate (%)"
-    t.decimal "amount", comment: "Amount"
-    t.decimal "quantity", comment: "Quantity"
-    t.decimal "total", comment: "Total"
-    t.string "name", null: false, comment: "Name"
-    t.string "code", null: false, comment: "Code"
-    t.integer "sequence", null: false, comment: "Sequence"
-    t.integer "category_id", null: false, comment: "Category"
-    t.boolean "active", comment: "Active"
-    t.boolean "appears_on_payslip", comment: "Appears on Payslip"
-    t.integer "parent_rule_id", comment: "Parent Salary Rule"
-    t.integer "company_id", comment: "Company"
-    t.string "condition_select", null: false, comment: "Condition Based on"
-    t.string "condition_range", comment: "Range Based on"
-    t.text "condition_python", null: false, comment: "Python Condition"
-    t.float "condition_range_min", comment: "Minimum Range"
-    t.float "condition_range_max", comment: "Maximum Range"
-    t.string "amount_select", null: false, comment: "Amount Type"
-    t.decimal "amount_fix", comment: "Fixed Amount"
-    t.decimal "amount_percentage", comment: "Percentage (%)"
-    t.text "amount_python_compute", comment: "Python Code"
-    t.string "amount_percentage_base", comment: "Percentage based on"
-    t.integer "register_id", comment: "Contribution Register"
-    t.text "note", comment: "Description"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["amount_select"], name: "hr_payslip_line_amount_select_index"
-    t.index ["contract_id"], name: "hr_payslip_line_contract_id_index"
-    t.index ["parent_rule_id"], name: "hr_payslip_line_parent_rule_id_index"
-    t.index ["sequence"], name: "hr_payslip_line_sequence_index"
-  end
-
-  create_table "hr_payslip_run", id: :serial, comment: "Payslip Batches", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.string "state", comment: "Status"
-    t.date "date_start", null: false, comment: "Date From"
-    t.date "date_end", null: false, comment: "Date To"
-    t.boolean "credit_note", comment: "Credit Note"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["state"], name: "hr_payslip_run_state_index"
-  end
-
-  create_table "hr_payslip_worked_days", id: :serial, comment: "Payslip Worked Days", force: :cascade do |t|
-    t.string "name", null: false, comment: "Description"
-    t.integer "payslip_id", null: false, comment: "Pay Slip"
-    t.integer "sequence", null: false, comment: "Sequence"
-    t.string "code", null: false, comment: "Code"
-    t.float "number_of_days", comment: "Number of Days"
-    t.float "number_of_hours", comment: "Number of Hours"
-    t.integer "contract_id", null: false, comment: "Contract"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["payslip_id"], name: "hr_payslip_worked_days_payslip_id_index"
-    t.index ["sequence"], name: "hr_payslip_worked_days_sequence_index"
   end
 
   create_table "hr_public_holiday", id: :serial, comment: "hr.public.holiday", force: :cascade do |t|
@@ -4127,67 +3556,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "hr_rule_input", id: :serial, comment: "Salary Rule Input", force: :cascade do |t|
-    t.string "name", null: false, comment: "Description"
-    t.string "code", null: false, comment: "Code"
-    t.integer "input_id", null: false, comment: "Salary Rule Input"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "hr_salary_rule", id: :serial, comment: "hr.salary.rule", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.string "code", null: false, comment: "Code"
-    t.integer "sequence", null: false, comment: "Sequence"
-    t.string "quantity", comment: "Quantity"
-    t.integer "category_id", null: false, comment: "Category"
-    t.boolean "active", comment: "Active"
-    t.boolean "appears_on_payslip", comment: "Appears on Payslip"
-    t.integer "parent_rule_id", comment: "Parent Salary Rule"
-    t.integer "company_id", comment: "Company"
-    t.string "condition_select", null: false, comment: "Condition Based on"
-    t.string "condition_range", comment: "Range Based on"
-    t.text "condition_python", null: false, comment: "Python Condition"
-    t.float "condition_range_min", comment: "Minimum Range"
-    t.float "condition_range_max", comment: "Maximum Range"
-    t.string "amount_select", null: false, comment: "Amount Type"
-    t.decimal "amount_fix", comment: "Fixed Amount"
-    t.decimal "amount_percentage", comment: "Percentage (%)"
-    t.text "amount_python_compute", comment: "Python Code"
-    t.string "amount_percentage_base", comment: "Percentage based on"
-    t.integer "register_id", comment: "Contribution Register"
-    t.text "note", comment: "Description"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["amount_select"], name: "hr_salary_rule_amount_select_index"
-    t.index ["parent_rule_id"], name: "hr_salary_rule_parent_rule_id_index"
-    t.index ["sequence"], name: "hr_salary_rule_sequence_index"
-  end
-
-  create_table "hr_salary_rule_category", id: :serial, comment: "Salary Rule Category", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.string "code", null: false, comment: "Code"
-    t.integer "parent_id", comment: "Parent"
-    t.text "note", comment: "Description"
-    t.integer "company_id", comment: "Company"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "hr_structure_salary_rule_rel", id: false, comment: "RELATION BETWEEN hr_payroll_structure AND hr_salary_rule", force: :cascade do |t|
-    t.integer "struct_id", null: false
-    t.integer "rule_id", null: false
-    t.index ["rule_id"], name: "hr_structure_salary_rule_rel_rule_id_idx"
-    t.index ["struct_id", "rule_id"], name: "hr_structure_salary_rule_rel_struct_id_rule_id_key", unique: true
-    t.index ["struct_id"], name: "hr_structure_salary_rule_rel_struct_id_idx"
-  end
-
   create_table "hr_year", id: :serial, comment: "hr.year", force: :cascade do |t|
     t.integer "year", comment: "Year"
     t.integer "create_uid", comment: "Created by"
@@ -4206,47 +3574,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "im_livechat_channel", id: :serial, comment: "Livechat Channel", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.string "button_text", comment: "Text of the Button"
-    t.string "default_message", comment: "Welcome Message"
-    t.string "input_placeholder", comment: "Chat Input Placeholder"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.text "website_description", comment: "Website description"
-    t.boolean "website_published", comment: "Visible in Website"
-  end
-
-  create_table "im_livechat_channel_country_rel", id: false, comment: "RELATION BETWEEN im_livechat_channel_rule AND res_country", force: :cascade do |t|
-    t.integer "channel_id", null: false
-    t.integer "country_id", null: false
-    t.index ["channel_id", "country_id"], name: "im_livechat_channel_country_rel_channel_id_country_id_key", unique: true
-    t.index ["channel_id"], name: "im_livechat_channel_country_rel_channel_id_idx"
-    t.index ["country_id"], name: "im_livechat_channel_country_rel_country_id_idx"
-  end
-
-  create_table "im_livechat_channel_im_user", id: false, comment: "RELATION BETWEEN im_livechat_channel AND res_users", force: :cascade do |t|
-    t.integer "channel_id", null: false
-    t.integer "user_id", null: false
-    t.index ["channel_id", "user_id"], name: "im_livechat_channel_im_user_channel_id_user_id_key", unique: true
-    t.index ["channel_id"], name: "im_livechat_channel_im_user_channel_id_idx"
-    t.index ["user_id"], name: "im_livechat_channel_im_user_user_id_idx"
-  end
-
-  create_table "im_livechat_channel_rule", id: :serial, comment: "Channel Rules", force: :cascade do |t|
-    t.string "regex_url", comment: "URL Regex"
-    t.string "action", null: false, comment: "Action"
-    t.integer "auto_popup_timer", comment: "Auto popup timer"
-    t.integer "channel_id", comment: "Channel"
-    t.integer "sequence", comment: "Matching order"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
   create_table "incoming_mail_job_rel", id: false, comment: "RELATION BETWEEN incomming_mail AND hr_job", force: :cascade do |t|
     t.integer "mail_id", null: false
     t.integer "job_id", null: false
@@ -4256,11 +3583,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "incomming_mail", id: :serial, comment: "Incomming mail", force: :cascade do |t|
-    t.integer "campaign_id", comment: "Campaign"
-    t.integer "source_id", comment: "Source"
-    t.integer "medium_id", comment: "Medium"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", comment: "Subject"
     t.integer "partner_id", comment: "Partner"
     t.string "body", comment: "Body"
@@ -4272,14 +3594,19 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "to", comment: "To"
     t.integer "attachment_count", comment: "Attachment Count"
     t.boolean "identified", comment: "Identified"
-    t.string "state", comment: "State"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.integer "campaign_id", comment: "Campaign"
+    t.integer "source_id", comment: "Source"
+    t.integer "medium_id", comment: "Medium"
     t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "source_number", comment: "Source Number"
+    t.string "state", comment: "State"
     t.integer "job_id", comment: "Job"
+    t.integer "source_number", comment: "Source Number"
     t.integer "tag_id", comment: "Tag"
   end
 
@@ -4486,9 +3813,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.text "index_content", comment: "Indexed Content"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.text "view_attachment", comment: "View Attachment"
     t.index ["checksum"], name: "ir_attachment_checksum_index"
     t.index ["res_model", "res_id"], name: "ir_attachment_res_idx"
-    t.index ["res_model"], name: "ir_attachment_res_model_index"
     t.index ["url"], name: "ir_attachment_url_index"
   end
 
@@ -4536,13 +3863,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "ir_exports", id: :serial, comment: "ir.exports", force: :cascade do |t|
-    t.string "name", null: false, comment: "Export Name"
+    t.string "name", comment: "Export Name"
     t.string "resource", comment: "Resource"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "model_id", comment: "Model"
     t.index ["resource"], name: "ir_exports_resource_index"
   end
 
@@ -4553,11 +3879,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "field1_id", comment: "First field"
-    t.integer "field2_id", comment: "Second field"
-    t.integer "field3_id", comment: "Third field"
-    t.integer "field4_id", comment: "Fourth field"
-    t.integer "sequence", comment: "Sequence"
     t.index ["export_id"], name: "ir_exports_line_export_id_index"
   end
 
@@ -4575,7 +3896,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.index "lower((name)::text), model_id, (COALESCE(user_id, '-1'::integer)), (COALESCE(action_id, '-1'::integer))", name: "ir_filters_name_model_uid_unique_action_index", unique: true
+    t.index "lower((name)::text), model_id, COALESCE(user_id, '-1'::integer), COALESCE(action_id, '-1'::integer)", name: "ir_filters_name_model_uid_unique_action_index", unique: true
     t.index ["name", "model_id", "user_id", "action_id"], name: "ir_filters_name_model_uid_unique", unique: true
   end
 
@@ -4657,9 +3978,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.boolean "is_mail_thread", comment: "Mail Thread"
-    t.boolean "website_form_access", comment: "Allowed to use in forms"
-    t.integer "website_form_default_field_id", comment: "Field for custom form data"
-    t.string "website_form_label", comment: "Label for form action"
     t.index ["model"], name: "ir_model_model_index"
     t.index ["model"], name: "ir_model_obj_name_uniq", unique: true
   end
@@ -4677,7 +3995,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "perm_export", comment: "Export Access"
     t.index ["group_id"], name: "ir_model_access_group_id_index"
     t.index ["model_id"], name: "ir_model_access_model_id_index"
     t.index ["name"], name: "ir_model_access_name_index"
@@ -4751,15 +4068,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.string "track_visibility", comment: "Tracking"
-    t.boolean "website_form_blacklisted", default: true, comment: "Blacklisted in web forms"
-    t.integer "serialization_field_id", comment: "Serialization Field"
     t.index ["complete_name"], name: "ir_model_fields_complete_name_index"
     t.index ["model", "name"], name: "ir_model_fields_name_unique", unique: true
     t.index ["model"], name: "ir_model_fields_model_index"
     t.index ["model_id"], name: "ir_model_fields_model_id_index"
     t.index ["name"], name: "ir_model_fields_name_index"
     t.index ["state"], name: "ir_model_fields_state_index"
-    t.index ["website_form_blacklisted"], name: "ir_model_fields_website_form_blacklisted_index"
   end
 
   create_table "ir_model_fields_group_rel", id: false, comment: "RELATION BETWEEN ir_model_fields AND res_groups", force: :cascade do |t|
@@ -4996,11 +4310,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.boolean "active", comment: "Active"
     t.integer "create_uid", comment: "Created by"
     t.integer "write_uid", comment: "Last Updated by"
-    t.boolean "customize_show", comment: "Show As Optional Inherit"
-    t.integer "website_id", comment: "Website"
     t.string "website_meta_title", comment: "Website meta title"
     t.text "website_meta_description", comment: "Website meta description"
     t.string "website_meta_keywords", comment: "Website meta keywords"
+    t.boolean "customize_show", comment: "Show As Optional Inherit"
+    t.integer "website_id", comment: "Website"
     t.index ["inherit_id"], name: "ir_ui_view_inherit_id_index"
     t.index ["model", "inherit_id"], name: "ir_ui_view_model_type_inherit_id"
     t.index ["model"], name: "ir_ui_view_model_index"
@@ -5062,46 +4376,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "google_drive_link"
     t.string "ziggeo_file_id"
     t.index ["op_lession_id"], name: "index_learning_materials_on_op_lession_id"
-  end
-
-  create_table "link_tracker", id: :serial, comment: "link.tracker", force: :cascade do |t|
-    t.string "url", null: false, comment: "Target URL"
-    t.integer "count", comment: "Number of Clicks"
-    t.string "title", comment: "Page Title"
-    t.string "favicon", comment: "Favicon"
-    t.integer "campaign_id", comment: "Campaign"
-    t.integer "source_id", comment: "Source"
-    t.integer "medium_id", comment: "Medium"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.integer "mass_mailing_id", comment: "Mass Mailing"
-    t.integer "mass_mailing_campaign_id", comment: "Mass Mailing Campaign"
-  end
-
-  create_table "link_tracker_click", id: :serial, comment: "link.tracker.click", force: :cascade do |t|
-    t.date "click_date", comment: "Create Date"
-    t.integer "link_id", null: false, comment: "Link"
-    t.string "ip", comment: "Internet Protocol"
-    t.integer "country_id", comment: "Country"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.integer "mail_stat_id", comment: "Mail Statistics"
-    t.integer "mass_mailing_id", comment: "Mass Mailing"
-    t.integer "mass_mailing_campaign_id", comment: "Mass Mailing Campaign"
-  end
-
-  create_table "link_tracker_code", id: :serial, comment: "link.tracker.code", force: :cascade do |t|
-    t.string "code", comment: "Short URL Code"
-    t.integer "link_id", null: false, comment: "Link"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["code"], name: "link_tracker_code_code", unique: true
   end
 
   create_table "mail_activity", id: :serial, comment: "Activity", force: :cascade do |t|
@@ -5175,6 +4449,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "mail_channel", id: :serial, comment: "Discussion channel", force: :cascade do |t|
+    t.integer "alias_id", null: false, comment: "Alias"
     t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Name"
     t.string "channel_type", comment: "Channel Type"
@@ -5183,14 +4458,10 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.boolean "email_send", comment: "Send messages by email"
     t.string "public", null: false, comment: "Privacy"
     t.integer "group_public_id", comment: "Authorized Group"
-    t.integer "alias_id", null: false, comment: "Alias"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.string "anonymous_name", comment: "Anonymous Name"
-    t.integer "livechat_channel_id", comment: "Channel"
-    t.float "rating_last_value", comment: "Rating Last Value"
     t.index ["uuid"], name: "mail_channel_uuid_index"
   end
 
@@ -5225,6 +4496,17 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "mail_compose_message", id: :serial, comment: "Email composition wizard", force: :cascade do |t|
+    t.string "composition_mode", comment: "Composition mode"
+    t.boolean "use_active_domain", comment: "Use active domain"
+    t.text "active_domain", comment: "Active domain"
+    t.boolean "is_log", comment: "Log an Internal Note"
+    t.string "subject", comment: "Subject"
+    t.boolean "notify", comment: "Notify followers"
+    t.boolean "auto_delete", comment: "Delete Emails"
+    t.boolean "auto_delete_message", comment: "Delete Message Copy"
+    t.integer "template_id", comment: "Use template"
+    t.string "message_type", null: false, comment: "Type"
+    t.integer "subtype_id", comment: "Subtype"
     t.datetime "date", comment: "Date"
     t.text "body", comment: "Contents"
     t.integer "parent_id", comment: "Parent Message"
@@ -5238,26 +4520,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "message_id", comment: "Message-Id"
     t.string "reply_to", comment: "Reply-To"
     t.integer "mail_server_id", comment: "Outgoing mail server"
-    t.string "composition_mode", comment: "Composition mode"
-    t.boolean "use_active_domain", comment: "Use active domain"
-    t.text "active_domain", comment: "Active domain"
-    t.boolean "is_log", comment: "Log an Internal Note"
-    t.string "subject", comment: "Subject"
-    t.boolean "notify", comment: "Notify followers"
-    t.boolean "auto_delete", comment: "Delete Emails"
-    t.boolean "auto_delete_message", comment: "Delete Message Copy"
-    t.integer "template_id", comment: "Use template"
-    t.string "message_type", null: false, comment: "Type"
-    t.integer "subtype_id", comment: "Subtype"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "mass_mailing_campaign_id", comment: "Mass Mailing Campaign"
-    t.integer "mass_mailing_id", comment: "Mass Mailing"
-    t.string "mass_mailing_name", comment: "Mass Mailing"
     t.boolean "website_published", comment: "Published"
-    t.float "rating_value", comment: "Rating Value"
     t.index ["author_id"], name: "mail_compose_message_author_id_index"
     t.index ["mail_activity_type_id"], name: "mail_compose_message_mail_activity_type_id_index"
     t.index ["message_id"], name: "mail_compose_message_message_id_index"
@@ -5274,14 +4541,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["attachment_id"], name: "mail_compose_message_ir_attachments_rel_attachment_id_idx"
     t.index ["wizard_id", "attachment_id"], name: "mail_compose_message_ir_attachments_wizard_id_attachment_id_key", unique: true
     t.index ["wizard_id"], name: "mail_compose_message_ir_attachments_rel_wizard_id_idx"
-  end
-
-  create_table "mail_compose_message_mail_mass_mailing_list_rel", id: false, comment: "RELATION BETWEEN mail_compose_message AND mail_mass_mailing_list", force: :cascade do |t|
-    t.integer "mail_compose_message_id", null: false
-    t.integer "mail_mass_mailing_list_id", null: false
-    t.index ["mail_compose_message_id", "mail_mass_mailing_list_id"], name: "mail_compose_message_mail_mas_mail_compose_message_id_mail__key", unique: true
-    t.index ["mail_compose_message_id"], name: "mail_compose_message_mail_mass_mail_mail_compose_message_id_idx"
-    t.index ["mail_mass_mailing_list_id"], name: "mail_compose_message_mail_mass_ma_mail_mass_mailing_list_id_idx"
   end
 
   create_table "mail_compose_message_res_partner_rel", id: false, comment: "RELATION BETWEEN mail_compose_message AND res_partner", force: :cascade do |t|
@@ -5330,7 +4589,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "fetchmail_server_id", comment: "Inbound Mail Server"
-    t.integer "mailing_id", comment: "Mass Mailing"
     t.index ["fetchmail_server_id"], name: "mail_mail_fetchmail_server_id_index"
     t.index ["mail_message_id"], name: "mail_mail_mail_message_id_index"
   end
@@ -5341,164 +4599,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["mail_mail_id", "res_partner_id"], name: "mail_mail_res_partner_rel_mail_mail_id_res_partner_id_key", unique: true
     t.index ["mail_mail_id"], name: "mail_mail_res_partner_rel_mail_mail_id_idx"
     t.index ["res_partner_id"], name: "mail_mail_res_partner_rel_res_partner_id_idx"
-  end
-
-  create_table "mail_mail_statistics", id: :serial, comment: "Email Statistics", force: :cascade do |t|
-    t.integer "mail_mail_id", comment: "Mail"
-    t.integer "mail_mail_id_int", comment: "Mail ID (tech)"
-    t.string "message_id", comment: "Message-ID"
-    t.string "model", comment: "Document model"
-    t.integer "res_id", comment: "Document ID"
-    t.integer "mass_mailing_id", comment: "Mass Mailing"
-    t.integer "mass_mailing_campaign_id", comment: "Mass Mailing Campaign"
-    t.datetime "scheduled", comment: "Scheduled"
-    t.datetime "sent", comment: "Sent"
-    t.datetime "exception", comment: "Exception"
-    t.datetime "opened", comment: "Opened"
-    t.datetime "replied", comment: "Replied"
-    t.datetime "bounced", comment: "Bounced"
-    t.datetime "clicked", comment: "Clicked"
-    t.string "state", comment: "State"
-    t.datetime "state_update", comment: "State Update"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["mail_mail_id"], name: "mail_mail_statistics_mail_mail_id_index"
-    t.index ["mail_mail_id_int"], name: "mail_mail_statistics_mail_mail_id_int_index"
-  end
-
-  create_table "mail_mass_mailing", id: :serial, comment: "Mass Mailing", force: :cascade do |t|
-    t.boolean "active", comment: "Active"
-    t.string "email_from", null: false, comment: "From"
-    t.datetime "create_date", comment: "Creation Date"
-    t.datetime "sent_date", comment: "Sent Date"
-    t.datetime "schedule_date", comment: "Schedule in the Future"
-    t.text "body_html", comment: "Body"
-    t.boolean "keep_archives", comment: "Keep Archives"
-    t.integer "mass_mailing_campaign_id", comment: "Mass Mailing Campaign"
-    t.integer "campaign_id", comment: "Campaign"
-    t.integer "source_id", null: false, comment: "Subject"
-    t.integer "medium_id", comment: "Medium"
-    t.string "state", null: false, comment: "Status"
-    t.integer "color", comment: "Color Index"
-    t.string "reply_to_mode", null: false, comment: "Reply-To Mode"
-    t.string "reply_to", comment: "Reply To"
-    t.integer "mailing_model_id", comment: "Recipients Model"
-    t.string "mailing_domain", comment: "Domain"
-    t.integer "contact_ab_pc", comment: "A/B Testing percentage"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "mail_mass_mailing_campaign", id: :serial, comment: "Mass Mailing Campaign", force: :cascade do |t|
-    t.integer "stage_id", null: false, comment: "Stage"
-    t.integer "user_id", null: false, comment: "Responsible"
-    t.integer "campaign_id", null: false, comment: "campaign_id"
-    t.integer "source_id", comment: "Source"
-    t.integer "medium_id", comment: "Medium"
-    t.boolean "unique_ab_testing", comment: "Allow A/B Testing"
-    t.integer "color", comment: "Color Index"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "mail_mass_mailing_contact", id: :serial, comment: "Mass Mailing Contact", force: :cascade do |t|
-    t.string "name", comment: "Name"
-    t.string "company_name", comment: "Company Name"
-    t.integer "title_id", comment: "Title"
-    t.string "email", null: false, comment: "Email"
-    t.datetime "create_date", comment: "Creation Date"
-    t.boolean "opt_out", comment: "Opt Out"
-    t.datetime "unsubscription_date", comment: "Unsubscription Date"
-    t.integer "message_bounce", comment: "Bounced"
-    t.integer "country_id", comment: "Country"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "mail_mass_mailing_contact_list_rel", id: false, comment: "RELATION BETWEEN mail_mass_mailing_contact AND mail_mass_mailing_list", force: :cascade do |t|
-    t.integer "contact_id", null: false
-    t.integer "list_id", null: false
-    t.index ["contact_id", "list_id"], name: "mail_mass_mailing_contact_list_rel_contact_id_list_id_key", unique: true
-    t.index ["contact_id"], name: "mail_mass_mailing_contact_list_rel_contact_id_idx"
-    t.index ["list_id"], name: "mail_mass_mailing_contact_list_rel_list_id_idx"
-  end
-
-  create_table "mail_mass_mailing_contact_res_partner_category_rel", id: false, comment: "RELATION BETWEEN mail_mass_mailing_contact AND res_partner_category", force: :cascade do |t|
-    t.integer "mail_mass_mailing_contact_id", null: false
-    t.integer "res_partner_category_id", null: false
-    t.index ["mail_mass_mailing_contact_id", "res_partner_category_id"], name: "mail_mass_mailing_contact_res_mail_mass_mailing_contact_id__key", unique: true
-    t.index ["mail_mass_mailing_contact_id"], name: "mail_mass_mailing_contact_res__mail_mass_mailing_contact_id_idx"
-    t.index ["res_partner_category_id"], name: "mail_mass_mailing_contact_res_partn_res_partner_category_id_idx"
-  end
-
-  create_table "mail_mass_mailing_list", id: :serial, comment: "Mailing List", force: :cascade do |t|
-    t.string "name", null: false, comment: "Mailing List"
-    t.boolean "active", comment: "Active"
-    t.datetime "create_date", comment: "Creation Date"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.text "popup_content", comment: "Website Popup Content"
-    t.string "popup_redirect_url", comment: "Website Popup Redirect URL"
-  end
-
-  create_table "mail_mass_mailing_list_rel", id: false, comment: "RELATION BETWEEN mail_mass_mailing AND mail_mass_mailing_list", force: :cascade do |t|
-    t.integer "mail_mass_mailing_id", null: false
-    t.integer "mail_mass_mailing_list_id", null: false
-    t.index ["mail_mass_mailing_id", "mail_mass_mailing_list_id"], name: "mail_mass_mailing_list_rel_mail_mass_mailing_id_mail_mass_m_key", unique: true
-    t.index ["mail_mass_mailing_id"], name: "mail_mass_mailing_list_rel_mail_mass_mailing_id_idx"
-    t.index ["mail_mass_mailing_list_id"], name: "mail_mass_mailing_list_rel_mail_mass_mailing_list_id_idx"
-  end
-
-  create_table "mail_mass_mailing_list_survey_mail_compose_message_rel", id: false, comment: "RELATION BETWEEN survey_mail_compose_message AND mail_mass_mailing_list", force: :cascade do |t|
-    t.integer "survey_mail_compose_message_id", null: false
-    t.integer "mail_mass_mailing_list_id", null: false
-    t.index ["mail_mass_mailing_list_id"], name: "mail_mass_mailing_list_survey_mai_mail_mass_mailing_list_id_idx"
-    t.index ["survey_mail_compose_message_id", "mail_mass_mailing_list_id"], name: "mail_mass_mailing_list_survey_survey_mail_compose_message_i_key", unique: true
-    t.index ["survey_mail_compose_message_id"], name: "mail_mass_mailing_list_survey_survey_mail_compose_message_i_idx"
-  end
-
-  create_table "mail_mass_mailing_stage", id: :serial, comment: "Mass Mailing Campaign Stage", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "mail_mass_mailing_tag", id: :serial, comment: "Mass Mailing Tag", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "color", comment: "Color Index"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name"], name: "mail_mass_mailing_tag_name_uniq", unique: true
-  end
-
-  create_table "mail_mass_mailing_tag_rel", id: false, comment: "RELATION BETWEEN mail_mass_mailing_campaign AND mail_mass_mailing_tag", force: :cascade do |t|
-    t.integer "tag_id", null: false
-    t.integer "campaign_id", null: false
-    t.index ["campaign_id"], name: "mail_mass_mailing_tag_rel_campaign_id_idx"
-    t.index ["tag_id", "campaign_id"], name: "mail_mass_mailing_tag_rel_tag_id_campaign_id_key", unique: true
-    t.index ["tag_id"], name: "mail_mass_mailing_tag_rel_tag_id_idx"
-  end
-
-  create_table "mail_mass_mailing_test", id: :serial, comment: "Sample Mail Wizard", force: :cascade do |t|
-    t.string "email_to", null: false, comment: "Recipients"
-    t.integer "mass_mailing_id", null: false, comment: "Mailing"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "mail_message", id: :serial, comment: "Message", force: :cascade do |t|
@@ -5523,7 +4623,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.boolean "website_published", comment: "Published"
-    t.float "rating_value", comment: "Rating Value"
     t.index ["author_id"], name: "mail_message_author_id_index"
     t.index ["mail_activity_type_id"], name: "mail_message_mail_activity_type_id_index"
     t.index ["message_id"], name: "mail_message_message_id_index"
@@ -5646,71 +4745,14 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "mail_test_simple", id: :serial, comment: "Test Simple Chatter Record", force: :cascade do |t|
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", comment: "Name"
     t.string "email_from", comment: "Email From"
     t.text "description", comment: "Description"
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "mail_tracking_email", id: :serial, comment: "MailTracking email", force: :cascade do |t|
-    t.string "name", comment: "Subject"
-    t.string "display_name", comment: "Display name"
-    t.decimal "timestamp", comment: "UTC timestamp"
-    t.datetime "time", comment: "Time"
-    t.date "date", comment: "Date"
-    t.integer "mail_message_id", comment: "Message"
-    t.integer "mail_id", comment: "Email"
-    t.integer "partner_id", comment: "Partner"
-    t.string "recipient", comment: "Recipient email"
-    t.string "recipient_address", comment: "Recipient email address"
-    t.string "sender", comment: "Sender email"
-    t.string "state", comment: "State"
-    t.string "error_smtp_server", comment: "Error SMTP server"
-    t.string "error_type", comment: "Error type"
-    t.string "error_description", comment: "Error description"
-    t.string "bounce_type", comment: "Bounce type"
-    t.string "bounce_description", comment: "Bounce description"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["mail_message_id"], name: "mail_tracking_email_mail_message_id_index"
-    t.index ["name"], name: "mail_tracking_email_name_index"
-    t.index ["recipient_address"], name: "mail_tracking_email_recipient_address_index"
-    t.index ["state"], name: "mail_tracking_email_state_index"
-    t.index ["time"], name: "mail_tracking_email_time_index"
-  end
-
-  create_table "mail_tracking_event", id: :serial, comment: "MailTracking event", force: :cascade do |t|
-    t.string "recipient", comment: "Recipient"
-    t.string "recipient_address", comment: "Recipient email address"
-    t.decimal "timestamp", comment: "UTC timestamp"
-    t.datetime "time", comment: "Time"
-    t.date "date", comment: "Date"
-    t.integer "tracking_email_id", null: false, comment: "Message"
-    t.string "event_type", comment: "Event type"
-    t.string "smtp_server", comment: "SMTP server"
-    t.string "url", comment: "Clicked URL"
-    t.string "ip", comment: "User IP"
-    t.string "user_agent", comment: "User agent"
-    t.boolean "mobile", comment: "Is mobile?"
-    t.string "os_family", comment: "Operating system family"
-    t.string "ua_family", comment: "User agent family"
-    t.string "ua_type", comment: "User agent type"
-    t.integer "user_country_id", comment: "User country"
-    t.string "error_type", comment: "Error type"
-    t.string "error_description", comment: "Error description"
-    t.text "error_details", comment: "Error details"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["recipient_address"], name: "mail_tracking_event_recipient_address_index"
-    t.index ["tracking_email_id"], name: "mail_tracking_event_tracking_email_id_index"
   end
 
   create_table "mail_tracking_value", id: :serial, comment: "Mail Tracking Value", force: :cascade do |t|
@@ -5791,10 +4833,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "department_id", comment: "Assigned to Department"
     t.string "equipment_assign_to", null: false, comment: "Used By"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.string "code", comment: "Code"
-    t.integer "status_id", comment: "Status"
-    t.string "status_name", comment: "Status name"
-    t.integer "location_id", null: false, comment: "Location"
     t.index ["serial_no"], name: "maintenance_equipment_serial_no", unique: true
   end
 
@@ -5810,94 +4848,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.string "sequence_prefix", comment: "Sequence Prefix"
-    t.integer "sequence_id", comment: "Entry Sequence"
-    t.integer "parent_id", comment: "Parent Category"
-    t.integer "parent_left", comment: "Left Parent"
-    t.integer "parent_right", comment: "Right Parent"
-    t.index ["parent_id"], name: "maintenance_equipment_category_parent_id_index"
-    t.index ["parent_left"], name: "maintenance_equipment_category_parent_left_index"
-    t.index ["parent_right"], name: "maintenance_equipment_category_parent_right_index"
-  end
-
-  create_table "maintenance_equipment_category_maintenance_equipment_status_rel", id: false, comment: "RELATION BETWEEN maintenance_equipment_status AND maintenance_equipment_category", force: :cascade do |t|
-    t.integer "maintenance_equipment_status_id", null: false
-    t.integer "maintenance_equipment_category_id", null: false
-    t.index ["maintenance_equipment_category_id"], name: "maintenance_equipment_categor_maintenance_equipment_categor_idx"
-    t.index ["maintenance_equipment_status_id", "maintenance_equipment_category_id"], name: "maintenance_equipment_categor_maintenance_equipment_status__key", unique: true
-    t.index ["maintenance_equipment_status_id"], name: "maintenance_equipment_categor_maintenance_equipment_status__idx"
-  end
-
-  create_table "maintenance_equipment_location", id: :serial, comment: "Equipment Location", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "company_id", comment: "Company"
-    t.boolean "is_scrap", comment: "Scrap Location"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "maintenance_equipment_maintenance_equipment_move_rel", id: false, comment: "RELATION BETWEEN maintenance_equipment_move AND maintenance_equipment", force: :cascade do |t|
-    t.integer "maintenance_equipment_move_id", null: false
-    t.integer "maintenance_equipment_id", null: false
-    t.index ["maintenance_equipment_id"], name: "maintenance_equipment_maintenance__maintenance_equipment_id_idx"
-    t.index ["maintenance_equipment_move_id", "maintenance_equipment_id"], name: "maintenance_equipment_mainten_maintenance_equipment_move_id_key", unique: true
-    t.index ["maintenance_equipment_move_id"], name: "maintenance_equipment_mainten_maintenance_equipment_move_id_idx"
-  end
-
-  create_table "maintenance_equipment_move", id: :serial, comment: "Equipment Moves", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.string "name", comment: "Move Number"
-    t.string "state", comment: "Status"
-    t.integer "move_type_id", null: false, comment: "Move Type"
-    t.integer "from_location_id", null: false, comment: "From Location"
-    t.integer "to_location_id", comment: "To Location"
-    t.datetime "date", null: false, comment: "Date"
-    t.datetime "return_date", comment: "Return Date"
-    t.text "note", comment: "Description"
-    t.boolean "is_transfer", comment: "Is Transfer"
-    t.boolean "is_internal", comment: "Is Internal"
-    t.integer "user_id", null: false, comment: "Equipment User"
-    t.integer "session_id", comment: "Session"
-    t.datetime "actual_return_date", comment: "Actual Return Date"
-    t.string "return_state", comment: "Return State"
-    t.text "return_note", comment: "Return Description"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "maintenance_equipment_move_type", id: :serial, comment: "maintenance.equipment.move.type", force: :cascade do |t|
-    t.string "name", comment: "Name"
-    t.boolean "is_transfer", comment: "Is Transfer"
-    t.boolean "is_internal", comment: "Is Internal"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "maintenance_equipment_status", id: :serial, comment: "Maintenance Equipment Status", force: :cascade do |t|
-    t.boolean "active", comment: "Active"
-    t.string "name", comment: "Name"
-    t.text "note", comment: "Notes"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "maintenance_equipment_tag", id: :serial, comment: "Maintenance Equipment Tag", force: :cascade do |t|
-    t.string "name", null: false, comment: "Equipment Tag"
-    t.integer "color", comment: "Color Index (0-15)"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name"], name: "maintenance_equipment_tag_name_uniq", unique: true
   end
 
   create_table "maintenance_request", id: :serial, comment: "Maintenance Requests", force: :cascade do |t|
@@ -5927,7 +4877,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "employee_id", comment: "Employee"
     t.integer "department_id", comment: "Department"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.string "code", comment: "Code"
     t.index ["equipment_id"], name: "maintenance_request_equipment_id_index"
   end
 
@@ -5940,15 +4889,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.string "button_class", comment: "Button Class"
-  end
-
-  create_table "maintenance_stage_next_stage", id: false, comment: "RELATION BETWEEN maintenance_stage AND maintenance_stage", force: :cascade do |t|
-    t.integer "stage_id", null: false
-    t.integer "next_stage_id", null: false
-    t.index ["next_stage_id"], name: "maintenance_stage_next_stage_next_stage_id_idx"
-    t.index ["stage_id", "next_stage_id"], name: "maintenance_stage_next_stage_stage_id_next_stage_id_key", unique: true
-    t.index ["stage_id"], name: "maintenance_stage_next_stage_stage_id_idx"
   end
 
   create_table "maintenance_team", id: :serial, comment: "Maintenance Teams", force: :cascade do |t|
@@ -5958,11 +4898,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "active", comment: "Active"
-    t.integer "user_id", comment: "Team Leader"
-    t.text "description", comment: "Description"
-    t.string "code_prefix", comment: "Prefix for Team Reference"
-    t.integer "sequence_id", comment: "Team Sequence"
   end
 
   create_table "maintenance_team_users_rel", id: false, comment: "RELATION BETWEEN maintenance_team AND res_users", force: :cascade do |t|
@@ -5973,39 +4908,39 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["res_users_id"], name: "maintenance_team_users_rel_res_users_id_idx"
   end
 
-  create_table "mass_editing_wizard", id: :serial, comment: "mass.editing.wizard", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "mass_mailing_ir_attachments_rel", id: false, comment: "RELATION BETWEEN mail_mass_mailing AND ir_attachment", force: :cascade do |t|
-    t.integer "mass_mailing_id", null: false
-    t.integer "attachment_id", null: false
-    t.index ["attachment_id"], name: "mass_mailing_ir_attachments_rel_attachment_id_idx"
-    t.index ["mass_mailing_id", "attachment_id"], name: "mass_mailing_ir_attachments_r_mass_mailing_id_attachment_id_key", unique: true
-    t.index ["mass_mailing_id"], name: "mass_mailing_ir_attachments_rel_mass_mailing_id_idx"
-  end
-
-  create_table "mass_object", id: :serial, comment: "Mass Editing Object", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "model_id", null: false, comment: "Model"
-    t.integer "ref_ir_act_window_id", comment: "Sidebar action"
-    t.string "model_list", comment: "Model List"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name"], name: "mass_object_name_index"
-  end
-
   create_table "meeting_category_rel", id: false, comment: "RELATION BETWEEN calendar_event AND calendar_event_type", force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "type_id", null: false
     t.index ["event_id", "type_id"], name: "meeting_category_rel_event_id_type_id_key", unique: true
     t.index ["event_id"], name: "meeting_category_rel_event_id_idx"
     t.index ["type_id"], name: "meeting_category_rel_type_id_idx"
+  end
+
+  create_table "membership_invoice", id: :serial, comment: "Membership Invoice", force: :cascade do |t|
+    t.integer "product_id", null: false, comment: "Membership"
+    t.decimal "member_price", null: false, comment: "Member Price"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "membership_membership_line", id: :serial, comment: "membership.membership_line", force: :cascade do |t|
+    t.integer "partner", comment: "Partner"
+    t.integer "membership_id", null: false, comment: "Membership"
+    t.date "date_from", comment: "From"
+    t.date "date_to", comment: "To"
+    t.date "date_cancel", comment: "Cancel date"
+    t.date "date", comment: "Join Date"
+    t.decimal "member_price", null: false, comment: "Membership Fee"
+    t.integer "account_invoice_line", comment: "Account Invoice line"
+    t.integer "company_id", comment: "Company"
+    t.string "state", comment: "Membership Status"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.index ["partner"], name: "membership_membership_line_partner_index"
   end
 
   create_table "merge_opportunity_rel", id: false, comment: "RELATION BETWEEN crm_merge_opportunity AND crm_lead", force: :cascade do |t|
@@ -6024,111 +4959,13 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["message_id"], name: "message_attachment_rel_message_id_idx"
   end
 
-  create_table "muk_autovacuum_rules", id: :serial, comment: "Auto Vacuum Rules", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.string "name", null: false, comment: "Name"
-    t.boolean "active", comment: "Active"
-    t.string "state", null: false, comment: "Rule Type"
-    t.integer "sequence", null: false, comment: "Sequence"
-    t.integer "model", null: false, comment: "Model"
-    t.string "model_name", comment: "Model Name"
-    t.integer "time_field", comment: "Time Field"
-    t.string "time_type", comment: "Time Unit"
-    t.integer "time", comment: "Time"
-    t.string "size_type", comment: "Size Type"
-    t.integer "size_parameter", comment: "System Parameter"
-    t.string "size_order", comment: "Size Order"
-    t.integer "size", comment: "Size"
-    t.string "domain", comment: "Domain"
-    t.text "code", comment: "Code"
-    t.boolean "protect_starred", comment: "Protect Starred"
-    t.boolean "only_inactive", comment: "Only Archived"
-    t.boolean "only_attachments", comment: "Only Attachments"
-  end
-
-  create_table "muk_web_client_notification_send_notifications", id: :serial, comment: "muk_web_client_notification.send_notifications", force: :cascade do |t|
-    t.string "type", null: false, comment: "Type"
-    t.string "title", null: false, comment: "Title"
-    t.text "message", null: false, comment: "Message"
-    t.boolean "sticky", comment: "Sticky"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "muk_web_client_notification_user_rel", id: false, comment: "RELATION BETWEEN muk_web_client_notification_send_notifications AND res_users", force: :cascade do |t|
-    t.integer "wizard_id", null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "muk_web_client_notification_user_rel_user_id_idx"
-    t.index ["wizard_id", "user_id"], name: "muk_web_client_notification_user_rel_wizard_id_user_id_key", unique: true
-    t.index ["wizard_id"], name: "muk_web_client_notification_user_rel_wizard_id_idx"
-  end
-
-  create_table "note_note", id: :serial, comment: "Note", force: :cascade do |t|
-    t.text "name", comment: "Note Summary"
-    t.integer "user_id", comment: "Owner"
-    t.text "memo", comment: "Note Content"
-    t.integer "sequence", comment: "Sequence"
-    t.boolean "open", comment: "Active"
-    t.date "date_done", comment: "Date done"
-    t.integer "color", comment: "Color Index"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-  end
-
-  create_table "note_stage", id: :serial, comment: "Note Stage", force: :cascade do |t|
-    t.string "name", null: false, comment: "Stage Name"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "user_id", null: false, comment: "Owner"
-    t.boolean "fold", comment: "Folded by Default"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "note_stage_rel", id: false, comment: "RELATION BETWEEN note_note AND note_stage", force: :cascade do |t|
-    t.integer "note_id", null: false
-    t.integer "stage_id", null: false
-    t.index ["note_id", "stage_id"], name: "note_stage_rel_note_id_stage_id_key", unique: true
-    t.index ["note_id"], name: "note_stage_rel_note_id_idx"
-    t.index ["stage_id"], name: "note_stage_rel_stage_id_idx"
-  end
-
-  create_table "note_tag", id: :serial, comment: "Note Tag", force: :cascade do |t|
-    t.string "name", null: false, comment: "Tag Name"
-    t.integer "color", comment: "Color Index"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name"], name: "note_tag_name_uniq", unique: true
-  end
-
-  create_table "note_tags_rel", id: false, comment: "RELATION BETWEEN note_note AND note_tag", force: :cascade do |t|
-    t.integer "note_id", null: false
-    t.integer "tag_id", null: false
-    t.index ["note_id", "tag_id"], name: "note_tags_rel_note_id_tag_id_key", unique: true
-    t.index ["note_id"], name: "note_tags_rel_note_id_idx"
-    t.index ["tag_id"], name: "note_tags_rel_tag_id_idx"
-  end
-
   create_table "op_activity", id: :serial, comment: "op.activity", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "student_id", null: false, comment: "Student"
     t.integer "faculty_id", comment: "Faculty"
     t.integer "type_id", comment: "Activity Type"
     t.text "description", comment: "Description"
     t.date "date", comment: "Date"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -6185,8 +5022,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "company_id", comment: "Company"
-    t.string "full_name", comment: "Full name"
-    t.string "note", comment: "Sale Order"
+    t.string "note", comment: "Note"
     t.integer "sale_order_id", comment: "Sale Order"
     t.integer "sale_order_line_id", comment: "Sale Order Line"
     t.string "admission_type", comment: "Type"
@@ -6195,9 +5031,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.float "retain_rate", comment: "Retention Rate %"
     t.boolean "retained", comment: "Retained"
     t.string "admission_mode", comment: "Mode"
-    t.boolean "last_subject", comment: "Last Subject Sessions Created?"
     t.boolean "last_subject_sessions_created", comment: "Last Subject Sessions Created?"
-    t.integer "claim_id", comment: "Claim"
+    t.string "full_name", comment: "Full name"
   end
 
   create_table "op_admission_register", id: :serial, comment: "Admission Register", force: :cascade do |t|
@@ -6215,6 +5050,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "company_id", comment: "Company"
+    t.boolean "already_batch", comment: "Already Student"
     t.integer "batch_id", comment: "Batch"
   end
 
@@ -6316,7 +5152,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_attendance_line", id: :serial, comment: "op.attendance.line", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "attendance_id", null: false, comment: "Attendance Sheet"
     t.integer "student_id", null: false, comment: "Student"
     t.boolean "present", comment: "Present ?"
@@ -6325,25 +5160,22 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "remark", limit: 256, comment: "Remark"
     t.date "attendance_date", comment: "Date"
     t.integer "register_id", comment: "Register"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.string "state_evaluate", comment: "Lựa chọn đánh giá"
     t.integer "session_id", comment: "Session"
     t.integer "company_id", comment: "Company"
     t.string "knowledge1", comment: "Khả năng tiếp thu kiến thức bài học mới"
     t.string "knowledge2", comment: "Khả năng sáng tạo, phát triển ý tưởng bài học"
-    t.string "knowledge3", comment: "Khả năng tiếp thu kiến thức bài học mới"
+    t.string "knowledge3", comment: "Khả năng áp dụng các kiến thức đã học vào bài học mới"
     t.string "knowledge4", comment: "Hoàn thành bài tập về nhà"
-    t.string "attitude1", comment: "Khả năng tập trung, chú ý nghe giảng"
-    t.string "attitude2", comment: "Tinh thần phát biểu, xây dựng bài học"
-    t.string "attitude3", comment: "Tham gia các hoạt động trong lớp"
+    t.string "attitude1", comment: "Ý thức học tập, khả năng tập trung và chú ý nghe giảng"
+    t.string "attitude2", comment: "Tinh thần phát biểu xây dựng bài học và tham gia các hoạt động trong lớp"
     t.string "skill1", comment: "Khả năng làm việc nhóm"
     t.string "skill2", comment: "Kỹ năng thuyết trình"
-    t.text "note", comment: "Nhận xét khác"
-    t.text "picture_link", comment: "Link ảnh"
-    t.text "product_link", comment: "Link sản phẩm"
-    t.string "state_evaluate", comment: "Lựa chọn đánh giá"
     t.string "category_finish", comment: "Tốc độ hoàn thành các hoạt động trong lớp"
     t.string "category_old_ideas", comment: "Mức độ học sinh vận dụng các kiến thức cũ trong bài học mới"
     t.string "category_skill", comment: "Mức độ học sinh có thể áp dụng các kỹ năng từ các bài đã học trong bài học mới"
@@ -6362,12 +5194,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_attendance_register", id: :serial, comment: "op.attendance.register", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Name"
     t.string "code", comment: "Code"
     t.integer "course_id", null: false, comment: "Course"
     t.integer "batch_id", null: false, comment: "Batch"
     t.integer "subject_id", comment: "Subject"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -6376,7 +5208,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_attendance_sheet", id: :serial, comment: "op.attendance.sheet", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", comment: "Name"
     t.integer "register_id", comment: "Register"
     t.integer "course_id", comment: "Course"
@@ -6384,19 +5215,20 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "session_id", comment: "Session"
     t.date "attendance_date", comment: "Date"
     t.integer "faculty_id", comment: "Faculty"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.string "faculty_name", comment: "Faculty"
+    t.text "note", comment: "Target"
+    t.integer "subject_id", comment: "Subject"
     t.string "state", comment: "State"
     t.integer "tutors_id", comment: "Tutors"
     t.integer "company_id", comment: "Company"
-    t.text "note", comment: "Target"
-    t.integer "subject_id", comment: "Subject"
+    t.string "faculty_name", comment: "Faculty"
     t.string "exercise", comment: "Link bài tập về nhà"
-    t.integer "lession_id", comment: "Lesson"
     t.text "picture_link", comment: "Link ảnh"
+    t.integer "lession_id", comment: "Lesson"
     t.index ["register_id", "session_id", "attendance_date"], name: "op_attendance_sheet_unique_register_sheet", unique: true
   end
 
@@ -6451,21 +5283,25 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "company_id", comment: "Company"
+    t.boolean "active", comment: "Active"
     t.integer "type_id", comment: "Type"
     t.string "level", comment: "Level"
-    t.integer "total", comment: "Total Students"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.string "select_place", comment: "Select Place"
     t.string "lang", comment: "Lang"
     t.string "select_type", comment: "Select Type"
-    t.string "state", comment: "State"
-    t.boolean "active", comment: "Active"
+    t.string "state", comment: "Status"
     t.integer "register_id", comment: "Admission Register"
     t.integer "sesion_per_week", comment: "Session per week"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.date "activity_date_deadline", comment: "Next Activity Deadline"
+    t.boolean "already_batch", comment: "Already Student"
+    t.integer "batch_id", comment: "Batch"
     t.string "note_time", comment: "Giờ học dự kiến"
     t.text "lesson_link", comment: "Link bài tập"
+    t.string "check_send_email", comment: "Gửi email bài tập"
+    t.string "check_corona", comment: "Gửi email nghỉ học"
+    t.string "parent_email", comment: "Email parent"
     t.index ["code"], name: "op_batch_unique_batch_code", unique: true
   end
 
@@ -6508,18 +5344,18 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "center_id", comment: "Center"
     t.boolean "active", comment: "Active"
+    t.integer "center_id", comment: "Center"
     t.index ["code"], name: "op_classroom_unique_classroom_code", unique: true
   end
 
   create_table "op_classroom_report_wizard", id: :serial, comment: "op.classroom.report_wizard", force: :cascade do |t|
     t.integer "center_id", comment: "Center"
+    t.integer "classroom_id", comment: "Classroom"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "classroom_id", comment: "Classroom"
   end
 
   create_table "op_course", id: :serial, comment: "op.course", force: :cascade do |t|
@@ -6534,11 +5370,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "fees_term_id", comment: "Fees Term"
     t.integer "company_id", comment: "Company"
+    t.integer "fees_term_id", comment: "Fees Term"
     t.string "sequence_next", comment: "Mã số bắt đầu"
-    t.integer "categ_id", comment: "Course Category"
     t.boolean "active", comment: "Active"
+    t.integer "categ_id", comment: "Course Category"
     t.index ["code"], name: "op_course_unique_course_code", unique: true
   end
 
@@ -6567,7 +5403,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_exam", id: :serial, comment: "Exam", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "session_id", comment: "Exam Session"
     t.integer "course_id", comment: "Course"
     t.integer "batch_id", comment: "Batch"
@@ -6580,6 +5415,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "name", null: false, comment: "Exam"
     t.integer "total_marks", null: false, comment: "Total Marks"
     t.integer "min_marks", null: false, comment: "Passing Marks"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -6638,7 +5474,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_exam_session", id: :serial, comment: "Exam Session", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Exam Session"
     t.integer "course_id", null: false, comment: "Course"
     t.integer "batch_id", null: false, comment: "Batch"
@@ -6648,6 +5483,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "exam_type", null: false, comment: "Exam Type"
     t.string "evaluation_type", null: false, comment: "Evolution type"
     t.integer "venue", comment: "Venue"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -6701,15 +5537,15 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "library_card_id", comment: "Library Card"
     t.integer "company_id", comment: "Company"
-    t.string "full_name", comment: "Full name"
+    t.integer "library_card_id", comment: "Library Card"
     t.string "status", comment: "Tình trạng giảng viên"
     t.integer "related_user", comment: "Related User"
+    t.string "full_name", comment: "Full name"
     t.string "faculty_level", comment: "Level of falcuty"
     t.string "type_of_faculty", comment: "Type of faculty"
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "ranking", comment: "Ranking"
+    t.datetime "message_last_post", comment: "Last Message Date"
   end
 
   create_table "op_faculty_op_subject_rel", id: false, comment: "RELATION BETWEEN op_faculty AND op_subject", force: :cascade do |t|
@@ -6760,13 +5596,13 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_gamification_badge", id: :serial, comment: "Gamification badge", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.string "rule_auth", null: false, comment: "Allowance to Grant"
-    t.boolean "rule_max", comment: "Monthly Limited Sending"
-    t.integer "rule_max_number", comment: "Limitation Number"
     t.string "name", null: false, comment: "Badge"
     t.boolean "active", comment: "Active"
     t.text "description", comment: "Description"
+    t.string "rule_auth", null: false, comment: "Allowance to Grant"
+    t.boolean "rule_max", comment: "Monthly Limited Sending"
+    t.integer "rule_max_number", comment: "Limitation Number"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -6805,14 +5641,13 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   create_table "op_lession", id: :serial, comment: "op.lession", force: :cascade do |t|
     t.string "code", comment: "Code"
     t.integer "subject_id", null: false, comment: "Subject"
-    t.integer "lession_number", comment: "lession number"
+    t.integer "lession_number", comment: "lesson number"
     t.text "name", null: false, comment: "Name"
     t.text "note", null: false, comment: "Target"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.text "learning_devices", comment: "Learning Devices"
   end
 
   create_table "op_library_card", id: :serial, comment: "Library Card", force: :cascade do |t|
@@ -6852,13 +5687,13 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_marksheet_register", id: :serial, comment: "op.marksheet.register", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "exam_session_id", null: false, comment: "Exam Session"
     t.date "generated_date", null: false, comment: "Generated Date"
     t.integer "generated_by", null: false, comment: "Generated By"
     t.string "status", null: false, comment: "Status"
     t.string "name", null: false, comment: "Marksheet Register"
     t.integer "result_template_id", null: false, comment: "Result Template"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -6882,7 +5717,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_media_movement", id: :serial, comment: "Media Movement", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "media_id", null: false, comment: "Media"
     t.integer "media_unit_id", null: false, comment: "Media Unit"
     t.string "type", null: false, comment: "Student/Faculty"
@@ -6898,6 +5732,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "state", comment: "Status"
     t.integer "media_type_id", comment: "Media Type"
     t.integer "invoice_id", comment: "Invoice"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -6931,7 +5766,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_media_purchase", id: :serial, comment: "Media Purchase Request", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", limit: 128, null: false, comment: "Title"
     t.string "author", limit: 256, null: false, comment: "Author(s)"
     t.string "edition", comment: "Edition"
@@ -6941,6 +5775,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "requested_id", comment: "Requested By"
     t.string "state", comment: "State"
     t.integer "media_type_id", comment: "Media Type"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -6948,7 +5783,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_media_queue", id: :serial, comment: "Media Queue Request", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", comment: "Sequence No"
     t.integer "partner_id", comment: "Student/Faculty"
     t.integer "media_id", null: false, comment: "Media"
@@ -6956,6 +5790,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.date "date_to", null: false, comment: "To Date"
     t.integer "user_id", comment: "User"
     t.string "state", comment: "Status"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -6973,12 +5808,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_media_unit", id: :serial, comment: "Media Unit", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", null: false, comment: "Name"
     t.integer "media_id", null: false, comment: "Media"
     t.string "barcode", limit: 20, comment: "Barcode"
     t.string "state", comment: "State"
     t.integer "media_type_id", comment: "Media Type"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -7029,12 +5864,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_result_template", id: :serial, comment: "Result Template", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "exam_session_id", null: false, comment: "Exam Session"
     t.string "evaluation_type", comment: "Evolution type"
     t.string "name", null: false, comment: "Name"
     t.date "result_date", null: false, comment: "Result Date"
     t.string "state", comment: "State"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -7065,7 +5900,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_session", id: :serial, comment: "Sessions", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", comment: "Name"
     t.integer "timing_id", null: false, comment: "Timing"
     t.datetime "start_datetime", null: false, comment: "Start Time"
@@ -7078,52 +5912,41 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "color", comment: "Color Index"
     t.string "type", comment: "Day"
     t.string "state", comment: "Status"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "company_id", comment: "Company"
-    t.integer "user_id", comment: "User"
-    t.boolean "is_offset", comment: "Offset"
-    t.integer "level", comment: "Level"
-    t.boolean "sendEmail", comment: "Đã gửi thư mời giảng"
-    t.boolean "send_email", comment: "Đã gửi thư mời giảng"
-    t.string "count", comment: "Status"
-    t.string "attendance_state", comment: "Attendance State"
-    t.datetime "check_in_time", comment: "Check-in"
-    t.string "check_in_state", comment: "Check-in Status"
-    t.boolean "is_observed", comment: "Observed?"
-    t.integer "observe_faculty", comment: "Class Observer"
-    t.text "observe_report", comment: "Observation Report"
-    t.string "observe_link", comment: "Report Link"
-    t.text "teacher", comment: "Evaluation for teachers"
-    t.boolean "teacher_tick", comment: "Livestream"
-    t.boolean "check_teacher", comment: "Check Evaluation"
-    t.integer "assessor", comment: "Assessor"
-    t.datetime "evaluation_date", comment: "Evaluation Date"
-    t.boolean "attend_match", comment: "Attendance info is matching?"
-    t.float "time_count", comment: "Time count"
-    t.integer "batch_count", comment: "Batch Count"
-    t.integer "course_categ", comment: "Course Category"
     t.integer "salary", comment: "Salary"
-    t.string "select_language", comment: "Select Language"
-    t.string "select_place", comment: "Select Place"
-    t.integer "student_course_id", comment: "Admission Details"
-    t.string "faculty_level", comment: "Level of falcuty"
-    t.string "type_of_faculty", comment: "Type of faculty"
     t.string "language", comment: "Language"
     t.string "select_place_related", comment: "Select Place"
     t.string "reason_cancel_class", comment: "Select Reason Cancel"
     t.string "reason_cancel", comment: "Lí do"
+    t.string "faculty_level", comment: "Level of falcuty"
+    t.string "type_of_faculty", comment: "Type of faculty"
+    t.integer "batch_count", comment: "Batch Count"
+    t.integer "company_id", comment: "Company"
+    t.integer "student_course_id", comment: "Admission Details"
+    t.string "count", comment: "Count"
+    t.boolean "is_offset", comment: "Offset"
     t.string "select_type", comment: "Select Type"
+    t.string "attendance_state", comment: "Attendance State"
+    t.datetime "check_in_time", comment: "Check-in"
+    t.string "check_in_state", comment: "Check-in Status"
+    t.text "teacher", comment: "Evaluation for teachers"
+    t.boolean "teacher_tick", comment: "Livestream"
     t.boolean "last_session", comment: "Cuối khóa"
+    t.boolean "check_teacher", comment: "Check Evaluation"
+    t.integer "assessor", comment: "Assessor"
+    t.datetime "evaluation_date", comment: "Evaluation Date"
+    t.boolean "attend_match", comment: "Attendance informations match"
+    t.float "time_count", comment: "Time count"
+    t.integer "course_categ", comment: "Course Category"
     t.integer "logistic_line_count", comment: "Logistic Count"
     t.string "logistic_note", comment: "Note"
     t.text "logistic_comment", comment: "Comment"
     t.float "salary_before", comment: "Lương trước khi phạt"
     t.float "salary_per_hour", comment: "Lương theo giờ"
-    t.boolean "active", comment: "Active"
-    t.integer "lession_id", comment: "Lesson"
   end
 
   create_table "op_session_change_faculty", id: :serial, comment: "op.session.change.faculty", force: :cascade do |t|
@@ -7158,19 +5981,17 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   create_table "op_session_student", id: :serial, comment: "op.session.student", force: :cascade do |t|
     t.integer "session_id", comment: "Session"
     t.integer "student_course_id", comment: "Admission Details"
-    t.boolean "is_presend", comment: "Presend"
-    t.text "note", comment: "Note"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "is_present", comment: "Presend"
     t.boolean "present", comment: "Present"
+    t.text "note", comment: "Note"
     t.integer "batch_id", comment: "Batch"
     t.datetime "start_datetime", comment: "Start Time"
     t.datetime "end_datetime", comment: "End Time"
     t.integer "company_id", comment: "Company"
     t.integer "classroom_id", comment: "Classroom"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "op_student", id: :serial, comment: "op.student", force: :cascade do |t|
@@ -7191,25 +6012,24 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "library_card_id", comment: "Library Card"
     t.integer "company_id", comment: "Company"
-    t.string "full_name", comment: "Full name"
-    t.string "parent_mail", comment: "Parent email"
-    t.integer "parent_id", comment: "Parent email"
-    t.string "state", comment: "State"
+    t.integer "library_card_id", comment: "Library Card"
     t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.datetime "message_last_post", comment: "Last Message Date"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.string "full_name", comment: "Full name"
+    t.integer "parent_id", comment: "Parent email"
     t.string "code", comment: "Code"
     t.integer "course_id", comment: "Course"
     t.integer "batch_id", comment: "Batch"
-    t.boolean "active", comment: "Active"
+    t.string "state", comment: "Status"
     t.integer "age", comment: "Age"
-    t.datetime "real_start_date", comment: "Start Date"
-    t.datetime "real_end_date", comment: "End Date"
-    t.float "duration", comment: "Durarion (Days)"
     t.string "birth_dd", comment: "Birth Day"
     t.string "birth_mm", comment: "Birth Month"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.datetime "real_start_date", comment: "Start Date"
+    t.datetime "real_end_date", comment: "End Date"
+    t.float "duration", comment: "Duration (Days)"
+    t.boolean "active", comment: "Active"
     t.string "parent_email", comment: "Parent email"
   end
 
@@ -7237,19 +6057,19 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "company_id", comment: "Company"
     t.string "state", comment: "State"
+    t.boolean "manual_state", comment: "Manual State"
+    t.integer "company_id", comment: "Company"
     t.boolean "active", comment: "Active"
     t.date "reserve_from", comment: "Reserve From"
     t.date "reserve_to", comment: "Reserve To"
     t.text "reserve_note", comment: "Reservation Note"
-    t.boolean "manual_state", comment: "Manual State"
     t.datetime "start_date", comment: "Start Date"
     t.datetime "end_date", comment: "End Date"
     t.integer "categ_id", comment: "Course Category"
     t.string "gender", comment: "Gender"
     t.date "birth_date", comment: "Birth Date"
-    t.text "lesson_link", comment: "Link bài tập"
+    t.text "lesson_link", comment: "Link"
     t.string "parent_email", comment: "Parent email"
     t.index ["roll_number", "course_id", "batch_id", "student_id"], name: "op_student_course_unique_name_roll_number_id", unique: true
     t.index ["roll_number", "course_id", "batch_id"], name: "op_student_course_unique_name_roll_number_course_id", unique: true
@@ -7286,9 +6106,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["student_migrate_id"], name: "op_student_student_migrate_rel_student_migrate_id_idx"
   end
 
-  create_table "op_student_subject", id: false, force: :cascade do |t|
-    t.integer "student_course_id"
-    t.integer "subject_id"
+  create_table "op_student_subject", id: false, comment: "RELATION BETWEEN op_student_course AND op_subject", force: :cascade do |t|
+    t.integer "student_course_id", null: false
+    t.integer "subject_id", null: false
+    t.index ["student_course_id", "subject_id"], name: "op_student_subject_student_course_id_subject_id_key", unique: true
+    t.index ["student_course_id"], name: "op_student_subject_student_course_id_idx"
+    t.index ["subject_id"], name: "op_student_subject_subject_id_idx"
   end
 
   create_table "op_student_wizard_op_student_rel", id: false, comment: "RELATION BETWEEN wizard_op_student AND op_student", force: :cascade do |t|
@@ -7311,9 +6134,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "company_id", comment: "Company"
     t.integer "course_id", comment: "Course"
+    t.boolean "active", comment: "Active"
     t.integer "total_session", comment: "Total Session"
     t.integer "level", comment: "Level"
-    t.boolean "active", comment: "Active"
     t.index ["code"], name: "op_subject_unique_subject_code", unique: true
   end
 
@@ -7326,7 +6149,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "op_subject_registration", id: :serial, comment: "op.subject.registration", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", comment: "Name"
     t.integer "student_id", null: false, comment: "Student"
     t.integer "course_id", null: false, comment: "Course"
@@ -7334,6 +6156,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.string "state", comment: "state"
     t.float "max_unit_load", comment: "Maximum Unit Load"
     t.float "min_unit_load", comment: "Minimum Unit Load"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -7462,17 +6285,15 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "create_uid", comment: "Created by"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "sale_order_id", comment: "Sales Order"
-    t.integer "account_invoice_id", comment: "Invoice"
   end
 
-  create_table "payslip_lines_contribution_register", id: :serial, comment: "PaySlip Lines by Contribution Registers", force: :cascade do |t|
-    t.date "date_from", null: false, comment: "Date From"
-    t.date "date_to", null: false, comment: "Date To"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
+  create_table "photos", force: :cascade do |t|
+    t.bigint "op_session_id"
+    t.bigint "album_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["album_id"], name: "index_photos_on_album_id"
+    t.index ["op_session_id"], name: "index_photos_on_op_session_id"
   end
 
   create_table "portal_wizard", id: :serial, comment: "Portal Access Management", force: :cascade do |t|
@@ -7496,210 +6317,18 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "pos_category", id: :serial, comment: "PoS Category", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "parent_id", comment: "Parent Category"
-    t.integer "sequence", comment: "Sequence"
+  create_table "posts", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "print_prenumbered_checks", id: :serial, comment: "Print Pre-numbered Checks", force: :cascade do |t|
+    t.integer "next_check_number", null: false, comment: "Next Check Number"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.index ["parent_id"], name: "pos_category_parent_id_index"
-  end
-
-  create_table "pos_config", id: :serial, comment: "pos.config", force: :cascade do |t|
-    t.string "name", null: false, comment: "Point of Sale Name"
-    t.integer "picking_type_id", comment: "Operation Type"
-    t.integer "stock_location_id", null: false, comment: "Stock Location"
-    t.integer "journal_id", comment: "Sales Journal"
-    t.integer "invoice_journal_id", comment: "Invoice Journal"
-    t.boolean "iface_cashdrawer", comment: "Cashdrawer"
-    t.boolean "iface_payment_terminal", comment: "Payment Terminal"
-    t.boolean "iface_electronic_scale", comment: "Electronic Scale"
-    t.boolean "iface_vkeyboard", comment: "Virtual KeyBoard"
-    t.boolean "iface_customer_facing_display", comment: "Customer Facing Display"
-    t.boolean "iface_print_via_proxy", comment: "Print via Proxy"
-    t.boolean "iface_scan_via_proxy", comment: "Scan via Proxy"
-    t.boolean "iface_invoicing", comment: "Invoicing"
-    t.boolean "iface_big_scrollbars", comment: "Large Scrollbars"
-    t.boolean "iface_print_auto", comment: "Automatic Receipt Printing"
-    t.boolean "iface_print_skip_screen", comment: "Skip Preview Screen"
-    t.boolean "iface_precompute_cash", comment: "Prefill Cash Payment"
-    t.string "iface_tax_included", null: false, comment: "Tax Display"
-    t.integer "iface_start_categ_id", comment: "Initial Category"
-    t.boolean "iface_display_categ_images", comment: "Display Category Pictures"
-    t.boolean "restrict_price_control", comment: "Restrict Price Modifications to Managers"
-    t.boolean "cash_control", comment: "Cash Control"
-    t.text "receipt_header", comment: "Receipt Header"
-    t.text "receipt_footer", comment: "Receipt Footer"
-    t.string "proxy_ip", limit: 45, comment: "IP Address"
-    t.boolean "active", comment: "Active"
-    t.string "uuid", comment: "Uuid"
-    t.integer "sequence_id", comment: "Order IDs Sequence"
-    t.integer "sequence_line_id", comment: "Order Line IDs Sequence"
-    t.boolean "group_by", comment: "Group Journal Items"
-    t.integer "pricelist_id", null: false, comment: "Default Pricelist"
-    t.integer "company_id", null: false, comment: "Company"
-    t.integer "barcode_nomenclature_id", comment: "Barcode Nomenclature"
-    t.integer "group_pos_manager_id", comment: "Point of Sale Manager Group"
-    t.integer "group_pos_user_id", comment: "Point of Sale User Group"
-    t.boolean "iface_tipproduct", comment: "Product tips"
-    t.integer "tip_product_id", comment: "Tip Product"
-    t.integer "default_fiscal_position_id", comment: "Default Fiscal Position"
-    t.text "customer_facing_display_html", comment: "Customer facing display content"
-    t.boolean "use_pricelist", comment: "Use a pricelist."
-    t.boolean "group_sale_pricelist", comment: "Use pricelists to adapt your price per customers"
-    t.boolean "group_pricelist_item", comment: "Show pricelists to customers"
-    t.boolean "tax_regime", comment: "Tax Regime"
-    t.boolean "tax_regime_selection", comment: "Tax Regime Selection value"
-    t.boolean "barcode_scanner", comment: "Barcode Scanner"
-    t.boolean "start_category", comment: "Set Start Category"
-    t.boolean "module_pos_restaurant", comment: "Is a Bar/Restaurant"
-    t.boolean "module_pos_discount", comment: "Global Discounts"
-    t.boolean "module_pos_loyalty", comment: "Loyalty Program"
-    t.boolean "module_pos_mercury", comment: "Integrated Card Payments"
-    t.boolean "module_pos_reprint", comment: "Reprint Receipt"
-    t.boolean "is_posbox", comment: "PosBox"
-    t.boolean "is_header_or_footer", comment: "Header & Footer"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name"], name: "pos_config_name_index"
-  end
-
-  create_table "pos_config_journal_rel", id: false, comment: "RELATION BETWEEN pos_config AND account_journal", force: :cascade do |t|
-    t.integer "pos_config_id", null: false
-    t.integer "journal_id", null: false
-    t.index ["journal_id"], name: "pos_config_journal_rel_journal_id_idx"
-    t.index ["pos_config_id", "journal_id"], name: "pos_config_journal_rel_pos_config_id_journal_id_key", unique: true
-    t.index ["pos_config_id"], name: "pos_config_journal_rel_pos_config_id_idx"
-  end
-
-  create_table "pos_config_product_pricelist_rel", id: false, comment: "RELATION BETWEEN pos_config AND product_pricelist", force: :cascade do |t|
-    t.integer "pos_config_id", null: false
-    t.integer "product_pricelist_id", null: false
-    t.index ["pos_config_id", "product_pricelist_id"], name: "pos_config_product_pricelist__pos_config_id_product_priceli_key", unique: true
-    t.index ["pos_config_id"], name: "pos_config_product_pricelist_rel_pos_config_id_idx"
-    t.index ["product_pricelist_id"], name: "pos_config_product_pricelist_rel_product_pricelist_id_idx"
-  end
-
-  create_table "pos_detail_configs", id: false, comment: "RELATION BETWEEN pos_details_wizard AND pos_config", force: :cascade do |t|
-    t.integer "pos_details_wizard_id", null: false
-    t.integer "pos_config_id", null: false
-    t.index ["pos_config_id"], name: "pos_detail_configs_pos_config_id_idx"
-    t.index ["pos_details_wizard_id", "pos_config_id"], name: "pos_detail_configs_pos_details_wizard_id_pos_config_id_key", unique: true
-    t.index ["pos_details_wizard_id"], name: "pos_detail_configs_pos_details_wizard_id_idx"
-  end
-
-  create_table "pos_details_wizard", id: :serial, comment: "Open Sales Details Report", force: :cascade do |t|
-    t.datetime "start_date", null: false, comment: "Start Date"
-    t.datetime "end_date", null: false, comment: "End Date"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "pos_discount", id: :serial, comment: "Add a Global Discount", force: :cascade do |t|
-    t.decimal "discount", null: false, comment: "Discount (%)"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "pos_make_payment", id: :serial, comment: "Point of Sale Payment", force: :cascade do |t|
-    t.integer "session_id", null: false, comment: "Session"
-    t.integer "journal_id", null: false, comment: "Payment Mode"
-    t.decimal "amount", null: false, comment: "Amount"
-    t.string "payment_name", comment: "Payment Reference"
-    t.date "payment_date", null: false, comment: "Payment Date"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "pos_open_statement", id: :serial, comment: "Open Statements", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "pos_order", id: :serial, comment: "Point of Sale Orders", force: :cascade do |t|
-    t.string "name", null: false, comment: "Order Ref"
-    t.integer "company_id", null: false, comment: "Company"
-    t.datetime "date_order", comment: "Order Date"
-    t.integer "user_id", comment: "Salesman"
-    t.integer "pricelist_id", null: false, comment: "Pricelist"
-    t.integer "partner_id", comment: "Customer"
-    t.integer "sequence_number", comment: "Sequence Number"
-    t.integer "session_id", null: false, comment: "Session"
-    t.string "state", comment: "Status"
-    t.integer "invoice_id", comment: "Invoice"
-    t.integer "account_move", comment: "Journal Entry"
-    t.integer "picking_id", comment: "Picking"
-    t.integer "location_id", comment: "Location"
-    t.text "note", comment: "Internal Notes"
-    t.integer "nb_print", comment: "Number of Print"
-    t.string "pos_reference", comment: "Receipt Ref"
-    t.integer "sale_journal", comment: "Sales Journal"
-    t.integer "fiscal_position_id", comment: "Fiscal Position"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["date_order"], name: "pos_order_date_order_index"
-    t.index ["partner_id"], name: "pos_order_partner_id_index"
-    t.index ["session_id"], name: "pos_order_session_id_index"
-  end
-
-  create_table "pos_order_line", id: :serial, comment: "Lines of Point of Sale Orders", force: :cascade do |t|
-    t.integer "company_id", null: false, comment: "Company"
-    t.string "name", null: false, comment: "Line No"
-    t.string "notice", comment: "Discount Notice"
-    t.integer "product_id", null: false, comment: "Product"
-    t.decimal "price_unit", comment: "Unit Price"
-    t.decimal "qty", comment: "Quantity"
-    t.decimal "discount", comment: "Discount (%)"
-    t.integer "order_id", comment: "Order Ref"
-    t.datetime "create_date", comment: "Creation Date"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "pos_pack_operation_lot", id: :serial, comment: "Specify product lot/serial number in pos order line", force: :cascade do |t|
-    t.integer "pos_order_line_id", comment: "Pos Order Line"
-    t.string "lot_name", comment: "Lot Name"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "pos_session", id: :serial, comment: "pos.session", force: :cascade do |t|
-    t.integer "config_id", null: false, comment: "Point of Sale"
-    t.string "name", null: false, comment: "Session ID"
-    t.integer "user_id", null: false, comment: "Responsible"
-    t.datetime "start_at", comment: "Opening Date"
-    t.datetime "stop_at", comment: "Closing Date"
-    t.string "state", null: false, comment: "Status"
-    t.integer "sequence_number", comment: "Order Sequence Number"
-    t.integer "login_number", comment: "Login Sequence Number"
-    t.integer "cash_journal_id", comment: "Cash Journal"
-    t.integer "cash_register_id", comment: "Cash Register"
-    t.boolean "rescue", comment: "Recovery Session"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["config_id"], name: "pos_session_config_id_index"
-    t.index ["name"], name: "pos_session_uniq_name", unique: true
-    t.index ["state"], name: "pos_session_state_index"
-    t.index ["user_id"], name: "pos_session_user_id_index"
   end
 
   create_table "product_attribute", id: :serial, comment: "Product Attribute", force: :cascade do |t|
@@ -7774,17 +6403,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["parent_right"], name: "product_category_parent_right_index"
   end
 
-  create_table "product_margin", id: :serial, comment: "Product Margin", force: :cascade do |t|
-    t.date "from_date", comment: "From"
-    t.date "to_date", comment: "To"
-    t.string "invoice_state", null: false, comment: "Invoice State"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["invoice_state"], name: "product_margin_invoice_state_index"
-  end
-
   create_table "product_packaging", id: :serial, comment: "Packaging", force: :cascade do |t|
     t.string "name", null: false, comment: "Package Type"
     t.integer "sequence", comment: "Sequence"
@@ -7832,7 +6450,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.string "discount_policy", comment: "Discount Policy"
-    t.integer "website_id", comment: "website"
   end
 
   create_table "product_pricelist_item", id: :serial, comment: "Pricelist item", force: :cascade do |t|
@@ -7952,19 +6569,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.text "sale_line_warn_msg", comment: "Message for Sales Order Line"
     t.string "expense_policy", comment: "Re-Invoice Expenses"
     t.string "invoice_policy", comment: "Invoicing Policy"
-    t.integer "email_template_id", comment: "Product Email Template"
-    t.text "website_description", comment: "Description for the website"
-    t.string "website_meta_title", comment: "Website meta title"
-    t.text "website_meta_description", comment: "Website meta description"
-    t.string "website_meta_keywords", comment: "Website meta keywords"
-    t.boolean "website_published", comment: "Visible in Website"
-    t.float "rating_last_value", comment: "Rating Last Value"
     t.boolean "can_be_expensed", comment: "Can be Expensed"
-    t.boolean "available_in_pos", comment: "Available in Point of Sale"
-    t.boolean "to_weight", comment: "To Weigh With Scale"
-    t.integer "pos_categ_id", comment: "Point of Sale Category"
-    t.string "service_tracking", comment: "Service Tracking"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.boolean "membership", comment: "Membership"
+    t.date "membership_date_from", comment: "Membership Start Date"
+    t.date "membership_date_to", comment: "Membership End Date"
     t.index ["company_id"], name: "product_template_company_id_index"
     t.index ["name"], name: "product_template_name_index"
   end
@@ -7988,7 +6597,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "is_pos_groupable", comment: "Group Products in POS"
   end
 
   create_table "project_favorite_user_rel", id: false, comment: "RELATION BETWEEN project_project AND res_users", force: :cascade do |t|
@@ -8017,8 +6625,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "allow_timesheets", comment: "Allow timesheets"
-    t.integer "sale_line_id", comment: "Sales Order Line"
     t.index ["date"], name: "project_project_date_index"
   end
 
@@ -8041,7 +6647,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "project_task", id: :serial, comment: "Task", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.boolean "active", comment: "Active"
     t.string "name", null: false, comment: "Task Title"
     t.text "description", comment: "Description"
@@ -8072,18 +6677,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.float "working_hours_close", comment: "Working hours to close"
     t.float "working_days_open", comment: "Working days to assign"
     t.float "working_days_close", comment: "Working days to close"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.integer "create_uid", comment: "Created by"
     t.integer "write_uid", comment: "Last Updated by"
-    t.float "effective_hours", comment: "Hours Spent"
-    t.float "total_hours", comment: "Total"
-    t.float "total_hours_spent", comment: "Total Hours"
-    t.float "progress", comment: "Progress"
-    t.float "delay_hours", comment: "Delay Hours"
-    t.float "children_hours", comment: "Sub-tasks Hours"
-    t.float "rating_last_value", comment: "Rating Last Value"
-    t.integer "sale_line_id", comment: "Sales Order Item"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.index ["create_date"], name: "project_task_create_date_index"
     t.index ["date_assign"], name: "project_task_date_assign_index"
     t.index ["date_deadline"], name: "project_task_date_deadline_index"
@@ -8164,7 +6762,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["op_lession_id"], name: "index_questions_on_op_lession_id"
   end
 
-<<<<<<< HEAD
   create_table "reactions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "type", null: false
@@ -8175,49 +6772,18 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["post_id"], name: "index_reactions_on_post_id"
     t.index ["post_type"], name: "index_reactions_on_post_type"
     t.index ["user_id"], name: "index_reactions_on_user_id"
-=======
-  create_table "rating_rating", id: :serial, comment: "Rating", force: :cascade do |t|
-    t.string "res_name", comment: "Resource name"
-    t.integer "res_model_id", comment: "Related Document Model"
-    t.string "res_model", comment: "Document Model"
-    t.integer "res_id", null: false, comment: "Document"
-    t.string "parent_res_name", comment: "Parent Document Name"
-    t.integer "parent_res_model_id", comment: "Parent Related Document Model"
-    t.string "parent_res_model", comment: "Parent Document Model"
-    t.integer "parent_res_id", comment: "Parent Document"
-    t.integer "rated_partner_id", comment: "Rated person"
-    t.integer "partner_id", comment: "Customer"
-    t.float "rating", comment: "Rating"
-    t.string "rating_text", comment: "Rating"
-    t.text "feedback", comment: "Comment"
-    t.integer "message_id", comment: "Linked message"
-    t.string "access_token", comment: "Security Token"
-    t.boolean "consumed", comment: "Filled Rating"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "website_published", comment: "Published"
-    t.index ["message_id"], name: "rating_rating_message_id_index"
-    t.index ["parent_res_id"], name: "rating_rating_parent_res_id_index"
-    t.index ["parent_res_model"], name: "rating_rating_parent_res_model_index"
-    t.index ["parent_res_model_id"], name: "rating_rating_parent_res_model_id_index"
-    t.index ["res_id"], name: "rating_rating_res_id_index"
-    t.index ["res_model"], name: "rating_rating_res_model_index"
-    t.index ["res_model_id"], name: "rating_rating_res_model_id_index"
->>>>>>> 66d40abe8699d11d6f62fb7e78371eeea3608d4a
   end
 
   create_table "recruitment_source", id: :serial, comment: "Recruitment Source", force: :cascade do |t|
     t.string "name", null: false, comment: "Name"
     t.text "note", comment: "Note"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.datetime "message_last_post", comment: "Last Message Date"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
   end
 
   create_table "redeem_products", force: :cascade do |t|
@@ -8255,14 +6821,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["res_users_id"], name: "rel_badge_auth_users_res_users_id_idx"
   end
 
-  create_table "rel_channel_groups", id: false, comment: "RELATION BETWEEN slide_channel AND res_groups", force: :cascade do |t|
-    t.integer "channel_id", null: false
-    t.integer "group_id", null: false
-    t.index ["channel_id", "group_id"], name: "rel_channel_groups_channel_id_group_id_key", unique: true
-    t.index ["channel_id"], name: "rel_channel_groups_channel_id_idx"
-    t.index ["group_id"], name: "rel_channel_groups_group_id_idx"
-  end
-
   create_table "rel_modules_langexport", id: false, comment: "RELATION BETWEEN base_language_export AND ir_module_module", force: :cascade do |t|
     t.integer "wiz_id", null: false
     t.integer "module_id", null: false
@@ -8277,22 +6835,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["action_id"], name: "rel_server_actions_action_id_idx"
     t.index ["server_id", "action_id"], name: "rel_server_actions_server_id_action_id_key", unique: true
     t.index ["server_id"], name: "rel_server_actions_server_id_idx"
-  end
-
-  create_table "rel_slide_tag", id: false, comment: "RELATION BETWEEN slide_slide AND slide_tag", force: :cascade do |t|
-    t.integer "slide_id", null: false
-    t.integer "tag_id", null: false
-    t.index ["slide_id", "tag_id"], name: "rel_slide_tag_slide_id_tag_id_key", unique: true
-    t.index ["slide_id"], name: "rel_slide_tag_slide_id_idx"
-    t.index ["tag_id"], name: "rel_slide_tag_tag_id_idx"
-  end
-
-  create_table "rel_upload_groups", id: false, comment: "RELATION BETWEEN slide_channel AND res_groups", force: :cascade do |t|
-    t.integer "channel_id", null: false
-    t.integer "group_id", null: false
-    t.index ["channel_id", "group_id"], name: "rel_upload_groups_channel_id_group_id_key", unique: true
-    t.index ["channel_id"], name: "rel_upload_groups_channel_id_idx"
-    t.index ["group_id"], name: "rel_upload_groups_group_id_idx"
   end
 
   create_table "remove_draft_session", id: :serial, comment: "remove.draft.session", force: :cascade do |t|
@@ -8364,12 +6906,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "resource_calendar_id", comment: "Default Working Hours"
-    t.string "social_twitter", comment: "Twitter Account"
-    t.string "social_facebook", comment: "Facebook Account"
-    t.string "social_github", comment: "GitHub Account"
-    t.string "social_linkedin", comment: "LinkedIn Account"
-    t.string "social_youtube", comment: "Youtube Account"
-    t.string "social_googleplus", comment: "Google+ Account"
     t.integer "fiscalyear_last_day", null: false, comment: "Fiscalyear Last Day"
     t.integer "fiscalyear_last_month", null: false, comment: "Fiscalyear Last Month"
     t.date "period_lock_date", comment: "Lock Date for Non-Advisers"
@@ -8396,19 +6932,21 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.boolean "account_setup_coa_done", comment: "Chart of Account Checked"
     t.boolean "account_setup_bar_closed", comment: "Setup Bar Closed"
     t.text "sale_note", comment: "Default Terms and Conditions"
-    t.boolean "vat_check_vies", comment: "Verify VAT Numbers"
+    t.string "social_twitter", comment: "Twitter Account"
+    t.string "social_facebook", comment: "Facebook Account"
+    t.string "social_github", comment: "GitHub Account"
+    t.string "social_linkedin", comment: "LinkedIn Account"
+    t.string "social_youtube", comment: "Youtube Account"
+    t.string "social_googleplus", comment: "Google+ Account"
     t.binary "signature", comment: "Signature"
     t.text "accreditation", comment: "Accreditation"
     t.text "approval_authority", comment: "Approval Authority"
+    t.integer "project_time_mode_id", comment: "Project Time Unit"
     t.string "openeducat_instance_key", comment: "OpenEducat Instance Key"
     t.string "openeducat_instance_hash_key", comment: "OpenEducat Instance Hash Key"
     t.boolean "is_mail_sent", comment: "Is Mail Sent"
     t.string "verify_date", comment: "Verify Date"
     t.string "openeducat_instance_hash_msg", comment: "Instance Hash Key Message"
-    t.integer "project_time_mode_id", comment: "Project Time Unit"
-    t.integer "leave_timesheet_project_id", comment: "Internal Project"
-    t.integer "leave_timesheet_task_id", comment: "Leave Task"
-    t.string "pad_key", comment: "Pad Api Key"
     t.text "cc", comment: "Mail CC"
     t.string "code", comment: "Code"
     t.string "kanban_state", comment: "Kanban color"
@@ -8465,13 +7003,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.boolean "auth_signup_reset_password", comment: "Enable password reset from Login page"
     t.string "auth_signup_uninvited", comment: "Customer Account"
     t.integer "auth_signup_template_user_id", comment: "Template user for new users created through signup"
-    t.string "crm_alias_prefix", comment: "Default Alias Name for Leads"
-    t.boolean "generate_lead_from_alias", comment: "Manual Assignation of Emails"
-    t.boolean "group_use_lead", comment: "Leads"
-    t.boolean "module_crm_phone_validation", comment: "Phone Formatting"
-    t.boolean "module_web_clearbit", comment: "Customer Autocomplete"
     t.boolean "module_hr_org_chart", comment: "Show Organizational Chart"
-    t.boolean "group_mass_mailing_campaign", comment: "Mass Mailing Campaigns"
+    t.boolean "group_attendance_use_pin", comment: "Employee PIN"
     t.boolean "company_share_product", comment: "Share product to all companies"
     t.boolean "group_uom", comment: "Units of Measure"
     t.boolean "group_product_variant", comment: "Attributes and Variants"
@@ -8527,62 +7060,38 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.boolean "auto_done_setting", comment: "Lock Confirmed Orders"
     t.boolean "module_website_sale_digital", comment: "Sell digital products - provide downloadable content on your customer portal"
     t.boolean "module_delivery", comment: "Shipping Costs"
+    t.boolean "module_delivery_dhl", comment: "DHL"
+    t.boolean "module_delivery_fedex", comment: "FedEx"
+    t.boolean "module_delivery_ups", comment: "UPS"
+    t.boolean "module_delivery_usps", comment: "USPS"
+    t.boolean "module_delivery_bpost", comment: "bpost"
     t.boolean "module_product_email_template", comment: "Specific Email"
     t.boolean "module_sale_coupon", comment: "Coupons & Promotions"
-    t.boolean "group_attendance_use_pin", comment: "Employee PIN"
-    t.string "google_drive_authorization_code", comment: "Authorization Code"
-    t.boolean "module_website_hr_recruitment", comment: "Online Posting"
-    t.boolean "module_hr_recruitment_survey", comment: "Interview Forms"
     t.boolean "module_event_sale", comment: "Tickets"
     t.boolean "module_website_event_track", comment: "Tracks and Agenda"
     t.boolean "module_website_event_questions", comment: "Registration Survey"
     t.boolean "module_event_barcode", comment: "Barcode"
     t.boolean "module_website_event_sale", comment: "Online Ticketing"
+    t.string "crm_alias_prefix", comment: "Default Alias Name for Leads"
+    t.boolean "generate_lead_from_alias", comment: "Manual Assignation of Emails"
+    t.boolean "group_use_lead", comment: "Leads"
+    t.boolean "module_crm_phone_validation", comment: "Phone Formatting"
+    t.boolean "module_web_clearbit", comment: "Customer Autocomplete"
+    t.boolean "module_website_hr_recruitment", comment: "Online Posting"
+    t.boolean "module_hr_recruitment_survey", comment: "Interview Forms"
+    t.string "expense_alias_prefix", comment: "Default Alias Name for Expenses"
+    t.boolean "use_mailgateway", comment: "Let your employees record expenses by email"
+    t.boolean "module_sale_management", comment: "Customer Billing"
     t.integer "website_id", null: false, comment: "website"
     t.boolean "module_website_version", comment: "A/B Testing"
     t.string "google_maps_api_key", comment: "Google Maps API Key"
     t.boolean "has_google_analytics", comment: "Google Analytics"
     t.boolean "has_google_analytics_dashboard", comment: "Google Analytics in Dashboard"
     t.boolean "has_google_maps", comment: "Google Maps"
-    t.boolean "group_website_popup_on_exit", comment: "Website Popup"
-    t.string "cal_client_id", comment: "Client_id"
-    t.string "cal_client_secret", comment: "Client_key"
-    t.string "server_uri", comment: "URI for tuto"
-    t.string "expense_alias_prefix", comment: "Default Alias Name for Expenses"
-    t.boolean "use_mailgateway", comment: "Let your employees record expenses by email"
-    t.boolean "module_sale_management", comment: "Customer Billing"
-    t.boolean "module_l10n_fr_hr_payroll", comment: "French Payroll"
-    t.boolean "module_l10n_be_hr_payroll", comment: "Belgium Payroll"
-    t.boolean "module_l10n_in_hr_payroll", comment: "Indian Payroll"
-    t.boolean "auth_oauth_google_enabled", comment: "Allow users to sign in with Google"
-    t.string "auth_oauth_google_client_id", comment: "Client ID"
-    t.string "server_uri_google", comment: "Server uri"
-    t.string "website_slide_google_app_key", comment: "Google Doc Key"
-    t.boolean "module_delivery_dhl", comment: "DHL"
-    t.boolean "module_delivery_fedex", comment: "FedEx"
-    t.boolean "module_delivery_ups", comment: "UPS"
-    t.boolean "module_delivery_usps", comment: "USPS"
-    t.boolean "module_delivery_bpost", comment: "bpost"
     t.boolean "module_hr_timesheet", comment: "Timesheets"
     t.boolean "module_rating_project", comment: "Rating on Tasks"
     t.boolean "module_project_forecast", comment: "Forecasts"
     t.boolean "group_subtask_project", comment: "Sub-tasks"
-    t.boolean "module_project_timesheet_synchro", comment: "Awesome Timesheet"
-    t.boolean "module_sale_timesheet", comment: "Time Billing"
-    t.boolean "module_project_timesheet_holidays", comment: "Leaves"
-    t.boolean "voip_enable", comment: "VoIP Phone Call"
-    t.string "voip_domain", comment: "Domain"
-    t.boolean "cdr_api_enable", comment: "Enable Phonenet.vn Api?"
-    t.string "cdr_api_key", comment: "API Key"
-    t.boolean "module_muk_web_client_refresh", comment: "Web Refresh"
-    t.boolean "module_muk_web_client_notification", comment: "Web Notification"
-    t.boolean "module_document", comment: "Attachments List and Document Indexation"
-    t.boolean "group_ir_attachment_user", comment: "Central access to Documents"
-    t.boolean "module_document_page", comment: "Manage document pages (Wiki)"
-    t.boolean "module_document_page_approval", comment: "Manage documents approval"
-    t.boolean "module_cmis_read", comment: "Attach files from an external DMS into Odoo"
-    t.boolean "module_cmis_write", comment: "Store attachments in an external DMS instead of the Odoo Filestore"
-    t.integer "student_test_survey_id", comment: "Student Test Survey"
     t.integer "default_survey_id", comment: "Default Survey"
   end
 
@@ -8664,21 +7173,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
     t.index ["name", "currency_id", "company_id"], name: "res_currency_rate_unique_name_per_day", unique: true
     t.index ["name"], name: "res_currency_rate_name_index"
-  end
-
-  create_table "res_district", id: :serial, comment: "res.district", force: :cascade do |t|
-    t.string "name", null: false, comment: "Tên quận / huyện"
-    t.string "code", comment: "Mã"
-    t.integer "type", comment: "Lọai"
-    t.integer "position", comment: "Thứ tự"
-    t.boolean "active", comment: "Kích hoạt"
-    t.integer "province_id", comment: "Tỉnh / thành phố"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.string "sequence_code", comment: "Đầu mã KH"
-    t.index ["province_id"], name: "res_district_province_id_index"
   end
 
   create_table "res_groups", id: :serial, force: :cascade do |t|
@@ -8783,14 +7277,13 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "message_bounce", comment: "Bounce"
     t.boolean "opt_out", comment: "Opt-Out"
+    t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.string "signup_token", comment: "Signup Token"
     t.string "signup_type", comment: "Signup Token Type"
     t.datetime "signup_expiration", comment: "Signup Expiration"
-    t.datetime "calendar_last_notif_ack", comment: "Last notification marked as read from base Calendar"
     t.integer "team_id", comment: "Sales Channel"
     t.decimal "debit_limit", comment: "Payable Limit"
     t.datetime "last_time_entries_checked", comment: "Latest Invoices & Payments Matching Date"
@@ -8798,25 +7291,26 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.text "invoice_warn_msg", comment: "Message for Invoice"
     t.string "sale_warn", null: false, comment: "Sales Order"
     t.text "sale_warn_msg", comment: "Message for Sales Order"
+    t.datetime "calendar_last_notif_ack", comment: "Last notification marked as read from base Calendar"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.text "website_description", comment: "Website Partner Full Description"
     t.text "website_short_description", comment: "Website Partner Short Description"
+    t.boolean "website_published", comment: "Visible in Website"
     t.string "website_meta_title", comment: "Website meta title"
     t.text "website_meta_description", comment: "Website meta description"
     t.string "website_meta_keywords", comment: "Website meta keywords"
-    t.boolean "website_published", comment: "Visible in Website"
     t.boolean "is_venue", comment: "Venue"
-    t.integer "province_id", comment: "Tỉnh - Thành phố"
-    t.integer "district_id", comment: "Quận - Huyện"
-    t.integer "ward_id", comment: "Xã - Phường"
-    t.integer "tracking_emails_count"
-    t.float "email_score"
-    t.boolean "email_bounced", comment: "Email Bounced"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.integer "associate_member", comment: "Associate Member"
+    t.boolean "free_member", comment: "Free Member"
+    t.decimal "membership_amount", comment: "Membership Amount"
+    t.string "membership_state", comment: "Current Membership Status"
+    t.date "membership_start", comment: "Membership Start Date"
+    t.date "membership_stop", comment: "Membership End Date"
+    t.date "membership_cancel", comment: "Cancel Membership Date"
     t.index ["commercial_partner_id"], name: "res_partner_commercial_partner_id_index"
     t.index ["company_id"], name: "res_partner_company_id_index"
     t.index ["date"], name: "res_partner_date_index"
     t.index ["display_name"], name: "res_partner_display_name_index"
-    t.index ["email_bounced"], name: "res_partner_email_bounced_index"
     t.index ["name"], name: "res_partner_name_index"
     t.index ["parent_id"], name: "res_partner_parent_id_index"
     t.index ["ref"], name: "res_partner_ref_index"
@@ -8834,6 +7328,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.integer "aba_routing", comment: "ABA/Routing"
     t.index ["partner_id"], name: "res_partner_bank_partner_id_index"
     t.index ["sanitized_acc_number", "company_id"], name: "res_partner_bank_unique_number", unique: true
   end
@@ -8881,21 +7376,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "res_province", id: :serial, comment: "res.province", force: :cascade do |t|
-    t.string "name", null: false, comment: "Tên tỉnh / thành phố"
-    t.string "code", comment: "Mã"
-    t.integer "type", comment: "Lọai"
-    t.integer "position", comment: "Thứ tự"
-    t.boolean "active", comment: "Kích hoạt"
-    t.integer "country_id", comment: "Quốc gia"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.string "sequence_code", comment: "Đầu mã KH"
-    t.index ["country_id"], name: "res_province_country_id_index"
-  end
-
   create_table "res_request_link", id: :serial, comment: "res.request.link", force: :cascade do |t|
     t.string "name", null: false, comment: "Name"
     t.string "object", null: false, comment: "Object"
@@ -8934,22 +7414,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "target_sales_won", comment: "Won in Opportunities Target"
     t.integer "target_sales_done", comment: "Activities Done Target"
     t.integer "target_sales_invoiced", comment: "Invoiced in Sales Orders Target"
-    t.string "google_calendar_rtoken", comment: "Refresh Token"
-    t.string "google_calendar_token", comment: "User token"
-    t.datetime "google_calendar_token_validity", comment: "Token Validity"
-    t.datetime "google_calendar_last_sync_date", comment: "Last synchro date"
-    t.string "google_calendar_cal_id", comment: "Calendar ID"
-    t.integer "oauth_provider_id", comment: "OAuth Provider"
-    t.string "oauth_uid", comment: "OAuth User ID"
-    t.string "oauth_access_token", comment: "OAuth Access Token"
-    t.string "pos_security_pin", limit: 32, comment: "Security PIN"
-    t.boolean "voip_enable", comment: "Enable VoIP Phone"
-    t.string "voip_user", comment: "Account"
-    t.string "voip_pw", comment: "Password"
     t.index ["login"], name: "res_users_login_key", unique: true
-    t.index ["oauth_provider_id", "oauth_uid"], name: "res_users_uniq_users_oauth_provider_oauth_uid", unique: true
-    t.index ["voip_user"], name: "res_users_voip_user_index"
-    t.index ["voip_user"], name: "res_users_voip_user_unique", unique: true
   end
 
   create_table "res_users_log", id: :serial, comment: "res.users.log", force: :cascade do |t|
@@ -8957,40 +7422,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "res_users_role", id: :serial, comment: "User role", force: :cascade do |t|
-    t.integer "group_id", null: false, comment: "Associated group"
-    t.text "comment", comment: "Internal Notes"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "res_users_role_line", id: :serial, comment: "Users associated to a role", force: :cascade do |t|
-    t.integer "role_id", comment: "Role"
-    t.integer "user_id", comment: "User"
-    t.date "date_from", comment: "From"
-    t.date "date_to", comment: "To"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "res_ward", id: :serial, comment: "res.ward", force: :cascade do |t|
-    t.string "name", null: false, comment: "Tên xã / phường"
-    t.string "code", comment: "Mã"
-    t.integer "type", comment: "Lọai"
-    t.integer "position", comment: "Thứ tự"
-    t.boolean "active", comment: "Kích hoạt"
-    t.integer "district_id", comment: "Quận / huyện"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["district_id"], name: "res_ward_district_id_index"
   end
 
   create_table "reserve_media", id: :serial, comment: "reserve.media", force: :cascade do |t|
@@ -9056,9 +7487,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "resource_test", id: :serial, comment: "Test Resource Model", force: :cascade do |t|
-    t.string "name", comment: "Name"
     t.integer "resource_id", null: false, comment: "Resource"
     t.integer "company_id", comment: "Company"
+    t.string "name", comment: "Name"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -9138,19 +7569,17 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "create_uid", comment: "Created by"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.integer "journal_id", comment: "Payment method"
+    t.integer "admission_company_id", comment: "Admission Company"
+    t.string "sale_type", comment: "Type"
+    t.float "probability", comment: "Probability"
+    t.integer "main_order", comment: "Related Main Order"
+    t.string "order_mode", comment: "Order Mode"
     t.integer "campaign_id", comment: "Campaign"
     t.integer "source_id", comment: "Source"
     t.integer "medium_id", comment: "Medium"
     t.integer "opportunity_id", comment: "Opportunity"
-    t.integer "payment_tx_id", comment: "Last Transaction"
-    t.integer "payment_acquirer_id", comment: "Payment Acquirer"
-    t.integer "journal_id", comment: "Payment method"
-    t.integer "admission_company_id", comment: "Admission Company"
-    t.string "sale_type", comment: "Type"
-    t.integer "main_order", comment: "Related Main Order"
-    t.string "order_mode", comment: "Order Mode"
-    t.float "probability", comment: "Probability"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.index ["confirmation_date"], name: "sale_order_confirmation_date_index"
     t.index ["create_date"], name: "sale_order_create_date_index"
     t.index ["date_order"], name: "sale_order_date_order_index"
@@ -9196,18 +7625,15 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
     t.string "student_name", comment: "Student Name"
     t.date "student_birthdate", comment: "Student's Birthday"
+    t.integer "faculty_id", comment: "Faculty"
+    t.integer "student_test_id", comment: "Student Test"
+    t.string "student_test_state", comment: "Student Test Status"
     t.integer "course_id", comment: "Course"
     t.integer "batch_id", comment: "Batch"
     t.boolean "already_student", comment: "Already Student"
     t.integer "student_id", comment: "Student"
-    t.integer "faculty_id", comment: "Faculty"
-    t.integer "student_test_id", comment: "Student Test"
-    t.string "student_test_state", comment: "Student Test Status"
     t.string "line_mode", comment: "Line Mode"
-    t.integer "task_id", comment: "Task"
-    t.boolean "is_service", comment: "Is a Service"
     t.index ["order_id"], name: "sale_order_line_order_id_index"
-    t.index ["task_id"], name: "sale_order_line_task_id_index"
   end
 
   create_table "sale_order_line_invoice_rel", id: false, comment: "RELATION BETWEEN account_invoice_line AND sale_order_line", force: :cascade do |t|
@@ -9257,110 +7683,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["partner_id"], name: "session_fa_rel_partner_id_idx"
   end
 
-  create_table "slide_category", id: :serial, comment: "Slides Category", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "channel_id", null: false, comment: "Channel"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "nbr_presentations", comment: "Number of Presentations"
-    t.integer "nbr_documents", comment: "Number of Documents"
-    t.integer "nbr_videos", comment: "Number of Videos"
-    t.integer "nbr_infographics", comment: "Number of Infographics"
-    t.integer "total", comment: "Total"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "slide_channel", id: :serial, comment: "Channel for Slides", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.string "website_meta_title", comment: "Website meta title"
-    t.text "website_meta_description", comment: "Website meta description"
-    t.string "website_meta_keywords", comment: "Website meta keywords"
-    t.boolean "website_published", comment: "Visible in Website"
-    t.string "name", null: false, comment: "Name"
-    t.boolean "active", comment: "Active"
-    t.text "description", comment: "Description"
-    t.integer "sequence", comment: "Sequence"
-    t.string "promote_strategy", null: false, comment: "Featuring Policy"
-    t.integer "custom_slide_id", comment: "Slide to Promote"
-    t.integer "promoted_slide_id", comment: "Featured Slide"
-    t.integer "nbr_presentations", comment: "Number of Presentations"
-    t.integer "nbr_documents", comment: "Number of Documents"
-    t.integer "nbr_videos", comment: "Number of Videos"
-    t.integer "nbr_infographics", comment: "Number of Infographics"
-    t.integer "total", comment: "Total"
-    t.integer "publish_template_id", comment: "Published Template"
-    t.integer "share_template_id", comment: "Shared Template"
-    t.string "visibility", null: false, comment: "Visibility"
-    t.text "access_error_msg", comment: "Error Message"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "slide_embed", id: :serial, comment: "Embedded Slides View Counter", force: :cascade do |t|
-    t.integer "slide_id", null: false, comment: "Presentation"
-    t.string "url", null: false, comment: "Third Party Website URL"
-    t.integer "count_views", comment: "# Views"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["slide_id"], name: "slide_embed_slide_id_index"
-  end
-
-  create_table "slide_slide", id: :serial, comment: "Slides", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.string "website_meta_title", comment: "Website meta title"
-    t.text "website_meta_description", comment: "Website meta description"
-    t.string "website_meta_keywords", comment: "Website meta keywords"
-    t.string "name", null: false, comment: "Title"
-    t.boolean "active", comment: "Active"
-    t.text "description", comment: "Description"
-    t.integer "channel_id", null: false, comment: "Channel"
-    t.integer "category_id", comment: "Category"
-    t.string "download_security", null: false, comment: "Download Security"
-    t.string "slide_type", null: false, comment: "Type"
-    t.text "index_content", comment: "Transcript"
-    t.string "url", comment: "Document URL"
-    t.string "document_id", comment: "Document ID"
-    t.string "mime_type", comment: "Mime-type"
-    t.datetime "date_published", comment: "Publish Date"
-    t.integer "likes", comment: "Likes"
-    t.integer "dislikes", comment: "Dislikes"
-    t.integer "slide_views", comment: "# of Website Views"
-    t.integer "embed_views", comment: "# of Embedded Views"
-    t.integer "total_views", comment: "Total # Views"
-    t.boolean "website_published", comment: "Visible in Website"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["channel_id", "name"], name: "slide_slide_name_uniq", unique: true
-  end
-
-  create_table "slide_tag", id: :serial, comment: "Slide Tag", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name"], name: "slide_tag_slide_tag_unique", unique: true
-  end
-
   create_table "sms_send_sms", id: :serial, comment: "sms.send_sms", force: :cascade do |t|
     t.string "recipients", null: false, comment: "Recipients"
     t.text "message", null: false, comment: "Message"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "sparse_fields_test", id: :serial, comment: "sparse_fields.test", force: :cascade do |t|
-    t.text "data", comment: "Data"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -9391,13 +7716,13 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.integer "batch_id", null: false, comment: "Batch"
     t.integer "user_id", comment: "User Create"
     t.string "state", comment: "State"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
   end
 
   create_table "student_leave_student", id: false, comment: "RELATION BETWEEN student_leave AND op_student", force: :cascade do |t|
@@ -9425,43 +7750,30 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
 
   create_table "student_test", id: :serial, comment: "Student test", force: :cascade do |t|
     t.string "name", comment: "Name"
-    t.integer "faculty_id", comment: "Faculty"
-    t.integer "order_id", comment: "Sale Order"
+    t.integer "opportunity_id", comment: "Opportunity"
+    t.integer "user_id", comment: "Salesperson"
+    t.integer "partner_id", comment: "Customer"
+    t.date "student_dob", comment: "Date of Birth"
+    t.string "student_school", comment: "School"
+    t.date "expect_start_date", comment: "Expected Start Date"
+    t.integer "faculty_id", comment: "Teacher"
     t.integer "student_id", comment: "Student"
     t.string "student_name", comment: "Student Name"
     t.boolean "already_student", comment: "Already Student"
-    t.integer "course_id", comment: "Course"
+    t.integer "order_line_id", comment: "Sale Order Line"
+    t.integer "order_id", comment: "Sale Order"
+    t.integer "company_id", comment: "Company"
+    t.text "reason", comment: "Rejecting Reason"
+    t.integer "currency_id", comment: "Currency"
+    t.integer "survey_id", comment: "Survey"
+    t.integer "input_id", comment: "Input"
+    t.integer "confirm_course_id", comment: "Confirming Course"
     t.string "state", comment: "State"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "product_id", comment: "Product"
-    t.integer "batch_id", comment: "Batch"
-    t.integer "company_id", comment: "Company"
-    t.integer "order_line_id", comment: "Sale Order Line"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.text "reason", comment: "Rejecting Reason"
-    t.integer "currency_id", comment: "Currency"
-    t.integer "opportunity_id", comment: "Opportunity"
-    t.date "student_dob", comment: "Date of Birth"
-    t.string "student_school", comment: "School"
-    t.date "expect_start_date", comment: "Expected Start Date"
-    t.boolean "has_learnt", comment: "Student Has Learnt At School / Other Institute?"
-    t.string "learnt_for", comment: "Duration Student Has Learnt"
-    t.string "percentage", comment: "Quests completed Percentage in 15 minutes"
-    t.string "teacher_support", comment: "Need support from teacher"
-    t.string "knowledge", comment: "How well student can acquire concepts of new lessons"
-    t.string "additional", comment: "Solving the additional quests"
-    t.string "evaluate", comment: "Evaluation"
-    t.integer "confirm_course_id", comment: "Confirming Course"
-    t.integer "user_id", comment: "Salesperson"
-    t.integer "partner_id", comment: "Customer"
-    t.integer "survey_id", comment: "Survey"
-    t.integer "input_id", comment: "Input"
-    t.string "test_type", null: false, comment: "Test Type"
-    t.datetime "test_time", comment: "Test Time"
-    t.text "test_note", comment: "Test note"
   end
 
   create_table "student_test_wizard", id: :serial, comment: "student.test.wizard", force: :cascade do |t|
@@ -9496,192 +7808,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["sum_id"], name: "summary_emp_rel_sum_id_idx"
   end
 
-  create_table "survey_label", id: :serial, comment: "Survey Label", force: :cascade do |t|
-    t.integer "question_id", comment: "Question"
-    t.integer "question_id_2", comment: "Question 2"
-    t.integer "sequence", comment: "Label Sequence order"
-    t.string "value", null: false, comment: "Suggested value"
-    t.float "quizz_mark", comment: "Score for this choice"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "survey_mail_compose_message", id: :serial, comment: "Email composition wizard for Survey", force: :cascade do |t|
-    t.integer "survey_id", null: false, comment: "Survey"
-    t.string "public", null: false, comment: "Share options"
-    t.text "multi_email", comment: "List of emails"
-    t.date "date_deadline", comment: "Deadline to which the invitation to respond is valid"
-    t.string "composition_mode", comment: "Composition mode"
-    t.boolean "use_active_domain", comment: "Use active domain"
-    t.text "active_domain", comment: "Active domain"
-    t.boolean "is_log", comment: "Log an Internal Note"
-    t.string "subject", comment: "Subject"
-    t.boolean "notify", comment: "Notify followers"
-    t.boolean "auto_delete", comment: "Delete Emails"
-    t.boolean "auto_delete_message", comment: "Delete Message Copy"
-    t.integer "template_id", comment: "Use template"
-    t.string "message_type", null: false, comment: "Type"
-    t.integer "subtype_id", comment: "Subtype"
-    t.integer "mass_mailing_campaign_id", comment: "Mass Mailing Campaign"
-    t.integer "mass_mailing_id", comment: "Mass Mailing"
-    t.string "mass_mailing_name", comment: "Mass Mailing"
-    t.boolean "website_published", comment: "Published"
-    t.datetime "date", comment: "Date"
-    t.text "body", comment: "Contents"
-    t.integer "parent_id", comment: "Parent Message"
-    t.string "model", comment: "Related Document Model"
-    t.integer "res_id", comment: "Related Document ID"
-    t.string "record_name", comment: "Message Record Name"
-    t.integer "mail_activity_type_id", comment: "Mail Activity Type"
-    t.string "email_from", comment: "From"
-    t.integer "author_id", comment: "Author"
-    t.boolean "no_auto_thread", comment: "No threading for answers"
-    t.string "message_id", comment: "Message-Id"
-    t.string "reply_to", comment: "Reply-To"
-    t.integer "mail_server_id", comment: "Outgoing mail server"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.float "rating_value", comment: "Rating Value"
-    t.index ["author_id"], name: "survey_mail_compose_message_author_id_index"
-    t.index ["mail_activity_type_id"], name: "survey_mail_compose_message_mail_activity_type_id_index"
-    t.index ["message_id"], name: "survey_mail_compose_message_message_id_index"
-    t.index ["model"], name: "survey_mail_compose_message_model_index"
-    t.index ["parent_id"], name: "survey_mail_compose_message_parent_id_index"
-    t.index ["res_id"], name: "survey_mail_compose_message_res_id_index"
-    t.index ["subtype_id"], name: "survey_mail_compose_message_subtype_id_index"
-    t.index ["template_id"], name: "survey_mail_compose_message_template_id_index"
-  end
-
-  create_table "survey_mail_compose_message_ir_attachments_rel", id: false, comment: "RELATION BETWEEN survey_mail_compose_message AND ir_attachment", force: :cascade do |t|
-    t.integer "wizard_id", null: false
-    t.integer "attachment_id", null: false
-    t.index ["attachment_id"], name: "survey_mail_compose_message_ir_attachments_re_attachment_id_idx"
-    t.index ["wizard_id", "attachment_id"], name: "survey_mail_compose_message_ir_atta_wizard_id_attachment_id_key", unique: true
-    t.index ["wizard_id"], name: "survey_mail_compose_message_ir_attachments_rel_wizard_id_idx"
-  end
-
-  create_table "survey_mail_compose_message_res_partner_rel", id: false, comment: "RELATION BETWEEN survey_mail_compose_message AND res_partner", force: :cascade do |t|
-    t.integer "wizard_id", null: false
-    t.integer "partner_id", null: false
-    t.index ["partner_id"], name: "survey_mail_compose_message_res_partner_rel_partner_id_idx"
-    t.index ["wizard_id", "partner_id"], name: "survey_mail_compose_message_res_partne_wizard_id_partner_id_key", unique: true
-    t.index ["wizard_id"], name: "survey_mail_compose_message_res_partner_rel_wizard_id_idx"
-  end
-
-  create_table "survey_page", id: :serial, comment: "Survey Page", force: :cascade do |t|
-    t.string "title", null: false, comment: "Page Title"
-    t.integer "survey_id", null: false, comment: "Survey"
-    t.integer "sequence", comment: "Page number"
-    t.text "description", comment: "Description"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "survey_question", id: :serial, comment: "Survey Question", force: :cascade do |t|
-    t.integer "page_id", null: false, comment: "Survey page"
-    t.integer "sequence", comment: "Sequence"
-    t.string "question", null: false, comment: "Question Name"
-    t.text "description", comment: "Description"
-    t.string "type", null: false, comment: "Type of Question"
-    t.string "matrix_subtype", comment: "Matrix Type"
-    t.string "column_nb", comment: "Number of columns"
-    t.string "display_mode", comment: "Display Mode"
-    t.boolean "comments_allowed", comment: "Show Comments Field"
-    t.string "comments_message", comment: "Comment Message"
-    t.boolean "comment_count_as_answer", comment: "Comment Field is an Answer Choice"
-    t.boolean "validation_required", comment: "Validate entry"
-    t.boolean "validation_email", comment: "Input must be an email"
-    t.integer "validation_length_min", comment: "Minimum Text Length"
-    t.integer "validation_length_max", comment: "Maximum Text Length"
-    t.float "validation_min_float_value", comment: "Minimum value"
-    t.float "validation_max_float_value", comment: "Maximum value"
-    t.date "validation_min_date", comment: "Minimum Date"
-    t.date "validation_max_date", comment: "Maximum Date"
-    t.string "validation_error_msg", comment: "Validation Error message"
-    t.boolean "constr_mandatory", comment: "Mandatory Answer"
-    t.string "constr_error_msg", comment: "Error message"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "survey_stage", id: :serial, comment: "Survey Stage", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "sequence", comment: "Sequence"
-    t.boolean "closed", comment: "Closed"
-    t.boolean "fold", comment: "Folded in kanban view"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "survey_survey", id: :serial, comment: "Survey", force: :cascade do |t|
-    t.string "title", null: false, comment: "Title"
-    t.integer "stage_id", comment: "Stage"
-    t.boolean "auth_required", comment: "Login required"
-    t.boolean "users_can_go_back", comment: "Users can go back"
-    t.text "description", comment: "Description"
-    t.integer "color", comment: "Color Index"
-    t.integer "email_template_id", comment: "Email Template"
-    t.text "thank_you_message", comment: "Thanks Message"
-    t.boolean "quizz_mode", comment: "Quizz Mode"
-    t.boolean "active", comment: "Active"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-  end
-
-  create_table "survey_user_input", id: :serial, comment: "Survey User Input", force: :cascade do |t|
-    t.integer "survey_id", null: false, comment: "Survey"
-    t.datetime "date_create", null: false, comment: "Creation Date"
-    t.datetime "deadline", comment: "Deadline"
-    t.string "type", null: false, comment: "Answer Type"
-    t.string "state", comment: "Status"
-    t.boolean "test_entry", comment: "Test Entry"
-    t.string "token", null: false, comment: "Identification token"
-    t.integer "partner_id", comment: "Partner"
-    t.string "email", comment: "E-mail"
-    t.integer "last_displayed_page_id", comment: "Last displayed page"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.float "quizz_score", comment: "Score for the quiz"
-    t.index ["token"], name: "survey_user_input_unique_token", unique: true
-  end
-
-  create_table "survey_user_input_line", id: :serial, comment: "Survey User Input Line", force: :cascade do |t|
-    t.integer "user_input_id", null: false, comment: "User Input"
-    t.integer "question_id", null: false, comment: "Question"
-    t.integer "survey_id", comment: "Survey"
-    t.datetime "date_create", null: false, comment: "Create Date"
-    t.boolean "skipped", comment: "Skipped"
-    t.string "answer_type", comment: "Answer Type"
-    t.string "value_text", comment: "Text answer"
-    t.float "value_number", comment: "Numerical answer"
-    t.date "value_date", comment: "Date answer"
-    t.text "value_free_text", comment: "Free Text answer"
-    t.integer "value_suggested", comment: "Suggested answer"
-    t.integer "value_suggested_row", comment: "Row answer"
-    t.float "quizz_mark", comment: "Score given for this choice"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
   create_table "tax_adjustments_wizard", id: :serial, comment: "Wizard for Tax Adjustments", force: :cascade do |t|
     t.string "reason", null: false, comment: "Justification"
     t.integer "journal_id", null: false, comment: "Journal"
@@ -9706,25 +7832,22 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "teky_qldc", id: :serial, comment: "Quản lý đổi ca", force: :cascade do |t|
+    t.date "activity_date_deadline", comment: "Next Activity Deadline"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.integer "employee_id", comment: "Employee"
-    t.datetime "create_date", comment: "Create Date"
-    t.string "select_day", comment: "Select Day"
-    t.string "state", comment: "State"
-    t.string "di_muon", comment: "Đi muộn"
-    t.string "ve_som", comment: "Về sớm"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
     t.integer "user_id", comment: "User"
     t.integer "parent_id", comment: "Manager"
     t.integer "department_id", comment: "Department"
     t.integer "company_id", comment: "Company"
+    t.string "state", comment: "State"
     t.date "check_date", comment: "Check date"
     t.datetime "work_from", comment: "Work From"
     t.datetime "work_to", comment: "Work To"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "test_ir_rel", id: false, comment: "RELATION BETWEEN student_test AND ir_attachment", force: :cascade do |t|
@@ -9798,6 +7921,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "faculty_id"
+    t.bigint "classin_uid", comment: "UID tren he thong Classin"
+    t.bigint "classin_school_uid", comment: "ID của User là giáo viên theo School ID"
     t.index ["account_role"], name: "index_users_on_account_role"
   end
 
@@ -9898,10 +8023,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "website_form_enable_metadata", comment: "Write metadata"
-    t.integer "crm_default_team_id", comment: "Default Sales Channels"
-    t.integer "crm_default_user_id", comment: "Default Salesperson"
-    t.integer "channel_id", comment: "Website Live Chat Channel"
   end
 
   create_table "website_lang_rel", id: false, comment: "RELATION BETWEEN website AND res_lang", force: :cascade do |t|
@@ -9932,11 +8053,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   end
 
   create_table "website_page", id: :serial, comment: "Page", force: :cascade do |t|
+    t.boolean "website_published", comment: "Visible in Website"
     t.string "url", comment: "Page URL"
     t.integer "view_id", null: false, comment: "View"
     t.boolean "website_indexed", comment: "Page Indexed"
     t.datetime "date_publish", comment: "Publishing Date"
-    t.boolean "website_published", comment: "Visible in Website"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -9962,14 +8083,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.index ["website_id"], name: "website_website_page_rel_website_id_idx"
     t.index ["website_page_id", "website_id"], name: "website_website_page_rel_website_page_id_website_id_key", unique: true
     t.index ["website_page_id"], name: "website_website_page_rel_website_page_id_idx"
-  end
-
-  create_table "wizard_document_page_history_show_diff", id: :serial, comment: "wizard.document.page.history.show_diff", force: :cascade do |t|
-    t.text "diff", comment: "Diff"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "wizard_ir_model_menu_create", id: :serial, comment: "wizard.ir.model.menu.create", force: :cascade do |t|
@@ -10030,24 +8143,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "work_hours", id: :serial, comment: "Working hours", force: :cascade do |t|
-    t.integer "employee_id", comment: "Employee"
-    t.date "create_date", comment: "Create Date"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "x_lave", id: :serial, comment: "Lave", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.string "x_name", comment: "Name"
-  end
-
-  add_foreign_key "Tutors", "op_faculty", name: "Tutors_op_faculty_id_fkey", on_delete: :cascade
-  add_foreign_key "Tutors", "op_session", name: "Tutors_op_session_id_fkey", on_delete: :cascade
   add_foreign_key "account_account", "account_account_type", column: "user_type_id", name: "account_account_user_type_id_fkey", on_delete: :nullify
   add_foreign_key "account_account", "account_group", column: "group_id", name: "account_account_group_id_fkey", on_delete: :nullify
   add_foreign_key "account_account", "res_company", column: "company_id", name: "account_account_company_id_fkey", on_delete: :nullify
@@ -10093,15 +8188,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "account_analytic_account_tag_rel", "account_analytic_tag", column: "tag_id", name: "account_analytic_account_tag_rel_tag_id_fkey", on_delete: :cascade
   add_foreign_key "account_analytic_line", "account_account", column: "general_account_id", name: "account_analytic_line_general_account_id_fkey", on_delete: :restrict
   add_foreign_key "account_analytic_line", "account_analytic_account", column: "account_id", name: "account_analytic_line_account_id_fkey", on_delete: :restrict
-  add_foreign_key "account_analytic_line", "account_invoice", column: "timesheet_invoice_id", name: "account_analytic_line_timesheet_invoice_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "account_move_line", column: "move_id", name: "account_analytic_line_move_id_fkey", on_delete: :cascade
-  add_foreign_key "account_analytic_line", "hr_department", column: "department_id", name: "account_analytic_line_department_id_fkey", on_delete: :nullify
-  add_foreign_key "account_analytic_line", "hr_employee", column: "employee_id", name: "account_analytic_line_employee_id_fkey", on_delete: :nullify
-  add_foreign_key "account_analytic_line", "hr_holidays", column: "holiday_id", name: "account_analytic_line_holiday_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "product_product", column: "product_id", name: "account_analytic_line_product_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "product_uom", name: "account_analytic_line_product_uom_id_fkey", on_delete: :nullify
-  add_foreign_key "account_analytic_line", "project_project", column: "project_id", name: "account_analytic_line_project_id_fkey", on_delete: :nullify
-  add_foreign_key "account_analytic_line", "project_task", column: "task_id", name: "account_analytic_line_task_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "res_company", column: "company_id", name: "account_analytic_line_company_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "res_currency", column: "currency_id", name: "account_analytic_line_currency_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "res_partner", column: "partner_id", name: "account_analytic_line_partner_id_fkey", on_delete: :nullify
@@ -10150,7 +8239,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "account_bank_statement", "account_bank_statement_cashbox", column: "cashbox_end_id", name: "account_bank_statement_cashbox_end_id_fkey", on_delete: :nullify
   add_foreign_key "account_bank_statement", "account_bank_statement_cashbox", column: "cashbox_start_id", name: "account_bank_statement_cashbox_start_id_fkey", on_delete: :nullify
   add_foreign_key "account_bank_statement", "account_journal", column: "journal_id", name: "account_bank_statement_journal_id_fkey", on_delete: :nullify
-  add_foreign_key "account_bank_statement", "pos_session", name: "account_bank_statement_pos_session_id_fkey", on_delete: :nullify
   add_foreign_key "account_bank_statement", "res_company", column: "company_id", name: "account_bank_statement_company_id_fkey", on_delete: :nullify
   add_foreign_key "account_bank_statement", "res_users", column: "create_uid", name: "account_bank_statement_create_uid_fkey", on_delete: :nullify
   add_foreign_key "account_bank_statement", "res_users", column: "user_id", name: "account_bank_statement_user_id_fkey", on_delete: :nullify
@@ -10167,7 +8255,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "account_bank_statement_line", "account_account", column: "account_id", name: "account_bank_statement_line_account_id_fkey", on_delete: :nullify
   add_foreign_key "account_bank_statement_line", "account_bank_statement", column: "statement_id", name: "account_bank_statement_line_statement_id_fkey", on_delete: :cascade
   add_foreign_key "account_bank_statement_line", "account_journal", column: "journal_id", name: "account_bank_statement_line_journal_id_fkey", on_delete: :nullify
-  add_foreign_key "account_bank_statement_line", "pos_order", column: "pos_statement_id", name: "account_bank_statement_line_pos_statement_id_fkey", on_delete: :cascade
   add_foreign_key "account_bank_statement_line", "res_company", column: "company_id", name: "account_bank_statement_line_company_id_fkey", on_delete: :nullify
   add_foreign_key "account_bank_statement_line", "res_currency", column: "currency_id", name: "account_bank_statement_line_currency_id_fkey", on_delete: :nullify
   add_foreign_key "account_bank_statement_line", "res_partner", column: "partner_id", name: "account_bank_statement_line_partner_id_fkey", on_delete: :nullify
@@ -10178,7 +8265,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "account_cash_rounding", "res_users", column: "create_uid", name: "account_cash_rounding_create_uid_fkey", on_delete: :nullify
   add_foreign_key "account_cash_rounding", "res_users", column: "write_uid", name: "account_cash_rounding_write_uid_fkey", on_delete: :nullify
   add_foreign_key "account_cashbox_line", "account_bank_statement_cashbox", column: "cashbox_id", name: "account_cashbox_line_cashbox_id_fkey", on_delete: :nullify
-  add_foreign_key "account_cashbox_line", "pos_config", column: "default_pos_id", name: "account_cashbox_line_default_pos_id_fkey", on_delete: :nullify
   add_foreign_key "account_cashbox_line", "res_users", column: "create_uid", name: "account_cashbox_line_create_uid_fkey", on_delete: :nullify
   add_foreign_key "account_cashbox_line", "res_users", column: "write_uid", name: "account_cashbox_line_write_uid_fkey", on_delete: :nullify
   add_foreign_key "account_chart_template", "account_account_template", column: "expense_currency_exchange_account_id", name: "account_chart_template_expense_currency_exchange_account_i_fkey", on_delete: :nullify
@@ -10240,8 +8326,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "account_fiscal_position_account_template", "account_fiscal_position_template", column: "position_id", name: "account_fiscal_position_account_template_position_id_fkey", on_delete: :cascade
   add_foreign_key "account_fiscal_position_account_template", "res_users", column: "create_uid", name: "account_fiscal_position_account_template_create_uid_fkey", on_delete: :nullify
   add_foreign_key "account_fiscal_position_account_template", "res_users", column: "write_uid", name: "account_fiscal_position_account_template_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "account_fiscal_position_pos_config_rel", "account_fiscal_position", name: "account_fiscal_position_pos_con_account_fiscal_position_id_fkey", on_delete: :cascade
-  add_foreign_key "account_fiscal_position_pos_config_rel", "pos_config", name: "account_fiscal_position_pos_config_rel_pos_config_id_fkey", on_delete: :cascade
   add_foreign_key "account_fiscal_position_res_country_state_rel", "account_fiscal_position", name: "account_fiscal_position_res_cou_account_fiscal_position_id_fkey", on_delete: :cascade
   add_foreign_key "account_fiscal_position_res_country_state_rel", "res_country_state", name: "account_fiscal_position_res_country_s_res_country_state_id_fkey", on_delete: :cascade
   add_foreign_key "account_fiscal_position_tax", "account_fiscal_position", column: "position_id", name: "account_fiscal_position_tax_position_id_fkey", on_delete: :cascade
@@ -10275,8 +8359,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "account_invoice", "account_move", column: "move_id", name: "account_invoice_move_id_fkey", on_delete: :restrict
   add_foreign_key "account_invoice", "account_payment_term", column: "payment_term_id", name: "account_invoice_payment_term_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "crm_team", column: "team_id", name: "account_invoice_team_id_fkey", on_delete: :nullify
-  add_foreign_key "account_invoice", "payment_acquirer", name: "account_invoice_payment_acquirer_id_fkey", on_delete: :nullify
-  add_foreign_key "account_invoice", "payment_transaction", column: "payment_tx_id", name: "account_invoice_payment_tx_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "res_company", column: "company_id", name: "account_invoice_company_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "res_currency", column: "currency_id", name: "account_invoice_currency_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "res_partner", column: "commercial_partner_id", name: "account_invoice_commercial_partner_id_fkey", on_delete: :nullify
@@ -10325,6 +8407,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "account_journal", "account_account", column: "default_debit_account_id", name: "account_journal_default_debit_account_id_fkey", on_delete: :nullify
   add_foreign_key "account_journal", "account_account", column: "loss_account_id", name: "account_journal_loss_account_id_fkey", on_delete: :nullify
   add_foreign_key "account_journal", "account_account", column: "profit_account_id", name: "account_journal_profit_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "ir_sequence", column: "check_sequence_id", name: "account_journal_check_sequence_id_fkey", on_delete: :nullify
   add_foreign_key "account_journal", "ir_sequence", column: "refund_sequence_id", name: "account_journal_refund_sequence_id_fkey", on_delete: :nullify
   add_foreign_key "account_journal", "ir_sequence", column: "sequence_id", name: "account_journal_sequence_id_fkey", on_delete: :nullify
   add_foreign_key "account_journal", "res_company", column: "company_id", name: "account_journal_company_id_fkey", on_delete: :nullify
@@ -10464,8 +8547,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "account_tax_filiation_rel", "account_tax", column: "parent_tax", name: "account_tax_filiation_rel_parent_tax_fkey", on_delete: :cascade
   add_foreign_key "account_tax_group", "res_users", column: "create_uid", name: "account_tax_group_create_uid_fkey", on_delete: :nullify
   add_foreign_key "account_tax_group", "res_users", column: "write_uid", name: "account_tax_group_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "account_tax_pos_order_line_rel", "account_tax", name: "account_tax_pos_order_line_rel_account_tax_id_fkey", on_delete: :cascade
-  add_foreign_key "account_tax_pos_order_line_rel", "pos_order_line", name: "account_tax_pos_order_line_rel_pos_order_line_id_fkey", on_delete: :cascade
   add_foreign_key "account_tax_report", "res_company", column: "company_id", name: "account_tax_report_company_id_fkey", on_delete: :nullify
   add_foreign_key "account_tax_report", "res_users", column: "create_uid", name: "account_tax_report_create_uid_fkey", on_delete: :nullify
   add_foreign_key "account_tax_report", "res_users", column: "write_uid", name: "account_tax_report_write_uid_fkey", on_delete: :nullify
@@ -10497,6 +8578,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "admission_sent_email", "op_student", column: "student_id", name: "admission_sent_email_student_id_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "res_users", column: "create_uid", name: "admission_sent_email_create_uid_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "res_users", column: "write_uid", name: "admission_sent_email_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "albums", "op_batch"
   add_foreign_key "answer_marks", "user_answers"
   add_foreign_key "asset_depreciation_confirmation_wizard", "res_users", column: "create_uid", name: "asset_depreciation_confirmation_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_depreciation_confirmation_wizard", "res_users", column: "write_uid", name: "asset_depreciation_confirmation_wizard_write_uid_fkey", on_delete: :nullify
@@ -10507,12 +8589,10 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "asset_mass_create", "res_users", column: "write_uid", name: "asset_mass_create_write_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_modify", "res_users", column: "create_uid", name: "asset_modify_create_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_modify", "res_users", column: "write_uid", name: "asset_modify_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "asset_move", "bt_asset", column: "asset_id", name: "asset_move_asset_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "bt_asset_location", column: "from_loc_id", name: "asset_move_from_loc_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "bt_asset_location", column: "to_loc_id", name: "asset_move_to_loc_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "hr_employee", column: "employee_id", name: "asset_move_employee_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "hr_employee", column: "manager_faculty_id", name: "asset_move_manager_faculty_id_fkey", on_delete: :nullify
-  add_foreign_key "asset_move", "hr_employee", column: "manager_id", name: "asset_move_manager_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "op_batch", column: "batch_id", name: "asset_move_batch_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "op_course", column: "course_id", name: "asset_move_course_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "op_faculty", column: "faculty_id", name: "asset_move_faculty_id_fkey", on_delete: :nullify
@@ -10522,8 +8602,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "asset_move", "res_users", column: "write_uid", name: "asset_move_write_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_move_bt_asset_rel", "asset_move", name: "asset_move_bt_asset_rel_asset_move_id_fkey", on_delete: :cascade
   add_foreign_key "asset_move_bt_asset_rel", "bt_asset", name: "asset_move_bt_asset_rel_bt_asset_id_fkey", on_delete: :cascade
-  add_foreign_key "asset_table", "res_users", column: "create_uid", name: "asset_table_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "asset_table", "res_users", column: "write_uid", name: "asset_table_write_uid_fkey", on_delete: :nullify
   add_foreign_key "assign_lead", "crm_stage", column: "stage_id", name: "assign_lead_stage_id_fkey", on_delete: :nullify
   add_foreign_key "assign_lead", "crm_team", column: "team_id", name: "assign_lead_team_id_fkey", on_delete: :nullify
   add_foreign_key "assign_lead", "res_users", column: "create_uid", name: "assign_lead_create_uid_fkey", on_delete: :nullify
@@ -10550,8 +8628,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "attendance_tutor", "op_session", column: "session_id", name: "attendance_tutor_session_id_fkey", on_delete: :nullify
   add_foreign_key "attendance_tutor", "res_users", column: "create_uid", name: "attendance_tutor_create_uid_fkey", on_delete: :nullify
   add_foreign_key "attendance_tutor", "res_users", column: "write_uid", name: "attendance_tutor_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "auth_oauth_provider", "res_users", column: "create_uid", name: "auth_oauth_provider_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "auth_oauth_provider", "res_users", column: "write_uid", name: "auth_oauth_provider_write_uid_fkey", on_delete: :nullify
   add_foreign_key "badge_unlocked_definition_rel", "gamification_badge", name: "badge_unlocked_definition_rel_gamification_badge_id_fkey", on_delete: :cascade
   add_foreign_key "badge_unlocked_definition_rel", "gamification_goal_definition", name: "badge_unlocked_definition_rel_gamification_goal_definition_fkey", on_delete: :cascade
   add_foreign_key "barcode_nomenclature", "res_users", column: "create_uid", name: "barcode_nomenclature_create_uid_fkey", on_delete: :nullify
@@ -10611,10 +8687,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "base_language_install", "res_users", column: "write_uid", name: "base_language_install_write_uid_fkey", on_delete: :nullify
   add_foreign_key "base_language_install_website_rel", "base_language_install", name: "base_language_install_website_rel_base_language_install_id_fkey", on_delete: :cascade
   add_foreign_key "base_language_install_website_rel", "website", name: "base_language_install_website_rel_website_id_fkey", on_delete: :cascade
-  add_foreign_key "base_language_update", "res_users", column: "create_uid", name: "base_language_update_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "base_language_update", "res_users", column: "write_uid", name: "base_language_update_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "base_language_update_ir_module_module_rel", "base_language_update", name: "base_language_update_ir_module_mod_base_language_update_id_fkey", on_delete: :cascade
-  add_foreign_key "base_language_update_ir_module_module_rel", "ir_module_module", name: "base_language_update_ir_module_module__ir_module_module_id_fkey", on_delete: :cascade
   add_foreign_key "base_module_uninstall", "ir_module_module", column: "module_id", name: "base_module_uninstall_module_id_fkey", on_delete: :nullify
   add_foreign_key "base_module_uninstall", "res_users", column: "create_uid", name: "base_module_uninstall_create_uid_fkey", on_delete: :nullify
   add_foreign_key "base_module_uninstall", "res_users", column: "write_uid", name: "base_module_uninstall_write_uid_fkey", on_delete: :nullify
@@ -10635,7 +8707,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "base_update_translations", "res_users", column: "write_uid", name: "base_update_translations_write_uid_fkey", on_delete: :nullify
   add_foreign_key "batch_reject_wizard", "res_users", column: "create_uid", name: "batch_reject_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "batch_reject_wizard", "res_users", column: "write_uid", name: "batch_reject_wizard_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "bt_asset", "asset_table", column: "asset_table", name: "bt_asset_asset_table_fkey", on_delete: :nullify
   add_foreign_key "bt_asset", "bt_asset_category", column: "categ_id", name: "bt_asset_categ_id_fkey", on_delete: :nullify
   add_foreign_key "bt_asset", "bt_asset_category", column: "category_id", name: "bt_asset_category_id_fkey", on_delete: :nullify
   add_foreign_key "bt_asset", "bt_asset_category", column: "parent_id", name: "bt_asset_parent_id_fkey", on_delete: :nullify
@@ -10665,8 +8736,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "bus_bus", "res_users", column: "create_uid", name: "bus_bus_create_uid_fkey", on_delete: :nullify
   add_foreign_key "bus_bus", "res_users", column: "write_uid", name: "bus_bus_write_uid_fkey", on_delete: :nullify
   add_foreign_key "bus_presence", "res_users", column: "user_id", name: "bus_presence_user_id_fkey", on_delete: :cascade
-  add_foreign_key "bve_view", "res_users", column: "create_uid", name: "bve_view_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "bve_view", "res_users", column: "write_uid", name: "bve_view_write_uid_fkey", on_delete: :nullify
   add_foreign_key "calendar_alarm", "res_users", column: "create_uid", name: "calendar_alarm_create_uid_fkey", on_delete: :nullify
   add_foreign_key "calendar_alarm", "res_users", column: "write_uid", name: "calendar_alarm_write_uid_fkey", on_delete: :nullify
   add_foreign_key "calendar_alarm_calendar_event_rel", "calendar_alarm", name: "calendar_alarm_calendar_event_rel_calendar_alarm_id_fkey", on_delete: :cascade
@@ -10680,7 +8749,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "calendar_contacts", "res_users", column: "user_id", name: "calendar_contacts_user_id_fkey", on_delete: :nullify
   add_foreign_key "calendar_contacts", "res_users", column: "write_uid", name: "calendar_contacts_write_uid_fkey", on_delete: :nullify
   add_foreign_key "calendar_event", "crm_lead", column: "opportunity_id", name: "calendar_event_opportunity_id_fkey", on_delete: :nullify
-  add_foreign_key "calendar_event", "crm_phonecall", column: "phonecall_id", name: "calendar_event_phonecall_id_fkey", on_delete: :nullify
   add_foreign_key "calendar_event", "hr_applicant", column: "applicant_id", name: "calendar_event_applicant_id_fkey", on_delete: :nullify
   add_foreign_key "calendar_event", "ir_model", column: "res_model_id", name: "calendar_event_res_model_id_fkey", on_delete: :cascade
   add_foreign_key "calendar_event", "res_users", column: "create_uid", name: "calendar_event_create_uid_fkey", on_delete: :nullify
@@ -10707,14 +8775,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "crm_claim", "crm_claim_category", column: "categ_id", name: "crm_claim_categ_id_fkey", on_delete: :nullify
   add_foreign_key "crm_claim", "crm_claim_stage", column: "stage_id", name: "crm_claim_stage_id_fkey", on_delete: :nullify
   add_foreign_key "crm_claim", "crm_team", column: "team_id", name: "crm_claim_team_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_claim", "op_batch", column: "from_batch_id", name: "crm_claim_from_batch_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_claim", "op_batch", column: "to_batch_id", name: "crm_claim_to_batch_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_claim", "op_course", column: "from_course_id", name: "crm_claim_from_course_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_claim", "op_course", column: "to_course_id", name: "crm_claim_to_course_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_claim", "op_student", column: "student_id", name: "crm_claim_student_id_fkey", on_delete: :nullify
   add_foreign_key "crm_claim", "res_company", column: "company_id", name: "crm_claim_company_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_claim", "res_company", column: "from_company_id", name: "crm_claim_from_company_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_claim", "res_company", column: "to_company_id", name: "crm_claim_to_company_id_fkey", on_delete: :nullify
   add_foreign_key "crm_claim", "res_partner", column: "partner_id", name: "crm_claim_partner_id_fkey", on_delete: :nullify
   add_foreign_key "crm_claim", "res_users", column: "create_uid", name: "crm_claim_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_claim", "res_users", column: "user_id", name: "crm_claim_user_id_fkey", on_delete: :nullify
@@ -10722,8 +8783,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "crm_claim_category", "crm_team", column: "team_id", name: "crm_claim_category_team_id_fkey", on_delete: :nullify
   add_foreign_key "crm_claim_category", "res_users", column: "create_uid", name: "crm_claim_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_claim_category", "res_users", column: "write_uid", name: "crm_claim_category_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "crm_claim_sale_order_rel", "crm_claim", name: "crm_claim_sale_order_rel_crm_claim_id_fkey", on_delete: :cascade
-  add_foreign_key "crm_claim_sale_order_rel", "sale_order", name: "crm_claim_sale_order_rel_sale_order_id_fkey", on_delete: :cascade
   add_foreign_key "crm_claim_stage", "res_users", column: "create_uid", name: "crm_claim_stage_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_claim_stage", "res_users", column: "write_uid", name: "crm_claim_stage_write_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead", "crm_lost_reason", column: "lost_reason", name: "crm_lead_lost_reason_fkey", on_delete: :nullify
@@ -10734,7 +8793,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "crm_lead", "res_country_state", column: "state_id", name: "crm_lead_state_id_fkey", on_delete: :nullify
   add_foreign_key "crm_lead", "res_partner", column: "partner_id", name: "crm_lead_partner_id_fkey", on_delete: :nullify
   add_foreign_key "crm_lead", "res_partner_title", column: "title", name: "crm_lead_title_fkey", on_delete: :nullify
-  add_foreign_key "crm_lead", "res_users", column: "convert_uid", name: "crm_lead_convert_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead", "res_users", column: "create_uid", name: "crm_lead_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead", "res_users", column: "user_id", name: "crm_lead_user_id_fkey", on_delete: :nullify
   add_foreign_key "crm_lead", "res_users", column: "write_uid", name: "crm_lead_write_uid_fkey", on_delete: :nullify
@@ -10753,6 +8811,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "crm_lead2opportunity_partner_mass", "res_users", column: "write_uid", name: "crm_lead2opportunity_partner_mass_write_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead2opportunity_partner_mass_res_users_rel", "crm_lead2opportunity_partner_mass", name: "crm_lead2opportunity_partner__crm_lead2opportunity_partner_fkey", on_delete: :cascade
   add_foreign_key "crm_lead2opportunity_partner_mass_res_users_rel", "res_users", column: "res_users_id", name: "crm_lead2opportunity_partner_mass_res_users_r_res_users_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_lead_convert2task", "crm_lead", column: "lead_id", name: "crm_lead_convert2task_lead_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_convert2task", "project_project", column: "project_id", name: "crm_lead_convert2task_project_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_convert2task", "res_partner", column: "partner_id", name: "crm_lead_convert2task_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_convert2task", "res_users", column: "create_uid", name: "crm_lead_convert2task_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_convert2task", "res_users", column: "write_uid", name: "crm_lead_convert2task_write_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead_crm_lead2opportunity_partner_mass_rel", "crm_lead", name: "crm_lead_crm_lead2opportunity_partner_mass_rel_crm_lead_id_fkey", on_delete: :cascade
   add_foreign_key "crm_lead_crm_lead2opportunity_partner_mass_rel", "crm_lead2opportunity_partner_mass", name: "crm_lead_crm_lead2opportunit_crm_lead2opportunity_partner_fkey1", on_delete: :cascade
   add_foreign_key "crm_lead_crm_lead2opportunity_partner_rel", "crm_lead", name: "crm_lead_crm_lead2opportunity_partner_rel_crm_lead_id_fkey", on_delete: :cascade
@@ -10773,23 +8836,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "crm_partner_binding", "res_partner", column: "partner_id", name: "crm_partner_binding_partner_id_fkey", on_delete: :nullify
   add_foreign_key "crm_partner_binding", "res_users", column: "create_uid", name: "crm_partner_binding_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_partner_binding", "res_users", column: "write_uid", name: "crm_partner_binding_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "crm_lead", column: "opportunity_id", name: "crm_phonecall_opportunity_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "crm_team", column: "team_id", name: "crm_phonecall_team_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "res_company", column: "company_id", name: "crm_phonecall_company_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "res_partner", column: "partner_id", name: "crm_phonecall_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "res_users", column: "create_uid", name: "crm_phonecall_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "res_users", column: "user_id", name: "crm_phonecall_user_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "res_users", column: "write_uid", name: "crm_phonecall_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "utm_campaign", column: "campaign_id", name: "crm_phonecall_campaign_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "utm_medium", column: "medium_id", name: "crm_phonecall_medium_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall", "utm_source", column: "source_id", name: "crm_phonecall_source_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall2phonecall", "crm_team", column: "team_id", name: "crm_phonecall2phonecall_team_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall2phonecall", "res_partner", column: "partner_id", name: "crm_phonecall2phonecall_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall2phonecall", "res_users", column: "create_uid", name: "crm_phonecall2phonecall_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall2phonecall", "res_users", column: "user_id", name: "crm_phonecall2phonecall_user_id_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall2phonecall", "res_users", column: "write_uid", name: "crm_phonecall2phonecall_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "crm_phonecall_tag_rel", "crm_lead_tag", column: "tag_id", name: "crm_phonecall_tag_rel_tag_id_fkey", on_delete: :cascade
-  add_foreign_key "crm_phonecall_tag_rel", "crm_phonecall", column: "phone_id", name: "crm_phonecall_tag_rel_phone_id_fkey", on_delete: :cascade
   add_foreign_key "crm_stage", "crm_team", column: "team_id", name: "crm_stage_team_id_fkey", on_delete: :nullify
   add_foreign_key "crm_stage", "res_users", column: "create_uid", name: "crm_stage_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_stage", "res_users", column: "write_uid", name: "crm_stage_write_uid_fkey", on_delete: :nullify
@@ -10805,23 +8851,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "decimal_precision", "res_users", column: "write_uid", name: "decimal_precision_write_uid_fkey", on_delete: :nullify
   add_foreign_key "decimal_precision_test", "res_users", column: "create_uid", name: "decimal_precision_test_create_uid_fkey", on_delete: :nullify
   add_foreign_key "decimal_precision_test", "res_users", column: "write_uid", name: "decimal_precision_test_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "document_page", "document_page", column: "parent_id", name: "document_page_parent_id_fkey", on_delete: :nullify
-  add_foreign_key "document_page", "document_page_history", column: "history_head", name: "document_page_history_head_fkey", on_delete: :nullify
-  add_foreign_key "document_page", "ir_ui_menu", column: "menu_id", name: "document_page_menu_id_fkey", on_delete: :nullify
-  add_foreign_key "document_page", "res_company", column: "company_id", name: "document_page_company_id_fkey", on_delete: :cascade
-  add_foreign_key "document_page", "res_groups", column: "approver_gid", name: "document_page_approver_gid_fkey", on_delete: :nullify
-  add_foreign_key "document_page", "res_users", column: "approved_uid", name: "document_page_approved_uid_fkey", on_delete: :nullify
-  add_foreign_key "document_page", "res_users", column: "content_uid", name: "document_page_content_uid_fkey", on_delete: :nullify
-  add_foreign_key "document_page", "res_users", column: "create_uid", name: "document_page_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "document_page", "res_users", column: "write_uid", name: "document_page_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "document_page_create_menu", "ir_ui_menu", column: "menu_parent_id", name: "document_page_create_menu_menu_parent_id_fkey", on_delete: :nullify
-  add_foreign_key "document_page_create_menu", "res_users", column: "create_uid", name: "document_page_create_menu_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "document_page_create_menu", "res_users", column: "write_uid", name: "document_page_create_menu_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "document_page_history", "document_page", column: "page_id", name: "document_page_history_page_id_fkey", on_delete: :cascade
-  add_foreign_key "document_page_history", "res_company", column: "company_id", name: "document_page_history_company_id_fkey", on_delete: :nullify
-  add_foreign_key "document_page_history", "res_users", column: "approved_uid", name: "document_page_history_approved_uid_fkey", on_delete: :nullify
-  add_foreign_key "document_page_history", "res_users", column: "create_uid", name: "document_page_history_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "document_page_history", "res_users", column: "write_uid", name: "document_page_history_write_uid_fkey", on_delete: :nullify
   add_foreign_key "email_template_attachment_rel", "ir_attachment", column: "attachment_id", name: "email_template_attachment_rel_attachment_id_fkey", on_delete: :cascade
   add_foreign_key "email_template_attachment_rel", "mail_template", column: "email_template_id", name: "email_template_attachment_rel_email_template_id_fkey", on_delete: :cascade
   add_foreign_key "email_template_preview", "ir_act_report_xml", column: "report_template", name: "email_template_preview_report_template_fkey", on_delete: :nullify
@@ -10837,13 +8866,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "email_template_preview_res_partner_rel", "res_partner", name: "email_template_preview_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
   add_foreign_key "employee_category_rel", "hr_employee", column: "emp_id", name: "employee_category_rel_emp_id_fkey", on_delete: :cascade
   add_foreign_key "employee_category_rel", "hr_employee_category", column: "category_id", name: "employee_category_rel_category_id_fkey", on_delete: :cascade
-  add_foreign_key "equipment_tag_rel", "maintenance_equipment", column: "equipment_id", name: "equipment_tag_rel_equipment_id_fkey", on_delete: :cascade
-  add_foreign_key "equipment_tag_rel", "maintenance_equipment_tag", column: "tag_id", name: "equipment_tag_rel_tag_id_fkey", on_delete: :cascade
-  add_foreign_key "event_allowed_track_tags_rel", "event_event", name: "event_allowed_track_tags_rel_event_event_id_fkey", on_delete: :cascade
-  add_foreign_key "event_allowed_track_tags_rel", "event_track_tag", name: "event_allowed_track_tags_rel_event_track_tag_id_fkey", on_delete: :cascade
-  add_foreign_key "event_answer", "event_question", column: "question_id", name: "event_answer_question_id_fkey", on_delete: :cascade
-  add_foreign_key "event_answer", "res_users", column: "create_uid", name: "event_answer_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_answer", "res_users", column: "write_uid", name: "event_answer_write_uid_fkey", on_delete: :nullify
   add_foreign_key "event_confirm", "res_users", column: "create_uid", name: "event_confirm_create_uid_fkey", on_delete: :nullify
   add_foreign_key "event_confirm", "res_users", column: "write_uid", name: "event_confirm_write_uid_fkey", on_delete: :nullify
   add_foreign_key "event_event", "event_type", name: "event_event_event_type_id_fkey", on_delete: :nullify
@@ -10866,10 +8888,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "event_mail_registration", "event_registration", column: "registration_id", name: "event_mail_registration_registration_id_fkey", on_delete: :cascade
   add_foreign_key "event_mail_registration", "res_users", column: "create_uid", name: "event_mail_registration_create_uid_fkey", on_delete: :nullify
   add_foreign_key "event_mail_registration", "res_users", column: "write_uid", name: "event_mail_registration_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_question", "event_event", column: "event_id", name: "event_question_event_id_fkey", on_delete: :cascade
-  add_foreign_key "event_question", "event_type", name: "event_question_event_type_id_fkey", on_delete: :cascade
-  add_foreign_key "event_question", "res_users", column: "create_uid", name: "event_question_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_question", "res_users", column: "write_uid", name: "event_question_write_uid_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "event_event", column: "event_id", name: "event_registration_event_id_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "event_type", name: "event_registration_event_type_id_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "res_company", column: "company_id", name: "event_registration_company_id_fkey", on_delete: :nullify
@@ -10877,35 +8895,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "event_registration", "res_users", column: "create_uid", name: "event_registration_create_uid_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "res_users", column: "user_id", name: "event_registration_user_id_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "res_users", column: "write_uid", name: "event_registration_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_registration_answer", "event_answer", name: "event_registration_answer_event_answer_id_fkey", on_delete: :cascade
-  add_foreign_key "event_registration_answer", "event_registration", name: "event_registration_answer_event_registration_id_fkey", on_delete: :cascade
-  add_foreign_key "event_registration_answer", "res_users", column: "create_uid", name: "event_registration_answer_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_registration_answer", "res_users", column: "write_uid", name: "event_registration_answer_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_sponsor", "event_event", column: "event_id", name: "event_sponsor_event_id_fkey", on_delete: :nullify
-  add_foreign_key "event_sponsor", "event_sponsor_type", column: "sponsor_type_id", name: "event_sponsor_sponsor_type_id_fkey", on_delete: :nullify
-  add_foreign_key "event_sponsor", "res_partner", column: "partner_id", name: "event_sponsor_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "event_sponsor", "res_users", column: "create_uid", name: "event_sponsor_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_sponsor", "res_users", column: "write_uid", name: "event_sponsor_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_sponsor_type", "res_users", column: "create_uid", name: "event_sponsor_type_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_sponsor_type", "res_users", column: "write_uid", name: "event_sponsor_type_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_track", "event_event", column: "event_id", name: "event_track_event_id_fkey", on_delete: :nullify
-  add_foreign_key "event_track", "event_track_location", column: "location_id", name: "event_track_location_id_fkey", on_delete: :nullify
-  add_foreign_key "event_track", "event_track_stage", column: "stage_id", name: "event_track_stage_id_fkey", on_delete: :nullify
-  add_foreign_key "event_track", "res_partner", column: "partner_id", name: "event_track_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "event_track", "res_users", column: "create_uid", name: "event_track_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_track", "res_users", column: "user_id", name: "event_track_user_id_fkey", on_delete: :nullify
-  add_foreign_key "event_track", "res_users", column: "write_uid", name: "event_track_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_track_event_track_tag_rel", "event_track", name: "event_track_event_track_tag_rel_event_track_id_fkey", on_delete: :cascade
-  add_foreign_key "event_track_event_track_tag_rel", "event_track_tag", name: "event_track_event_track_tag_rel_event_track_tag_id_fkey", on_delete: :cascade
-  add_foreign_key "event_track_location", "res_users", column: "create_uid", name: "event_track_location_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_track_location", "res_users", column: "write_uid", name: "event_track_location_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_track_stage", "mail_template", name: "event_track_stage_mail_template_id_fkey", on_delete: :nullify
-  add_foreign_key "event_track_stage", "res_users", column: "create_uid", name: "event_track_stage_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_track_stage", "res_users", column: "write_uid", name: "event_track_stage_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_track_tag", "res_users", column: "create_uid", name: "event_track_tag_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_track_tag", "res_users", column: "write_uid", name: "event_track_tag_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "event_track_tags_rel", "event_event", name: "event_track_tags_rel_event_event_id_fkey", on_delete: :cascade
-  add_foreign_key "event_track_tags_rel", "event_track_tag", name: "event_track_tags_rel_event_track_tag_id_fkey", on_delete: :cascade
   add_foreign_key "event_type", "res_users", column: "create_uid", name: "event_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "event_type", "res_users", column: "write_uid", name: "event_type_write_uid_fkey", on_delete: :nullify
   add_foreign_key "event_type_mail", "event_type", name: "event_type_mail_event_type_id_fkey", on_delete: :cascade
@@ -10986,12 +8975,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "generate_time_table", "op_subject", column: "subject_id", name: "generate_time_table_subject_id_fkey", on_delete: :nullify
   add_foreign_key "generate_time_table", "res_users", column: "create_uid", name: "generate_time_table_create_uid_fkey", on_delete: :nullify
   add_foreign_key "generate_time_table", "res_users", column: "write_uid", name: "generate_time_table_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "google_drive_config", "ir_filters", column: "filter_id", name: "google_drive_config_filter_id_fkey", on_delete: :nullify
-  add_foreign_key "google_drive_config", "ir_model", column: "model_id", name: "google_drive_config_model_id_fkey", on_delete: :nullify
-  add_foreign_key "google_drive_config", "res_users", column: "create_uid", name: "google_drive_config_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "google_drive_config", "res_users", column: "write_uid", name: "google_drive_config_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "google_service", "res_users", column: "create_uid", name: "google_service_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "google_service", "res_users", column: "write_uid", name: "google_service_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_applicant", "hr_department", column: "department_id", name: "hr_applicant_department_id_fkey", on_delete: :nullify
   add_foreign_key "hr_applicant", "hr_employee", column: "emp_id", name: "hr_applicant_emp_id_fkey", on_delete: :nullify
   add_foreign_key "hr_applicant", "hr_job", column: "job_id", name: "hr_applicant_job_id_fkey", on_delete: :nullify
@@ -11033,19 +9016,12 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "hr_contract", "hr_department", column: "department_id", name: "hr_contract_department_id_fkey", on_delete: :nullify
   add_foreign_key "hr_contract", "hr_employee", column: "employee_id", name: "hr_contract_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_contract", "hr_job", column: "job_id", name: "hr_contract_job_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_contract", "hr_payroll_structure", column: "struct_id", name: "hr_contract_struct_id_fkey", on_delete: :nullify
   add_foreign_key "hr_contract", "res_company", column: "company_id", name: "hr_contract_company_id_fkey", on_delete: :nullify
   add_foreign_key "hr_contract", "res_users", column: "create_uid", name: "hr_contract_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_contract", "res_users", column: "write_uid", name: "hr_contract_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_contract", "resource_calendar", name: "hr_contract_resource_calendar_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_contract_advantage_template", "res_users", column: "create_uid", name: "hr_contract_advantage_template_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_contract_advantage_template", "res_users", column: "write_uid", name: "hr_contract_advantage_template_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_contract_type", "res_users", column: "create_uid", name: "hr_contract_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_contract_type", "res_users", column: "write_uid", name: "hr_contract_type_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_contribution_register", "res_company", column: "company_id", name: "hr_contribution_register_company_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_contribution_register", "res_partner", column: "partner_id", name: "hr_contribution_register_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_contribution_register", "res_users", column: "create_uid", name: "hr_contribution_register_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_contribution_register", "res_users", column: "write_uid", name: "hr_contribution_register_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_department", "hr_department", column: "parent_id", name: "hr_department_parent_id_fkey", on_delete: :nullify
   add_foreign_key "hr_department", "hr_employee", column: "manager_id", name: "hr_department_manager_id_fkey", on_delete: :nullify
   add_foreign_key "hr_department", "res_company", column: "company_id", name: "hr_department_company_id_fkey", on_delete: :nullify
@@ -11067,11 +9043,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "hr_employee", "resource_resource", column: "resource_id", name: "hr_employee_resource_id_fkey", on_delete: :restrict
   add_foreign_key "hr_employee_category", "res_users", column: "create_uid", name: "hr_employee_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_category", "res_users", column: "write_uid", name: "hr_employee_category_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_employee_group_rel", "hr_employee", column: "employee_id", name: "hr_employee_group_rel_employee_id_fkey", on_delete: :cascade
-  add_foreign_key "hr_employee_group_rel", "hr_payslip_employees", column: "payslip_id", name: "hr_employee_group_rel_payslip_id_fkey", on_delete: :cascade
   add_foreign_key "hr_expense", "account_account", column: "account_id", name: "hr_expense_account_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "account_analytic_account", column: "analytic_account_id", name: "hr_expense_analytic_account_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_expense", "crm_claim", column: "claim_id", name: "hr_expense_claim_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "hr_employee", column: "employee_id", name: "hr_expense_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "hr_employee", column: "manager_id", name: "hr_expense_manager_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "hr_expense_sheet", column: "sheet_id", name: "hr_expense_sheet_id_fkey", on_delete: :nullify
@@ -11118,8 +9091,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "hr_holidays", "res_users", column: "user_id", name: "hr_holidays_user_id_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays", "res_users", column: "write_uid", name: "hr_holidays_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "calendar_event_type", column: "categ_id", name: "hr_holidays_status_categ_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_holidays_status", "project_project", column: "timesheet_project_id", name: "hr_holidays_status_timesheet_project_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_holidays_status", "project_task", column: "timesheet_task_id", name: "hr_holidays_status_timesheet_task_id_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "res_company", column: "company_id", name: "hr_holidays_status_company_id_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "res_users", column: "create_uid", name: "hr_holidays_status_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "res_users", column: "write_uid", name: "hr_holidays_status_write_uid_fkey", on_delete: :nullify
@@ -11136,39 +9107,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "hr_job", "res_users", column: "hr_responsible_id", name: "hr_job_hr_responsible_id_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "res_users", column: "user_id", name: "hr_job_user_id_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "res_users", column: "write_uid", name: "hr_job_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payroll_structure", "hr_payroll_structure", column: "parent_id", name: "hr_payroll_structure_parent_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payroll_structure", "res_company", column: "company_id", name: "hr_payroll_structure_company_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payroll_structure", "res_users", column: "create_uid", name: "hr_payroll_structure_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payroll_structure", "res_users", column: "write_uid", name: "hr_payroll_structure_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip", "hr_contract", column: "contract_id", name: "hr_payslip_contract_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip", "hr_employee", column: "employee_id", name: "hr_payslip_employee_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip", "hr_payroll_structure", column: "struct_id", name: "hr_payslip_struct_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip", "hr_payslip_run", column: "payslip_run_id", name: "hr_payslip_payslip_run_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip", "res_company", column: "company_id", name: "hr_payslip_company_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip", "res_users", column: "create_uid", name: "hr_payslip_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip", "res_users", column: "write_uid", name: "hr_payslip_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_employees", "res_users", column: "create_uid", name: "hr_payslip_employees_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_employees", "res_users", column: "write_uid", name: "hr_payslip_employees_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_input", "hr_contract", column: "contract_id", name: "hr_payslip_input_contract_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_input", "hr_payslip", column: "payslip_id", name: "hr_payslip_input_payslip_id_fkey", on_delete: :cascade
-  add_foreign_key "hr_payslip_input", "res_users", column: "create_uid", name: "hr_payslip_input_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_input", "res_users", column: "write_uid", name: "hr_payslip_input_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_line", "hr_contract", column: "contract_id", name: "hr_payslip_line_contract_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_line", "hr_contribution_register", column: "register_id", name: "hr_payslip_line_register_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_line", "hr_employee", column: "employee_id", name: "hr_payslip_line_employee_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_line", "hr_payslip", column: "slip_id", name: "hr_payslip_line_slip_id_fkey", on_delete: :cascade
-  add_foreign_key "hr_payslip_line", "hr_salary_rule", column: "parent_rule_id", name: "hr_payslip_line_parent_rule_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_line", "hr_salary_rule", column: "salary_rule_id", name: "hr_payslip_line_salary_rule_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_line", "hr_salary_rule_category", column: "category_id", name: "hr_payslip_line_category_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_line", "res_company", column: "company_id", name: "hr_payslip_line_company_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_line", "res_users", column: "create_uid", name: "hr_payslip_line_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_line", "res_users", column: "write_uid", name: "hr_payslip_line_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_run", "res_users", column: "create_uid", name: "hr_payslip_run_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_run", "res_users", column: "write_uid", name: "hr_payslip_run_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_worked_days", "hr_contract", column: "contract_id", name: "hr_payslip_worked_days_contract_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_worked_days", "hr_payslip", column: "payslip_id", name: "hr_payslip_worked_days_payslip_id_fkey", on_delete: :cascade
-  add_foreign_key "hr_payslip_worked_days", "res_users", column: "create_uid", name: "hr_payslip_worked_days_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_payslip_worked_days", "res_users", column: "write_uid", name: "hr_payslip_worked_days_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_public_holiday", "res_company", column: "company_id", name: "hr_public_holiday_company_id_fkey", on_delete: :nullify
   add_foreign_key "hr_public_holiday", "res_users", column: "create_uid", name: "hr_public_holiday_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_public_holiday", "res_users", column: "write_uid", name: "hr_public_holiday_write_uid_fkey", on_delete: :nullify
@@ -11186,35 +9124,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "hr_recruitment_stage", "mail_template", column: "template_id", name: "hr_recruitment_stage_template_id_fkey", on_delete: :nullify
   add_foreign_key "hr_recruitment_stage", "res_users", column: "create_uid", name: "hr_recruitment_stage_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_recruitment_stage", "res_users", column: "write_uid", name: "hr_recruitment_stage_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_rule_input", "hr_salary_rule", column: "input_id", name: "hr_rule_input_input_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_rule_input", "res_users", column: "create_uid", name: "hr_rule_input_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_rule_input", "res_users", column: "write_uid", name: "hr_rule_input_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule", "hr_contribution_register", column: "register_id", name: "hr_salary_rule_register_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule", "hr_salary_rule", column: "parent_rule_id", name: "hr_salary_rule_parent_rule_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule", "hr_salary_rule_category", column: "category_id", name: "hr_salary_rule_category_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule", "res_company", column: "company_id", name: "hr_salary_rule_company_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule", "res_users", column: "create_uid", name: "hr_salary_rule_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule", "res_users", column: "write_uid", name: "hr_salary_rule_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule_category", "hr_salary_rule_category", column: "parent_id", name: "hr_salary_rule_category_parent_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule_category", "res_company", column: "company_id", name: "hr_salary_rule_category_company_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule_category", "res_users", column: "create_uid", name: "hr_salary_rule_category_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_salary_rule_category", "res_users", column: "write_uid", name: "hr_salary_rule_category_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "hr_structure_salary_rule_rel", "hr_payroll_structure", column: "struct_id", name: "hr_structure_salary_rule_rel_struct_id_fkey", on_delete: :cascade
-  add_foreign_key "hr_structure_salary_rule_rel", "hr_salary_rule", column: "rule_id", name: "hr_structure_salary_rule_rel_rule_id_fkey", on_delete: :cascade
   add_foreign_key "hr_year", "res_users", column: "create_uid", name: "hr_year_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_year", "res_users", column: "write_uid", name: "hr_year_write_uid_fkey", on_delete: :nullify
   add_foreign_key "iap_account", "res_company", column: "company_id", name: "iap_account_company_id_fkey", on_delete: :nullify
   add_foreign_key "iap_account", "res_users", column: "create_uid", name: "iap_account_create_uid_fkey", on_delete: :nullify
   add_foreign_key "iap_account", "res_users", column: "write_uid", name: "iap_account_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "im_livechat_channel", "res_users", column: "create_uid", name: "im_livechat_channel_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "im_livechat_channel", "res_users", column: "write_uid", name: "im_livechat_channel_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "im_livechat_channel_country_rel", "im_livechat_channel_rule", column: "channel_id", name: "im_livechat_channel_country_rel_channel_id_fkey", on_delete: :cascade
-  add_foreign_key "im_livechat_channel_country_rel", "res_country", column: "country_id", name: "im_livechat_channel_country_rel_country_id_fkey", on_delete: :cascade
-  add_foreign_key "im_livechat_channel_im_user", "im_livechat_channel", column: "channel_id", name: "im_livechat_channel_im_user_channel_id_fkey", on_delete: :cascade
-  add_foreign_key "im_livechat_channel_im_user", "res_users", column: "user_id", name: "im_livechat_channel_im_user_user_id_fkey", on_delete: :cascade
-  add_foreign_key "im_livechat_channel_rule", "im_livechat_channel", column: "channel_id", name: "im_livechat_channel_rule_channel_id_fkey", on_delete: :nullify
-  add_foreign_key "im_livechat_channel_rule", "res_users", column: "create_uid", name: "im_livechat_channel_rule_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "im_livechat_channel_rule", "res_users", column: "write_uid", name: "im_livechat_channel_rule_write_uid_fkey", on_delete: :nullify
   add_foreign_key "incoming_mail_job_rel", "hr_job", column: "job_id", name: "incoming_mail_job_rel_job_id_fkey", on_delete: :cascade
   add_foreign_key "incoming_mail_job_rel", "incomming_mail", column: "mail_id", name: "incoming_mail_job_rel_mail_id_fkey", on_delete: :cascade
   add_foreign_key "incomming_mail", "hr_job", column: "job_id", name: "incomming_mail_job_id_fkey", on_delete: :nullify
@@ -11280,14 +9194,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "ir_default", "res_users", column: "create_uid", name: "ir_default_create_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_default", "res_users", column: "user_id", name: "ir_default_user_id_fkey", on_delete: :cascade
   add_foreign_key "ir_default", "res_users", column: "write_uid", name: "ir_default_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "ir_exports", "ir_model", column: "model_id", name: "ir_exports_model_id_fkey", on_delete: :nullify
   add_foreign_key "ir_exports", "res_users", column: "create_uid", name: "ir_exports_create_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_exports", "res_users", column: "write_uid", name: "ir_exports_write_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_exports_line", "ir_exports", column: "export_id", name: "ir_exports_line_export_id_fkey", on_delete: :cascade
-  add_foreign_key "ir_exports_line", "ir_model_fields", column: "field1_id", name: "ir_exports_line_field1_id_fkey", on_delete: :nullify
-  add_foreign_key "ir_exports_line", "ir_model_fields", column: "field2_id", name: "ir_exports_line_field2_id_fkey", on_delete: :nullify
-  add_foreign_key "ir_exports_line", "ir_model_fields", column: "field3_id", name: "ir_exports_line_field3_id_fkey", on_delete: :nullify
-  add_foreign_key "ir_exports_line", "ir_model_fields", column: "field4_id", name: "ir_exports_line_field4_id_fkey", on_delete: :nullify
   add_foreign_key "ir_exports_line", "res_users", column: "create_uid", name: "ir_exports_line_create_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_exports_line", "res_users", column: "write_uid", name: "ir_exports_line_write_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_filters", "res_users", column: "create_uid", name: "ir_filters_create_uid_fkey", on_delete: :nullify
@@ -11302,7 +9211,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "ir_logging_perf_rule_res_users_rel", "res_users", column: "res_users_id", name: "ir_logging_perf_rule_res_users_rel_res_users_id_fkey", on_delete: :cascade
   add_foreign_key "ir_mail_server", "res_users", column: "create_uid", name: "ir_mail_server_create_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_mail_server", "res_users", column: "write_uid", name: "ir_mail_server_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "ir_model", "ir_model_fields", column: "website_form_default_field_id", name: "ir_model_website_form_default_field_id_fkey", on_delete: :nullify
   add_foreign_key "ir_model", "res_users", column: "create_uid", name: "ir_model_create_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_model", "res_users", column: "write_uid", name: "ir_model_write_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_model_access", "ir_model", column: "model_id", name: "ir_model_access_model_id_fkey", on_delete: :cascade
@@ -11316,7 +9224,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "ir_model_data", "res_users", column: "create_uid", name: "ir_model_data_create_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_model_data", "res_users", column: "write_uid", name: "ir_model_data_write_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_model_fields", "ir_model", column: "model_id", name: "ir_model_fields_model_id_fkey", on_delete: :cascade
-  add_foreign_key "ir_model_fields", "ir_model_fields", column: "serialization_field_id", name: "ir_model_fields_serialization_field_id_fkey", on_delete: :cascade
   add_foreign_key "ir_model_fields", "res_users", column: "create_uid", name: "ir_model_fields_create_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_model_fields", "res_users", column: "write_uid", name: "ir_model_fields_write_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_model_fields_group_rel", "ir_model_fields", column: "field_id", name: "ir_model_fields_group_rel_field_id_fkey", on_delete: :cascade
@@ -11380,23 +9287,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "job_cv_rel", "hr_job", column: "job_id", name: "job_cv_rel_job_id_fkey", on_delete: :cascade
   add_foreign_key "job_cv_rel", "ir_attachment", column: "cv_id", name: "job_cv_rel_cv_id_fkey", on_delete: :cascade
   add_foreign_key "learning_materials", "op_lession"
-  add_foreign_key "link_tracker", "mail_mass_mailing", column: "mass_mailing_id", name: "link_tracker_mass_mailing_id_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "link_tracker_mass_mailing_campaign_id_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker", "res_users", column: "create_uid", name: "link_tracker_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker", "res_users", column: "write_uid", name: "link_tracker_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker", "utm_campaign", column: "campaign_id", name: "link_tracker_campaign_id_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker", "utm_medium", column: "medium_id", name: "link_tracker_medium_id_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker", "utm_source", column: "source_id", name: "link_tracker_source_id_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker_click", "link_tracker", column: "link_id", name: "link_tracker_click_link_id_fkey", on_delete: :cascade
-  add_foreign_key "link_tracker_click", "mail_mail_statistics", column: "mail_stat_id", name: "link_tracker_click_mail_stat_id_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker_click", "mail_mass_mailing", column: "mass_mailing_id", name: "link_tracker_click_mass_mailing_id_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker_click", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "link_tracker_click_mass_mailing_campaign_id_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker_click", "res_country", column: "country_id", name: "link_tracker_click_country_id_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker_click", "res_users", column: "create_uid", name: "link_tracker_click_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker_click", "res_users", column: "write_uid", name: "link_tracker_click_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker_code", "link_tracker", column: "link_id", name: "link_tracker_code_link_id_fkey", on_delete: :cascade
-  add_foreign_key "link_tracker_code", "res_users", column: "create_uid", name: "link_tracker_code_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "link_tracker_code", "res_users", column: "write_uid", name: "link_tracker_code_write_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_activity", "calendar_event", name: "mail_activity_calendar_event_id_fkey", on_delete: :cascade
   add_foreign_key "mail_activity", "ir_model", column: "res_model_id", name: "mail_activity_res_model_id_fkey", on_delete: :cascade
   add_foreign_key "mail_activity", "mail_activity_type", column: "activity_type_id", name: "mail_activity_activity_type_id_fkey", on_delete: :nullify
@@ -11415,7 +9305,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "mail_alias", "res_users", column: "alias_user_id", name: "mail_alias_alias_user_id_fkey", on_delete: :nullify
   add_foreign_key "mail_alias", "res_users", column: "create_uid", name: "mail_alias_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_alias", "res_users", column: "write_uid", name: "mail_alias_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_channel", "im_livechat_channel", column: "livechat_channel_id", name: "mail_channel_livechat_channel_id_fkey", on_delete: :nullify
   add_foreign_key "mail_channel", "mail_alias", column: "alias_id", name: "mail_channel_alias_id_fkey", on_delete: :restrict
   add_foreign_key "mail_channel", "res_groups", column: "group_public_id", name: "mail_channel_group_public_id_fkey", on_delete: :nullify
   add_foreign_key "mail_channel", "res_users", column: "create_uid", name: "mail_channel_create_uid_fkey", on_delete: :nullify
@@ -11431,8 +9320,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "mail_channel_res_groups_rel", "res_groups", column: "res_groups_id", name: "mail_channel_res_groups_rel_res_groups_id_fkey", on_delete: :cascade
   add_foreign_key "mail_compose_message", "ir_mail_server", column: "mail_server_id", name: "mail_compose_message_mail_server_id_fkey", on_delete: :nullify
   add_foreign_key "mail_compose_message", "mail_activity_type", name: "mail_compose_message_mail_activity_type_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_compose_message", "mail_mass_mailing", column: "mass_mailing_id", name: "mail_compose_message_mass_mailing_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_compose_message", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "mail_compose_message_mass_mailing_campaign_id_fkey", on_delete: :nullify
   add_foreign_key "mail_compose_message", "mail_message", column: "parent_id", name: "mail_compose_message_parent_id_fkey", on_delete: :nullify
   add_foreign_key "mail_compose_message", "mail_message_subtype", column: "subtype_id", name: "mail_compose_message_subtype_id_fkey", on_delete: :nullify
   add_foreign_key "mail_compose_message", "mail_template", column: "template_id", name: "mail_compose_message_template_id_fkey", on_delete: :nullify
@@ -11441,8 +9328,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "mail_compose_message", "res_users", column: "write_uid", name: "mail_compose_message_write_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_compose_message_ir_attachments_rel", "ir_attachment", column: "attachment_id", name: "mail_compose_message_ir_attachments_rel_attachment_id_fkey", on_delete: :cascade
   add_foreign_key "mail_compose_message_ir_attachments_rel", "mail_compose_message", column: "wizard_id", name: "mail_compose_message_ir_attachments_rel_wizard_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_compose_message_mail_mass_mailing_list_rel", "mail_compose_message", name: "mail_compose_message_mail_mass_mai_mail_compose_message_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_compose_message_mail_mass_mailing_list_rel", "mail_mass_mailing_list", name: "mail_compose_message_mail_mass_m_mail_mass_mailing_list_id_fkey", on_delete: :cascade
   add_foreign_key "mail_compose_message_res_partner_rel", "mail_compose_message", column: "wizard_id", name: "mail_compose_message_res_partner_rel_wizard_id_fkey", on_delete: :cascade
   add_foreign_key "mail_compose_message_res_partner_rel", "res_partner", column: "partner_id", name: "mail_compose_message_res_partner_rel_partner_id_fkey", on_delete: :cascade
   add_foreign_key "mail_followers", "mail_channel", column: "channel_id", name: "mail_followers_channel_id_fkey", on_delete: :cascade
@@ -11450,54 +9335,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "mail_followers_mail_message_subtype_rel", "mail_followers", column: "mail_followers_id", name: "mail_followers_mail_message_subtype_rel_mail_followers_id_fkey", on_delete: :cascade
   add_foreign_key "mail_followers_mail_message_subtype_rel", "mail_message_subtype", name: "mail_followers_mail_message_subtyp_mail_message_subtype_id_fkey", on_delete: :cascade
   add_foreign_key "mail_mail", "fetchmail_server", name: "mail_mail_fetchmail_server_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mail", "mail_mass_mailing", column: "mailing_id", name: "mail_mail_mailing_id_fkey", on_delete: :nullify
   add_foreign_key "mail_mail", "mail_message", name: "mail_mail_mail_message_id_fkey", on_delete: :cascade
   add_foreign_key "mail_mail", "res_users", column: "create_uid", name: "mail_mail_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_mail", "res_users", column: "write_uid", name: "mail_mail_write_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_mail_res_partner_rel", "mail_mail", name: "mail_mail_res_partner_rel_mail_mail_id_fkey", on_delete: :cascade
   add_foreign_key "mail_mail_res_partner_rel", "res_partner", name: "mail_mail_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mail_statistics", "mail_mail", name: "mail_mail_statistics_mail_mail_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mail_statistics", "mail_mass_mailing", column: "mass_mailing_id", name: "mail_mail_statistics_mass_mailing_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mail_statistics", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "mail_mail_statistics_mass_mailing_campaign_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mail_statistics", "res_users", column: "create_uid", name: "mail_mail_statistics_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mail_statistics", "res_users", column: "write_uid", name: "mail_mail_statistics_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing", "ir_model", column: "mailing_model_id", name: "mail_mass_mailing_mailing_model_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "mail_mass_mailing_mass_mailing_campaign_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing", "res_users", column: "create_uid", name: "mail_mass_mailing_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing", "res_users", column: "write_uid", name: "mail_mass_mailing_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing", "utm_campaign", column: "campaign_id", name: "mail_mass_mailing_campaign_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing", "utm_medium", column: "medium_id", name: "mail_mass_mailing_medium_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing", "utm_source", column: "source_id", name: "mail_mass_mailing_source_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_campaign", "mail_mass_mailing_stage", column: "stage_id", name: "mail_mass_mailing_campaign_stage_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_campaign", "res_users", column: "create_uid", name: "mail_mass_mailing_campaign_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_campaign", "res_users", column: "user_id", name: "mail_mass_mailing_campaign_user_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_campaign", "res_users", column: "write_uid", name: "mail_mass_mailing_campaign_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_campaign", "utm_campaign", column: "campaign_id", name: "mail_mass_mailing_campaign_campaign_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_campaign", "utm_medium", column: "medium_id", name: "mail_mass_mailing_campaign_medium_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_campaign", "utm_source", column: "source_id", name: "mail_mass_mailing_campaign_source_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_contact", "res_country", column: "country_id", name: "mail_mass_mailing_contact_country_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_contact", "res_partner_title", column: "title_id", name: "mail_mass_mailing_contact_title_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_contact", "res_users", column: "create_uid", name: "mail_mass_mailing_contact_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_contact", "res_users", column: "write_uid", name: "mail_mass_mailing_contact_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_contact_list_rel", "mail_mass_mailing_contact", column: "contact_id", name: "mail_mass_mailing_contact_list_rel_contact_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_contact_list_rel", "mail_mass_mailing_list", column: "list_id", name: "mail_mass_mailing_contact_list_rel_list_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_contact_res_partner_category_rel", "mail_mass_mailing_contact", name: "mail_mass_mailing_contact_res_mail_mass_mailing_contact_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_contact_res_partner_category_rel", "res_partner_category", name: "mail_mass_mailing_contact_res_part_res_partner_category_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_list", "res_users", column: "create_uid", name: "mail_mass_mailing_list_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_list", "res_users", column: "write_uid", name: "mail_mass_mailing_list_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_list_rel", "mail_mass_mailing", name: "mail_mass_mailing_list_rel_mail_mass_mailing_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_list_rel", "mail_mass_mailing_list", name: "mail_mass_mailing_list_rel_mail_mass_mailing_list_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_list_survey_mail_compose_message_rel", "mail_mass_mailing_list", name: "mail_mass_mailing_list_survey_ma_mail_mass_mailing_list_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_list_survey_mail_compose_message_rel", "survey_mail_compose_message", name: "mail_mass_mailing_list_survey_survey_mail_compose_message__fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_stage", "res_users", column: "create_uid", name: "mail_mass_mailing_stage_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_stage", "res_users", column: "write_uid", name: "mail_mass_mailing_stage_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_tag", "res_users", column: "create_uid", name: "mail_mass_mailing_tag_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_tag", "res_users", column: "write_uid", name: "mail_mass_mailing_tag_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_tag_rel", "mail_mass_mailing_campaign", column: "tag_id", name: "mail_mass_mailing_tag_rel_tag_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_tag_rel", "mail_mass_mailing_tag", column: "campaign_id", name: "mail_mass_mailing_tag_rel_campaign_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_test", "mail_mass_mailing", column: "mass_mailing_id", name: "mail_mass_mailing_test_mass_mailing_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_mass_mailing_test", "res_users", column: "create_uid", name: "mail_mass_mailing_test_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_mass_mailing_test", "res_users", column: "write_uid", name: "mail_mass_mailing_test_write_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_message", "ir_mail_server", column: "mail_server_id", name: "mail_message_mail_server_id_fkey", on_delete: :nullify
   add_foreign_key "mail_message", "mail_activity_type", name: "mail_message_mail_activity_type_id_fkey", on_delete: :nullify
   add_foreign_key "mail_message", "mail_message", column: "parent_id", name: "mail_message_parent_id_fkey", on_delete: :nullify
@@ -11532,15 +9374,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "mail_test", "res_users", column: "write_uid", name: "mail_test_write_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_test_simple", "res_users", column: "create_uid", name: "mail_test_simple_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_test_simple", "res_users", column: "write_uid", name: "mail_test_simple_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_tracking_email", "mail_mail", column: "mail_id", name: "mail_tracking_email_mail_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_tracking_email", "mail_message", name: "mail_tracking_email_mail_message_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_tracking_email", "res_partner", column: "partner_id", name: "mail_tracking_email_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_tracking_email", "res_users", column: "create_uid", name: "mail_tracking_email_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_tracking_email", "res_users", column: "write_uid", name: "mail_tracking_email_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_tracking_event", "mail_tracking_email", column: "tracking_email_id", name: "mail_tracking_event_tracking_email_id_fkey", on_delete: :cascade
-  add_foreign_key "mail_tracking_event", "res_country", column: "user_country_id", name: "mail_tracking_event_user_country_id_fkey", on_delete: :nullify
-  add_foreign_key "mail_tracking_event", "res_users", column: "create_uid", name: "mail_tracking_event_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mail_tracking_event", "res_users", column: "write_uid", name: "mail_tracking_event_write_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_tracking_value", "mail_message", name: "mail_tracking_value_mail_message_id_fkey", on_delete: :cascade
   add_foreign_key "mail_tracking_value", "res_users", column: "create_uid", name: "mail_tracking_value_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_tracking_value", "res_users", column: "write_uid", name: "mail_tracking_value_write_uid_fkey", on_delete: :nullify
@@ -11551,40 +9384,16 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "maintenance_equipment", "hr_department", column: "department_id", name: "maintenance_equipment_department_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "hr_employee", column: "employee_id", name: "maintenance_equipment_employee_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "maintenance_equipment_category", column: "category_id", name: "maintenance_equipment_category_id_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment", "maintenance_equipment_location", column: "location_id", name: "maintenance_equipment_location_id_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment", "maintenance_equipment_status", column: "status_id", name: "maintenance_equipment_status_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "maintenance_team", name: "maintenance_equipment_maintenance_team_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "res_partner", column: "partner_id", name: "maintenance_equipment_partner_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "res_users", column: "create_uid", name: "maintenance_equipment_create_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "res_users", column: "owner_user_id", name: "maintenance_equipment_owner_user_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "res_users", column: "technician_user_id", name: "maintenance_equipment_technician_user_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "res_users", column: "write_uid", name: "maintenance_equipment_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_category", "ir_sequence", column: "sequence_id", name: "maintenance_equipment_category_sequence_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_category", "mail_alias", column: "alias_id", name: "maintenance_equipment_category_alias_id_fkey", on_delete: :restrict
-  add_foreign_key "maintenance_equipment_category", "maintenance_equipment_category", column: "parent_id", name: "maintenance_equipment_category_parent_id_fkey", on_delete: :cascade
   add_foreign_key "maintenance_equipment_category", "res_users", column: "create_uid", name: "maintenance_equipment_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_category", "res_users", column: "technician_user_id", name: "maintenance_equipment_category_technician_user_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_category", "res_users", column: "write_uid", name: "maintenance_equipment_category_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_category_maintenance_equipment_status_rel", "maintenance_equipment_category", name: "maintenance_equipment_categor_maintenance_equipment_catego_fkey", on_delete: :cascade
-  add_foreign_key "maintenance_equipment_category_maintenance_equipment_status_rel", "maintenance_equipment_status", name: "maintenance_equipment_categor_maintenance_equipment_status_fkey", on_delete: :cascade
-  add_foreign_key "maintenance_equipment_location", "res_company", column: "company_id", name: "maintenance_equipment_location_company_id_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_location", "res_users", column: "create_uid", name: "maintenance_equipment_location_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_location", "res_users", column: "write_uid", name: "maintenance_equipment_location_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_maintenance_equipment_move_rel", "maintenance_equipment", name: "maintenance_equipment_maintenance_maintenance_equipment_id_fkey", on_delete: :cascade
-  add_foreign_key "maintenance_equipment_maintenance_equipment_move_rel", "maintenance_equipment_move", name: "maintenance_equipment_mainten_maintenance_equipment_move_i_fkey", on_delete: :cascade
-  add_foreign_key "maintenance_equipment_move", "maintenance_equipment_location", column: "from_location_id", name: "maintenance_equipment_move_from_location_id_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_move", "maintenance_equipment_location", column: "to_location_id", name: "maintenance_equipment_move_to_location_id_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_move", "maintenance_equipment_move_type", column: "move_type_id", name: "maintenance_equipment_move_move_type_id_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_move", "op_session", column: "session_id", name: "maintenance_equipment_move_session_id_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_move", "res_users", column: "create_uid", name: "maintenance_equipment_move_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_move", "res_users", column: "user_id", name: "maintenance_equipment_move_user_id_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_move", "res_users", column: "write_uid", name: "maintenance_equipment_move_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_move_type", "res_users", column: "create_uid", name: "maintenance_equipment_move_type_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_move_type", "res_users", column: "write_uid", name: "maintenance_equipment_move_type_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_status", "res_users", column: "create_uid", name: "maintenance_equipment_status_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_status", "res_users", column: "write_uid", name: "maintenance_equipment_status_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_tag", "res_users", column: "create_uid", name: "maintenance_equipment_tag_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_equipment_tag", "res_users", column: "write_uid", name: "maintenance_equipment_tag_write_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_request", "hr_department", column: "department_id", name: "maintenance_request_department_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_request", "hr_employee", column: "employee_id", name: "maintenance_request_employee_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_request", "maintenance_equipment", column: "equipment_id", name: "maintenance_request_equipment_id_fkey", on_delete: :nullify
@@ -11597,44 +9406,25 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "maintenance_request", "res_users", column: "write_uid", name: "maintenance_request_write_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_stage", "res_users", column: "create_uid", name: "maintenance_stage_create_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_stage", "res_users", column: "write_uid", name: "maintenance_stage_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_stage_next_stage", "maintenance_stage", column: "next_stage_id", name: "maintenance_stage_next_stage_next_stage_id_fkey", on_delete: :cascade
-  add_foreign_key "maintenance_stage_next_stage", "maintenance_stage", column: "stage_id", name: "maintenance_stage_next_stage_stage_id_fkey", on_delete: :cascade
-  add_foreign_key "maintenance_team", "ir_sequence", column: "sequence_id", name: "maintenance_team_sequence_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_team", "res_users", column: "create_uid", name: "maintenance_team_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "maintenance_team", "res_users", column: "user_id", name: "maintenance_team_user_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_team", "res_users", column: "write_uid", name: "maintenance_team_write_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_team_users_rel", "maintenance_team", name: "maintenance_team_users_rel_maintenance_team_id_fkey", on_delete: :cascade
   add_foreign_key "maintenance_team_users_rel", "res_users", column: "res_users_id", name: "maintenance_team_users_rel_res_users_id_fkey", on_delete: :cascade
-  add_foreign_key "mass_editing_wizard", "res_users", column: "create_uid", name: "mass_editing_wizard_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mass_editing_wizard", "res_users", column: "write_uid", name: "mass_editing_wizard_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "mass_mailing_ir_attachments_rel", "ir_attachment", column: "attachment_id", name: "mass_mailing_ir_attachments_rel_attachment_id_fkey", on_delete: :cascade
-  add_foreign_key "mass_mailing_ir_attachments_rel", "mail_mass_mailing", column: "mass_mailing_id", name: "mass_mailing_ir_attachments_rel_mass_mailing_id_fkey", on_delete: :cascade
-  add_foreign_key "mass_object", "res_users", column: "create_uid", name: "mass_object_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "mass_object", "res_users", column: "write_uid", name: "mass_object_write_uid_fkey", on_delete: :nullify
   add_foreign_key "meeting_category_rel", "calendar_event", column: "event_id", name: "meeting_category_rel_event_id_fkey", on_delete: :cascade
   add_foreign_key "meeting_category_rel", "calendar_event_type", column: "type_id", name: "meeting_category_rel_type_id_fkey", on_delete: :cascade
+  add_foreign_key "membership_invoice", "product_product", column: "product_id", name: "membership_invoice_product_id_fkey", on_delete: :nullify
+  add_foreign_key "membership_invoice", "res_users", column: "create_uid", name: "membership_invoice_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "membership_invoice", "res_users", column: "write_uid", name: "membership_invoice_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "membership_membership_line", "account_invoice_line", column: "account_invoice_line", name: "membership_membership_line_account_invoice_line_fkey", on_delete: :cascade
+  add_foreign_key "membership_membership_line", "product_product", column: "membership_id", name: "membership_membership_line_membership_id_fkey", on_delete: :nullify
+  add_foreign_key "membership_membership_line", "res_company", column: "company_id", name: "membership_membership_line_company_id_fkey", on_delete: :nullify
+  add_foreign_key "membership_membership_line", "res_partner", column: "partner", name: "membership_membership_line_partner_fkey", on_delete: :cascade
+  add_foreign_key "membership_membership_line", "res_users", column: "create_uid", name: "membership_membership_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "membership_membership_line", "res_users", column: "write_uid", name: "membership_membership_line_write_uid_fkey", on_delete: :nullify
   add_foreign_key "merge_opportunity_rel", "crm_lead", column: "opportunity_id", name: "merge_opportunity_rel_opportunity_id_fkey", on_delete: :cascade
   add_foreign_key "merge_opportunity_rel", "crm_merge_opportunity", column: "merge_id", name: "merge_opportunity_rel_merge_id_fkey", on_delete: :cascade
   add_foreign_key "message_attachment_rel", "ir_attachment", column: "attachment_id", name: "message_attachment_rel_attachment_id_fkey", on_delete: :cascade
   add_foreign_key "message_attachment_rel", "mail_message", column: "message_id", name: "message_attachment_rel_message_id_fkey", on_delete: :cascade
-  add_foreign_key "muk_autovacuum_rules", "res_users", column: "create_uid", name: "muk_autovacuum_rules_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "muk_autovacuum_rules", "res_users", column: "write_uid", name: "muk_autovacuum_rules_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "muk_web_client_notification_send_notifications", "res_users", column: "create_uid", name: "muk_web_client_notification_send_notifications_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "muk_web_client_notification_send_notifications", "res_users", column: "write_uid", name: "muk_web_client_notification_send_notifications_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "muk_web_client_notification_user_rel", "muk_web_client_notification_send_notifications", column: "wizard_id", name: "muk_web_client_notification_user_rel_wizard_id_fkey", on_delete: :cascade
-  add_foreign_key "muk_web_client_notification_user_rel", "res_users", column: "user_id", name: "muk_web_client_notification_user_rel_user_id_fkey", on_delete: :cascade
-  add_foreign_key "note_note", "res_users", column: "create_uid", name: "note_note_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "note_note", "res_users", column: "user_id", name: "note_note_user_id_fkey", on_delete: :nullify
-  add_foreign_key "note_note", "res_users", column: "write_uid", name: "note_note_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "note_stage", "res_users", column: "create_uid", name: "note_stage_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "note_stage", "res_users", column: "user_id", name: "note_stage_user_id_fkey", on_delete: :cascade
-  add_foreign_key "note_stage", "res_users", column: "write_uid", name: "note_stage_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "note_stage_rel", "note_note", column: "note_id", name: "note_stage_rel_note_id_fkey", on_delete: :cascade
-  add_foreign_key "note_stage_rel", "note_stage", column: "stage_id", name: "note_stage_rel_stage_id_fkey", on_delete: :cascade
-  add_foreign_key "note_tag", "res_users", column: "create_uid", name: "note_tag_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "note_tag", "res_users", column: "write_uid", name: "note_tag_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "note_tags_rel", "note_note", column: "note_id", name: "note_tags_rel_note_id_fkey", on_delete: :cascade
-  add_foreign_key "note_tags_rel", "note_tag", column: "tag_id", name: "note_tags_rel_tag_id_fkey", on_delete: :cascade
   add_foreign_key "op_activity", "op_activity_type", column: "type_id", name: "op_activity_type_id_fkey", on_delete: :nullify
   add_foreign_key "op_activity", "op_faculty", column: "faculty_id", name: "op_activity_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "op_activity", "op_student", column: "student_id", name: "op_activity_student_id_fkey", on_delete: :nullify
@@ -11642,7 +9432,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "op_activity", "res_users", column: "write_uid", name: "op_activity_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_activity_type", "res_users", column: "create_uid", name: "op_activity_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_activity_type", "res_users", column: "write_uid", name: "op_activity_type_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "op_admission", "crm_claim", column: "claim_id", name: "op_admission_claim_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission", "op_admission_register", column: "register_id", name: "op_admission_register_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission", "op_batch", column: "batch_id", name: "op_admission_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission", "op_course", column: "course_id", name: "op_admission_course_id_fkey", on_delete: :nullify
@@ -11735,6 +9524,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "op_badge_student_wizard", "res_users", column: "create_uid", name: "op_badge_student_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_badge_student_wizard", "res_users", column: "write_uid", name: "op_badge_student_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_admission_register", column: "register_id", name: "op_batch_register_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch", "op_batch", column: "batch_id", name: "op_batch_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_batch_type", column: "type_id", name: "op_batch_type_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_course", column: "course_id", name: "op_batch_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "res_company", column: "company_id", name: "op_batch_company_id_fkey", on_delete: :nullify
@@ -11928,14 +9718,11 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "op_session", "op_course", column: "course_id", name: "op_session_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_faculty", column: "assessor", name: "op_session_assessor_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_faculty", column: "faculty_id", name: "op_session_faculty_id_fkey", on_delete: :nullify
-  add_foreign_key "op_session", "op_faculty", column: "observe_faculty", name: "op_session_observe_faculty_fkey", on_delete: :nullify
-  add_foreign_key "op_session", "op_lession", column: "lession_id", name: "op_session_lession_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_student_course", column: "student_course_id", name: "op_session_student_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_subject", column: "subject_id", name: "op_session_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_timing", column: "timing_id", name: "op_session_timing_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "res_company", column: "company_id", name: "op_session_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "res_users", column: "create_uid", name: "op_session_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "op_session", "res_users", column: "user_id", name: "op_session_user_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "res_users", column: "write_uid", name: "op_session_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_session_change_faculty", "op_batch", column: "batch_id", name: "op_session_change_faculty_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_change_faculty", "op_course", column: "course_id", name: "op_session_change_faculty_course_id_fkey", on_delete: :nullify
@@ -11988,6 +9775,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "op_student_fees_details", "res_users", column: "write_uid", name: "op_student_fees_details_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_student_student_migrate_rel", "op_student", name: "op_student_student_migrate_rel_op_student_id_fkey", on_delete: :cascade
   add_foreign_key "op_student_student_migrate_rel", "student_migrate", name: "op_student_student_migrate_rel_student_migrate_id_fkey", on_delete: :cascade
+  add_foreign_key "op_student_subject", "op_student_course", column: "student_course_id", name: "op_student_subject_student_course_id_fkey", on_delete: :cascade
+  add_foreign_key "op_student_subject", "op_subject", column: "subject_id", name: "op_student_subject_subject_id_fkey", on_delete: :cascade
   add_foreign_key "op_student_wizard_op_student_rel", "op_student", name: "op_student_wizard_op_student_rel_op_student_id_fkey", on_delete: :cascade
   add_foreign_key "op_student_wizard_op_student_rel", "wizard_op_student", name: "op_student_wizard_op_student_rel_wizard_op_student_id_fkey", on_delete: :cascade
   add_foreign_key "op_subject", "op_course", column: "course_id", name: "op_subject_course_id_fkey", on_delete: :nullify
@@ -12022,7 +9811,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "payment_token", "res_partner", column: "partner_id", name: "payment_token_partner_id_fkey", on_delete: :nullify
   add_foreign_key "payment_token", "res_users", column: "create_uid", name: "payment_token_create_uid_fkey", on_delete: :nullify
   add_foreign_key "payment_token", "res_users", column: "write_uid", name: "payment_token_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "payment_transaction", "account_invoice", name: "payment_transaction_account_invoice_id_fkey", on_delete: :nullify
   add_foreign_key "payment_transaction", "ir_model", column: "callback_model_id", name: "payment_transaction_callback_model_id_fkey", on_delete: :nullify
   add_foreign_key "payment_transaction", "payment_acquirer", column: "acquirer_id", name: "payment_transaction_acquirer_id_fkey", on_delete: :nullify
   add_foreign_key "payment_transaction", "payment_token", name: "payment_transaction_payment_token_id_fkey", on_delete: :nullify
@@ -12031,9 +9819,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "payment_transaction", "res_partner", column: "partner_id", name: "payment_transaction_partner_id_fkey", on_delete: :nullify
   add_foreign_key "payment_transaction", "res_users", column: "create_uid", name: "payment_transaction_create_uid_fkey", on_delete: :nullify
   add_foreign_key "payment_transaction", "res_users", column: "write_uid", name: "payment_transaction_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "payment_transaction", "sale_order", name: "payment_transaction_sale_order_id_fkey", on_delete: :nullify
-  add_foreign_key "payslip_lines_contribution_register", "res_users", column: "create_uid", name: "payslip_lines_contribution_register_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "payslip_lines_contribution_register", "res_users", column: "write_uid", name: "payslip_lines_contribution_register_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "photos", "op_session"
   add_foreign_key "portal_wizard", "res_groups", column: "portal_id", name: "portal_wizard_portal_id_fkey", on_delete: :nullify
   add_foreign_key "portal_wizard", "res_users", column: "create_uid", name: "portal_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "portal_wizard", "res_users", column: "write_uid", name: "portal_wizard_write_uid_fkey", on_delete: :nullify
@@ -12042,64 +9828,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "portal_wizard_user", "res_users", column: "create_uid", name: "portal_wizard_user_create_uid_fkey", on_delete: :nullify
   add_foreign_key "portal_wizard_user", "res_users", column: "user_id", name: "portal_wizard_user_user_id_fkey", on_delete: :nullify
   add_foreign_key "portal_wizard_user", "res_users", column: "write_uid", name: "portal_wizard_user_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_category", "pos_category", column: "parent_id", name: "pos_category_parent_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_category", "res_users", column: "create_uid", name: "pos_category_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_category", "res_users", column: "write_uid", name: "pos_category_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "account_fiscal_position", column: "default_fiscal_position_id", name: "pos_config_default_fiscal_position_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "account_journal", column: "invoice_journal_id", name: "pos_config_invoice_journal_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "account_journal", column: "journal_id", name: "pos_config_journal_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "barcode_nomenclature", name: "pos_config_barcode_nomenclature_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "ir_sequence", column: "sequence_id", name: "pos_config_sequence_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "ir_sequence", column: "sequence_line_id", name: "pos_config_sequence_line_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "pos_category", column: "iface_start_categ_id", name: "pos_config_iface_start_categ_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "product_pricelist", column: "pricelist_id", name: "pos_config_pricelist_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "product_product", column: "tip_product_id", name: "pos_config_tip_product_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "res_company", column: "company_id", name: "pos_config_company_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "res_groups", column: "group_pos_manager_id", name: "pos_config_group_pos_manager_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "res_groups", column: "group_pos_user_id", name: "pos_config_group_pos_user_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "res_users", column: "create_uid", name: "pos_config_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_config", "res_users", column: "write_uid", name: "pos_config_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_config_journal_rel", "account_journal", column: "journal_id", name: "pos_config_journal_rel_journal_id_fkey", on_delete: :cascade
-  add_foreign_key "pos_config_journal_rel", "pos_config", name: "pos_config_journal_rel_pos_config_id_fkey", on_delete: :cascade
-  add_foreign_key "pos_config_product_pricelist_rel", "pos_config", name: "pos_config_product_pricelist_rel_pos_config_id_fkey", on_delete: :cascade
-  add_foreign_key "pos_config_product_pricelist_rel", "product_pricelist", name: "pos_config_product_pricelist_rel_product_pricelist_id_fkey", on_delete: :cascade
-  add_foreign_key "pos_detail_configs", "pos_config", name: "pos_detail_configs_pos_config_id_fkey", on_delete: :cascade
-  add_foreign_key "pos_detail_configs", "pos_details_wizard", name: "pos_detail_configs_pos_details_wizard_id_fkey", on_delete: :cascade
-  add_foreign_key "pos_details_wizard", "res_users", column: "create_uid", name: "pos_details_wizard_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_details_wizard", "res_users", column: "write_uid", name: "pos_details_wizard_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_discount", "res_users", column: "create_uid", name: "pos_discount_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_discount", "res_users", column: "write_uid", name: "pos_discount_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_make_payment", "account_journal", column: "journal_id", name: "pos_make_payment_journal_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_make_payment", "pos_session", column: "session_id", name: "pos_make_payment_session_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_make_payment", "res_users", column: "create_uid", name: "pos_make_payment_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_make_payment", "res_users", column: "write_uid", name: "pos_make_payment_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_open_statement", "res_users", column: "create_uid", name: "pos_open_statement_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_open_statement", "res_users", column: "write_uid", name: "pos_open_statement_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "account_fiscal_position", column: "fiscal_position_id", name: "pos_order_fiscal_position_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "account_invoice", column: "invoice_id", name: "pos_order_invoice_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "account_journal", column: "sale_journal", name: "pos_order_sale_journal_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "account_move", column: "account_move", name: "pos_order_account_move_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "pos_session", column: "session_id", name: "pos_order_session_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "product_pricelist", column: "pricelist_id", name: "pos_order_pricelist_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "res_company", column: "company_id", name: "pos_order_company_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "res_partner", column: "partner_id", name: "pos_order_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "res_users", column: "create_uid", name: "pos_order_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "res_users", column: "user_id", name: "pos_order_user_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_order", "res_users", column: "write_uid", name: "pos_order_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_order_line", "pos_order", column: "order_id", name: "pos_order_line_order_id_fkey", on_delete: :cascade
-  add_foreign_key "pos_order_line", "product_product", column: "product_id", name: "pos_order_line_product_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_order_line", "res_company", column: "company_id", name: "pos_order_line_company_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_order_line", "res_users", column: "create_uid", name: "pos_order_line_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_order_line", "res_users", column: "write_uid", name: "pos_order_line_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_pack_operation_lot", "pos_order_line", name: "pos_pack_operation_lot_pos_order_line_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_pack_operation_lot", "res_users", column: "create_uid", name: "pos_pack_operation_lot_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_pack_operation_lot", "res_users", column: "write_uid", name: "pos_pack_operation_lot_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_session", "account_bank_statement", column: "cash_register_id", name: "pos_session_cash_register_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_session", "account_journal", column: "cash_journal_id", name: "pos_session_cash_journal_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_session", "pos_config", column: "config_id", name: "pos_session_config_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_session", "res_users", column: "create_uid", name: "pos_session_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "pos_session", "res_users", column: "user_id", name: "pos_session_user_id_fkey", on_delete: :nullify
-  add_foreign_key "pos_session", "res_users", column: "write_uid", name: "pos_session_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "print_prenumbered_checks", "res_users", column: "create_uid", name: "print_prenumbered_checks_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "print_prenumbered_checks", "res_users", column: "write_uid", name: "print_prenumbered_checks_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_attribute", "res_users", column: "create_uid", name: "product_attribute_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_attribute", "res_users", column: "write_uid", name: "product_attribute_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_attribute_line", "product_attribute", column: "attribute_id", name: "product_attribute_line_attribute_id_fkey", on_delete: :restrict
@@ -12120,8 +9850,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "product_category", "product_category", column: "parent_id", name: "product_category_parent_id_fkey", on_delete: :cascade
   add_foreign_key "product_category", "res_users", column: "create_uid", name: "product_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_category", "res_users", column: "write_uid", name: "product_category_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "product_margin", "res_users", column: "create_uid", name: "product_margin_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "product_margin", "res_users", column: "write_uid", name: "product_margin_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_packaging", "product_product", column: "product_id", name: "product_packaging_product_id_fkey", on_delete: :nullify
   add_foreign_key "product_packaging", "res_users", column: "create_uid", name: "product_packaging_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_packaging", "res_users", column: "write_uid", name: "product_packaging_write_uid_fkey", on_delete: :nullify
@@ -12159,8 +9887,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "product_supplierinfo", "res_users", column: "write_uid", name: "product_supplierinfo_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_taxes_rel", "account_tax", column: "tax_id", name: "product_taxes_rel_tax_id_fkey", on_delete: :cascade
   add_foreign_key "product_taxes_rel", "product_template", column: "prod_id", name: "product_taxes_rel_prod_id_fkey", on_delete: :cascade
-  add_foreign_key "product_template", "mail_template", column: "email_template_id", name: "product_template_email_template_id_fkey", on_delete: :nullify
-  add_foreign_key "product_template", "pos_category", column: "pos_categ_id", name: "product_template_pos_categ_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "product_category", column: "categ_id", name: "product_template_categ_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "product_uom", column: "uom_id", name: "product_template_uom_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "product_uom", column: "uom_po_id", name: "product_template_uom_po_id_fkey", on_delete: :nullify
@@ -12181,7 +9907,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "project_project", "res_users", column: "user_id", name: "project_project_user_id_fkey", on_delete: :nullify
   add_foreign_key "project_project", "res_users", column: "write_uid", name: "project_project_write_uid_fkey", on_delete: :nullify
   add_foreign_key "project_project", "resource_calendar", name: "project_project_resource_calendar_id_fkey", on_delete: :nullify
-  add_foreign_key "project_project", "sale_order_line", column: "sale_line_id", name: "project_project_sale_line_id_fkey", on_delete: :nullify
   add_foreign_key "project_tags", "res_users", column: "create_uid", name: "project_tags_create_uid_fkey", on_delete: :nullify
   add_foreign_key "project_tags", "res_users", column: "write_uid", name: "project_tags_write_uid_fkey", on_delete: :nullify
   add_foreign_key "project_tags_project_task_rel", "project_tags", column: "project_tags_id", name: "project_tags_project_task_rel_project_tags_id_fkey", on_delete: :cascade
@@ -12195,7 +9920,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "project_task", "res_users", column: "create_uid", name: "project_task_create_uid_fkey", on_delete: :nullify
   add_foreign_key "project_task", "res_users", column: "user_id", name: "project_task_user_id_fkey", on_delete: :nullify
   add_foreign_key "project_task", "res_users", column: "write_uid", name: "project_task_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "project_task", "sale_order_line", column: "sale_line_id", name: "project_task_sale_line_id_fkey", on_delete: :nullify
   add_foreign_key "project_task_merge_wizard", "project_project", column: "target_project_id", name: "project_task_merge_wizard_target_project_id_fkey", on_delete: :nullify
   add_foreign_key "project_task_merge_wizard", "project_task", column: "target_task_id", name: "project_task_merge_wizard_target_task_id_fkey", on_delete: :nullify
   add_foreign_key "project_task_merge_wizard", "res_users", column: "create_uid", name: "project_task_merge_wizard_create_uid_fkey", on_delete: :nullify
@@ -12210,31 +9934,15 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "project_task_type_rel", "project_task_type", column: "type_id", name: "project_task_type_rel_type_id_fkey", on_delete: :cascade
   add_foreign_key "question_choices", "questions"
   add_foreign_key "questions", "op_lession"
-<<<<<<< HEAD
   add_foreign_key "reactions", "users"
-=======
-  add_foreign_key "rating_rating", "ir_model", column: "parent_res_model_id", name: "rating_rating_parent_res_model_id_fkey", on_delete: :nullify
-  add_foreign_key "rating_rating", "ir_model", column: "res_model_id", name: "rating_rating_res_model_id_fkey", on_delete: :cascade
-  add_foreign_key "rating_rating", "mail_message", column: "message_id", name: "rating_rating_message_id_fkey", on_delete: :nullify
-  add_foreign_key "rating_rating", "res_partner", column: "partner_id", name: "rating_rating_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "rating_rating", "res_partner", column: "rated_partner_id", name: "rating_rating_rated_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "rating_rating", "res_users", column: "create_uid", name: "rating_rating_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "rating_rating", "res_users", column: "write_uid", name: "rating_rating_write_uid_fkey", on_delete: :nullify
->>>>>>> 66d40abe8699d11d6f62fb7e78371eeea3608d4a
   add_foreign_key "recruitment_source", "res_users", column: "create_uid", name: "recruitment_source_create_uid_fkey", on_delete: :nullify
   add_foreign_key "recruitment_source", "res_users", column: "write_uid", name: "recruitment_source_write_uid_fkey", on_delete: :nullify
   add_foreign_key "rel_badge_auth_users", "gamification_badge", name: "rel_badge_auth_users_gamification_badge_id_fkey", on_delete: :cascade
   add_foreign_key "rel_badge_auth_users", "res_users", column: "res_users_id", name: "rel_badge_auth_users_res_users_id_fkey", on_delete: :cascade
-  add_foreign_key "rel_channel_groups", "res_groups", column: "group_id", name: "rel_channel_groups_group_id_fkey", on_delete: :cascade
-  add_foreign_key "rel_channel_groups", "slide_channel", column: "channel_id", name: "rel_channel_groups_channel_id_fkey", on_delete: :cascade
   add_foreign_key "rel_modules_langexport", "base_language_export", column: "wiz_id", name: "rel_modules_langexport_wiz_id_fkey", on_delete: :cascade
   add_foreign_key "rel_modules_langexport", "ir_module_module", column: "module_id", name: "rel_modules_langexport_module_id_fkey", on_delete: :cascade
   add_foreign_key "rel_server_actions", "ir_act_server", column: "action_id", name: "rel_server_actions_action_id_fkey", on_delete: :cascade
   add_foreign_key "rel_server_actions", "ir_act_server", column: "server_id", name: "rel_server_actions_server_id_fkey", on_delete: :cascade
-  add_foreign_key "rel_slide_tag", "slide_slide", column: "slide_id", name: "rel_slide_tag_slide_id_fkey", on_delete: :cascade
-  add_foreign_key "rel_slide_tag", "slide_tag", column: "tag_id", name: "rel_slide_tag_tag_id_fkey", on_delete: :cascade
-  add_foreign_key "rel_upload_groups", "res_groups", column: "group_id", name: "rel_upload_groups_group_id_fkey", on_delete: :cascade
-  add_foreign_key "rel_upload_groups", "slide_channel", column: "channel_id", name: "rel_upload_groups_channel_id_fkey", on_delete: :cascade
   add_foreign_key "remove_draft_session", "op_batch", column: "batch_id", name: "remove_draft_session_batch_id_fkey", on_delete: :nullify
   add_foreign_key "remove_draft_session", "op_course", column: "course_id", name: "remove_draft_session_course_id_fkey", on_delete: :nullify
   add_foreign_key "remove_draft_session", "res_users", column: "create_uid", name: "remove_draft_session_create_uid_fkey", on_delete: :nullify
@@ -12254,8 +9962,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "res_company", "account_journal", column: "tax_cash_basis_journal_id", name: "res_company_tax_cash_basis_journal_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "account_move", column: "account_opening_move_id", name: "res_company_account_opening_move_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "product_uom", column: "project_time_mode_id", name: "res_company_project_time_mode_id_fkey", on_delete: :nullify
-  add_foreign_key "res_company", "project_project", column: "leave_timesheet_project_id", name: "res_company_leave_timesheet_project_id_fkey", on_delete: :nullify
-  add_foreign_key "res_company", "project_task", column: "leave_timesheet_task_id", name: "res_company_leave_timesheet_task_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "report_paperformat", column: "paperformat_id", name: "res_company_paperformat_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "res_company", column: "parent_id", name: "res_company_parent_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "res_currency", column: "currency_id", name: "res_company_currency_id_fkey", on_delete: :nullify
@@ -12275,8 +9981,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "res_config_settings", "res_users", column: "auth_signup_template_user_id", name: "res_config_settings_auth_signup_template_user_id_fkey", on_delete: :nullify
   add_foreign_key "res_config_settings", "res_users", column: "create_uid", name: "res_config_settings_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_config_settings", "res_users", column: "write_uid", name: "res_config_settings_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_config_settings", "survey_survey", column: "default_survey_id", name: "res_config_settings_default_survey_id_fkey", on_delete: :nullify
-  add_foreign_key "res_config_settings", "survey_survey", column: "student_test_survey_id", name: "res_config_settings_student_test_survey_id_fkey", on_delete: :nullify
   add_foreign_key "res_config_settings", "website", name: "res_config_settings_website_id_fkey", on_delete: :nullify
   add_foreign_key "res_country", "ir_ui_view", column: "address_view_id", name: "res_country_address_view_id_fkey", on_delete: :nullify
   add_foreign_key "res_country", "res_currency", column: "currency_id", name: "res_country_currency_id_fkey", on_delete: :nullify
@@ -12297,9 +10001,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "res_currency_rate", "res_currency", column: "currency_id", name: "res_currency_rate_currency_id_fkey", on_delete: :nullify
   add_foreign_key "res_currency_rate", "res_users", column: "create_uid", name: "res_currency_rate_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_currency_rate", "res_users", column: "write_uid", name: "res_currency_rate_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_district", "res_province", column: "province_id", name: "res_district_province_id_fkey", on_delete: :nullify
-  add_foreign_key "res_district", "res_users", column: "create_uid", name: "res_district_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_district", "res_users", column: "write_uid", name: "res_district_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_groups", "ir_module_category", column: "category_id", name: "res_groups_category_id_fkey", on_delete: :nullify
   add_foreign_key "res_groups", "res_users", column: "create_uid", name: "res_groups_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_groups", "res_users", column: "write_uid", name: "res_groups_write_uid_fkey", on_delete: :nullify
@@ -12316,16 +10017,14 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "res_partner", "res_country", column: "commercial_partner_country_id", name: "res_partner_commercial_partner_country_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_country", column: "country_id", name: "res_partner_country_id_fkey", on_delete: :restrict
   add_foreign_key "res_partner", "res_country_state", column: "state_id", name: "res_partner_state_id_fkey", on_delete: :restrict
-  add_foreign_key "res_partner", "res_district", column: "district_id", name: "res_partner_district_id_fkey", on_delete: :restrict
+  add_foreign_key "res_partner", "res_partner", column: "associate_member", name: "res_partner_associate_member_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_partner", column: "commercial_partner_id", name: "res_partner_commercial_partner_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_partner", column: "parent_id", name: "res_partner_parent_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_partner_industry", column: "industry_id", name: "res_partner_industry_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_partner_title", column: "title", name: "res_partner_title_fkey", on_delete: :nullify
-  add_foreign_key "res_partner", "res_province", column: "province_id", name: "res_partner_province_id_fkey", on_delete: :restrict
   add_foreign_key "res_partner", "res_users", column: "create_uid", name: "res_partner_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_users", column: "user_id", name: "res_partner_user_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_users", column: "write_uid", name: "res_partner_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_partner", "res_ward", column: "ward_id", name: "res_partner_ward_id_fkey", on_delete: :restrict
   add_foreign_key "res_partner_bank", "res_bank", column: "bank_id", name: "res_partner_bank_bank_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner_bank", "res_company", column: "company_id", name: "res_partner_bank_company_id_fkey", on_delete: :cascade
   add_foreign_key "res_partner_bank", "res_currency", column: "currency_id", name: "res_partner_bank_currency_id_fkey", on_delete: :nullify
@@ -12341,14 +10040,10 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "res_partner_res_partner_category_rel", "res_partner_category", column: "category_id", name: "res_partner_res_partner_category_rel_category_id_fkey", on_delete: :cascade
   add_foreign_key "res_partner_title", "res_users", column: "create_uid", name: "res_partner_title_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_partner_title", "res_users", column: "write_uid", name: "res_partner_title_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_province", "res_country", column: "country_id", name: "res_province_country_id_fkey", on_delete: :nullify
-  add_foreign_key "res_province", "res_users", column: "create_uid", name: "res_province_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_province", "res_users", column: "write_uid", name: "res_province_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_request_link", "res_users", column: "create_uid", name: "res_request_link_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_request_link", "res_users", column: "write_uid", name: "res_request_link_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_user_first_rel1", "res_users", column: "res_user_second_rel1", name: "res_user_first_rel1_res_user_second_rel1_fkey", on_delete: :cascade
   add_foreign_key "res_user_first_rel1", "res_users", column: "user_id", name: "res_user_first_rel1_user_id_fkey", on_delete: :cascade
-  add_foreign_key "res_users", "auth_oauth_provider", column: "oauth_provider_id", name: "res_users_oauth_provider_id_fkey", on_delete: :nullify
   add_foreign_key "res_users", "crm_team", column: "sale_team_id", name: "res_users_sale_team_id_fkey", on_delete: :nullify
   add_foreign_key "res_users", "mail_alias", column: "alias_id", name: "res_users_alias_id_fkey", on_delete: :nullify
   add_foreign_key "res_users", "res_company", column: "company_id", name: "res_users_company_id_fkey", on_delete: :nullify
@@ -12357,16 +10052,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "res_users", "res_users", column: "write_uid", name: "res_users_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_users_log", "res_users", column: "create_uid", name: "res_users_log_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_users_log", "res_users", column: "write_uid", name: "res_users_log_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_users_role", "res_groups", column: "group_id", name: "res_users_role_group_id_fkey", on_delete: :cascade
-  add_foreign_key "res_users_role", "res_users", column: "create_uid", name: "res_users_role_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_users_role", "res_users", column: "write_uid", name: "res_users_role_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_users_role_line", "res_users", column: "create_uid", name: "res_users_role_line_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_users_role_line", "res_users", column: "user_id", name: "res_users_role_line_user_id_fkey", on_delete: :nullify
-  add_foreign_key "res_users_role_line", "res_users", column: "write_uid", name: "res_users_role_line_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_users_role_line", "res_users_role", column: "role_id", name: "res_users_role_line_role_id_fkey", on_delete: :cascade
-  add_foreign_key "res_ward", "res_district", column: "district_id", name: "res_ward_district_id_fkey", on_delete: :nullify
-  add_foreign_key "res_ward", "res_users", column: "create_uid", name: "res_ward_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "res_ward", "res_users", column: "write_uid", name: "res_ward_write_uid_fkey", on_delete: :nullify
   add_foreign_key "reserve_media", "res_partner", column: "partner_id", name: "reserve_media_partner_id_fkey", on_delete: :nullify
   add_foreign_key "reserve_media", "res_users", column: "create_uid", name: "reserve_media_create_uid_fkey", on_delete: :nullify
   add_foreign_key "reserve_media", "res_users", column: "write_uid", name: "reserve_media_write_uid_fkey", on_delete: :nullify
@@ -12409,8 +10094,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "sale_order", "account_payment_term", column: "payment_term_id", name: "sale_order_payment_term_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "crm_lead", column: "opportunity_id", name: "sale_order_opportunity_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "crm_team", column: "team_id", name: "sale_order_team_id_fkey", on_delete: :nullify
-  add_foreign_key "sale_order", "payment_acquirer", name: "sale_order_payment_acquirer_id_fkey", on_delete: :nullify
-  add_foreign_key "sale_order", "payment_transaction", column: "payment_tx_id", name: "sale_order_payment_tx_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "product_pricelist", column: "pricelist_id", name: "sale_order_pricelist_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "res_company", column: "admission_company_id", name: "sale_order_admission_company_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "res_company", column: "company_id", name: "sale_order_company_id_fkey", on_delete: :nullify
@@ -12430,7 +10113,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "sale_order_line", "op_student", column: "student_id", name: "sale_order_line_student_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "product_product", column: "product_id", name: "sale_order_line_product_id_fkey", on_delete: :restrict
   add_foreign_key "sale_order_line", "product_uom", column: "product_uom", name: "sale_order_line_product_uom_fkey", on_delete: :nullify
-  add_foreign_key "sale_order_line", "project_task", column: "task_id", name: "sale_order_line_task_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "res_company", column: "company_id", name: "sale_order_line_company_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "res_currency", column: "currency_id", name: "sale_order_line_currency_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "res_partner", column: "order_partner_id", name: "sale_order_line_order_partner_id_fkey", on_delete: :nullify
@@ -12452,28 +10134,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "session_confirmation", "res_users", column: "write_uid", name: "session_confirmation_write_uid_fkey", on_delete: :nullify
   add_foreign_key "session_fa_rel", "op_faculty", column: "partner_id", name: "session_fa_rel_partner_id_fkey", on_delete: :cascade
   add_foreign_key "session_fa_rel", "op_session", column: "name", name: "session_fa_rel_name_fkey", on_delete: :cascade
-  add_foreign_key "slide_category", "res_users", column: "create_uid", name: "slide_category_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "slide_category", "res_users", column: "write_uid", name: "slide_category_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "slide_category", "slide_channel", column: "channel_id", name: "slide_category_channel_id_fkey", on_delete: :cascade
-  add_foreign_key "slide_channel", "mail_template", column: "publish_template_id", name: "slide_channel_publish_template_id_fkey", on_delete: :nullify
-  add_foreign_key "slide_channel", "mail_template", column: "share_template_id", name: "slide_channel_share_template_id_fkey", on_delete: :nullify
-  add_foreign_key "slide_channel", "res_users", column: "create_uid", name: "slide_channel_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "slide_channel", "res_users", column: "write_uid", name: "slide_channel_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "slide_channel", "slide_slide", column: "custom_slide_id", name: "slide_channel_custom_slide_id_fkey", on_delete: :nullify
-  add_foreign_key "slide_channel", "slide_slide", column: "promoted_slide_id", name: "slide_channel_promoted_slide_id_fkey", on_delete: :nullify
-  add_foreign_key "slide_embed", "res_users", column: "create_uid", name: "slide_embed_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "slide_embed", "res_users", column: "write_uid", name: "slide_embed_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "slide_embed", "slide_slide", column: "slide_id", name: "slide_embed_slide_id_fkey", on_delete: :nullify
-  add_foreign_key "slide_slide", "res_users", column: "create_uid", name: "slide_slide_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "slide_slide", "res_users", column: "write_uid", name: "slide_slide_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "slide_slide", "slide_category", column: "category_id", name: "slide_slide_category_id_fkey", on_delete: :nullify
-  add_foreign_key "slide_slide", "slide_channel", column: "channel_id", name: "slide_slide_channel_id_fkey", on_delete: :nullify
-  add_foreign_key "slide_tag", "res_users", column: "create_uid", name: "slide_tag_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "slide_tag", "res_users", column: "write_uid", name: "slide_tag_write_uid_fkey", on_delete: :nullify
   add_foreign_key "sms_send_sms", "res_users", column: "create_uid", name: "sms_send_sms_create_uid_fkey", on_delete: :nullify
   add_foreign_key "sms_send_sms", "res_users", column: "write_uid", name: "sms_send_sms_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "sparse_fields_test", "res_users", column: "create_uid", name: "sparse_fields_test_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "sparse_fields_test", "res_users", column: "write_uid", name: "sparse_fields_test_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_attendance", "res_users", column: "create_uid", name: "student_attendance_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_attendance", "res_users", column: "write_uid", name: "student_attendance_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_hall_ticket", "op_exam_session", column: "exam_session_id", name: "student_hall_ticket_exam_session_id_fkey", on_delete: :nullify
@@ -12493,12 +10155,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "student_migrate", "res_users", column: "create_uid", name: "student_migrate_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_migrate", "res_users", column: "write_uid", name: "student_migrate_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test", "crm_lead", column: "opportunity_id", name: "student_test_opportunity_id_fkey", on_delete: :nullify
-  add_foreign_key "student_test", "op_batch", column: "batch_id", name: "student_test_batch_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_course", column: "confirm_course_id", name: "student_test_confirm_course_id_fkey", on_delete: :nullify
-  add_foreign_key "student_test", "op_course", column: "course_id", name: "student_test_course_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_faculty", column: "faculty_id", name: "student_test_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_student", column: "student_id", name: "student_test_student_id_fkey", on_delete: :nullify
-  add_foreign_key "student_test", "product_product", column: "product_id", name: "student_test_product_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "res_company", column: "company_id", name: "student_test_company_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "res_currency", column: "currency_id", name: "student_test_currency_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "res_partner", column: "partner_id", name: "student_test_partner_id_fkey", on_delete: :nullify
@@ -12507,8 +10166,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "student_test", "res_users", column: "write_uid", name: "student_test_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test", "sale_order", column: "order_id", name: "student_test_order_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "sale_order_line", column: "order_line_id", name: "student_test_order_line_id_fkey", on_delete: :nullify
-  add_foreign_key "student_test", "survey_survey", column: "survey_id", name: "student_test_survey_id_fkey", on_delete: :nullify
-  add_foreign_key "student_test", "survey_user_input", column: "input_id", name: "student_test_input_id_fkey", on_delete: :nullify
   add_foreign_key "student_test_wizard", "res_users", column: "create_uid", name: "student_test_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test_wizard", "res_users", column: "write_uid", name: "student_test_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "subject_compulsory_rel", "op_subject", column: "subject_id", name: "subject_compulsory_rel_subject_id_fkey", on_delete: :cascade
@@ -12517,49 +10174,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "summary_dept_rel", "hr_holidays_summary_dept", column: "sum_id", name: "summary_dept_rel_sum_id_fkey", on_delete: :cascade
   add_foreign_key "summary_emp_rel", "hr_employee", column: "emp_id", name: "summary_emp_rel_emp_id_fkey", on_delete: :cascade
   add_foreign_key "summary_emp_rel", "hr_holidays_summary_employee", column: "sum_id", name: "summary_emp_rel_sum_id_fkey", on_delete: :cascade
-  add_foreign_key "survey_label", "res_users", column: "create_uid", name: "survey_label_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_label", "res_users", column: "write_uid", name: "survey_label_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_label", "survey_question", column: "question_id", name: "survey_label_question_id_fkey", on_delete: :cascade
-  add_foreign_key "survey_label", "survey_question", column: "question_id_2", name: "survey_label_question_id_2_fkey", on_delete: :cascade
-  add_foreign_key "survey_mail_compose_message", "ir_mail_server", column: "mail_server_id", name: "survey_mail_compose_message_mail_server_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message", "mail_activity_type", name: "survey_mail_compose_message_mail_activity_type_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message", "mail_mass_mailing", column: "mass_mailing_id", name: "survey_mail_compose_message_mass_mailing_id_fkey", on_delete: :cascade
-  add_foreign_key "survey_mail_compose_message", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "survey_mail_compose_message_mass_mailing_campaign_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message", "mail_message", column: "parent_id", name: "survey_mail_compose_message_parent_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message", "mail_message_subtype", column: "subtype_id", name: "survey_mail_compose_message_subtype_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message", "mail_template", column: "template_id", name: "survey_mail_compose_message_template_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message", "res_partner", column: "author_id", name: "survey_mail_compose_message_author_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message", "res_users", column: "create_uid", name: "survey_mail_compose_message_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message", "res_users", column: "write_uid", name: "survey_mail_compose_message_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message", "survey_survey", column: "survey_id", name: "survey_mail_compose_message_survey_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_mail_compose_message_ir_attachments_rel", "ir_attachment", column: "attachment_id", name: "survey_mail_compose_message_ir_attachments_r_attachment_id_fkey", on_delete: :cascade
-  add_foreign_key "survey_mail_compose_message_ir_attachments_rel", "survey_mail_compose_message", column: "wizard_id", name: "survey_mail_compose_message_ir_attachments_rel_wizard_id_fkey", on_delete: :cascade
-  add_foreign_key "survey_mail_compose_message_res_partner_rel", "res_partner", column: "partner_id", name: "survey_mail_compose_message_res_partner_rel_partner_id_fkey", on_delete: :cascade
-  add_foreign_key "survey_mail_compose_message_res_partner_rel", "survey_mail_compose_message", column: "wizard_id", name: "survey_mail_compose_message_res_partner_rel_wizard_id_fkey", on_delete: :cascade
-  add_foreign_key "survey_page", "res_users", column: "create_uid", name: "survey_page_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_page", "res_users", column: "write_uid", name: "survey_page_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_page", "survey_survey", column: "survey_id", name: "survey_page_survey_id_fkey", on_delete: :cascade
-  add_foreign_key "survey_question", "res_users", column: "create_uid", name: "survey_question_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_question", "res_users", column: "write_uid", name: "survey_question_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_question", "survey_page", column: "page_id", name: "survey_question_page_id_fkey", on_delete: :cascade
-  add_foreign_key "survey_stage", "res_users", column: "create_uid", name: "survey_stage_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_stage", "res_users", column: "write_uid", name: "survey_stage_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_survey", "mail_template", column: "email_template_id", name: "survey_survey_email_template_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_survey", "res_users", column: "create_uid", name: "survey_survey_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_survey", "res_users", column: "write_uid", name: "survey_survey_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_survey", "survey_stage", column: "stage_id", name: "survey_survey_stage_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input", "res_partner", column: "partner_id", name: "survey_user_input_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input", "res_users", column: "create_uid", name: "survey_user_input_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input", "res_users", column: "write_uid", name: "survey_user_input_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input", "survey_page", column: "last_displayed_page_id", name: "survey_user_input_last_displayed_page_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input", "survey_survey", column: "survey_id", name: "survey_user_input_survey_id_fkey", on_delete: :restrict
-  add_foreign_key "survey_user_input_line", "res_users", column: "create_uid", name: "survey_user_input_line_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input_line", "res_users", column: "write_uid", name: "survey_user_input_line_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input_line", "survey_label", column: "value_suggested", name: "survey_user_input_line_value_suggested_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input_line", "survey_label", column: "value_suggested_row", name: "survey_user_input_line_value_suggested_row_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input_line", "survey_question", column: "question_id", name: "survey_user_input_line_question_id_fkey", on_delete: :restrict
-  add_foreign_key "survey_user_input_line", "survey_survey", column: "survey_id", name: "survey_user_input_line_survey_id_fkey", on_delete: :nullify
-  add_foreign_key "survey_user_input_line", "survey_user_input", column: "user_input_id", name: "survey_user_input_line_user_input_id_fkey", on_delete: :cascade
   add_foreign_key "tax_adjustments_wizard", "account_account", column: "credit_account_id", name: "tax_adjustments_wizard_credit_account_id_fkey", on_delete: :nullify
   add_foreign_key "tax_adjustments_wizard", "account_account", column: "debit_account_id", name: "tax_adjustments_wizard_debit_account_id_fkey", on_delete: :nullify
   add_foreign_key "tax_adjustments_wizard", "account_journal", column: "journal_id", name: "tax_adjustments_wizard_journal_id_fkey", on_delete: :nullify
@@ -12609,12 +10223,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "web_planner", "res_users", column: "create_uid", name: "web_planner_create_uid_fkey", on_delete: :nullify
   add_foreign_key "web_planner", "res_users", column: "write_uid", name: "web_planner_write_uid_fkey", on_delete: :nullify
   add_foreign_key "web_tour_tour", "res_users", column: "user_id", name: "web_tour_tour_user_id_fkey", on_delete: :nullify
-  add_foreign_key "website", "crm_team", column: "crm_default_team_id", name: "website_crm_default_team_id_fkey", on_delete: :nullify
-  add_foreign_key "website", "im_livechat_channel", column: "channel_id", name: "website_channel_id_fkey", on_delete: :nullify
   add_foreign_key "website", "res_company", column: "company_id", name: "website_company_id_fkey", on_delete: :nullify
   add_foreign_key "website", "res_lang", column: "default_lang_id", name: "website_default_lang_id_fkey", on_delete: :nullify
   add_foreign_key "website", "res_users", column: "create_uid", name: "website_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "website", "res_users", column: "crm_default_user_id", name: "website_crm_default_user_id_fkey", on_delete: :nullify
   add_foreign_key "website", "res_users", column: "user_id", name: "website_user_id_fkey", on_delete: :nullify
   add_foreign_key "website", "res_users", column: "write_uid", name: "website_write_uid_fkey", on_delete: :nullify
   add_foreign_key "website", "website_page", column: "homepage_id", name: "website_homepage_id_fkey", on_delete: :nullify
@@ -12633,8 +10244,6 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "website_redirect", "website", name: "website_redirect_website_id_fkey", on_delete: :nullify
   add_foreign_key "website_website_page_rel", "website", name: "website_website_page_rel_website_id_fkey", on_delete: :cascade
   add_foreign_key "website_website_page_rel", "website_page", name: "website_website_page_rel_website_page_id_fkey", on_delete: :cascade
-  add_foreign_key "wizard_document_page_history_show_diff", "res_users", column: "create_uid", name: "wizard_document_page_history_show_diff_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "wizard_document_page_history_show_diff", "res_users", column: "write_uid", name: "wizard_document_page_history_show_diff_write_uid_fkey", on_delete: :nullify
   add_foreign_key "wizard_ir_model_menu_create", "ir_ui_menu", column: "menu_id", name: "wizard_ir_model_menu_create_menu_id_fkey", on_delete: :cascade
   add_foreign_key "wizard_ir_model_menu_create", "res_users", column: "create_uid", name: "wizard_ir_model_menu_create_create_uid_fkey", on_delete: :nullify
   add_foreign_key "wizard_ir_model_menu_create", "res_users", column: "write_uid", name: "wizard_ir_model_menu_create_write_uid_fkey", on_delete: :nullify
@@ -12654,9 +10263,4 @@ ActiveRecord::Schema.define(version: 2020_03_23_093933) do
   add_foreign_key "wizard_op_faculty_employee", "res_users", column: "write_uid", name: "wizard_op_faculty_employee_write_uid_fkey", on_delete: :nullify
   add_foreign_key "wizard_op_student", "res_users", column: "create_uid", name: "wizard_op_student_create_uid_fkey", on_delete: :nullify
   add_foreign_key "wizard_op_student", "res_users", column: "write_uid", name: "wizard_op_student_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "work_hours", "hr_employee", column: "employee_id", name: "work_hours_employee_id_fkey", on_delete: :nullify
-  add_foreign_key "work_hours", "res_users", column: "create_uid", name: "work_hours_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "work_hours", "res_users", column: "write_uid", name: "work_hours_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "x_lave", "res_users", column: "create_uid", name: "x_lave_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "x_lave", "res_users", column: "write_uid", name: "x_lave_write_uid_fkey", on_delete: :nullify
 end
