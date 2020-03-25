@@ -11,9 +11,9 @@
     <label for="">Trả lời</label>
   </div>
   <% user_answer = user_question.user_answers.order( created_at: :DESC ).first %>
-  <% if user_answer && user_answer.state == 'waiting' %>
+  <% if user_answer.present? && user_answer.state == 'waiting' %>
     <div class="fcoa-con">
-      <textarea rows="4" placeholder="Nhập nội dung câu trả lời" id='text_answer'><%= user_answer.answer_content %></textarea>
+      <textarea rows="4" placeholder="Nhập nội dung câu trả lời" id='text_answer'><%= user_answer.answer_content.html_safe %></textarea>
       <span class="line-textarea line-textarea1"></span>
       <span class="line-textarea line-textarea2"></span>
       <span class="line-textarea line-textarea3"></span>

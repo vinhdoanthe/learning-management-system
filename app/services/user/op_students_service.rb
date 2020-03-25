@@ -8,8 +8,6 @@ class User::OpStudentsService
   end
 
   def self.student_homework params, student
-    # courses = student.op_courses
-    #student_course_ids = student.op_courses.pluck(:id)
     student_subject_id = student.op_sessions.pluck(:subject_id)
     student_batch_ids = student.op_batches.pluck(:id).uniq
     show_video = false
@@ -51,7 +49,6 @@ class User::OpStudentsService
     subject = session.op_subject
     subjects = []
     sessions.each{|session| subjects << session.op_subject}
-   # subjects = sessions.pluck(:subject_id).uniq
     subjects = subjects.uniq.sort_by{|s| s.level}
 
     if params[:subject].present?

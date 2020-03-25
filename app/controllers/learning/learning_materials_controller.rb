@@ -23,7 +23,7 @@ module Learning
 
     def show_video
       video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last
-      fallback_video_id = Learning::Constant::LearningMaterial::DEFAULT_VIDEO_ID
+      fallback_video_id = Learning::Constant::Material::DEFAULT_VIDEO_ID
 
       if params[:session_id].present?
         session = Learning::Batch::OpSession.where(id: params[:session_id]).first

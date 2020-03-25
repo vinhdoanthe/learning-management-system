@@ -40,8 +40,8 @@
           <%= image_tag('global/images/steps.png') %>
           <p id="subject_id_span">
           <span class="span-text">Học phần: </span>
-          <% levels = list_subject_level_of_batch(batch.id) %>
           <% if current_user.is_student? %>
+            <% levels = list_subject_level_of_batch(batch.id) %>
             <% subject_ids = done_subject_ids(batch) %>
             <% unless levels.blank? %>
               <% levels.each do |level| %>
@@ -57,6 +57,8 @@
               <% end %>
             <% end %>
           <% elsif current_user.is_teacher? %>
+            <% levels = list_teacher_subject_level(batch.id) %>
+            <% binding.pry %>
             <% unless levels.blank? %>
               <% levels.each do |level| %>
                 <% if level[0] == @current_subject_id %>
