@@ -87,6 +87,18 @@ module Learning
 
         levels
       end
+      
+      def list_teacher_subject_level batch_id
+        levels = []
+        op_batch = Learning::Batch::OpBatch.find(batch_id)
+
+        unless op_batch.nil?
+          subject_ids = op_batch.op_sessions.pluck(:subject_id).uniq
+          levels = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level).uniq
+        end
+
+        levels
+      end
 
       def learning_room(batch_id)
         room_ids = Learning::Batch::OpSession.where(batch_id: batch_id).pluck(:classroom_id).uniq
