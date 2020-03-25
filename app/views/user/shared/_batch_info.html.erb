@@ -58,7 +58,6 @@
             <% end %>
           <% elsif current_user.is_teacher? %>
             <% levels = list_teacher_subject_level(batch.id) %>
-            <% binding.pry %>
             <% unless levels.blank? %>
               <% levels.each do |level| %>
                 <% if level[0] == @current_subject_id %>
