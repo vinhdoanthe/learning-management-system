@@ -33,9 +33,21 @@ RailsAdmin.config do |config|
     list do
       field :id
       field :name
+      field :link do
+        formatted_value do
+          path = bindings[:object].link
+          bindings[:view].link_to('Preview', path)
+        end
+      end
     end
 
     show do
+      field :link do
+        formatted_value do
+          path = bindings[:object].link
+          bindings[:view].link_to('Preview', path)
+        end
+      end
       field :name
       field :course_description
     end
@@ -47,7 +59,7 @@ RailsAdmin.config do |config|
 
   config.model 'Learning::Course::CourseDescription' do
     list do
-      
+
     end
 
     show do
@@ -124,7 +136,7 @@ RailsAdmin.config do |config|
       field :parent_name
       field :faculty_name
     end
-    
+
     show do
       field :username
       field :email

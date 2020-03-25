@@ -1,6 +1,7 @@
 module Learning
   module Course
     class OpCourse < ApplicationRecord
+      include Rails.application.routes.url_helpers
       self.table_name = 'op_course'
       
       belongs_to :course_categ, foreign_key: 'categ_id'
@@ -13,6 +14,10 @@ module Learning
       accepts_nested_attributes_for :course_description, allow_destroy: true
 
       has_one_attached :thumbnail
+      
+      def link
+        learning_show_course_path(self.id)
+      end
     end
   end
 end

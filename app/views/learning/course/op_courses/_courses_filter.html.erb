@@ -1,0 +1,18 @@
+<div class="tab-content p-0 tab-all-content m-t-20">
+  <div class="tab-pane fade active in">
+    <div class="bo-table">
+      <div class="form-content">
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id='btnFilterCategory'>All Categories
+            <span class="caret"></span></button>
+          <ul class="dropdown-menu" id='listCategories'>
+            <input class="form-control" id="filterCategory" type="text" placeholder="Search..">
+            <% categs.each do |categ| %>
+              <li><%= link_to categ[1], learning_courses_by_category_path(:category_id => categ[0]), {:remote => true } %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

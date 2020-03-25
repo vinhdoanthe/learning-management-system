@@ -59,6 +59,9 @@ class User::UsersService
   end
 
   def create_teacher_user teacher
+    existed_teacher = User::User.where(faculty_id: teacher.id).first
+    return if existed_teacher
+
     teacher_user = User::User.new
     res_user = teacher.res_user
     return if res_user.blank?
@@ -67,7 +70,8 @@ class User::UsersService
     return if User::User.where(username: teacher_user.username).first.present?
     teacher_user.password = '123456'
     teacher_user.account_role = User::Constant::TEACHER
+    teacher_user.faculty_id = teacher.id
     teacher_user.email = res_user.login
-    teacher.save
+    teacher_user.save
   end
 end

@@ -18,6 +18,23 @@ module Learning
         else 
           image_tag('global/images/default-lesson-thumbnail.png', size: "130x82")
         end
+      end
+
+      def count_question lession_id
+        Learning::Material::Question.where(op_lession_id: lession_id).count
+      end
+
+      def count_slides lession_id
+        Learning::Material::LearningMaterial.where(op_lession_id: lession_id, 
+                                                   material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE,
+                                                   learning_type: Learning::Constant::Material::MATERIAL_TYPE_TEACH).count
+      end
+
+      def count_videos lession_id
+        Learning::Material::LearningMaterial.where(op_lession_id: lession_id, 
+                                                   material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO,
+                                                   learning_type: Learning::Constant::Material::MATERIAL_TYPE_REVIEW).count
+
       end 
     end
   end

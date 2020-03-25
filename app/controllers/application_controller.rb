@@ -23,4 +23,11 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def authenticate_admin!
+    unless current_user.is_admin?
+      flash[:danger] = 'Bạn không có quyền truy cập đến tài nguyên này'
+      redirect_to root_path
+    end
+  end
 end

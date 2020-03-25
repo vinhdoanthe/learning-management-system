@@ -1,6 +1,8 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "admin/material.js" %>
+<% end %>
 <div class="page-content page-thin">
 
-  <!-- InstanceBeginEditable name="EditRegion1" -->
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
@@ -11,13 +13,49 @@
     <div class="panel-content">
       <h2 class="text-transform" style="margin-top: 50px; border-bottom: 2px solid gray; padding: 5px"><%= @course.name %></h2>
       <div class="tab-content p-0 tab-all-content m-t-20">
-        <div class="tab-pane fade active in">
-          <div class="bo-table">
-            <div class="form-content">
-              <div class="box-progress" id='lessons_list'>
-                <div class='table-responsive'>
+        <div class="bo-table">
+          <div class="form-content">
+            <h4>Giới thiệu môn học</h4>
+            <div class="box-progress">
+              <% course_des = get_description(@course) %>
+              <% if course_des.empty? %>
+                <p>Chưa có thông tin giới thiệu khóa học</p>
+              <% else %>
+                <p><%= course_des.html_safe %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="bo-table">
+          <div class="form-content">
+            <div class="box-progress">
+              <% @subjects.each do |subject| %>
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="mb-0">
+                      <%= subject.name %> (<%= @lesson_count[subject.id] %>  lesson)
+                    </h5>
+                    <br>
+                  </div>
+
+                  <div class="card-body">
+                    <div class='card-content'>
+                      <% if @lesson_count[subject.id] != 0 %>
+                        <ul>
+                          <% @lessons.each do |lesson| %>
+                            <% if lesson.subject_id == subject.id %>
+                              <li> <%= link_to lesson.name + ' (' + count_question(lesson.id).to_s + ' BTVN, ' + count_videos(lesson.id).to_s + ' Video, ' + count_slides(lesson.id).to_s + ' Slide)', learning_preview_lesson_path(lesson.id) %> </li>
+                            <% end %>
+                          <% end %>
+                        </ul>
+                      <% else %>
+                        <p>Subject này không có lesson nào</p>
+                      <% end %>
+                    </div>
+                  </div>
                 </div>
-              </div>
+                <hr>
+              <% end %>
             </div>
           </div>
         </div>

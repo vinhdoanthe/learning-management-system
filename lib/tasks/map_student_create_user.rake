@@ -11,17 +11,26 @@ namespace :map_student_create_user do
     User::UsersController.new.map_student_new_user student_list
   end
 
+  desc 'Create eacher account by faculty_id'
   task :create_faculty, [:faculty_id] => :environment do |t, arg|
-    faculty_ids = arg[:faculty_id]
-    
-    if faculty_ids == -1
-      faculty_list = User::OpFaculty.all.uniq
-    else
-      faculty_list = User::OpFaculty.where(id: faculty_ids)
+    faculty_id = arg[:faculty_id].to_i
+    if faculty_id
+      faculty = User::OpFaculty.find(faculty_id)
+      unless faculty.nil?
+        User::UsersController.new.map_faculty_create_user faculty
+      end
     end
-    binding.pry 
+  end
+
+  desc 'Create all teacher accounts'
+  task :create_mass_faculty_account, [] => :environment do |t,arg|
+    faculty_list = User::OpFaculty.all.uniq
     faculty_list.each do |faculty|
-      User::UsersController.new.map_faculty_create_user faculty
+      unless faculty.nil?
+        puts faculty.id
+        User::UsersController.new.map_faculty_create_user faculty
+        puts 'done!'
+      end
     end
   end
 end
