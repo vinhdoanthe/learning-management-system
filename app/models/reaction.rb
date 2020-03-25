@@ -1,3 +1,5 @@
-class Reaction < ApplicationRecord
-  belongs_to :user
+module User
+	class Reaction < ApplicationRecord
+	  belongs_to :user
+	end
 end

@@ -1,14 +1,14 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  users_id: 1
+  user: one
   post_id: 1
   post_type: MyString
   parent_comment_id: 1
   content: MyText
 
 two:
-  users_id: 1
+  user: two
   post_id: 1
   post_type: MyString
   parent_comment_id: 1

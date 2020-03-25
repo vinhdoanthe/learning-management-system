@@ -1,3 +1,3 @@
-class Comment < ApplicationRecord
-	  belongs_to :user
+class Comment< ApplicationRecord
+  belongs_to :user
 end
