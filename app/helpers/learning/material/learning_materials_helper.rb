@@ -35,6 +35,11 @@ module Learning
 
         return { state: state, progress: progress }
 			end
+
+      def get_student_evaluate user, session
+        student = user.op_student
+        Learning::Batch::OpAttendanceLine.where(student_id: student.id, session_id: session.id).last
+      end
 		end
 	end
 end
