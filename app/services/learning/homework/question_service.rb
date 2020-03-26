@@ -29,7 +29,6 @@ class Learning::Homework::QuestionService
     if question.question_type == Learning::Constant::Material::QUESTION_TEXT_RESPONSE
       user_answer.state = 'waiting'
     else
-      # question_choices = Learning::Material::QuestionChoice.where(id: params[:question_choice])
       right_answer_ids = question.question_choices.where(is_right_choice: true).pluck(:id)
       choice_content = params[:question_choices].map{ |choice| choice.to_i }
       user_answer.state = right_answer_ids == choice_content ? 'right' : 'wrong'
