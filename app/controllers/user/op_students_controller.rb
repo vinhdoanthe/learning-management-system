@@ -26,6 +26,7 @@ module User
       data = OpStudentsService.student_homework params, @student
       @courses = @student.op_courses
       @session = data[:session]
+      @batch = data[:batch]
       
       respond_to do |format|
         format.html
