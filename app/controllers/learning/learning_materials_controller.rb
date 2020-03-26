@@ -62,8 +62,6 @@ module Learning
         index_value = current_video_index + params[:index].to_i
 
         if index_value < 0 || index_value >= videos.length
-          #	next_session = find_next_session current_user.op_student, session, params[:index]
-          #	video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => next_session.lession_id).order(created_at: :DESC).first
           data = find_next_video current_user.op_student, session, params[:index]
           video = data[:video]
           next_session = data[:session] 
