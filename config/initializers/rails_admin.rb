@@ -217,6 +217,33 @@ RailsAdmin.config do |config|
       field :op_batch
     end
   end
+  
+  config.model 'Learning::Batch::OpSession' do
+    list do
+      field :start_datetime
+      field :end_datetime
+      field :batch_code
+      field :lesson
+      field :photos_link
+    end
+    
+    show do 
+      field :start_datetime
+      field :end_datetime
+      field :batch_code
+      field :lesson
+      field :photos_link
+    end
+
+    export do 
+      field :start_datetime
+      field :end_datetime
+      field :batch_code
+      field :lesson
+      field :photos_link
+    end
+  end
+
   config.actions do
 
     dashboard
@@ -236,7 +263,7 @@ RailsAdmin.config do |config|
     end
 
     export do
-      only %w(User::User)
+      only %w(User::User Learning::Batch::OpSession)
     end
   end
 end

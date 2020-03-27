@@ -23,6 +23,41 @@ module Learning
       def start_time
         self.start_datetime
       end
+
+      def end_time
+        end_datetime
+      end
+
+      def batch_code
+        op_batch.code
+      end
+
+      def lesson
+        att_sheet = op_attendance_sheets.last
+        if att_sheet.nil?
+          ''
+        else
+          if att_sheet.lession_id
+          lesson = Learning::Course::OpLession.find(att_sheet.lession_id)
+          if lesson.nil?
+            ''
+          else
+            lesson.lession_number
+          end
+          else
+            ''
+          end
+        end
+      end
+
+      def photos_link
+        att_sheet = op_attendance_sheets.last
+        if att_sheet.nil?
+          ''
+        else
+          att_sheet.picture_link
+        end
+      end
     end
   end
 end

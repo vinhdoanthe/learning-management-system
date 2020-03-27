@@ -11,31 +11,33 @@
     <label for="">Trả lời</label>
   </div>
   <% user_answer = user_question.user_answers.order( created_at: :DESC ).first %>
-  <% if user_answer.present? && user_answer.state == 'waiting' %>
-    <div class="fcoa-con">
-      <textarea rows="4" placeholder="Nhập nội dung câu trả lời" id='text_answer'><%= user_answer.answer_content %></textarea>
-      <span class="line-textarea line-textarea1"></span>
-      <span class="line-textarea line-textarea2"></span>
-      <span class="line-textarea line-textarea3"></span>
-      <span class="line-textarea line-textarea4"></span>
-    </div>
+  <% if user_answer.present? %>
+    <% if user_answer.state == 'waiting' %>
+      <div class="fcoa-con">
+        <textarea rows="4" placeholder="Nhập nội dung câu trả lời" id='text_answer'><%= user_answer.answer_content %></textarea>
+        <span class="line-textarea line-textarea1"></span>
+        <span class="line-textarea line-textarea2"></span>
+        <span class="line-textarea line-textarea3"></span>
+        <span class="line-textarea line-textarea4"></span>
+      </div>
+    <% end %>
+    <% if user_answer.answer_marks.present? %>
+      <label>Giáo viên đánh giá</label>
+      <div class="fcoa-con">
+        <textarea readonly rows="4" placeholder="" id='text_answer'><%= user_answer.answer_marks.last.mark_content %></textarea>
+        <span class="line-textarea line-textarea1"></span>
+        <span class="line-textarea line-textarea2"></span>
+        <span class="line-textarea line-textarea3"></span>
+        <span class="line-textarea line-textarea4"></span>
+      </div>
+    <% end %>
   <% else %>
-    <div class="fcoa-con">
-      <textarea rows="4" placeholder="Nhập nội dung câu trả lời" id='text_answer'></textarea>
-      <span class="line-textarea line-textarea1"></span>
-      <span class="line-textarea line-textarea2"></span>
-      <span class="line-textarea line-textarea3"></span>
-      <span class="line-textarea line-textarea4"></span>
-    </div>
-  <% end %>
-  <% if user_answer.answer_marks.present? %>
-    <label>Giáo viên đánh giá</label>
-    <div class="fcoa-con">
-      <textarea readonly rows="4" placeholder="" id='text_answer'><%= user_answer.answer_marks.last.mark_content %></textarea>
-      <span class="line-textarea line-textarea1"></span>
-      <span class="line-textarea line-textarea2"></span>
-      <span class="line-textarea line-textarea3"></span>
-      <span class="line-textarea line-textarea4"></span>
-    </div>
+      <div class="fcoa-con">
+        <textarea rows="4" placeholder="Nhập nội dung câu trả lời" id='text_answer'></textarea>
+        <span class="line-textarea line-textarea1"></span>
+        <span class="line-textarea line-textarea2"></span>
+        <span class="line-textarea line-textarea3"></span>
+        <span class="line-textarea line-textarea4"></span>
+      </div>
   <% end %>
 </div>
