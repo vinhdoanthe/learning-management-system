@@ -32,7 +32,7 @@
                       <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) %>
                     <% end %>
                     hàng tuần Tại 
-                    <span><%= batch.res_company.name %></span>
+                    <span><%= batch.res_company ? batch.res_company.name : "" %></span>
                     </p>
                   </div>
                   <div class="scl-right">

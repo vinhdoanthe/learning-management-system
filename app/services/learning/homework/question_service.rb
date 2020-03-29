@@ -1,15 +1,15 @@
 class Learning::Homework::QuestionService
   def answer_question params, student
-    question = Learning::Material::Question.find(params[:question])
+    question = Learning::Material::Question.where(id: params[:question]).first 
     user_question = find_user_question params[:user_question]
 
-    if question.present?
+    if question.present? && user_question.present?
       user_answer = user_question.user_answers.order(created_at: :DESC).first
-      if user_answer && user_answer.state == 'right'
+      if user_answer.present? && user_answer.state == 'right'
         return {state: 'done'}
       else
         user_answer = create_user_answer user_question, student, params
-        return { state: user_answer.state }
+        return { state: user_answer.state } if user_answer.present?
       end
     else
       return { message: 'Đã có lỗi xảy ra! Thử lại sau!'}
@@ -22,20 +22,26 @@ class Learning::Homework::QuestionService
     user_answer.user_question_id = user_question.id
     user_answer.answer_time = Time.now
     user_answer.answer_content = params[:question_choices]
-    session = Learning::Batch::OpSession.find(params[:session_id])
-    user_answer.batch_id = session.batch_id
-    user_answer.faculty_id = session.faculty_id.to_i
+    session = Learning::Batch::OpSession.where(id: params[:session_id]).first
 
-    if question.question_type == Learning::Constant::Material::QUESTION_TEXT_RESPONSE
-      user_answer.state = 'waiting'
-    else
-      right_answer_ids = question.question_choices.where(is_right_choice: true).pluck(:id)
-      choice_content = params[:question_choices].map{ |choice| choice.to_i }
-      user_answer.state = right_answer_ids == choice_content ? 'right' : 'wrong'
+    if session.present?
+      user_answer.batch_id = session.batch_id
+      user_answer.faculty_id = session.faculty_id.to_i
+      
+      if question.question_type == Learning::Constant::Material::QUESTION_TEXT_RESPONSE
+        user_answer.state = 'waiting'
+      else
+        if params[:question_choices].present?
+          right_answer_ids = question.question_choices.where(is_right_choice: true).pluck(:id)
+          choice_content = params[:question_choices].map{ |choice| choice.to_i }
+          user_answer.state = right_answer_ids == choice_content ? 'right' : 'wrong'
+        else
+          return false
+        end
+      end
+      return user_answer if user_answer.save
+      false
     end
-
-    user_answer.save
-    user_answer
   end
 
   def mark_answer params, user
@@ -89,11 +95,11 @@ class Learning::Homework::QuestionService
   private
 
   def find_user_question user_question
-    Learning::LearningRecord::UserQuestion.find(user_question)
+    Learning::LearningRecord::UserQuestion.where(id: user_question).first
   end
 
   def find_user_answer user_answer
-    Learning::LearningRecord::UserAnswer.find(user_answer)
+    Learning::LearningRecord::UserAnswer.where(id: user_answer).first
   end
 
   # def find_question_choice question_choice_id
