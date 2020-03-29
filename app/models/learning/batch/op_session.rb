@@ -38,12 +38,12 @@ module Learning
           ''
         else
           if att_sheet.lession_id
-          lesson = Learning::Course::OpLession.find(att_sheet.lession_id)
-          if lesson.nil?
-            ''
-          else
-            lesson.lession_number
-          end
+            lesson = Learning::Course::OpLession.find(att_sheet.lession_id)
+            if lesson.nil?
+              ''
+            else
+              lesson.lession_number
+            end
           else
             ''
           end
