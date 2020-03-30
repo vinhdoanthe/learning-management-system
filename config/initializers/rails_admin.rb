@@ -135,6 +135,7 @@ RailsAdmin.config do |config|
       field :student_name
       field :parent_name
       field :faculty_name
+      field :center_name
     end
 
     show do
@@ -144,6 +145,7 @@ RailsAdmin.config do |config|
       field :student_name
       field :parent_name
       field :faculty_name
+      field :center_name
     end
 
     edit do
@@ -164,6 +166,7 @@ RailsAdmin.config do |config|
       field :student_name
       field :parent_name
       field :faculty_name
+      field :center_name
     end
   end
 

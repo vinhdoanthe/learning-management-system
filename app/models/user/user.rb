@@ -65,6 +65,30 @@ module User
       end
     end
 
+    def center_name
+      company = nil
+      if !student_id.nil?
+        op_student = OpStudent.find(student_id)
+        if !op_student.nil? && !op_student.company_id.nil?
+          company = Common::ResCompany.find(op_student.company_id)
+        end
+      elsif !parent_id.nil?
+        op_parent = OpParent.find(parent_id)
+        if !op_parent.nil? && !op_parent.name.nil?
+          res_partner = ResPartner.find(op_parent.name)
+          if !res_partner.nil? && !res_partner.company_id.nil?
+            company = Common::ResCompany.find(op_parent.company_id)
+          end
+        end
+      elsif !faculty_id.nil?
+        op_faculty = OpFaculty.find(faculty_id)
+        if !op_faculty.nil? && !op_faculty.company_id.nil?
+          company = Common::ResCompany.find(op_faculty.company_id)
+        end
+      end
+      company.nil? ? '' : company.name
+    end
+
     # Sets the password reset attributes.
     def create_reset_digest
       self.reset_token = User.new_token
