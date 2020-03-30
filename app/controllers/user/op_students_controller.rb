@@ -49,7 +49,6 @@ module User
     def student_timetable
     #  batches = @student.op_batches
       @sessions = @student.op_sessions
-      session = []
 
 			# student_subject_ids = Learning::Course::OpSubject.joins(op_student_courses: :op_student).where(op_student: {id: @student.id}).pluck(:id)
      # student_subject_ids = @student.op_sessions.pluck(:subject_id).uniq

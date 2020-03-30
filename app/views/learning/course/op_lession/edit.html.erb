@@ -106,18 +106,18 @@
                             <label for="">Trả lời</label>
                           </div>
                           <div class="fcoa-con">
-                            <% question.question_choices.each_with_index do |choice, i| %>
+                            <% question.question_choices.order(created_at: :ASC).each_with_index do |choice, i| %>
                               <% if choice.is_right_choice %>
                                 <label class="check-multi" style="background: #aad3aa"><%= choice.choice_content %>
                                 <input type="radio" name="student_choise_answer" value="<%= choice.id %>" >
                                 <% choice_key = ('A'.ord + i) %>
-                                <span class="checkmark"><%= choice_key.chr %></span>
+                                <span class="checkmark"></span>
                                 </label>
                               <% else %>
                                 <label class="check-multi"><%= choice.choice_content %>
                                 <input type="radio" >
                                 <% choice_key = ('A'.ord + i) %>
-                                <span class="checkmark"><%= choice_key.chr %></span>
+                                <span class="checkmark"></span>
                                 </label>
                               <% end %>
                             <% end %>
@@ -137,18 +137,18 @@
                             <label for="">Trả lời</label>
                           </div>
                           <div class="fcoa-con">
-                            <% question.question_choices.each_with_index do |choice, i| %>
+                            <% question.question_choices.order(created_at: :ASC).each_with_index do |choice, i| %>
                               <% if choice.is_right_choice %>
                                 <label class="check-multi" style="background: #aad3aa"><%= choice.choice_content %>
                                 <input type="checkbox">
                                 <% choice_key = ('A'.ord + i) %>
-                                <span class="checkmark"><%= choice_key.chr %></span>
+                                <span class="checkmark"></span>
                                 </label>
                               <% else %>
                                 <label class="check-multi"><%= choice.choice_content %>
                                 <input type="checkbox">
                                 <% choice_key = ('A'.ord + i) %>
-                                <span class="checkmark"><%= choice_key.chr %></span>
+                                <span class="checkmark"></span>
                                 </label>
                               <% end %>
                             <% end %>
