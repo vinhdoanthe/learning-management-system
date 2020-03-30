@@ -15,6 +15,7 @@ Rails.application.config.assets.precompile += %w(ckeditor/*)
 Rails.application.config.assets.precompile += %w( learning/learning_material.js learning/course_description.js )
 Rails.application.config.assets.precompile += %w( learning/lesson_input.js )
 Rails.application.config.assets.precompile += %w( admin/material.js )
+Rails.application.config.assets.precompile += %w( social_community/sc_product.js )
 # Rails.application.config.assets.precompile += ['ckeditor/*']
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets

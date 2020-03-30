@@ -1,5 +1,7 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'social_community/sc_product.js' %>
+<% end %>
 <div class="page-content page-thin">
-
     <!-- InstanceBeginEditable name="EditRegion1" -->
     <div class="panel panel-edits bg-232837">
         <div class="panel-heading">
@@ -15,93 +17,38 @@
         
         <div class="panel-content">
             <div class="filter-box FlowupLabels b-b-1-869fb229" id='formBody'>
-                <div class="row">
-                    <div class="col-md-3 col-md-offset-2">
-                        <div class='fl_wrap m-t-0'>
-                            <label class='fl_label' for='rf_name'>Khóa học</label>
-                            <select class='fl_input' id='rf_name' >
-                                <option value=""></option>
-                                <option value="">sss</option>
-                                <option value="">sss</option>
-                                <option value="">sss</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class='fl_wrap m-t-0'>
-                            <label class='fl_label' for='rf_name1'>lớp học:</label>
-                            <select class='fl_input' id='rf_name1' >
-                                <option value=""></option>
-                                <option value="">sss</option>
-                                <option value="">sss</option>
-                                <option value="">sss</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class='fl_wrap m-t-0'>
-                            <label class='fl_label' for='rf_name2'>Học phần:</label>
-                            <select class='fl_input' id='rf_name2' >
-                                <option value=""></option>
-                                <option value="">sss</option>
-                                <option value="">sss</option>
-                                <option value="">sss</option>
-                            </select>
-                        </div>
-                    </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class='fl_wrap m-t-0'>
+                    <label class='fl_label' for='rf_name'>Khóa học:</label>
+                    <select class='fl_input' id='homework_course_selection'>
+                      <% @courses.each do |course| %>
+                        <option value="<%= course.id %>"><a href="/user/student_homework" data-remote="true"><%= course.name %></a></option>
+                      <% end %>
+                    </select>
+                  </div>
                 </div>
+                <div class="col-md-3">
+                  <div class='fl_wrap m-t-0 populated'>
+                    <label class='fl_label' for='rf_name'>Lớp học:</label>
+                    <select class='fl_input' id="homework_batch_selection">
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class='fl_wrap m-t-0 populated'>
+                    <label class='fl_label' for='rf_name'>Học phần:</label>
+                    <select class='fl_input' id="homework_subject_selection">
+                      <option val="all">Tat ca</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="box-product">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="prod-detail">
-                            <div class="prod-img">
-                                <span><img src="/global/images/Bitmap5.png" alt=""></span>
-                            </div>
-                            <div class="prod-text">
-                                <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN LẬP TRÌNH SCRATCH</label>
-                                <p>Khám phá lập trình với ngôn ngữ Scratch là bước đầu tiên để các bạn nhỏ làm quen với bộ môn lập trình.</p>
-                                <a id="student_product_detail" data-toggle="modal" data-target="#modal_student_product">Xem sản phẩm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="prod-detail">
-                            <div class="prod-img">
-                                <span><img src="/global/images/Bitmap5.png" alt=""></span>
-                            </div>
-                            <div class="prod-text">
-                                <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN LẬP TRÌNH SCRATCH</label>
-                                <p>Khám phá lập trình với ngôn ngữ Scratch là bước đầu tiên để các bạn nhỏ làm quen với bộ môn lập trình.</p>
-                                <a href="">Xem sản phẩm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="prod-detail">
-                            <div class="prod-img">
-                                <span><img src="/global/images/Bitmap5.png" alt=""></span>
-                            </div>
-                            <div class="prod-text">
-                                <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN LẬP TRÌNH SCRATCH</label>
-                                <p>Khám phá lập trình với ngôn ngữ Scratch là bước đầu tiên để các bạn nhỏ làm quen với bộ môn lập trình.</p>
-                                <a href="">Xem sản phẩm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="prod-detail">
-                            <div class="prod-img">
-                                <span><img src="/global/images/Bitmap5.png" alt=""></span>
-                            </div>
-                            <div class="prod-text">
-                                <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN LẬP TRÌNH SCRATCH</label>
-                                <p>Khám phá lập trình với ngôn ngữ Scratch là bước đầu tiên để các bạn nhỏ làm quen với bộ môn lập trình.</p>
-                                <a href="">Xem sản phẩm</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="box-product" >
+              <div class="row" id="student_product_list" >
+                <%#= render 'user/op_students/partials/student_products', { course: @course, products: @products } %>
+              </div>
             </div>    
         </div>
         
@@ -121,4 +68,6 @@
         </div>
     </div>
 </div>
-<%= render 'user/op_students/modals/student_product_detail', {product: ''} %>
+<%#= render 'user/op_students/modals/student_product_detail', {product: ''} %>
+<div id="modal_student_product" class="modal fade" role="dialog">
+</div>
