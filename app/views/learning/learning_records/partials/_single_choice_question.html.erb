@@ -11,11 +11,11 @@
     <label for="">Trả lời</label>
   </div>
   <div class="fcoa-con">
-  	<% question.question_choices.each_with_index do |choice, i| %>
+  	<% question.question_choices.order(created_at: :ASC).each_with_index do |choice, i| %>
     	<label class="check-multi"><%= choice.choice_content %>
         <input type="radio" name="student_choise_answer" value="<%= choice.id %>" >
         <% choice_key = ('A'.ord + i) %>
-        <span class="checkmark"><%= choice_key.chr %></span>
+        <span class="checkmark"></span>
       </label>
     <% end %>
     <% user_answer = user_question.user_answers.order( created_at: :DESC ).first %>

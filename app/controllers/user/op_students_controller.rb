@@ -35,7 +35,28 @@ module User
     end
 
     def student_product
+      data = OpStudentsService.student_homework params, @student
+      @course = data[:course]
+      @batch = data[:batch]
+      @products = SocialCommunity::ScProduct.where(student_id: @student.id, batch_id: @batch.id)
+      @courses = @student.op_courses
 
+      respond_to do |format|
+        format.html
+        format.js { render 'user/op_students/partials/student_product', locals: {batch: @batch, course: @course, products: @products, batches: data[:batches], subjects: data[:subjects], subject: data[:subject]} }
+      end
+    end
+
+    def student_product_detail
+      product = SocialCommunity::ScProduct.where(id: params[:product_id]).first
+      batch = product.op_batch.name
+      course = product.op_course.name
+      student = product.op_student
+      company = student.res_company ? student.res_company.name : ''
+
+      respond_to do |format|
+        format.js { render 'user/op_students/partials/student_product_detail', locals: { batch: batch, course: course, student: student.full_name, company: company, product: product } }
+      end
     end
 
     def student_redeem
@@ -49,7 +70,6 @@ module User
     def student_timetable
     #  batches = @student.op_batches
       @sessions = @student.op_sessions
-      session = []
 
 			# student_subject_ids = Learning::Course::OpSubject.joins(op_student_courses: :op_student).where(op_student: {id: @student.id}).pluck(:id)
      # student_subject_ids = @student.op_sessions.pluck(:subject_id).uniq
@@ -61,7 +81,7 @@ module User
     #     session << batch.op_sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).last
     #   end
     # 
-			@session = @sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :DESC).first
+			@session = @sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).first
       # session.each{|s| @session = s if s.present? && @session.start_datetime <= s.start_datetime}
       schedules = OpTeachersService.teaching_schedule(@sessions, params)
 

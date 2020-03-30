@@ -1,4 +1,3 @@
-<div id="modal_student_product" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -9,16 +8,16 @@
       </div>
       <div class="modal-body learning_device_content">
         <div class='student_info'>
-          <p><strong>Học sinh:</strong>Kiều Vũ Tuệ Nhi</p>
-          <p><strong>Khoá học:</strong>Siêu nhân lập trình Python</p>
-          <p><strong>Lớp:</strong>C-RB-916-XCTRB-L1</p>
-          <p><strong>Cơ sở:</strong>Teky-Cầu Giấy</p>
+          <p><strong>Học sinh: </strong><%= student %></p>
+          <p><strong>Khoá học: </strong><%= course %></p>
+          <p><strong>Lớp: </strong><%= batch %></p>
+          <p><strong>Cơ sở: </strong><%= company %></p>
           <hr>
           <h4>Mô tả sản phẩm</h4>
-          <p>Content</p>
+          <p><%= product.description %></p>
+          <%= product.video.html_safe if product.video.present? %>
         </div>
       </div>
     </div>
 
   </div>
-</div>

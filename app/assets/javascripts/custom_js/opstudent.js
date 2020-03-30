@@ -127,6 +127,7 @@ $('document').ready(function () {
         var homework_session = $('input[name="homework_session"]').val()
         get_video(homework_session, 'watch_video_box');
         get_homework();
+      filter_learning_params()
     }
 
     if(window.location.href.includes('student_homework?session=')){
@@ -135,30 +136,32 @@ $('document').ready(function () {
         var homework_session = $('input[name="homework_session"]').val()
         get_video(homework_session, 'watch_video_box');
         get_homework({session: session_id})
+      filter_learning_params()
     }
 
+  function filter_learning_params(){
     $('#homework_course_selection').on('change', function(){
-        course = $('#homework_course_selection').val()
-        get_homework({course: course})
+      course = $('#homework_course_selection').val()
+      get_homework({course: course})
     })
 
     $('#homework_batch_selection').on('change', function(){
-        course = $('#homework_course_selection').val()
-        batch = $('#homework_batch_selection').val() 
-        get_homework({course: course, batch: batch})
+      course = $('#homework_course_selection').val()
+      batch = $('#homework_batch_selection').val() 
+      get_homework({course: course, batch: batch})
     })
 
     $('#homework_subject_selection').on('change', function(){
-        course = $('#homework_course_selection').val()
-        batch = $('#homework_batch_selection').val() 
-        subject = $('#homework_subject_selection').val()
-        get_homework({course: course, batch: batch, subject: subject})
+      course = $('#homework_course_selection').val()
+      batch = $('#homework_batch_selection').val() 
+      subject = $('#homework_subject_selection').val()
+      get_homework({course: course, batch: batch, subject: subject})
     })
-
+  }
 
     $(document).on('click', '.student_homework_watch_videos', function(){
-        session_id = $(this).data('session')
-        window.location.href = '/user/student_homework?session=' + session_id
+      session_id = $(this).data('session')
+      window.location.href = '/user/student_homework?session=' + session_id
     })
 
     // Student do homework

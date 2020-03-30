@@ -1,0 +1,6 @@
+$("#homework_batch_selection").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_selection', locals: { datas: batches } ) %>");                                                                                                                               
+$("#homework_subject_selection").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_selection', locals: { datas: subjects } ) %>");
+$("#student_product_list").html("<%= escape_javascript(render partial: 'user/op_students/partials/student_products', locals: { products: products, course: course, batch: batch } ) %>");
+$('#homework_course_selection').val("<%= course.id %>")
+$('#homework_batch_selection').val("<%= batch.id %>")
+$('#homework_subject_selection').val("<%= subject.id %>")
