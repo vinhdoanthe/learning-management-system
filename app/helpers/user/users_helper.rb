@@ -8,7 +8,7 @@ module User
       else
         state = op_student_course.state.to_s
       end
-			state
+      state
     end
 
     def get_nationality(student_id)
@@ -25,10 +25,6 @@ module User
 
     def get_avatar
       asset_path('global/images/avatar.svg')
-      # if current_user.avatar.attached?
-      #   current_user.avatar.variant(resize_to_limit: [80, 80])
-      # else
-      # end
     end
 
     def count_sessions_week reference
@@ -43,9 +39,9 @@ module User
       questions_count - user_answers_count
     end
 
-		def count_mark_question teacher
-			teacher.user_answers.where(state: 'waiting').count	
-		end
+    def count_mark_question teacher
+      teacher.user_answers.where(state: 'waiting').count	
+    end
 
     # Lay so thong bao cua hoc sinh
     def count_notification_student user
@@ -82,18 +78,18 @@ module User
     # get Menu for User is Teacher
     def get_menus_teacher(fullpath)
       menus = [
-              {'path' => user_teacher_info_path, 
-                'icon' => 'icon-Setting.png',
-                'title' => 'Cấu hình', 
-                'right_content' => ''
-              # },
-              
-              # {'path' => '#', 
-              #   'icon' => 'Icon-Bell.png',
-              #   'title' => 'Thông báo', 
-              #   'right_content' => '<span class="left-badge">' << count_notification_teacher(current_user).to_s << '</span>'
-              }
-            ]
+        {'path' => user_teacher_info_path, 
+         'icon' => 'icon-Setting.png',
+         'title' => 'Cấu hình', 
+         'right_content' => ''
+         # },
+
+         # {'path' => '#', 
+         #   'icon' => 'Icon-Bell.png',
+         #   'title' => 'Thông báo', 
+         #   'right_content' => '<span class="left-badge">' << count_notification_teacher(current_user).to_s << '</span>'
+      }
+      ]
 
       # Khoi menu Config
       tag_html = '<div class="noti-nav">'
@@ -124,31 +120,31 @@ module User
 
       # Khoi menu Dashboard
       menus = [
-              # {'path' => user_teacher_dashboard_path, 
-              #   'icon' => 'ico-Dashboard.png',
-              #   'title' => 'Dashboard', 
-              #   'right_content' => ''
-              # },
+        # {'path' => user_teacher_dashboard_path, 
+        #   'icon' => 'ico-Dashboard.png',
+        #   'title' => 'Dashboard', 
+        #   'right_content' => ''
+        # },
 
-              {'path' => user_teaching_schedule_path, 
-                'icon' => 'ico-TienDoHocTap.png',
-                'title' => 'Lịch giảng dạy', 
-                'right_content' => '<span class="left-badge">' << count_sessions_week('op_faculty').to_s << '</span>'
-              },
+        {'path' => user_teaching_schedule_path, 
+         'icon' => 'ico-TienDoHocTap.png',
+         'title' => 'Lịch giảng dạy', 
+         'right_content' => '<span class="left-badge">' << count_sessions_week('op_faculty').to_s << '</span>'
+      },
 
-              # {'path' => user_teacher_class_path, 
-              #   'icon' => 'ico-TienDoHocTap.png',
-              #   'title' => 'Danh sách lớp học', 
-              #   'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
-              # },
+      # {'path' => user_teacher_class_path, 
+      #   'icon' => 'ico-TienDoHocTap.png',
+      #   'title' => 'Danh sách lớp học', 
+      #   'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
+      # },
 
-              {'path' => user_teacher_class_path, 
-                'icon' => 'ico-TienDoHocTap.png',
-                'title' => 'Danh sách lớp học', 
-                'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
-              },              
-              
-            ]
+      {'path' => user_teacher_class_path, 
+       'icon' => 'ico-TienDoHocTap.png',
+       'title' => 'Danh sách lớp học', 
+       'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
+      },              
+
+      ]
 
 
       tag_html = tag_html + '<hr class="border-sidebar-edit"/><ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
@@ -182,18 +178,18 @@ module User
     # get Menu for User is Student
     def get_menus_student(fullpath)
       menus = [
-              {'path' => user_student_info_path, 
-                'icon' => 'icon-Setting.png',
-                'title' => 'Cấu hình', 
-                'right_content' => ''
-              # },
-              
-              # {'path' => '#', 
-              #   'icon' => 'Icon-Bell.png',
-              #   'title' => 'Thông báo', 
-              #   'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
-              }
-            ]
+        {'path' => user_student_info_path, 
+         'icon' => 'icon-Setting.png',
+         'title' => 'Cấu hình', 
+         'right_content' => ''
+         # },
+
+         # {'path' => '#', 
+         #   'icon' => 'Icon-Bell.png',
+         #   'title' => 'Thông báo', 
+         #   'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
+      }
+      ]
 
       # Khoi menu Config
       tag_html = '<div class="noti-nav">'
@@ -226,49 +222,49 @@ module User
 
       # Khoi menu Dashboard
       menus = [
-              # {'path' => user_student_dashboard_path, 
-              #   'icon' => 'ico-Dashboard.png',
-              #   'title' => 'Dashboard', 
-              #   'right_content' => ''
-              # },
+        # {'path' => user_student_dashboard_path, 
+        #   'icon' => 'ico-Dashboard.png',
+        #   'title' => 'Dashboard', 
+        #   'right_content' => ''
+        # },
 
-              {'path' => user_student_timetable_path, 
-                'icon' => 'ico-TienDoHocTap.png',
-                'title' => 'Thời khoá biểu', 
-                'right_content' => '<span class="left-badge">' << count_sessions_week('op_student').to_s << '</span>'
-              },
+        {'path' => user_student_timetable_path, 
+         'icon' => 'ico-TienDoHocTap.png',
+         'title' => 'Thời khoá biểu', 
+         'right_content' => '<span class="left-badge">' << count_sessions_week('op_student').to_s << '</span>'
+      },
 
-              {'path' => user_my_class_path, 
-                'icon' => 'ico-TienDoHocTap.png',
-                'title' => 'Lớp học của tôi', 
-                'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
-              },
-              
-              {'path' => user_student_homework_path, 
-                'icon' => 'ico-BaiTapOnBai.png',
-                'title' => 'Bài tập & Ôn bài', 
-                'right_content' => ''
-              },
+      {'path' => user_my_class_path, 
+       'icon' => 'ico-TienDoHocTap.png',
+       'title' => 'Lớp học của tôi', 
+       'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
+      },
 
-              # {'path' => '#', 
-              #   'icon' => 'ico-Certificate.png',
-              #   'title' => 'Chứng chỉ', 
-              #   'right_content' => ''
-              # },
+      {'path' => user_student_homework_path, 
+       'icon' => 'ico-BaiTapOnBai.png',
+       'title' => 'Bài tập & Ôn bài', 
+       'right_content' => ''
+      },
 
-              # {'path' => user_student_product_path, 
-              #   'icon' => 'ico-SPhocsinh.png',
-              #   'title' => 'Sản phẩm của tôi', 
-              #   'right_content' => ''
-              # },
+      # {'path' => '#', 
+      #   'icon' => 'ico-Certificate.png',
+      #   'title' => 'Chứng chỉ', 
+      #   'right_content' => ''
+      # },
 
-              # {'path' => '#', 
-              #   'icon' => 'ico-SPhocsinh.png',
-              #   'title' => 'Top thành tích', 
-              #   'right_content' => ''
-              # }
+      # {'path' => user_student_product_path, 
+      #   'icon' => 'ico-SPhocsinh.png',
+      #   'title' => 'Sản phẩm của tôi', 
+      #   'right_content' => ''
+      # },
 
-            ]
+      # {'path' => '#', 
+      #   'icon' => 'ico-SPhocsinh.png',
+      #   'title' => 'Top thành tích', 
+      #   'right_content' => ''
+      # }
+
+      ]
 
 
       tag_html = tag_html + '<hr class="border-sidebar-edit"/><ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
@@ -297,31 +293,31 @@ module User
 
       # Khoi menu Diem thuong
       menus = [
-              # {'path' => '#', 
-              #   'icon' => 'ico-Certificate.png',
-              #   'title' => 'Huy hiệu', 
-              #   'right_content' => ''
-              # },
+        # {'path' => '#', 
+        #   'icon' => 'ico-Certificate.png',
+        #   'title' => 'Huy hiệu', 
+        #   'right_content' => ''
+        # },
 
-              # {'path' => user_student_redeem_path, 
-              #   'icon' => 'ico-Redem.png',
-              #   'title' => 'Đổi điểm lấy quà', 
-              #   'right_content' => ''
-              # },
+        # {'path' => user_student_redeem_path, 
+        #   'icon' => 'ico-Redem.png',
+        #   'title' => 'Đổi điểm lấy quà', 
+        #   'right_content' => ''
+        # },
 
-              # {'path' => '#', 
-              #   'icon' => 'ico-Redem.png',
-              #   'title' => 'Giới thiệu phụ huynh', 
-              #   'right_content' => ''
-              # },
+        # {'path' => '#', 
+        #   'icon' => 'ico-Redem.png',
+        #   'title' => 'Giới thiệu phụ huynh', 
+        #   'right_content' => ''
+        # },
 
-              # {'path' => user_student_invoice_path, 
-              #   'icon' => 'ico-Invoice.png',
-              #   'title' => 'Hóa đơn', 
-              #   'right_content' => ''
-              # },             
+        # {'path' => user_student_invoice_path, 
+        #   'icon' => 'ico-Invoice.png',
+        #   'title' => 'Hóa đơn', 
+        #   'right_content' => ''
+        # },             
 
-            ]
+      ]
 
       tag_html = tag_html + '<hr class="border-sidebar-bottom"/><ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
 

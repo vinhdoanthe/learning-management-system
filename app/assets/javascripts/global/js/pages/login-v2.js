@@ -15,7 +15,7 @@ $(window).resize(function() {
 $(function() {
 
     copyrightPos();
-    if($('#session_login')){
+    if($('body').data('page') == 'login'){
 
         /* Show / Hide Password Recover Form */
         $('#password').on('click', function(e) {
@@ -35,7 +35,7 @@ $(function() {
             var l = Ladda.create(this);
             l.start();
             setTimeout(function() {
-                window.location.href = "";
+                window.location.href = "dashboard.html";
             }, 2000);
         });
         $.backstretch(["../assets/global/images/gallery/login.jpg"],

@@ -333,6 +333,12 @@ td,th{
 .color-000{
 	color: #000 !important;
 }
+.color-5DC2A7{
+	color: #5DC2A7 !important;
+}
+.color-939393{
+	color: #939393 !important;
+}
 .bg-8392A5{
 	background: #8392A5 !important;
 }
@@ -551,6 +557,9 @@ td,th{
 }
 .height-400{
 	height: 400px !important;
+}
+.height-auto{
+	height: auto !important;
 }
 .transfor_rotate_-90{
 	-ms-transform: rotate(-90deg);

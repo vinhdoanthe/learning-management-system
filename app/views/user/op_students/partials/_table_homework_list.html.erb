@@ -1,4 +1,4 @@
-<%= render 'user/op_students/modals/student_evaluate_view', {batch: batch} %>
+<%= render :partial => 'user/op_students/modals/session_evaluation' %>
 <tbody>
   <% sessions.each do |session| %>
     <tr>
@@ -43,7 +43,7 @@
           </a>
         <% end %>
         <% if evaluate.present? %>
-          <a class='student_evaluate_view' href="/user/student_evaluate_content?session_id=<%= session.id %>" data-remote='true' data-toggle="modal" data-target="#modal_student_evaluate_view" title='Nhận xét của giảng viên'>
+          <a class='student_evaluate_view' href="/user/session_evaluation_content?session_id=<%= session.id %>" data-remote='true' data-toggle="modal" data-target="#session_evaluation_view" title='Nhận xét của giảng viên'>
             <span>
               <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
             </span>

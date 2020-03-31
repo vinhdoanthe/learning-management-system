@@ -77,7 +77,7 @@ module User
         if !op_parent.nil? && !op_parent.name.nil?
           res_partner = ResPartner.find(op_parent.name)
           if !res_partner.nil? && !res_partner.company_id.nil?
-            company = Common::ResCompany.find(op_parent.company_id)
+            company = Common::ResCompany.find(res_partner.company_id)
           end
         end
       elsif !faculty_id.nil?

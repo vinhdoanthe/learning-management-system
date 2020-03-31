@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     post 'teacher_evaluate' => 'op_teachers#teacher_evaluate'
     post 'teacher_evaluate_content' => 'op_teachers#teacher_evaluate_content'
     get 'student_evaluate_content' => 'op_students#student_attendance_content'
+    get 'session_evaluation_content' => 'op_students#session_evaluation'
     get 'student_videos_list' => 'op_students#student_videos_list'
 
     get 'student_dashboard' => 'op_students#dashboard'
