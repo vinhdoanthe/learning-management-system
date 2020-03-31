@@ -80,6 +80,13 @@ Rails.application.routes.draw do
     get 'lessons_by_subject' => 'course/op_lession#index_by_subject', as: 'lessons_by_subject'
     get 'get_video_list' => 'learning_materials#get_video_list'
   end
+
+  namespace :notification do
+    namespace :broadcast do
+      resources :broadcast_notices, only: [:index, :show]
+    end
+  end
+
   resources :password_resets, only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'learning/batch/sessions#add_photo_attachment'
 
