@@ -2522,22 +2522,239 @@ position: absolute;
 	display: inline-block;
 }
 
+.modal-test{
+	background: url(../images/bg-mask.png) repeat-y;
+	background-size: cover;
+}
 
+.box-mt{
+	background: #fff;
+	border-radius: 10px;
+	border: 3px solid #5DC2A7;
+	text-align: center;
+}
+.modal-body-fix{
+	padding: 70px 60px 20px;
+}
+.bmt-img{
+	text-align: center;
+    margin-top: -50px;
+    margin-bottom: 20px;
+}
+.bmt-img span{
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	border: 3px solid #5DC2A7;
+}
+.bmt-img span img{
+	width: 100%;
+}
+.bmt-text{}
+.bmt-text p{
+	text-align: center;
+	margin-bottom: 10px;
+}
+.bmt-text p strong{
 
+}
+.bmt-text p a{}
+.bmt-text p span{}
 
+.box-mt-detail{
+	text-align: center;
+	display: inline-block;width: 100%;
+	    margin-top: 30px;
+}
+.bmd-title{
+	text-align: center;
+}
+.bmd-title span{}
+.bmd-title span img{
+	display: block;
+	margin: 0 auto
+}
+.bmd-title h3{
+	font-size: 18px;
+	text-transform: uppercase;
+	color: #000;
+	background: #fcf055;
+	display: inline-block;
+	    width: 250px;
+    padding: 15px 0;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+}
+.bmd-content{
+    background: #fff;
+    border-radius: 10px;
+    border: 3px solid #fcf055;
+    text-align: center;
+    padding: 0px 15px 16px;
+}
+.bmd-content span.bmdc-title{
+    text-align: center;
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
+    background: #5dc2a7;
+    border-radius: 50px;
+    padding: 30px 25px 30px 70px;
+    margin: 10px;
+}
+.bmd-content span.bmdc-title img{
+	width: 50px;
+    position: absolute;
+    height: 50px;
+    left: 13px;
+    top: 12px;
+}
+.bmd-content span.bmdc-title h3{
+	font-size: 14px;
+}
+.bmd-content label{
+	font-size: 30px;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+}
+.bmd-content label span{
+	font-size: 15px;
+}
+.bmd-content p{
+	text-align: center;
+}
+.list-all-bmd{
+	display: inline-block;
+background: #5dc2a7;
+    margin-top: 10px;
+    border-radius: 30px;
+    padding: 15px 0px;
+}
+.list-all-bmd li{
+	display: inline-block;
+}
+.list-bmd-detail{
+	position: relative;
+}
+.list-bmd-detail span{
+	display: inherit;
+	width: 30px;
+	position: absolute;
+	    top: -5px;
+    left: 20px;	
+}
+.list-bmd-detail span img{}
+.list-bmd-detail p{
+	    padding: 0 30px 0 60px;
+	        color: #fff;
+    font-size: 15px;
+    font-family: 'Montserrat-Bold';
+    text-transform: uppercase;
+}
+.bmd-video{
+	padding: 0 !important
+}
+.big-video{
+	background: #f3f3f3;
+	margin-bottom: 10px;
+}
+.big-video video{
+	width: 100%;
+}
+.list-video{
+	display: inline-block;
+	width: 100%;
+}
+.list-video li{
+	display: inline-block;
+	width: 25%;
+	float: left;
+	padding: 0 5px;
+}
+.list-video li .lv-detail{
+	background: #f4f4f4
+}
+.list-video li .lv-detail video{
+	width: 100%;
+}
+.bmd-repost{}
+.bmr-detail{
+	margin-bottom: 20px;
+}
+.bmrd-title{
+	position: relative;
+	margin-top: 15px;
+}
+.bmrd-title h3{
+    padding: 26px 75px;
+}
+.bmrd-title span{
+	position: absolute;
+	display: inline-block;
+	width: 70px;
+}
+.bmrd-title span img{}
+.bmrd-content{
+	margin-left: 75px;
+	margin-top: 20px;
+}
+.bmrd-content li{
+	position: relative;
+	margin-bottom: 25px;
+}
+.bmrd-content li:before{
+	position: absolute;
+	content: '';
+	background: url(../images/oval-list.svg) no-repeat;
+	width: 10px;
+	height: 10px;
+	left: -45px;
+	top: 0;
+}
+.bmrd-content li:after{
+	position: absolute;
+    content: '';
+    width: 1px;
+    height: 82%;
+    left: -41px;
+    top: 14px;
+    border: 1px dashed #000;
+}
+.bmrd-content li:after:last-child{
+	display: none;
+}
+.bmrd-content li p{
+	text-align: left;
+	margin-bottom: 10px;
+	font-size: 14px;
+	color: #000;
+	    line-height: 15px;
+}
+.bmrd-content li p span{
+	display: block;
+	font-size: 10px;
+	color: #7E858E
+}
+.bmrd-content li label{
+	text-align: left;
+	color: #EB9138;
+	font-size: 10px;
+	font-family: 'Montserrat-Bold';
+	position: relative;
+	padding-left: 16px; 
+}
+.bmrd-content li label:before{
+	position: absolute;
+	content: '';
+	width: 12px;
+	height: 12px;
+	left: 0;
+	top: 6px;
+	background: url(../images/path-list.svg) no-repeat;
 
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 

@@ -14,7 +14,6 @@
         <div class="bp-photo">
           <span>
             <%= image_tag('global/images/avatars/user3.jpg') %>
-            <%# <%= current_user.avatar.attached? ? image_tag(current_user.avatar.variant(resize_to_limit: [80, 80])) : image_tag('global/images/avatars/user3.jpg') %1> %>
           </span>
           <p>Giảng viên Fultime</p>
           <label><%= teacher.full_name if teacher.present? %></label>
@@ -22,8 +21,6 @@
         <div class="bp-tab">
           <ul class="nav nav-tabs" role="tablist">
             <li class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Thông tin chung</a></li>
-            <%# <li class=""><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Năng lực giảng viên</a></li> %>
-            <%# <li class=""><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Thiết bị học tập</a></li> %>
           </ul>
           <div class="tab-content ">
             <%= render :partial => "info", :locals => {:teacher => teacher, :res_partner => res_partner} %>

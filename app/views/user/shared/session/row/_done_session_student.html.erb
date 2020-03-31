@@ -3,7 +3,6 @@
 <%= render 'user/shared/session/row/session_calendar_box', {:session => session} %>
 
 <% lesson = session.op_lession %>
-<% batch = session.op_batch %>
 <td>
   <div class="photo-box">
     <span>
@@ -31,7 +30,7 @@
     </span>
   </a>
   <% if !attendance_line.nil? %>
-    <a class='student_evaluate_view' href="/user/student_evaluate_content?session_id=<%= session.id %>" data-remote='true' data-toggle="modal" data-target="#modal_student_evaluate_view" title='Nhận xét của giảng viên'>
+    <a class='student_evaluate_view' href="/user/session_evaluation_content?session_id=<%= session.id %>" data-remote='true' data-toggle="modal" data-target="#session_evaluation_view" title='Nhận xét của giảng viên'>
       <span>
         <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
       </span>
@@ -44,4 +43,3 @@
     </a>
   <% end %>
 </td>
-<%= render 'user/op_students/modals/student_evaluate_view', {batch: batch} %>

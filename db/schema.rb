@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_25_113352) do
+ActiveRecord::Schema.define(version: 2020_03_30_024516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -9225,6 +9225,19 @@ ActiveRecord::Schema.define(version: 2020_03_25_113352) do
     t.index ["order_id", "tag_id"], name: "sale_order_tag_rel_order_id_tag_id_key", unique: true
     t.index ["order_id"], name: "sale_order_tag_rel_order_id_idx"
     t.index ["tag_id"], name: "sale_order_tag_rel_tag_id_idx"
+  end
+
+  create_table "sc_products", force: :cascade do |t|
+    t.text "description"
+    t.text "presentation"
+    t.text "video"
+    t.text "thumbnail"
+    t.integer "batch_id"
+    t.integer "user_id"
+    t.integer "course_id"
+    t.integer "student_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "session_change_tutors_id", id: false, comment: "RELATION BETWEEN op_session_change_faculty AND op_faculty", force: :cascade do |t|

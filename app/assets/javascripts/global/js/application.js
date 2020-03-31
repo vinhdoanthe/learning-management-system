@@ -17,7 +17,6 @@ var topbarWidth = $('.topbar').width();
 var headerLeftWidth = $('.header-left').width();
 var headerRightWidth = $('.header-right').width();
 var start = delta = end = 0;
-
 $(window).load(function() {
     "use strict";
     setTimeout(function() {
@@ -215,6 +214,7 @@ function handleSidebarRemove() {
         });
     });
 }
+
 /* Hide User & Search Sidebar */
 function handleSidebarHide() {
     hiddenElements = $(':hidden');
