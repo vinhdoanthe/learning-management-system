@@ -15,7 +15,7 @@ $(window).resize(function() {
 $(function() {
 
     copyrightPos();
-    if($('body').data('page') == 'login'){
+    if($('#session_login')){
 
         /* Show / Hide Password Recover Form */
         $('#password').on('click', function(e) {

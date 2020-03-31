@@ -13,8 +13,11 @@
  */
 
 /*
-*= require_self
+* require_self
 *= require video-js
+*= require 'customized/customized_custom'
+*= require 'customized/customized_style'
+*= require 'customized/customized_style_other'
 */
 @import 'user/users';
 
