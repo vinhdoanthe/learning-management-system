@@ -14,7 +14,9 @@
       <div class="bo-table">
         <%= render 'user/shared/batch_info', {:batch => @batch} %>
       </div>
-      <div class="bo-table" style="margin-top: 30px">
+      <div class="bo-table" id="teacher_class_detail_content" style="margin-top: 30px">
+            <input type="hidden" id='batch_id' value="<%= @batch.id %>">
+        <% unless @sessions.blank? %>
         <div class="box-lession">
           <div class="row">
             <div class="col-md-2">
@@ -34,7 +36,7 @@
         <div class="m-t-20">
           <div class="redem-tab class-tab">
             <!-- Nav tabs -->
-            <input type="hidden" id='batch_id' value="<%= @batch.id %>">
+            <!-- <input type="hidden" id='batch_id' value="<%#= @batch.id %>"> -->
             <!-- Tab panes -->
             <div class="tab-content">
               <div class="tab-pane active in" id="<%= 'buoi' + (@session_index + 1).to_s %>">
@@ -117,16 +119,19 @@
               </div>
             </div>
           </div>
+        <% end %>
         </div>
       </div>
     </div>
   </div>
 
-  <%= render 'user/op_teachers/modals/teacher_checkin' %>
-  <%= render 'user/op_teachers/modals/teacher_attendance' %>
-  <%= render 'user/op_teachers/modals/upload_photo' %>
-  <%= render 'user/op_teachers/modals/learning_device' %>
-  <%= render 'user/op_teachers/modals/teacher_evaluate' %>
-  <%= render 'learning/modal_materials' %>
+  <% if @sessions.present? %>
+    <%= render 'user/op_teachers/modals/teacher_checkin' %>
+    <%= render 'user/op_teachers/modals/teacher_attendance' %>
+    <%= render 'user/op_teachers/modals/upload_photo' %>
+    <%= render 'user/op_teachers/modals/learning_device' %>
+    <%= render 'user/op_teachers/modals/teacher_evaluate' %>
+    <%= render 'learning/modal_materials' %>
+  <% end %>
 
 </div>

@@ -2,7 +2,9 @@ class User::OpTeachersService
   include Rails.application.routes.url_helpers
 
   def self.filter_batch(teacher, params)
-    @batches ||= teacher.op_batches
+    @batches = teacher.op_batches
+    return [] if @batches.blank?
+
     query = ''
 
     if params[:active] && params[:active] != 'all'
