@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_30_024516) do
+ActiveRecord::Schema.define(version: 2020_03_31_030248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2050,6 +2050,24 @@ ActiveRecord::Schema.define(version: 2020_03_30_024516) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "broadcast_noti", force: :cascade do |t|
+    t.text "content"
+    t.text "title"
+    t.integer "created_by"
+    t.datetime "expiry_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "broadcast_noti_state", force: :cascade do |t|
+    t.boolean "status"
+    t.integer "broadcast_notice_id"
+    t.integer "user_id"
+    t.datetime "read_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "bt_asset", id: :serial, comment: "Asset", force: :cascade do |t|

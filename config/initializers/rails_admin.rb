@@ -23,10 +23,12 @@ RailsAdmin.config do |config|
       end
     end
   end
-  config.included_models = %w(Learning::Course::OpCourse Learning::Course::CourseDescription
-                              Learning::Course::OpLession Learning::Material::LearningMaterial
-                              Learning::Batch::OpBatch Learning::Batch::OpSession Learning::Material::Question Learning::Material::QuestionChoice
-                              User::User Learning::LearningRecord::UserQuestion)
+  config.included_models = %w(Learning::Course::OpCourse Learning::Course::CourseDescription Learning::Course::OpLession 
+                              Learning::Batch::OpBatch Learning::Batch::OpSession 
+                              Learning::Material::Question Learning::Material::QuestionChoice Learning::Material::LearningMaterial
+                              User::User User::OpStudent 
+                              Learning::LearningRecord::UserQuestion
+                              Notification::BroadcastNoti)
 
 
   config.model 'Learning::Course::OpCourse' do
@@ -170,6 +172,38 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'User::OpStudent' do
+    list do
+      field :full_name
+      field :code
+      field :vattr_gender
+      field :birth_date
+      field :nationality
+      field :vattr_center_name
+    end
+
+    show do
+
+    end
+
+    export do
+      field :full_name
+      field :code
+      field :vattr_gender
+      field :birth_date
+      field :nationality
+      field :vattr_center_name
+      field :vattr_parent_full_name
+      field :vattr_parent_relation_type
+      field :vattr_parent_email
+      field :vattr_parent_phone
+      field :vattr_parent_address
+      field :vattr_parent_district
+      field :vattr_parent_nation
+      field :create_date
+    end
+  end
+
   config.model 'Learning::Material::Question' do
     show do
       field :op_lession
@@ -220,7 +254,7 @@ RailsAdmin.config do |config|
       field :op_batch
     end
   end
-  
+
   config.model 'Learning::Batch::OpSession' do
     list do
       field :start_datetime
@@ -229,7 +263,7 @@ RailsAdmin.config do |config|
       field :lesson
       field :photos_link
     end
-    
+
     show do 
       field :start_datetime
       field :end_datetime
@@ -247,26 +281,59 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'Notification::BroadcastNoti' do
+    list do
+      field :title
+      field :created_by
+      field :expiry_date
+    end
+
+    show do
+      field :title
+      field :content do
+        pretty_value do
+          value.html_safe
+        end
+      end
+      field :created_by
+      field :expiry_date
+    end
+
+    edit do
+      field :title
+      field :content, :ck_editor do
+        config_js ActionController::Base.helpers.asset_path('ckeditor/config.js')
+      end
+      field :created_by
+      field :expiry_date
+    end
+  end
+
   config.actions do
 
     dashboard
     index
     new do
-      only %w(Learning::Course::CourseDescription Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
+      only %w(Learning::Course::CourseDescription 
+              Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice
+              Notification::BroadcastNoti)
     end
     show
     show_in_app do
       only %w(Learning::Course::OpLession)
     end
     edit do
-      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, Learning::Course::OpLession Learning::Course::OpCourse Learning::Course::CourseDescription)
+      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, 
+              Learning::Course::OpLession Learning::Course::OpCourse Learning::Course::CourseDescription 
+              Notification::BroadcastNoti)
     end
     delete do
       only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
     end
 
     export do
-      only %w(User::User Learning::Batch::OpSession)
+      only %w(User::User User::OpStudent 
+              Learning::Batch::OpSession)
     end
   end
 end
