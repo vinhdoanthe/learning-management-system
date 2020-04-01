@@ -76,6 +76,10 @@ $(document).ready(function () {
     var week_days = ["Chủ Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
 
     function change_view(res, data) {
+      if (res.no_session){
+        $('#teacher_class_detail_content').html('<h3>Không có buổi học nào của bạn</h3>');
+        return
+      }
         $('#student_attendance').html('');
 
         if (res.lesson) {
@@ -478,7 +482,8 @@ $(document).ready(function () {
         url: '/user/teacher_evaluate_content/',
         data: { student_id: student_id, session_id: session_id },
         success: function (res) {
-          if (res != 'null'){
+          debugger
+          if (res != 'null' && res != undefined){
           $('select[name="knowledge1"').val(res.knowledge1);
           $('select[name="knowledge2"').val(res.knowledge2);
           $('select[name="knowledge3"').val(res.knowledge3);

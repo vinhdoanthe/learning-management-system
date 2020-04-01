@@ -86,7 +86,7 @@
                         <div class="fco-ques">
                           <div class="fcoq-tit">
                             <label for="">Câu <%= index.to_i + 1 %> (Text response):</label>
-                            <p><%= question.question.html_safe %></p>
+                            <p><%= question.question ? question.question.html_safe : '' %></p>
                           </div>
                         </div>
                       </div>
@@ -95,7 +95,7 @@
                         <div class="fco-ques">
                           <div class="fcoq-tit">
                             <label for="">Bài <%= index.to_i + 1 %> (Single choice):</label>
-                            <p><%= question.question.html_safe %></p>
+                            <p><%= question.question ? question.question.html_safe : '' %></p>
                           </div>
                         </div>
                         <div class="fco-answ">
@@ -126,7 +126,7 @@
                         <div class="fco-ques">
                           <div class="fcoq-tit">
                             <label for="">Bài <%= index.to_i + 1%> (Multiple choice):</label>
-                            <p><%= question.question.html_safe %></p>
+                            <p><%= question.question ? question.question.html_safe : '' %></p>
                           </div>
                         </div>
                         <div class="fco-answ">

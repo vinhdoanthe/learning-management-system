@@ -2,7 +2,7 @@
   <div class="fco-ques">
     <div class="fcoq-tit">
       <label for="">NỘI DUNG BÀI TẬP:</label>
-      <p><%= question.question.html_safe %></p>
+      <p><%= question.question ? question.question.html_safe : '' %></p>
     </div>
   </div>
   <div class="fco-answ">

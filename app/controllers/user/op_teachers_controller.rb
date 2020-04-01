@@ -42,7 +42,7 @@ module User
     def teacher_class_detail
       @batch = Learning::Batch::OpBatch.find(params[:batch_id].to_i)
       @sessions = @batch.op_sessions.order(start_datetime: 'ASC')
-      
+
 			if params[:subject_id].present?
 				@current_subject_id = params[:subject_id].to_i
 				@sessions = @sessions.where(:subject_id => params[:subject_id].to_i).where(faculty_id: @teacher.id)
@@ -52,6 +52,11 @@ module User
 				@current_subject_id = current_subject.subject_id
 				@sessions = @sessions.where(subject_id: @current_subject_id, faculty_id: @teacher.id)
 			end
+
+      if @sessions.blank?
+        render json: {no_session: true}
+        return
+      end
 
       if params[:session_index].present?
         @session = @sessions[params[:session_index].to_i]
@@ -131,6 +136,10 @@ module User
 
     def teacher_evaluate_content
       e = Learning::Batch::OpAttendanceLine.where(student_id: params[:student_id], session_id: params[:session_id]).first
+      if e.blank?
+        return
+      end
+
       render json: {skill1: e.skill1.to_i, skill2: e.skill2.to_i, knowledge1: e.knowledge1.to_i, knowledge2: e.knowledge2.to_i, knowledge3: e.knowledge4.to_i, knowledge4: e.knowledge4.to_i, attitude1: e.attitude1.to_i, attitude2: e.attitude2.to_i, note: e.note_1}
     end
 
