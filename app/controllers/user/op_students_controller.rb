@@ -35,16 +35,18 @@ module User
     end
 
     def student_product
-      data = OpStudentsService.student_homework params, @student
-      @course = data[:course]
-      @batch = data[:batch]
-      @products = SocialCommunity::ScProduct.where(student_id: @student.id, batch_id: @batch.id)
-      @courses = @student.op_courses
+     # data = OpStudentsService.student_homework params, @student
+     # @course = data[:course]
+     # @batch = data[:batch]
+     # @products = SocialCommunity::ScProduct.where(student_id: @student.id, batch_id: @batch.id)
+     # @courses = @student.op_courses
 
-      respond_to do |format|
-        format.html
-        format.js { render 'user/op_students/partials/student_product', locals: {batch: @batch, course: @course, products: @products, batches: data[:batches], subjects: data[:subjects], subject: data[:subject]} }
-      end
+     # respond_to do |format|
+     #   format.html
+     #   format.js { render 'user/op_students/partials/student_product', locals: {batch: @batch, course: @course, products: @products, batches: data[:batches], subjects: data[:subjects], subject: data[:subject]} }
+     # end
+      @products = SocialCommunity::ScProduct.where(student_id: @student.id).all
+      @course_products = OpStudentsService.new.course_product 
     end
 
     def student_product_detail
@@ -57,6 +59,12 @@ module User
       respond_to do |format|
         format.js { render 'user/op_students/partials/student_product_detail', locals: { batch: batch, course: course, student: student.full_name, company: company, product: product } }
       end
+    end
+
+    def course_products
+      @course = Learning::Course::OpCourse.where(id: params[:course_id]).first
+      return nil if @course.blank?
+      @products = SocialCommunity::ScProduct.where(course_id: @course.id).order(created_at: :DESC)
     end
 
     def student_redeem

@@ -75,3 +75,29 @@ button:disabled {
 #course_description li {
 	font-size: 15px;
 }
+
+.owl-prev {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 2px solid gray !important;
+    border-radius: 50%;
+    top: 40%;
+    margin-left: -20px;
+    display: block !important;
+    background-color: white !important;
+}
+
+.owl-next {
+    position: absolute;
+    right: -25px;
+    width: 50px;
+    height: 50px;
+    border: 2px solid gray !important;
+    border-radius: 50%;
+    top: 40%;
+    margin-left: -20px;
+    display: block !important;
+    background-color: white !important;
+}
+.owl-prev i, .owl-next i {color: #007791; padding: 0 !important; font-size: 20px}
