@@ -23,7 +23,8 @@ set :repo_url, "git@gitlab.com:teky.vn/lms.git"
 append :linked_files, "config/database.yml", "config/storage.yml", "config/settings.yml", "config/secrets.yml"
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads',
+  'data_export', 'data_import'
 
 
 # Default value for default_env is {}
