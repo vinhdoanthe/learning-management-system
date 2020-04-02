@@ -49,10 +49,10 @@ var getUrlParameter = function getUrlParameter(sParam) {
 };
 
 $('document').ready(function () {
-  var waitingDialog = waitingDialog || (function ($) {
+  var waitingdialog = waitingdialog || (function ($) {
     'use strict';
 
-	// Creating modal dialog's DOM
+	// creating modal dialog's dom
 	var $dialog = $(
 		'<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style=" overflow-y:visible;">' +
 		'<div class="modal-dialog modal-m">' +

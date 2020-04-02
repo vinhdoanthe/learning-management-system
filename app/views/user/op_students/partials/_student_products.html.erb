@@ -1,17 +1,39 @@
-<% products.each do |product| %>
-  <div class="col-md-3">                                                                                                    
-    <div class="prod-detail">
-      <div class="prod-img">
-        <span><img src="/global/images/Bitmap5.png" alt=""></span>
+<% if products.length > 5 %>
+  <div class="owl-carousel">
+    <% products.each do |product| %>
+      <div class='item'>
+        <div class="">                                                                              
+          <div class="prod-detail">
+            <div class="prod-img">
+              <span><img src="<%= product.thumbnail %>" alt=""></span>
+            </div>
+            <div class="prod-text">
+              <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN <%= product.op_course.name %></label>
+              <p><%= product.description %></p>
+              <input type='hidden' value='<%= product.id %>' name='student_product_id'>
+              <input type='hidden' value='<%= product.op_batch %>' name='product_batch_id' >
+              <a id="student_product_detail" data-toggle="modal" data-remote='true' href='/user/student_product_detail?product_id=<%= product.id %>' data-target="#modal_student_product">Xem sản phẩm</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="prod-text">
-        <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN <%= course.name %></label>
-        <p><%= product.description %></p>
-        <input type='hidden' value='<%= product.id %>' name='student_product_id'>
-        <input type='hidden' value='<%= product.op_batch %>' name='product_batch_id' >
-        <a id="student_product_detail" data-toggle="modal" data-remote='true' href='/user/student_product_detail?product_id=<%= product.id %>' data-target="#modal_student_product">Xem sản phẩm</a>
-      </div>
-    </div>
+    <% end %>
   </div>
-
+<% else %>
+  <% products.each do |product| %>
+      <div class="col-md-3">                                                                              
+        <div class="prod-detail">
+          <div class="prod-img">
+            <span><img src="<%= product.thumbnail %>" alt=""></span>
+          </div>
+          <div class="prod-text">
+            <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN <%= product.op_course.name %></label>
+            <p><%= product.description %></p>
+            <input type='hidden' value='<%= product.id %>' name='student_product_id'>
+            <input type='hidden' value='<%= product.op_batch %>' name='product_batch_id' >
+            <a id="student_product_detail" data-toggle="modal" data-remote='true' href='/user/student_product_detail?product_id=<%= product.id %>' data-target="#modal_student_product">Xem sản phẩm</a>
+          </div>
+        </div>
+      </div>
+  <% end %>
 <% end %>

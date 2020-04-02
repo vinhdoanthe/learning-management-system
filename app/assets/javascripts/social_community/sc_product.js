@@ -1,4 +1,6 @@
-function get_student_product(data){
+
+$(document).ready(function(){
+  function get_student_product(data){
   $.ajax({
     method: 'GET',
     url: '/user/student_product',
@@ -6,24 +8,22 @@ function get_student_product(data){
     dataType: 'script'
   })
 }
+$('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+  nav: true,
+    navText : ['<i class="fa fa-chevron-left" aria-hidden="true"></i>','<i class="fa fa-chevron-right" aria-hidden="true"></i>'],
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:4
+        }
+    }
+})
 
-$(document).ready(function(){
-    $('#homework_course_selection').on('change', function(){
-      course = $('#homework_course_selection').val()
-      get_student_product({course: course})
-    })
-
-    $('#homework_batch_selection').on('change', function(){
-      course = $('#homework_course_selection').val()
-      batch = $('#homework_batch_selection').val() 
-      get_student_product({course: course, batch: batch})
-    })
-
-    $('#homework_subject_selection').on('change', function(){
-      course = $('#homework_course_selection').val()
-      batch = $('#homework_batch_selection').val() 
-      subject = $('#homework_subject_selection').val()
-      get_student_product({course: course, batch: batch, subject: subject})
-    })
-  get_student_product();
 })

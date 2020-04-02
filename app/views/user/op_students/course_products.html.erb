@@ -1,0 +1,41 @@
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Khoá học <%= @course.name %></h2>
+      </div>
+    </div>
+  </div>                                                                                        
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="fc-header" style='margin: 15px 0'>
+        <h3><span class="color-F16357">Sản phẩm học sinh</h3>
+      </div>
+      <% for i in 0..(@products.length / 4 + 1) %>
+        <div class='row row_<%= i.to_s %>'>
+          <% @products.each_with_index do |product, index| %>
+            <% if index / 4 == i %>
+              <div class="col-md-3 row_<%= i.to_s %>">
+                <div class="prod-detail">
+                  <div class="prod-img">
+                    <span><img src="<%= product.thumbnail %>" alt=""></span>
+                  </div>
+                  <div class="prod-text">
+                    <label>Lớp <%= product.op_batch.name %></label>
+                    <h3>Học sinh: <%= product.op_student.full_name %></h3>
+                    <p><%= product.description %></p>
+                    <input type='hidden' value='<%= product.id %>' name='student_product_id'>
+                    <input type='hidden' value='<%= product.op_batch %>' name='product_batch_id' >
+                    <a id="student_product_detail" data-toggle="modal" data-remote='true' href='/user/student_product_detail?product_id=<%= product.id %>' data-target="#modal_student_product">xem sản phẩm</a>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div id="modal_student_product" class="modal fade" role="dialog">
+</div> 

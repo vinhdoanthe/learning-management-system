@@ -13,46 +13,42 @@
             </div>
         </div>
     </div>
-	<div class="panel m-t--70">
-        
-        <div class="panel-content">
-            <div class="filter-box FlowupLabels b-b-1-869fb229" id='formBody'>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class='fl_wrap m-t-0'>
-                    <label class='fl_label' for='rf_name'>Khóa học:</label>
-                    <select class='fl_input' id='homework_course_selection'>
-                      <% @courses.each do |course| %>
-                        <option value="<%= course.id %>"><a href="/user/student_homework" data-remote="true"><%= course.name %></a></option>
-                      <% end %>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class='fl_wrap m-t-0 populated'>
-                    <label class='fl_label' for='rf_name'>Lớp học:</label>
-                    <select class='fl_input' id="homework_batch_selection">
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class='fl_wrap m-t-0 populated'>
-                    <label class='fl_label' for='rf_name'>Học phần:</label>
-                    <select class='fl_input' id="homework_subject_selection">
-                      <option val="all">Tat ca</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+    <div class="panel m-t--70">
+
+      <div class="panel-content">
+        <div class="box-product" >
+          <!-- <div class="row" id="student_product_list" > -->
+          <%#= render 'user/op_students/partials/student_products', { course: @course, products: @products } %>
+          <!-- </div> -->
+          <div class="fc-header" style='margin: 15px 0'>
+            <h3><span class="color-F16357">Sản phẩm của tôi</h3>
+          </div>
+          <div class='row'>
+            <%= render 'user/op_students/partials/student_products', { products: @products } %>
+          </div>
+        </div>    
+      </div>
+
+      <div class="panel-content">
+        <div class="box-product" >
+          <!-- <div class="row" id="student_product_list" > -->
+          <%#= render 'user/op_students/partials/student_products', { course: @course, products: @products } %>
+          <!-- </div> -->
+          <div class="fc-header" style='margin: 15px 0'>
+            <h3><span class="color-F16357">Sản phẩm cộng đồng</h3>
+          </div>
+          <% @course_products.each do |product| %>
+            <h3 style="display: inline-block"><%= product.keys[0] %></h3>
+            <a style="float: right" href='/user/course_products?course_id=<%= product.values.flatten[0].course_id %>'> Xem thêm </a>
+            <hr style="margin-top: 0">
+            <div class='row'>
+              <%= render 'user/op_students/partials/student_products', { products: product.values.flatten } %>
             </div>
-            <div class="box-product" >
-              <div class="row" id="student_product_list" >
-                <%#= render 'user/op_students/partials/student_products', { course: @course, products: @products } %>
-              </div>
-            </div>    
-        </div>
-        
+          <% end %>
+        </div>    
+      </div>
     </div>
+
 	<!-- InstanceEndEditable -->   
 
   	<div class="footer">

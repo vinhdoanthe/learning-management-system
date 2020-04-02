@@ -60,4 +60,16 @@ class User::OpStudentsService
     sessions = sessions.where(subject_id: subject.id).order(start_datetime: :DESC)
     {batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, show_video: show_video}
   end
+
+  def course_product
+    course_ids = Learning::Course::OpCourse.pluck(:name, :id).uniq
+    # course_product = SocialCommunity::ScProduct.where(course_id: course_ids)
+    course_products = []
+    course_ids.each do |course|
+      products = SocialCommunity::ScProduct.where(course_id: course[1]).order(created_at: :DESC).limit(10).to_a
+      course_products << { course[0] => products }
+    end
+    course_products.select!{|t| t.values.flatten.present?}
+    course_products
+  end
 end
