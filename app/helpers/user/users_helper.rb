@@ -190,7 +190,7 @@ module User
                 'right_content' => ''
               },
               
-              {'path' => '#', 
+              {'path' => notification_broadcast_broadcast_notices_path, 
                 'icon' => 'Icon-Bell.png',
                 'title' => 'Thông báo', 
                 'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
@@ -258,11 +258,11 @@ module User
       #   'right_content' => ''
       # },
 
-      # {'path' => user_student_product_path, 
-      #   'icon' => 'ico-SPhocsinh.png',
-      #   'title' => 'Sản phẩm của tôi', 
-      #   'right_content' => ''
-      # },
+      {'path' => user_student_product_path, 
+        'icon' => 'ico-SPhocsinh.png',
+        'title' => 'Sản phẩm của tôi', 
+        'right_content' => ''
+      },
 
       # {'path' => '#', 
       #   'icon' => 'ico-SPhocsinh.png',

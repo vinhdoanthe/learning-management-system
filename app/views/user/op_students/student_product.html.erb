@@ -2,68 +2,42 @@
   <%= javascript_include_tag 'social_community/sc_product.js' %>
 <% end %>
 <div class="page-content page-thin">
-    <!-- InstanceBeginEditable name="EditRegion1" -->
-    <div class="panel panel-edits bg-232837">
-        <div class="panel-heading">
-            <!-- <div class="ph-img">
-                <span><img src="assets/global/images/avatar.svg" alt=""></span>
-            </div> -->
-            <div class="ph-text">
-                <h2 class="color-fff text-transform">Sản phẩm của học sinh</h2>
-            </div>
-        </div>
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Sản phẩm của học sinh</h2>
+      </div>
     </div>
-    <div class="panel m-t--70">
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="box-product" >
+        <div class="fc-header" style='margin: 15px 0'>
+          <h3><span class="color-F16357">Sản phẩm của tôi</h3>
+        </div>
+        <div class='row'>
+          <%= render 'user/op_students/partials/student_products', { products: @products } %>
+        </div>
+      </div>    
+    </div>
 
-      <div class="panel-content">
-        <div class="box-product" >
-          <!-- <div class="row" id="student_product_list" > -->
-          <%#= render 'user/op_students/partials/student_products', { course: @course, products: @products } %>
-          <!-- </div> -->
-          <div class="fc-header" style='margin: 15px 0'>
-            <h3><span class="color-F16357">Sản phẩm của tôi</h3>
-          </div>
+    <div class="panel-content">
+      <div class="box-product" >
+        <div class="fc-header" style='margin: 15px 0'>
+          <h3><span class="color-F16357">Sản phẩm cộng đồng</h3>
+        </div>
+        <% @course_products.each do |product| %>
+          <h3 style="display: inline-block"><%= product.keys[0] %></h3>
+          <a style="float: right" href='/user/course_products?course_id=<%= product.values.flatten[0].course_id %>'> Xem thêm </a>
+          <hr style="margin-top: 0">
           <div class='row'>
-            <%= render 'user/op_students/partials/student_products', { products: @products } %>
+            <%= render 'user/op_students/partials/student_products', { products: product.values.flatten } %>
           </div>
-        </div>    
-      </div>
-
-      <div class="panel-content">
-        <div class="box-product" >
-          <!-- <div class="row" id="student_product_list" > -->
-          <%#= render 'user/op_students/partials/student_products', { course: @course, products: @products } %>
-          <!-- </div> -->
-          <div class="fc-header" style='margin: 15px 0'>
-            <h3><span class="color-F16357">Sản phẩm cộng đồng</h3>
-          </div>
-          <% @course_products.each do |product| %>
-            <h3 style="display: inline-block"><%= product.keys[0] %></h3>
-            <a style="float: right" href='/user/course_products?course_id=<%= product.values.flatten[0].course_id %>'> Xem thêm </a>
-            <hr style="margin-top: 0">
-            <div class='row'>
-              <%= render 'user/op_students/partials/student_products', { products: product.values.flatten } %>
-            </div>
-          <% end %>
-        </div>    
-      </div>
+        <% end %>
+      </div>    
     </div>
+  </div>
 
-	<!-- InstanceEndEditable -->   
-
-  	<div class="footer">
-        <div class="copyright">
-            <p class="pull-left sm-pull-reset">
-                <span>Copyright <span class="copyright">©</span> 2020 </span>
-                <span>THEMES BACKEND TEKY. </span>
-                <span>All rights reserved. </span>
-            </p>
-            <p class="pull-right sm-pull-reset">
-                <span><a href="#" class="m-r-10">Support</a> | <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a></span>
-            </p>
-        </div>
-    </div>
 </div>
-<%#= render 'user/op_students/modals/student_product_detail', {product: ''} %>
 <div id="modal_student_product" class="modal fade" role="dialog">
 </div>
