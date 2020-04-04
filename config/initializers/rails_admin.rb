@@ -183,7 +183,12 @@ RailsAdmin.config do |config|
     end
 
     show do
-
+      field :full_name
+      field :code
+      field :vattr_gender
+      field :birth_date
+      field :nationality
+      field :vattr_center_name
     end
 
     export do
@@ -331,9 +336,11 @@ RailsAdmin.config do |config|
       only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
     end
 
+=begin
     export do
       only %w(User::User User::OpStudent 
               Learning::Batch::OpSession)
     end
+=end
   end
 end
