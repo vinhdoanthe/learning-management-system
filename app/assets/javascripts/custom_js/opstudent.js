@@ -185,7 +185,7 @@ $('document').ready(function () {
         })
 
         $('#answer_the_question').on('click', function(){
-          waitingDialog.show();
+          waitingdialog.show();
             question_choices = $("input[name='student_choise_answer']:checked").map(function(){
               return $(this).val();
             }).get()
@@ -205,7 +205,7 @@ $('document').ready(function () {
                 data: { session_id: session_id, question: question, question_choices: question_choices, user_question: user_question},
                 dataType: 'script',
               success: function(){
-          waitingDialog.hide();
+          waitingdialog.hide();
               }
             })
         })
