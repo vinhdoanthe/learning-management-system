@@ -3,7 +3,7 @@ module User
 
     before_action :authenticate_user!, only: [:my_class, :batch_detail, :update_nickname, :update_password]
     before_action :authenticate_student!, only: [:my_class, :batch_detail, :update_nickname]
-
+ERROR_TURTLE = 'layouts/errors/turtle'
     def batch_detail
       if params[:batch_id].present?
         @batch = Learning::Batch::OpBatch.find(params[:batch_id])
@@ -16,7 +16,11 @@ module User
         @batches = current_user.op_student.op_batches
       else
         @batches = []
-      end 
+      end
+
+    rescue StandardError => e
+      puts e
+      render :template => ERROR_TURTLE, :layout => false, :locals => { :msg => 'Có lỗi xảy ra rồi!' }
     end
 
     def update_nickname

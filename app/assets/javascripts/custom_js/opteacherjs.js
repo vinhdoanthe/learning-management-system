@@ -106,7 +106,8 @@ $(document).ready(function () {
             $('#teacher_attendance').prop('disabled', true);
             $('#upload_session_photo').prop('disabled', true);
         }
-
+        
+      $('.teacher_class_detail_subject').html('Học phần ' + res.subject.level);
         $('.lesson_info').html("<h3>Học phần " + res.subject.level + " - Buổi học: " + (parseInt(res.session_index) + 1).toString() + "</h3><p>" + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + " | " + start_time.day + "/" + start_time.month + "/" + start_time.year + "</p>")
 
         month = months[parseInt(start_time.month) - 1]

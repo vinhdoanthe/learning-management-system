@@ -25,7 +25,8 @@
   </div>
 </div>
 <script type="text/javascript">
-  if ($('input[name="right_answer"]')){
+  if ($('input[name="right_answer"]').length > 0){
+    debugger
     right_answer = $('input[name="right_answer"]').val();
     right_answer = JSON.parse("[" + right_answer + "]")
 
