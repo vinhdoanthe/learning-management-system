@@ -7,11 +7,13 @@ module User
     before_action :instance_session, only: [:active_session]
 
     def dashboard
-      
+    rescue StandardError => e
+      redirect_error_site(e)      
     end
     
     def teacher_info
-
+    rescue StandardError => e
+      redirect_error_site(e)      
     end
 
     def teacher_class
@@ -37,6 +39,8 @@ module User
         end
         render json: {data: data}, status: 200
       end
+    rescue StandardError => e
+      redirect_error_site(e)      
     end
 
     def teacher_class_detail
@@ -83,6 +87,9 @@ module User
       if request.method == 'POST'
         render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students, sessions_time: sessions_time, lesson: @lesson, img_src: img_src}
       end
+    
+    rescue StandardError => e
+      redirect_error_site(e)      
     end
 
     def teaching_schedule
@@ -91,6 +98,9 @@ module User
       if request.method == 'POST'
         render json: {schedules: schedules}
       end
+    
+    rescue StandardError => e
+      redirect_error_site(e)      
     end
 
     def active_session
@@ -107,6 +117,9 @@ module User
       end
 
       render json: {error: error}
+    
+    rescue StandardError => e
+      redirect_error_site(e)      
     end
 
     def teacher_attendance
@@ -127,11 +140,17 @@ module User
       else
         render json: {type: 'danger', message: errors[0]}
       end
+    
+    rescue StandardError => e
+      redirect_error_site(e)      
     end
 
     def teacher_evaluate
       result = OpTeachersService.teacher_evaluate params
       render json: result
+    
+    rescue StandardError => e
+      redirect_error_site(e)      
     end
 
     def teacher_evaluate_content
