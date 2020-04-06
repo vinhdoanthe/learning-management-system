@@ -30,6 +30,8 @@ $(document).ready(function () {
     obj = { 'href': href, 'index': index }
     localStorage.setItem('active_menu', JSON.stringify(obj));
   })
+
+  $('.public_profile').append('<a href="http://google.com.vn"><b class="color-5DC2A7 public_profile">Public Profile</b></a>')
 });
 
 function getTimeRemaining(endtime) {

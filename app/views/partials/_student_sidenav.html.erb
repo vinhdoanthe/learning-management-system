@@ -11,10 +11,10 @@
         <li class="nav-active">
           <a href="<%= root_path %>">
             <%= image_tag(get_avatar, size: [80, 80]) %>
-          <span>
+            <span class='public_profile'>
               <label class="user_full_name"><%= current_user.op_student.full_name %></label>
-              <p class="user_code">&nbsp<%= current_user.op_student.code %></p>
-          </span>
+              <p class="user_code" style="padding: 0; text-align: left">&nbsp<%= current_user.op_student.code %></p>
+            </span>
           </a>
         </li>
       </ul>
