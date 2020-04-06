@@ -36,7 +36,7 @@ module User
       questions_count = questions.count
 
       user_answers_count = Learning::LearningRecord::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
-      questions_count - user_answers_count
+      (questions_count - user_answers_count).to_s
     end
 
     def count_mark_question teacher
@@ -103,7 +103,7 @@ module User
       menus.each do |menu|
 
         if (menu['path'] == fullpath)
-          tag_html = tag_html + '<li class="nav-active activea">'        
+          tag_html = tag_html + '<li class="nav-active menu_item">'        
           tag_html = tag_html + '<a href="' + menu['path'] + '">'
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
@@ -152,12 +152,12 @@ module User
       ]
 
 
-      tag_html = tag_html + '<hr class="border-sidebar-edit"/><ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
+      tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
 
       menus.each do |menu|
 
         if (menu['path'] == fullpath)
-          tag_html = tag_html + '<li class="nav-active activea">'        
+          tag_html = tag_html + '<li class="nav-active menu_item">'        
           tag_html = tag_html + '<a href="' + menu['path'] + '">'
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
@@ -194,6 +194,19 @@ module User
                 'icon' => 'Icon-Bell.png',
                 'title' => 'Thông báo', 
                 'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
+              },
+
+              {
+                'path' =>  user_my_class_path,
+                'icon' => 'Icon-Inbox.png',
+                'title' => 'Tiến độ học tập',
+                'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
+              },
+
+              {'path' => user_student_homework_path,
+               'icon' => 'ico-BaiTapOnBai.png',
+               'title' => 'Bài tập & Ôn bài',
+               'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
               }
             ]
 
@@ -204,13 +217,13 @@ module User
       menus.each do |menu|
 
         if (menu['path'] == fullpath)
-          tag_html = tag_html + '<li class="nav-active activea">'        
-          tag_html = tag_html + '<a href="' + menu['path'] + '">'
+          tag_html = tag_html + '<li class="nav-active menu_item">'        
+          tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="0">'
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
         else
-          tag_html = tag_html + '<li class="nav-active">'        
-          tag_html = tag_html + '<a href="' + menu['path'] + '">'
+          tag_html = tag_html + '<li class="nav-active menu_item">'        
+          tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="0">'
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
         end
@@ -273,18 +286,18 @@ module User
       ]
 
 
-      tag_html = tag_html + '<hr class="border-sidebar-edit"/><ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
+      tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
 
       menus.each do |menu|
 
         if (menu['path'] == fullpath)
-          tag_html = tag_html + '<li class="nav-active activea">'        
-          tag_html = tag_html + '<a href="' + menu['path'] + '">'
+          tag_html = tag_html + '<li class="nav-active menu_item">'        
+          tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
         else
-          tag_html = tag_html + '<li class="">'        
-          tag_html = tag_html + '<a href="' + menu['path'] + '">'
+          tag_html = tag_html + '<li class="menu_item">'        
+          tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
         end
@@ -325,18 +338,18 @@ module User
 
       ]
 
-      tag_html = tag_html + '<hr class="border-sidebar-bottom"/><ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
+      tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
 
       menus.each do |menu|
 
         if (menu['path'] == fullpath)
-          tag_html = tag_html + '<li class="nav-active activea">'        
-          tag_html = tag_html + '<a href="' + menu['path'] + '">'
+          tag_html = tag_html + '<li class="nav-active menu_item">'        
+          tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
         else
-          tag_html = tag_html + '<li class="">'        
-          tag_html = tag_html + '<a href="' + menu['path'] + '">'
+          tag_html = tag_html + '<li class="menu_item">'        
+          tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
         end
