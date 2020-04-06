@@ -20,12 +20,20 @@ module User
       if params[:op_student_id].present?
         @op_student = OpStudent.where(id: params[:op_student_id].to_i).first       
         if @op_student.nil?
-          redirect_to root_path
+          if !current_user.nil? and !current_user.student_id.nil?
+            redirect_to user_public_profile_path(current_user.student_id)
+          else
+            redirect_to root_path
+          end
         else
 
         end
-      else
-        redirect_to root_path
+      else 
+        if !current_user.nil? and !current_user.student_id.nil?
+          redirect_to user_public_profile_path(current_user.student_id)
+        else
+          redirect_to root_path
+        end
       end
     end
 

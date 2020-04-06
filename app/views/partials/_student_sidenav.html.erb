@@ -4,7 +4,7 @@
       <%= link_to '', root_path, class:"not-sidebar-collapsed-logo" %>
       <%= image_tag("global/images/logo-small.png",class:"sidebar-collapsed-logo", style:"width:60px;height:60px;") %>
     </h1>    
-</div>
+  </div>
   <div class="sidebar-inner" id="sidebar">
     <div class="noti-avatar">
       <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
@@ -16,6 +16,7 @@
               <p class="user_code" style="padding: 0; text-align: left">&nbsp<%= current_user.op_student.code %></p>
             </span>
           </a>
+          <%= link_to '<b class="color-5DC2A7 public_profile">Public Profile</b>'.html_safe , user_public_profile_path(current_user.student_id) %>            
         </li>
       </ul>
     </div>    

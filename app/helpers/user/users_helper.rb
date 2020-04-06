@@ -183,7 +183,6 @@ module User
     # get Menu for User is Student
     def get_menus_student(fullpath)
       menus = [
-
         {'path' => user_student_info_path, 
          'icon' => 'icon-Setting.png',
          'title' => 'Cấu hình', 

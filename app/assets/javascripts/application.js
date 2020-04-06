@@ -1,7 +1,7 @@
 //=require jquery
 //=require jquery_ujs
-//= require layout.js
-//= require video
+//=require layout.js
+//=require video
 //=require custom_js/opteacherjs.js
 //=require custom_js/opstudent.js
 //=require custom_js/learning.js
@@ -11,27 +11,25 @@ $(document).ready(function () {
 	setTimeout(function () {
 		$('.alert').remove();
 	}, 3000);
-  
-  let active_menu = JSON.parse(localStorage.getItem('active_menu'));
-  if (active_menu != null){
-    menu = $('#sidebar').find('a[href="' + active_menu.href +'"]')
-    if (menu.length == 1){
-      $(menu[0]).parent().addClass('activea')
-    }else
-    {
-    $(menu[parseInt(active_menu.index)]).parent().addClass('activea')
-    }
-  }
-  
-  $(document).on('click', '.menu_item', function(){
-    $(this).addClass('activea')
-    href = $($(this).find($('a'))).attr('href')
-    index = $($(this).find($('a'))).attr('data-index')
-    obj = { 'href': href, 'index': index }
-    localStorage.setItem('active_menu', JSON.stringify(obj));
-  })
 
-  $('.public_profile').append('<a href="http://google.com.vn"><b class="color-5DC2A7 public_profile">Public Profile</b></a>')
+	let active_menu = JSON.parse(localStorage.getItem('active_menu'));
+	if (active_menu != null){
+		menu = $('#sidebar').find('a[href="' + active_menu.href +'"]')
+		if (menu.length == 1){
+			$(menu[0]).parent().addClass('activea')
+		}else
+		{
+			$(menu[parseInt(active_menu.index)]).parent().addClass('activea')
+		}
+	}
+
+	$(document).on('click', '.menu_item', function(){
+		$(this).addClass('activea')
+		href = $($(this).find($('a'))).attr('href')
+		index = $($(this).find($('a'))).attr('data-index')
+		obj = { 'href': href, 'index': index }
+		localStorage.setItem('active_menu', JSON.stringify(obj));
+	})
 });
 
 function getTimeRemaining(endtime) {
