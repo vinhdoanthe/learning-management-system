@@ -52,7 +52,7 @@ Rails.application.routes.draw do
     get 'student_videos_list' => 'op_students#student_videos_list'
 
     get 'student_dashboard' => 'op_students#dashboard'
-
+    get 'public_profile/:op_student_id' => 'op_students#public_profile'
   end
 
   namespace :learning do

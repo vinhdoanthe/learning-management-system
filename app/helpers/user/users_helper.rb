@@ -47,14 +47,14 @@ module User
     def count_notification_student user
       all_noti = Notification::BroadcastNoti.where('expiry_date >= ? ', Time.now).count
       read_noti = Notification::BroadcastNotiState.where(user_id: current_user.id).count
-     return all_noti - read_noti 
+      return all_noti - read_noti 
     end
 
     # Lay so thong bao cua giao vien
     def count_notification_teacher user
       all_noti = Notification::BroadcastNoti.where('expiry_date >= ? ', Time.now).count
       read_noti = Notification::BroadcastNotiState.where(user_id: current_user.id).count
-     return all_noti - read_noti 
+      return all_noti - read_noti 
     end
 
     #Lay coin_star_transactions
@@ -83,18 +83,18 @@ module User
     def get_menus_teacher(fullpath)
       menus = [
 
-              {'path' => user_teacher_info_path, 
-                'icon' => 'icon-Setting.png',
-                'title' => 'Cấu hình', 
-                'right_content' => ''
-              },
-              
-              {'path' => '#', 
-                'icon' => 'Icon-Bell.png',
-                'title' => 'Thông báo', 
-                'right_content' => '<span class="left-badge">' << count_notification_teacher(current_user).to_s << '</span>'
-              }
-            ]
+        {'path' => user_teacher_info_path, 
+         'icon' => 'icon-Setting.png',
+         'title' => 'Cấu hình', 
+         'right_content' => ''
+      },
+
+      {'path' => '#', 
+       'icon' => 'Icon-Bell.png',
+       'title' => 'Thông báo', 
+       'right_content' => '<span class="left-badge">' << count_notification_teacher(current_user).to_s << '</span>'
+      }
+      ]
 
       # Khoi menu Config
       tag_html = '<div class="noti-nav">'
@@ -184,18 +184,18 @@ module User
     def get_menus_student(fullpath)
       menus = [
 
-              {'path' => user_student_info_path, 
-                'icon' => 'icon-Setting.png',
-                'title' => 'Cấu hình', 
-                'right_content' => ''
-              },
-              
-              {'path' => notification_broadcast_broadcast_notices_path, 
-                'icon' => 'Icon-Bell.png',
-                'title' => 'Thông báo', 
-                'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
-              }
-            ]
+        {'path' => user_student_info_path, 
+         'icon' => 'icon-Setting.png',
+         'title' => 'Cấu hình', 
+         'right_content' => ''
+      },
+
+      {'path' => notification_broadcast_broadcast_notices_path, 
+       'icon' => 'Icon-Bell.png',
+       'title' => 'Thông báo', 
+       'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
+      }
+      ]
 
       # Khoi menu Config
       tag_html = '<div class="noti-nav">'
@@ -259,9 +259,9 @@ module User
       # },
 
       {'path' => user_student_product_path, 
-        'icon' => 'ico-SPhocsinh.png',
-        'title' => 'Sản phẩm của tôi', 
-        'right_content' => ''
+       'icon' => 'ico-SPhocsinh.png',
+       'title' => 'Sản phẩm của tôi', 
+       'right_content' => ''
       },
 
       # {'path' => '#', 

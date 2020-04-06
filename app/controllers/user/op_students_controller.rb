@@ -1,12 +1,11 @@
 module User
-
   class OpStudentsController < ApplicationController
-
-    before_action :authenticate_student!, :find_student
+    before_action :authenticate_student!, only: [:find_student]
     skip_before_action :verify_authenticity_token
+    skip_before_action :authenticate_user!, only: [:public_profile]
 
     def dashboard
-      
+
     end
 
     def index
@@ -15,6 +14,19 @@ module User
 
     def new
 
+    end
+
+    def public_profile
+      if params[:op_student_id].present?
+        @op_student = OpStudent.where(id: params[:op_student_id].to_i).first       
+        if @op_student.nil?
+          redirect_to root_path
+        else
+
+        end
+      else
+        redirect_to root_path
+      end
     end
 
     def student_info
@@ -27,7 +39,7 @@ module User
       @courses = @student.op_courses
       @session = data[:session]
       @batch = data[:batch]
-      
+
       respond_to do |format|
         format.html
         format.js {render 'user/op_students/partials/table_homework_list', :locals => data}
@@ -35,16 +47,6 @@ module User
     end
 
     def student_product
-     # data = OpStudentsService.student_homework params, @student
-     # @course = data[:course]
-     # @batch = data[:batch]
-     # @products = SocialCommunity::ScProduct.where(student_id: @student.id, batch_id: @batch.id)
-     # @courses = @student.op_courses
-
-     # respond_to do |format|
-     #   format.html
-     #   format.js { render 'user/op_students/partials/student_product', locals: {batch: @batch, course: @course, products: @products, batches: data[:batches], subjects: data[:subjects], subject: data[:subject]} }
-     # end
       @products = SocialCommunity::ScProduct.where(student_id: @student.id).all
       @course_products = OpStudentsService.new.course_product 
     end
@@ -76,21 +78,9 @@ module User
     end
 
     def student_timetable
-    #  batches = @student.op_batches
       @sessions = @student.op_sessions
 
-			# student_subject_ids = Learning::Course::OpSubject.joins(op_student_courses: :op_student).where(op_student: {id: @student.id}).pluck(:id)
-     # student_subject_ids = @student.op_sessions.pluck(:subject_id).uniq
-    #  binding.pry
-      
-		# 	batches.each do |batch|
-		# 		@sessions << batch.op_sessions.where(subject_id: student_subject_ids)
-		# 		#@sessions << batch.op_sessions
-    #     session << batch.op_sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).last
-    #   end
-    # 
-			@session = @sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).first
-      # session.each{|s| @session = s if s.present? && @session.start_datetime <= s.start_datetime}
+      @session = @sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).first
       schedules = OpTeachersService.teaching_schedule(@sessions, params)
 
       if request.method == 'POST'
@@ -106,7 +96,7 @@ module User
       data = OpStudentsService.student_homework params, @student
       @courses = @student.op_courses
       @session = data[:session]
-      
+
       respond_to do |format|
         format.html
         format.js {render 'user/op_students/partials/student_videos_list', :locals => data}
