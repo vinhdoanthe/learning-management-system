@@ -71,22 +71,22 @@ namespace :export do
         missing_fields = "#{missing_fields}, Birth Date"
       end
       if op_student.vattr_parent_full_name.blank?
-       missing_fields = "#{missing_fields}, Parent Name"
+        missing_fields = "#{missing_fields}, Parent Name"
       end
       if op_student.vattr_parent_email.blank?
-       missing_fields = "#{missing_fields}, Parent Email"
+        missing_fields = "#{missing_fields}, Parent Email"
       end
       if op_student.vattr_parent_phone.blank?
-       missing_fields = "#{missing_fields}, Parent Phone"
+        missing_fields = "#{missing_fields}, Parent Phone"
       end
       if op_student.vattr_parent_address.blank?
-       missing_fields = "#{missing_fields}, Parent Address"
+        missing_fields = "#{missing_fields}, Parent Address"
       end
       if op_student.vattr_parent_district.blank?
-       missing_fields = "#{missing_fields}, Parent City"
+        missing_fields = "#{missing_fields}, Parent City"
       end
       if op_student.vattr_parent_nation.blank?
-       missing_fields = "#{missing_fields}, Parent Nation"
+        missing_fields = "#{missing_fields}, Parent Nation"
       end
       op_student_export.append missing_fields
       op_student_export.append op_student.create_date.strftime('%d-%m-%Y')
@@ -112,4 +112,59 @@ namespace :export do
     puts "Done!"
 
   end
+
+  desc 'Export Users'
+  task :export_users, [] => :environment do |t, args|
+    users = User::User.all
+    users_export = []
+    total_user = users.length()
+    index = 0
+    users.each do |user|
+      next if !(user.account_role == User::Constant::STUDENT or user.account_role == User::Constant::TEACHER)
+      user_export = []
+      index = index + 1
+
+      puts "#{index}/#{total_user}" 
+      user_export << user.username
+      user_export << user.account_role
+      if user.account_role == User::Constant::STUDENT
+        op_student = user.op_student
+        if !op_student.nil?
+          user_export << op_student.op_batches.count
+          user_export << op_student.create_date
+        else
+          user_export << '-'
+          user_export << '-'
+        end
+      else
+        op_faculty = user.op_faculty
+        if !op_faculty.nil?
+          user_export << op_faculty.op_batches.count
+          user_export << op_faculty.create_date
+        else
+          user_export << '-'
+          user_export << '-'
+        end
+      end
+      users_export << user_export
+      puts 'done'
+    end
+    puts "Starting export"
+    p = Axlsx::Package.new
+    wb = p.workbook
+    wb.add_worksheet(:name => "Acounts") do |sheet|
+      sheet.add_row ["STT","Username", "Role", "Batch Count", "Created Date"]
+      index = 0
+      users_export.each do |user_export|
+        index = index + 1
+        user_export.unshift(index)
+        sheet.add_row user_export
+      end
+    end
+    current_time_str = Time.now.strftime('%Y-%m-%d_%H-%M-%S')
+    file_name = "data_export/users_#{current_time_str}.xlsx"
+    p.serialize(file_name)
+    puts "Done!"
+  end
+
 end

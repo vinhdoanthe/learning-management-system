@@ -1,6 +1,6 @@
 module User
   class OpStudentsController < ApplicationController
-    before_action :authenticate_student!, only: [:find_student]
+    before_action :authenticate_student!, :find_student
     skip_before_action :verify_authenticity_token
     skip_before_action :authenticate_user!, only: [:public_profile]
 

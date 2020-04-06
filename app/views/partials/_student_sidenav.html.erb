@@ -5,12 +5,12 @@
       <%= image_tag("global/images/logo-small.png",class:"sidebar-collapsed-logo", style:"width:60px;height:60px;") %>
     </h1>    
 </div>
-  <div class="sidebar-inner">
+  <div class="sidebar-inner" id="sidebar">
     <div class="noti-avatar">
       <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
         <li class="nav-active">
           <a href="<%= root_path %>">
-            <%= image_tag(get_avatar, size: [80, 80]) %>          
+            <%= image_tag(get_avatar, size: [80, 80]) %>
           <span>
               <label class="user_full_name"><%= current_user.op_student.full_name %></label>
               <p class="user_code">&nbsp<%= current_user.op_student.code %></p>
