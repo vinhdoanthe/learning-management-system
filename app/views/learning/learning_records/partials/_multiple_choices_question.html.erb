@@ -29,7 +29,6 @@
   if ($('input[name="right_answer"]').length >= 1){
     right_answer = $('input[name="right_answer"]').val();
     right_answer = JSON.parse("[" + right_answer + "]")
-debugger
     $('input[name="student_choise_answer"]').each(function(){
       if(right_answer[0].includes($(this).val())){
         $(this).prop('checked', true)

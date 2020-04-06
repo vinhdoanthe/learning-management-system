@@ -18,24 +18,24 @@
 @import "../plugins/bootstrap-editable/css/bootstrap-editable.css";
 @import "../plugins/prettify/prettify.css";
 @font-face {
-	font-family: 'Montserrat-Bold';
-	src: url('../fonts/Montserrat-Bold.otf');
+  font-family: 'Montserrat-Bold';
+  src: url('../fonts/Montserrat-Bold.otf');
 }
 @font-face {
-	font-family: 'Montserrat-Italic';
-	src: url('../fonts/Montserrat-Italic.otf');
+  font-family: 'Montserrat-Italic';
+  src: url('../fonts/Montserrat-Italic.otf');
 }
 @font-face {
-	font-family: 'Montserrat-Medium';
-	src: url('../fonts/Montserrat-Medium.otf');
+  font-family: 'Montserrat-Medium';
+  src: url('../fonts/Montserrat-Medium.otf');
 }
 @font-face {
-	font-family: 'Montserrat-Regular';
-	src: url('../fonts/Montserrat-Regular.otf');
+  font-family: 'Montserrat-Regular';
+  src: url('../fonts/Montserrat-Regular.otf');
 }
 @font-face {
-	font-family: 'Montserrat-Thin';
-	src: url('../fonts/Montserrat-Thin.otf');
+  font-family: 'Montserrat-Thin';
+  src: url('../fonts/Montserrat-Thin.otf');
 }
 .font-bold{font-family: 'Montserrat-Bold';}
 .font-italic{font-family: 'Montserrat-Italic';}
@@ -43,29 +43,29 @@
 .font-regular{font-family: 'Montserrat-Regular';}
 .font-thin{font-family: 'Montserrat-Thin';}
 html {
-	height: 100%;
+  height: 100%;
 }
 body {
-	height: 100%;
-	background: #F5F5F5;
-	color: #000;
-	font-family: 'Montserrat-Regular' !important;
-	line-height: 1.42857143;
-	-webkit-font-smoothing: antialiased;
-	-webkit-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
-	font-size: 14px;
+  height: 100%;
+  background: #F5F5F5;
+  color: #000;
+  font-family: 'Montserrat-Regular' !important;
+  line-height: 1.42857143;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-size: 14px;
 }
 body > section {
-	opacity: 0;
-	height: 100%;
+  opacity: 0;
+  height: 100%;
 }
 body p strong {
-	font-family: 'Montserrat-Bold';
-	font-weight: 600;
+  font-family: 'Montserrat-Bold';
+  font-weight: 600;
 }
 body > .pace > .pace-activity {
-	display: none !important;
+  display: none !important;
 }
 img{
 	max-height: 100%;
@@ -74,78 +74,78 @@ img{
 input,
 select,
 textarea {
-	color: #636e7b;
-	font-family: 'Montserrat-Regular' !important;
+  color: #636e7b;
+  font-family: 'Montserrat-Regular' !important;
 }
 ol,
 ul {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 li{
 	list-style: none;
 }
 pre {
-	color: #121212;
+  color: #121212;
 }
 a {
-	color: #319DB5;
-	text-decoration: none;
+  color: #319DB5;
+  text-decoration: none;
 }
 a:hover {
-	text-decoration: none;
+  text-decoration: none;
 }
 a:focus,
 a:active {
-	outline: none;
+  outline: none;
 }
 h1,
 h2,
 h3,
 h4,
 h5 {
-	font-family: 'Montserrat-Bold';
-	font-weight: 100;
-	margin: 0 !important;
+  font-family: 'Montserrat-Bold';
+  font-weight: 100;
+  margin: 0 !important;
 }
 h1.light,
 h2.light,
 h3.light,
 h4.light,
 h5.light {
-	font-family: 'Montserrat-Bold';
-	font-weight: 100;
+  font-family: 'Montserrat-Bold';
+  font-weight: 100;
 }
 h1,
 .h1 {
-	font-size: 45px;
-	margin-top: 0;
-	font-family: 'Montserrat-Bold';
+  font-size: 45px;
+  margin-top: 0;
+  font-family: 'Montserrat-Bold';
 }
 div,
 p,
 span {
-	text-align: left;
+  text-align: left;
 }
 h2,
 .h2 {
-	font-size: 25px;
+  font-size: 25px;
 }
 h3 {
-	font-size: 20px;
+  font-size: 20px;
 }
 strong,label {
-	font-family: 'Montserrat-Medium';
-	font-weight: 600;;
-	margin: 0;
+  font-family: 'Montserrat-Medium';
+  font-weight: 600;;
+  margin: 0;
 }
 p {
-	line-height: 23px;
-	margin-bottom: 0;
+  line-height: 23px;
+  margin-bottom: 0;
 }
 td,th{
 	vertical-align: middle;
@@ -292,22 +292,22 @@ td,th{
 	color: #333 !important;
 }
 .color-8392a5 {
-	color: #8392a5 !important;
+    color: #8392a5 !important;
 }
 .color-001737 {
-	color: #001737 !important;
+    color: #001737 !important;
 }
 .color-D50B50 {
-	color: #D50B50 !important;
+    color: #D50B50 !important;
 }
 .color-339266 {
-	color: #339266 !important;
+    color: #339266 !important;
 }
 .color-2F3337 {
-	color: #2F3337 !important;
+    color: #2F3337 !important;
 }
 .color-828282 {
-	color: #828282 !important;
+    color: #828282 !important;
 }
 .color-FCF055{
 	color: #FCF055 !important;
@@ -529,7 +529,7 @@ td,th{
 	width: 100% !important;
 }
 .wd-150 {
-	width: 150px !important; 
+  width: 150px !important; 
 }
 .width-auto{
 	width: auto !important;
@@ -563,24 +563,30 @@ td,th{
 }
 .transfor_rotate_-90{
 	-ms-transform: rotate(-90deg);
-	-webkit-transform: rotate(-90deg);
-	transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
 }
 .transfor_rotate_90{
 	-ms-transform: rotate(90deg);
-	-webkit-transform: rotate(90deg);
-	transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 .transfor_rotate_-180{
 	-ms-transform: rotate(-180deg);
-	-webkit-transform: rotate(-180deg);
-	transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
 }
 .transfor_rotate_180{
 	-ms-transform: rotate(180deg);
-	-webkit-transform: rotate(180deg);
-	transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 .panel-content{
 	position: relative;
+}
+.dis-inlineblock{
+	display: inline-block;
+}
+.text-center{
+	text-align: center !important;
 }
