@@ -21,7 +21,7 @@ module User
     has_many :user_notifications
     has_many :users, class_name: 'User::User', foreign_key: 'parent_account_id'
 
-    has_one_attached :avatar
+    belongs_to :avatar, required: false
 
     enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
 
@@ -167,6 +167,48 @@ module User
         else
           false
         end
+      end
+    end
+
+    def get_avatar_thumbnail
+      if avatar_id.nil?
+        return nil
+      end
+      avatar = Avatar::where(id: avatar_id).first
+      if avatar.empty?
+        return nil
+      end
+      if avatar.thumbnail.attached?
+        return avatar.thumbnail
+      else
+        return nil
+      end
+    end
+
+    def get_avatar_full_size
+      if avatar_id.nil?
+        return nil
+      end
+      avatar = Avatar::where(id: avatar_id).first
+      if avatar.empty?
+        return nil
+      end
+      if avatar.thumbnail.attached?
+        return avatar.full_size
+      else
+        return nil
+      end
+    end
+
+    def update_avatar avatar_id
+      if self.update(avatar_id: avatar_id)
+        {:success => true,
+         :message => nil
+        }  
+      else
+        {:success => false,
+         :message => self.errors.full_messages
+        }
       end
     end
   end

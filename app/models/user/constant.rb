@@ -10,6 +10,10 @@ module User::Constant
   IN_ACTIVE = false
 end
 
+module User::Constant::Gender
+  MALE = 'm'
+  FEMALE = 'f'
+end
 
 module User::Constant::Evaluate
   EVALUATE = {

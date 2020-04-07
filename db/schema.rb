@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_02_093203) do
+ActiveRecord::Schema.define(version: 2020_04_07_095346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1719,6 +1719,12 @@ ActiveRecord::Schema.define(version: 2020_04_02_093203) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "avatars", force: :cascade do |t|
+    t.string "gender"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "badge_unlocked_definition_rel", id: false, comment: "RELATION BETWEEN gamification_badge AND gamification_goal_definition", force: :cascade do |t|
@@ -9496,6 +9502,7 @@ ActiveRecord::Schema.define(version: 2020_04_02_093203) do
     t.string "test_type", null: false, comment: "Test Type"
     t.datetime "test_time", comment: "Test Time"
     t.text "test_note", comment: "Test note"
+    t.integer "sale_channel_id", comment: "Sales Channel"
   end
 
   create_table "student_test_wizard", id: :serial, comment: "student.test.wizard", force: :cascade do |t|
@@ -9832,7 +9839,9 @@ ActiveRecord::Schema.define(version: 2020_04_02_093203) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "faculty_id"
+    t.bigint "avatar_id"
     t.index ["account_role"], name: "index_users_on_account_role"
+    t.index ["avatar_id"], name: "index_users_on_avatar_id"
   end
 
   create_table "utm_campaign", id: :serial, comment: "Campaign", force: :cascade do |t|
@@ -12523,6 +12532,7 @@ ActiveRecord::Schema.define(version: 2020_04_02_093203) do
   add_foreign_key "student_migrate", "res_users", column: "create_uid", name: "student_migrate_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_migrate", "res_users", column: "write_uid", name: "student_migrate_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test", "crm_lead", column: "opportunity_id", name: "student_test_opportunity_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test", "crm_team", column: "sale_channel_id", name: "student_test_sale_channel_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_batch", column: "batch_id", name: "student_test_batch_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_course", column: "confirm_course_id", name: "student_test_confirm_course_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_course", column: "course_id", name: "student_test_course_id_fkey", on_delete: :nullify

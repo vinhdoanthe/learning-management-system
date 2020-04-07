@@ -26,7 +26,7 @@ RailsAdmin.config do |config|
   config.included_models = %w(Learning::Course::OpCourse Learning::Course::CourseDescription Learning::Course::OpLession 
                               Learning::Batch::OpBatch Learning::Batch::OpSession 
                               Learning::Material::Question Learning::Material::QuestionChoice Learning::Material::LearningMaterial
-                              User::User User::OpStudent 
+                              User::User User::OpStudent User::Avatar 
                               Learning::LearningRecord::UserQuestion
                               Notification::BroadcastNoti)
 
@@ -286,34 +286,6 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model 'Notification::BroadcastNoti' do
-    list do
-      field :title
-      field :created_by
-      field :expiry_date
-    end
-
-    show do
-      field :title
-      field :content do
-        pretty_value do
-          value.html_safe
-        end
-      end
-      field :created_by
-      field :expiry_date
-    end
-
-    edit do
-      field :title
-      field :content, :ck_editor do
-        config_js ActionController::Base.helpers.asset_path('ckeditor/config.js')
-      end
-      field :created_by
-      field :expiry_date
-    end
-  end
-
   config.actions do
 
     dashboard
@@ -321,7 +293,8 @@ RailsAdmin.config do |config|
     new do
       only %w(Learning::Course::CourseDescription 
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice
-              Notification::BroadcastNoti)
+              Notification::BroadcastNoti
+              User::Avatar)
     end
     show
     show_in_app do
