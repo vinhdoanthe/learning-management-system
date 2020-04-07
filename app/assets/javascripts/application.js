@@ -31,8 +31,8 @@ $(document).ready(function () {
 		localStorage.setItem('active_menu', JSON.stringify(obj));
 	})
 
-  public_profile_id = $('#public_profile_id').val();
-  $('.public_profile').append('<a href="/user/public_profile/' + public_profile_id + '"><b class="color-5DC2A7 public_profile">Public Profile</b></a>')
+//  public_profile_id = $('#public_profile_id').val();
+//  $('.public_profile').append('<a href="/user/public_profile/' + public_profile_id + '"><b class="color-5DC2A7 public_profile">Public Profile</b></a>')
 
   $(window).unload(function(){
     localStorage.removeItem('active_menu');
