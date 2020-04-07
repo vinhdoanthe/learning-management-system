@@ -101,3 +101,17 @@ button:disabled {
     background-color: white !important;
 }
 .owl-prev i, .owl-next i {color: #007791; padding: 0 !important; font-size: 20px}
+
+ul.header-menu.nav.navbar-nav li {
+  max-height: 48px !important;
+}
+
+ul.header-menu.nav.navbar-nav li a {
+  max-height: 48px !important;
+}
+
+@media screen and (max-width: 980px) {
+  .response-logo-sidebar {
+    display: none !important;
+  }
+}

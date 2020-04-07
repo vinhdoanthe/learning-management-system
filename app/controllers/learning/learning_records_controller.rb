@@ -36,16 +36,18 @@ module Learning
     end
 
     def answer_question
+      user_question_id = ''
       if params[:question_choices].blank? && params[:text_answer].blank?
         state = 'fail'
       else
         result = Homework::QuestionService.new.answer_question params, current_user
         state = result[:state]
+        user_question_id = result[:user_question_id]
       end
 
       respond_to do |format|
         format.html
-        format.js { render 'learning/learning_records/partials/answer_responses/success_answer', :locals => { state: state}}
+        format.js { render 'learning/learning_records/partials/answer_responses/success_answer', :locals => { state: state, user_question_id: user_question_id}}
       end
     end
 
