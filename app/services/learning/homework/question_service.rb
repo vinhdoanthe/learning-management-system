@@ -6,10 +6,10 @@ class Learning::Homework::QuestionService
     if question.present? && user_question.present?
       user_answer = user_question.user_answers.order(created_at: :DESC).first
       if user_answer.present? && user_answer.state == 'right'
-        return {state: 'done'}
+        return {state: 'done', user_question_id: user_question.id}
       else
         user_answer = create_user_answer user_question, student, params
-        return { state: user_answer.state } if user_answer.present?
+        return { state: user_answer.state, user_question_id: user_question.id } if user_answer.present?
       end
     else
       return { message: 'Đã có lỗi xảy ra! Thử lại sau!'}
@@ -34,7 +34,7 @@ class Learning::Homework::QuestionService
         if params[:question_choices].present?
           right_answer_ids = question.question_choices.where(is_right_choice: true).pluck(:id)
           choice_content = params[:question_choices].map{ |choice| choice.to_i }
-          user_answer.state = right_answer_ids == choice_content ? 'right' : 'wrong'
+          user_answer.state = right_answer_ids.sort == choice_content.sort ? 'right' : 'wrong'
         else
           return false
         end

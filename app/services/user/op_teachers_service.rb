@@ -123,7 +123,7 @@ class User::OpTeachersService
         schedule_hash['c2'].merge!(record)
       when 16..18
         schedule_hash['t1'].merge!(record)
-      when 18.20
+      when 18..20
         schedule_hash['t2'].merge!(record)
       else
         # type code here
