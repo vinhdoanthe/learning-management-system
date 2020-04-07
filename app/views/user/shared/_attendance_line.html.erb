@@ -119,7 +119,7 @@
 
             <label>Giảng viên nhận xét</label>
             <p>
-            <%= op_att_line.note_1.html_safe %>
+            <%= op_att_line.note_1.html_safe if !op_att_line.note_1.nil? %>
             </p>
           </li>
         </ul>

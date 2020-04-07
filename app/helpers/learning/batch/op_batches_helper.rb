@@ -162,7 +162,11 @@ module Learning
         if sessions_time.blank?
           session = batch.op_sessions.where('start_datetime >= ?', Time.now).first
           session = batch.op_sessions.order(start_datetime: :DESC).first if session.blank?	
-          sessions_time = [session.start_datetime]
+          if !session.nil?
+            sessions_time = [session.start_datetime]
+          else
+            sessions_time = []
+          end
         end
 
         sessions_time

@@ -17,10 +17,10 @@
 </td>
 <td align="center">
   <% attendance_line = attendance_line(session.id, current_user.op_student.id) %>
-  <% if attendance_line.nil? %>
-    <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
-  <% else %>
+  <% if !attendance_line.nil? and attendance_line.present %>
     <%= image_tag('global/images/check.png', style: 'width: 20px') %>
+  <% else %>
+    <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
   <% end %>
 </td>
 <td align="right">

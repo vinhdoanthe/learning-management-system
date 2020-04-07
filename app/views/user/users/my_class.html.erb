@@ -28,10 +28,14 @@
                     <p>Mã lớp: <span><%= batch.code %></span></p>
                     <% time_line = batch_timeline batch %> 
                     <p>
-                    <% time_line.each do |time| %>
-                      <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) %>
+                    <% if time_line.blank? %>
+                      Hàng tuần Tại
+                    <% else %>
+                      <% time_line.each do |time| %>
+                        <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) %>
+                      <% end %>
+                      hàng tuần Tại
                     <% end %>
-                    hàng tuần Tại 
                     <span><%= batch.res_company ? batch.res_company.name : "" %></span>
                     </p>
                   </div>
