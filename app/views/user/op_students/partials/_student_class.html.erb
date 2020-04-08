@@ -2,41 +2,40 @@
   <div class="table-responsive bo-table">
     <table class="table table-hover">
       <thead>
-      <tr>
-        <th>Khóa học</th>
-        <th>Lớp học</th>
-        <th>Học phần</th>
-        <th>Loại</th>
-        <th></th>
-      </tr>
+        <tr>
+          <th>Khóa học</th>
+          <th>Lớp học</th>
+          <th>Học phần</th>
+          <th>Loại</th>
+          <th></th>
+        </tr>
       </thead>
       <tbody>
-      <% @batches.each do |batch| %>
-        <tr>
-          <td><%= batch.op_course.name %></td>
-          <td><%= batch.code %></td>
-          <% sessions = batch.op_sessions %>
-          <% subjects = [] %>
-          <% sessions.each { |session| subjects << session.op_subject.level } %>
-          <td>
-            <% subjects.uniq.each do |level| %>
-              <span class="label-course label label-default"><%= level %></span>
+        <% @batches.each do |batch| %>
+          <% op_student_course = get_op_student_course(current_user, batch) %>
+          <% levels = list_subject_level_of_student(op_student_course) %> 
+          <tr>
+            <td><%= batch.op_course.name %></td>
+            <td><%= batch.code %></td>
+            <td>
+              <% levels.each do |level| %>
+                <span class="label-course label label-default"><%= level[1] %></span>
+              <% end %>
+            </td>
+            <td>
+              <% unless batch.op_batch_type.nil?%>
+                <%= batch.op_batch_type.name%>
+              <% end%>
+            </td>
+            <% if op_student_course.state == 'on' %>
+              <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
+            <% elsif op_student_course.state == 'off' %>
+              <td align="right"><span class="label-edit label label-danger">Đã nghỉ</span></td>
+            <% else %>
+              <td align="right"><span class="label-edit label label-stop">Đã bảo lưu</span></td>
             <% end %>
-          </td>
-          <td>
-            <% unless batch.op_batch_type.nil?%>
-            <%= batch.op_batch_type.name%>
-            <% end%>
-          </td>
-          <% if @batch_states[batch.id] == 'on' %>
-            <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
-          <% elsif @batch_states[batch.id] == 'off' %>
-            <td align="right"><span class="label-edit label label-danger">Đã nghỉ</span></td>
-          <% else %>
-            <td align="right"><span class="label-edit label label-stop">Đã bảo lưu</span></td>
-          <% end %>
-        </tr>
-      <% end %>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
