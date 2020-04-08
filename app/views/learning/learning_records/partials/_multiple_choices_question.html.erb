@@ -12,7 +12,7 @@
   </div>
   <div class="fcoa-con">
     <% question.question_choices.order(created_at: :ASC).each_with_index do |choice, i| %>
-      <label class="check-multi"><%= choice.choice_content %>
+      <label class="check-multi"><%= choice.choice_content.present? ? choice.choice_content : "''" %>
       <input type="checkbox" name='student_choise_answer' value='<%= choice.id %>'>
       <% choice_key = ('A'.ord + i) %>
       <span class="checkmark"></span>

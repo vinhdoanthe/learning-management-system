@@ -1,7 +1,7 @@
-function filter_answer(batch_id){
+function filter_answer(batch_id, state){
 	$.ajax({
 			method: "GET",
-			url: '/learning/batch_user_answer_list?batch_id=' + batch_id,
+			url: '/learning/batch_user_answer_list?batch_id=' + batch_id +'&state=' + state,
 			dataType: 'script'
 		})
 }
@@ -17,12 +17,18 @@ function get_next_video(video_id, session_id, index){
 $('document').ready(function(){
 	if (window.location.href.includes('marking_question')){
 		var active_batch_answer = $('#batch_user_answer_list').val()
-		filter_answer(active_batch_answer)
+    var state = $('#answer_state_filter').val()
+		filter_answer(active_batch_answer, state)
 
 		$('#batch_user_answer_list').on('change', function(){
 			active_batch_answer = $(this).val()
-			filter_answer(active_batch_answer)
+			filter_answer(active_batch_answer, state)
 		})
+
+    $('#answer_state_filter').on('change', function(){
+      state = $(this).val();
+      filter_answer(active_batch_answer, state)
+    })
 	}
 
 	$('#homework_tab2').on('click','#previous_video', function(){

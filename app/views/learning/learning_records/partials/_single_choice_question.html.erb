@@ -12,7 +12,7 @@
   </div>
   <div class="fcoa-con">
   	<% question.question_choices.order(created_at: :ASC).each_with_index do |choice, i| %>
-    	<label class="check-multi"><%= choice.choice_content %>
+    	<label class="check-multi"><%= choice.choice_content.present? ? choice.choice_content : "''" %>
         <input type="radio" name="student_choise_answer" value="<%= choice.id %>" >
         <% choice_key = ('A'.ord + i) %>
         <span class="checkmark"></span>
@@ -26,12 +26,11 @@
 </div>
 <script type="text/javascript">
   if ($('input[name="right_answer"]').length > 0){
-    debugger
     right_answer = $('input[name="right_answer"]').val();
     right_answer = JSON.parse("[" + right_answer + "]")
 
     $('input[name="student_choise_answer"]').each(function(){
-      if(right_answer[0].includes(parseInt($(this).val()))){
+      if(right_answer[0].includes($(this).val())){
         $(this).prop('checked', true)
       }
     })

@@ -1,6 +1,6 @@
 <% if state != 'fail' %>
     $('#modal-basic').html("<%= escape_javascript(render partial: 'learning/learning_records/partials/answer_responses/success_answer', locals: { state: state } ) %>");
-    <% if state == 'right' %>
+<% if state == 'right' || state == 'wrong' %>
         $('#user_question_list').find($('input[value="12"]')).parent().find($('a')).removeClass('undone_question')
         $('#user_question_list').find($('input[value="12"]')).parent().find($('a')).addClass('done_question')
     <% end %>
