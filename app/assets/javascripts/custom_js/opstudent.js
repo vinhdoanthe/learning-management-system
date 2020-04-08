@@ -123,7 +123,7 @@ $('document').ready(function () {
         })
     })
 
-    if(window.location.href.includes('student_homework') && (window.location.href.includes('session=') == false)){
+    if ((window.location.href.includes('student_homework') && (window.location.href.includes('session=') == false)) || (window.location.href.includes('homework'))){ 
         var homework_session = $('input[name="homework_session"]').val()
         get_video(homework_session, 'watch_video_box');
         get_homework();

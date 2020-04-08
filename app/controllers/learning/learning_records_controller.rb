@@ -58,7 +58,11 @@ module Learning
     end
 
     def batch_user_answer_list
-      user_answers = current_user.op_faculty.user_answers.where(batch_id: params[:batch_id])
+      if params[:state].present? && params[:state] != 'undone' 
+        user_answers = current_user.op_faculty.user_answers.where(batch_id: params[:batch_id], state: ['right', 'wrong'])
+      else
+        user_answers = current_user.op_faculty.user_answers.where(batch_id: params[:batch_id], state: 'waiting')
+      end
 
       respond_to do |format|
         format.html
@@ -68,7 +72,7 @@ module Learning
 
     def get_user_answer
       user_answer = Learning::LearningRecord::UserAnswer.find(params[:user_answer_id])
-      question = user_answer.user_question.question
+      question = user_answer.user_question.question if user_answer.user_question.present?
       respond_to do |format|
         format.html
         format.js { render 'learning/learning_records/marking_question/user_answer', locals: { question: question, answer: user_answer}}

@@ -40,7 +40,7 @@ module User
     end
 
     def count_mark_question teacher
-      teacher.user_answers.where(state: 'waiting').count	
+      teacher.user_answers.where(state: 'waiting').count.to_s
     end
 
     # Lay so thong bao cua hoc sinh
@@ -89,7 +89,7 @@ module User
          'right_content' => ''
       },
 
-      {'path' => '#', 
+      {'path' => notification_broadcast_broadcast_notices_path, 
        'icon' => 'Icon-Bell.png',
        'title' => 'Thông báo', 
        'right_content' => '<span class="left-badge">' << count_notification_teacher(current_user).to_s << '</span>'
@@ -147,8 +147,13 @@ module User
        'icon' => 'ico-TienDoHocTap.png',
        'title' => 'Danh sách lớp học', 
        'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
-      },              
-
+      },
+     
+      {'path' => learning_marking_question_path, 
+       'icon' => 'ico-BaiTapOnBai.png',
+       'title' => 'Chấm bài', 
+       'right_content' => '<span class="left-badge">' << count_mark_question(current_user.op_faculty) << '</span>'
+      },
       ]
 
 
