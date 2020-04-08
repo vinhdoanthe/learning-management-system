@@ -167,4 +167,82 @@ namespace :export do
     puts "Done!"
   end
 
+  desc 'Export Students by Company'
+  task :export_op_student_course_by_company_of_batch, [:company_id] => :environment do |t, args|
+    company_id = args[:company_id].to_i
+    return if !company_id
+    res_company = Common::ResCompany.where(id: company_id).first
+    return if res_company.nil?
+    
+    op_batch_ids = Learning::Batch::OpBatch.where(company_id: res_company.id).pluck(:id).compact
+    op_student_course_ids = Learning::Batch::OpStudentCourse.where(batch_id: op_batch_ids).pluck(:id).compact
+    total_op = op_student_course_ids.length()
+    count_op = 0
+    op_student_course = nil
+    export_rows = []
+    op_student_course_ids.each do |op_student_course_id|
+      export_row = []
+      count_op += 1
+      puts "#{count_op}/#{total_op}"
+      op_student_course = Learning::Batch::OpStudentCourse.where(id: op_student_course_id).first
+      next if op_student_course.nil?
+      op_student = op_student_course.op_student
+      next if op_student.nil?
+      export_row << op_student.vattr_center_name
+      export_row << op_student.code
+      export_row << op_student.full_name
+      export_row << op_student.birth_date
+      
+      op_course = op_student_course.op_course
+      if op_course.nil?
+        export_row << '-'
+      else
+        export_row << op_course.name
+      end
+
+      op_batch = op_student_course.op_batch
+      if op_batch.nil?
+        export_row << '-'
+      else
+        export_row << op_batch.code
+      end
+
+      op_subject_levels = op_student_course.op_subjects.pluck(:level)
+      export_row << op_subject_levels
+
+      # Admission, SO
+      admission = ""
+      so = ""
+      op_admissions = Learning::Batch::OpAdmission.where(batch_id: op_student_course.batch_id, student_id: op_student_course.student_id).to_a
+      unless op_admissions.blank?
+        op_admissions.each do |op_admission|
+          admission = admission + " " + op_admission.application_number.to_s
+          sale_order = op_admission.order
+          unless sale_order.nil?
+            so = so + " " + sale_order.name
+          end
+        end  
+      end
+      export_row << admission
+      export_row << so
+      export_rows << export_row
+    end
+
+    puts "Starting export"
+    p = Axlsx::Package.new
+    wb = p.workbook
+    wb.add_worksheet(:name => "Students") do |sheet|
+      sheet.add_row ["STT","Company", "Code", "Name", "Birth Date", "Course", "Batch", "Subject", "Admission", "SO"]
+      index = 0
+      export_rows.each do |export_row|
+        index = index + 1
+        export_row.unshift(index)
+        sheet.add_row export_row
+      end
+    end
+    current_time_str = Time.now.strftime('%Y-%m-%d_%H-%M-%S')
+    file_name = "data_export/op_student_courses_#{current_time_str}.xlsx"
+    p.serialize(file_name)
+    puts "Done!"
+  end
 end
