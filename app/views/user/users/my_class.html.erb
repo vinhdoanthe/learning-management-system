@@ -7,61 +7,29 @@
     </div>
   </div>
   <div class="panel m-t--70">
-
     <div class="panel-content">
-      <div class="row">
-        <% if @batches.nil? %>
-          <h4>Bạn chưa có khóa học nào</h4>
-        <% else %>
-          <% op_student_id = current_user.op_student.id %>          
-          <% @batches.each do |batch| %>
-            <% student_batch_status = get_student_batch_status(op_student_id, batch.id)%>
-            <div class="col-md-6">
-              <div class="scl-detail">
-                <div class="scl-img">
-                  <%= image_tag('global/images/default-course-thumbnail.png') %>
-                  <%= student_batch_status['status_html'].html_safe%>
-                </div>
-                <div class="scl-text">
-                  <div class="scl-left">
-                    <label for=""><%= batch.op_course.name %></label>
-                    <p>Mã lớp: <span><%= batch.code %></span></p>
-                    <% time_line = batch_timeline batch %> 
-                    <p>
-                    <% if time_line.blank? %>
-                      Hàng tuần Tại
-                    <% else %>
-                      <% time_line.each do |time| %>
-                        <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) %>
-                      <% end %>
-                      hàng tuần Tại
-                    <% end %>
-                    <span><%= batch.res_company ? batch.res_company.name : "" %></span>
-                    </p>
-                  </div>
-                  <div class="scl-right">
-                    <ul>
-                      <li><%= image_tag('global/images/laurel-wreath.png') %></li>
-                      <li><%= image_tag('global/images/files-and-folders-2.png') %></li>
-                      <li>
-                        <% if student_batch_status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-                          <a href="<%= user_batch_detail_path(batch.id) %>" class="btn btn-default btn-embossed btn-edit bg-5DC2A7">
-                            <%= image_tag('global/images/come-in.png') %> Vào lớp
-                          </a>
-                        <% else %>
-                          <a href="<%= user_batch_detail_path(batch.id) %>" class="btn btn-default btn-embossed btn-edit bg-505050">
-                            <%= image_tag('global/images/come-in.png') %> Xem lại
-                          </a>
-                        <% end %>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
+      <% if @batches.nil? %>
+        <h4>Bạn chưa có khóa học nào</h4>
+      <% else %>
+        <% batch_count = @batches.length() %>
+        <% row_count = batch_count.even? ? batch_count/2 : batch_count/2 + 1 %>
+        <% op_student_id = current_user.op_student.id %>
+        <% index = 0 %>
+        <% (1..row_count).each do |i| %>
+          <div class="row">
+            <% index = 2*(i-1) %>
+            <% if index <= batch_count %>
+              <% batch = @batches[index] %>
+              <%= render :partial => "user/users/overview_batch", :locals => {batch: batch, op_student_id: op_student_id} %>
+            <% end %>
+            <% index = 2*i-1 %>
+            <% if index <= batch_count %>
+              <% batch = @batches[index] %>
+              <%= render :partial => "user/users/overview_batch", :locals => {batch: batch, op_student_id: op_student_id} %>
+            <% end %>
+          </div>
         <% end %>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>

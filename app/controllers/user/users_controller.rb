@@ -4,6 +4,26 @@ module User
     before_action :authenticate_user!, only: [:my_class, :batch_detail, :update_nickname, :update_password]
     before_action :authenticate_student!, only: [:my_class, :batch_detail, :update_nickname]
     
+    def get_avatar
+      if params[:user_id].present?
+        user = User::User.where(id: params[:user_id].to_i).first
+      else
+        user = current_user
+      end
+      avatar_obj = user.get_avatar
+      if avatar_obj.nil?
+        nil
+      else
+        avatar_link = {
+          'thumbnail' => url_for(avatar_obj[:thumbnail]),
+          'full_size' => url_for(avatar_obj[:full_size])
+        }
+      end
+      respond_to do |format|
+        format.js {render 'user/op_students/modals/set_active_avatar', :partials => {avatar: avatar_link}}
+      end
+    end
+
     def batch_detail
       if params[:batch_id].present?
         @batch = Learning::Batch::OpBatch.find(params[:batch_id])

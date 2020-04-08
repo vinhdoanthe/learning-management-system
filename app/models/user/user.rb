@@ -169,13 +169,31 @@ module User
         end
       end
     end
+    
+    def get_avatar 
+      if avatar_id.nil?
+        return nil
+      end
+      avatar = Avatar::where(id: avatar_id).first
+      if avatar.nil?
+        return nil
+      end
+      if avatar.thumbnail.attached? and avatar.full_size.attached?
+        return {
+          'thumbnail' => avatar.thumbnail,
+          'full_size' => avatar.full_size
+        }
+      else
+        return nil
+      end
+    end
 
     def get_avatar_thumbnail
       if avatar_id.nil?
         return nil
       end
       avatar = Avatar::where(id: avatar_id).first
-      if avatar.empty?
+      if avatar.nil?
         return nil
       end
       if avatar.thumbnail.attached?
@@ -190,7 +208,7 @@ module User
         return nil
       end
       avatar = Avatar::where(id: avatar_id).first
-      if avatar.empty?
+      if avatar.nil?
         return nil
       end
       if avatar.thumbnail.attached?

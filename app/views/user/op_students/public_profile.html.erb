@@ -1,13 +1,14 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "user/op_students/public_profile.js" %>
 <% end %>
+
 <div class="page-content page-thin p-0">
   <section class="box-public">
     <%= render :partial => "user/op_students/public_profile/header_info", :locals => {} %>
     <div class="bp-main">
       <div class="bpm-head">
         <% if pp_can_change_avatar?(@op_student.id) %> 
-          <a href="#changeAvatarModal" data-toggle="modal"> 
+          <a href="/user/avatars_list?gender=<%=@op_student.gender%>" data-toggle="modal" data-remote='true' data-target='#changeAvatarModal'> 
             <%= image_tag('global/images/tekyman.png') %>
           </a>
         <% else %>
@@ -27,7 +28,6 @@
       </div>
       <% if pp_can_change_avatar?(@op_student.id) %>
         <div class="modal fade" id="changeAvatarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <%= render :partial => "user/op_students/modals/change_avatar_modal", :locals => {} %>
         </div>
       <% end %>
       <div class="bpm-content">

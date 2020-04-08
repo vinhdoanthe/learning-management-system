@@ -52,10 +52,12 @@ RailsAdmin.config do |config|
       end
       field :name
       field :course_description
+      field :thumbnail
     end
 
     edit do
       field :course_description
+      field :thumbnail
     end
   end
 

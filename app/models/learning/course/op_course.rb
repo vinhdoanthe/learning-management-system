@@ -4,7 +4,7 @@ module Learning
       include Rails.application.routes.url_helpers
       self.table_name = 'op_course'
       
-      belongs_to :course_categ, foreign_key: 'categ_id'
+      belongs_to :course_categ, foreign_key: 'categ_id', required: false
 
       has_many :op_batches, class_name: 'Learning::Batch::OpBatch', foreign_key: 'course_id'
       has_many :op_subjects, foreign_key: 'course_id'

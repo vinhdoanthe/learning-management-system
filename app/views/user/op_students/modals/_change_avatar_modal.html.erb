@@ -6,33 +6,13 @@
     </div>
     <div class="modal-body p-t-0">
       <ul class="modal-avalist">
-        <li>
-          <a href=""><img src="assets/global/images/Group-0.png"></a>
-        </li>
-        <li>
-          <a href=""><img src="assets/global/images/Group-1.png"></a>
-        </li>
-        <li>
-          <a href=""><img src="assets/global/images/Group-2.png"></a>
-        </li>
-        <li>
-          <a href=""><img src="assets/global/images/Group-4.png"></a>
-        </li>
-        <li>
-          <a href=""><img src="assets/global/images/Group-5.png"></a>
-        </li>
-        <li>
-          <a href=""><img src="assets/global/images/Group-6.png"></a>
-        </li>
-        <li>
-          <a href=""><img src="assets/global/images/Group-7.png"></a>
-        </li>
-        <li>
-          <a href=""><img src="assets/global/images/Group-8.png"></a>
-        </li>
-        <li>
-          <a href=""><img src="assets/global/images/Group-9.png"></a>
-        </li>
+        <% avatars.each do |avatar| %>
+          <li>
+            <a href="" id="">
+              <%= image_tag avatar['thumbnail'] %>
+            </a>
+          </li>
+        <% end %>
       </ul>
       <div class="modal-avabig">
         <span><img src="assets/global/images/avabig.png"></span>
