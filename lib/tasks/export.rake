@@ -206,9 +206,11 @@ namespace :export do
       else
         export_row << op_batch.code
       end
+      
+      subject_ids = Learning::Batch::OpStudentSubject.where(student_course_id: op_student_course.id).pluck(:subject_id).uniq.compact
+      subject_levels = Learning::Course::OpSubject.where(id: subject_ids).pluck(:level).uniq.compact.join(', ') 
 
-      op_subject_levels = op_student_course.op_subjects.pluck(:level)
-      export_row << op_subject_levels
+      export_row << subject_levels
 
       # Admission, SO
       admission = ""
