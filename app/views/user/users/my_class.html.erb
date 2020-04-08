@@ -23,7 +23,7 @@
               <%= render :partial => "user/users/overview_batch", :locals => {batch: batch, op_student_id: op_student_id} %>
             <% end %>
             <% index = 2*i-1 %>
-            <% if index <= batch_count %>
+            <% if index < batch_count %>
               <% batch = @batches[index] %>
               <%= render :partial => "user/users/overview_batch", :locals => {batch: batch, op_student_id: op_student_id} %>
             <% end %>
