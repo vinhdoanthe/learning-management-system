@@ -14,8 +14,8 @@ module Learning
         if checkpoint_datetime.nil?
           checkpoint_datetime = Time.now
         end
-        op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch_id, state: Learning::Constant::STUDENT_BATCH_STATUS_ON)
-        op_student_courses.each do |op_student_course|
+        op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch_id, state: Learning::Constant::STUDENT_BATCH_STATUS_ON).last
+        unless op_student_course.nil?
           op_subject_ids = op_student_course.op_subjects.map(&:id)
           session = Learning::Batch::OpSession.where("batch_id = ?  AND subject_id IN (?) AND start_datetime >= ?", op_student_course.batch_id, op_subject_ids, checkpoint_datetime).order(start_datetime: :DESC).first
 
@@ -42,7 +42,7 @@ module Learning
                                                       op_subject_ids,
                                                       Learning::Constant::Batch::Session::STATE_CONFIRM,
                                                       Learning::Constant::Batch::Session::STATE_DRAFT)
-                         .order(start_datetime: 'ASC').to_a
+            .order(start_datetime: 'ASC').to_a
           unless sessions.nil?
             todo_sessions.concat sessions
           end
@@ -60,7 +60,7 @@ module Learning
             sessions = Learning::Batch::OpSession.where(batch_id: batch_id,
                                                         subject_id: op_subject_ids,
                                                         state: Learning::Constant::Batch::Session::STATE_DONE)
-                           .order(start_datetime: 'ASC').to_a
+              .order(start_datetime: 'ASC').to_a
             unless sessions.nil?
               done_sessions.concat sessions
             end
@@ -81,7 +81,7 @@ module Learning
                                                       batch_id,
                                                       op_subject_ids,
                                                       Learning::Constant::Batch::Session::STATE_CANCEL)
-                         .order(start_datetime: 'ASC').to_a
+            .order(start_datetime: 'ASC').to_a
           unless sessions.nil?
             cancel_sessions.concat sessions
           end
@@ -92,17 +92,19 @@ module Learning
 
 
       def self.match_session_with_lesson
-        errors = []
         done_sessions = Learning::Batch::OpSession.where(state: Learning::Constant::Batch::Session::STATE_DONE)
+        total_count = done_sessions.length()
+        count = 0
         unless done_sessions.blank?
           done_sessions.each do |session|
-            att_sheet = session.op_attendance_sheets.last
-            unless att_sheet.nil?
-              session.lession_id = att_sheet.lession_id
+            count += 1
+            if (count%100 == 0)
+              puts "#{count}/#{total_count}"
+            end
+            att_sheet = session.op_attendance_sheets.pluck(:lession_id)
+            unless att_sheet.blank?
+              session.lession_id = att_sheet[-1]
               session.save
-              if session.errors.full_messages.any?
-                errors << session.errors.full_messages.to_s
-              end
             end
           end
         end

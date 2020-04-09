@@ -10,10 +10,9 @@ namespace :mapping do
         if (count%100 == 0)
           puts "#{count}/#{total_count}"
         end
-        next if !session.lession_id.nil?
-        att_sheet = session.op_attendance_sheets.last
-        unless att_sheet.nil?
-          session.lession_id = att_sheet.lession_id
+        att_sheet = session.op_attendance_sheets.pluck(:lession_id)
+        unless att_sheet.blank?
+          session.lession_id = att_sheet[-1]
           session.save
         end
       end

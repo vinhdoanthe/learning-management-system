@@ -1,6 +1,5 @@
 <div class="page-content page-thin">
 
-  <!-- InstanceBeginEditable name="EditRegion1" -->
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
@@ -13,28 +12,28 @@
     <div class="panel-content">
       <div class="tab-content p-0 tab-all-content m-t-20" style="font-family: 'Montserrat', sans-serif;">
         <% @notices.each_with_index do |notice, index| %>
-        <div class="table-responsive bo-table" style="margin-top: 20px">
-          <div class='broadcast_notice_content' >
-            <div>
-              <div class='row' style="display: flex; justify-content: center; align-items: center;">
-                <div class='icon' style="float: left; margin: auto; margin: 0px">
-                  <%= image_tag('global-noti.png', style: 'width: 30px;') %>
+          <div class="table-responsive bo-table" style="margin-top: 20px">
+            <div class='broadcast_notice_content' >
+              <div>
+                <div class='row' style="display: flex; justify-content: center; align-items: center;">
+                  <div class='icon' style="float: left; margin: auto; margin: 0px">
+                    <%= image_tag('global-noti.png', style: 'width: 30px;') %>
+                  </div>
+                  <div class='col-md-9'>
+                    <h3><%= notice.title %></h3>
+                    <p><%= notice.user.username %> đăng lúc <%= notice.created_at.strftime('%H:%M - %d/%m/%y') %></p> 
+                  </div>
+                  <div class='col-md-2'>
+                    <a data-toggle="collapse" data-target="#notice_content_<%= index.to_s %>" style='float: right' class="">Xem thêm</a>
+                  </div>
                 </div>
-                <div class='col-md-9'>
-                  <h3><%= notice.title %></h3>
-                  <p><%= notice.user.username %> đăng lúc <%= notice.created_at.strftime('%A - %H:%M - %d/%m/%y') %></p> 
+                <div id="notice_content_<%= index.to_s %>" class="collapse">
+                  <div><%= notice.content.html_safe %></div>
                 </div>
-                <div class='col-md-2'>
-                  <a data-toggle="collapse" data-target="#notice_content_<%= index.to_s %>" style='float: right' class="">Xem thêm</a>
-                </div>
-              </div>
-              <div id="notice_content_<%= index.to_s %>" class="collapse">
-                <div><%= notice.content.html_safe %></div>
               </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
       </div>
     </div>
   </div>
