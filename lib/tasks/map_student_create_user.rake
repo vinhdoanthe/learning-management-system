@@ -11,7 +11,7 @@ namespace :map_student_create_user do
     User::UsersController.new.map_student_new_user student_list
   end
 
-  desc 'Create eacher account by faculty_id'
+  desc 'Create teacher account by faculty_id'
   task :create_faculty, [:faculty_id] => :environment do |t, arg|
     faculty_id = arg[:faculty_id].to_i
     if faculty_id

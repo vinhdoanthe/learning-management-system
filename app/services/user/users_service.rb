@@ -1,6 +1,6 @@
 class User::UsersService
   def create_student_user student
-    
+
     existed_user = User::User.where(student_id: student.id).first
     if existed_user
       return { missing_email_student: nil, errors: nil }
@@ -11,30 +11,32 @@ class User::UsersService
     missing_email_student = {}
     if student.parent_email.blank?
       missing_email_student = [student.id, student.full_name, student.code]
+      username = student.full_name.mb_chars.unicode_normalize(:nfkd).gsub(/[^\x00-\x7F]/n,'').gsub(/\s+/, "").downcase.to_s
+      user.email = '-'
     else
       username = student.parent_email[/[^@]+/]
       parent_user = User::User.where(email: student.parent_email, account_role: User::Constant::PARENT).first
       parent_user = create_parent_user student.op_parents[0] if parent_user.blank?
-      user.parent_account_id = parent_user.id
-      user.password = '123456'
-
-      old_user = User::User.where('username ILIKE ?', username).order(created_at: :DESC).first  
-     
-      if old_user.present?
-        number_account = (old_user.username[/(\d+)(?!.*\d)/].to_i + 1).to_s
-        if number_account == '1'
-          username = old_user.username + number_account
-        else
-          username = old_user.username.gsub(/(\d+)(?!.*\d)/, number_account)
-        end
-      end
-      
-      user.username = username
       user.email = parent_user.email
-      user.account_role = User::Constant::STUDENT
-      user.student_id = student.id
-      user.save  
+      user.parent_account_id = parent_user.id
     end
+    user.password = '123456'
+
+    old_user = User::User.where('username ILIKE ?', username).order(created_at: :DESC).first  
+
+    if old_user.present?
+      number_account = (old_user.username[/(\d+)(?!.*\d)/].to_i + 1).to_s
+      if number_account == '1'
+        username = old_user.username + number_account
+      else
+        username = old_user.username.gsub(/(\d+)(?!.*\d)/, number_account)
+      end
+    end
+
+    user.username = username
+    user.account_role = User::Constant::STUDENT
+    user.student_id = student.id
+    user.save  
 
     { missing_email_student: missing_email_student, errors: errors }
   rescue StandardError => e
@@ -66,7 +68,7 @@ class User::UsersService
     res_user = teacher.res_user
     return if res_user.blank?
     teacher_user.username = res_user.login[/[^@]+/]
-    
+
     return if User::User.where(username: teacher_user.username).first.present?
     teacher_user.password = '123456'
     teacher_user.account_role = User::Constant::TEACHER

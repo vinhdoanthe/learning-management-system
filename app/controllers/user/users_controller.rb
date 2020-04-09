@@ -104,7 +104,11 @@ module User
     def map_student_new_user students
       missing_email_students = []
 
+      count_student = students.length()
+      count = 0
       students.each do |student|
+        count += 1
+        puts "#{count}/#{count_student}"
         user = UsersService.new.create_student_user student
         missing_email_students << user[:missing_email_student]
       end
@@ -117,7 +121,7 @@ module User
           csv << row
         end
       end
-      File.open("List_missing_parent_email_students.xlsx", "w+") do |f|
+      File.open("data_export/list_missing_parent_email_students.xlsx", "w+") do |f|
         f.write(csv_file.force_encoding('iso-8859-1').encode('utf-8').encode('iso-8859-1').force_encoding('utf-8'))
       end
     end
