@@ -92,6 +92,27 @@ class Learning::Homework::QuestionService
     errors
   end
 
+  def assign_homework student_id, lesson_id, session_id
+    session = Learning::Batch::OpSession.where(id: session_id).first
+    session.update(lession_id: lesson_id) if session.lession_id.blank?
+
+    lesson = session.op_lession
+    questions = lesson.questions
+    batch_id = session.batch_id
+    user = User::User.where(student_id: student_id).first
+
+    questions.each do |question|
+      existed_user_question = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: question.id).first
+      next if existed_user_question.present?
+      
+      user_question = Learning::LearningRecord::UserQuestion.new
+      user_question.op_batch_id = batch_id
+      user_question.student_id = User::User.where(student_id: student_id).first.id
+      user_question.question_id = question.id
+      user_question.save
+    end
+  end
+
   private
 
   def find_user_question user_question
