@@ -2,7 +2,7 @@
 
 <%= render 'user/shared/session/row/session_calendar_box', {:session => session} %>
 
-<% lesson = session.op_lession %>
+<% lesson = get_lesson_of_session(session) %>
 <td>
   <div class="photo-box">
     <span>

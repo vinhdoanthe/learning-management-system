@@ -2711,7 +2711,7 @@ background: #5dc2a7;
 .bmrd-content li:before{
 	position: absolute;
 	content: '';
-	background: url(../images/oval-list.svg) no-repeat;
+	background: url(../images/Oval-list.svg) no-repeat;
 	width: 10px;
 	height: 10px;
 	left: -45px;

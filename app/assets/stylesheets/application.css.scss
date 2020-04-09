@@ -115,3 +115,13 @@ ul.header-menu.nav.navbar-nav li a {
     display: none !important;
   }
 }
+
+.bmrd-content li:before{
+  position: absolute;
+  content: '';
+  background: url(global/images/Oval-list.svg) no-repeat;
+  width: 10px;
+  height: 10px;
+  left: -45px;
+  top: 0;
+}
