@@ -86,6 +86,7 @@ Rails.application.routes.draw do
   namespace :notification do
     namespace :broadcast do
       resources :broadcast_notices, only: [:index, :show]
+      get 'read_notice' => 'broadcast_notices#read_notice'
     end
   end
 

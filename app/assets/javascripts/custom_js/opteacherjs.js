@@ -370,10 +370,19 @@ $(document).ready(function () {
 
     function change_attendance_form(res) {
         $('.attendance_student').remove();
+      $('.attendance_lesson_info').html('');
         start_time = change_time(res.session.start_datetime);
         end_time = change_time(res.session.end_datetime);
+        
+      $('.attendance_session_info').html("<h4><strong>Học phần " + res.subject_level + " - Buổi học: " + (parseInt(res.session_index) + 1).toString() + "</strong></h4><p>" + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + " | " + start_time.day + "/" + start_time.month + "/" + start_time.year + "</p>")
 
-        $('.attendance_session_info').html("<h4><strong>Học phần " + res.subject_level + " - Buổi học: " + (parseInt(res.session_index) + 1).toString() + "</strong></h4><p>" + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + " | " + start_time.day + "/" + start_time.month + "/" + start_time.year + "</p>")
+      $.each(res.lessons, function (i, lesson){
+        html = "<input type='radio' name='attendance_lesson_id' style='margin: 10px' value='" + lesson.id + "'><label for='" + lesson.id + "'>" + lesson.name + "</label></br>"
+        $('.attendance_lesson_info').append(html)
+      })
+
+      if(res.lessons.length == 1){$('input[name="attendance_lesson_id"').prop('checked', true)}
+
         $.each(res.students, function (i, student) {
             if (student.status == 'on') {
                 html = "<tr class='attendance_student'><td>" + student.name + "</td><td><input type='checkbox' name='attendance' value='" + i.toString() + "'></td><td><input style='width: 100%' type='text' name='teacher_note' placeholder='Ghi chú của giảng viên'></td></tr>"
@@ -383,9 +392,11 @@ $(document).ready(function () {
     }
 
     $('#teacher_attendance_confirm').on('click', function () {
+        lesson_id = $('input[name="attendance_lesson_id"]:checked').val();
+      if (!lesson_id){confirm("Vui lòng điền đầy đủ thông tin trước!"); return }
         faculty_id = $('input[name="teacher_id"]').val();
         session_id = $('input[name="checkin_session_id"').val()
-        data = {'faculty_id': faculty_id, 'session_id': session_id, 'student': []}
+        data = {'faculty_id': faculty_id, 'session_id': session_id, 'lesson_id': lesson_id, 'student': []}
         $('.attendance_student').each(function (i, element) {
             student_id = $(this).find($('input[name="attendance"]')).val();
             note = $(this).find($('input[name="teacher_note"]')).val();
