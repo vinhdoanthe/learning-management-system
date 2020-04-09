@@ -7,6 +7,10 @@ class Notification::Broadcast::BroadcastNoticesController < ApplicationControlle
 
   def show
   end
+  
+  def read_notice
+    Notification::BroadcastNoti::BroadcastService.new.read_notice current_user.id, params[:notice_id]  
+  end
 
   private
 

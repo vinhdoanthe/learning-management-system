@@ -1,26 +1,48 @@
 <div class="sidebar-top account2 font-regular" id="session_login" style="background:#f2f2f2">
+  <style>  
+    .account-form input {
+      font-size: 14px;
+      padding: 16px;
+      font-weight: 500;
+    }
+    
+    .account-form i {
+      padding: 10px;
+    }
+    
+    .login-submit {
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      background: #5DC2A7;
+      height: 100% !important;
+      padding: 16px 20px !important;
+      box-shadow: 0px 3px #00877a;
+    }
+  </style>
   <div class="container" id="login-block">
     <div class="account-info">
       <%= link_to '', root_path, :class => 'logo' %>
-      <%= image_tag("global/images/Login.png", style: "margin: 0; width: 50%") %>
+      <%= image_tag("global/images/Login.png", style: "margin: 0;") %>
     </div>
     <div class="account-form">
       <%= form_for :session, url: user_login_path, :html => {class: "form-signin"} do |f| %>
-        <div class="append-icon">
+        <div class="append-icon" style="margin-bottom: 20px">
           <%= f.text_field :username, class: 'form-control', placeholder: "Username", required: true %>
           <i class="icon-user"></i>
         </div>
-        <div class="append-icon">
+        <div class="append-icon" style="margin-bottom: 20px">
           <%= f.password_field :password, class: 'form-control form-white password', placeholder: "Mật khẩu", required: true %>
           <i class="icon-lock"></i>
         </div>
         <div class="append-icon m-b-20 m-t-10">
         </div>
-        <%= f.submit "Đăng nhập", class: "btn btn-primary", 'data-style' => 'expand-left' %>
+        <div>
+        <%= f.submit "Đăng nhập", class: "btn btn-primary login-submit", 'data-style' => 'expand-left' %>
 
         <span class="forgot-password">
               <a id="password" href="">Quên mật khẩu?</a>
         </span>
+        </div>
         <p style="text-align: right;color: #939393;font-size: 12px;" class="m-t-20">
           Nếu bạn không đăng nhập được hay gọi cho <br/>chúng tôi: +8424 7109 6668
         </p>

@@ -57,7 +57,7 @@ class User::OpStudentsService
       session = sessions.order(start_datetime: :DESC).first 
     end
 
-    sessions = sessions.where(subject_id: subject.id).order(start_datetime: :DESC)
+    sessions = sessions.where(subject_id: subject.id).order(start_datetime: :ASC)
     {batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, show_video: show_video}
   end
 

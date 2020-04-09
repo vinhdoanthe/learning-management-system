@@ -1,5 +1,4 @@
 <div class="page-content page-thin">
-
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
@@ -30,6 +29,12 @@
                 <div id="notice_content_<%= index.to_s %>" class="collapse">
                   <div><%= notice.content.html_safe %></div>
                 </div>
+                <div class='col-md-2'>
+                  <a data-toggle="collapse" href="/notification/broadcast/read_notice?notice_id=<%= notice.id %>" data-remote='true' data-target="#notice_content_<%= index.to_s %>" style='float: right; cursor: pointer' class="">Xem thêm</a>
+                </div>
+              </div>
+              <div id="notice_content_<%= index.to_s %>" class="collapse">
+                <div><%= notice.content.html_safe %></div>
               </div>
             </div>
           </div>

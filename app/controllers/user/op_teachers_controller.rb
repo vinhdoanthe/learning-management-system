@@ -77,7 +77,7 @@ module User
       if @lesson && @lesson.thumbnail.attached?
         img_src = @lesson.thumbnail.service_url
       else
-        img_src = ActionController::Base.helpers.asset_path('default_lesson_thumbnail.jpg')
+        img_src = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
       end
 
       all_students = OpTeachersService.new.teacher_class_detail @batch, @session
@@ -104,7 +104,9 @@ module User
     end
 
     def active_session
-      render json: {session: @session, subject_level: @subject.level, session_index: @session_index, students: @student_list}
+      lessons = [@session.op_lession]
+      lessons = @subject.op_lessions if lessons.blank?
+      render json: {session: @session, subject_level: @subject.level, session_index: @session_index, students: @student_list, lessons: lessons}
     end
 
     def teacher_checkin
@@ -131,6 +133,8 @@ module User
           line[:is_present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
           line[:note] = student_params['note'].to_s
           lines.append line
+
+          Learning::Homework::QuestionService.new.assign_homework student_params[:student_id], params[:lesson_id], params[:session_id]
         end
       end
 
