@@ -14,6 +14,7 @@ $(document).ready(function () {
 $('[data-toggle="tooltip"]').tooltip();
 	let active_menu = JSON.parse(localStorage.getItem('active_menu'));
 	if (active_menu != null){
+    $('.activea').removeClass('activea')
 		menu = $('#sidebar').find('a[href="' + active_menu.href +'"]')
 		if (menu.length == 1){
 			$(menu[0]).parent().addClass('activea')
@@ -31,6 +32,7 @@ $('[data-toggle="tooltip"]').tooltip();
 		localStorage.setItem('active_menu', JSON.stringify(obj));
 	})
 
+
 //  public_profile_id = $('#public_profile_id').val();
 //  $('.public_profile').append('<a href="/user/public_profile/' + public_profile_id + '"><b class="color-5DC2A7 public_profile">Public Profile</b></a>')
 
@@ -39,6 +41,11 @@ $('[data-toggle="tooltip"]').tooltip();
   //   localStorage.removeItem('active_menu');
   // });
 });
+
+  window.onbeforeunload = function (e) {
+    localStorage.clear();
+    return undefined;
+};
 
 function getTimeRemaining(endtime) {
 	var t = Date.parse(endtime) - Date.parse(new Date());
