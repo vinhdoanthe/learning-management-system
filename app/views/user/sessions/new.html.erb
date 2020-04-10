@@ -1,24 +1,4 @@
 <div class="sidebar-top account2 font-regular" id="session_login" style="background:#f2f2f2">
-  <style>  
-    .account-form input {
-      font-size: 14px;
-      padding: 16px;
-      font-weight: 500;
-    }
-    
-    .account-form i {
-      padding: 10px;
-    }
-    
-    .login-submit {
-      font-size: 16px !important;
-      font-weight: 700 !important;
-      background: #5DC2A7;
-      height: 100% !important;
-      padding: 16px 20px !important;
-      box-shadow: 0px 3px #00877a;
-    }
-  </style>
   <div class="container" id="login-block">
     <div class="account-info">
       <%= link_to '', root_path, :class => 'logo' %>
@@ -26,17 +6,17 @@
     </div>
     <div class="account-form">
       <%= form_for :session, url: user_login_path, :html => {class: "form-signin"} do |f| %>
-        <div class="append-icon" style="margin-bottom: 20px">
+        <div class="append-icon" >
           <%= f.text_field :username, class: 'form-control', placeholder: "Username", required: true %>
           <i class="icon-user"></i>
         </div>
-        <div class="append-icon" style="margin-bottom: 20px">
+        <div class="append-icon"> 
           <%= f.password_field :password, class: 'form-control form-white password', placeholder: "Mật khẩu", required: true %>
           <i class="icon-lock"></i>
         </div>
         <div class="append-icon m-b-20 m-t-10">
         </div>
-        <div>
+        <div style="padding-top: 15px">
         <%= f.submit "Đăng nhập", class: "btn btn-primary login-submit", 'data-style' => 'expand-left' %>
 
         <span class="forgot-password">

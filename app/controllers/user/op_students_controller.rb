@@ -35,11 +35,17 @@ module User
           redirect_to root_path
         end
       end
+
+    rescue StandardError => e
+      redirect_error_site(e)
     end
 
     def student_info
       @batches = @student.op_batches
       @batch_states = OpStudentsService.batch_state @student
+
+    rescue StandardError => e
+      redirect_error_site(e)
     end
 
     def student_homework
@@ -52,11 +58,17 @@ module User
         format.html
         format.js {render 'user/op_students/partials/table_homework_list', :locals => data}
       end
+
+    rescue StandardError => e
+      redirect_error_site(e)
     end
 
     def student_product
       @products = SocialCommunity::ScProduct.where(student_id: @student.id).all
       @course_products = OpStudentsService.new.course_product 
+
+    rescue StandardError => e
+      redirect_error_site(e)
     end
 
     def student_product_detail
@@ -69,12 +81,18 @@ module User
       respond_to do |format|
         format.js { render 'user/op_students/partials/student_product_detail', locals: { batch: batch, course: course, student: student.full_name, company: company, product: product } }
       end
+
+    rescue StandardError => e
+      redirect_error_site(e)
     end
 
     def course_products
       @course = Learning::Course::OpCourse.where(id: params[:course_id]).first
       return nil if @course.blank?
       @products = SocialCommunity::ScProduct.where(course_id: @course.id).order(created_at: :DESC)
+
+    rescue StandardError => e
+      redirect_error_site(e)
     end
 
     def student_redeem
@@ -140,6 +158,9 @@ module User
         format.html
         format.js {render 'user/op_students/partials/session_evaluation', :locals => {op_faculty: op_faculty, op_batch: op_batch, op_session: op_session, op_att_line: op_att_line}}
       end
+
+    rescue StandardError => e
+      redirect_error_site(e)
     end
 
     def student_attendance_content

@@ -1,7 +1,7 @@
 <div class="fco-ques">
   <div class="fcoq-tit">
     <label for="">NỘI DUNG BÀI TẬP SỐ <%= index.to_i + 1%> (Multiple choices):</label>
-    <p><%= question.question ? question.question.html_safe : '' %></p>
+    <p><%= question.question.present? ? question.question.html_safe : '' %></p>
     <input type="hidden" id='question_id' value="<%= question.id %>">
     <input type="hidden" id='user_question_id' value="<%= user_question.id %>">
   </div>

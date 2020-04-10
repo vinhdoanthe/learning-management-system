@@ -45,9 +45,9 @@ module User
 
     # Lay so thong bao cua hoc sinh
     def count_notification_student user
-      all_noti = Notification::BroadcastNoti.where('expiry_date >= ? ', Time.now).count
-      read_noti = Notification::BroadcastNotiState.where(user_id: current_user.id).count
-      return all_noti - read_noti 
+      all_noti = Notification::BroadcastNoti.where('expiry_date >= ? ', Time.now)
+      read_noti = Notification::BroadcastNotiState.where(user_id: current_user.id, broadcast_notice_id: all_noti.pluck(:id)).count
+      return all_noti.count - read_noti 
     end
 
     # Lay so thong bao cua giao vien
@@ -275,11 +275,11 @@ module User
       #   'right_content' => ''
       # },
 
-      {'path' => user_student_product_path, 
-       'icon' => 'ico-SPhocsinh.png',
-       'title' => 'Sản phẩm của tôi', 
-       'right_content' => ''
-      },
+     #  {'path' => user_student_product_path, 
+     #   'icon' => 'ico-SPhocsinh.png',
+     #   'title' => 'Sản phẩm của tôi', 
+     #   'right_content' => ''
+     #  },
 
       # {'path' => '#', 
       #   'icon' => 'ico-SPhocsinh.png',
