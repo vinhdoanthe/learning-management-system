@@ -29,8 +29,8 @@
       </div>
       <div class="scl-right">
         <ul>
-          <li><%= image_tag('global/images/laurel-wreath.png') %></li>
-          <li><%= image_tag('global/images/files-and-folders-2.png') %></li>
+          <%# <li><%= image_tag('global/images/laurel-wreath.png') %1></li> %>
+          <%# <li><%= image_tag('global/images/files-and-folders-2.png') %1></li> %>
           <li>
             <% if student_batch_status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
               <a href="<%= user_batch_detail_path(batch.id) %>" class="btn btn-default btn-embossed btn-edit bg-5DC2A7">

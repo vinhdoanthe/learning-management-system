@@ -35,11 +35,11 @@
   <% coming_soon_session = get_coming_soon_session(student_id: current_user.op_student.id, batch_id: batch.id, checkpoint_datetime: Time.now) %>
   <%= render 'user/shared/session/coming_session', {:coming_soon_session => coming_soon_session} %>
 
-  <% todo_sessions = todo_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %>
-  <%= render 'user/shared/session/todo_sessions', {:todo_sessions => todo_sessions} %>
-
   <% done_sessions = done_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %>
   <%= render 'user/shared/session/done_sessions', {:done_sessions => done_sessions} %>
+
+  <%# <% todo_sessions = todo_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %1> %>
+  <%# <%= render 'user/shared/session/todo_sessions', {:todo_sessions => todo_sessions} %1> %>
 
   <% cancel_sessions = cancel_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %>
   <%= render 'user/shared/session/cancel_sessions', {:cancel_sessions => cancel_sessions} %>
