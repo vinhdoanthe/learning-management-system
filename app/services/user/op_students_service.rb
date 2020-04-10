@@ -23,6 +23,7 @@ class User::OpStudentsService
       if params[:course].blank? && params[:batch].blank? && params[:subject].blank?
         session = student.op_sessions.where('end_datetime <= ? AND op_session.state = ?', Time.now, Learning::Constant::Batch::Session::STATE_DONE).order(start_datetime: :DESC).first
         session = student.op_sessions.first if session.blank?
+        return { errors: 'Học sinh chưa có lớp học nào' } if session.blank?
         batch = session.op_batch
         sessions = student.op_sessions.where(batch_id: batch.id)
         course = batch.op_course

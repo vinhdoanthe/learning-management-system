@@ -42,8 +42,11 @@ module Learning
         @video_id = fallback_video_id
       end
       name = ''
+
+      if session.present?
       name = session.op_subject.name
       name = session.op_lession.name if session.op_lession.present?
+      end
 
       respond_to do |format|
         format.js {render 'learning/show_video', :locals => {:target => params[:target], name: name, session_id: session.id, session: session, video_id: video.id}}

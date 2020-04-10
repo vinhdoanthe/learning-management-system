@@ -1,4 +1,8 @@
-$("#homework_batch_selection").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_selection', locals: { datas: batches } ) %>");
+<% if errors.present? %>
+ $('#homework_tab1').html("<%= escape_javascript(render partial: 'user/op_students/partials/no_batch' ) %>");
+ 
+ <% else %>
+     $("#homework_batch_selection").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_selection', locals: { datas: batches } ) %>");
 $("#homework_subject_selection").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_selection', locals: { datas: subjects } ) %>");
 $("#homework_session_table").html("<%= escape_javascript(render partial: 'user/op_students/partials/table_homework_list', locals: { sessions: sessions, batch: batch } ) %>");
 $('#homework_course_selection').val("<%= course.id %>")
@@ -19,3 +23,5 @@ $(document).on('click', '#student_homework_videos', function(){
   $(document).on('click', '.student_homework_session', function(){
     $("#homework_video_detail").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_video_detail', locals: {course: course, batch: batch, subject: subject} ) %>")
   })
+
+<% end %>
