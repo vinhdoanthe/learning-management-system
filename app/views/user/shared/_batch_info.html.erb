@@ -47,7 +47,7 @@
             <% unless levels.blank? %>
               <% levels.each do |level| %>
                 <% if subject_ids.include?(level[0]) %>
-                  <span class="label-course label label-default" data-toggle="tooltip" title="Học phần đã học" style="background: #5DC2A7;">
+                  <span class="label-course label label-default" style="background: #5DC2A7;">
                     <%= level[1] %>
                   </span>
                 <% else %>

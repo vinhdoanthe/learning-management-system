@@ -208,7 +208,7 @@ module User
       menus.each do |menu|
 
         if (menu['path'] == fullpath)
-          tag_html = tag_html + '<li class="nav-active menu_item">'        
+          tag_html = tag_html + '<li class="nav-active menu_item activea">'
           tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="0">'
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
@@ -283,7 +283,7 @@ module User
       menus.each do |menu|
 
         if (menu['path'] == fullpath)
-          tag_html = tag_html + '<li class="nav-active menu_item">'        
+          tag_html = tag_html + '<li class="nav-active menu_item activea">'        
           tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
@@ -335,7 +335,7 @@ module User
       menus.each do |menu|
 
         if (menu['path'] == fullpath)
-          tag_html = tag_html + '<li class="nav-active menu_item">'        
+          tag_html = tag_html + '<li class="nav-active menu_item activea">'        
           tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
           tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
           tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
