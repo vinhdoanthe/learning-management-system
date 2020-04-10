@@ -181,3 +181,19 @@ ul.header-menu.nav.navbar-nav li span {
     max-width: 350px;
     width: 350px;
 }
+
+.comming {
+  position: absolute;
+  top: 50px;
+  left: -100px;
+  display: inline-block;
+  font-size: 14px;
+  background: #f16357;
+  color: #fff;
+  font-family: 'Montserrat-Bold';
+  transform: rotate(-90deg);
+  border-radius: 10px 10px 0 0;
+  height: 100%;
+  width: 150px;
+  text-align: center;
+}
