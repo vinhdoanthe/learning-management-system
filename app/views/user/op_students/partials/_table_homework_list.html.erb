@@ -13,11 +13,11 @@
         <%# <td align="right"><%= session.start_datetime.strftime('%H:%M') %1> - <%= session.start_datetime.strftime('%d/%m/%y') %1></td> %>
         <% homework_state = done_homework? current_user, session %> 
         <% if homework_state[:state] == 'done'%>
-          <td align="right"><span class="label-edit label label-success">Đã làm <%= homework_state[:progress] %></span></td>
+          <td align="right"><span class="label-edit label label-success" style="width: 100%; padding:6px">Đã làm <%= homework_state[:progress] %></span></td>
         <% elsif homework_state == 'undone' %>
-          <td align="right"><span class="label-edit label label-danger">Chưa làm <%= homework_state[:progress] %></span></td>
+          <td align="right"><span class="label-edit label label-danger" style="width: 100%; padding:6px">Chưa làm <%= homework_state[:progress] %></span></td>
         <% else %>
-          <td align="right"><span class="label-edit label label-primary">Đang làm <%= homework_state[:progress] %></span></td>
+          <td align="right"><span class="label-edit label label-primary" style="width: 100%; padding:6px">Đang làm <%= homework_state[:progress] %></span></td>
         <% end %>
       <% else %>
         <td width="70%">
@@ -30,40 +30,42 @@
         <% if has_homework %>
           <!--          <a class='student_evaluate_view student_homework_watch_videos' href="/learning/show_video/<%#= session.id %>?target=watch_video_box" data-remote="true" data-session="<%= session.id %>" title='Làm bài tập về nhà'> -->
           <% if session.start_datetime >= Time.now %>
-          <a style='opacity: 0.5' title='Tạm khoá: Buổi học chưa diễn ra'>
+          <a style='opacity: 0.5' title='Tạm khoá: Buổi học chưa diễn ra' data-toggle="tooltip">
             <span>
               <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
             </span>
           </a>
           <% else %>
-          <a href="/learning/view_question?session_id=<%= session.id %>"  title='Làm bài tập về nhà' class='student_homework_view'>
+          <a href="/learning/view_question?session_id=<%= session.id %>"  title='Làm bài tập về nhà' class='student_homework_view' data-toggle="tooltip">
             <span>
               <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
             </span>
           </a>
         <% end %>
         <% else %>
-          <a style='opacity: 0.5' title='Làm bài tập về nhà'>
+          <a style='opacity: 0.5' title='Làm bài tập về nhà' data-toggle="tooltip">
             <span>
               <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
             </span>
           </a>
         <% end %>
         <% if evaluate.present? %>
-          <a class='student_evaluate_view' href="/user/session_evaluation_content?session_id=<%= session.id %>" data-remote='true' data-toggle="modal" data-target="#session_evaluation_view" title='Nhận xét của giảng viên'>
+          <span data-toggle="modal" data-target="#session_evaluation_view">
+          <a class='student_evaluate_view' href="/user/session_evaluation_content?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
             <span>
               <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
             </span>
           </a>
+          </span>
         <% else %>
-          <a class='student_evaluate_view' style='opacity: 0.5'  title='Nhận xét của giảng viên'>
+          <a class='student_evaluate_view' style='opacity: 0.5'  title='Nhận xét của giảng viên' data-toggle="tooltip">
             <span>
               <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
             </span>
           </a>
         <% end %>
         <!-- <a class='student_evaluate_view student_homework_watch_videos' href="/learning/show_video/<%#= session.id %>?target=watch_video_box" data-remote="true" data-session="<%= session.id %>" title='Ôn bài'> -->
-        <a class='' data-toggle="tooltip" title='Chức năng "Ôn bài qua video": Sắp ra mắt'>
+        <a class='' data-toggle="tooltip" title='Chức năng "Ôn bài qua video" Sắp ra mắt'>
           <span>
             <%= image_tag('global/images/youtube-button.png', style: 'width: 20px;margin-right: 10px') %>
           </span>
