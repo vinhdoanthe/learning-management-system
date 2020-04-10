@@ -77,7 +77,7 @@ class Learning::Homework::QuestionService
 
     return if question_ids.blank?
     question_ids.each do |question_id|
-      existed_user_question = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: question_id).first
+      existed_user_question = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: question_id, op_batch_id: student_course.batch_id).first
       next if existed_user_question
 
       user_question = Learning::LearningRecord::UserQuestion.new
@@ -101,8 +101,9 @@ class Learning::Homework::QuestionService
     batch_id = session.batch_id
     user = User::User.where(student_id: student_id).first
 
+    return if (user.nil? or batch_id.nil?)
     questions.each do |question|
-      existed_user_question = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: question.id).first
+      existed_user_question = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: question.id, op_batch_id: batch_id).first
       next if existed_user_question.present?
       
       user_question = Learning::LearningRecord::UserQuestion.new

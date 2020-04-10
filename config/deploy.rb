@@ -26,6 +26,8 @@ append :linked_files, "config/database.yml", "config/storage.yml", "config/setti
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads',
   'data_export', 'data_import'
 
+# Require
+require 'whenever/capistrano'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

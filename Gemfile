@@ -27,8 +27,11 @@ gem 'Ziggeo'
 gem 'pdfjs_viewer-rails'
 gem 'google-api-client', '~> 0.34'
 
-#gem 'axlsx_rails'
+# For import/export
 gem 'caxlsx_rails'
+
+# For cronjob/delay job
+gem 'whenever', require: false
 
 # jQuery
 gem 'jquery-rails'

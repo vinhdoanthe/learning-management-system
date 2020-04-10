@@ -17,7 +17,7 @@ module Learning
         op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch_id, state: Learning::Constant::STUDENT_BATCH_STATUS_ON).last
         unless op_student_course.nil?
           op_subject_ids = op_student_course.op_subjects.map(&:id)
-          session = Learning::Batch::OpSession.where("batch_id = ?  AND subject_id IN (?) AND start_datetime >= ?", op_student_course.batch_id, op_subject_ids, checkpoint_datetime).order(start_datetime: :DESC).first
+          session = Learning::Batch::OpSession.where("batch_id = ?  AND subject_id IN (?) AND start_datetime >= ?", op_student_course.batch_id, op_subject_ids, checkpoint_datetime).order(start_datetime: :ASC).first
 
           unless session.nil?
             if soonest_session.nil?
