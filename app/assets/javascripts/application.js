@@ -11,7 +11,7 @@ $(document).ready(function () {
 	setTimeout(function () {
 		$('.alert').remove();
 	}, 3000);
-
+$('[data-toggle="tooltip"]').tooltip();
 	let active_menu = JSON.parse(localStorage.getItem('active_menu'));
 	if (active_menu != null){
 		menu = $('#sidebar').find('a[href="' + active_menu.href +'"]')
