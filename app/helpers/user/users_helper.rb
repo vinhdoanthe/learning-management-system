@@ -198,19 +198,6 @@ module User
        'icon' => 'Icon-Bell.png',
        'title' => 'Thông báo', 
        'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
-      },
-
-      {
-        'path' =>  user_my_class_path,
-        'icon' => 'Icon-Inbox.png',
-        'title' => 'Tiến độ học tập',
-        'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
-      },
-
-      {'path' => user_student_homework_path,
-       'icon' => 'ico-BaiTapOnBai.png',
-       'title' => 'Bài tập & Ôn bài',
-       'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
       }
       ]
 
@@ -251,23 +238,24 @@ module User
         #   'right_content' => ''
         # },
 
+
+      {
+        'path' =>  user_my_class_path,
+        'icon' => 'Icon-Inbox.png',
+        'title' => 'Lớp học của tôi',
+        'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
+      },
+
         {'path' => user_student_timetable_path, 
          'icon' => 'ico-TienDoHocTap.png',
          'title' => 'Thời khoá biểu', 
          'right_content' => '<span class="left-badge">' << count_sessions_week('op_student').to_s << '</span>'
       },
-
-      {'path' => user_my_class_path, 
-       'icon' => 'ico-TienDoHocTap.png',
-       'title' => 'Lớp học của tôi', 
-       'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
-      },
-
-      {'path' => user_student_homework_path, 
+      {'path' => user_student_homework_path,
        'icon' => 'ico-BaiTapOnBai.png',
-       'title' => 'Bài tập & Ôn bài', 
-       'right_content' => ''
-      },
+       'title' => 'Bài tập & Ôn bài',
+       'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
+      }
 
       # {'path' => '#', 
       #   'icon' => 'ico-Certificate.png',

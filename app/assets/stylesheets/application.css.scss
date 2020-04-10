@@ -180,3 +180,9 @@ ul.header-menu.nav.navbar-nav li span {
   from {right: 0px;}
   to {right: 100px;}
 }
+
+.tooltip-inner {
+    max-width: 350px;
+    /* If max-width does not work, try using width instead */
+    width: 350px;
+}
