@@ -20,7 +20,7 @@
           <% time_line.each do |time| %>
             <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + " "%>
           <% end %>
-            hàng tuần
+          hàng tuần
           </p>
         </li>
         <li>
@@ -78,9 +78,17 @@
           </p>
         </li>
         <li>
+          <% last_done_session_count = get_done_subject_count(batch) %>
+          <%= image_tag('global/images/steps.png') %>
+          <span class='span-text'>Buổi học: <%= last_done_session_count %> 
+          </span>
+          </p>
+        </li>
+        <li>
           <%= image_tag('global/images/group-of-students.png') %>
           <p>
-          <span class="span-text">Loại lớp học: </span><%= batch.op_batch_type.nil? ? '' : batch.op_batch_type.name %>
+          <% batch_type = get_batch_type(batch) %>
+          <span class="span-text">Loại lớp học: </span><%= batch_type %>
           </p></li>
           <li>
             <%= image_tag('global/images/hotel.png') %>
@@ -88,7 +96,7 @@
             <span class="span-text">Trung tâm: </span><a href=""><%= batch.res_company.nil? ? '' : batch.res_company.name %></a>
             <% learning_room = learning_room(batch.id) %>
             <% unless learning_room.blank? %>
-            <span class='span-text'>| (Phòng học: </span><a href=""><%= learning_room %> </a> <span class='span-text'>)</span>
+              <span class='span-text'>| (Phòng học: </span><a href=""><%= learning_room %> </a> <span class='span-text'>)</span>
             </p>
           <% end %>
           </li>

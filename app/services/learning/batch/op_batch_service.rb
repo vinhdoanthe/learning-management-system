@@ -9,6 +9,15 @@ module Learning
         faculty.nil? ? '' : faculty.full_name
       end
 
+      def self.get_done_subject_count(batch)
+        last_done_session = Learning::Batch::OpSession.where(state: Learning::Constant::Batch::Session::STATE_DONE, batch_id: batch.id).order(start_datetime: :ASC).last
+        if last_done_session.nil?
+          ''
+        else
+          last_done_session.count
+        end
+      end
+
       def self.get_coming_soon_session(student_id:, batch_id:, checkpoint_datetime:)
         soonest_session = nil
         if checkpoint_datetime.nil?

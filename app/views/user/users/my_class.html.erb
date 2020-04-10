@@ -11,25 +11,13 @@
       <% if @batches.nil? %>
         <h4>Bạn chưa có khóa học nào</h4>
       <% else %>
-        <% batch_count = @batches.length() %>
-        <% row_count = batch_count.even? ? batch_count/2 : batch_count/2 + 1 %>
-        <% op_student_id = current_user.op_student.id %>
-        <% index = 0 %>
-        <% (1..row_count).each do |i| %>
-          <div class="row">
-            <% index = 2*(i-1) %>
-            <% if index <= batch_count %>
-              <% batch = @batches[index] %>
-              <%= render :partial => "user/users/overview_batch", :locals => {batch: batch, op_student_id: op_student_id} %>
-            <% end %>
-            <% index = 2*i-1 %>
-            <% if index < batch_count %>
-              <% batch = @batches[index] %>
-              <%= render :partial => "user/users/overview_batch", :locals => {batch: batch, op_student_id: op_student_id} %>
-            <% end %>
-          </div>
+          <% op_student_id = current_user.op_student.id %>
+        <div class='row' %> 
+        <% @batches.each do |batch| %>
+          <%= render :partial => "user/users/overview_batch", :locals => {batch: batch, op_student_id: op_student_id} %>
         <% end %>
-      <% end %>
+        </div>
+    <% end %>
     </div>
   </div>
 </div>

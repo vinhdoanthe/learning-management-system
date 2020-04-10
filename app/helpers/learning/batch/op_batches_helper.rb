@@ -2,6 +2,16 @@ module Learning
   module Batch
     module OpBatchesHelper
 
+      def get_batch_type(batch)
+        if batch.select_type.nil?
+          ''
+        elsif batch.select_type == '1'
+          'Group class'
+        elsif batch.select_type == '2'
+          'Coaching class'
+        end
+      end
+
       def done_subject_ids(batch)
         OpSession.where(batch_id: batch.id,
                         state: Learning::Constant::Batch::Session::STATE_DONE).pluck(:subject_id).uniq.compact
@@ -123,6 +133,10 @@ module Learning
           end
         end
         is_active
+      end
+
+      def get_done_subject_count(batch)
+        Learning::Batch::OpBatchService.get_done_subject_count(batch) 
       end
 
       def get_coming_soon_session(student_id:, batch_id:, checkpoint_datetime:)
