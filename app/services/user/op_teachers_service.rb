@@ -102,7 +102,7 @@ class User::OpTeachersService
       subject = session.op_subject.name
       level = session.op_subject.level.to_s
       batch = session.op_batch.name
-      batch_class_online = false
+      batch_class_online = session.op_batch.company_id == 35 ? true : false
       # batch_class = session.op_batch.is_online_class
       course = session.op_batch.op_course.code
       lesson = session.op_batch.current_session_level

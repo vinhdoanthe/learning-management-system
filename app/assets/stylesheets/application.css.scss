@@ -22,7 +22,6 @@
 @import 'user/users';
 
 body{
-  font-family: 'Montserrat', sans-serif !important;
 }
 span.subject_id.active{
 	background-color: #5DC2A7;
@@ -156,18 +155,15 @@ ul.header-menu.nav.navbar-nav li span {
     font-weight: 600;
     font-size: 15px;
     text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif !important;
   }
 
   p {
-    font-family: 'Montserrat', sans-serif !important;
     font-weight: 500;
   }
 }
 
 #password {
   color: #0654BA;
-  font-family: 'Montserrat', sans-serif !important;
   font-weight: 500;
 }
 
@@ -178,11 +174,10 @@ ul.header-menu.nav.navbar-nav li span {
 
 @keyframes mymove {
   from {right: 0px;}
-  to {right: 100px;}
+  to {right: 100%;}
 }
 
 .tooltip-inner {
     max-width: 350px;
-    /* If max-width does not work, try using width instead */
     width: 350px;
 }
