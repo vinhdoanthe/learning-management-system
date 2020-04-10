@@ -18,7 +18,7 @@
 
           <p><span class="span-text">Lịch học: </span>
           <% time_line.each do |time| %>
-            <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + " "%>
+            <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + "; "%>
           <% end %>
             hàng tuần
           </p>
