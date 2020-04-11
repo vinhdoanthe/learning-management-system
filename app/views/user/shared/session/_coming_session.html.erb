@@ -28,11 +28,11 @@
 
           <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
             <p class="text-right"><%= start.strftime('%H:%M') %>
-          - <%= coming_soon_session.end_datetime.strftime('%H:%M') %> | <%= start.strftime('%A') + ', ' + start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %>
+          - <%= coming_soon_session.end_datetime.strftime('%H:%M') %> | <%= (get_week_day start.strftime('%A')) + ', ' + start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %>
             </p>
           <% end %> 
         </td>
-        <td width="210px">
+        <td width="27%">
           <div id="clockdiv">
             <div>
               <span class="days"></span>

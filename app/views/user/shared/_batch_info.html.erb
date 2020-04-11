@@ -16,12 +16,15 @@
           <%= image_tag('global/images/clock.png') %>
           <% time_line = batch_timeline batch %> 
 
-          <p><span class="span-text">Lịch học: </span>
-          <% time_line.each do |time| %>
-            <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + "; "%>
+          <p style="display: inline-block"><span class="span-text">Lịch học: </span>
+          <% time_line.each_with_index do |time, i| %>
+            <% if time_line.length - i != 1 %>
+              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + "; "%>
+            <% else %>
+              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + " "%>
+            <% end %>
           <% end %>
-          hàng tuần
-          </p>
+          </p> hàng tuần
         </li>
         <li>
           <%= image_tag('global/images/professor.png') %>
@@ -80,8 +83,7 @@
         <li>
           <% last_done_session_count = get_done_subject_count(batch) %>
           <%= image_tag('global/images/steps.png') %>
-          <span class='span-text'>Buổi học: <%= last_done_session_count %> 
-          </span>
+          <p><span class='span-text'>Buổi học: </span> <%= last_done_session_count %>
           </p>
         </li>
         <li>
