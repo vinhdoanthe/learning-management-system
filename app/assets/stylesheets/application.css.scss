@@ -168,18 +168,18 @@ ul.header-menu.nav.navbar-nav li span {
 }
 
 .user_full_name{
-  position: relative;
-  animation: mymove 7s infinite;
-}
+    animation-name: animation-promotion;
+    animation-timing-function: linear;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    width: 100%;
+    padding-left: 0;}
 
-@keyframes mymove {
-  from {right: 0px;}
-  to {right: 100%;}
-}
+@keyframes animation-promotion{from{transform:translate(103%)}99%,to{transform:translate(-105%)}}
 
 .tooltip-inner {
     max-width: 350px;
-    width: 350px;
+    width: 100%;
 }
 
 .comming {

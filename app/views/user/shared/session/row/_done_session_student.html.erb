@@ -18,25 +18,40 @@
 <td align="center">
   <% attendance_line = attendance_line(session.id, current_user.op_student.id) %>
   <% if !attendance_line.nil? and attendance_line.present %>
-    <%= image_tag('global/images/check.png', style: 'width: 20px') %>
+    <span data-toggle='tooltip' title="Có đi học">
+      <%= image_tag('global/images/check.png', style: 'width: 20px') %>
+    </span>
   <% else %>
+    <span data-toggle="tooltip" title="Nghỉ học" >
     <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
+    </span>
   <% end %>
 </td>
 <td align="right">
-  <a class='student_evaluate_view student_homework_watch_videos' href="/learning/show_video/<%= session.id %>?target=watch_video_box" data-remote="true" data-session="<%= session.id %>" title='Bài tập về nhà, Ôn bài'>
+  <!-- <a class='student_evaluate_view student_homework_watch_videos' href="/learning/show_video/<%= session.id %>?target=watch_video_box" data-remote="true" data-session="<%= session.id %>" title='Bài tập về nhà, Ôn bài'> -->
+  <% if has_homework? current_user, session %>
+  <a class='' href="/learning/view_question/<%= session.id %>" data-toggle="tooltip" data-remote="true" data-session="<%= session.id %>" title='Làm bài tập về nhà'>
     <span>
       <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
     </span>
   </a>
+<% else %>
+  <a data-toggle="tooltip" title='Chưa có bài tập về nhà' style="opacity:0.2">
+    <span>
+      <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
+    </span>
+  </a>
+<% end %>
   <% if !attendance_line.nil? %>
-    <a class='student_evaluate_view' href="/user/session_evaluation_content?session_id=<%= session.id %>" data-remote='true' data-toggle="modal" data-target="#session_evaluation_view" title='Nhận xét của giảng viên'>
+    <span data-toggle="modal" data-target="#session_evaluation_view"> 
+    <a class='student_evaluate_view' href="/user/session_evaluation_content?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
       <span>
         <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
       </span>
     </a>
+    </span>
   <% else %>
-    <a style='opacity: 0.2' title='Nhận xét của giảng viên'>
+    <a style='opacity: 0.2' data-toggle="tooltip" title='Nhận xét của giảng viên'>
       <span>
         <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
       </span>
