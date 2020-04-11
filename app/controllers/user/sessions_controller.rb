@@ -3,7 +3,7 @@ module User
 
     skip_before_action :authenticate_user!, only: [:new, :create]
     def new
-      if !current_user.nil?
+      if logged_in?
         redirect_to root_path
       end
     end
