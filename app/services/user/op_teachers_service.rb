@@ -104,7 +104,7 @@ class User::OpTeachersService
       batch = session.op_batch
       batch_name = batch.name
       faculty = session.op_faculty ? session.op_faculty.full_name : ""
-      classroom = session.classroom_id.nil? ? '' : Common::OpClassroom.find(room_id).name
+      classroom = session.classroom_id.nil? ? '' : Common::OpClassroom.find(session.classroom_id).name
 
       batch_class_online = session.op_batch.company_id == 35 ? true : false
       # batch_class = session.op_batch.is_online_class
