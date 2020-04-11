@@ -515,23 +515,29 @@
 
 .scl-detail{
     box-shadow: 0px 0px 8px -5px;
-    display: block; 
+    display: block;
     border-radius: 10px;
     overflow: hidden;
+    position: relative;
 }
 .scl-img{
 	position: relative;
+	width: 100%;
+	display: table;
+	vertical-align: middle;
+	height: 250px;
 }
 .scl-img span.spanimg{
-	display: inline-block;
-    height: 300px;
+	display: table-cell;
+	vertical-align: middle;
+    height: 250px;
     position: initial;
     width: 100%;
     padding: 0;
 }
 .scl-img span img{
-	width: 100%;
-	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
 }
 .scl-img span{
 	position: absolute;
@@ -547,7 +553,7 @@
 }
 .scl-img span.scl-danger{
 	background: #F16357;
-	
+
 }
 .scl-img span.scl-success{
 	background: #00C246;
@@ -558,40 +564,78 @@
     width: 100%;
     padding: 10px;
 }
-.scl-text .scl-left{
-	width: 50%;
-	float: left;
+.scl-left{
 }
-.scl-text .scl-left label{
+.scl-left label{
 	color: #000000;
 	font-family: 'Montserrat-Bold';
 	font-size: 14px;
 }
-.scl-text .scl-left p{
+.scl-left p{
 	color: #6D7278;
 	font-size: 12px;
 	line-height: 16px;
 	font-family: 'Montserrat-Medium';
 }
-.scl-text .scl-left p span{
+.scl-left p span{
 	color: #0654BA
 }
-.scl-text .scl-right{
-	float: right;
-	width: 50%;
+.scl-right{
+	position: absolute;
+	background: rgba(0,0,0,0.5);
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	text-align: center;
 }
-.scl-text .scl-right ul{
-	text-align: right;
+.scl-right a.btn-edit-view{
+	margin-top: 25%;
+    display: inline-block;
+    background: #fcf055;
+    border-radius: 4px;
+    padding: 10px 50px;
+    margin-bottom: 10px;
+    font-family: 'Montserrat-Bold';
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #000;
 }
-.scl-text .scl-right ul li{
+.scl-right a.btn-edit-view:hover{
+	background: #5cd2a7
+}
+.scl-right a.btn-edit-class{
+	margin-top: 25%;
+    display: inline-block;
+    background: #5cd2a7;
+    border-radius: 4px;
+    padding: 10px 77px;
+    margin-bottom: 10px;
+    font-family: 'Montserrat-Bold';
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #000;
+}
+.scl-right a.btn-edit-class:hover{
+	background: #fcf055
+}
+.scl-right a img{
+	height: 34px;
+	margin-right: 5px
+}
+.scl-right ul{
+	position: absolute;
+    top: 10px;
+}
+.scl-right ul li{
 	display: inline-block;
 	margin-left: 15px;
 }
-.scl-text .scl-right ul li a{}
-.scl-text .scl-right ul li img{
+.scl-right ul li a{}
+.scl-right ul li img{
 	height: 45px;
 }
-.scl-text .scl-right ul li a.btn-edit{
+.scl-right ul li a.btn-edit{
 	padding: 11px 20px;
     height: auto !important;
     color: #fff;
@@ -599,7 +643,7 @@
     margin: 0;
     background: #505050
 }
-.scl-text .scl-right ul li a.btn-edit img{
+.scl-right ul li a.btn-edit img{
     height: 20px;
     margin-right: 5px;
 }

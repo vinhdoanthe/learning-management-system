@@ -67,27 +67,25 @@ module User
       status = {}
       status['status'] = get_stage(op_student_id, batch_id)      
       if status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_ON
-        status['status_html'] = '<span class="scl-success">Đang học</span>'
+        status['status_html'] = 'Đang học'
       elsif status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_OFF
-        status['status_html'] = '<span class="scl-danger">Nghỉ học</span>'
+        status['status_html'] = 'Nghỉ học'
       elsif status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_SAVE
-        status['status_html'] = '<span class="scl-danger">Bảo lưu</span>'
+        status['status_html'] = 'Bảo lưu'
       else
-        status['status_html'] = '<span class="scl-danger">Đang cập nhật</span>'
+        status['status_html'] = 'Đang cập nhật'
       end
-
       return status
     end
 
     # get Menu for User is Teacher
     def get_menus_teacher(fullpath)
       menus = [
-
         {'path' => user_teacher_info_path, 
          'icon' => 'icon-Setting.png',
          'title' => 'Cấu hình', 
          'right_content' => ''
-      },
+        },
 
       {'path' => notification_broadcast_broadcast_notices_path, 
        'icon' => 'Icon-Bell.png',
@@ -148,7 +146,7 @@ module User
        'title' => 'Danh sách lớp học', 
        'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
       },
-     
+
       {'path' => learning_marking_question_path, 
        'icon' => 'ico-BaiTapOnBai.png',
        'title' => 'Chấm bài', 
@@ -239,41 +237,41 @@ module User
         # },
 
 
-      {
-        'path' =>  user_my_class_path,
-        'icon' => 'Icon-Inbox.png',
-        'title' => 'Lớp học của tôi',
-        'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
-      },
+        {
+          'path' =>  user_my_class_path,
+          'icon' => 'Icon-Inbox.png',
+          'title' => 'Lớp học của tôi',
+          'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
+        },
 
         {'path' => user_student_timetable_path, 
          'icon' => 'ico-TienDoHocTap.png',
          'title' => 'Thời khoá biểu', 
          'right_content' => '<span class="left-badge">' << count_sessions_week('op_student').to_s << '</span>'
-      },
-      {'path' => user_student_homework_path,
-       'icon' => 'ico-BaiTapOnBai.png',
-       'title' => 'Bài tập & Ôn bài',
-       'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
-      }
+        },
+        {'path' => user_student_homework_path,
+         'icon' => 'ico-BaiTapOnBai.png',
+         'title' => 'Bài tập & Ôn bài',
+         'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
+        }
 
-      # {'path' => '#', 
-      #   'icon' => 'ico-Certificate.png',
-      #   'title' => 'Chứng chỉ', 
-      #   'right_content' => ''
-      # },
+        # {'path' => '#', 
+        #   'icon' => 'ico-Certificate.png',
+        #   'title' => 'Chứng chỉ', 
+        #   'right_content' => ''
+        # },
 
-     #  {'path' => user_student_product_path, 
-     #   'icon' => 'ico-SPhocsinh.png',
-     #   'title' => 'Sản phẩm của tôi', 
-     #   'right_content' => ''
-     #  },
+        #  {'path' => user_student_product_path, 
+        #   'icon' => 'ico-SPhocsinh.png',
+        #   'title' => 'Sản phẩm của tôi', 
+        #   'right_content' => ''
+        #  },
 
-      # {'path' => '#', 
-      #   'icon' => 'ico-SPhocsinh.png',
-      #   'title' => 'Top thành tích', 
-      #   'right_content' => ''
-      # }
+        # {'path' => '#', 
+        #   'icon' => 'ico-SPhocsinh.png',
+        #   'title' => 'Top thành tích', 
+        #   'right_content' => ''
+        # }
 
       ]
 
