@@ -249,9 +249,9 @@ $(document).ready(function () {
                           html = '<td class="bg-eaeaea schedule_info">' 
                         }
                         if (info.batch_class_online){
-                          html += '<a data-placement="top" class="ct-detail ctd-cs3 online_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li><h3>HỌC TRỰC TUYẾN</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Tên giáo viên: ' + info.faculty +'</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
+                          html += '<a data-placement="top" class="ct-detail ctd-cs3 online_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul><li><h3>HỌC TRỰC TUYẾN</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Tên giáo viên: ' + info.faculty +'</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
                         }else{
-                          html += '<a data-placement="top" class="ct-detail ctd-cs3 offline_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="focus" data-content="<ul><li><h3>HỌC TẠI TRUNG TÂM</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Tên giáo viên: ' + info.faculty + '</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
+                          html += '<a data-placement="top" class="ct-detail ctd-cs3 offline_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul><li><h3>HỌC TẠI TRUNG TÂM</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Tên giáo viên: ' + info.faculty + '</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
                         }
 
                         if (info.status == 'cancel') {
@@ -264,11 +264,9 @@ $(document).ready(function () {
                       }
 
                         $('.' + key).append(html);
-                        $('.schedule_link').click(function (e) {
-                            $(this).popover('show');
-                        })
                     }
                 })
+                       $('[data-toggle="popover"]').popover();
             },
             error: function (res) {
                 console.log(res);
