@@ -94,7 +94,7 @@ class User::OpTeachersService
 
     sessions.each do |session|
       time = session.end_datetime
-      name = session.name
+      name = session.op_subject.name
       start_time = session.start_datetime.strftime('%H:%M')
       end_time = time.strftime('%H:%M')
       day = time.strftime('%Y-%m-%d')
@@ -108,7 +108,7 @@ class User::OpTeachersService
 
       batch_class_online = session.op_batch.company_id == 35 ? true : false
       # batch_class = session.op_batch.is_online_class
-      course = session.op_batch.op_course.code
+      course = session.op_batch.op_course.name
       lesson = session.op_batch.current_session_level
       status = session.state
 
