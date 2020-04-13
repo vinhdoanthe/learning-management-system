@@ -44,21 +44,23 @@ module User
     end
 
     def teacher_class_detail
+      no_session = false
       @batch = Learning::Batch::OpBatch.find(params[:batch_id].to_i)
       @sessions = @batch.op_sessions.order(start_datetime: 'ASC')
-
-			if params[:subject_id].present?
-				@current_subject_id = params[:subject_id].to_i
-				@sessions = @sessions.where(:subject_id => params[:subject_id].to_i).where(faculty_id: @teacher.id)
-			else
-				current_subject = @sessions.where.not('state = ? OR state = ?', Learning::Constant::Batch::Session::STATE_DONE, Learning::Constant::Batch::Session::STATE_CANCEL).first
-				current_subject = @sessions.last if current_subject.blank?
-				@current_subject_id = current_subject.subject_id
-				@sessions = @sessions.where(subject_id: @current_subject_id, faculty_id: @teacher.id)
-			end
-
+			
+      if params[:subject_id].present?
+        @current_subject_id = params[:subject_id].to_i
+        @sessions = @sessions.where(:subject_id => params[:subject_id].to_i).where(faculty_id: @teacher.id)
+      else
+        current_subject = @sessions.where.not('state = ? OR state = ?', Learning::Constant::Batch::Session::STATE_DONE, Learning::Constant::Batch::Session::STATE_CANCEL).first
+        current_subject = @sessions.last if current_subject.blank?
+        @current_subject_id = current_subject.subject_id
+        @sessions = @sessions.where(subject_id: @current_subject_id, faculty_id: @teacher.id)
+      end
+      
       if @sessions.blank?
-        render json: {no_session: true}
+        no_session = true
+        render json: {no_session: no_session}
         return
       end
 
@@ -85,7 +87,7 @@ module User
       teacher_class_detail_active_session(@session.id, @subject.id, @session_index, all_students)
 
       if request.method == 'POST'
-        render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students, sessions_time: sessions_time, lesson: @lesson, img_src: img_src}
+        render json: {batch: @batch, session: @session, session_index: @session_index, subject: @subject, note: @note, students: all_students, sessions_time: sessions_time, lesson: @lesson, img_src: img_src, no_session: no_session}
       end
     
     rescue StandardError => e

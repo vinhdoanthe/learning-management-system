@@ -32,6 +32,20 @@ $('[data-toggle="tooltip"]').tooltip();
 		localStorage.setItem('active_menu', JSON.stringify(obj));
 	})
 
+  $(".notice_collapse").on("hide.bs.collapse", function(){
+    $(this).parent().find($('a')).html('Xem thêm')
+  });
+  $(".notice_collapse").on("show.bs.collapse", function(){
+    $(this).parent().find($('.notice_state')).attr('src','/global/images/unread_notice.png')
+    $(this).parent().find($('a')).html('Đóng')
+  });
+
+  $('.toggle_notice_collapse').on('click', function(){
+    debugger
+    $('.notice_collapse').collapse('hide');
+    $(this).closest('.notice_collapse').collapse('show');
+  })
+
 
 //  public_profile_id = $('#public_profile_id').val();
 //  $('.public_profile').append('<a href="/user/public_profile/' + public_profile_id + '"><b class="color-5DC2A7 public_profile">Public Profile</b></a>')
