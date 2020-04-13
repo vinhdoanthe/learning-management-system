@@ -18,7 +18,7 @@ class Learning::Homework::QuestionService
 
   def create_user_answer user_question, student, params
     question = user_question.question
-    user_answer = Learning::LearningRecord::UserAnswer.new
+    user_answer = Learning::Homework::UserAnswer.new
     user_answer.user_question_id = user_question.id
     user_answer.answer_time = Time.now
     user_answer.answer_content = params[:question_choices]
@@ -45,7 +45,7 @@ class Learning::Homework::QuestionService
   end
 
   def mark_answer params, user
-    answer_mark = Learning::LearningRecord::AnswerMark.new
+    answer_mark = Learning::Homework::AnswerMark.new
     user_answer = find_user_answer params[:user_answer_id]
     answer_mark.user_answer_id = user_answer.id
     answer_mark.mark_content = params[:teacher_mark_content]
@@ -77,10 +77,10 @@ class Learning::Homework::QuestionService
 
     return if question_ids.blank?
     question_ids.each do |question_id|
-      existed_user_question = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: question_id, op_batch_id: student_course.batch_id).first
+      existed_user_question = Learning::Homework::UserQuestion.where(student_id: user.id, question_id: question_id, op_batch_id: student_course.batch_id).first
       next if existed_user_question
 
-      user_question = Learning::LearningRecord::UserQuestion.new
+      user_question = Learning::Homework::UserQuestion.new
       user_question.question_id = question_id
       user_question.student_id = user.id
       user_question.op_batch_id = student_course.batch_id
@@ -103,10 +103,10 @@ class Learning::Homework::QuestionService
 
     return if (user.nil? or batch_id.nil?)
     questions.each do |question|
-      existed_user_question = Learning::LearningRecord::UserQuestion.where(student_id: user.id, question_id: question.id, op_batch_id: batch_id).first
+      existed_user_question = Learning::Homework::UserQuestion.where(student_id: user.id, question_id: question.id, op_batch_id: batch_id).first
       next if existed_user_question.present?
       
-      user_question = Learning::LearningRecord::UserQuestion.new
+      user_question = Learning::Homework::UserQuestion.new
       user_question.op_batch_id = batch_id
       user_question.student_id = User::User.where(student_id: student_id).first.id
       user_question.question_id = question.id
@@ -117,11 +117,11 @@ class Learning::Homework::QuestionService
   private
 
   def find_user_question user_question
-    Learning::LearningRecord::UserQuestion.where(id: user_question).first
+    Learning::Homework::UserQuestion.where(id: user_question).first
   end
 
   def find_user_answer user_answer
-    Learning::LearningRecord::UserAnswer.where(id: user_answer).first
+    Learning::Homework::UserAnswer.where(id: user_answer).first
   end
 
   # def find_question_choice question_choice_id

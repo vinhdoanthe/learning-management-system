@@ -32,10 +32,10 @@ module User
     end
 
     def count_homework user
-      questions = Learning::LearningRecord::UserQuestion.where(student_id: user.id).pluck(:id)
+      questions = Learning::Homework::UserQuestion.where(student_id: user.id).pluck(:id)
       questions_count = questions.count
 
-      user_answers_count = Learning::LearningRecord::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
+      user_answers_count = Learning::Homework::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
       (questions_count - user_answers_count).to_s
     end
 

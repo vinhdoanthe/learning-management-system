@@ -27,7 +27,7 @@ RailsAdmin.config do |config|
                               Learning::Batch::OpBatch Learning::Batch::OpSession 
                               Learning::Material::Question Learning::Material::QuestionChoice Learning::Material::LearningMaterial
                               User::User User::OpStudent User::Avatar 
-                              Learning::LearningRecord::UserQuestion
+                              Learning::Homework::UserQuestion
                               Notification::BroadcastNoti)
 
 
@@ -248,7 +248,7 @@ RailsAdmin.config do |config|
       field :choice_content
     end
   end
-  config.model 'Learning::LearningRecord::UserQuestion' do
+  config.model 'Learning::Homework::UserQuestion' do
     show do
       field :user
       field :question
