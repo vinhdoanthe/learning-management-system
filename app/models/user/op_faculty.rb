@@ -9,6 +9,6 @@ module User
 
     has_many :op_sessions, :class_name => 'Learning::Batch::OpSession', :foreign_key => 'faculty_id'
     has_many :op_batches, :class_name => 'Learning::Batch::OpBatch', :through => 'op_sessions'
-    has_many :user_answers, :class_name => 'Learning::Homework::UserAnswer', foreign_key: 'faculty_id'
+    has_many :user_answers, :class_name => 'Learning::LearningRecord::UserAnswer', foreign_key: 'faculty_id'
   end
 end
