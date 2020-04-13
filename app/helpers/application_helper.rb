@@ -21,4 +21,13 @@ module ApplicationHelper
       'Chủ nhật'
     end
   end
+
+  def read_notice? user, notice
+    state = Notification::BroadcastNotiState.where(user_id: user.id, broadcast_notice_id: notice.id)
+    if state.present?
+      return true
+    else
+      return false
+    end
+  end
 end

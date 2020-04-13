@@ -9,9 +9,9 @@
   <div class="panel m-t--70">
 
     <div class="panel-content">
-      <div class="tab-content p-0 tab-all-content m-t-20">
+      <div class="tab-content p-0 tab-all-content m-t-20" id="notice_index">
         <% @notices.each_with_index do |notice, index| %>
-          <div class="table-responsive bo-table" style="margin-top: 20px">
+          <div class="table-responsive bo-table panel" style="margin-top: 20px">
             <div class='broadcast_notice_content' >
               <div>
                 <div class='row' style="display: flex; justify-content: center; align-items: center;">
@@ -23,10 +23,15 @@
                     <p><%= notice.user.username %> đăng lúc <%= notice.created_at.strftime('%H:%M - %d/%m/%y') %></p> 
                   </div>
                   <div class='col-md-2'>
-                    <a data-toggle="collapse" href="/notification/broadcast/read_notice?notice_id=<%= notice.id %>" data-remote='true' data-target="#notice_content_<%= index.to_s %>" style='float: right; cursor: pointer' class="">Xem thêm</a>
+                    <a data-toggle="collapse" data-parent="#notice_index" href="/notification/broadcast/read_notice?notice_id=<%= notice.id %>" data-remote='true' data-target="#notice_content_<%= index.to_s %>" style='float: right; cursor: pointer' class="toggle_notice_collapse">Xem thêm</a>
                   </div>
+                  <% if read_notice? current_user, notice %>
+                    <%= image_tag('unread_notice', class: 'notice_state') %>
+                  <% else %>
+                    <%= image_tag('read_notice', class: 'notice_state') %>
+                  <% end %>
                 </div>
-                <div id="notice_content_<%= index.to_s %>" class="collapse">
+                <div id="notice_content_<%= index.to_s %>" class="collapse notice_collapse">
                   <hr>
                   <div><%= notice.content.html_safe %></div>
                 </div>

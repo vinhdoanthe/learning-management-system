@@ -72,15 +72,20 @@ $(document).ready(function () {
         return data;
     }
 
-    var months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    //var months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+  var months = ['THÁNG 1', 'THÁNG 2', 'THÁNG 3', 'THÁNG 4', 'THÁNG 5', 'THÁNG 6', 'THÁNG 7', 'THÁNG 8', 'THÁNG 9', 'THÁNG 10', 'THÁNG 11', 'THÁNG 12']
     var week_days = ["Chủ Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
 
     function change_view(res, data) {
       if (res.no_session){
-        $('#teacher_class_detail_content').html('<h3>Không có buổi học nào của bạn</h3>');
+        // $('#teacher_class_detail_content').html('<h3>Không có buổi học nào của bạn</h3>');
+        $('#teacher_class_detail_content').hide();
+        $('#no_session_class_detail').show();
         return
       }
-        $('#student_attendance').html('');
+      $('#teacher_class_detail_content').show();
+      $('#no_session_class_detail').hide();
+      $('#student_attendance').html('');
 
         if (res.lesson) {
             $('#lesson_title').html("<strong>" + res.lesson.name + "</strong><br/>" + res.session.name + "<br/>Kiến thức học được: " + res.lesson.note);
@@ -249,9 +254,9 @@ $(document).ready(function () {
                           html = '<td class="bg-eaeaea schedule_info">' 
                         }
                         if (info.batch_class_online){
-                          html += '<a data-placement="top" class="ct-detail ctd-cs3 online_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul><li><h3>HỌC TRỰC TUYẾN</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Tên giáo viên: ' + info.faculty +'</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
+                          html += '<a data-placement="top" class="ct-detail ctd-cs3 online_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul><li><h3>HỌC TRỰC TUYẾN</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Giáo viên: ' + info.faculty +'</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
                         }else{
-                          html += '<a data-placement="top" class="ct-detail ctd-cs3 offline_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul><li><h3>HỌC TẠI TRUNG TÂM</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Tên giáo viên: ' + info.faculty + '</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
+                          html += '<a data-placement="top" class="ct-detail ctd-cs3 offline_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul><li><h3>HỌC TẠI TRUNG TÂM</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Giáo viên: ' + info.faculty + '</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
                         }
 
                         if (info.status == 'cancel') {
@@ -492,7 +497,6 @@ $(document).ready(function () {
         url: '/user/teacher_evaluate_content/',
         data: { student_id: student_id, session_id: session_id },
         success: function (res) {
-          debugger
           if (res != 'null' && res != undefined){
           $('select[name="knowledge1"').val(res.knowledge1);
           $('select[name="knowledge2"').val(res.knowledge2);
