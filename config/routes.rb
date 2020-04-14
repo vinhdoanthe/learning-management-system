@@ -1,7 +1,16 @@
+class ActionDispatch::Routing::Mapper
+  def draw(routes_name)
+    instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
+  end
+end
+
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'user/home#dashboard'
+
+  draw :op_student
+
   namespace :user do
 
     get 'login' => 'sessions#new'
@@ -11,8 +20,6 @@ Rails.application.routes.draw do
     get 'logout' => 'sessions#destroy'
     delete 'logout' => 'sessions#destroy'
     get 'teacher_info' => 'op_teachers#teacher_info'
-    get 'my_class' => 'users#my_class'
-    get 'batch_detail/:batch_id' => 'users#batch_detail', as: 'batch_detail'
     get 'teacher_class' => 'op_teachers#teacher_class'
     post 'teacher_class' => 'op_teachers#teacher_class'
     get 'teaching_schedule' => 'op_teachers#teaching_schedule'

@@ -238,7 +238,7 @@ module User
 
 
         {
-          'path' =>  user_my_class_path,
+          'path' =>  user_open_educat_batches_path,
           'icon' => 'Icon-Inbox.png',
           'title' => 'Lớp học của tôi',
           'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
