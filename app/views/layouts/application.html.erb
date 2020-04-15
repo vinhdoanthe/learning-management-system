@@ -24,13 +24,9 @@
     <!-- END PAGE STYLE -->
     <script src="/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 		<link rel="stylesheet" href="/global/css/daterangepicker.css" />
-		<link rel="stylesheet" href="https://assets-cdn.ziggeo.com/v1-r31/ziggeo.css" />
 
-			<script src="https://assets-cdn.ziggeo.com/v1-r31/ziggeo.js"></script>
     <%= yield :javascript_includes %>
 
-    <!-- Ziggeo -->
-    <script>ZiggeoApi.token = "73ba6f214db02fbb37eb1a947d53f9b4";</script>
   </head>
 
   <% if current_user && !current_user.is_parent? %>

@@ -2,6 +2,91 @@ module Learning
   module Batch
     class OpBatchService
 
+      require 'matrix'
+
+      def self.get_batch_detail(batch_id, student_id)
+        batch = Learning::Batch::OpBatch.where(id: batch_id).first
+        if !batch.nil?
+          course = batch.op_course
+          course_name = course.nil? ? '' : course.name
+          active_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch_id).first
+          op_student_courses = Learning::Batch::OpStudentCourse.where(batch_id: batch_id).to_a
+          faculty_ids = Learning::Batch::OpSession.where('batch_id = ? AND state != ?', batch_id, Learning::Constant::Batch::Session::STATE_CANCEL).pluck(:faculty_id).uniq.compact
+          faculty_names = User::OpenEducat::OpFaculty.where(id: faculty_ids).pluck(:full_name).uniq.compact
+          batch_subjects = course.op_subjects.pluck(:id, :level).uniq.compact
+          done_subjects = Learning::Batch::OpSession.where(batch_id: batch_id, state: Learning::Constant::Batch::Session::STATE_DONE).pluck(:subject_id).uniq.compact
+          session_count = count_done_session(batch)
+          company = Common::ResCompany.where(id: batch.company_id).first
+          company_name = company.nil? ? '-' : company.name
+          classroom_ids= batch.op_sessions.pluck(:classroom_id).uniq.compact
+          if classroom_ids.blank?
+            classroom_name = ''
+          else
+            classroom = Common::OpClassroom.where(id: classroom_ids[0]).first
+            classroom_name = classroom.nil? ? '' : classroom.name
+          end
+          return batch, course_name, active_student_course, op_student_courses, faculty_names, batch_subjects, done_subjects, session_count, company_name, classroom_name
+        else
+          return nil,nil,nil,nil,nil,nil,nil,nil,nil,nil
+        end 
+      end
+
+      def self.get_student_batch_progress(batch_id, student_id)
+        op_student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch_id, student_id: student_id).last
+        subjects = op_student_course.op_subjects.pluck(:id, :level).compact
+        subject_ids = Matrix[*subjects].column(0).to_a
+        all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids).order(start_datetime: :ASC).to_a
+        coming_soon_session = find_coming_soon_session(all_sessions)
+        done_sessions = find_done_sessions(all_sessions)
+        tobe_sessions = find_tobe_sessions(all_sessions)
+        cancel_sessions = find_cancel_sessions(all_sessions)
+        # done_sessions = pair_done_sessions(done_sessions)
+        # tobe_sessions = match_tobe_sessions(tobe_sessions)
+        # cancel_sessions = pair_cancel_sessions(cancel_sessions)
+
+        return coming_soon_session, done_sessions, tobe_sessions, cancel_sessions
+      end
+
+      def self.find_coming_soon_session(sessions)
+        time_now = Time.now()
+        coming_soon_session = nil
+        sessions.each do |session|
+          next if session.start_datetime < time_now
+          next if session.state == Learning::Constant::Batch::Session::STATE_CANCEL
+          coming_soon_session = session
+        end
+        coming_soon_session
+      end
+
+      def self.find_tobe_sessions(sessions)
+        time_now = Time.now()
+        tobe_sessions = []
+        sessions.each do |session|
+          next if session.start_datetime < time_now
+          next if session.state == Learning::Constant::Batch::Session::STATE_CANCEL
+          tobe_sessions << session
+        end
+        tobe_sessions
+      end
+
+      def self.find_cancel_sessions(sessions)
+        cancel_sessions = []
+        sessions.each do |session|
+          next if session.state != Learning::Constant::Batch::Session::STATE_CANCEL
+          cancel_sessions << session
+        end
+        cancel_sessions
+      end
+
+      def self.find_done_sessions(sessions)
+        done_sessions = []
+        sessions.each do |session|
+          next if session.state != Learning::Constant::Batch::Session::STATE_DONE
+          done_sessions << session
+        end
+        done_sessions
+      end 
+
       def self.get_teachers_name(batch_id)
         faculty_ids = Learning::Batch::OpSession.where(batch_id: batch_id).pluck(:faculty_id).uniq
         faculty_id = faculty_ids.compact.first
@@ -9,7 +94,7 @@ module Learning
         faculty.nil? ? '' : faculty.full_name
       end
 
-      def self.get_done_subject_count(batch)
+      def self.count_done_session(batch)
         last_done_session = Learning::Batch::OpSession.where(state: Learning::Constant::Batch::Session::STATE_DONE, batch_id: batch.id).order(start_datetime: :ASC).last
         if last_done_session.nil?
           ''
@@ -98,27 +183,7 @@ module Learning
 
         cancel_sessions
       end
-
-
-      def self.match_session_with_lesson
-        done_sessions = Learning::Batch::OpSession.where(state: Learning::Constant::Batch::Session::STATE_DONE)
-        total_count = done_sessions.length()
-        count = 0
-        unless done_sessions.blank?
-          done_sessions.each do |session|
-            count += 1
-            if (count%100 == 0)
-              puts "#{count}/#{total_count}"
-            end
-            att_sheet = session.op_attendance_sheets.pluck(:lession_id)
-            unless att_sheet.blank?
-              session.lession_id = att_sheet[-1]
-              session.save
-            end
-          end
-        end
-      end
-
+    
     end
   end
 end

@@ -1,5 +1,3 @@
-<% levels = list_subject_level_of_batch(batch.id) %>
-
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -11,9 +9,8 @@
       </tr>
     </thead>
     <tbody>
-      <% op_student_courses = batch.op_student_courses %>
       <% op_student_courses.each do |op_student_course| %>
-        <% if current_user.is_student? and current_user.op_student.id == op_student_course.student_id %>
+        <% if current_user.is_student? and active_student_course.id == op_student_course.id %>
           <tr style="color: black;">
             <% op_student = op_student_course.op_student %>
             <% unless op_student.nil? %>
@@ -22,12 +19,12 @@
             <% end %>
             <td>
               <% paid_levels = list_subject_level_of_student(op_student_course) %>
-              <% unless levels.nil? %>
-                <% levels.each do |level| %>
-                  <% if paid_levels.include?(level) %>
-                    <span class="label-course label label-default"><%= level[1] %></span>
+              <% unless batch_subjects.nil? %>
+                <% batch_subjects.each do |subject| %>
+                  <% if paid_levels.include?(subject) %>
+                    <span class="label-course label label-default"><%= subject[1] %></span>
                   <% else %>
-                    <span class="label-course label label-default" style="background: #e0e6eb;"><%= level[1] %></span>
+                    <span class="label-course label label-default" style="background: #e0e6eb;"><%= subject[1] %></span>
                   <% end %>
                 <% end %>
               <% end %>

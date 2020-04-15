@@ -1,6 +1,4 @@
-<!--Local variable: done_session-->
-
-<%= render 'user/shared/session/row/session_calendar_box', {:session => session} %>
+<%= render 'user/open_educat/shared/session_calendar_box', {:session => session} %>
 
 <% lesson = get_lesson_of_session(session) %>
 <td>
@@ -44,7 +42,7 @@
 <% end %>
   <% if !attendance_line.nil? %>
     <span data-toggle="modal" data-target="#session_evaluation_view"> 
-    <a class='student_evaluate_view' href="/user/session_evaluation_content?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
+    <a class='student_evaluate_view' href="/user/open_educat/session_evaluation?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
       <span>
         <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
       </span>

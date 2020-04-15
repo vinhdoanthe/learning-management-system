@@ -16,30 +16,6 @@ module User
 
     end
 
-    def public_profile
-      if params[:op_student_id].present?
-        @op_student = OpStudent.where(id: params[:op_student_id].to_i).first       
-        if @op_student.nil?
-          if !current_user.nil? and !current_user.student_id.nil?
-            redirect_to user_public_profile_path(current_user.student_id)
-          else
-            redirect_to root_path
-          end
-        else
-
-        end
-      else 
-        if !current_user.nil? and !current_user.student_id.nil?
-          redirect_to user_public_profile_path(current_user.student_id)
-        else
-          redirect_to root_path
-        end
-      end
-
-    rescue StandardError => e
-      redirect_error_site(e)
-    end
-
     def student_info
       @batches = @student.op_batches
       @batch_states = OpStudentsService.batch_state @student
@@ -140,28 +116,6 @@ module User
     def student_attendance_line
     end
 
-    def session_evaluation
-      op_session = nil
-      op_faculty = nil
-      op_batch = nil
-      op_att_line = nil
-      if params[:session_id].present?
-        op_session = Learning::Batch::OpSession.find(params[:session_id].to_i)
-        unless op_session.nil?
-          op_batch = op_session.op_batch
-          op_faculty = op_session.op_faculty
-        end
-        op_att_line = op_session.op_attendance_lines.where(student_id: @student.id).first
-      end
-
-      respond_to do |format|
-        format.html
-        format.js {render 'user/op_students/partials/session_evaluation', :locals => {op_faculty: op_faculty, op_batch: op_batch, op_session: op_session, op_att_line: op_att_line}}
-      end
-
-    rescue StandardError => e
-      redirect_error_site(e)
-    end
 
     def student_attendance_content
       attendance = Learning::Batch::OpAttendanceLine.where(student_id: @student.id, session_id: params[:session_id]).first

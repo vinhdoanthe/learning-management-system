@@ -15,11 +15,9 @@
       </thead>
       <tbody>
       <% done_sessions.each do |done_session| %>
-
-          <tr class=" student_subject_level <%= 'subject_level_' + done_session.op_subject.id.to_s %>">
-            <%= render 'user/shared/session/row/done_session_student', {:session => done_session} %>
+          <tr class="student_subject_level <%= 'subject_level_' + done_session.op_subject.id.to_s %>">
+            <%= render 'user/open_educat/op_student/progress/session/done_session_student', {:session => done_session} %>
           </tr>
-
       <% end %>
       </tbody>
     </table>
@@ -27,4 +25,4 @@
     <div>Chưa có buổi học nào</div>
   <% end %>
 </div>
-<%= render :partial => 'user/op_students/modals/session_evaluation' %>
+<%= render :partial => 'user/open_educat/op_student/modal/session_evaluation' %>

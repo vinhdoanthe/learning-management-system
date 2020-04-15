@@ -1,6 +1,4 @@
-<!--Local variable: cancel_session-->
-
-  <%= render 'user/shared/session/row/session_calendar_box', {:session => session} %>
+  <%= render 'user/open_educat/shared/session_calendar_box', {:session => session} %>
   <% lesson = session.op_lession %>
   <td>
     <div class="photo-box">
@@ -14,7 +12,5 @@
     <%= lesson.nil? ? 'Đang cập nhật' : lesson.name %> <br/>
     <%= lesson.nil? ? 'Đang cập nhật' : sanitize(truncate(lesson.note, :length => 50)) %>
   </td>
-
   <td align="right">
-
   </td>
