@@ -6,7 +6,7 @@ $('document').ready(function () {
 			data: {
 			batch_id: batch_id
 			},
-			url: '/user/open_educat/batch_progress',
+			url: '/user/open_educat/op_student/batch_progress',
 			dataType: 'script'
 		});
 	});

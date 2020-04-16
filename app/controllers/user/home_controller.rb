@@ -5,7 +5,7 @@ module User
         redirect_to user_login_path
       else
         if current_user.is_student?
-          redirect_to user_open_educat_batches_path
+          redirect_to user_open_educat_op_student_batches_path
         elsif current_user.is_parent?
           redirect_to user_parent_selection_path
         elsif current_user.is_teacher?

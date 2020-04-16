@@ -35,16 +35,67 @@ module Learning
         op_student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch_id, student_id: student_id).last
         subjects = op_student_course.op_subjects.pluck(:id, :level).compact
         subject_ids = Matrix[*subjects].column(0).to_a
-        all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids).order(start_datetime: :ASC).to_a
+        all_sessions = get_sessions(batch_id, student_id, subject_ids)
         coming_soon_session = find_coming_soon_session(all_sessions)
         done_sessions = find_done_sessions(all_sessions)
         tobe_sessions = find_tobe_sessions(all_sessions)
         cancel_sessions = find_cancel_sessions(all_sessions)
-        # done_sessions = pair_done_sessions(done_sessions)
-        # tobe_sessions = match_tobe_sessions(tobe_sessions)
-        # cancel_sessions = pair_cancel_sessions(cancel_sessions)
 
+=begin TODO: Matching lesson với session
+        done_sessions = pair_session_lessons(done_sessions)
+        tobe_sessions = match_tobe_session_lessons(tobe_sessions)
+        cancel_sessions = pair_cancel_sessions(cancel_sessions)
+=end
         return coming_soon_session, done_sessions, tobe_sessions, cancel_sessions
+      end
+
+      def self.get_sessions(batch_id, student_id, subject_ids = [], interval = {})
+        all_sessions = []
+        if interval[:start].present? and interval[:end].present? 
+          if subject_ids.blank?
+            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, start_datetime: interval[:start]..interval[:end]).order(start_datetime: :ASC).to_a
+          else
+            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids, start_datetime: interval[:start]..interval[:end]).order(start_datetime: :ASC).to_a
+          end
+        else 
+          if subject_ids.blank?
+            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id).order(start_datetime: :ASC).to_a
+          else
+            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids).order(start_datetime: :ASC).to_a
+          end
+        end
+        sessions = []
+        all_sessions.each do |session|
+          if !session.is_offset
+            if session.state == Learning::Constant::Batch::Session::STATE_DRAFT \
+                or session.state == Learning::Constant::Batch::Session::STATE_CONFIRM \
+                or session.state == Learning::Constant::Batch::Session::STATE_CANCEL
+              # Not done session
+              sessions << session
+            else
+              # Done session
+              att_line = Learning::Batch::OpAttendanceLine.where(session_id: session.id, student_id: student_id).first
+              sessions << session if !att_line.nil?
+            end
+          else
+            session_student = Learning::Batch::OpSessionStudent.where(session_id: session.id, student_id: student_id).first
+            sessions << session if !session_student.nil?
+          end
+        end
+        sessions
+      end
+
+      def self.pair_session_lessons(sessions)
+        paired_sessions = []
+        sessions.each do |session|
+          lesson = session.op_lession
+          paired_sessions << {session: session, lesson: lesson}
+        end
+        paired_sessions
+      end
+
+      def self.match_tobe_session_lessons(sessions)
+
       end
 
       def self.find_coming_soon_session(sessions)
@@ -86,7 +137,7 @@ module Learning
         end
         done_sessions
       end 
-
+      
       def self.get_teachers_name(batch_id)
         faculty_ids = Learning::Batch::OpSession.where(batch_id: batch_id).pluck(:faculty_id).uniq
         faculty_id = faculty_ids.compact.first
@@ -103,6 +154,7 @@ module Learning
         end
       end
 
+=begin Will be removed
       def self.get_coming_soon_session(student_id:, batch_id:, checkpoint_datetime:)
         soonest_session = nil
         if checkpoint_datetime.nil?
@@ -183,7 +235,7 @@ module Learning
 
         cancel_sessions
       end
-    
+=end
     end
   end
 end
