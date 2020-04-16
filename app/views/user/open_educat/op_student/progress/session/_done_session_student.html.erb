@@ -26,7 +26,6 @@
   <% end %>
 </td>
 <td align="right">
-  <!-- <a class='student_evaluate_view student_homework_watch_videos' href="/learning/show_video/<%= session.id %>?target=watch_video_box" data-remote="true" data-session="<%= session.id %>" title='Bài tập về nhà, Ôn bài'> -->
   <% if has_homework? current_user, session %>
   <a class='' href="/learning/view_question/<%= session.id %>" data-toggle="tooltip" data-remote="true" data-session="<%= session.id %>" title='Làm bài tập về nhà'>
     <span>
@@ -42,7 +41,7 @@
 <% end %>
   <% if !attendance_line.nil? %>
     <span data-toggle="modal" data-target="#session_evaluation_view"> 
-    <a class='student_evaluate_view' href="/user/open_educat/session_evaluation?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
+    <a class='student_evaluate_view' href="/user/open_educat/op_student/session_evaluation?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
       <span>
         <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
       </span>

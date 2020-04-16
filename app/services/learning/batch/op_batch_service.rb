@@ -40,7 +40,7 @@ module Learning
         tobe_sessions = find_tobe_sessions(all_sessions)
         cancel_sessions = find_cancel_sessions(all_sessions)
 
-=begin TODO: Matching lesson với session
+=begin TODO: Matching lesson - session
         done_sessions = pair_session_lessons(done_sessions)
         tobe_sessions = match_tobe_session_lessons(tobe_sessions)
         cancel_sessions = pair_cancel_sessions(cancel_sessions)
@@ -51,15 +51,11 @@ module Learning
       def self.get_sessions(batch_id, student_id, subject_ids = [], interval = {})
         all_sessions = []
         if interval[:start].present? and interval[:end].present? 
-          if subject_ids.blank?
-            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, start_datetime: interval[:start]..interval[:end]).order(start_datetime: :ASC).to_a
-          else
+          unless subject_ids.blank?
             all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids, start_datetime: interval[:start]..interval[:end]).order(start_datetime: :ASC).to_a
           end
         else 
-          if subject_ids.blank?
-            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id).order(start_datetime: :ASC).to_a
-          else
+          unless subject_ids.blank?
             all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids).order(start_datetime: :ASC).to_a
           end
         end
