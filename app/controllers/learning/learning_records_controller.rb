@@ -59,7 +59,7 @@ module Learning
 
     def batch_user_answer_list
       if params[:state].present? && params[:state] != 'undone' 
-        user_answers = current_user.op_faculty.user_answers.where(batch_id: params[:batch_id], state: ['right', 'wrong'])
+        user_answers = current_user.op_faculty.user_answers.joins(user_question: :question).where(batch_id: params[:batch_id], state: ['right', 'wrong']).where(questions: {question_type: 'text'})
       else
         user_answers = current_user.op_faculty.user_answers.where(batch_id: params[:batch_id], state: 'waiting')
       end
