@@ -1,44 +1,37 @@
 <div class="filter-box FlowupLabels" id='formBody'>
-  <%# <div class="row"> %>
-  <%#   <div class="col-md-offset-1 col-md-4"> %>
-  <%#     <div class='fl_wrap m-t-0 course-populated'> %>
-  <%#       <label class='fl_label' for='rf_name'>Khóa học: </label> %>
-  <%#       <p class="fl_input"><%= batch.op_course.name %1></p> %>
-  <%#     </div> %>
-  <%#   </div> %>
-  <%#   <div class="col-md-4"> %>
-  <%#     <div class='fl_wrap m-t-0 batch-populated'> %>
-  <%#       <label class='fl_label' for='rf_name'>Lớp học</label> %>
-  <%#       <p class="fl_input"><%= batch.code %1></p> %>
-  <%#     </div> %>
-  <%#   </div> %>
-  <%#   <div class="col-md-2"> %>
-  <%#     <div class='fl_wrap m-t-0'> %>
-  <%#       <label class='fl_label' for='rf_name'>Học phần:</label> %>
-  <%#       <% student_course = get_op_student_course(current_user,batch) %1> %>
-  <%#       <% subjects = list_subject_level_of_student(student_course) %1> %>
-  <%#       <% unless subjects.blank? %1> %>
-  <%#         <select class='fl_input student_subject_filter' id='rf_name' onchange="showSubjectSessions()"> %>
-  <%#           <option value="all">Tất cả</option> %>
-  <%#           <% subjects.each do |subject| %1> %>
-  <%#             <option value="<%= subject[0] %1>"><%= subject[1] %1></option> %>
-  <%#           <% end %1> %>
-  <%#         </select> %>
-  <%#       <% end %1> %>
-  <%#     </div> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="row">
+    <div class="col-md-offset-1 col-md-4">
+      <div class='fl_wrap m-t-0 course-populated populated'>
+        <label class='fl_label' for='rf_name'>Khóa học: </label>
+        <p class="fl_input"><%= batch.op_course.name %></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class='fl_wrap m-t-0 batch-populatedi populated'>
+        <label class='fl_label' for='rf_name'>Lớp học</label>
+        <p class="fl_input"><%= batch.code %></p>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class='fl_wrap m-t-0i populated'>
+        <label class='fl_label' for='rf_name'>Học phần:</label>
+        <% unless subjects.blank? %>
+          <select class='fl_input student_subject_filter' id='rf_name' onchange="showSubjectSessions()">
+            <option value="all">Tất cả</option>
+            <% subjects.each do |subject| %>
+              <option value="<%= subject[0] %>"><%= subject[1] %></option>
+            <% end %>
+          </select>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!--  TODO: update below render: query 1 time and process by logic-->
-<%# <% coming_soon_session = get_coming_soon_session(student_id: current_user.op_student.id, batch_id: batch.id, checkpoint_datetime: Time.now) %1> %>
 <%= render 'user/open_educat/shared/session/coming_session', {:coming_soon_session => coming_soon_session} %>
 
-<%# <% done_sessions = done_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %1> %>
 <%= render 'user/open_educat/op_student/progress/done_sessions', {:done_sessions => done_sessions} %>
 
-<%# <% todo_sessions = todo_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %1> %>
 <%# <%= render 'user/open_educat/op_student/progress/tobe_sessions', {:tobe_sessions => tobe_sessions} %1> %>
 
-<%# <% cancel_sessions = cancel_session_student_batch(student_id: current_user.op_student.id, batch_id: batch.id) %1> %>
 <%= render 'user/open_educat/op_student/progress/cancel_sessions', {:cancel_sessions => cancel_sessions} %>

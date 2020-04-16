@@ -1,13 +1,3 @@
-function showSubjectSessions() {
-    subject = $('.student_subject_filter').val();
-    if (subject == 'all') {
-        $('.student_subject_level').show();
-    } else {
-        $('.student_subject_level').hide();
-        $('.subject_level_' + subject).show();
-    }
-}
-
 function get_video(session_id, target) {
     $.ajax({
         url: '/learning/show_video/' + session_id,

@@ -2,8 +2,6 @@ module Learning
   module Batch
     class OpBatchService
 
-      require 'matrix'
-
       def self.get_batch_detail(batch_id, student_id)
         batch = Learning::Batch::OpBatch.where(id: batch_id).first
         if !batch.nil?
@@ -32,9 +30,10 @@ module Learning
       end
 
       def self.get_student_batch_progress(batch_id, student_id)
+        batch = Learning::Batch::OpBatch.where(id: batch_id).first
         op_student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch_id, student_id: student_id).last
         subjects = op_student_course.op_subjects.pluck(:id, :level).compact
-        subject_ids = Matrix[*subjects].column(0).to_a
+        subject_ids = subjects.map{|subject| subject[0]}
         all_sessions = get_sessions(batch_id, student_id, subject_ids)
         coming_soon_session = find_coming_soon_session(all_sessions)
         done_sessions = find_done_sessions(all_sessions)
@@ -46,7 +45,7 @@ module Learning
         tobe_sessions = match_tobe_session_lessons(tobe_sessions)
         cancel_sessions = pair_cancel_sessions(cancel_sessions)
 =end
-        return coming_soon_session, done_sessions, tobe_sessions, cancel_sessions
+        return batch, op_student_course, subjects, coming_soon_session, done_sessions, tobe_sessions, cancel_sessions
       end
 
       def self.get_sessions(batch_id, student_id, subject_ids = [], interval = {})
