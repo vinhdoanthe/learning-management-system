@@ -59,7 +59,7 @@
           <tbody id="batch_list">
           <% @batches.each do |batch| %>
             <tr class='batch_info'>
-              <td><a href="<%='/user/teacher_class_detail?batch_id=' + batch.id.to_s %>"><%= batch.code %></a></td>
+              <td><a href="<%='/user/open_educat/op_teacher/teacher_class_detail?batch_id=' + batch.id.to_s %>"><%= batch.code %></a></td>
               <td><%= batch.op_course.name %></td>
               <td><%= batch.op_student_courses.count %></td>
               <td><%= batch.start_date.to_s + ' - ' + batch.end_date.to_s %></td>

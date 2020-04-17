@@ -1,6 +1,6 @@
 class User::OpenEducat::OpStudentController < ApplicationController
-  before_action :authenticate_student!, except: [:public_profile]
-  before_action :get_op_student, except: [:public_profile]
+  before_action :authenticate_student!, except: [:public_profile, :session_student, :student_evaluate]
+  before_action :get_op_student, except: [:public_profile, :session_student, :student_evaluate]
 
   def batch_detail
     if params[:batch_id].present?
@@ -97,7 +97,29 @@ class User::OpenEducat::OpStudentController < ApplicationController
     redirect_error_site(e)
   end
 
+  def session_student
+    session = Learning::Batch::OpSession.find(params[:session_id])
+    batch = session.op_batch
+    all_students = User::OpTeachersService.new.teacher_class_detail batch, session
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/session_student_table', locals: { all_student: all_students, session: session }}
+    end
+  end
+
+  def student_evaluate
+    student = User::OpStudent.where(code: params[:code]).first
+    attendance = Learning::Batch::OpAttendanceLine.joins(:op_attendance_sheet).where(student_id: student.id).where(op_attendance_sheet: { session_id: params[:session_id] }).first
+    
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/student_attendance_content', locals: { attendance: attendance }}
+    end
+  end
+
   private
+
   def get_op_student
     if current_user.op_student.blank?
       @op_student = nil
@@ -105,4 +127,5 @@ class User::OpenEducat::OpStudentController < ApplicationController
       @op_student = current_user.op_student
     end
   end
+
 end

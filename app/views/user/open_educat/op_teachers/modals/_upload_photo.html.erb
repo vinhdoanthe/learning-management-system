@@ -1,0 +1,88 @@
+<div id="upload_photo" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Đăng ảnh lớp</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag(add_photo_attachment_path, runat: 'server', id: 'photo_upload_form', :multipart => true) do %>
+          <%= file_field_tag 'photo', multiple: true, id: 'photos_attachment', name: "photos[photo][]" %>
+          <%#= hidden_field_tag 'faculty_id', @faculty.id %>
+          <%= hidden_field_tag 'upload_session_id' %>
+          <div id="photo_review">
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <input type="submit" value="Đăng ảnh" id="upload_photo_confirm" class="btn btn-primary" >
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function readURL(input) {
+    if (input.files) {
+      $.each(input.files, function (i, photo) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#photo_review').append('<img class="photo_review" src="' + e.target.result + '" alt="" />');
+        }
+
+        reader.readAsDataURL(photo);    
+      })
+    } 
+  }     
+
+$('#upload_photo').on('click', '#upload_photo_confirm', function () {
+  params = $('#photo_upload_form').serializeArray()
+  var formData = new FormData();  
+
+  params.forEach(function (p) {   
+    formData.append(p['name'], p['value'])
+  })
+  $.each($('#photos_attachment')[0].files, function (i, file) {
+    formData.append("photos[]", file);
+  })
+
+  $.ajax({              
+    method: 'POST',
+    url: '/add_photo_attachment',   
+    data: formData,    
+    contentType: false,
+    processData: false,
+    success: function (res) {       
+      display_noti(res)               
+    }
+  })
+})  
+
+$('#upload_photo_confirm').prop('disabled', true)
+
+$("#photos_attachment").change(function () {
+  $('#photo_review').html('');    
+
+  if(this.files.length > 0){      
+    $('#upload_photo_confirm').prop('disabled', false)
+  }else{
+    $('#upload_photo_confirm').prop('disabled', true)
+  }                      
+  readURL(this);
+
+});
+
+$('#upload_session_photo').on('click', function () {
+  $('#photo_review').html('')
+})
+
+$('#upload_photo_confirm').on('click', function () {
+  $('#upload_photo').modal('hide')
+});
+
+</script>
+

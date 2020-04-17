@@ -22,6 +22,35 @@ module ApplicationHelper
     end
   end
 
+  def get_month month
+    case month
+    when '01'
+      'THÁNG 1'
+    when '02'
+      'THÁNG 2'
+    when '03'
+      'THÁNG 3'
+    when '04'
+      'THÁNG 4'
+    when '05'
+      'THANG 5'
+    when '06'
+      'THÁNG 6'
+    when '07'
+      'THÁNG 7'
+    when '08'
+      'THÁNG 8'
+    when '09'
+      'THÁNG 9'
+    when '10'
+      'THÁNG 10'
+    when '11'
+      'THÁNG 11'
+    when '12'
+      'THÁNG 12'
+    end
+  end
+
   def read_notice? user, notice
     state = Notification::BroadcastNotiState.where(user_id: user.id, broadcast_notice_id: notice.id)
     if state.present?
