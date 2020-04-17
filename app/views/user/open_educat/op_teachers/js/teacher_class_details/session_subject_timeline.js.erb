@@ -1,0 +1,13 @@
+$("#subject_timeline").html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/session_subject_timeline', locals: {subject: subject, sessions: assign_sessions, active_session: active_session} ) %>");
+
+$.ajax({
+  method: 'GET',
+  url: '/learning/active_session?session_id=<%= active_session.id %>',
+  dataType: 'script'
+})
+
+$.ajax({
+  url: '/user/open_educat/session_student?session_id=<%= active_session.id %>',
+  method: 'GET',
+  dataType: 'script'
+})

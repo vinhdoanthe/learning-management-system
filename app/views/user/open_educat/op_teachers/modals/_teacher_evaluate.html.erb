@@ -1,0 +1,41 @@
+  <div class="modal-dialog batch_student_evaluate">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Đánh giá học sinh</h4>
+      </div>
+      <div class="modal-body teacher_evaluate_content">
+        <form action="" id='teacher_evaluate_session'>
+          <input type="hidden" name='session_id' value='<%= session.id %>'>
+          <% User::Constant::Evaluate::EVALUATE.each do |e| %>
+            <div>
+              <h2><%= e[0] %></h2>
+              <% e[1].keys.each do |k| %>
+                <label><%= e[1][k]['label'] %>:</label>
+                <br>
+                <select name="<%= k %>" id="">
+                <% e[1][k]['content'].each do  |content| %>
+                    <% if attendance.present? && attendance.send(k) == content[0]%>
+                      <option value="<%= content[0] %>" selected><%= content[1]%></option>
+                    <% else %>
+                      <option value="<%= content[0] %>"><%= content[1] %></option>
+                    <% end %>
+                  <% end %>
+                </select>
+              <% end %>
+            </div>
+          <% end %>
+          <div>
+            <label>Nhận xét khác:</label>
+            <br>
+            ​<textarea name="teacher_note" rows="5"><%= attendance.present? ? attendance.note_1 : '' %></textarea>
+          </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="teacher_evaluate_confirm" data-dismiss="modal">Gửi đánh giá</button>
+      </div>
+    </div>
+
+  </div>

@@ -1,0 +1,9 @@
+$.ajax({
+  method: 'GET',
+  url: '/learning/active_session?session_id=<%= session.id %>',
+  dataType: 'script'
+})
+
+$("#session_student_info").html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/session_student_table', locals: { all_student: all_student, session: session } ) %>");
+
+$("#attendance_table").html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/attendance_table', locals: { all_student: all_student } ) %>");

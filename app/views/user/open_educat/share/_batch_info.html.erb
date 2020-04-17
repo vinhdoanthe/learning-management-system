@@ -1,0 +1,108 @@
+<% teacher_id = current_user.op_faculty.id if current_user.is_teacher? %>
+<div class="fc-header">
+  <h3><span class="color-F16357">LỚP HỌC:</span> <%= course.name %></h3>
+</div>
+<div class="box-progress">
+  <div class="row">
+    <div class="col-md-6">
+      <ul>
+        <li>
+          <%= image_tag('global/images/qr-code.png') %>
+          <p><span class="span-text">Mã lớp học: </span><%= batch.code %></p></li>
+        <li>
+          <%= image_tag('global/images/calendar-4.png') %>
+          <p><span class="span-text">Thời gian học: </span><%= batch.start_date.strftime('%d/%m/%Y') %>
+        đến <%= batch.end_date.strftime('%d/%m/%Y') %></p></li>
+        <li>
+          <%= image_tag('global/images/clock.png') %>
+          <% time_line = batch_timeline batch %> 
+
+          <p style="display: inline-block"><span class="span-text">Lịch học: </span>
+          <% time_line.each_with_index do |time, i| %>
+            <% if time_line.length - i != 1 %>
+              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + "; "%>
+            <% else %>
+              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + " "%>
+            <% end %>
+          <% end %>
+          </p> hàng tuần
+        </li>
+        <li>
+          <%= image_tag('global/images/professor.png') %>
+          <p><span class="span-text">Giảng viên: </span>
+          <a href=""><%= faculty.full_name %></a>
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <ul>
+        <li>
+          <%= image_tag('global/images/Combined-Shape.png') %>
+          <p><span class="span-text">Môn học: </span><%= course.name %></p></li>
+        <li>
+          <%= image_tag('global/images/steps.png') %>
+          <p id="subject_id_span">
+          <span class="span-text">Học phần: </span>
+          <% if current_user.is_student? %>
+            <% levels = list_subject_level_of_batch(batch.id) %>
+            <% subject_ids = done_subject_ids(batch) %>
+            <% unless levels.blank? %>
+              <% levels.each do |level| %>
+                <% if subject_ids.include?(level[0]) %>
+                  <span class="label-course label label-default" style="background: #5DC2A7;">
+                    <%= level[1] %>
+                  </span>
+                <% else %>
+                  <span class="label-course label label-default">
+                    <%= level[1] %>
+                  </span>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% elsif current_user.is_teacher? %>
+            <% unless subjects.blank? %>
+              <% subjects.each do |level| %>
+                <% if level[0] == active_subject.id %>
+                  <a href='/learning/assign_session?subject_id=<%= level[0] %>&teacher_id=<%= teacher_id %>&batch_id=<%= @batch.id %>' class='select_active_subject' data-remote="true">
+                    <span class="label-course label label-default active_subject"> 
+                      <input type='hidden' name='subject_id' value="<%= level[0] %>" >
+                      <%= level[1] %>
+                    </span>
+                  </a>
+                <% else %>
+                  <a href="/learning/assign_session?subject_id=<%= level[0] %>&teacher_id=<%= teacher_id %>&batch_id=<%= @batch.id %>" class='select_active_subject' data-remote="true">
+                    <span class="label-course label label-default ">
+                      <input type='hidden' name='subject_id' value="<%= level[0] %>" >
+                      <%= level[1] %>
+                    </span>
+                  </a>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+          </p>
+        </li>
+        <li>
+          <% last_done_session_count = get_done_subject_count(batch) %>
+          <%= image_tag('global/images/steps.png') %>
+          <p><span class='span-text'>Buổi học: </span> <%= last_done_session_count %>
+        </p>
+        </li>
+        <li>
+          <%= image_tag('global/images/group-of-students.png') %>
+          <p>
+          <% batch_type = get_batch_type(batch) %>
+          <span class="span-text">Loại lớp học: </span><%= batch_type %>
+        </p></li>
+        <li>
+          <%= image_tag('global/images/hotel.png') %>
+          <p>
+          <span class="span-text">Trung tâm: </span><a href=""><%= company_name %></a>
+          <span class='span-text'>| (Phòng học: </span><a href=""><%= classroom_name %> </a> <span class='span-text'>)</span>
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

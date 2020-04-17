@@ -1,0 +1,8 @@
+$('.attendance_lesson_info').html('');
+<% if lessons.length == 1 %>
+    $('.attendance_lesson_info').append('<input type="radio" checked name="attendance_lesson_id" style="margin: 10px" value="<%= lessons[0].id %>"><label for="<%= lessons[0].id %>"><%= lessons[0].name %></label></br>' )
+<% else %>
+    <% lessons.each do |lesson| %>
+    $('.attendance_lesson_info').append('<input type="radio" name="attendance_lesson_id" style="margin: 10px" value="<%= lesson.id %>"><label for="<%= lesson.id %>"><%= lesson.name %></label></br>' )
+    <% end %>
+<% end %>

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   root to: 'user/home#dashboard'
 
   draw :op_student
+  draw :learning
+  draw :op_teacher
 
   namespace :user do
 
@@ -61,6 +63,17 @@ Rails.application.routes.draw do
     get 'student_dashboard' => 'op_students#dashboard'
     get 'public_profile/:op_student_id' => 'op_students#public_profile', as: 'public_profile'
     get 'avatars_list' => 'avatars#avatars_list', as: 'avatars_list'
+
+
+
+    namespace :open_educat do
+      resource :op_student do
+      end
+
+      resource :op_teacher do
+        get 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
+      end
+    end
   end
 
   namespace :learning do
@@ -88,6 +101,7 @@ Rails.application.routes.draw do
     get 'lessons_by_course' => 'course/op_lession#index_by_course', as: 'lessons_by_course'
     get 'lessons_by_subject' => 'course/op_lession#index_by_subject', as: 'lessons_by_subject'
     get 'get_video_list' => 'learning_materials#get_video_list'
+    get 'assign_session' => 'course/op_subjects#assign_session'
   end
 
   namespace :notification do
