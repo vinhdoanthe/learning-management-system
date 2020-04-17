@@ -1,0 +1,27 @@
+<div class="box-lession">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="bl-title text-right">
+        <label class="teacher_class_detail_subject">Học phần <%= subject.level %> </label>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="bl-content">
+        <ul id="session_time_table">
+          <% sessions.each_with_index do |session, index| %>
+            <li>
+              <a href='/user/open_educat/session_student?session_id=<%= session.id %>' data-remote='true' style="text-decoration: none; color: #5b5b5b">
+                <p class="lesson_timeline <%= 'active' if session.id == active_session.id %>">
+              <input type='hidden' name="lession_id" value="<%= session.id %>">
+              <span class="tag-time"><%= index + 1 %></span>
+              <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M') %></span>
+              <span class="last-time"><%= session.start_datetime.strftime('%d.%m.%Y') %></span>
+              </p>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

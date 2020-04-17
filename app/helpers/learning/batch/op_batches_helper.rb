@@ -136,7 +136,7 @@ module Learning
       end
 
       def get_done_subject_count(batch)
-        Learning::Batch::OpBatchService.get_done_subject_count(batch) 
+        Learning::Batch::OpBatchService.count_done_session(batch) 
       end
 
       def get_coming_soon_session(student_id:, batch_id:, checkpoint_datetime:)
