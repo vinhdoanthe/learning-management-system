@@ -2,6 +2,8 @@ module User
   class OpStudent < ApplicationRecord
     self.table_name = 'op_student'
 
+    has_many :users, foreign_key: 'student_id'
+
     has_many :op_parent_op_student_rels
     has_many :op_parents, through: :op_parent_op_student_rels
 
@@ -145,6 +147,6 @@ module User
       end
       nation
     end
-
+    
   end
 end

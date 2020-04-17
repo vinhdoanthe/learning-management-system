@@ -26,3 +26,7 @@ env :GEM_PATH, ENV['GEM_PATH']
 every 30.minutes do 
   rake "mapping:mapping_lesson_to_done_session_and_assign_homework[100]"
 end
+
+every 1.hour do 
+  rake "user:create_users_within_days[30]"
+end

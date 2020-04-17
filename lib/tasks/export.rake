@@ -340,4 +340,90 @@ namespace :export do
     p.serialize(file_name)
     puts "Done!"
   end
+  
+  desc 'Export Students by Batch Code'
+  task :export_op_student_course_by_batch_code, [:batch_code] => :environment do |t, args|
+    batch_code = args[:batch_code].to_s
+    return if batch_code.blank?
+
+    op_batch_ids = Learning::Batch::OpBatch.where('code ilike ?', batch_code).pluck(:id).compact
+    op_student_course_ids = Learning::Batch::OpStudentCourse.where(batch_id: op_batch_ids).order(batch_id: :ASC).pluck(:id).compact
+    total_op = op_student_course_ids.length()
+    count_op = 0
+    op_student_course = nil
+    export_rows = []
+    op_student_course_ids.each do |op_student_course_id|
+      export_row = []
+      count_op += 1
+      puts "#{count_op}/#{total_op}"
+      op_student_course = Learning::Batch::OpStudentCourse.where(id: op_student_course_id).first
+      next if op_student_course.nil?
+      op_student = op_student_course.op_student
+      next if op_student.nil?
+      export_row << op_student.code
+      export_row << op_student.full_name
+      export_row << op_student.birth_date
+      export_row << op_student.vattr_gender
+
+      op_course = op_student_course.op_course
+      if op_course.nil?
+        export_row << '-'
+      else
+        export_row << op_course.name
+      end
+      
+      op_batch = op_student_course.op_batch
+      if op_batch.nil?
+        export_row << '-'
+      else
+        export_row << op_batch.code
+      end
+
+      subject_ids = Learning::Batch::OpStudentSubject.where(student_course_id: op_student_course.id).pluck(:subject_id).uniq.compact
+      subject_levels = Learning::Course::OpSubject.where(id: subject_ids).pluck(:level).uniq.compact.join(', ') 
+
+      export_row << subject_levels
+
+      # Admission, SO
+      admission = ""
+      so = ""
+      op_admissions = Learning::Batch::OpAdmission.where(batch_id: op_student_course.batch_id, student_id: op_student_course.student_id).to_a
+      unless op_admissions.blank?
+        op_admissions.each do |op_admission|
+          admission = admission + " " + op_admission.application_number.to_s
+          sale_order = op_admission.order
+          unless sale_order.nil?
+            so = so + " " + sale_order.name
+          end
+        end  
+      end
+      export_row << admission
+      export_row << so
+      
+      export_row << op_student.vattr_parent_full_name
+      export_row << op_student.vattr_parent_email
+      export_row << op_student.vattr_parent_phone
+
+      export_row << op_student.vattr_center_name
+
+      export_rows << export_row
+    end
+
+    puts "Starting export"
+    p = Axlsx::Package.new
+    wb = p.workbook
+    wb.add_worksheet(:name => "Students") do |sheet|
+      sheet.add_row ["STT", "Code", "Name", "Birth Date","Gender", "Course", "Batch", "Subject", "Admission", "SO", "Parent", "Email", "Mobile", "Company"]
+      index = 0
+      export_rows.each do |export_row|
+        index = index + 1
+        export_row.unshift(index)
+        sheet.add_row export_row
+      end
+    end
+    current_time_str = Time.now.strftime('%Y-%m-%d_%H-%M-%S')
+    file_name = "data_export/op_student_courses_by_batch_code_#{current_time_str}.xlsx"
+    p.serialize(file_name)
+    puts "Done!"
+  end
 end

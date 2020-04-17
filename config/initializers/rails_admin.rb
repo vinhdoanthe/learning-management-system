@@ -191,6 +191,7 @@ RailsAdmin.config do |config|
       field :birth_date
       field :nationality
       field :vattr_center_name
+      field :users
     end
 
     export do
