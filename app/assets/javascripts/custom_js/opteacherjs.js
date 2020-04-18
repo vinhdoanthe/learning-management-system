@@ -122,7 +122,7 @@ $(document).ready(function () {
         $('#calendar-box').html('<div class="cb-tit"><p>' + month + '</p></div><div class="cb-con"><strong>' + start_time.day + '</strong><p>' + start_time.hour + ":" + start_time.min + " - " + end_time.hour + ":" + end_time.min + '<br/>' + w_day + '</p></div>')
         $('#session_time_table').html('');
 
-        html_str = "<a type='button' class='btn btn-default btn-embossed' data-toggle='modal' data-target='#modal_materials' data-remote='true' href='/learning/show_google_doc_materials/" + res.session.id + "'> Học liệu </a>"
+        html_str = "<a type='button' class='btn btn-default btn-embossed' data-toggle='modal' data-target='#modal_materials' data-remote='true' href='/learning/list_slides_of_subject/" + res.session.subject_id + "'> Học liệu </a>"
         $('#btn_view_materials').html('');
         $('#btn_view_materials').html(html_str);
 

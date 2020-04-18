@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     get 'pdf_materials' => 'learning_materials#pdf_materials'
     get 'show_pdf/:session_id' => 'learning_materials#show_pdf', as: 'show_single_pdf'
     get 'show_google_doc_materials/:session_id' => 'learning_materials#show_google_doc_materials', as: 'show_google_doc_materials'
+    get 'list_slides_of_subject/:subject_id' => 'learning_materials#list_slides_of_subject', as: 'list_slides_of_subject'
+    get 'show_google_slide/:slide_id' => 'learning_materials#show_google_slide', as: 'show_google_slide'
     get 'show_video/:session_id' => 'learning_materials#show_video', as: 'show_single_video'
     get 'video/next_video' => 'learning_materials#next_video'
     get 'view_question' => 'learning_records#view_question'
