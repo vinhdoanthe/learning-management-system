@@ -26,9 +26,9 @@
                     <a data-toggle="collapse" data-parent="#notice_index" href="/notification/broadcast/read_notice?notice_id=<%= notice.id %>" data-remote='true' data-target="#notice_content_<%= index.to_s %>" style='float: right; cursor: pointer' class="toggle_notice_collapse">Xem thêm</a>
                   </div>
                   <% if read_notice? current_user, notice %>
-                    <%= image_tag('unread_notice', class: 'notice_state') %>
+                    <%= image_tag('unread_notice.png', class: 'notice_state') %>
                   <% else %>
-                    <%= image_tag('read_notice', class: 'notice_state') %>
+                    <%= image_tag('read_notice.png', class: 'notice_state') %>
                   <% end %>
                 </div>
                 <div id="notice_content_<%= index.to_s %>" class="collapse notice_collapse">
