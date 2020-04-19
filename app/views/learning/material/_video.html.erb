@@ -1,16 +1,18 @@
 <% if @video_id.present? %>
-	<div class="card">
-		<div class="card-block">
-			<ziggeo ziggeo-video='<%= @video_id %>' 
-			 ziggeo-width="320"
-		ziggeo-height="240" ziggeo-popup>
-			</ziggeo>
-		</div>
-	</div>
+
+  <div class="card">
+    <div class="card-block">
+<!--       <ziggeo ziggeo-video='<%= @video_id %>' 
+         ziggeo-width="320"
+         ziggeo-height="240" ziggeo-popup>
+</ziggeo> -->
+<%= @video_id.html_safe %>
+    </div>
+  </div>
 <% else %>
-	<div class="card">
-		<div class="card-block">
-			Chưa có video ôn tập
-		</div>
-	</div>
+  <div class="card">
+    <div class="card-block">
+      Chưa có video ôn tập
+    </div>
+  </div>
 <% end %>

@@ -18,6 +18,70 @@ module Learning
         end
       end
 
+      def self.get_sessions(batch_id, student_id, subject_ids = [], interval = {})
+        all_sessions = []
+        if interval[:start].present? and interval[:end].present? 
+          unless subject_ids.blank?
+            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids, start_datetime: interval[:start]..interval[:end]).order(start_datetime: :ASC).to_a
+          end
+        else 
+          unless subject_ids.blank?
+            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids).order(start_datetime: :ASC).to_a
+          end
+        end
+        sessions = []
+        all_sessions.each do |session|
+          if !session.is_offset
+            if session.state == Learning::Constant::Batch::Session::STATE_DRAFT \
+                or session.state == Learning::Constant::Batch::Session::STATE_CONFIRM \
+                or session.state == Learning::Constant::Batch::Session::STATE_CANCEL
+              # Not done session
+              sessions << session
+            else
+              # Done session
+              att_line = Learning::Batch::OpAttendanceLine.where(session_id: session.id, student_id: student_id).first
+              sessions << session if !att_line.nil?
+            end
+          else
+            session_student = Learning::Batch::OpSessionStudent.where(session_id: session.id, student_id: student_id).first
+            sessions << session if !session_student.nil?
+          end
+        end
+        sessions
+      end
+
+      def self.get_sessions_without_cancel(batch_id, student_id, subject_ids = [], interval = {})
+        all_sessions = []
+        if interval[:start].present? and interval[:end].present? 
+          unless subject_ids.blank?
+            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids, start_datetime: interval[:start]..interval[:end]).order(start_datetime: :ASC).to_a
+          end
+        else 
+          unless subject_ids.blank?
+            all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids).order(start_datetime: :ASC).to_a
+          end
+        end
+        sessions = []
+        all_sessions.each do |session|
+          next if session.state == Learning::Constant::Batch::Session::STATE_CANCEL
+          if !session.is_offset
+            if session.state == Learning::Constant::Batch::Session::STATE_DRAFT \
+                or session.state == Learning::Constant::Batch::Session::STATE_CONFIRM
+              # Not done session
+              sessions << session
+            else
+              # Done session
+              att_line = Learning::Batch::OpAttendanceLine.where(session_id: session.id, student_id: student_id).first
+              sessions << session if !att_line.nil?
+            end
+          else
+            session_student = Learning::Batch::OpSessionStudent.where(session_id: session.id, student_id: student_id).first
+            sessions << session if !session_student.nil?
+          end
+        end
+        sessions
+      end
+
       def self.get_coming_soon_session(student_id:, batch_id:, checkpoint_datetime:)
         soonest_session = nil
         if checkpoint_datetime.nil?
@@ -71,7 +135,13 @@ module Learning
                                                         state: Learning::Constant::Batch::Session::STATE_DONE)
               .order(start_datetime: 'ASC').to_a
             unless sessions.nil?
-              done_sessions.concat sessions
+              sessions.each do |session|
+                att_line = Learning::Batch::OpAttendanceLine.where(session_id: session.id, student_id: student_id).first
+                if !att_line.blank?
+                  done_sessions << session
+                end
+              end
+              # done_sessions.concat sessions
             end
           end
         end

@@ -50,7 +50,7 @@ module Learning
 
     def show_video
       video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last
-      fallback_video_id = Learning::Constant::Material::DEFAULT_VIDEO_ID
+      fallback_video_id = video.nil? ? 'Không có video nào' : video.ziggeo_file_id
 
       if params[:session_id].present?
         session = Learning::Batch::OpSession.where(id: params[:session_id]).first

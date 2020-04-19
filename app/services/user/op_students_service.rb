@@ -25,7 +25,15 @@ class User::OpStudentsService
         session = student.op_sessions.first if session.blank?
         return { errors: 'Học sinh chưa có lớp học nào' } if session.blank?
         batch = session.op_batch
-        sessions = student.op_sessions.where(batch_id: batch.id)
+
+        op_student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch.id, student_id: student.id).last
+        subject_ids = []
+        unless op_student_course.nil?
+          subject_ids = op_student_course.op_subjects.pluck(:id).uniq.compact
+        end
+        sessions = Learning::Batch::OpBatchService.get_sessions_without_cancel(batch.id, student.id, subject_ids)
+        
+        # sessions = student.op_sessions.where(batch_id: batch.id)
         course = batch.op_course
         batches = course.op_batches.where(id: student_batch_ids).uniq
       else
@@ -54,11 +62,15 @@ class User::OpStudentsService
 
     if params[:subject].present?
       subject = Learning::Course::OpSubject.find(params[:subject])
-      sessions = sessions.where(subject_id: subject.id)
-      session = sessions.order(start_datetime: :DESC).first 
+
+      sessions = Learning::Batch::OpBatchService.get_sessions_without_cancel(batch.id, student.id, subject.id)
+      
+      # sessions = sessions.where(subject_id: subject.id)
+      session = sessions[-1] 
     end
     
-    sessions = sessions.where(subject_id: subject.id).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC)
+    sessions = Learning::Batch::OpBatchService.get_sessions_without_cancel(batch.id, student.id, subject.id)
+    # sessions = sessions.where(subject_id: subject.id).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC)
     
     {batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, show_video: show_video, errors: ''}
   end
