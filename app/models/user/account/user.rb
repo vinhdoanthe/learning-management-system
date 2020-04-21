@@ -8,9 +8,9 @@ class User::Account::User < ApplicationRecord
   validates :email, presence: true
   validates :username, presence: true, uniqueness: true
 
-  belongs_to :op_student, required: false, foreign_key: 'student_id'
-  belongs_to :op_parent, required: false, foreign_key: 'parent_id'
-  belongs_to :op_faculty, required: false, foreign_key: 'faculty_id'
+  belongs_to :op_student, class_name: 'User::OpenEducat::OpStudent', required: false, foreign_key: 'student_id'
+  belongs_to :op_parent, class_name: 'User::OpenEducat::OpParent', required: false, foreign_key: 'parent_id'
+  belongs_to :op_faculty, class_name: 'User::OpenEducat::OpFaculty', required: false, foreign_key: 'faculty_id'
 
   belongs_to :user, required: false, class_name: 'User::User', foreign_key: 'parent_account_id'
 

@@ -1,4 +1,4 @@
-class PasswordResetsController < ApplicationController
+class User::Account::PasswordResetsController < ApplicationController
   before_action :get_user, only: [:edit, :update]
   before_action :valid_user, only: [:edit, :update]
   before_action :check_expiration, only: [:edit, :update]
@@ -14,7 +14,6 @@ class PasswordResetsController < ApplicationController
       @user.create_reset_digest
       @user.send_password_reset_email
       flash[:success] = "Email sent with password reset instructions"
-      # TODO: render view after send mail success
       redirect_to root_url
     else
       flash.now[:danger] = "Username not found"
