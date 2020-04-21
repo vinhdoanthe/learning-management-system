@@ -235,7 +235,7 @@ $(document).ready(function () {
     var used_date = new Date();
     used_date.setDate(used_date.getDate() - used_date.getDay());
     set_date_filter(used_date);
-    var url = window.location.href.includes('teaching_schedule') ? '/user/teaching_schedule' : '/user/student_timetable'
+    var url = window.location.href.includes('teaching_schedule') ? '/user/teaching_schedule' : '/user/open_educat/op_students/timetable'
 
     function get_schedule(date) {
         $.ajax({

@@ -5,7 +5,7 @@ class User::Account::UsersController < ApplicationController
 
   def get_avatar
     if params[:user_id].present?
-      user = User::User.where(id: params[:user_id].to_i).first
+      user = User::Account::User.where(id: params[:user_id].to_i).first
     else
       user = current_user
     end

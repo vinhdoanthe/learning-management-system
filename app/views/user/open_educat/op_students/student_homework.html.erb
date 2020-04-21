@@ -29,7 +29,7 @@
                     <label class='fl_label' for='rf_name'>Khóa học:</label>
                     <select class='fl_input' id='homework_course_selection'>
                       <% @courses.each do |course| %>
-                        <option value="<%= course.id %>"><a href="/user/student_homework" data-remote="true"><%= course.name %></a></option>
+                        <option value="<%= course.id %>"><a href="/user/open_educat/op_students/student_homework" data-remote="true"><%= course.name %></a></option>
                       <% end %>
                     </select>
                   </div>

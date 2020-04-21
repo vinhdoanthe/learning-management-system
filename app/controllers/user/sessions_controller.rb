@@ -27,7 +27,6 @@ module User
     end
 
     def destroy
-      binding.pry
       log_out
       redirect_to user_login_path
     end

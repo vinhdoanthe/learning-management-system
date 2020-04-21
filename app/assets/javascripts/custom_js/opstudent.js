@@ -8,7 +8,7 @@ function get_video(session_id, target) {
 
 function get_homework(data){
     $.ajax({
-        url: '/user/student_homework',
+        url: '/user/open_educat/op_students/student_homework',
         method: 'GET',
         data: data,
         dataType : 'script',
@@ -151,7 +151,7 @@ $('document').ready(function () {
 
     $(document).on('click', '.student_homework_watch_videos', function(){
       session_id = $(this).data('session')
-      window.location.href = '/user/student_homework?session=' + session_id
+      window.location.href = '/user/open_educat/op_students/student_homework?session=' + session_id
     })
 
     // Student do homework

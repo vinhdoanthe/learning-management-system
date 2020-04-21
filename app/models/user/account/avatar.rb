@@ -27,9 +27,9 @@ class User::Account::Avatar < ApplicationRecord
 
   def self.get_avatars_by_gender(gender=nil)
     if !gender.nil?
-      avatars = User::Avatar.where(gender: gender).to_a
+      avatars = User::Account::Avatar.where(gender: gender).to_a
     else
-      avatars = User::Avatar.all.to_a
+      avatars = User::Account::Avatar.all.to_a
     end
 
     avatars

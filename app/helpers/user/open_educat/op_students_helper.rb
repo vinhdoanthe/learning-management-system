@@ -131,7 +131,7 @@ module User
             'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
           },
 
-          {'path' => user_student_timetable_path, 
+          {'path' => user_open_educat_op_students_timetable_path,
            'icon' => 'ico-TienDoHocTap.png',
            'title' => 'Thời khoá biểu', 
            'right_content' => '<span class="left-badge">' << count_sessions_week('op_student').to_s << '</span>'

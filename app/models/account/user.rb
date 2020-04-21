@@ -13,13 +13,13 @@ module User
     belongs_to :op_parent, required: false, foreign_key: 'parent_id'
     belongs_to :op_faculty, required: false, foreign_key: 'faculty_id'
 
-    belongs_to :user, required: false, class_name: 'User::User', foreign_key: 'parent_account_id'
+    belongs_to :user, required: false, class_name: 'User::Account::User', foreign_key: 'parent_account_id'
 
     has_many :refer_friends
     has_many :coin_star_transactions
     has_many :redeem_transactions
     has_many :user_notifications
-    has_many :users, class_name: 'User::User', foreign_key: 'parent_account_id'
+    has_many :users, class_name: 'User::Account::User', foreign_key: 'parent_account_id'
 
     belongs_to :avatar, required: false
 

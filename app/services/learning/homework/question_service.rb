@@ -66,7 +66,7 @@ class Learning::Homework::QuestionService
   def create_user_question student_course
     student = student_course.op_student
     return [] if student.nil?
-    user = User::User.where(student_id: student.id).first
+    user = User::Account::User.where(student_id: student.id).first
     return [] if user.nil?
     subject_ids = student_course.op_subjects.pluck(:id)
     return [] if subject_ids.blank?
@@ -99,7 +99,7 @@ class Learning::Homework::QuestionService
     lesson = session.op_lession
     questions = lesson.questions
     batch_id = session.batch_id
-    user = User::User.where(student_id: student_id).first
+    user = User::Account::User.where(student_id: student_id).first
 
     return if (user.nil? or batch_id.nil?)
     questions.each do |question|
@@ -108,7 +108,7 @@ class Learning::Homework::QuestionService
       
       user_question = Learning::Homework::UserQuestion.new
       user_question.op_batch_id = batch_id
-      user_question.student_id = User::User.where(student_id: student_id).first.id
+      user_question.student_id = User::Account::User.where(student_id: student_id).first.id
       user_question.question_id = question.id
       user_question.save
     end

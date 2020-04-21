@@ -13,7 +13,7 @@ namespace :export do
       puts "#{index}/#{total_student}"
       op_student_export.append op_student.full_name
       op_student_export.append op_student.code
-      user = User::User.where(student_id: op_student.id).first
+      user = User::Account::User.where(student_id: op_student.id).first
       if user.nil?
         op_student_export.append '-'
       else
@@ -121,7 +121,7 @@ namespace :export do
 
   desc 'Export Users'
   task :export_users, [] => :environment do |t, args|
-    users = User::User.all
+    users = User::Account::User.all
     users_export = []
     total_user = users.length()
     index = 0
@@ -278,7 +278,7 @@ namespace :export do
       export_row << op_student.vattr_center_name
       export_row << op_student.code
       export_row << op_student.full_name
-      user = User::User.where(student_id: op_student.id).first
+      user = User::Account::User.where(student_id: op_student.id).first
       if user.nil?
         export_row << '-'
       else

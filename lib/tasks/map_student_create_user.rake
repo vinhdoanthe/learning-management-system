@@ -8,7 +8,7 @@ namespace :map_student_create_user do
       student_list = User::OpenEducat::OpStudent.where(id: student_ids)
     end
 
-    User::UsersController.new.map_student_new_user student_list
+    User::Account::UsersController.new.map_student_new_user student_list
   end
 
   desc 'Create teacher account by faculty_id'
@@ -17,7 +17,7 @@ namespace :map_student_create_user do
     if faculty_id
       faculty = User::OpenEducat::OpFaculty.find(faculty_id)
       unless faculty.nil?
-        User::UsersController.new.map_faculty_create_user faculty
+        User::Account::UsersController.new.map_faculty_create_user faculty
       end
     end
   end
@@ -28,7 +28,7 @@ namespace :map_student_create_user do
     faculty_list.each do |faculty|
       unless faculty.nil?
         puts faculty.id
-        User::UsersController.new.map_faculty_create_user faculty
+        User::Account::UsersController.new.map_faculty_create_user faculty
         puts 'done!'
       end
     end

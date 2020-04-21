@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     post 'student_update_nickname' => 'users#update_nickname'
     get 'change_password' => 'users#change_password'
     post 'change_password' => 'users#update_password'
-    get 'student_info' => 'op_students#student_info'
+    # get 'student_info' => 'op_students#student_info'
     get 'teacher_active_session' => 'op_teachers#active_session'
     post 'teacher_checkin' => 'op_teachers#teacher_checkin'
     post 'teacher_attendance' => 'op_teachers#teacher_attendance'
@@ -39,21 +39,21 @@ Rails.application.routes.draw do
     get 'teacher_dashboard' => 'op_teachers#dashboard'
 
     resources :users
-    resources :op_students, only: [:index, :new]
+    # resources :op_students, only: [:index, :new]
 
-    get 'student_homework' => 'op_students#student_homework'
-    get 'student_product' => 'op_students#student_product'
-    get 'course_products' => 'op_students#course_products'
+    # get 'student_homework' => 'op_students#student_homework'
+    # get 'student_product' => 'op_students#student_product'
+    # get 'course_products' => 'op_students#course_products'
     get 'student_product_detail' => 'op_students#student_product_detail'
-    get 'student_redeem' => 'op_students#student_redeem'
-    get 'student_invoice' => 'op_students#student_invoice'
-    get 'student_timetable' => 'op_students#student_timetable'
+    # get 'student_redeem' => 'op_students#student_redeem'
+    # get 'student_invoice' => 'op_students#student_invoice'
+    # get 'student_timetable' => 'op_students#student_timetable'
     get 'student_homework_detail' => 'op_students#student_homework_detail'
     get 'student_videos' => 'op_students#student_videos'
     get 'student_video_subs' => 'op_students#student_video_subs'
     get 'refer_friend' => 'op_students#refer_friend'
     post 'student_attendance_line' => 'op_students#student_attendance_line'
-    post 'student_timetable' => 'op_students#student_timetable'
+    # post 'student_timetable' => 'op_students#student_timetable'
     post 'teacher_evaluate' => 'op_teachers#teacher_evaluate'
     post 'teacher_evaluate_content' => 'op_teachers#teacher_evaluate_content'
     get 'student_evaluate_content' => 'op_students#student_attendance_content'

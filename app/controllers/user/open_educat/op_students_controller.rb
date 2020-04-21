@@ -149,7 +149,7 @@ module User
 
         respond_to do |format|
           format.html
-          format.js {render 'user/open_educat/op_students/partials/table_homework_list', :locals => data}
+          format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => data}
         end
 
       rescue StandardError => e
@@ -196,8 +196,8 @@ module User
 
       end
 
-      def student_timetable
-        @sessions = @student.op_sessions
+      def timetable
+        @sessions = @op_student.op_sessions
 
         @session = @sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).first
         schedules = OpTeachersService.teaching_schedule(@sessions, params)

@@ -1,8 +1,8 @@
-class User::AvatarsController < ApplicationController
+class User::Account::AvatarsController < ApplicationController
 
   def avatars_list
     if params[:gender].present?
-      avatars = User::Avatar.get_avatars_by_gender(params[:gender])     
+      avatars = User::Account::Avatar.get_avatars_by_gender(params[:gender])
       avatar_links = []
       avatars.each do |avatar|
         avatar_obj = {

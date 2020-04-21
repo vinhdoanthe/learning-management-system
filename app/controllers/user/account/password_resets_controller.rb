@@ -9,7 +9,7 @@ class User::Account::PasswordResetsController < ApplicationController
   end
 
   def create
-    @user = User::User.find_by(username: params[:password_reset][:username].downcase)
+    @user = User::Account::User.find_by(username: params[:password_reset][:username].downcase)
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
@@ -41,7 +41,7 @@ class User::Account::PasswordResetsController < ApplicationController
   private
 
   def get_user
-    @user = User::User.find_by(username: params[:username])
+    @user = User::Account::User.find_by(username: params[:username])
   end
 
   # Confirms a valid user.

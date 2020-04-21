@@ -9,6 +9,8 @@ namespace :user do
     get 'session_evaluation', action: 'session_evaluation', as: 'session_evaluation'
     get 'student_homework', action: 'student_homework', as: 'student_homework'
     get 'information', action: 'information', as: 'information'
+    get 'timetable', action: 'timetable', as: 'timetable'
+    post 'timetable', action: 'timetable'
    end
   end
 end
