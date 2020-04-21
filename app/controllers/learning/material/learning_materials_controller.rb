@@ -7,4 +7,8 @@ class Learning::Material::LearningMaterialsController < ApplicationController
       format.js { render '', locals: { learning_material: learning_material }}
     end
   end
+
+  def vimeo
+
+  end
 end

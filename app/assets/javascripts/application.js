@@ -1,7 +1,6 @@
 //=require jquery
 //=require jquery_ujs
 //=require layout.js
-//=require video
 //=require custom_js/opteacherjs.js
 //=require custom_js/opstudent.js
 //=require custom_js/learning.js
@@ -11,10 +10,10 @@ $(document).ready(function () {
 	setTimeout(function () {
 		$('.alert').remove();
 	}, 3000);
-$('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="tooltip"]').tooltip();
 	let active_menu = JSON.parse(localStorage.getItem('active_menu'));
 	if (active_menu != null){
-    $('.activea').removeClass('activea')
+		$('.activea').removeClass('activea')
 		menu = $('#sidebar').find('a[href="' + active_menu.href +'"]')
 		if (menu.length == 1){
 			$(menu[0]).parent().addClass('activea')
@@ -32,33 +31,23 @@ $('[data-toggle="tooltip"]').tooltip();
 		localStorage.setItem('active_menu', JSON.stringify(obj));
 	})
 
-  $(".notice_collapse").on("hide.bs.collapse", function(){
-    $(this).parent().find($('a')).html('Xem thêm')
-  });
-  $(".notice_collapse").on("show.bs.collapse", function(){
-    $(this).parent().find($('.notice_state')).attr('src','/global/images/unread_notice.png')
-    $(this).parent().find($('a')).html('Đóng')
-  });
+	$(".notice_collapse").on("hide.bs.collapse", function(){
+		$(this).parent().find($('a')).html('Xem thêm')
+	});
+	$(".notice_collapse").on("show.bs.collapse", function(){
+		$(this).parent().find($('.notice_state')).attr('src','/global/images/unread_notice.png')
+		$(this).parent().find($('a')).html('Đóng')
+	});
 
-  $('.toggle_notice_collapse').on('click', function(){
-    debugger
-    $('.notice_collapse').collapse('hide');
-    $(this).closest('.notice_collapse').collapse('show');
-  })
-
-
-//  public_profile_id = $('#public_profile_id').val();
-//  $('.public_profile').append('<a href="/user/public_profile/' + public_profile_id + '"><b class="color-5DC2A7 public_profile">Public Profile</b></a>')
-
-  // $(window).unload(function(){
-  //   debugger
-  //   localStorage.removeItem('active_menu');
-  // });
+	$('.toggle_notice_collapse').on('click', function(){
+		$('.notice_collapse').collapse('hide');
+		$(this).closest('.notice_collapse').collapse('show');
+	})
 });
 
-  window.onbeforeunload = function (e) {
-    localStorage.clear();
-    return undefined;
+window.onbeforeunload = function (e) {
+	localStorage.clear();
+	return undefined;
 };
 
 function getTimeRemaining(endtime) {
@@ -107,9 +96,9 @@ function initializeClock(id, endtime) {
 }
 
 function display_noti(error) {
-        html = '<div class="alert alert-' + error.type + '"><a href="#" class="close" data-dismiss="alert">×</a><div id="flash_' + error.type + '">' + error.message + '</div></div>'
-        $('#noti-message').html(html);
-        setTimeout(function () {
-            $('#noti-message').html('');
-        }, 3000);
-    }
+	html = '<div class="alert alert-' + error.type + '"><a href="#" class="close" data-dismiss="alert">×</a><div id="flash_' + error.type + '">' + error.message + '</div></div>'
+	$('#noti-message').html(html);
+	setTimeout(function () {
+		$('#noti-message').html('');
+	}, 3000);
+}

@@ -22,10 +22,7 @@ gem 'composite_primary_keys', '~> 12.0'
 gem "aws-sdk-s3", require: false
 
 gem 'image_processing'
-gem 'videojs_rails'
-gem 'Ziggeo'
-gem 'pdfjs_viewer-rails'
-gem 'google-api-client', '~> 0.34'
+gem 'vimeo_me2', :git => "https://github.com/bo-oz/vimeo_me2.git"
 
 # For import/export
 gem 'caxlsx_rails'
