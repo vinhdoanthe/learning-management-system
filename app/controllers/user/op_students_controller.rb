@@ -18,14 +18,14 @@ module User
 
     def student_info
       @batches = @student.op_batches
-      @batch_states = OpStudentsService.batch_state @student
+      @batch_states = OpenEducat::OpStudentsService.batch_state @student
 
     rescue StandardError => e
       redirect_error_site(e)
     end
 
     def student_homework
-      data = OpStudentsService.student_homework params, @student
+      data = OpenEducat::OpStudentsService.student_homework params, @student
       @courses = @student.op_courses
       @session = data[:session]
       @batch = data[:batch]
@@ -41,7 +41,7 @@ module User
 
     def student_product
       @products = SocialCommunity::ScProduct.where(student_id: @student.id).all
-      @course_products = OpStudentsService.new.course_product 
+      @course_products = OpenEducat::OpStudentsService.new.course_product 
 
     rescue StandardError => e
       redirect_error_site(e)
@@ -95,7 +95,7 @@ module User
     end
 
     def student_videos_list
-      data = OpStudentsService.student_homework params, @student
+      data = OpenEducat::OpStudentsService.student_homework params, @student
       @courses = @student.op_courses
       @session = data[:session]
 

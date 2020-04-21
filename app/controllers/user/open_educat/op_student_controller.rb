@@ -118,6 +118,22 @@ class User::OpenEducat::OpStudentController < ApplicationController
     end
   end
 
+  def student_homework
+    @student = @op_student
+    data = User::OpenEducat::OpStudentsService.student_homework params, @student
+    @courses = @student.op_courses
+    @session = data[:session]
+    @batch = data[:batch]
+
+    respond_to do |format|
+      format.html
+      format.js {render 'user/open_educat/op_student/partials/table_homework_list', :locals => data}
+    end
+
+  rescue StandardError => e
+    redirect_error_site(e)
+  end
+
   private
 
   def get_op_student
