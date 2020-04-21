@@ -1,4 +1,4 @@
-class User::OpStudentsService
+class User::OpenEducat::OpStudentsService
   def self.batch_state student
     batch_states = {}
     student.op_student_courses.each do |course|
@@ -8,7 +8,7 @@ class User::OpStudentsService
   end
 
   def self.student_homework params, student
-    student_subject_id = student.op_sessions.pluck(:subject_id)
+    student_subject_id = student.op_sessions.pluck(:subject_id).uniq
     student_batch_ids = student.op_batches.pluck(:id).uniq
     show_video = false
 

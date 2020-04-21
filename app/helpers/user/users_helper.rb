@@ -249,7 +249,7 @@ module User
          'title' => 'Thời khoá biểu', 
          'right_content' => '<span class="left-badge">' << count_sessions_week('op_student').to_s << '</span>'
         },
-        {'path' => user_student_homework_path,
+        {'path' => user_open_educat_op_student_student_homework_path,
          'icon' => 'ico-BaiTapOnBai.png',
          'title' => 'Bài tập & Ôn bài',
          'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
