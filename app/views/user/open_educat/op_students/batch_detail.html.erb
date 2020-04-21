@@ -1,6 +1,6 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "learning/course/course_description.js" %>
-  <%= javascript_include_tag 'user/open_educat/op_student/batch_detail.js' %>
+  <%= javascript_include_tag 'user/open_educat/op_students/batch_detail.js' %>
 <% end %>
 
 <div class="page-content page-thin">
@@ -13,7 +13,7 @@
   </div>
   <div class="panel m-t--70">
     <div class="panel-content">
-      <a href="<%= user_open_educat_op_student_batches_path %>" class="PC-back">
+      <a href="<%= user_open_educat_op_students_batches_path %>" class="PC-back">
         <%= image_tag('global/images/quaylai.svg') %>
         Quay lại
       </a>

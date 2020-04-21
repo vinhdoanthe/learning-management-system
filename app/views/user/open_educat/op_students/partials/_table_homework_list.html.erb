@@ -1,4 +1,4 @@
-<%= render :partial => 'user/open_educat/op_student/modal/session_evaluation' %>
+<%= render :partial => 'user/open_educat/op_students/modal/session_evaluation' %>
 <tbody>
   <% sessions.each do |session| %>
     <tr>
@@ -51,7 +51,7 @@
         <% end %>
         <% if evaluate.present? %>
           <span data-toggle="modal" data-target="#session_evaluation_view">
-          <a class='student_evaluate_view' href="/user/open_educat/op_student/session_evaluation?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
+          <a class='student_evaluate_view' href="/user/open_educat/op_students/session_evaluation?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
             <span>
               <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
             </span>

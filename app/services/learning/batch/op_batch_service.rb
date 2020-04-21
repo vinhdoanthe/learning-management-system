@@ -136,7 +136,7 @@ module Learning
       def self.get_teachers_name(batch_id)
         faculty_ids = Learning::Batch::OpSession.where(batch_id: batch_id).pluck(:faculty_id).uniq
         faculty_id = faculty_ids.compact.first
-        faculty = User::OpFaculty.where(id: faculty_id).first
+        faculty = User::OpenEducat::OpFaculty.where(id: faculty_id).first
         faculty.nil? ? '' : faculty.full_name
       end
 

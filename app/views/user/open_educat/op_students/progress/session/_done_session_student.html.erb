@@ -41,7 +41,7 @@
 <% end %>
   <% if !attendance_line.nil? %>
     <span data-toggle="modal" data-target="#session_evaluation_view"> 
-    <a class='student_evaluate_view' href="/user/open_educat/op_student/session_evaluation?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
+    <a class='student_evaluate_view' href="/user/open_educat/op_students/session_evaluation?session_id=<%= session.id %>" data-remote='true' data-toggle="tooltip" title='Nhận xét của giảng viên'>
       <span>
         <%= image_tag('global/images/icon-Comment.png', style: 'width: 20px;margin-right: 10px') %>
       </span>

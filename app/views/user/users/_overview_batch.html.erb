@@ -13,10 +13,10 @@
       <div class="scl-right"> 
         <% student_status = student_batch_status['status'] %>
         <% if student_status == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-          <a href="<%= user_open_educat_op_student_batch_detail_path(batch.id) %>" class="btn-edit-class">Vào lớp</a>
+          <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn-edit-class">Vào lớp</a>
           <span class="scl-success"><%= student_batch_status['status_html'].html_safe %></span>
         <% else %>
-          <a href="<%= user_open_educat_op_student_batch_detail_path(batch.id) %>" class="btn-edit-view">Xem thông tin</a>
+          <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn-edit-view">Xem thông tin</a>
           <span class="scl-danger"><%= student_batch_status['status_html'].html_safe %></span>
         <% end %>
       </div>

@@ -26,7 +26,7 @@ RailsAdmin.config do |config|
   config.included_models = %w(Learning::Course::OpCourse Learning::Course::CourseDescription Learning::Course::OpLession 
                               Learning::Batch::OpBatch Learning::Batch::OpSession 
                               Learning::Material::Question Learning::Material::QuestionChoice Learning::Material::LearningMaterial
-                              User::User User::OpStudent User::Avatar 
+                              User::User User::OpenEducat::OpStudent User::Avatar
                               Learning::Homework::UserQuestion
                               Notification::BroadcastNoti)
 
@@ -174,7 +174,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model 'User::OpStudent' do
+  config.model 'User::OpenEducat::OpStudent' do
     list do
       field :full_name
       field :code
@@ -313,7 +313,7 @@ RailsAdmin.config do |config|
 
 =begin
     export do
-      only %w(User::User User::OpStudent 
+      only %w(User::User User::OpenEducat::OpStudent
               Learning::Batch::OpSession)
     end
 =end

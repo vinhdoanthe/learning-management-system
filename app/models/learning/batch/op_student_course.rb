@@ -4,7 +4,7 @@ module Learning
       self.table_name = 'op_student_course'
 
       belongs_to :op_batch, :foreign_key => 'batch_id'
-      belongs_to :op_student, :class_name => 'User::OpStudent', :foreign_key => 'student_id'
+      belongs_to :op_student, :class_name => 'User::OpenEducat::OpStudent', :foreign_key => 'student_id'
       belongs_to :op_course, :class_name => 'Learning::Course::OpCourse', :foreign_key => 'course_id'
 =begin
       has_many :op_student_course_op_subject_rels, foreign_key: 'op_student_course_id'

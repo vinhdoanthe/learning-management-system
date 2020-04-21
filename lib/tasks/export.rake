@@ -2,7 +2,7 @@ namespace :export do
   require 'axlsx'
   desc 'Export all students information'
   task :op_students, [] => :environment do |t, arg|
-    @op_students = User::OpStudent.order(:create_date => :desc)
+    @op_students = User::OpenEducat::OpStudent.order(:create_date => :desc)
     op_students_export = []
 
     total_student = @op_students.length()
@@ -56,7 +56,7 @@ namespace :export do
   desc 'Export all missing information students'
   task :op_student_missing_information, [] => :environment do |t,args|
 
-    @op_students = User::OpStudent.order(:create_date => :desc)
+    @op_students = User::OpenEducat::OpStudent.order(:create_date => :desc)
     op_students_export = []
 
     total_student = @op_students.length()

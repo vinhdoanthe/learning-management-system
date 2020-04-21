@@ -45,7 +45,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     unless params[:student].blank?
       params[:student].each_value do |student_params|
         line = {}
-        student_id = User::OpStudent.where(code: params['student_id']).first.id
+        student_id = User::OpenEducat::OpStudent.where(code: params['student_id']).first.id
         line[:student_id] = student_id
         line[:is_present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
         line[:note] = student_params['note'].to_s

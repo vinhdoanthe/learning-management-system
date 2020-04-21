@@ -16,7 +16,7 @@
       <tbody>
       <% done_sessions.each do |done_session| %>
           <tr class="student_subject_level <%= 'subject_level_' + done_session.op_subject.id.to_s %>">
-            <%= render 'user/open_educat/op_student/progress/session/done_session_student', {:session => done_session} %>
+            <%= render 'user/open_educat/op_students/progress/session/done_session_student', {:session => done_session} %>
           </tr>
       <% end %>
       </tbody>
@@ -25,4 +25,4 @@
     <div>Chưa có buổi học nào</div>
   <% end %>
 </div>
-<%= render :partial => 'user/open_educat/op_student/modal/session_evaluation' %>
+<%= render :partial => 'user/open_educat/op_students/modal/session_evaluation' %>
