@@ -1,4 +1,4 @@
-class User::Avatar < ApplicationRecord
+class User::Account::Avatar < ApplicationRecord
 
   extend Enumerize
   include Constant
