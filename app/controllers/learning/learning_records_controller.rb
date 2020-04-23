@@ -96,9 +96,11 @@ module Learning
         @session = Learning::Batch::OpSession.where(id: params[:session_id]).last
         @lesson = @session.op_lession
         question_ids = @lesson.questions.pluck(:id) if @lesson.present?
-        @user_questions = Homework::UserQuestion.where("student_id = #{current_user.id.to_s} AND question_id IN (#{question_ids.join(', ')})")
 
-        if !@user_questions.nil?
+#        @user_questions = Homework::UserQuestion.where("student_id = #{current_user.id.to_s} AND question_id IN (#{question_ids.join(', ')})")
+        @user_questions = Homework::UserQuestion.where(student_id: current_user.id, question_id: question_ids)
+        
+        if @user_questions.present?
           if @user_questions.first.student_id != current_user.id
             flash[:danger] = "Bạn không có quyền truy cập đến tài nguyên này"
             redirect_to root_path

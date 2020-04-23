@@ -1,29 +1,17 @@
 <% if errors.present? %>
-    $('#homework_tab1').html("<%= escape_javascript(render partial: 'user/op_students/partials/no_batch' ) %>");
+    // $('#homework_tab1').html("<%#= escape_javascript(render partial: 'user/op_students/partials/no_batch' ) %>");
+    $('#homework_tab1').hide();
 
  <% else %>
-    $("#homework_batch_selection").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_selection', locals: { datas: batches } ) %>");
-$("#homework_subject_selection").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_selection', locals: { datas: subjects } ) %>");
-$("#homework_session_table").html("<%= escape_javascript(render partial: 'user/op_students/partials/table_homework_list', locals: { sessions: sessions, batch: batch } ) %>");
-$('#homework_course_selection').val("<%= course.id %>")
-$('#homework_batch_selection').val("<%= batch.id %>")
-$('#homework_subject_selection').val("<%= subject.id %>")
+    $("#homework_batch_selection").html('<%= escape_javascript( render partial: 'user/open_educat/op_students/partials/homework_selection', locals: { datas: batches } ) %>');
+$("#homework_subject_selection").html('<%= escape_javascript(render partial: 'user/open_educat/op_students/partials/homework_selection', locals: { datas: subjects } ) %>');
+    $("#homework_session_table").html('<%= escape_javascript(render partial: 'user/open_educat/op_students/partials/table_homework_list', locals: { sessions: sessions, batch: batch, session: session, subject: subject } ) %>');
+    $('#homework_course_selection').val("<%= course.id %>");
+    $('#homework_batch_selection').val("<%= batch.id %>");
+    $('#homework_subject_selection').val("<%= subject.id %>");
 
-$(document).on('click', '#student_homework_videos', function(){
-  $("#homework_video_detail").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_video_detail', locals: {course: course, batch: batch, session: session, subject: subject} ) %>")
-  $("#student_videos_list").html("<%= escape_javascript(render partial: 'user/op_students/partials/student_videos_list', locals: { sessions: sessions, session: session, subject: subject } ) %>");
-
-  $($('input[name="session_homework_name"][value="<%= session.id %>"]')[1]).parent().addClass('undone_question')
-})
-
-  <% if show_video %>
-    $('#student_homework_videos').trigger('click')
-<% end %>
-
-  $(document).on('click', '.student_homework_session', function(){
-    $("#homework_video_detail").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_video_detail', locals: {course: course, batch: batch, subject: subject} ) %>")
-  })
-
-<% end %>
-
+$(document).ready(function(){
+      $('#homework_tab2_new').html('<%= escape_javascript(render partial: 'user/open_educat/op_students/partials/homework_video', locals: { sessions: sessions, course: course, subject: subject, lesson: lesson, batch: batch, session: session } ) %> ');
+    })
+<% end %> 
   $('[data-toggle="tooltip"]').tooltip();

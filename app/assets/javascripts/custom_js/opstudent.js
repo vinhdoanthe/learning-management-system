@@ -6,22 +6,22 @@ function get_video(session_id, target) {
     })
 }
 
-function get_homework(data){
-    $.ajax({
-        url: '/user/open_educat/op_students/student_homework',
-        method: 'GET',
-        data: data,
-        dataType : 'script',
-        success: function(){
-            select_val = $('#homework_course_selection').val()
-            $('.student_course_title').html($('#homework_course_selection option[value="' + select_val.toString() + '"]').html())
-            if (typeof session_id !== 'undefined'){
-                option = $('#homework_session_table').find('input[value="' + session_id +'"]').parent().find('a')
-                if(option){option.trigger('click');}
-            }
-        }
-    })
-}
+// function get_homework(data){
+//     $.ajax({
+//         url: '/user/open_educat/op_students/student_homework',
+//         method: 'GET',
+//         data: data,
+//         dataType : 'script',
+//         success: function(){
+//             select_val = $('#homework_course_selection').val()
+//             $('.student_course_title').html($('#homework_course_selection option[value="' + select_val.toString() + '"]').html())
+//             if (typeof session_id !== 'undefined'){
+//                 option = $('#homework_session_table').find('input[value="' + session_id +'"]').parent().find('a')
+//                 if(option){option.trigger('click');}
+//             }
+//         }
+//     })
+// }
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
@@ -54,13 +54,6 @@ $('document').ready(function () {
 		'</div></div></div>');
 
 	return {
-		/**
-		 * Opens our dialog
-		 * @param message Custom message
-		 * @param options Custom options:
-		 * 				  options.dialogSize - bootstrap postfix for dialog size, e.g. "sm", "m";
-		 * 				  options.progressType - bootstrap postfix for progress bar type, e.g. "success", "warning".
-		 */
 		show: function (message, options) {
 			// Assigning defaults
 			if (typeof options === 'undefined') {
@@ -91,43 +84,40 @@ $('document').ready(function () {
 			// Opening dialog
 			$dialog.modal();
 		},
-		/**
-		 * Closes dialog
-		 */
 		hide: function () {
 			$dialog.modal('hide');
 		}
 	};
 
 })(jQuery);
-    $('.student_evaluate_view').on('click', function () {
-        sudent_id = $(this).data('student');
-        session_id = $(this).data('session');
-        $.ajax({
-            url: '/user/student_attendance_line',
-            method: 'post',
-            data: {'student_id': sudent_id, 'session_id': session_id},
-            success: function (res) {
+    // $('.student_evaluate_view').on('click', function () {
+    //     sudent_id = $(this).data('student');
+    //     session_id = $(this).data('session');
+    //     $.ajax({
+    //         url: '/user/student_attendance_line',
+    //         method: 'post',
+    //         data: {'student_id': sudent_id, 'session_id': session_id},
+    //         success: function (res) {
 
-            }
-        })
-    })
+    //         }
+    //     })
+    // })
 
-    if ((window.location.href.includes('student_homework') && (window.location.href.includes('session=') == false)) || (window.location.href.includes('homework'))){ 
-        var homework_session = $('input[name="homework_session"]').val()
-        get_video(homework_session, 'watch_video_box');
-        get_homework();
-      filter_learning_params()
-    }
+ //   if ((window.location.href.includes('student_homework') && (window.location.href.includes('session=') == false)) || (window.location.href.includes('homework'))){ 
+       // var homework_session = $('input[name="homework_session"]').val()
+        // get_video(homework_session, 'watch_video_box');
+//	get_homework();
+     // filter_learning_params()
+    //}
 
-    if(window.location.href.includes('student_homework?session=')){
-        searchParams = new URLSearchParams(window.location.search)
-        session_id = searchParams.get('session')
-        var homework_session = $('input[name="homework_session"]').val()
-        get_video(homework_session, 'watch_video_box');
-        get_homework({session: session_id})
-      filter_learning_params()
-    }
+   // if(window.location.href.includes('student_homework?session=')){
+     //   searchParams = new URLSearchParams(window.location.search)
+       // session_id = searchParams.get('session')
+        //var homework_session = $('input[name="homework_session"]').val()
+        // get_video(homework_session, 'watch_video_box');
+//	get_homework({session: session_id})
+     // filter_learning_params()
+    //}
 
   function filter_learning_params(){
     $('#homework_course_selection').on('change', function(){
@@ -149,10 +139,10 @@ $('document').ready(function () {
     })
   }
 
-    $(document).on('click', '.student_homework_watch_videos', function(){
-      session_id = $(this).data('session')
-      window.location.href = '/user/open_educat/op_students/student_homework?session=' + session_id
-    })
+//    $(document).on('click', '.student_homework_watch_videos', function(){
+  //    session_id = $(this).data('session')
+   //   window.location.href = '/user/open_educat/op_students/student_homework?session=' + session_id
+   // })
 
     // Student do homework
     if(window.location.href.includes('/learning/view_question')){
