@@ -279,7 +279,7 @@ $(document).ready(function () {
         })
     }
 
-    get_schedule(save_date);
+    if(location.href.includes('timetable')){get_schedule(save_date);}
 
     function fill_table(save_date) {
         used_date = new Date(save_date.getTime());

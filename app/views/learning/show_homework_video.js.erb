@@ -1,0 +1,11 @@
+$('#play_video_box').html("<%= escape_javascript(render partial: '/learning/material/learning_materials/vimeo', locals: { video_id: video_id } ) %>");
+
+<% if lesson.present? %>
+    $('#video_lesson_name').html('<%= lesson.name %>');
+$('#video_description').html('<%= name %>');
+<% end %>
+  <% if session.present? && (has_homework? current_user, session) %>
+    $('.do_video_homework').attr('href','/learning/view_question?session_id=<%= session.id %>')
+<% else %>
+    $('.do_video_homework').hide()
+<% end %>

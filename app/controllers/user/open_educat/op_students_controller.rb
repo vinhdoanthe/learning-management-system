@@ -1,8 +1,9 @@
 module User
   module OpenEducat
     class OpStudentsController < ApplicationController
-      before_action :authenticate_student!, except: [:public_profile, :session_student, :student_evaluate]
+      before_action :authenticate_student!, except: [:public_profile, :session_student, :student_evaluate, :timetable]
       before_action :get_op_student, except: [:public_profile, :session_student, :student_evaluate]
+      skip_before_action :verify_authenticity_token, only: [:timetable]
 
       def dashboard
 
@@ -146,7 +147,13 @@ module User
         @courses = @student.op_courses
         @session = data[:session]
         @batch = data[:batch]
-
+        @sessions = data[:sessions]
+        @batches = data[:batches]
+        @subjects = data[:subjects] 
+        @lesson = data[:lesson]
+        @course = data[:course]
+        @subject = data[:subject]
+        
         respond_to do |format|
           format.html
           format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => data}

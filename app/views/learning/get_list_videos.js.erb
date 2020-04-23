@@ -2,5 +2,5 @@ $("#homework_video_detail").html("<%= escape_javascript(render partial: 'user/op
 $("#student_videos_list").html("<%= escape_javascript(render partial: 'user/op_students/partials/student_videos_list', locals: { sessions: sessions, session: session, subject: subject } ) %>"); 
 $($('input[name="session_homework_name"][value="<%= session.id %>"]')).parent().addClass('undone_question')
 $(document).on('click', '.student_homework_session', function(){
-  $("#homework_video_detail").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_video_detail', locals: {course: course, batch: batch, subject: subject} ) %>")
+  $("#homework_video_detail").html("<%= escape_javascript(render partial: 'user/op_students/partials/homework_video_detail', locals: {course: course, batch: batch, subject: subject, session: session} ) %>")
 })
