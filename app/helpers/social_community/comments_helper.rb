@@ -1,0 +1,2 @@
+module SocialCommunity::CommentsHelper
+end

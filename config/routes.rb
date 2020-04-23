@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   draw :op_student
   draw :learning
   draw :op_teacher
+  draw :social_community
 
   namespace :user do
 
