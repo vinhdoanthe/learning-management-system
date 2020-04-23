@@ -1,18 +1,18 @@
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag "user/op_students/public_profile.js" %>
+  <%= javascript_include_tag "user/open_educat/op_students/public_profile.js" %>
 <% end %>
 
 <div class="page-content page-thin p-0">
   <section class="box-public">
-    <%= render :partial => "user/op_students/public_profile/header_info", :locals => {} %>
+    <%= render :partial => "user/open_educat/op_students/public_profile/header_info", :locals => {} %>
     <div class="bp-main">
       <div class="bpm-head">
         <% if pp_can_change_avatar?(@op_student.id) %> 
-          <a href="/user/avatars_list?gender=<%=@op_student.gender%>" data-toggle="modal" data-remote='true' data-target='#changeAvatarModal'> 
-            <%= image_tag('global/images/tekyman.png') %>
+          <a id='userAvatar' href="/user/account/users/change_avatar" data-toggle="modal" data-remote='true' data-target='#changeAvatarModal'>
+            <%= image_tag pp_avatar(@op_student.id) %>
           </a>
         <% else %>
-          <%= image_tag('global/images/tekyman.png') %>
+          <%= image_tag pp_avatar(@op_student.id) %>
         <% end %>
         <p class="name-cards"><span>Yaki</span><br/>Kiều Chí Công</p>
         <ul>
@@ -31,28 +31,28 @@
         </div>
       <% end %>
       <div class="bpm-content">
-        <%= render :partial => "user/op_students/public_profile/general_info", :locals => {} %>
+        <%= render :partial => "user/open_educat/op_students/public_profile/general_info", :locals => {} %>
         <hr>
         <div class="bpc-detail">
           <div class="dpc-title">
             <h3>Thành tích & Giải thưởng</h3>
           </div>
-          <%= render :partial => "user/op_students/public_profile/achievements", :locals => {} %>
+          <%= render :partial => "user/open_educat/op_students/public_profile/achievements", :locals => {} %>
 
           <div class="dpc-title">
             <h3>Huy hiệu</h3>
           </div>
-          <%= render "user/op_students/public_profile/badges" %>
+          <%= render "user/open_educat/op_students/public_profile/badges" %>
 
           <div class="dpc-title">
             <h3>Hình ảnh </h3>
           </div>
-          <%= render "user/op_students/public_profile/pictures" %>
+          <%= render "user/open_educat/op_students/public_profile/pictures" %>
 
           <div class="dpc-title">
             <h3>Sản phẩm</h3>
           </div>
-          <%= render "user/op_students/public_profile/products" %>
+          <%= render "user/open_educat/op_students/public_profile/products" %>
 
         </div>
       </div>

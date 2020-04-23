@@ -9,6 +9,17 @@ module User
         end
       end
 
+      def pp_avatar(op_student_id)
+        user = User::Account::User.where(student_id: op_student_id).first
+        pp_avatar = asset_path('global/images/tekyman.png')
+        unless user.nil?
+          if !user.avatar.nil?
+            pp_avatar = url_for(user.avatar.thumbnail)
+          end
+        end
+        pp_avatar
+      end
+
       def get_nationality(student_id)
         op_student = User::OpenEducat::OpStudent.find(student_id)
         nationality_name = ''

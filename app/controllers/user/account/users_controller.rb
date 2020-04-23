@@ -23,6 +23,50 @@ class User::Account::UsersController < ApplicationController
     end
   end
 
+  def new_avatar
+    current_avatar = nil 
+    if params[:user_id].present?
+      user = User::Account::User.where(id: params[:user_id].to_i).first
+    else
+      user = current_user
+    end
+    avatar_obj = user.get_avatar
+    unless avatar_obj.nil?
+      current_avatar = {
+        'id' => avatar_obj['id'],
+        'thumbnail' => url_for(avatar_obj['thumbnail']),
+        'full_size' => url_for(avatar_obj['full_size'])
+      }
+    end
+
+    avatars = User::Account::Avatar.get_avatars_by_gender(user.gender)
+    list_avatars = []
+    avatars.each do |avatar|
+      avatar_obj = {
+        'id' => avatar.id,
+        'thumbnail' => (avatar.thumbnail.attached? ? url_for(avatar.thumbnail) : ''),
+        'full_size' => (avatar.full_size.attached? ? url_for(avatar.full_size) : '')
+      }
+      list_avatars << avatar_obj
+    end 
+
+    respond_to do |format|
+      format.js { render 'user/open_educat/op_students/modal/change_avatar', :locals => {avatars: list_avatars, current_avatar: current_avatar}}
+    end
+  end
+
+  def update_avatar
+    if params[:avatar_id].present?
+      if current_user.avatar_id != params[:avatar_id].to_i
+        current_user.avatar_id = params[:avatar_id].to_i
+        current_user.save!
+        respond_to do |format|
+          format.js {render 'user/open_educat/op_students/js/update_avatar', :locals => {avatar: current_user.avatar}}
+        end
+      end
+    end
+  end
+
   def update_nickname
     unless params[:user][:username].nil?
       new_username = params[:user][:username]
@@ -43,7 +87,7 @@ class User::Account::UsersController < ApplicationController
           flash.now[:danger] = 'Nickname đã tồn tại'
         end
       end
-      redirect_to user_student_info_path
+      redirect_to user_open_educat_op_students_information_path
       # end
     end
   end

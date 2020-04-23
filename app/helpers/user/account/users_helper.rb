@@ -1,18 +1,13 @@
 module User
   module Account
     module UsersHelper
-
-
       def get_avatar
         asset_path('global/images/avatar.svg')
       end
 
-
       def count_mark_question teacher
         teacher.user_answers.where(state: 'waiting').count.to_s
       end
-
-
 
       # get Menu for User is Teacher
       def get_menus_teacher(fullpath)

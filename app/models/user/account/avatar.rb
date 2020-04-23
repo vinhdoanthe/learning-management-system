@@ -33,16 +33,5 @@ class User::Account::Avatar < ApplicationRecord
     end
 
     avatars
-    # avatar_links = []
-    # avatars.each do |avatar|
-    #   if avatar.thumbnail.attached? and avatar.full_size.attached?
-    #     avatar_obj = {
-    #       'thumbnail' => avatar.thumbnail,
-    #       'full_size' => avatar.full_size
-    #     }
-    #     avatar_links << avatar_obj
-    #   end
-    # end
-    # avatar_links
   end
 end

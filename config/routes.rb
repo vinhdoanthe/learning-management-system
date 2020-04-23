@@ -13,69 +13,7 @@ Rails.application.routes.draw do
   draw :learning
   draw :op_teacher
   draw :social_community
-
-  namespace :user do
-
-    get 'login' => 'sessions#new'
-    post 'login' => 'sessions#create'
-    get 'parent_selection' => 'sessions#new_parent_selection'
-    post 'parent_selection' => 'sessions#create_parent_selection'
-    get 'logout' => 'sessions#destroy'
-    delete 'logout' => 'sessions#destroy'
-    get 'teacher_info' => 'op_teachers#teacher_info'
-    get 'teacher_class' => 'op_teachers#teacher_class'
-    post 'teacher_class' => 'op_teachers#teacher_class'
-    get 'teaching_schedule' => 'op_teachers#teaching_schedule'
-    post 'teaching_schedule' => 'op_teachers#teaching_schedule'
-    get 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
-    post 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
-    post 'student_update_nickname' => 'users#update_nickname'
-    get 'change_password' => 'users#change_password'
-    post 'change_password' => 'users#update_password'
-    # get 'student_info' => 'op_students#student_info'
-    get 'teacher_active_session' => 'op_teachers#active_session'
-    post 'teacher_checkin' => 'op_teachers#teacher_checkin'
-    post 'teacher_attendance' => 'op_teachers#teacher_attendance'
-
-    get 'teacher_dashboard' => 'op_teachers#dashboard'
-
-    resources :users
-    # resources :op_students, only: [:index, :new]
-
-    # get 'student_homework' => 'op_students#student_homework'
-    # get 'student_product' => 'op_students#student_product'
-    # get 'course_products' => 'op_students#course_products'
-    get 'student_product_detail' => 'op_students#student_product_detail'
-    # get 'student_redeem' => 'op_students#student_redeem'
-    # get 'student_invoice' => 'op_students#student_invoice'
-    # get 'student_timetable' => 'op_students#student_timetable'
-    get 'student_homework_detail' => 'op_students#student_homework_detail'
-    get 'student_videos' => 'op_students#student_videos'
-    get 'student_video_subs' => 'op_students#student_video_subs'
-    get 'refer_friend' => 'op_students#refer_friend'
-    post 'student_attendance_line' => 'op_students#student_attendance_line'
-    # post 'student_timetable' => 'op_students#student_timetable'
-    post 'teacher_evaluate' => 'op_teachers#teacher_evaluate'
-    post 'teacher_evaluate_content' => 'op_teachers#teacher_evaluate_content'
-    get 'student_evaluate_content' => 'op_students#student_attendance_content'
-    get 'session_evaluation_content' => 'op_students#session_evaluation'
-    get 'student_videos_list' => 'op_students#student_videos_list'
-
-    get 'student_dashboard' => 'op_students#dashboard'
-    get 'public_profile/:op_student_id' => 'op_students#public_profile', as: 'public_profile'
-    get 'avatars_list' => 'avatars#avatars_list', as: 'avatars_list'
-
-
-
-    namespace :open_educat do
-      resource :op_student do
-      end
-
-      resource :op_teacher do
-        get 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
-      end
-    end
-  end
+  draw :user
 
   namespace :learning do
     get 'view_learning_material/:material_id' => 'learning_materials#view_learning_material'

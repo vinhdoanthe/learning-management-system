@@ -24,6 +24,16 @@ class User::Account::User < ApplicationRecord
 
   enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
 
+  def gender
+    gender = ''
+    if student_id
+      gender = op_student.gender if !op_student.nil?
+    elsif faculty_id
+      gender = op_faculty.gender if !op_faculty.nil?
+    end
+    gender
+  end
+
   def student_name
     if student_id
       op_student = OpStudent.find(student_id)
@@ -173,12 +183,13 @@ class User::Account::User < ApplicationRecord
     if avatar_id.nil?
       return nil
     end
-    avatar = Avatar::where(id: avatar_id).first
+    avatar = User::Account::Avatar::where(id: avatar_id).first
     if avatar.nil?
       return nil
     end
     if avatar.thumbnail.attached? and avatar.full_size.attached?
       return {
+        'id' => avatar.id,
         'thumbnail' => avatar.thumbnail,
         'full_size' => avatar.full_size
       }

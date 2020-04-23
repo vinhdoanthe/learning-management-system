@@ -100,7 +100,7 @@ module User
           @op_student = OpStudent.where(id: params[:op_student_id].to_i).first       
           if @op_student.nil?
             if !current_user.nil? and !current_user.student_id.nil?
-              redirect_to user_public_profile_path(current_user.student_id)
+              redirect_to user_open_educat_op_students_public_profile_path(current_user.student_id)
             else
               redirect_to root_path
             end
@@ -109,7 +109,7 @@ module User
           end
         else 
           if !current_user.nil? and !current_user.student_id.nil?
-            redirect_to user_public_profile_path(current_user.student_id)
+            redirect_to user_open_educat_op_students_public_profile_path(current_user.student_id)
           else
             redirect_to root_path
           end
