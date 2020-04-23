@@ -59,8 +59,9 @@ class User::OpenEducat::OpStudentsService
     end
     
     sessions = sessions.where(subject_id: subject.id).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC)
+    lesson = session.op_lession
     
-    {batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, show_video: show_video, errors: ''}
+    {batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, show_video: show_video, errors: '', lesson: lesson}
   end
 
   def course_product
