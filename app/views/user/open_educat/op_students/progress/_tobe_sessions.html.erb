@@ -1,0 +1,28 @@
+<div class="table-responsive bo-table m-b-20">
+  <div class="fc-header">
+    <h3>Buổi học <span class="color-FFC400">Chưa diễn ra</span></h3>
+  </div>
+  <% if !tobe_sessions.nil? and !tobe_sessions.empty? %>
+    <table class="table  table-link">
+      <thead>
+        <tr>
+          <th width="90">&nbsp;</th>
+          <th width="140"></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tobe_sessions.each do |tobe_session| %>
+          <% s_tobe = tobe_session[:session] %>
+          <% l_tobe = tobe_session[:lesson] %>
+          <tr class="student_subject_level <%= 'subject_level_' + s_tobe.op_subject.id.to_s %>">
+            <%= render 'user/open_educat/op_students/progress/session/tobe_session_student', {:session => s_tobe, :lesson => l_tobe} %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div>Không có buổi học nào chưa diễn ra</div>
+  <% end %>
+</div>

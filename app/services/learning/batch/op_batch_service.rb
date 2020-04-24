@@ -39,12 +39,28 @@ module Learning
         done_sessions = find_done_sessions(all_sessions)
         tobe_sessions = find_tobe_sessions(all_sessions)
         cancel_sessions = find_cancel_sessions(all_sessions)
-
-=begin TODO: Matching lesson - session
+        # Find last_done_lesson
         done_sessions = pair_session_lessons(done_sessions)
-        tobe_sessions = match_tobe_session_lessons(tobe_sessions)
-        cancel_sessions = pair_cancel_sessions(cancel_sessions)
-=end
+        done_lessons = done_sessions.map {|done_session| done_session[:lesson]}
+        done_lessons = done_lessons.compact
+        last_done_lesson = done_lessons.empty? ? nil : done_lessons[-1]
+        # Find tobe_lessions
+        all_lessons = Learning::Course::OpLession.where(subject_id: subject_ids).to_a.compact
+        sorted_lessons = all_lessons.sort_by{|lesson| [lesson[:subject_id], lesson[:lession_number]]}
+        tobe_lessons = []
+        if last_done_lesson.nil?
+          current_index = -1
+        else
+          current_index = sorted_lessons.index{|lesson| lesson[:id] == last_done_lesson.id}
+        end
+        start_index = current_index + 1
+        end_index = sorted_lessons.size - 1
+        for index in start_index..end_index
+          tobe_lessons << sorted_lessons[index]
+        end
+        # Matching
+        tobe_sessions = match_tobe_session_lessons(tobe_sessions, tobe_lessons)
+        cancel_sessions = pair_session_lessons(cancel_sessions)
         return batch, op_student_course, subjects, coming_soon_session, done_sessions, tobe_sessions, cancel_sessions
       end
 
@@ -92,8 +108,23 @@ module Learning
         paired_sessions
       end
 
-      def self.match_tobe_session_lessons(sessions)
-
+      def self.match_tobe_session_lessons(tobe_sessions, tobe_lessons)
+        sessions = []
+        s_size = tobe_sessions.size
+        l_size = tobe_lessons.size
+        if s_size > l_size
+          for index in 0..(l_size-1)
+            sessions << {session: tobe_sessions[index], lesson: tobe_lessons[index]}
+          end
+          for index in l_size..(s_size-1)
+            sessions << {session: tobe_sessions[index], lesson: nil}
+          end
+        else
+          for index in 0..(s_size-1)
+            sessions << {session: tobe_sessions[index], lesson: tobe_lessons[index]}
+          end
+        end
+        sessions
       end
 
       def self.find_coming_soon_session(sessions)
@@ -135,7 +166,7 @@ module Learning
         end
         done_sessions
       end 
-      
+
       def self.get_teachers_name(batch_id)
         faculty_ids = Learning::Batch::OpSession.where(batch_id: batch_id).pluck(:faculty_id).uniq
         faculty_id = faculty_ids.compact.first
@@ -152,88 +183,6 @@ module Learning
         end
       end
 
-=begin Will be removed
-      def self.get_coming_soon_session(student_id:, batch_id:, checkpoint_datetime:)
-        soonest_session = nil
-        if checkpoint_datetime.nil?
-          checkpoint_datetime = Time.now
-        end
-        op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch_id, state: Learning::Constant::STUDENT_BATCH_STATUS_ON).last
-        unless op_student_course.nil?
-          op_subject_ids = op_student_course.op_subjects.map(&:id)
-          session = Learning::Batch::OpSession.where("batch_id = ?  AND subject_id IN (?) AND start_datetime >= ?", op_student_course.batch_id, op_subject_ids, checkpoint_datetime).order(start_datetime: :ASC).first
-
-          unless session.nil?
-            if soonest_session.nil?
-              soonest_session = session
-            else
-              if soonest_session.start_datetime > session.start_datetime
-                soonest_session = session
-              end
-            end
-          end
-        end
-        soonest_session
-      end
-
-      def self.todo_session_student_batch(student_id:, batch_id:)
-        todo_sessions = []
-        op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch_id)
-        op_student_courses.each do |op_student_course|
-          op_subject_ids = op_student_course.op_subjects.map(&:id)
-          sessions = Learning::Batch::OpSession.where('batch_id = ? AND subject_id IN (?) AND (state ilike ? OR state ilike ?)',
-                                                      batch_id,
-                                                      op_subject_ids,
-                                                      Learning::Constant::Batch::Session::STATE_CONFIRM,
-                                                      Learning::Constant::Batch::Session::STATE_DRAFT)
-            .order(start_datetime: 'ASC').to_a
-          unless sessions.nil?
-            todo_sessions.concat sessions
-          end
-        end
-
-        todo_sessions
-      end
-
-      def self.done_session_student_batch(student_id:, batch_id:)
-        done_sessions = []
-        op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch_id)
-        op_student_courses.each do |op_student_course|
-          op_subject_ids = op_student_course.op_subjects.map(&:id)
-          unless op_subject_ids.nil?
-            sessions = Learning::Batch::OpSession.where(batch_id: batch_id,
-                                                        subject_id: op_subject_ids,
-                                                        state: Learning::Constant::Batch::Session::STATE_DONE)
-              .order(start_datetime: 'ASC').to_a
-            unless sessions.nil?
-              done_sessions.concat sessions
-            end
-          end
-        end
-
-        done_sessions
-      end
-
-      def self.cancel_session_student_batch(student_id:, batch_id:)
-        cancel_sessions = []
-
-        op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch_id)
-        op_student_courses.each do |op_student_course|
-          op_subject_ids = op_student_course.op_subjects.map(&:id)
-
-          sessions = Learning::Batch::OpSession.where('batch_id = ? AND subject_id IN (?) AND state ilike ?',
-                                                      batch_id,
-                                                      op_subject_ids,
-                                                      Learning::Constant::Batch::Session::STATE_CANCEL)
-            .order(start_datetime: 'ASC').to_a
-          unless sessions.nil?
-            cancel_sessions.concat sessions
-          end
-        end
-
-        cancel_sessions
-      end
-=end
     end
   end
 end

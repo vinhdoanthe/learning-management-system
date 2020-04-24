@@ -6,19 +6,21 @@
   <% if !cancel_sessions.nil? and !cancel_sessions.empty? %>
     <table class="table  table-link">
       <thead>
-      <tr>
-        <th width="90">&nbsp;</th>
-        <th width="140"></th>
-        <th></th>
-        <th></th>
-      </tr>
+        <tr>
+          <th width="90">&nbsp;</th>
+          <th width="140"></th>
+          <th></th>
+          <th></th>
+        </tr>
       </thead>
       <tbody>
-      <% cancel_sessions.each do |cancel_session| %>
-          <tr class="student_subject_level <%= 'subject_level_' + cancel_session.op_subject.id.to_s %>">
-            <%= render 'user/open_educat/op_students/progress/session/cancel_session_student', {:session => cancel_session} %>
-          <tr>
-      <% end %>
+        <% cancel_sessions.each do |cancel_session| %>
+          <% s_cancel = cancel_session[:session] %>
+          <% l_cancel = cancel_session[:lesson] %>
+          <tr class="student_subject_level <%= 'subject_level_' + s_cancel.op_subject.id.to_s %>">
+            <%= render 'user/open_educat/op_students/progress/session/cancel_session_student', {:session => s_cancel, :lesson => l_cancel} %>
+            <tr>
+            <% end %>
       </tbody>
     </table>
   <% else %>

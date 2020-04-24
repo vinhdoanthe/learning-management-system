@@ -14,9 +14,11 @@
       </tr>
       </thead>
       <tbody>
-      <% done_sessions.each do |done_session| %>
-          <tr class="student_subject_level <%= 'subject_level_' + done_session.op_subject.id.to_s %>">
-            <%= render 'user/open_educat/op_students/progress/session/done_session_student', {:session => done_session} %>
+        <% done_sessions.each do |done_session| %>
+          <% s_done = done_session[:session] %>
+          <% l_done = done_session[:lesson] %>
+          <tr class="student_subject_level <%= 'subject_level_' + s_done.op_subject.id.to_s %>">
+            <%= render 'user/open_educat/op_students/progress/session/done_session_student', {:session => s_done, :lesson => l_done} %>
           </tr>
       <% end %>
       </tbody>
