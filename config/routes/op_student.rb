@@ -1,7 +1,7 @@
 namespace :user do
   namespace :open_educat do
-    get 'session_student' => 'op_student#session_student'
-    get 'student_evaluate' => 'op_student#student_evaluate'
+    get 'session_student' => 'op_students#session_student'
+    get 'student_evaluate' => 'op_students#student_evaluate'
     namespace :op_students do
       get 'batches', action: 'batches'
       get 'batch_detail/:batch_id', action: 'batch_detail', as: 'batch_detail'

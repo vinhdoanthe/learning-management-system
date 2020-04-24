@@ -21,6 +21,7 @@ class Learning::Course::OpSubjectsController < ApplicationController
     subject = session.op_subject
     lessons = [session.op_lession]
     lessons = subject.op_lessions if lessons.blank?
+    lessons.compact!
 
     respond_to do |format|
       format.html

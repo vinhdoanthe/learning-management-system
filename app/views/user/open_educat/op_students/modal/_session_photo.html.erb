@@ -1,0 +1,72 @@
+<div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Hình ảnh lớp học</h4>
+            </div>
+            <div class="modal-body">
+              <% if photos.present? %>
+                <% photos.each do |photo| %>
+                  <div class="bnd-img">
+                    <span><%= image_tag(photo.image) if photo.image.attached? %></span>
+                  </div>
+                <% end %>
+              <% else %>
+                <div> Không có ảnh </div>
+              <% end %>
+                <!-- <div class="bnd-all-other">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="bnd-other">
+                                <a> 
+                                    <img src="/global/images/like-3.png" alt="">
+                                    Like
+                                    <span>0</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="bnd-other">
+                                <a> 
+                                    <img src="/global/images/love-and-romance.png" alt="">
+                                    Thả tim
+                                    <span>0</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="bnd-other">
+                                <a> 
+                                    <img src="/global/images/iconsad.png" alt="">
+                                    Buồn
+                                    <span>0</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="bnd-comment">
+                    <div class="bc-edit">
+                        <span><img src="" alt=""></span>
+                        <input type="text">
+                        <a href="#"><img src="/global/images/send.png" alt=""></a>
+                    </div>
+                    <div class="bc-ansew">
+                        <div class="bca-parent">
+                            <div class="bpe-detail bpe-parent">
+                                <span class=""><img src="" alt=""></span>
+                                <p><b>Kiều Chí Công :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur, recusandae reiciendis commodi placeat fuga quisquam ipsam nam at, repudiandae aperiam illo! Dolore cumque vel repellat libero quidem? Expedita, aliquid.</p>
+                            </div>
+                        </div>
+                        <div class="bca-child">
+                            <div class="bpe-detail bce-child">
+                                <span class=""><img src="" alt=""></span>
+                                <p><b>Kiều Chí Công :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur, recusandae reiciendis commodi placeat fuga quisquam ipsam nam at, repudiandae aperiam illo! Dolore cumque vel repellat libero quidem? Expedita, aliquid.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            
+        </div>
+</div>
