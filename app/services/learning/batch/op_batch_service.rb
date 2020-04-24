@@ -92,8 +92,17 @@ module Learning
               sessions << session if !att_line.nil?
             end
           else
-            session_student = Learning::Batch::OpSessionStudent.where(session_id: session.id, student_course_id: op_student_course_id).first
-            sessions << session if !session_student.nil?
+            if session.state == Learning::Constant::Batch::Session::STATE_DRAFT \
+                or session.state == Learning::Constant::Batch::Session::STATE_CONFIRM \
+                or session.state == Learning::Constant::Batch::Session::STATE_CANCEL
+              # Not done session
+              session_student = Learning::Batch::OpSessionStudent.where(session_id: session.id, student_course_id: op_student_course_id).first
+              sessions << session if !session_student.nil?
+            else
+              # Done session
+              att_line = Learning::Batch::OpAttendanceLine.where(session_id: session.id, student_id: student_id).first
+              sessions << session if !att_line.nil?
+            end
           end
         end
         sessions

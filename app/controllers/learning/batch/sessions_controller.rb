@@ -9,34 +9,34 @@ class Learning::Batch::SessionsController < ApplicationController
     end
   end
 
-    def active_session
-      session = Learning::Batch::OpSession.where(id: params[:session_id]).first
-      lesson = session.op_lession
-      subject = session.op_subject
+  def active_session
+    session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+    lesson = session.op_lession
+    subject = session.op_subject
 
-      if lesson.present? && lesson.thumbnail.attached?
-        thumbnail = lesson.thumbnail.service_url
-      else
-        thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
-      end
-
-      respond_to do |format|
-        format.html
-        format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/lession_information', locals: { session: session, lesson: lesson, thumbnail: thumbnail, subject: subject }}
-      end
+    if lesson.present? && lesson.thumbnail.attached?
+      thumbnail = lesson.thumbnail.service_url
+    else
+      thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
     end
 
-    def session_attendance_info
-
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/lession_information', locals: { session: session, lesson: lesson, thumbnail: thumbnail, subject: subject }}
     end
+  end
 
-    def session_photo
-      session = Learning::Batch::OpSession.where(id: params[:session_id]).first
-      photos = session.photos
+  def session_attendance_info
 
-      respond_to do |format|
-        format.html
-        format.js { render 'user/open_educat/op_students/js/session_photo', locals: { photos: photos } }
-      end
+  end
+
+  def session_photo
+    session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+    photos = session.photos
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_students/js/session_photo', locals: { photos: photos } }
     end
+  end
 end

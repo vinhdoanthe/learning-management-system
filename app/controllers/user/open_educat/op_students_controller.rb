@@ -79,17 +79,20 @@ module User
         op_faculty = nil
         op_batch = nil
         op_att_line = nil
+        photos = []
         if params[:session_id].present?
           op_session = Learning::Batch::OpSession.find(params[:session_id].to_i)
           unless op_session.nil?
             op_batch = op_session.op_batch
             op_faculty = op_session.op_faculty
-          end
           op_att_line = op_session.op_attendance_lines.where(student_id: @op_student.id).first
+          photos = SocialCommunity::Photo.where(session_id: op_session.id).to_a
+          photos = photos.take(5) if !photos.empty?
+          end
         end
         respond_to do |format|
           format.html
-          format.js {render 'user/open_educat/op_students/evaluation/session_evaluation', :locals => {op_faculty: op_faculty, op_batch: op_batch, op_session: op_session, op_att_line: op_att_line}}
+          format.js {render 'user/open_educat/op_students/evaluation/session_evaluation', :locals => {op_faculty: op_faculty, op_batch: op_batch, op_session: op_session, op_att_line: op_att_line, photos: photos}}
         end
 
       rescue StandardError => e

@@ -1,6 +1,7 @@
 <% op_batch %>
 <% op_faculty %>
 <% op_att_line %>
+<% photos %>
 
 <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content modal-test">
@@ -42,7 +43,7 @@
           <% end %>
         </div>
       </div>
-
+      <%= render :partial => 'user/open_educat/op_students/session_picture_moments', :locals => {photos: photos} %>
       <%= render :partial => "user/open_educat/op_students/evaluation/attendance_line", :locals => {op_att_line: op_att_line} %>
     </div>
   </div>
