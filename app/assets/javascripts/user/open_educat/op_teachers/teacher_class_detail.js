@@ -79,7 +79,6 @@ $('#session_control').on('click', '#teacher_checkin_confirm_new', function () {
     })
   
   $('.select_active_subject').on('click', function(){
-    debugger
     $('.select_active_subject span').removeClass('active_subject');
     $(this).find('span').addClass('active_subject')
   })

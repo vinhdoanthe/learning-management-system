@@ -87,7 +87,7 @@
                             </button>
                           </li>
                           <li id="btn_view_materials">
-                            <%= link_to 'Học liệu', learning_show_google_doc_materials_path(@session.id), {:class => 'btn btn-default btn-embossed', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
+                            <%= link_to 'Học liệu', learning_list_slides_of_subject_path(@session.subject_id), {:class => 'btn btn-default btn-embossed', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
                           </li>
                           <!-- <li>
                             <button type="button" class="btn btn-default btn-embossed" data-toggle="modal" data-target="#thuonghocsinh">Thưởng</button>

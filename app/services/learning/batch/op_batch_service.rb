@@ -49,6 +49,9 @@ module Learning
       end
 
       def self.get_sessions(batch_id, student_id, subject_ids = [], interval = {})
+        op_student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch_id, student_id: student_id).last
+        op_student_course_id = op_student_course.nil? ? nil : op_student_course.id
+
         all_sessions = []
         if interval[:start].present? and interval[:end].present? 
           unless subject_ids.blank?
@@ -73,7 +76,7 @@ module Learning
               sessions << session if !att_line.nil?
             end
           else
-            session_student = Learning::Batch::OpSessionStudent.where(session_id: session.id, student_id: student_id).first
+            session_student = Learning::Batch::OpSessionStudent.where(session_id: session.id, student_course_id: op_student_course_id).first
             sessions << session if !session_student.nil?
           end
         end

@@ -21,6 +21,33 @@ module Learning
     end
 
 
+    def list_slides_of_subject
+      if params[:subject_id].present?
+        lesson_ids = Learning::Course::OpLession.where(subject_id: params[:subject_id].to_i).pluck(:id).uniq.compact
+        slides = []
+        unless lesson_ids.blank?
+          slides = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE, op_lession_id: lesson_ids).pluck(:id,:title).uniq.compact 
+        end
+        respond_to do |format|
+          format.js {render 'learning/list_slides', locals: {slides: slides}}
+        end
+      end
+    end
+
+    def show_google_slide
+      if params[:slide_id].present?
+        slide = Learning::Material::LearningMaterial.where(id: params[:slide_id].to_i).first
+        if slide.nil?
+          link = ''
+        else
+          link = slide.google_drive_link
+        end
+        respond_to do |format|
+          format.js {render 'learning/show_google_slide', locals: {link: link}}
+        end
+      end
+    end
+
     def show_video
       video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last
       fallback_video_id = Learning::Constant::Material::DEFAULT_VIDEO_ID
@@ -52,7 +79,7 @@ module Learning
       else
         @video_id = fallback_video_id
       end
-      
+
       respond_to do |format|
         format.js {render 'learning/show_homework_video', :locals => { session: session, video_id: @video_id, lesson: lesson, name: name }}
       end

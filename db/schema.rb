@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_22_105959) do
+ActiveRecord::Schema.define(version: 2020_04_24_024620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2828,6 +2828,12 @@ ActiveRecord::Schema.define(version: 2020_04_22_105959) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "discussions", force: :cascade do |t|
+    t.bigint "batch_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "document_page", id: :serial, comment: "Document Page", force: :cascade do |t|
@@ -6065,11 +6071,13 @@ ActiveRecord::Schema.define(version: 2020_04_22_105959) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.bigint "conversation_id"
     t.text "content"
     t.bigint "sent_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "messageable_type"
+    t.bigint "messageable_id"
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
   end
 
   create_table "muk_autovacuum_rules", id: :serial, comment: "Auto Vacuum Rules", force: :cascade do |t|
@@ -10921,6 +10929,7 @@ ActiveRecord::Schema.define(version: 2020_04_22_105959) do
   add_foreign_key "decimal_precision", "res_users", column: "write_uid", name: "decimal_precision_write_uid_fkey", on_delete: :nullify
   add_foreign_key "decimal_precision_test", "res_users", column: "create_uid", name: "decimal_precision_test_create_uid_fkey", on_delete: :nullify
   add_foreign_key "decimal_precision_test", "res_users", column: "write_uid", name: "decimal_precision_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "discussions", "op_batch", column: "batch_id"
   add_foreign_key "document_page", "document_page", column: "parent_id", name: "document_page_parent_id_fkey", on_delete: :nullify
   add_foreign_key "document_page", "document_page_history", column: "history_head", name: "document_page_history_head_fkey", on_delete: :nullify
   add_foreign_key "document_page", "ir_ui_menu", column: "menu_id", name: "document_page_menu_id_fkey", on_delete: :nullify
@@ -11733,7 +11742,6 @@ ActiveRecord::Schema.define(version: 2020_04_22_105959) do
   add_foreign_key "merge_opportunity_rel", "crm_merge_opportunity", column: "merge_id", name: "merge_opportunity_rel_merge_id_fkey", on_delete: :cascade
   add_foreign_key "message_attachment_rel", "ir_attachment", column: "attachment_id", name: "message_attachment_rel_attachment_id_fkey", on_delete: :cascade
   add_foreign_key "message_attachment_rel", "mail_message", column: "message_id", name: "message_attachment_rel_message_id_fkey", on_delete: :cascade
-  add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users", column: "sent_by"
   add_foreign_key "muk_autovacuum_rules", "res_users", column: "create_uid", name: "muk_autovacuum_rules_create_uid_fkey", on_delete: :nullify
   add_foreign_key "muk_autovacuum_rules", "res_users", column: "write_uid", name: "muk_autovacuum_rules_write_uid_fkey", on_delete: :nullify
