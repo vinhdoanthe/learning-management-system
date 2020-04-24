@@ -8,7 +8,7 @@
         <h4 class="modal-title">Học cụ</h4>
       </div>
       <div class="modal-body learning_device_content">
-        
+        <div><%= lesson.present? ? lesson.learning_devices : 'Không có học cụ' %></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

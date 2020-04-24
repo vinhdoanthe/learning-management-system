@@ -4,4 +4,5 @@ namespace :learning do
     get 'vimeo' => 'material/learning_materials#vimeo'
     get 'list_slides_of_subject/:subject_id' => 'learning_materials#list_slides_of_subject', as: 'list_slides_of_subject'
     get 'show_google_slide/:slide_id' => 'learning_materials#show_google_slide', as: 'show_google_slide'
+    get 'op_session/session_photo' => 'batch/sessions#session_photo'
 end

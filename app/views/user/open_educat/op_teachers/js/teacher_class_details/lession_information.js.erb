@@ -5,3 +5,5 @@ $('#session_control').html('<%= escape_javascript(render partial: 'user/open_edu
 $('.attendance_session_info').html("<h4><strong>Học phần <%= subject.level %> Buổi học: <%= session.count %></h4><p><%= session.start_datetime.strftime('%H:%M') %> - <%= session.end_datetime.strftime('%H:%M') %> | <%= session.start_datetime.strftime('%d/%m/%Y') %> </p>") 
 
 $('input[name="upload_session_id"]').val('<%= session.id %>')
+
+$('.learning_device_content').html("<div> <%= lesson.present? ? lesson.learning_devices : 'Không có học cụ' %></div>")

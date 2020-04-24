@@ -18,7 +18,7 @@ module Learning
       has_many :op_session_students, :class_name => 'Learning::Batch::OpSessionStudent', foreign_key: 'session_id'
       has_many :op_attendance_sheets, :class_name => 'Learning::Batch::OpAttendanceSheet', foreign_key: 'session_id'
       has_many :op_attendance_lines, :class_name => 'Learning::Batch::OpAttendanceLine', foreign_key: 'session_id'
-      has_many_attached :photos
+      has_many :photos, :class_name => 'SocialCommunity::Photo', foreign_key: 'session_id'
 
       def start_time
         self.start_datetime

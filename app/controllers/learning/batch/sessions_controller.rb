@@ -1,13 +1,4 @@
 class Learning::Batch::SessionsController < ApplicationController
-    # def add_photo_attachment
-    # 	@session = Learning::Batch::OpSession.find(params[:upload_session_id])
-    # 	if @session.photos.attach(params[:photos])
-    # 		render json: {type: 'success', message: 'Đăng ảnh thành công!' }
-    # 	else
-    # 		render json: {type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau!'}
-    # 	end
-    # 	
-    # end
   def add_photo_attachment
     session = Learning::Batch::OpSession.where(id: params[:upload_session_id]).first
     result = SocialCommunity::PhotoService.new.add_photo_attachment session, params[:photos], current_user
@@ -28,8 +19,6 @@ class Learning::Batch::SessionsController < ApplicationController
       else
         thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
       end
-      #      attendance_sheet = session.op_attendance_sheets.last
-      #     attendance_lines = attendance_sheet.op_attendance_lines
 
       respond_to do |format|
         format.html
@@ -39,5 +28,15 @@ class Learning::Batch::SessionsController < ApplicationController
 
     def session_attendance_info
 
+    end
+
+    def session_photo
+      session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+      photos = session.photos
+
+      respond_to do |format|
+        format.html
+        format.js { render 'user/open_educat/op_students/js/session_photo', locals: { photos: photos } }
+      end
     end
 end
