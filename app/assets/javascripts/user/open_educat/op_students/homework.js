@@ -3,7 +3,26 @@ function get_video( batch_id, subject_id){
     $.ajax({
       method: 'GET',
       url: '/learning/show_video/' + session_id + '?session_id=' + session_id + '&batch_id=' + batch_id + '&subject_id=' + subject_id,
-      dataType: 'script'
+      dataType: 'script',
+      success: function(){
+        debugger
+        $('.video_carousel').owlCarousel({
+          margin:10,
+          nav:true,
+          responsive:{
+            0:{
+              items:1    
+            },
+            600:{
+              items:3
+            },
+            1000:{
+              items:5
+            }
+          }
+        })
+
+      }
     })
 }
 

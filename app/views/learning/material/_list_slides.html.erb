@@ -1,0 +1,25 @@
+<!-- Render list slides of a lesson -->
+
+<div class="modal-dialog modal-lg" role="document" style='position: relative; display: table;overflow-y: auto;overflow-x: auto;width: auto;'>
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="redem-tab class-tab">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="active"><a href="#baigiang" data-toggle="tab">Bài giảng</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane active in" id="baigiang">
+            <ul>
+              <% slides.each do |slide| %>
+                <li>
+                  <%= link_to slide[1], learning_show_google_slide_path(slide[0]), {:class => 'btn btn-default btn-embossed', :remote => true} %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

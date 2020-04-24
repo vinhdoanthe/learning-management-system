@@ -1,13 +1,22 @@
 class Learning::Batch::SessionsController < ApplicationController
-    def add_photo_attachment
-    	@session = Learning::Batch::OpSession.find(params[:upload_session_id])
-    	if @session.photos.attach(params[:photos])
-    		render json: {type: 'success', message: 'Đăng ảnh thành công!' }
-    	else
-    		render json: {type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau!'}
-    	end
-    	
+    # def add_photo_attachment
+    # 	@session = Learning::Batch::OpSession.find(params[:upload_session_id])
+    # 	if @session.photos.attach(params[:photos])
+    # 		render json: {type: 'success', message: 'Đăng ảnh thành công!' }
+    # 	else
+    # 		render json: {type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau!'}
+    # 	end
+    # 	
+    # end
+  def add_photo_attachment
+    session = Learning::Batch::OpSession.where(id: params[:upload_session_id]).first
+    result = SocialCommunity::PhotoService.new.add_photo_attachment session, params[:photos], current_user
+    if result.present?
+      render json: {type: 'danger', message: result}
+    else
+      render json: {type: 'success', message: 'Đăng ảnh thành công!' }
     end
+  end
 
     def active_session
       session = Learning::Batch::OpSession.where(id: params[:session_id]).first
