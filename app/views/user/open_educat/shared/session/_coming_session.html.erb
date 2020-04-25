@@ -1,10 +1,10 @@
-<div class="table-responsive bo-table m-b-20" style="padding-left: 38px !important;">
-  <div class="fc-header b-0">                                                                                       
+<div class="table-responsive bo-table" style="padding-left: 38px !important;">
+  <div class="fc-header b-0">
     <h3 class="pull-left p-t-10">Buổi học <span class="color-F16357">Sắp diễn ra</span></h3>
     <ul class="list-modal">
       <li>
-        <button type="submit" class="btn btn-primary btn-embossed height-auto btn-fix" data-toggle="modal" data-target="#study_guide" style="padding-left: 5px !important; display: flex; align-items: center;">
-          <img src="/global/images/laptop.png" style="padding: 5px"> 
+        <button type="submit" class="btn btn-primary btn-embossed height-auto btn-fix" data-toggle="modal" data-target="#study_guide">
+          <img src="/global/images/laptop.png"> 
           Hướng dẫn cài đặt ứng dụng và<br/>học trực tuyến trên máy tính
         </button>
       </li>
@@ -16,27 +16,22 @@
       <tr>
         <td>
           <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
-            <p><%= coming_soon_session.op_subject.name %></p>
+            <p><strong><%= coming_soon_session.op_subject.name %><strong?</p>
             <% start = coming_soon_session.start_datetime %>
           <% else %>
-            <div>Đã kết thúc</div>
+            <div><strong>Đã kết thúc</strong></div>
             <% start = 0 %>
           <% end %>
         </td>
-
         <td align="right">
-
           <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
-            <p class="text-right"><%= start.strftime('%H:%M') %>
-          - <%= coming_soon_session.end_datetime.strftime('%H:%M') %> | <%= (get_week_day start.strftime('%A')) + ', ' + start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %>
+            <p class="text-right"><b><%= start.strftime('%H:%M') %></b>
+            đến <b><%= coming_soon_session.end_datetime.strftime('%H:%M') %></b> | <b><%= (get_week_day start.strftime('%A')) + ', ' + start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %></b>
             </p>
           <% end %> 
         </td>
-        <td width="27%">
+        <td width="135">
           <div id="clockdiv">
-            <div>
-              <span class="days"></span>
-            </div>
             <div>
               <span class="hours"></span>
             </div>
@@ -48,6 +43,9 @@
             </div>
           </div>
         </td>
+<!--        <td align="right">-->
+<!--          <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7">Vào học ngay</button>-->
+<!--        </td>-->
       </tr>
     </tbody>
   </table>
@@ -69,12 +67,12 @@
   </div>
 </div>
 <style>
-  .btn-fix{
-    background: #fff !important;
-    color: #000 !important;
-    border: 1px solid rgba(0, 0, 0, 0.15) !important;
-    position: relative;
-    padding-left: 35px !important;
-  }
+.btn-fix{
+  background: #fff !important;
+  color: #000 !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  position: relative;
+  padding-left: 35px !important;
+}
 </style>
-<%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true%>
+<%#= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true %>

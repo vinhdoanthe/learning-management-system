@@ -57,11 +57,39 @@ class User::OpenEducat::OpStudentsService
       sessions = sessions.where(subject_id: subject.id)
       session = sessions.order(start_datetime: :DESC).first 
     end
-    
+
     sessions = sessions.where(subject_id: subject.id).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC)
     lesson = session.op_lession
-    
+
     {batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, show_video: show_video, errors: '', lesson: lesson}
+  end
+
+  def self.get_comming_soon_session(student_id)
+    coming_soon_session = nil
+    op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id).to_a
+    batch_ids = []
+    subject_ids = []
+    student_course_ids = []
+    op_student_courses.each do |op_student_course|
+      student_course_ids << op_student_course.id
+      batch_ids << op_student_course.batch_id
+      subject_ids.concat op_student_course.op_subjects.pluck(:id).uniq
+    end
+    time_now = Time.now()
+    next_sessions = Learning::Batch::OpSession.where('batch_id IN (?) AND subject_id IN (?) AND start_datetime >= ?', batch_ids, subject_ids, time_now).order(start_datetime: :ASC).to_a
+    next_sessions.each do |session|
+      if !session.is_offset
+        coming_soon_session = session
+        break
+      else
+        session_student = Learning::Batch::OpSessionStudent.where(session_id: session.id, student_course_id: student_course_ids).first
+        if !session_student.nil?
+          coming_soon_session = session
+          break
+        end
+      end 
+    end 
+    coming_soon_session
   end
 
   def course_product

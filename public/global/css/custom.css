@@ -2391,8 +2391,49 @@ box-shadow: 0px 5px 3px -1px #707070;
 	overflow: hidden; 
 }
 .bnd-img{
-	max-height: 450px;
+	/*max-height: 450px;*/
+	margin-bottom: 10px;
 }
+.bndi-detail{
+	display: table;
+	vertical-align: middle;
+	width: 50%;
+	height: 300px;
+	text-align: center;
+	padding: 5px;
+	float: left;
+	
+}
+.bndi-detail span span.detail-plus{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	background: rgba(0,0,0,0.5);
+	color: #fff;
+	font-size: 30px;
+	padding-top: 47%;
+	font-family: 'Montserrat-Bold';
+}
+
+.bndi-detail span{
+	position: relative;
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+	height: 300px;
+	text-align: center;
+	border: 1px solid #dcdcdc;
+}
+.bndi-detail span img{
+	max-width: 100%;
+	max-height: 100%
+}
+
 .bld-left{
 	width: 50%;
 	float: left;
@@ -2428,6 +2469,8 @@ box-shadow: 0px 5px 3px -1px #707070;
     border-left: 0;
     border-right: 0;
     margin-top: 10px;
+        display: inline-block;
+    width: 100%;
 }
 .bnd-other{
 	text-align: center;
@@ -3149,7 +3192,20 @@ ul.fcv-small li:hover video{
 	width: 20px;
 }
 
-
+.list-lightbox .owl-nav{}
+.list-lightbox .owl-nav button{
+	position: absolute;
+    top: 30%;
+    background: #fff !important;
+}
+.list-lightbox .owl-nav button.owl-prev{}
+.list-lightbox .owl-nav button.owl-next{
+	right: 0;
+}
+.list-lightbox .owl-nav button span{
+	font-size: 50px;
+    
+}
 
 
 

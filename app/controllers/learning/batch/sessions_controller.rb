@@ -38,7 +38,7 @@ class Learning::Batch::SessionsController < ApplicationController
       format.html
       format.js { render 'user/open_educat/op_students/js/session_photo', locals: { photos: photos } }
     end
-
+  end
     def session_reward
       session = Learning::Batch::OpSession.where(id: params[:session_id]).first
       batch = session.op_batch

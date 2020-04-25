@@ -29,7 +29,11 @@
         <li>
           <%= image_tag('global/images/professor.png') %>
           <p><span class="span-text">Giảng viên: </span>
-          <a href=""><%= faculty_names.join(', ') %></a>
+          <% if current_user.is_student? %>
+            <a href=""><%= faculty_names.join(', ') %></a>
+          <% elsif current_user.is_teacher? %>
+            <a href=""><%= faculty.full_name %></a>
+          <% end %>
           </p>
         </li>
       </ul>

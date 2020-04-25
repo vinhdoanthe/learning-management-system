@@ -231,8 +231,7 @@ module User
 
       def timetable
         @sessions = @op_student.op_sessions
-
-        @session = @sessions.where('start_datetime >= ?', Time.now).order(start_datetime: :ASC).first
+        @session = User::OpenEducat::OpStudentsService.get_comming_soon_session(@op_student.id)
         schedules = OpTeachersService.teaching_schedule(@sessions, params)
 
         if request.method == 'POST'
