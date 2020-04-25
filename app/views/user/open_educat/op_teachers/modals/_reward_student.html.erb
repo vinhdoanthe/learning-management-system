@@ -1,0 +1,55 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+
+    <div class="modal-body">
+      <div class="modal-title">
+        <label>Thưởng học sinh</label>
+      </div>
+      <div class="ths-adds">
+        <div class="ths-left pull-left">
+          <ul>
+            <% students.each do |student| %>
+              <li>
+                <div class="ths-people">
+                  <% avatar = get_student_avatar student %>
+                  <span class="big-icon icon_reward" style='position: relative'>
+                    <input type='hidden' value='<%= student.id %>' name='active_reward_student'>
+                    <span class="active_reward" style=" width: 15px; height: 15px; background-color: #5DC2A7 ; position: absolute; top: 0; right: 0; border-radius: 50%;"></span>
+                    <!-- <img src="/global/images/Group.png" alt=""> -->
+                    <%= image_tag(avatar.thumbnail) if (avatar.present? && avatar.thumbnail.attached?) %>
+                  </span>
+                  <!--  <a href="" class="close-icon"><img src="/global/images/close.png" alt=""></a> -->
+                  <p><%= student.full_name %></p>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <hr>
+      <div class="ths-list">
+        <div class="row">
+          <% Common::RewardType.all.each_with_index do |type, index| %>
+            <div class="col-sm-3 reward_type">
+              <a class="ths-detail">
+                <%= image_tag(type.icon) if type.icon.attached? %>
+                <input type='hidden' name='active_reward_type' value='<%= type.id %>'>
+                <% if index == 0 %>
+                  <span class='active_reward_type plus-add'>+1</span>
+                <% else %>
+                  <span class='active_reward_type'>0</span>
+                <% end %>
+                <label for=""><%= type.name %></label>
+                <p><%= type.description %></p>
+              </a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button type="button" id="reward_student_confirm" class="btn btn-primary">Khen thưởng</button>
+    </div>
+  </div>
+</div>

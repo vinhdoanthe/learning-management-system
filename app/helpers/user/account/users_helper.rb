@@ -5,6 +5,12 @@ module User
         asset_path('global/images/avatar.svg')
       end
 
+      def get_student_avatar student
+        user = User.where(student_id: student.id).first
+        avatar = user ? user.avatar : ''
+        return avatar
+      end
+
       def count_mark_question teacher
         teacher.user_answers.where(state: 'waiting').count.to_s
       end
