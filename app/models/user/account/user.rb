@@ -36,7 +36,7 @@ class User::Account::User < ApplicationRecord
 
   def student_name
     if student_id
-      op_student = OpStudent.find(student_id)
+      op_student = User::OpenEducat::OpStudent.find(student_id)
       op_student.full_name
     else
       ''
@@ -45,7 +45,7 @@ class User::Account::User < ApplicationRecord
 
   def parent_name
     if parent_id
-      op_parent = OpParent.find(parent_id)
+      op_parent = User::OpenEducat::OpParent.find(parent_id)
       op_parent.full_name
     else
       if student_id
@@ -67,7 +67,7 @@ class User::Account::User < ApplicationRecord
 
   def faculty_name
     if faculty_id
-      op_faculty = OpFaculty.find(faculty_id)
+      op_faculty = User::OpenEducat::OpFaculty.find(faculty_id)
       op_faculty.full_name
     else
       ''
@@ -77,20 +77,20 @@ class User::Account::User < ApplicationRecord
   def center_name
     company = nil
     if !student_id.nil?
-      op_student = OpStudent.find(student_id)
+      op_student = User::OpenEducat::OpStudent.find(student_id)
       if !op_student.nil? && !op_student.company_id.nil?
         company = Common::ResCompany.find(op_student.company_id)
       end
     elsif !parent_id.nil?
-      op_parent = OpParent.find(parent_id)
+      op_parent = User::OpenEducat::OpParent.find(parent_id)
       if !op_parent.nil? && !op_parent.name.nil?
-        res_partner = ResPartner.find(op_parent.name)
+        res_partner = User::ResPartner.find(op_parent.name)
         if !res_partner.nil? && !res_partner.company_id.nil?
           company = Common::ResCompany.find(res_partner.company_id)
         end
       end
     elsif !faculty_id.nil?
-      op_faculty = OpFaculty.find(faculty_id)
+      op_faculty = User::OpenEducat::OpFaculty.find(faculty_id)
       if !op_faculty.nil? && !op_faculty.company_id.nil?
         company = Common::ResCompany.find(op_faculty.company_id)
       end

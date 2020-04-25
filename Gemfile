@@ -18,6 +18,9 @@ gem 'rails_admin', '~> 2.0'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'composite_primary_keys', '~> 12.0'
 
+# Notification
+gem 'activity_notification'
+
 # Image processing
 gem "aws-sdk-s3", require: false
 
@@ -52,6 +55,8 @@ gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 gem 'rails', '~> 6.0.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
+# Use MongoDB for store key-value object
+gem "mongoid", "~> 7.0.2"
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets

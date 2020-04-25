@@ -60,7 +60,7 @@ class User::OpenEducat::OpStudent < ApplicationRecord
     if parent_id
       op_parent = op_parents.last
       if op_parent && op_parent.name
-        res_partner = ResPartner.find(op_parent.name)
+        res_partner = User::ResPartner.find(op_parent.name)
         if res_partner
           if res_partner.display_name
             name = res_partner.display_name
@@ -97,7 +97,7 @@ class User::OpenEducat::OpStudent < ApplicationRecord
     if parent_id
       op_parent = op_parents.last
       if op_parent && op_parent.name
-        res_partner = ResPartner.find(op_parent.name)
+        res_partner = User::ResPartner.find(op_parent.name)
         if res_partner
           if res_partner.street
             address = res_partner.street
@@ -115,7 +115,7 @@ class User::OpenEducat::OpStudent < ApplicationRecord
     if parent_id
       op_parent = op_parents.last
       if op_parent && op_parent.name
-        res_partner = ResPartner.find(op_parent.name)
+        res_partner = User::ResPartner.find(op_parent.name)
         if res_partner
           if res_partner.city
             district = res_partner.city
@@ -131,7 +131,7 @@ class User::OpenEducat::OpStudent < ApplicationRecord
     if parent_id
       op_parent = op_parents.last
       if op_parent && op_parent.name
-        res_partner = ResPartner.find(op_parent.name)
+        res_partner = User::ResPartner.find(op_parent.name)
         if res_partner
           if res_partner.country_id
             res_country = Common::ResCountry.find(res_partner.country_id)

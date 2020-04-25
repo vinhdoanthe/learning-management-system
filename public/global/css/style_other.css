@@ -35,7 +35,7 @@
 }
 @font-face {
   font-family: 'Montserrat-Thin';
-  src: url('../fonts/Montserrat-Thin.otf');
+  src: url('../fonts/Montserrat-Thin.ttf');
 }
 .font-bold{font-family: 'Montserrat-Bold';}
 .font-italic{font-family: 'Montserrat-Italic';}
@@ -67,9 +67,16 @@ body p strong {
 body > .pace > .pace-activity {
   display: none !important;
 }
+ html input[disabled]{
+ 	background: #f2f2f2 !important;
+ }
 img{
 	max-height: 100%;
 	max-width: 100%;
+}
+b,strong{
+	color: #000 !important;
+	font-family: 'Montserrat-Bold';
 }
 input,
 select,
@@ -149,6 +156,9 @@ p {
 }
 td,th{
 	vertical-align: middle;
+}
+th{
+	font-family: 'Montserrat-Bold';
 }
 .p-0{
 	padding: 0 !important;
@@ -338,6 +348,9 @@ td,th{
 }
 .color-939393{
 	color: #939393 !important;
+}
+.bg-cfcfcf{
+	background: #cfcfcf !important;
 }
 .bg-8392A5{
 	background: #8392A5 !important;

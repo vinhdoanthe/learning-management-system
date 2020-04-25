@@ -4,25 +4,25 @@
       <span>
         <%= image_tag('global/images/profile1.png') %>
       </span>
-      <p><b class="color-F16357">120.320</b> Điểm</p>
+      <p><b class="color-F16357">0</b> Điểm</p>
     </li>
     <li>
       <span>
         <%= image_tag('global/images/profile2.png') %>
       </span>
-      <p>Học tại:  <b>TEKY Cầu Giấy</b></p>
+      <p>Học tại:  <b><%= op_student.vattr_center_name %></b></p>
     </li>
     <li>
       <span>
         <%= image_tag('global/images/profile4.png') %>
       </span>
-      <p>Giới tính: <b>Nam</b></p>
+      <p>Giới tính: <b><%= op_student.vattr_gender %></b></p>
     </li>
     <li>
       <span>
         <%= image_tag('global/images/profile5.png') %>
       </span>
-      <p>Địa chỉ: <b>Hà Nội, Việt Nam</b></p>
+      <p>Địa chỉ: <b><%= op_student.vattr_parent_address %></b></p>
     </li>
   </ul>
 </div>

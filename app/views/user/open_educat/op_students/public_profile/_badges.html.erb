@@ -1,23 +1,12 @@
 <div class="bpc-huyhieu">
   <div class="row">
-    <div class="col-sm-4">
-      <div class="bph-img">
-        <%= image_tag('global/images/huyhieu.png') %>
-        <label>MOD CREATIONS ESSENTIALS</label>
+    <% badges.each do |badge| %>
+      <div class="col-sm-4">
+        <div class="bph-img">
+          <%= image_tag('global/images/huyhieu.png') %>
+          <label>MOD CREATIONS ESSENTIALS</label>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="bph-img">
-        <%= image_tag('global/images/huyhieu.png') %>
-        <label>MOD CREATIONS ESSENTIALS</label>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="bph-img">
-        <%= image_tag('global/images/huyhieu.png') %>
-        <label>MOD CREATIONS ESSENTIALS</label>
-      </div>
-    </div>
-
+    <% end %>
   </div>
 </div>

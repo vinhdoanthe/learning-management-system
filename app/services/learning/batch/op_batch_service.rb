@@ -11,7 +11,7 @@ module Learning
           op_student_courses = Learning::Batch::OpStudentCourse.where(batch_id: batch_id).to_a
           faculty_ids = Learning::Batch::OpSession.where('batch_id = ? AND state != ?', batch_id, Learning::Constant::Batch::Session::STATE_CANCEL).pluck(:faculty_id).uniq.compact
           faculty_names = User::OpenEducat::OpFaculty.where(id: faculty_ids).pluck(:full_name).uniq.compact
-          batch_subjects = course.op_subjects.pluck(:id, :level).uniq.compact
+          batch_subjects = course.op_subjects.order(level: :ASC).pluck(:id, :level).uniq.compact
           done_subjects = Learning::Batch::OpSession.where(batch_id: batch_id, state: Learning::Constant::Batch::Session::STATE_DONE).pluck(:subject_id).uniq.compact
           session_count = count_done_session(batch)
           company = Common::ResCompany.where(id: batch.company_id).first
@@ -32,7 +32,7 @@ module Learning
       def self.get_student_batch_progress(batch_id, student_id)
         batch = Learning::Batch::OpBatch.where(id: batch_id).first
         op_student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch_id, student_id: student_id).last
-        subjects = op_student_course.op_subjects.pluck(:id, :level).compact
+        subjects = op_student_course.op_subjects.order(level: :ASC).pluck(:id, :level).compact
         subject_ids = subjects.map{|subject| subject[0]}
         all_sessions = get_sessions(batch_id, student_id, subject_ids)
         coming_soon_session = find_coming_soon_session(all_sessions)

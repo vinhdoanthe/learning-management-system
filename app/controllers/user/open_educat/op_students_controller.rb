@@ -3,6 +3,7 @@ module User
     class OpStudentsController < ApplicationController
       before_action :authenticate_student!, except: [:public_profile, :session_student, :student_evaluate, :timetable]
       before_action :get_op_student, except: [:public_profile, :session_student, :student_evaluate]
+      skip_before_action :authenticate_user!, only: [:public_profile] 
       skip_before_action :verify_authenticity_token, only: [:timetable]
 
       def dashboard
@@ -85,9 +86,9 @@ module User
           unless op_session.nil?
             op_batch = op_session.op_batch
             op_faculty = op_session.op_faculty
-          op_att_line = op_session.op_attendance_lines.where(student_id: @op_student.id).first
-          photos = SocialCommunity::Photo.where(session_id: op_session.id).to_a
-          photos = photos.take(5) if !photos.empty?
+            op_att_line = op_session.op_attendance_lines.where(student_id: @op_student.id).first
+            photos = SocialCommunity::Photo.where(session_id: op_session.id).to_a
+            photos = photos.take(5) if !photos.empty?
           end
         end
         respond_to do |format|
@@ -99,26 +100,48 @@ module User
         redirect_error_site(e)
       end
 
+
+      # Lấy các thông tin để hiển thị cho trang Public Profile
+      # Return
+      # - user
+      # - op_student
+      # - achievements
+      # - badges
+      # - products
+      # - featured photos
       def public_profile
         if params[:op_student_id].present?
           @op_student = OpStudent.where(id: params[:op_student_id].to_i).first       
           if @op_student.nil?
             if !current_user.nil? and !current_user.student_id.nil?
-              redirect_to user_open_educat_op_students_public_profile_path(current_user.student_id)
+              redirect_to user_open_educat_op_students_public_profile_path(current_user.student_id) and return
             else
-              redirect_to root_path
+              redirect_to root_path and return
             end
-          else
-
           end
-        else 
+        else # params[:op_student_id] == nil 
           if !current_user.nil? and !current_user.student_id.nil?
-            redirect_to user_open_educat_op_students_public_profile_path(current_user.student_id)
+            redirect_to user_open_educat_op_students_public_profile_path(current_user.student_id) and return
           else
-            redirect_to root_path
+            redirect_to root_path and return
           end
         end
-
+        # Get response data
+        public_user = User::Account::User.where(student_id: @op_student.id).first
+        achievements = []
+        badges = []
+        products = []
+        featured_photos = []
+        respond_to do |format|
+          format.html {render 'public_profile', :locals => {
+            op_student: @op_student,
+            public_user: public_user,
+            achievements: achievements,
+            badges: badges,
+            products: products,
+            featured_photos: featured_photos
+          }}
+        end
       rescue StandardError => e
         redirect_error_site(e)
       end
@@ -156,7 +179,7 @@ module User
         @lesson = data[:lesson]
         @course = data[:course]
         @subject = data[:subject]
-        
+
         respond_to do |format|
           format.html
           format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => data}
