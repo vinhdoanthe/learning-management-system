@@ -45,6 +45,17 @@
         </button>
       </li>
     <% end %>
+    <% if active_session.state == 'done' %>
+      <li>
+        <button type="button" id='reward_student' class="btn btn-default btn-embossed" data-toggle="modal" data-target="#reward_student_modal">Thưởng
+        </button>
+      </li>
+    <% else %>
+      <li>
+        <button type="button" id='reward_student' disabled class="btn btn-default btn-embossed">Thưởng
+        </button>
+      </li>
+    <% end %>
     </ul>
   </div>
 </div>
@@ -52,3 +63,5 @@
 <%= render 'user/open_educat/op_teachers/modals/teacher_checkin', { session: active_session, active_subject: active_subject, lesson: active_lesson } %>
 <%= render 'user/open_educat/op_teachers/modals/upload_photo' %>
 <%= render 'user/open_educat/op_teachers/modals/learning_device', { lesson: active_lesson } %>
+  <div class="modal fade" id="reward_student_modal" role="dialog">
+</div>
