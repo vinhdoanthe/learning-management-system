@@ -12,6 +12,9 @@ namespace :user do
       get 'timetable', action: 'timetable', as: 'timetable'
       post 'timetable', action: 'timetable'
       get 'public_profile/:op_student_id', action: 'public_profile', as: 'public_profile'
+      get 'filter_subject_homework', action: 'filter_subject_homework', as: 'filter_subject_homework'
+      get 'filter_batch_homework', action: 'filter_batch_homework', as: 'filter_batch_homework'
+      get 'filter_course_homework', action: 'filter_course_homework', as: 'filter_course_homework'
     end
   end
 end

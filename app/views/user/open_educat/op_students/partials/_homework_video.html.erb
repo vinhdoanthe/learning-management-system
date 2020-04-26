@@ -17,7 +17,7 @@
               </div>
             </div>
             <div class="owl-carousel video_carousel" style='display: block'>
-              <% sessions.where(state: Learning::Constant::Batch::Session::STATE_DONE).where.not(lession_id: nil).each do |s| %>
+              <% (sessions.select{|s| s.state == Learning::Constant::Batch::Session::STATE_DONE && s.lession_id != nil}).each do |s| %>
                 <div class="item video_item">
                   <input type='hidden' value='<%= s.id %>'>
                   <% if s.id == session %>
