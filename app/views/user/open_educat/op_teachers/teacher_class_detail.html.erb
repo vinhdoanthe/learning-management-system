@@ -12,9 +12,9 @@
   <div class="panel m-t--70">
     <div class="panel-content">
       <div class="bo-table">
-        <%= render 'user/open_educat/share/batch_info', {:batch => @batch, :course => @course, company_name: @company_name, :classroom_name => @classroom_name, faculty: @faculty, subjects: @subjects, active_subject: @active_subject} %>
+        <%= render 'user/open_educat/shared/batch_info', {:batch => @batch, :course => @course, company_name: @company_name, :classroom_name => @classroom_name, faculty: @faculty, subjects: @subjects, active_subject: @active_subject} %>
       </div>
-      <div class="bo-table" id="no_session_class_detail" style=" margin-top: 30px">
+      <div class="bo-table" id="no_session_class_detail" style=" margin-top: 30px; display: none">
         <h3>Không có lớp học nào của bạn</h3>
       </div>
       <div class="bo-table" id="teacher_class_detail_content" style="margin-top: 30px">
