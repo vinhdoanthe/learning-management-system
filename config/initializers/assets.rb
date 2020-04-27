@@ -14,3 +14,4 @@ Rails.application.config.assets.precompile += %w( user/open_educat/op_students/p
 Rails.application.config.assets.precompile += %w( user/*)
 Rails.application.config.assets.precompile += %w( user/open_educat/op_students/batch_detail.js )
 Rails.application.config.assets.precompile += %w( user/open_educat/op_students/homework.js )
+Rails.application.config.assets.precompile += %w( social_community/dashboards/* )

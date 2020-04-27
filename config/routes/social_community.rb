@@ -14,4 +14,7 @@ namespace :social_community do
   namespace :reactions do
 
   end
+
+  get 'student_dashboard' => 'dashboards#student_dashboard', as: 'student_dashboard'
+  get 'teacher_dashboard' => 'dashboards#teacher_dashboard', as: 'teacher_dashboard'
 end

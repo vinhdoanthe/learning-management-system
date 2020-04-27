@@ -12,6 +12,7 @@ namespace :user do
       get 'change_password', action: 'change_password'
       post 'change_password', action: 'update_password'
 
+      post 'student_update_nickname', action: 'update_nickname'
       get 'change_avatar', action: 'new_avatar'
       post 'change_avatar', action: 'update_avatar'
     end
@@ -28,13 +29,12 @@ namespace :user do
   post 'teaching_schedule' => 'op_teachers#teaching_schedule'
   get 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
   post 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
-  post 'student_update_nickname' => 'users#update_nickname'
   # get 'student_info' => 'op_students#student_info'
   get 'teacher_active_session' => 'op_teachers#active_session'
   post 'teacher_checkin' => 'op_teachers#teacher_checkin'
   post 'teacher_attendance' => 'op_teachers#teacher_attendance'
 
-  get 'teacher_dashboard' => 'op_teachers#dashboard'
+  # get 'teacher_dashboard' => 'op_teachers#dashboard'
 
   resources :users
   # resources :op_students, only: [:index, :new]
@@ -58,7 +58,7 @@ namespace :user do
   get 'session_evaluation_content' => 'op_students#session_evaluation'
   get 'student_videos_list' => 'op_students#student_videos_list'
 
-  get 'student_dashboard' => 'op_students#dashboard'
+  # get 'student_dashboard' => 'op_students#dashboard'
 
 
 

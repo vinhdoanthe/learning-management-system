@@ -131,7 +131,7 @@ module User
         achievements = []
         badges = []
         products = []
-        featured_photos = []
+        featured_photos = User::OpenEducat::OpStudentsService.get_featured_photos @op_student.id
         respond_to do |format|
           format.html {render 'public_profile', :locals => {
             op_student: @op_student,

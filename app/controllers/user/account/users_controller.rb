@@ -74,7 +74,7 @@ class User::Account::UsersController < ApplicationController
       if new_username.empty?
         flash.now[:danger] = 'Nickname không được phép để trống'
       else
-        user = User.find_by(username: new_username)
+        user = User::Account::User.find_by(username: new_username)
         if user.nil?
           current_user.username = new_username
           current_user.save

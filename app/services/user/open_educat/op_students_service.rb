@@ -12,16 +12,16 @@ class User::OpenEducat::OpStudentsService
     batch_ids = op_student_courses.pluck(:batch_id)
     batches = Learning::Batch::OpBatch.where(id: batch_ids)
     active_session =  Learning::Batch::OpBatchService.last_done_session(student.id, batch_ids)
-    
-    if active_session.present?
-    batch = active_session.op_batch
-    subject = active_session.op_subject
-    subjects = Learning::Course::OpSubject.where(id: batch.op_sessions.pluck(:subject_id).uniq)
-    sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = student.id, subject_ids = subject.id).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
-    course = batch.op_course
-    lesson = active_session.lesson
 
-    { batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson }
+    if active_session.present?
+      batch = active_session.op_batch
+      subject = active_session.op_subject
+      subjects = Learning::Course::OpSubject.where(id: batch.op_sessions.pluck(:subject_id).uniq)
+      sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = student.id, subject_ids = subject.id).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
+      course = batch.op_course
+      lesson = active_session.lesson
+
+      { batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson }
     else
       { errors: true }
     end
@@ -157,7 +157,7 @@ class User::OpenEducat::OpStudentsService
       when 10..12
         schedule_hash['s2'].merge!(record)
       when 12..14
-         schedule_hash['c2'].merge!(record)
+        schedule_hash['c2'].merge!(record)
       when 16..18
         schedule_hash['t1'].merge!(record)
       when 18..20
@@ -168,6 +168,37 @@ class User::OpenEducat::OpStudentsService
     end
 
     schedule_hash
+  end
 
+  def self.get_featured_photos student_id
+    batch_ids, subject_ids = get_batch_subject_ids student_id
+    session_ids = Learning::Batch::OpSession.where(batch_id: batch_ids, subject_id: subject_ids).pluck(:id)
+    SocialCommunity::Photo.where(session_id: session_ids).to_a
+  end
+
+  def self.get_batch_ids student_id
+    op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id).to_a
+    batch_ids = []
+    student_course_ids = []
+    op_student_courses.each do |op_student_course|
+      student_course_ids << op_student_course.id
+      batch_ids << op_student_course.batch_id
+    end
+
+    batch_ids
+  end
+
+  def self.get_batch_subject_ids student_id
+    op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id).to_a
+    batch_ids = []
+    subject_ids = []
+    student_course_ids = []
+    op_student_courses.each do |op_student_course|
+      student_course_ids << op_student_course.id
+      batch_ids << op_student_course.batch_id
+      subject_ids.concat op_student_course.op_subjects.pluck(:id).uniq
+    end
+
+    [batch_ids, subject_ids]
   end
 end
