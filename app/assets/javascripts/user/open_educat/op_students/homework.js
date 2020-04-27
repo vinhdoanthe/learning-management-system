@@ -5,7 +5,6 @@ function get_video( batch_id, subject_id){
       url: '/learning/show_video/' + session_id + '?session_id=' + session_id + '&batch_id=' + batch_id + '&subject_id=' + subject_id,
       dataType: 'script',
       success: function(){
-        debugger
         $('.video_carousel').owlCarousel({
           margin:10,
           nav:true,
@@ -26,9 +25,9 @@ function get_video( batch_id, subject_id){
     })
 }
 
-function get_homework(data){
+function get_homework(data, url){
   $.ajax({
-    url: '/user/open_educat/op_students/student_homework',
+    url: url,
     method: 'GET',
     data: data,
     dataType : 'script',
@@ -69,20 +68,23 @@ $('document').ready(function () {
 
   $('#homework_course_selection').on('change', function(){
     course = $('#homework_course_selection').val()
-    get_homework({course: course})
+    get_homework({course: course}, '/user/open_educat/op_students/filter_course_homework'
+)
   })
 
   $('#homework_batch_selection').on('change', function(){
     course = $('#homework_course_selection').val()
     batch = $('#homework_batch_selection').val() 
-    get_homework({course: course, batch: batch})
+    get_homework({course: course, batch: batch}, '/user/open_educat/op_students/filter_batch_homework'
+)
   })  
 
   $('#homework_subject_selection').on('change', function(){
     course = $('#homework_course_selection').val()
     batch = $('#homework_batch_selection').val() 
     subject = $('#homework_subject_selection').val()
-    get_homework({course: course, batch: batch, subject: subject})
+    get_homework({course: course, batch: batch, subject: subject}, '/user/open_educat/op_students/filter_subject_homework'
+)
   })
 
   $('.video_carousel').owlCarousel({

@@ -42,7 +42,11 @@
                     <label class='fl_label' for='rf_name'>Lớp học:</label>
                     <select class='fl_input' id="homework_batch_selection">
                       <% @batches.each do |batch| %>
-                        <option value="<%= batch.id %>"><%= batch.name %></option>
+                        <% if @batch.id == batch.id %>
+                          <option value="<%= batch.id %>" selected><%= batch.name %></option>
+                        <% else %>
+                          <option value="<%= batch.id %>"><%= batch.name %></option>
+                        <% end %>
                       <% end %>
                     </select>
                   </div>
@@ -52,14 +56,18 @@
                     <label class='fl_label' for='rf_name'>Học phần:</label>
                     <select class='fl_input' id="homework_subject_selection">
                       <% @subjects.each do |subject| %>
-                        <option value="<%= subject.id %>"><%= subject.level %></option>
+                        <% if @subject.id == subject.id %>
+                          <option value="<%= subject.id %>" selected><%= subject.level %></option>
+                        <% else %>
+                          <option value="<%= subject.id %>"><%= subject.level %></option>
+                        <% end %>
                       <% end %>
-                      <option val="all">Tất cả</option>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="no_lesson_div" style="display: none">Chưa có buổi học nào</div>
             <table class="table table-hover table-link" id="homework_session_table" remote='true'>
               <%= render 'user/open_educat/op_students/partials/table_homework_list', { sessions: @sessions, batch: @batch, session: @session, subject: @subject } %>
             </table>

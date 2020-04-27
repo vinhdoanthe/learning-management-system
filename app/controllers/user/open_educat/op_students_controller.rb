@@ -169,7 +169,7 @@ module User
 
       def student_homework
         @student = @op_student
-        data = User::OpenEducat::OpStudentsService.student_homework params, @student
+        data = User::OpenEducat::OpStudentsService.new.student_homework @student
         @courses = @student.op_courses
         @session = data[:session]
         @batch = data[:batch]
@@ -271,6 +271,79 @@ module User
         respond_to do |format|
           format.html
           format.js { render 'user/op_students/partials/student_evaluate_content', :locals => {attendance: attendance}}
+        end
+      end
+
+      def filter_course_homework
+        course = Learning::Course::OpCourse.where(id: params[:course]).first
+        op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: @op_student.id, course_id: course.id)
+        #subject_ids = op_student_courses.pluck(:subject_id).uniq
+        #subjects = Learning::Course::OpSubject.where(id: subject_ids)
+        batch_ids = op_student_courses.pluck(:batch_id).uniq
+        batches = Learning::Batch::OpBatch.where(id: batch_ids)
+        active_session = Learning::Batch::OpBatchService.last_done_session(@op_student.id, batch_ids, [])
+        batch = active_session.op_batch
+        subject = active_session.op_subject
+        lesson = active_session.op_lession
+        subjects = Learning::Course::OpSubject.where(id: batch.op_sessions.pluck(:subject_id).uniq)
+
+        sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = @op_student.id, subject_ids = [subject.id]).select{ |s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
+
+        respond_to do |format|
+          format.html
+          format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => {batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson}}
+        end
+
+      end
+
+      def filter_batch_homework
+        batch = Learning::Batch::OpBatch.where(id: params[:batch]).first
+        subjects = Learning::Course::OpSubject.where(id: batch.op_sessions.pluck(:subject_id).uniq)
+        course = batch.op_course
+        batches = ''
+        sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = @op_student.id, subject_ids = subjects.pluck(:id)).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
+        active_session = sessions.sort_by{|s| s.start_datetime}.select{|s| s.state == Learning::Constant::Batch::Session::STATE_DONE}.last
+        active_session = sessions.last if active_session.blank?
+        
+        if active_session.present?
+          subject = active_session.op_subject
+          sessions.select{|s| s.subject_id == subject.id}
+          #subjects = Learning::Course::OpCourse.where(id: sessions.pluck(:subject_id))
+          lesson = active_session.op_lession
+
+          respond_to do |format|
+            format.html
+            format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => {batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson}}
+          end
+        else
+          respond_to do |format|
+            format.js { render 'user/open_educat/op_students/js/table_homework_list', :locals => { errors: true } } 
+          end
+        end
+      end
+
+      def filter_subject_homework
+        subject = Learning::Course::OpSubject.where(id: params[:subject]).first
+        course = subject.op_course
+        batch = Learning::Batch::OpBatch.where(id: params[:batch]).first
+        sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = @op_student.id, subject_ids = subject.id).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
+        active_session = sessions.sort_by{|s| s.start_datetime}.select{|s| s.state == Learning::Constant::Batch::Session::STATE_DONE}.last
+        active_session = sessions.last if active_session.blank?
+
+        if active_session.present?
+        subject = active_session.op_subject
+        lesson = active_session.op_lession
+        batches = ''
+        subjects = ''
+        
+        respond_to do |format|
+          format.html
+          format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => {batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson}}
+        end
+        else
+          respond_to do |format|
+            format.js { render 'user/open_educat/op_students/js/table_homework_list', :locals => { errors: true } } 
+          end
         end
       end
 

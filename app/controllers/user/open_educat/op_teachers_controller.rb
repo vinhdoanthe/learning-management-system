@@ -18,8 +18,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     @subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level).uniq
     @sessions = @sessions.where(subject_id: @active_subject.id)
     @active_lesson = @active_session.op_lession
-#    @attendance_lines = @active_session.op_attendance_lines
-#    @all_students = User::OpTeachersService.new.teacher_class_detail @batch, @active_session
+    
     if @active_lesson && @active_lesson.thumbnail.attached?
       @thumbnail = @active_lesson.thumbnail.service_url
     else
