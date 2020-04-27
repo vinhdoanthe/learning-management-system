@@ -1,5 +1,7 @@
+<% teacher_id = current_user.op_faculty.id if current_user.is_teacher? %>
+<% course = batch.op_course %>
 <div class="fc-header">
-  <h3><span class="color-F16357">LỚP HỌC:</span> <%= batch.op_course.name %></h3>
+  <h3><span class="color-F16357">LỚP HỌC:</span> <%= course.name %></h3>
 </div>
 <div class="box-progress">
   <div class="row">
@@ -42,7 +44,7 @@
       <ul>
         <li>
           <%= image_tag('global/images/Combined-Shape.png') %>
-          <p><span class="span-text">Môn học: </span><%= course_name %></p></li>
+          <p><span class="span-text">Môn học: </span><%= course.name %></p></li>
         <li>
           <%= image_tag('global/images/steps.png') %>
           <p id="subject_id_span">
@@ -62,19 +64,22 @@
               <% end %>
             <% end %>
           <% elsif current_user.is_teacher? %>
-            <% levels = list_teacher_subject_level(batch.id) %>
-            <% unless levels.blank? %>
-              <% levels.each do |level| %>
-                <% if level[0] == @current_subject_id %>
-                  <span class="label-course label label-default subject_id active">
-                    <input type='hidden' name='subject_id' value="<%= level[0] %>" >
-                    <%= level[1] %>
-                  </span>
+            <% unless subjects.blank? %>
+              <% subjects.each do |level| %>
+                <% if level[0] == active_subject.id %>
+                  <a href='/learning/assign_session?subject_id=<%= level[0] %>&teacher_id=<%= teacher_id %>&batch_id=<%= @batch.id %>' class='select_active_subject' data-remote="true">
+                    <span class="label-course label label-default active_subject">
+                      <input type='hidden' name='subject_id' value="<%= level[0] %>" >
+                      <%= level[1] %>
+                    </span>
+                  </a>
                 <% else %>
-                  <span class="label-course label label-default subject_id">
-                    <input type='hidden' name='subject_id' value="<%= level[0] %>" >
-                    <%= level[1] %>
-                  </span>
+                  <a href="/learning/assign_session?subject_id=<%= level[0] %>&teacher_id=<%= teacher_id %>&batch_id=<%= @batch.id %>" class='select_active_subject' data-remote="true">
+                    <span class="label-course label label-default ">
+                      <input type='hidden' name='subject_id' value="<%= level[0] %>" >
+                      <%= level[1] %>
+                    </span>
+                  </a>
                 <% end %>
               <% end %>
             <% end %>
@@ -82,8 +87,9 @@
           </p>
         </li>
         <li>
+          <% last_done_session_count = get_done_subject_count(batch) %>
           <%= image_tag('global/images/steps.png') %>
-          <p><span class='span-text'>Buổi học: </span> <%= session_count %>
+          <p><span class='span-text'>Buổi học: </span> <%= last_done_session_count %>
           </p>
         </li>
         <li>
