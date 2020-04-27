@@ -4,7 +4,7 @@ module User
       before_action :authenticate_student!, except: [:public_profile, :session_student, :student_evaluate, :timetable]
       before_action :get_op_student, except: [:public_profile, :session_student, :student_evaluate]
       skip_before_action :authenticate_user!, only: [:public_profile] 
-      skip_before_action :verify_authenticity_token, only: [:timetable]
+      skip_before_action :verify_authenticity_token, only: [:timetable_content]
 
       def dashboard
 
@@ -230,9 +230,32 @@ module User
       end
 
       def timetable
-        @sessions = @op_student.op_sessions
-        @session = User::OpenEducat::OpStudentsService.get_comming_soon_session(@op_student.id)
-        schedules = OpTeachersService.teaching_schedule(@sessions, params)
+      end
+
+      def timetable_content
+        # @sessions = @op_student.op_sessions
+        # @session = User::OpenEducat::OpStudentsService.get_comming_soon_session(@op_student.id)
+        # schedules = OpTeachersService.teaching_schedule(@sessions, params)
+        params[:date] = Time.now
+        student_courses = Learning::Batch::OpStudentCourse.where(student_id: @op_student.id)
+        batch_ids = student_courses.pluck(:batch_id)
+        subject_ids = []
+        sessions = []
+        start_time = params[:date].beginning_of_week
+        end_time = params[:date].end_of_week
+        
+        student_courses.each do |sc|
+          subject_ids << sc.op_subjects.pluck(:id)
+        end
+
+        subject_ids = subject_ids.flatten.uniq
+
+        batch_ids.each do |batch_id|
+          sessions << Learning::Batch::OpBatchService.get_sessions(batch_id, @op_student.id, subject_ids, {start: start_time, end: end_time}) 
+        end
+        
+        sessions = sessions.flatten.uniq
+        schedules = User::OpenEducat::OpStudentsService.new.timetable sessions
 
         if request.method == 'POST'
           render json: {schedules: schedules}

@@ -10,6 +10,7 @@ namespace :user do
       get 'student_homework', action: 'student_homework', as: 'student_homework'
       get 'information', action: 'information', as: 'information'
       get 'timetable', action: 'timetable', as: 'timetable'
+      post 'timetable_content', action: 'timetable_content', as: 'timetable_content'
       post 'timetable', action: 'timetable'
       get 'public_profile/:op_student_id', action: 'public_profile', as: 'public_profile'
       get 'filter_subject_homework', action: 'filter_subject_homework', as: 'filter_subject_homework'
