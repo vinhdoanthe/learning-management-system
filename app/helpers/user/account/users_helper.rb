@@ -66,7 +66,7 @@ module User
           #   'right_content' => ''
           # },
 
-          {'path' => user_teaching_schedule_path, 
+          {'path' => user_open_educat_teacher_schedule_path, 
            'icon' => 'ico-TienDoHocTap.png',
            'title' => 'Lịch giảng dạy', 
            'right_content' => '<span class="left-badge">' << count_sessions_week('op_faculty').to_s << '</span>'

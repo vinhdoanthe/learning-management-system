@@ -65,6 +65,15 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     redirect_error_site(e)
   end
 
+  def teaching_schedule
+  end
+
+  def teaching_schedule_content
+    @sessions = @teacher.op_sessions
+    schedules = User::OpenEducat::OpTeachersService.teaching_schedule(@sessions, params)
+    
+    render json: {schedules: schedules}
+  end
 
   private
 
