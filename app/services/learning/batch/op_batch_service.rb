@@ -193,7 +193,6 @@ module Learning
       end
 
       def self.last_done_session(student_id, batch_ids = [], subject_ids = [])
-        binding.pry
         att = Learning::Batch::OpAttendanceLine.joins(:op_session).where(student_id: student_id).where(op_session: { batch_id: batch_ids, subject: subject_ids }.select{|k,v| !v.blank?}).order(create_date: :DESC).first
 
         if att.present?

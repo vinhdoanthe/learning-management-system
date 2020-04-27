@@ -16,7 +16,7 @@
       <tr>
         <td>
           <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
-            <p><strong><%= coming_soon_session.op_subject.name %><strong?</p>
+            <p><strong><%= coming_soon_session.op_subject.name %></strong></p>
             <% start = coming_soon_session.start_datetime %>
           <% else %>
             <div><strong>Đã kết thúc</strong></div>
@@ -43,9 +43,6 @@
             </div>
           </div>
         </td>
-<!--        <td align="right">-->
-<!--          <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7">Vào học ngay</button>-->
-<!--        </td>-->
       </tr>
     </tbody>
   </table>
@@ -75,4 +72,4 @@
   padding-left: 35px !important;
 }
 </style>
-<%#= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true %>
+<%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true %>
