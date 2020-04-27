@@ -17,12 +17,17 @@ class SocialCommunity::DashboardsController < ApplicationController
 
   def get_albums_with_comments
     if user.is_student?
-        
+      albums_with_comments = SocialCommunity::DashboardsService.get_albums_with_comments user.op_student.id        
     elsif user.is_teacher?
 
     else
 
-    end 
+    end
+
+   respond_to do |format|
+      format.html
+      format.js {render 'albums_with_comment', {albums_with_comments: albums_with_comments}}
+   end 
   end
 
   def teacher_dashboard

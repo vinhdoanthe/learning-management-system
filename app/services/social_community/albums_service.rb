@@ -19,6 +19,7 @@ class SocialCommunity::AlbumsService
   end
 
   def self.get_comments album_id
-
+    album = SocialCommunity::Album.where(id: album_id).first
+    album.comments  
   end
 end

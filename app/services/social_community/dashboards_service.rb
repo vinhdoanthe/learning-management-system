@@ -27,6 +27,7 @@ class SocialCommunity::DashboardsService
       albums_with_comments << album_with_comments
     end
 
+    binding.pry
     albums_with_comments
   end 
 end
