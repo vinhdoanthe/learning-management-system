@@ -40,19 +40,29 @@ class Learning::Batch::SessionsController < ApplicationController
     end
   end
 
-    def session_reward
-      session = Learning::Batch::OpSession.where(id: params[:session_id]).first
-      batch = session.op_batch
-      op_student_courses = batch.op_student_courses.where(state: 'on')
-      students = []
+  def session_reward
+    session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+    batch = session.op_batch
+    op_student_courses = batch.op_student_courses.where(state: 'on')
+    students = []
 
-      op_student_courses.each do |sc|
-        students << sc.op_student
-      end
-
-      respond_to do |format|
-        format.html
-        format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/reward_student', locals: { students: students } }
-      end
+    op_student_courses.each do |sc|
+      students << sc.op_student
     end
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/reward_student', locals: { students: students } }
+    end
+  end
+
+  def session_photo_review
+    session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+    photos = session.photos
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/session_photo_review', locals: { photos: photos } }
+    end
+  end
 end

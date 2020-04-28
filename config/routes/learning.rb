@@ -6,6 +6,7 @@ namespace :learning do
     get 'show_google_slide/:slide_id' => 'learning_materials#show_google_slide', as: 'show_google_slide'
     get 'op_session/session_photo' => 'batch/sessions#session_photo'
     get 'op_session/session_reward' => 'batch/sessions#session_reward'
+    get 'op_session/session_photo_review' => 'batch/sessions#session_photo_review'
 
     post 'reward_student' => 'batch/session_student_rewards#reward_student'
 end
