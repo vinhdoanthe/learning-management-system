@@ -1,5 +1,5 @@
 class SocialCommunity::DashboardsService
- 
+
   def self.get_student_albums_with_comments student_id
     albums_with_comments = []
     batch_ids = User::OpenEducat::OpStudentsService.get_batch_ids student_id
@@ -29,16 +29,22 @@ class SocialCommunity::DashboardsService
 
     albums_with_comments
   end 
-  
+
   def self.coming_session_decorator session
-    batch = Learning::Batch::OpBatch.where(id: session.batch_id).first
-    batch_code = batch.nil? ? '' : batch.code
-    company = Common::ResCompany.where(id: session.company_id).first
-    company_name = company.nil? ? '' : company.name
-    {
-      :batch_code => batch_code,
-      :company_name => company_name,
-      :session => session
-    }
+    unless session.nil?
+      batch = Learning::Batch::OpBatch.where(id: session.batch_id).first
+      batch_code = batch.nil? ? '' : batch.code
+      batch_id = batch.nil? ? nil : batch.id
+      company = Common::ResCompany.where(id: session.company_id).first
+      company_name = company.nil? ? '' : company.name
+      {
+        :batch_id => batch_id,
+        :batch_code => batch_code,
+        :company_name => company_name,
+        :session => session
+      }
+    else
+      nil
+    end
   end
 end

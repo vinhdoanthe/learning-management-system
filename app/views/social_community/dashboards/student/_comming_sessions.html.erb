@@ -1,30 +1,35 @@
-<% binding.pry %>
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title">LỚP ĐANG DẠY: <span class="color-16BD56"><%= coming_soon_session[:batch_code] %></span></label>
+    <label class="filter-title">LỊCH HỌC  TIẾP THEO: <span class="color-16BD56"><%= coming_soon_session.nil? ? ' ĐÃ KẾT THÚC' :  coming_soon_session[:batch_code] %></span></label>
   </div>
-  <div class="bnd-time text-center">
-    <div class="bnd-text">
-      <p class="font-bold color-000 f12 text-center">
-      THỜI GIAN VÀO LỚP TIẾP THEO 18:00 <span class="color-939393">đến</span> 20:00  |  <span class="font-regular">Thứ 7</span>, 20/11/2019
-      </p>
-      <p class="text-center">
-      <span>Bài 6: Ứng dụng chuyển đổi nhiệt độ</span><br />
-      tại cơ sở: <span class="font-bold"><%= coming_soon_session[:company_name] %></span>
-      </p>
+
+  <% unless coming_soon_session.nil? %>
+    <% start = coming_soon_session[:session].start_datetime %>
+    <div class="bnd-time text-center">
+      <div class="bnd-text">
+        <p class="font-bold color-000 f12 text-center">
+        THỜI GIAN VÀO LỚP TIẾP THEO <span style="color: #F16357;"><%= start.strftime('%H:%M') %> </span><span class="color-939393">đến</span> <span style="color: #F16357;"> <%= coming_soon_session[:session].end_datetime.strftime('%H:%M') %> </span>|  <span class="font-regular"><%= (get_week_day start.strftime('%A'))%></span>, <%= start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %> 
+        </p>
+        <p class="text-center">
+        <%# <span>Bài 6: Ứng dụng chuyển đổi nhiệt độ</span><br /> %>
+        tại cơ sở: <span class="font-bold"><%= coming_soon_session[:company_name] %></span>
+        </p>
+      </div>
+      <div class="bnd-clock" id="clockdiv">
+        <div>
+          <span class="hours"></span>
+        </div>
+        <div>
+          <span class="minutes"></span>
+        </div>
+        <div>
+          <span class="seconds"></span>
+        </div>
+      </div>
+      <br/>
+      <%= link_to 'Vào lớp', user_open_educat_op_students_batch_detail_path(coming_soon_session[:batch_id]), :class => 'link-other color-5DC2A7 m-t-10' %>
+      <%# <a href="#" class="link-other color-5DC2A7 m-t-10">Vào lớp</a> %>
     </div>
-    <div class="bnd-clock" id="clockdiv">
-      <div>
-        <span class="hours"></span>
-      </div>
-      <div>
-        <span class="minutes"></span>
-      </div>
-      <div>
-        <span class="seconds"></span>
-      </div>
-    </div>
-    <br/>
-    <a href="#" class="link-other color-5DC2A7 m-t-10">Vào lớp</a>
-  </div>
+  <% end %>
 </div>
+<%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true %>

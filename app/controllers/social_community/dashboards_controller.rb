@@ -31,7 +31,6 @@ class SocialCommunity::DashboardsController < ApplicationController
   end
 
   def student_coming_soon_session
-    binding.pry
     @student = User::OpenEducat::OpStudent.where(id: current_user.student_id).first
     session = User::OpenEducat::OpStudentsService.get_comming_soon_session(@student.id)
     coming_soon_session_decor = SocialCommunity::DashboardsService.coming_session_decorator session
