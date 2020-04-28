@@ -19,7 +19,7 @@ class User::OpenEducat::OpStudentsService
       subjects = Learning::Course::OpSubject.where(id: batch.op_sessions.pluck(:subject_id).uniq)
       sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = student.id, subject_ids = subject.id).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
       course = batch.op_course
-      lesson = active_session.lesson
+      lesson = active_session.op_lession
 
       { batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson }
     else

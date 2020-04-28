@@ -17,7 +17,9 @@ module User
     end
 
     def teacher_class
-      all_batches ||= @teacher.op_batches
+      batch_ids = @teacher.op_sessions.pluck(:batch_id).uniq
+      all_batches ||= Learning::Batch::OpBatch.where(id: batch_ids)
+
       company_id = []
       all_batches.each {|b| company_id << b.company_id}
       @company = Common::ResCompany.where(:id => company_id)

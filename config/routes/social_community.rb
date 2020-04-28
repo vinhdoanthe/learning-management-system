@@ -18,4 +18,6 @@ namespace :social_community do
   get 'teacher_dashboard' => 'dashboards#teacher_dashboard', as: 'teacher_dashboard'
   get 'student_coming_soon_session' => 'dashboards#student_coming_soon_session'
   get 'albums_with_comments' => 'dashboards#albums_with_comments', as: 'albums_with_comments'
+
+  post 'delete_session_photo' => 'photos#delete_session_photo', as: 'delete_session_photo'
 end
