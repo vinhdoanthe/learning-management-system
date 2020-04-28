@@ -1,0 +1,35 @@
+<% photos %>
+<% unless photos.empty? %>
+  <% count = photos.size %>
+  <div class="box-mt-detail">
+    <div class="bmd-title">
+      <span>
+        <%= image_tag('global/images/icon-camera.png') %>
+      </span>
+      <h3>Khoảnh khắc tuyệt vời</h3>
+    </div>
+    <div class="bmd-video bmd-content">
+      <div class="big-video">
+        <%= image_tag(photos[0].image, :class => 'image-fit') %>
+      </div>
+      <ul class="list-video">
+        <% for index in 1..(count-1) %>
+          <li>
+            <div class="lv-detail">
+              <%= image_tag(photos[index].image, :class => 'image-fit') %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+
+<style>
+.image-fit {
+  flex: 0 0 auto;
+  position: center;
+  width: 100%;
+}
+</style>

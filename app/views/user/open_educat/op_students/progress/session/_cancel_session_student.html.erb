@@ -1,0 +1,15 @@
+  <%= render 'user/open_educat/shared/session_calendar_box', {:session => session} %>
+  <td>
+    <div class="photo-box">
+        <span>
+          <%= thumbnail_tag  lesson%>
+        </span>
+    </div>
+  </td>
+  <td>
+    <strong><%= lesson.nil? ? 'Đang cập nhật' : 'Bài ' + lesson.lession_number.to_s %></strong><br/>
+    <%= lesson.nil? ? 'Đang cập nhật' : lesson.name %> <br/>
+    <%= lesson.nil? ? 'Đang cập nhật' : sanitize(truncate(lesson.note, :length => 50)) %>
+  </td>
+  <td align="right">
+  </td>

@@ -1,0 +1,35 @@
+<div class="bpc-achievements">
+  <div class="row">
+    <% featured_photos.each do |photo| %>
+      <div class="col-sm-3">
+        <a href='#showPhotosModal' data-toggle='modal'>
+          <div class="bpa-img">
+            <% if photo.image.attached? %>
+              <%= image_tag(photo.image) %>
+            <% end %>
+          </div>
+        </a>
+      </div>
+    <% end %>
+  </div> 
+</div>
+
+<div class="modal fade" id="showPhotosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <ul class="owl-carousel list-lightbox" id="lightbox">
+          <% featured_photos.each do |photo| %>
+            <li>
+              <span>
+                <% if photo.image.attached? %>
+                  <%= image_tag(photo.image) %>
+                <% end %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

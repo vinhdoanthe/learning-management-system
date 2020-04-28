@@ -16,7 +16,7 @@ module Learning::Constant
     QUESTION_SINGLE_CHOICE = 'single'
     QUESTION_MULTIPLE_CHOICES = 'multiple'
 
-    DEFAULT_VIDEO_ID = '0479afd4cf8e006de2599da41d7ee591'
+    DEFAULT_VIDEO_ID = "https://player.vimeo.com/video/410077195" 
   end
 
   module Batch

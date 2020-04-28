@@ -21,35 +21,67 @@ module Learning
     end
 
 
+    def list_slides_of_subject
+      if params[:subject_id].present?
+        lesson_ids = Learning::Course::OpLession.where(subject_id: params[:subject_id].to_i).pluck(:id).uniq.compact
+        slides = []
+        unless lesson_ids.blank?
+          slides = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE, op_lession_id: lesson_ids).pluck(:id,:title).uniq.compact 
+        end
+        respond_to do |format|
+          format.js {render 'learning/list_slides', locals: {slides: slides}}
+        end
+      end
+    end
+
+    def show_google_slide
+      if params[:slide_id].present?
+        slide = Learning::Material::LearningMaterial.where(id: params[:slide_id].to_i).first
+        if slide.nil?
+          link = ''
+        else
+          link = slide.google_drive_link
+        end
+        respond_to do |format|
+          format.js {render 'learning/show_google_slide', locals: {link: link}}
+        end
+      end
+    end
+
     def show_video
       video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last
       fallback_video_id = Learning::Constant::Material::DEFAULT_VIDEO_ID
+      lesson = ''
+      session = ''
+      name = ''
 
       if params[:session_id].present?
         session = Learning::Batch::OpSession.where(id: params[:session_id]).first
         if session.nil?
           @video_id = fallback_video_id
         else
-          session_video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => session.lession_id).order(created_at: :DESC).first
+          if session.lession_id.blank?
+            session = current_user.op_student.op_sessions.where('start_datetime <= ?', Time.now).where(state: Learning::Constant::Batch::Session::STATE_DONE, subject_id: params[:subject_id], batch_id: params[:batch_id]).where.not(lession_id: nil).order(start_datetime: :DESC).first
+            lesson = session.op_lession if session.present?
+          else
+            lesson = session.op_lession
+          end
+          session_video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => session.lession_id).order(created_at: :DESC).first if session.present?
           if session_video.present?
             video = session_video
             @video_id = video.ziggeo_file_id
+            name = session_video.title
           else
+            name = ''
             @video_id = fallback_video_id
           end
         end
       else
         @video_id = fallback_video_id
       end
-      name = ''
-
-      if session.present?
-      name = session.op_subject.name
-      name = session.op_lession.name if session.op_lession.present?
-      end
 
       respond_to do |format|
-        format.js {render 'learning/show_video', :locals => {:target => params[:target], name: name, session_id: session.id, session: session, video_id: video.id}}
+        format.js {render 'learning/show_homework_video', :locals => { session: session, video_id: @video_id, lesson: lesson, name: name }}
       end
     end
 

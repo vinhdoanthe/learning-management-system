@@ -1817,24 +1817,25 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   color: #ffffff;
   display: block;
   font-family: 'Open Sans';
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.6px;
   line-height: 21px;
   overflow: hidden;
-  padding: 7px 20px;
+  padding: 7px 20px 15px;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100%;
+  width: 100%; position: relative;
 }
 .sidebar .sidebar-inner .nav-sidebar > li > a:hover {
-  color: #fff;
-}
+  color: #FCF055
+} 
 .sidebar .sidebar-inner .nav-sidebar > li > a:hover i {
   opacity: 1;
 }
 .sidebar .sidebar-inner .nav-sidebar > li > a:hover span {
   opacity: 1;
+  color: #FCF055;
 }
 .sidebar .sidebar-inner .nav-sidebar > li > a i {
   opacity: 0.62;
@@ -1843,9 +1844,24 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+ 
+}
+.sidebar .sidebar-inner .nav-sidebar > li > a > i{
+  position: absolute;
+    right: 0px;
+    top: 6px;
+}
+.sidebar .sidebar-inner .nav-sidebar > li > a span p{
+  font-size: 10px;
+  padding-left: 26px;
+  color: #7E858E
+}
+.sidebar .sidebar-inner .nav-sidebar > li > a span p span.demo-cowndown{
+  color: #f16357;
+  font-family: 'Montserrat-Bold';
 }
 .sidebar .sidebar-inner .nav-sidebar > li > a span:not(.badge) {
-  opacity: 0.62;
+  opacity: 1;
 }
 .sidebar .sidebar-inner .nav-sidebar > li > a span:not(.badge) > span {
   opacity: 1;
@@ -4335,14 +4351,15 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
   top: -10px;
   width: 100%;
 }
-.main-content .page-content .panel .panel-footer {
+.main-content .page-content .tab-content .panel-footer {
   background-color: #F4F4F4;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom: 1px solid #E2E2E2;
   border-top: 1px solid #E2E2E2;
   border-top: none;
-  padding: 10px 15px;
+  padding: 10px;
+  margin: 10px -20px 20px;
 }
 .main-content .page-content .panel .panel-footer .btn {
   margin-bottom: 0;

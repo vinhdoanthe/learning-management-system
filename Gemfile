@@ -18,14 +18,15 @@ gem 'rails_admin', '~> 2.0'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'composite_primary_keys', '~> 12.0'
 
+# Notification
+gem 'activity_notification'
+
 # Image processing
 gem "aws-sdk-s3", require: false
 
 gem 'image_processing'
-gem 'videojs_rails'
-gem 'Ziggeo'
-gem 'pdfjs_viewer-rails'
-gem 'google-api-client', '~> 0.34'
+gem 'vimeo_me2', :git => "https://github.com/bo-oz/vimeo_me2.git"
+gem "lazyload-rails"
 
 # For import/export
 gem 'caxlsx_rails'
@@ -55,6 +56,8 @@ gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 gem 'rails', '~> 6.0.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
+# Use MongoDB for store key-value object
+gem "mongoid", "~> 7.0.2"
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -91,6 +94,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry', '~> 0.12.2'
   gem 'pry-rails', '~> 0.3.9'
+  gem 'pry-nav'
 end
 
 group :test do

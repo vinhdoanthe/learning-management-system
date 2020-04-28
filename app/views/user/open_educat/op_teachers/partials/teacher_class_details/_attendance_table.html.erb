@@ -1,0 +1,24 @@
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th><h4><strong>Họ và tên</strong></h4></th>
+      <th><h4><strong>Điểm danh</strong></h4></th>
+      <th><h4><strong>Giảng viên ghi chú</strong></h4></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% all_student.each do |student| %>
+      <% if student[1][:status] == 'on' %>
+        <tr class="attendance_student">
+          <td><%= student[1][:name] %></td>
+          <td>
+            <input type='checkbox' checked name='attendance' value='<%= student[1][:code] %>'>
+          </td>
+          <td>
+            <input style='width: 100%' type='text' name='teacher_note' placeholder='Ghi chú của giảng viên'> 
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

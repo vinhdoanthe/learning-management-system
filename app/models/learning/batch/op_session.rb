@@ -9,7 +9,7 @@ module Learning
         Array(remove_photos).each {|id| photos.find_by_id(id).try(:purge)}
       end
 
-      belongs_to :op_faculty, :class_name => 'User::OpFaculty', foreign_key: 'faculty_id'
+      belongs_to :op_faculty, :class_name => 'User::OpenEducat::OpFaculty', foreign_key: 'faculty_id'
       belongs_to :op_batch, :class_name => 'Learning::Batch::OpBatch', foreign_key: 'batch_id'
       belongs_to :op_subject, :class_name => 'Learning::Course::OpSubject', foreign_key: 'subject_id'
       belongs_to :op_lession, :class_name => 'Learning::Course::OpLession', foreign_key: 'lession_id', required: false
@@ -18,7 +18,7 @@ module Learning
       has_many :op_session_students, :class_name => 'Learning::Batch::OpSessionStudent', foreign_key: 'session_id'
       has_many :op_attendance_sheets, :class_name => 'Learning::Batch::OpAttendanceSheet', foreign_key: 'session_id'
       has_many :op_attendance_lines, :class_name => 'Learning::Batch::OpAttendanceLine', foreign_key: 'session_id'
-      has_many_attached :photos
+      has_many :photos, :class_name => 'SocialCommunity::Photo', foreign_key: 'session_id'
 
       def start_time
         self.start_datetime

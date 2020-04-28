@@ -27,7 +27,7 @@
     <div class="noti-nav">
       <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
         <li class="nav-active">
-          <a href="<%= current_user.is_student? ? user_student_info_path : user_teacher_info_path %>">
+          <a href="<%= current_user.is_student? ? user_open_educat_op_students_information_path : user_teacher_info_path %>">
             <%= image_tag "global/images/active/icon-Setting.png" %>
             <span>Cấu hình</span>
           </a>
@@ -39,7 +39,7 @@
               <span>Danh sách lớp học<span style="float: right; color: red"><%= current_user.op_faculty.op_batches.uniq.count %></span></span>
             </a>
           <% else %>
-            <a href="/user/student_homework">
+            <a href="/user/open_educat/op_students/student_homework">
               <%= image_tag "global/images/active/ico-BaiTapOnBai.png" %>
               <span>Bài tập ôn bài<span style="float: right; color: red"><%= count_homework current_user %></span></span>
               <!-- <span class="nn-alert"><%= current_user.op_student.op_batches.count %></span> -->
@@ -61,7 +61,7 @@
         </li>
         <% if current_user.is_student? %>
           <li class="">
-            <a href="/user/student_timetable">
+            <a href="/user/open_educat/op_students/timetable">
               <%= image_tag "global/images/no-active/ico-TienDoHocTap.png" %>
               <span>Thời khoá biểu<span style="float: right; color: red"><%= count_sessions_week 'op_student' %></span></span>
             </a>

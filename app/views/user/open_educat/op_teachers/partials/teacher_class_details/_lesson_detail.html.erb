@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-link">
+    <tbody>
+    <tr>
+      <td width="90">
+        <div class="calenda-box" id='calendar-box'>
+          <div class="cb-tit">
+            <p><%= get_month(active_session.start_datetime.strftime('%m')) %></p>
+          </div>
+          <div class="cb-con">
+            <strong><%= active_session.start_datetime.strftime('%d') %></strong>
+            <p><%= active_session.start_datetime.strftime('%H:%M') + ' - ' + active_session.end_datetime.strftime('%H:%M') %><br/><%= get_week_day(active_session.start_datetime.strftime('%A')) %></p>
+          </div>
+        </div>
+
+      </td>
+      <td width="130" id='lesson_img'>
+        <div class="photo-box">
+          <span><img class='lesson_thumbnail' src="<%= thumbnail %>" alt=""></span>
+        </div>
+      </td>
+      <!-- TO DO -->
+      <td id='lesson_title'>
+        <% if active_lesson.present? %>
+        <strong><%= active_lesson.name %></strong>
+        <br/>Kiến thức học được: <%= active_lesson.note %>
+    <% else %>
+        <strong>BÀI: Đang cập nhật</strong>
+        <br/>Kiến thức học được: Đang cập nhật
+    <% end %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <hr>
+</div>

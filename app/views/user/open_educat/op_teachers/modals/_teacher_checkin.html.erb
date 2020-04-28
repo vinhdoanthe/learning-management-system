@@ -1,0 +1,52 @@
+<% faculty = current_user.op_faculty %>
+<% start_day = session.start_datetime.strftime('%d/%m/%Y') %>
+<div class="modal fade" id="modal_checkin" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Thông tin buổi học</h4>
+        </div>
+        <div class="modal-body">
+          <table style="width: 100%">
+            <tr>
+                <td><strong>Giáo viên: </strong></td>
+                <td class='teacher_id'>
+                    <%= faculty.full_name %>
+                    <input type='hidden' name='teacher_id' value='<%= faculty.id %>'>
+                    </td>
+            </tr>
+            <tr>
+              <td><strong>Học phần: </strong></td>
+                <td class='checkin_subject'><%= active_subject.level %></td>
+            </tr>
+            <tr>
+                <td><strong>Buổi học: </strong>
+                  <input type="hidden" name="checkin_session_id" value='<%= session.id %>'>
+                </td>
+                <td class='checkin_sesion'><%= session.count %></td>
+            </tr>
+            <tr>
+              <td><strong>Trạng thái lớp học: </strong></td>
+                <td class="checkin_state"><%= session.state %></td>
+            </tr>
+            <tr>
+              <td><strong>Thời gian bắt đầu: </strong></td>
+              <td class="checkin_start"><%= session.start_datetime.strftime('%H:%M') %> <%= start_day %></td>
+            </tr>
+            <tr>
+              <td><strong>Thời gian kết thúc: </strong></td>
+              <td class="checkin_end"><%= session.end_datetime.strftime('%H:%M') %> <%= start_day %></td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id='teacher_checkin_confirm_new'>Check-in</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+</div>

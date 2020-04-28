@@ -14,7 +14,6 @@
 
 /*
 * require_self
-*= require video-js
 *= require 'customized/customized_custom'
 *= require 'customized/customized_style'
 *= require 'customized/customized_style_other'
@@ -196,4 +195,8 @@ ul.header-menu.nav.navbar-nav li span {
   height: 100%;
   width: 150px;
   text-align: center;
+}
+
+.active_subject {
+  background: #5DC2A7 !important;
 }

@@ -1,0 +1,51 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "user/open_educat/op_teachers/teacher_class_detail" %>
+<% end %>
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h4 class="color-fff text-transform"><%= link_to image_tag('global/images/quaylai.svg') + ' Quay lại danh sách lớp học', user_teacher_class_path %></h4>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="bo-table">
+        <%= render 'user/open_educat/shared/batch_info', {:batch => @batch, :course => @course, company_name: @company_name, :classroom_name => @classroom_name, faculty: @faculty, subjects: @subjects, active_subject: @active_subject} %>
+      </div>
+      <div class="bo-table" id="no_session_class_detail" style=" margin-top: 30px; display: none">
+        <h3>Không có lớp học nào của bạn</h3>
+      </div>
+      <div class="bo-table" id="teacher_class_detail_content" style="margin-top: 30px">
+        <div id="subject_timeline">
+          <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/session_subject_timeline', {subject: @active_subject, sessions: @sessions, active_session: @active_session} %>
+        </div>
+        <div class="m-t-20">
+          <div class="redem-tab class-tab">
+            <div class="tab-content">
+              <div class="tab-pane active in">
+                <div class="table-responsive" id="lesson_infomation">
+                  <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/lesson_detail', {active_session: @active_session, active_lesson: @active_lesson, thumbnail: @thumbnail} %>
+                </div>
+                <hr>
+                <div class="table-responsive" id="session_control">
+                  <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/session_control', { active_lesson: @active_lesson, active_session: @active_session, active_subject: @active_subject} %>
+                </div>
+                <hr>
+                <input type='hidden' name='active_session' value="<%= @active_session.id %>">
+                <input type='hidden' name='active_batch' value="<%= @batch.id %>" >
+                <div class="table-responsive" id="session_student_info">
+                  <%#= render 'user/open_educat/op_teachers/partials/teacher_class_details/session_student_table', { all_student: @all_students } %>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <%= render 'learning/modal_materials' %>
+  <%= render 'user/open_educat/op_teachers/modals/teacher_attendance' %>
+  <div class="modal fade" id="reward_student_modal" role="dialog">
+</div>

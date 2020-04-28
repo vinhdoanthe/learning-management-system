@@ -2,6 +2,7 @@ module User
   class SessionsController < ApplicationController
 
     skip_before_action :authenticate_user!, only: [:new, :create]
+
     def new
       if logged_in?
         redirect_to root_path
@@ -9,7 +10,7 @@ module User
     end
 
     def create
-      user = User.find_by(username: params[:session][:username])
+      user = User::Account::User.find_by(username: params[:session][:username])
 
       if user.nil?
         flash.now[:danger] = 'Tên đăng nhập không tồn tại'
@@ -31,7 +32,7 @@ module User
     end
 
     def authenticate_user!
-        redirect_to user_login_path unless logged_in?
+      redirect_to user_login_path unless logged_in?
     end
 
     def new_parent_selection
@@ -42,7 +43,7 @@ module User
     end
 
     def create_parent_selection
-      child = User.find(params[:child])
+      child = User::Account::User.find(params[:child])
       log_in(child)
       redirect_to root_path
     end

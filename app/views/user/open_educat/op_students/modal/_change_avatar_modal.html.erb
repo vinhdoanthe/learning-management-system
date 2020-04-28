@@ -1,0 +1,44 @@
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Thay đổi hình nền đại diện</h4>
+    </div>
+    <div class="modal-body p-t-0">
+      <ul class="modal-avalist">
+        <% avatars.each do |avatar| %>
+          <li>
+            <a href="/user/account/avatars/show_fullsize?id=<%= avatar['id'] %>" data-remote='true'>
+              <%= image_tag avatar['thumbnail'] %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+      <div class="modal-avabig" id='modalAvabig'>
+        <% if current_avatar.nil? %>
+          <span id='bigAvatarInmodal' data-avatar-id='<%=avatars[0]['id']%>'><%= image_tag avatars[0]['full_size'] %></span>
+        <% else %>
+          <span id='bigAvatarInmodal' data-avatar-id='<%=current_avatar['id']%>'><%= image_tag current_avatar['full_size'] %></span>
+        <% end %>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id='saveAvatarBtn' type="submit" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">Lưu lại</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#saveAvatarBtn').on('click', function(event) {
+    var avatar_id = $('#bigAvatarInmodal').data('avatar-id');
+    $.ajax({
+      type: 'POST',
+      data: {
+        authenticity_token: $('[name="csrf-token"]')[0].content,
+        avatar_id: avatar_id 
+      },
+      url: '/user/account/users/change_avatar',
+      dataType: 'script'
+    });
+  });
+</script>

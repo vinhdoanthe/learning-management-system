@@ -5,4 +5,5 @@ module Constant
   include Api::Constant
   include Learning::Constant
   include Notification::Constant
+  include SocialCommunity::Constant
 end

@@ -23,11 +23,12 @@ RailsAdmin.config do |config|
       end
     end
   end
-  config.included_models = %w(Learning::Course::OpCourse Learning::Course::CourseDescription Learning::Course::OpLession 
+  config.included_models = %w(Common::RewardType
+                              Learning::Course::OpCourse Learning::Course::CourseDescription Learning::Course::OpLession 
                               Learning::Batch::OpBatch Learning::Batch::OpSession 
                               Learning::Material::Question Learning::Material::QuestionChoice Learning::Material::LearningMaterial
-                              User::User User::OpStudent User::Avatar 
-                              Learning::LearningRecord::UserQuestion
+                              User::Account::User User::OpenEducat::OpStudent User::Account::Avatar
+                              Learning::Homework::UserQuestion
                               Notification::BroadcastNoti)
 
 
@@ -130,7 +131,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model 'User::User' do
+  config.model 'User::Account::User' do
     list do
       field :id
       field :username
@@ -174,7 +175,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model 'User::OpStudent' do
+  config.model 'User::OpenEducat::OpStudent' do
     list do
       field :full_name
       field :code
@@ -249,7 +250,7 @@ RailsAdmin.config do |config|
       field :choice_content
     end
   end
-  config.model 'Learning::LearningRecord::UserQuestion' do
+  config.model 'Learning::Homework::UserQuestion' do
     show do
       field :user
       field :question
@@ -294,29 +295,30 @@ RailsAdmin.config do |config|
     dashboard
     index
     new do
-      only %w(Learning::Course::CourseDescription 
+      only %w(Common::RewardType
+              Learning::Course::CourseDescription 
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice
               Notification::BroadcastNoti
-              User::Avatar)
+              User::Account::Avatar)
     end
     show
     show_in_app do
       only %w(Learning::Course::OpLession)
     end
     edit do
-      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, 
+      only %w(Common::RewardType
+              Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, 
               Learning::Course::OpLession Learning::Course::OpCourse Learning::Course::CourseDescription 
               Notification::BroadcastNoti)
     end
     delete do
-      only %w(Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
+      only %w(Common::RewardType
+              Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
     end
 
-=begin
     export do
-      only %w(User::User User::OpStudent 
+      only %w(User::Account::User User::OpenEducat::OpStudent
               Learning::Batch::OpSession)
     end
-=end
   end
 end

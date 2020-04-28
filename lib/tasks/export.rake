@@ -2,7 +2,7 @@ namespace :export do
   require 'axlsx'
   desc 'Export all students information'
   task :op_students, [] => :environment do |t, arg|
-    @op_students = User::OpStudent.order(:create_date => :desc)
+    @op_students = User::OpenEducat::OpStudent.order(:create_date => :desc)
     op_students_export = []
 
     total_student = @op_students.length()
@@ -13,7 +13,7 @@ namespace :export do
       puts "#{index}/#{total_student}"
       op_student_export.append op_student.full_name
       op_student_export.append op_student.code
-      user = User::User.where(student_id: op_student.id).first
+      user = User::Account::User.where(student_id: op_student.id).first
       if user.nil?
         op_student_export.append '-'
       else
@@ -56,7 +56,7 @@ namespace :export do
   desc 'Export all missing information students'
   task :op_student_missing_information, [] => :environment do |t,args|
 
-    @op_students = User::OpStudent.order(:create_date => :desc)
+    @op_students = User::OpenEducat::OpStudent.order(:create_date => :desc)
     op_students_export = []
 
     total_student = @op_students.length()
@@ -121,7 +121,7 @@ namespace :export do
 
   desc 'Export Users'
   task :export_users, [] => :environment do |t, args|
-    users = User::User.all
+    users = User::Account::User.all
     users_export = []
     total_user = users.length()
     index = 0
@@ -278,7 +278,7 @@ namespace :export do
       export_row << op_student.vattr_center_name
       export_row << op_student.code
       export_row << op_student.full_name
-      user = User::User.where(student_id: op_student.id).first
+      user = User::Account::User.where(student_id: op_student.id).first
       if user.nil?
         export_row << '-'
       else

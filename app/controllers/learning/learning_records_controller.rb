@@ -26,7 +26,7 @@ module Learning
     end
 
     def question_content
-      user_question = Learning::LearningRecord::UserQuestion.find(params[:user_question_id])
+      user_question = Learning::Homework::UserQuestion.find(params[:user_question_id])
       question = user_question.question
 
       respond_to do |format|
@@ -71,7 +71,7 @@ module Learning
     end
 
     def get_user_answer
-      user_answer = Learning::LearningRecord::UserAnswer.find(params[:user_answer_id])
+      user_answer = Learning::Homework::UserAnswer.find(params[:user_answer_id])
       question = user_answer.user_question.question if user_answer.user_question.present?
       respond_to do |format|
         format.html
@@ -96,9 +96,11 @@ module Learning
         @session = Learning::Batch::OpSession.where(id: params[:session_id]).last
         @lesson = @session.op_lession
         question_ids = @lesson.questions.pluck(:id) if @lesson.present?
-        @user_questions = LearningRecord::UserQuestion.where("student_id = #{current_user.id.to_s} AND question_id IN (#{question_ids.join(', ')})")
 
-        if !@user_questions.nil?
+#        @user_questions = Homework::UserQuestion.where("student_id = #{current_user.id.to_s} AND question_id IN (#{question_ids.join(', ')})")
+        @user_questions = Homework::UserQuestion.where(student_id: current_user.id, question_id: question_ids)
+        
+        if @user_questions.present?
           if @user_questions.first.student_id != current_user.id
             flash[:danger] = "Bạn không có quyền truy cập đến tài nguyên này"
             redirect_to root_path

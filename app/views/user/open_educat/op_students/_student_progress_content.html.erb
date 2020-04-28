@@ -1,0 +1,37 @@
+<div class="filter-box FlowupLabels" id='formBody'>
+  <div class="row">
+    <div class="col-md-offset-1 col-md-4">
+      <div class='fl_wrap m-t-0 course-populated populated'>
+        <label class='fl_label' for='rf_name'>Khóa học: </label>
+        <p class="fl_input"><%= batch.op_course.name %></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class='fl_wrap m-t-0 batch-populated populated'>
+        <label class='fl_label' for='rf_name'>Lớp học</label>
+        <p class="fl_input"><%= batch.code %></p>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class='fl_wrap m-t-0 populated'>
+        <label class='fl_label' for='rf_name'>Học phần:</label>
+        <% unless subjects.blank? %>
+          <select class='fl_input student_subject_filter' id='rf_name' onchange="showSubjectSessions()">
+            <option value="all">Tất cả</option>
+            <% subjects.each do |subject| %>
+              <option value="<%= subject[0] %>"><%= subject[1] %></option>
+            <% end %>
+          </select>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'user/open_educat/shared/session/coming_session', {:coming_soon_session => coming_soon_session} %>
+
+<%= render 'user/open_educat/op_students/progress/done_sessions', {:done_sessions => done_sessions} %>
+
+<%= render 'user/open_educat/op_students/progress/tobe_sessions', {:tobe_sessions => tobe_sessions} %>
+
+<%= render 'user/open_educat/op_students/progress/cancel_sessions', {:cancel_sessions => cancel_sessions} %>

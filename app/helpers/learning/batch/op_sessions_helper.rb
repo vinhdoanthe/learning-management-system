@@ -17,6 +17,10 @@ module Learning
           op_session.op_lession
         end
       end 
+
+      def get_video_thumbnail op_session
+        '/global/images/Logo-2.png'
+      end
     end
   end
 end

@@ -1,0 +1,110 @@
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Thời khoá biểu</h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <%= render 'user/open_educat/shared/session/coming_session', {:coming_soon_session => @session} %>
+      <div class="table-responsive calendar-teach" style="overflow-x: initial;">
+        <div class="filter-box FlowupLabels b-b-1-869fb229 m-b-20" id='formBody'>
+          <div class="row">
+            <div class="col-md-3">
+              <label class="filter-title">Toàn bộ <span class="color-16BD56">Lớp học</span></label>
+            </div>
+            <div class="col-md-3">
+              <div class="chosse-date">
+                <p>
+                <a class="cd-left schedule_time_previous"><i class="fa fa-caret-square-o-left"></i></a><span class="start_time">
+                  23/12/2019 </span><span>&rarr;</span> <span class="end_time">29/12/2019
+                </span><a class="cd-right schedule_time_next"><i class="fa fa-caret-square-o-right"></i></a>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class='fl_wrap m-t-0 chosen_month'>
+                <label class='fl_label' for='rf_name'>Xem theo:</label>
+                <select class='fl_input month_teaching_schedule' id='rf_name' >
+                  <option value=""></option>
+                  <option value="1">Tháng 1</option>
+                  <option value="2">Tháng 2</option>
+                  <option value="3">Tháng 3</option>
+                  <option value="4">Tháng 4</option>
+                  <option value="5">Tháng 5</option>
+                  <option value="6">Tháng 6</option>
+                  <option value="7">Tháng 7</option>
+                  <option value="8">Tháng 8</option>
+                  <option value="9">Tháng 9</option>
+                  <option value="10">Tháng 10</option>
+                  <option value="11">Tháng 11</option>
+                  <option value="12">Tháng 12</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="chosse-date">
+                <p>
+                <a class="cd-left schedule_year_previous"><i class="fa fa-caret-square-o-left"></i></a><span><strong class="year_teaching_schedule">
+                    <%= Time.now.year %></strong></span><a class="cd-right schedule_year_next"><i class="fa fa-caret-square-o-right"></i></a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr class='day_in_week'>
+              <th width="140" class="text-right bg-5DC2A7 color-fff" style="border: 0">Khung giờ</th>
+              <th class="text-center thu_2" width="155">Thứ 2<br/><span>23/12/2019</span></th>
+              <th class="text-center thu_3" width="155">Thứ 3<br/><span>24/12/2019</span></th>
+              <th class="text-center thu_4" width="155">Thứ 4<br/><span>25/12/2019</span></th>
+              <th class="text-center thu_5" width="155">Thứ 5<br/><span>26/12/2019</span></th>
+              <th class="text-center thu_6" width="155">Thứ 6<br/><span>27/12/2019</span></th>
+              <th class="text-center thu_7" width="155">Thứ 7<br/><span>28/12/2019</span></th>
+              <th class="text-center thu_8" width="155">Chủ nhật<br/><span>29/12/2019</span></th>
+            </tr>
+          </thead>
+          <tbody id='schedule_table'>
+            <tr class='s1' style='border: none !important'>
+              <td rowspan="2" align="center" class="bg-FFC400 color-fff font-bold" style="border: 0"><span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Sáng</span></td>
+            </tr>
+            <tr class='s2'>
+            </tr>
+            <tr class='c1'>
+              <td rowspan="2" align="center" class="bg-F0B800 color-fff font-bold" style="border: 0"><span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Chiều</span></td>
+            </tr>
+            <tr class='c2'>
+            </tr>
+            <tr class='t1'>
+              <td rowspan="2" align="center" class="bg-D4A300 color-fff font-bold" style="border: 0"><span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Tối</span></td>
+            </tr>
+            <tr class='t2'>
+            </tr>
+          </tbody>
+        </table>
+        <div class="ct-note">
+          <div class="row">
+            <div class="col-sm-10">
+              <div class="ct-left">
+                <ul>
+                  <li><span class="bg-5DC2A7"></span>LỚP HỌC TRỰC TUYẾN</li>
+                  <li><span class="bg-EB9138"></span>LỚP HỌC TẠI TRUNG TÂM</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-2 ct-right">
+              <div class="ct-right">
+                <ul>
+                  <li><span><img src="/global/images/close.png" alt=""></span>Lớp bị hủy</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

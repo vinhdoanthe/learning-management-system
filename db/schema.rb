@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_07_095346) do
+ActiveRecord::Schema.define(version: 2020_04_24_024620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1498,6 +1498,13 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
     t.integer "student_id", null: false, comment: "Student"
   end
 
+  create_table "albums", force: :cascade do |t|
+    t.bigint "batch_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["batch_id"], name: "index_albums_on_batch_id"
+  end
+
   create_table "answer_marks", force: :cascade do |t|
     t.bigint "user_answer_id"
     t.text "mark_content"
@@ -2381,14 +2388,22 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
   end
 
   create_table "comments", comment: "table comment ve mot noi dung cua nguoi dung", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "post_id", null: false, comment: "id cua noi dung comment"
-    t.string "post_type", limit: 10, comment: "loai noi dung comment: batch; album; photo;lesson"
-    t.bigint "parent_comment_id", comment: "id comment cha"
     t.text "content", comment: "noi dung comment"
-    t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
-    t.index ["post_id"], name: "index_comments_on_post_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
+    t.bigint "commented_by"
+    t.string "commentable_type"
+    t.bigint "commentable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.bigint "batch_id"
+    t.integer "conversation_type", limit: 2
+    t.bigint "created_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["batch_id"], name: "index_conversations_on_batch_id"
   end
 
   create_table "course_categ", id: :serial, comment: "course.categ", force: :cascade do |t|
@@ -2815,6 +2830,12 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "discussions", force: :cascade do |t|
+    t.bigint "batch_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "document_page", id: :serial, comment: "Document Page", force: :cascade do |t|
     t.string "name", null: false, comment: "Title"
     t.string "type", comment: "Type"
@@ -3235,6 +3256,12 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.string "employee_type", comment: "Employee Type"
+  end
+
+  create_table "feeling_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "fees_detail_report_wizard", id: :serial, comment: "fees.detail.report.wizard", force: :cascade do |t|
@@ -6043,6 +6070,16 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
     t.index ["message_id"], name: "message_attachment_rel_message_id_idx"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.bigint "sent_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "messageable_type"
+    t.bigint "messageable_id"
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
+  end
+
   create_table "muk_autovacuum_rules", id: :serial, comment: "Auto Vacuum Rules", force: :cascade do |t|
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
@@ -7494,6 +7531,16 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "photos", force: :cascade do |t|
+    t.bigint "album_id"
+    t.bigint "session_id"
+    t.bigint "created_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["album_id"], name: "index_photos_on_album_id"
+    t.index ["session_id"], name: "index_photos_on_session_id"
+  end
+
   create_table "portal_wizard", id: :serial, comment: "Portal Access Management", force: :cascade do |t|
     t.integer "portal_id", null: false, comment: "Portal"
     t.text "welcome_message", comment: "Invitation Message"
@@ -8215,14 +8262,13 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
   end
 
   create_table "reactions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "type", null: false
-    t.bigint "post_id", null: false
-    t.string "post_type", limit: 10
+    t.integer "react_type", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_reactions_on_post_id"
-    t.index ["post_type"], name: "index_reactions_on_post_type"
+    t.bigint "reacted_by"
+    t.string "reactable_type"
+    t.bigint "reactable_id"
+    t.index ["reactable_type", "reactable_id"], name: "index_reactions_on_reactable_type_and_reactable_id"
   end
 
   create_table "recruitment_source", id: :serial, comment: "Recruitment Source", force: :cascade do |t|
@@ -9094,6 +9140,13 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "reward_types", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "rule_group_rel", id: false, comment: "RELATION BETWEEN ir_rule AND res_groups", force: :cascade do |t|
     t.integer "rule_group_id", null: false
     t.integer "group_id", null: false
@@ -9286,6 +9339,31 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
     t.index ["name", "partner_id"], name: "session_fa_rel_name_partner_id_key", unique: true
     t.index ["name"], name: "session_fa_rel_name_idx"
     t.index ["partner_id"], name: "session_fa_rel_partner_id_idx"
+  end
+
+  create_table "session_student_feedbacks", force: :cascade do |t|
+    t.bigint "session_id"
+    t.bigint "feedback_by"
+    t.integer "feeling_type_id", limit: 2
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feedback_by"], name: "index_session_student_feedbacks_on_feedback_by"
+    t.index ["feeling_type_id"], name: "index_session_student_feedbacks_on_feeling_type_id"
+    t.index ["session_id"], name: "index_session_student_feedbacks_on_session_id"
+  end
+
+  create_table "session_student_rewards", force: :cascade do |t|
+    t.bigint "session_id"
+    t.bigint "rewarded_by"
+    t.bigint "rewarded_to"
+    t.integer "reward_type_id", limit: 2
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reward_type_id"], name: "index_session_student_rewards_on_reward_type_id"
+    t.index ["rewarded_by"], name: "index_session_student_rewards_on_rewarded_by"
+    t.index ["rewarded_to"], name: "index_session_student_rewards_on_rewarded_to"
+    t.index ["session_id"], name: "index_session_student_rewards_on_session_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -10540,6 +10618,7 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
   add_foreign_key "admission_sent_email", "op_student", column: "student_id", name: "admission_sent_email_student_id_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "res_users", column: "create_uid", name: "admission_sent_email_create_uid_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "res_users", column: "write_uid", name: "admission_sent_email_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "albums", "op_batch", column: "batch_id"
   add_foreign_key "answer_marks", "user_answers"
   add_foreign_key "asset_depreciation_confirmation_wizard", "res_users", column: "create_uid", name: "asset_depreciation_confirmation_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_depreciation_confirmation_wizard", "res_users", column: "write_uid", name: "asset_depreciation_confirmation_wizard_write_uid_fkey", on_delete: :nullify
@@ -10743,7 +10822,9 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
   add_foreign_key "change_password_user", "res_users", column: "write_uid", name: "change_password_user_write_uid_fkey", on_delete: :nullify
   add_foreign_key "change_password_wizard", "res_users", column: "create_uid", name: "change_password_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "change_password_wizard", "res_users", column: "write_uid", name: "change_password_wizard_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "comments", "comments", column: "user_id", name: "comments_user_id_fkey"
+  add_foreign_key "comments", "users", column: "commented_by"
+  add_foreign_key "conversations", "op_batch", column: "batch_id"
+  add_foreign_key "conversations", "users", column: "created_by"
   add_foreign_key "course_categ", "res_users", column: "create_uid", name: "course_categ_create_uid_fkey", on_delete: :nullify
   add_foreign_key "course_categ", "res_users", column: "write_uid", name: "course_categ_write_uid_fkey", on_delete: :nullify
   add_foreign_key "course_description", "op_course"
@@ -10848,6 +10929,7 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
   add_foreign_key "decimal_precision", "res_users", column: "write_uid", name: "decimal_precision_write_uid_fkey", on_delete: :nullify
   add_foreign_key "decimal_precision_test", "res_users", column: "create_uid", name: "decimal_precision_test_create_uid_fkey", on_delete: :nullify
   add_foreign_key "decimal_precision_test", "res_users", column: "write_uid", name: "decimal_precision_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "discussions", "op_batch", column: "batch_id"
   add_foreign_key "document_page", "document_page", column: "parent_id", name: "document_page_parent_id_fkey", on_delete: :nullify
   add_foreign_key "document_page", "document_page_history", column: "history_head", name: "document_page_history_head_fkey", on_delete: :nullify
   add_foreign_key "document_page", "ir_ui_menu", column: "menu_id", name: "document_page_menu_id_fkey", on_delete: :nullify
@@ -11660,6 +11742,7 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
   add_foreign_key "merge_opportunity_rel", "crm_merge_opportunity", column: "merge_id", name: "merge_opportunity_rel_merge_id_fkey", on_delete: :cascade
   add_foreign_key "message_attachment_rel", "ir_attachment", column: "attachment_id", name: "message_attachment_rel_attachment_id_fkey", on_delete: :cascade
   add_foreign_key "message_attachment_rel", "mail_message", column: "message_id", name: "message_attachment_rel_message_id_fkey", on_delete: :cascade
+  add_foreign_key "messages", "users", column: "sent_by"
   add_foreign_key "muk_autovacuum_rules", "res_users", column: "create_uid", name: "muk_autovacuum_rules_create_uid_fkey", on_delete: :nullify
   add_foreign_key "muk_autovacuum_rules", "res_users", column: "write_uid", name: "muk_autovacuum_rules_write_uid_fkey", on_delete: :nullify
   add_foreign_key "muk_web_client_notification_send_notifications", "res_users", column: "create_uid", name: "muk_web_client_notification_send_notifications_create_uid_fkey", on_delete: :nullify
@@ -12077,6 +12160,9 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
   add_foreign_key "payment_transaction", "sale_order", name: "payment_transaction_sale_order_id_fkey", on_delete: :nullify
   add_foreign_key "payslip_lines_contribution_register", "res_users", column: "create_uid", name: "payslip_lines_contribution_register_create_uid_fkey", on_delete: :nullify
   add_foreign_key "payslip_lines_contribution_register", "res_users", column: "write_uid", name: "payslip_lines_contribution_register_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "photos", "albums"
+  add_foreign_key "photos", "op_session", column: "session_id"
+  add_foreign_key "photos", "users", column: "created_by"
   add_foreign_key "portal_wizard", "res_groups", column: "portal_id", name: "portal_wizard_portal_id_fkey", on_delete: :nullify
   add_foreign_key "portal_wizard", "res_users", column: "create_uid", name: "portal_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "portal_wizard", "res_users", column: "write_uid", name: "portal_wizard_write_uid_fkey", on_delete: :nullify
@@ -12260,6 +12346,7 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
   add_foreign_key "rating_rating", "res_partner", column: "rated_partner_id", name: "rating_rating_rated_partner_id_fkey", on_delete: :nullify
   add_foreign_key "rating_rating", "res_users", column: "create_uid", name: "rating_rating_create_uid_fkey", on_delete: :nullify
   add_foreign_key "rating_rating", "res_users", column: "write_uid", name: "rating_rating_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "reactions", "users", column: "reacted_by"
   add_foreign_key "recruitment_source", "res_users", column: "create_uid", name: "recruitment_source_create_uid_fkey", on_delete: :nullify
   add_foreign_key "recruitment_source", "res_users", column: "write_uid", name: "recruitment_source_write_uid_fkey", on_delete: :nullify
   add_foreign_key "rel_badge_auth_users", "gamification_badge", name: "rel_badge_auth_users_gamification_badge_id_fkey", on_delete: :cascade
@@ -12491,6 +12578,13 @@ ActiveRecord::Schema.define(version: 2020_04_07_095346) do
   add_foreign_key "session_confirmation", "res_users", column: "write_uid", name: "session_confirmation_write_uid_fkey", on_delete: :nullify
   add_foreign_key "session_fa_rel", "op_faculty", column: "partner_id", name: "session_fa_rel_partner_id_fkey", on_delete: :cascade
   add_foreign_key "session_fa_rel", "op_session", column: "name", name: "session_fa_rel_name_fkey", on_delete: :cascade
+  add_foreign_key "session_student_feedbacks", "feeling_types"
+  add_foreign_key "session_student_feedbacks", "op_session", column: "session_id"
+  add_foreign_key "session_student_feedbacks", "users", column: "feedback_by"
+  add_foreign_key "session_student_rewards", "op_session", column: "session_id"
+  add_foreign_key "session_student_rewards", "reward_types"
+  add_foreign_key "session_student_rewards", "users", column: "rewarded_by"
+  add_foreign_key "session_student_rewards", "users", column: "rewarded_to"
   add_foreign_key "slide_category", "res_users", column: "create_uid", name: "slide_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "slide_category", "res_users", column: "write_uid", name: "slide_category_write_uid_fkey", on_delete: :nullify
   add_foreign_key "slide_category", "slide_channel", column: "channel_id", name: "slide_category_channel_id_fkey", on_delete: :cascade

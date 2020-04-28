@@ -1,0 +1,28 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'social_community/dashboards/student/dashboard.js' %>
+<% end %>
+<div class="page-content page-thin">  <div class="row">
+    <div class="col-md-7 ">
+      <div class="panel">
+        <div class="panel-content" id='albums_with_comments'>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="panel" id='coming_soon_session'>
+      </div>
+
+      <div class="panel">
+        <%= render "social_community/dashboards/student/star_coin" %>
+      </div>
+
+      <div class="panel">
+        <%= render "social_community/dashboards/shared/notifications" %>
+      </div>
+
+      <div class="panel">
+        <%= render "social_community/dashboards/student/leaders_board" %>
+      </div>
+    </div>
+  </div>
+</div>

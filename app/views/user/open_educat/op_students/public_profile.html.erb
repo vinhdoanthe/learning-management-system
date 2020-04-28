@@ -1,0 +1,61 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "user/open_educat/op_students/public_profile.js" %>
+<% end %>
+
+<div class="page-content page-thin p-0">
+  <section class="box-public">
+    <%= render :partial => "user/open_educat/op_students/public_profile/header_info", :locals => {public_user: public_user} %>
+    <div class="bp-main">
+      <div class="bpm-head">
+        <% if pp_can_change_avatar?(op_student.id) %> 
+          <a id='userAvatar' href="/user/account/users/change_avatar" data-toggle="modal" data-remote='true' data-target='#changeAvatarModal'>
+            <%= image_tag pp_avatar(op_student.id) %>
+          </a>
+        <% else %>
+          <%= image_tag pp_avatar(op_student.id) %>
+        <% end %>
+        <p class="name-cards"><span class="color-0654BA"><%= public_user.username %></span><br/><%= op_student.full_name %></p>
+        <ul>
+          <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.original_url %>" target='_blank'>
+              <span>
+                <%= image_tag('global/images/tekystar.png') %>
+              </span>
+              <p>Chia sẻ</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <% if pp_can_change_avatar?(op_student.id) %>
+        <div class="modal fade" id="changeAvatarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        </div>
+      <% end %>
+      <div class="bpm-content">
+        <%= render :partial => "user/open_educat/op_students/public_profile/general_info", :locals => {op_student: op_student} %>
+        <hr>
+        <div class="bpc-detail">
+          <div class="dpc-title">
+            <h3>Thành tích & Giải thưởng</h3>
+          </div>
+          <%= render :partial => "user/open_educat/op_students/public_profile/achievements", :locals => {achievements: achievements} %>
+
+          <div class="dpc-title">
+            <h3>Huy hiệu</h3>
+          </div>
+          <%= render :partial => "user/open_educat/op_students/public_profile/badges", :locals => {badges: badges} %>
+
+          <div class="dpc-title">
+            <h3>Hình ảnh </h3>
+          </div>
+          <%= render :partial => "user/open_educat/op_students/public_profile/pictures", :locals => {featured_photos: featured_photos} %>
+
+          <div class="dpc-title">
+            <h3>Sản phẩm</h3>
+          </div>
+          <%= render :partial => "user/open_educat/op_students/public_profile/products", :locals => {products: products} %>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

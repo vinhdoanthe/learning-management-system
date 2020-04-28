@@ -1,0 +1,64 @@
+<input type='hidden' name='active_session_id' value='<%= session.id %>' >
+<table class="table table-hover" id="table_student">
+  <thead>
+    <tr>
+      <th>Mã học sinh</th>
+      <th>Họ và tên</th>
+      <th class="text-center">Điểm danh</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id='student_attendance'>
+    <% all_student.each do |st| %>
+      <% student = st[1] %>
+      <tr>
+        <td><%= student[:code] %></td>
+        <td>
+          <span class="table-img">
+            <img src="<%= student[:avatar_src] %>" alt="">
+          </span>
+          <span class="table-name"><%= student[:name] %></span>
+        </td>
+        <% if student[:attendance] == '' %>
+          <td></td>
+        <% elsif student[:attendance] == true %>
+          <td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""></td>
+        <% else %>
+          <td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""> </td>
+        <% end %>
+        <% if student[:status] == 'off' %>
+          <td style="text-align: center; opacity: 0.3;">
+            <a>
+              <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px">
+            </a>
+          </td>
+          <td align="right">
+            <span class="label-edit label label-danger">Nghỉ học</span>
+          </td>
+        <% elsif student[:status] == 'on' %>
+          <td style="text-align: center">
+            <a class="student_evaluate" data-value="" data-code="<%= student[:code] %>" data-toggle="modal" data-target="#modal_evaluate">
+              <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px; cursor: pointer;">
+            </a>
+          </td>
+          <td align="right">
+            <span class="label-edit label label-primary">Đang học</span>
+          </td>
+        <% elsif student[:status] == 'save' %>
+          <td style="text-align: center; opacity: 0.3;">
+            <a>
+              <img src="/global/images/add-comment-button.png" style="min-width: 20px; width: 20px; margin-right: 10px">
+            </a>
+          </td>
+          <td align="right">
+            <span class="label-edit label label-stop">Bảo lưu</span>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div id="modal_evaluate" class="modal fade" role="dialog">
+</div>

@@ -1,0 +1,47 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "learning/course/course_description.js" %>
+  <%= javascript_include_tag 'user/open_educat/op_students/batch_detail.js' %>
+<% end %>
+
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Lớp học của tôi</h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <a href="<%= user_open_educat_op_students_batches_path %>" class="PC-back">
+        <%= image_tag('global/images/quaylai.svg') %>
+        Quay lại
+      </a>
+      <ul class="nav nav-tabs nav-primary tab-menu">
+        <li class="active"><a href="#tab2_1" data-toggle="tab">Thông tin lớp học</a></li>
+        <li class="" id='student_batch_progress_li' data-batch-id='<%= batch.id %>'><a href="#tab2_2" data-toggle="tab">Quá trình học tập</a></li>
+      </ul>
+      <div class="tab-content p-0 tab-all-content m-t-20">
+        <div class="tab-pane fade active in" id="tab2_1">
+          <div class="bo-table">
+            <div class="form-content">
+              <%= render 'user/open_educat/shared/batch_info', {batch: batch, course_name: course_name, faculty_names: faculty_names, batch_subjects: batch_subjects, done_subjects: done_subjects, session_count: session_count, company_name: company_name, classroom_name: classroom_name} %>
+              <%= render 'batch_info_table', {:batch => batch, batch_subjects: batch_subjects, op_student_courses: op_student_courses, active_student_course: active_student_course} %>
+            </div>
+          </div>
+
+          <div class="bo-lession m-t-20" id='course_description'>
+            <% op_course = batch.op_course %>
+            <% unless op_course.nil? %>
+              <% course_description = op_course.course_description.first %>
+              <% unless course_description.nil? %>
+                <%= raw(course_description.description) %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <%= render 'batch_student_progress', {:batch => batch} %>
+      </div>
+    </div>
+  </div>
+</div>

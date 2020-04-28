@@ -163,7 +163,7 @@ class User::OpTeachersService
     ActionController::Base.helpers.asset_path('global/images/avatar.svg')
 =begin
     Temporary comment. TODO: in version 1.1
-    user = User::User.where(student_id: student.id).first
+    user = User::Account::User.where(student_id: student.id).first
 
     if user.present?
       if student.gender == 'm'

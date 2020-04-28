@@ -1,0 +1,85 @@
+<div class="bnd-all-other">
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="bnd-other">
+        <a class='album-like-btn' data-album-id='<%= album_id%>'> 
+          <img src="/global/images/like-3.png" alt="" class='album-like-btn' data-album-id='<%= album_id%>'>
+          Like
+          <span id="album_count_like_<%= album_id %>"><%= count_like.nil? ? 0 : count_like %></span>
+        </a>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="bnd-other">
+        <a class='album-love-btn' data-album-id='<%= album_id%>'> 
+          <img src="/global/images/love-and-romance.png" alt="">
+          Thả tim
+          <span id='album_count_love_<%= album_id %>'><%= count_love.nil? ? 0 : count_love %></span>
+        </a>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="bnd-other">
+        <a class='album-sad-btn' data-album-id='<%= album_id%>'> 
+          <img src="/global/images/iconsad.png" alt="">
+          Buồn
+          <span id="album_count_sad_<%= album_id %>"><%= count_sad.nil? ? 0 : count_sad %></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.album-like-btn').click(function(event){
+      event.preventDefault();
+      data = {
+        reaction_type: 1,
+        album_id: $(event.target).data('album-id'),
+        authenticity_token: $('[name="csrf-token"]')[0].content
+      };
+      console.log(data)
+      add_reaction_to_album(data);
+    });
+
+    $('.album-love-btn').click(function(event){
+      event.preventDefault();
+      data = {
+        reaction_type: 2,
+        album_id: $(event.target).data('album-id'),
+        authenticity_token: $('[name="csrf-token"]')[0].content
+      };
+      console.log(data)
+      add_reaction_to_album(data);
+    });
+
+    $('.album-sad-btn').click(function(event){
+      event.preventDefault();
+      data = {
+        reaction_type: 3,
+        album_id: $(event.target).data('album-id'),
+        authenticity_token: $('[name="csrf-token"]')[0].content
+      };
+      console.log(data)
+      add_reaction_to_album(data);
+    });
+  });
+
+function add_reaction_to_album(data) {
+  $.ajax({
+    method: 'POST',
+    data: data,
+    url: '/social_community/albums/add_reaction',
+    dataType: 'script'
+  })
+}
+
+  <%# function add_comment_to_album(data) { %>
+    <%#   $.ajax({ %>
+    <%#     method: 'POST', %>
+  <%#     data: data, %>
+  <%#     url: '/social_community/albums/add_comment', %>
+  <%#     dataType: 'script' %>
+  <%#   }) %>
+  <%# } %>
+</script>

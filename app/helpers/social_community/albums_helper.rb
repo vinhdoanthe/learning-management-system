@@ -1,0 +1,2 @@
+module SocialCommunity::AlbumsHelper
+end

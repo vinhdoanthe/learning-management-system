@@ -1,0 +1,67 @@
+<% start_time = active_session.start_datetime %>
+<% end_time = active_session.end_datetime %>
+<div class="fc-header clearfix">
+  <div class="pull-left lesson_info">
+    <h3>Học phần <%= active_subject.level %> - Buổi học: <%= active_session.count %></h3>
+    <p><%= start_time.strftime('%H:%M') %> - <%= end_time.strftime('%H:%M') %> | <%= start_time.strftime('%d/%m/%y') %></p>
+  </div>
+  <div class="fc-list-btn pull-right">
+    <ul>
+      <li>
+        <button type="button" class="btn btn-default btn-embossed" id="learning_device" data-toggle="modal" data-target="#modal_learning_device">Học cụ
+        </button>
+      </li>
+      <li>
+        <% if active_session.state == 'confirm' %>
+          <button type="button" class="btn btn-default btn-embossed" id="teacher_checkin" data-toggle="modal" data-target="#modal_checkin" >Check-in</button>
+        <% else %>
+          <button type="button" class="btn btn-default btn-embossed" id="teacher_checkin" data-toggle="modal" data-target="#modal_checkin" disabled>Check-in</button>
+        <% end %>
+      </li>
+        <% if ['confirm', 'done'].include? active_session.state %>
+      <li>
+        <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance_new" data-toggle="modal" data-target="#modal_attendance" >Điểm danh
+        </button>
+      </li>
+      <li id="btn_view_materials">
+        <%= link_to 'Học liệu', learning_list_slides_of_subject_path(active_session.subject_id), {:class => 'btn btn-default btn-embossed', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
+        <%#= link_to 'Học liệu', learning_show_google_doc_materials_path(active_session.id), {:class => 'btn btn-default btn-embossed', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
+      </li>
+      <li>
+        <button type="button" id='upload_session_photo' class="btn btn-default btn-embossed" data-toggle="modal" data-target="#upload_photo">Chụp ảnh
+        </button>
+      </li>
+    <% else %>
+      <li>
+        <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance_new" disabled data-toggle="modal" data-target="#modal_attendance" >Điểm danh
+        </button>
+      </li>
+      <li id="btn_view_materials">
+        <%= link_to 'Học liệu', learning_list_slides_of_subject_path(active_session.subject_id), {:class => 'btn btn-default btn-embossed', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
+        <%#= link_to 'Học liệu', learning_show_google_doc_materials_path(active_session.id), {:class => 'btn btn-default btn-embossed', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
+      </li>
+      <li>
+        <button type="button" id='upload_session_photo' class="btn btn-default btn-embossed" disabled data-toggle="modal" data-target="#upload_photo" disabled>Chụp ảnh
+        </button>
+      </li>
+    <% end %>
+    <% if active_session.state == 'done' %>
+      <li>
+        <button type="button" id='reward_student' class="btn btn-default btn-embossed" data-toggle="modal" data-target="#reward_student_modal">Thưởng
+        </button>
+      </li>
+    <% else %>
+      <li>
+        <button type="button" id='reward_student' disabled class="btn btn-default btn-embossed">Thưởng
+        </button>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+</div>
+
+<%= render 'user/open_educat/op_teachers/modals/teacher_checkin', { session: active_session, active_subject: active_subject, lesson: active_lesson } %>
+<%= render 'user/open_educat/op_teachers/modals/upload_photo' %>
+<%= render 'user/open_educat/op_teachers/modals/learning_device', { lesson: active_lesson } %>
+  <div class="modal fade" id="reward_student_modal" role="dialog">
+</div>

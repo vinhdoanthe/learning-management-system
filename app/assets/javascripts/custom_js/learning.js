@@ -31,16 +31,16 @@ $('document').ready(function(){
     })
 	}
 
-	$('#homework_tab2').on('click','#previous_video', function(){
-		session_id = $('input[name="next_video_session_id"]').val();
-		video_id = $('input[name="video_id"]').val();
-		get_next_video(video_id, session_id, -1)
-	})
-
-	$('#homework_tab2').on('click','#next_video', function(){
-		session_id = $('input[name="next_video_session_id"]').val();
-		debugger
-		video_id = $('input[name="video_id"]').val();
-		get_next_video(video_id, session_id, 1)
-	})
+// 	$('#homework_tab2').on('click','#previous_video', function(){
+// 		session_id = $('input[name="next_video_session_id"]').val();
+// 		video_id = $('input[name="video_id"]').val();
+// 		get_next_video(video_id, session_id, -1)
+// 	})
+// 
+// 	$('#homework_tab2').on('click','#next_video', function(){
+// 		session_id = $('input[name="next_video_session_id"]').val();
+// 		debugger
+// 		video_id = $('input[name="video_id"]').val();
+// 		get_next_video(video_id, session_id, 1)
+// 	})
 })

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
 
   before_action :authenticate_user!
- ERROR_TURTLE = 'layouts/errors/turtle' 
+  ERROR_TURTLE = 'layouts/errors/turtle' 
 
   # Validated user!
   def authenticate_user!

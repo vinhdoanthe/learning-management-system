@@ -1,0 +1,9 @@
+$('#lesson_infomation').html('<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/lesson_detail', locals: { active_session: session, active_lesson: lesson, thumbnail: thumbnail } ) %>' );
+
+$('#session_control').html('<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/session_control', locals: { active_session: session, active_lesson: lesson, active_subject: subject } ) %>' );
+
+$('.attendance_session_info').html("<h4><strong>Học phần <%= subject.level %> Buổi học: <%= session.count %></h4><p><%= session.start_datetime.strftime('%H:%M') %> - <%= session.end_datetime.strftime('%H:%M') %> | <%= session.start_datetime.strftime('%d/%m/%Y') %> </p>") 
+
+$('input[name="upload_session_id"]').val('<%= session.id %>')
+
+$('.learning_device_content').html("<div> <%= lesson.present? ? lesson.learning_devices : 'Không có học cụ' %></div>")

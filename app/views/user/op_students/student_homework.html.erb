@@ -12,8 +12,8 @@
       <%= link_to image_tag('global/images/quaylai.svg').html_safe + " Quay lại", :back, class: 'PC-back', id: 'student_homework_back' %>
       <ul class="nav nav-tabs nav-primary tab-menu">
         <li class="active"><a href="#homework_tab1" data-toggle="tab">Bài tập về nhà</a></li>
-        <!-- <li class=""><a id="student_homework_videos" href="#homework_tab2" data-toggle="tab">Ôn bài</a></li> -->
-        <li class=""><a id="student_homework_videos" href="#homework_tab2" data-toggle="tooltip"  title='Chức năng "Ôn bài qua video": Sắp ra mắt' disabled>Ôn bài</a></li> 
+        <li class=""><a id="student_homework_videos_new" href="#homework_tab2" data-toggle="tab">Ôn bài</a></li>
+        <!-- <li class=""><a id="student_homework_videos" href="#homework_tab2" data-toggle="tooltip"  title='Chức năng "Ôn bài qua video": Sắp ra mắt' disabled>Ôn bài</a></li>  -->
       </ul>
       <div class="tab-content p-0 tab-all-content m-t-20">
         <div class="tab-pane fade active in" id='homework_tab1'>
@@ -29,7 +29,7 @@
                     <label class='fl_label' for='rf_name'>Khóa học:</label>
                     <select class='fl_input' id='homework_course_selection'>
                       <% @courses.each do |course| %>
-                        <option value="<%= course.id %>"><a href="/user/student_homework" data-remote="true"><%= course.name %></a></option>
+                        <option value="<%= course.id %>"><a href="/user/open_educat/op_students/student_homework" data-remote="true"><%= course.name %></a></option>
                       <% end %>
                     </select>
                   </div>
@@ -55,7 +55,9 @@
             </table>
           </div>
         </div>
-        <%= render 'user/op_students/partials/student_homework_videos' %>
+        <div id='video_play_tab'>
+          <%#= render 'user/open_educat/op_student/partials/homework_video', { sessions: @sessions } %>
+        </div>
       </div>
     </div>
   </div>
