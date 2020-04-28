@@ -1,0 +1,9 @@
+<% photos.each do |photo| %>  
+  <div class="bnd-img photo_div" style="margin: 15px">
+    <input type='hidden' name='delete_photo' value='<%= photo.id %>'>
+    <img class = 'delete_photo' src="/global/images/close.png" alt="">
+    <span class='photo_preview_show'>
+      <%= image_tag(photo.image) if photo.image.attached? %>
+    </span>
+  </div>       
+<% end %>
