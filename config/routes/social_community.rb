@@ -17,4 +17,6 @@ namespace :social_community do
 
   get 'student_dashboard' => 'dashboards#student_dashboard', as: 'student_dashboard'
   get 'teacher_dashboard' => 'dashboards#teacher_dashboard', as: 'teacher_dashboard'
+
+  post 'delete_session_photo' => 'photos#delete_session_photo', as: 'delete_session_photo'
 end

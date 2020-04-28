@@ -169,6 +169,7 @@ $(document).ready(function(){
     $('.select_active_subject span').removeClass('active_subject');
     $(this).find('span').addClass('active_subject')
   })
+
   $('#session_control').on('click', '#reward_student', function(){
     waitingdialog.show();
     session_id = $('input[name="active_session"]').val();
@@ -178,6 +179,38 @@ $(document).ready(function(){
       dataType: "script",
       success: function(){
         waitingdialog.hide();
+      }
+    })
+  })
+
+  $('#session_control').on('click', '#review_photo_uploaded', function(){
+    $('#upload').hide();
+    $('#review_photo_tab').show();
+   session_id = $('input[name="active_session"]').val() 
+    $.ajax({
+      url: '/learning/op_session/session_photo_review?session_id=' + session_id,
+      method: 'GET',
+      dataType: 'script',
+      sucess: function(){
+        $(this).tab('show');
+      }
+    })
+  })
+
+  $('#session_control').on('click', '#upload_tab', function(){
+    $('#upload').show();
+    $('#review_photo_tab').hide();
+  })
+
+  $('#session_control').on('click', '.delete_photo', function(){
+    photo_id = $(this).parent().find('input[name="delete_photo"]').val()
+    $.ajax({
+      url: '/social_community/delete_session_photo?photo_id=' + photo_id,
+      method: 'POST',
+      data: { photo_id: photo_id },
+      success: function(res){
+        display_noti(res)
+        $('input[name="delete_photo"][value="' + photo_id + '"]').parent().remove();
       }
     })
   })
