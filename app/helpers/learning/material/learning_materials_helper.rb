@@ -11,13 +11,15 @@ module Learning
 				true
 			end
 
-			def done_homework? user, session
+
+      def done_homework? user, session
         return { state: 'Không có bài tập', progres: '' } if session.op_lession.blank?
 				questions = session.op_lession.questions
 				user_questions = Learning::Homework::UserQuestion.where(student_id: user.id, question_id: questions).pluck(:id)
         user_answers = Learning::Homework::UserAnswer.where(user_question_id: user_questions).group_by{ |answers| answers.user_question }
+
         count_done_question = 0
-        
+
         user_answers.each do |_, answers|
           states = answers.pluck(:state)
           next if states.include? 'wrong'
@@ -34,12 +36,16 @@ module Learning
         end
 
         return { state: state, progress: progress }
-			end
+      end
 
       def get_student_evaluate user, session
         student = user.op_student
         Learning::Batch::OpAttendanceLine.where(student_id: student.id, session_id: session.id).last
       end
-		end
-	end
+
+      def enable_video?
+        Settings[:enable_video]
+      end
+    end
+  end
 end

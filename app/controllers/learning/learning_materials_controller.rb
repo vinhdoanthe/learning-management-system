@@ -79,7 +79,7 @@ module Learning
       else
         @video_id = fallback_video_id
       end
-
+      
       respond_to do |format|
         format.js {render 'learning/show_homework_video', :locals => { session: session, video_id: @video_id, lesson: lesson, name: name }}
       end

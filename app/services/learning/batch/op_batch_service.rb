@@ -131,6 +131,7 @@ module Learning
         else
           for index in 0..(s_size-1)
             sessions << {session: tobe_sessions[index], lesson: tobe_lessons[index]}
+
           end
         end
         sessions
