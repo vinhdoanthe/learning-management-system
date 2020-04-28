@@ -1,6 +1,6 @@
 class SocialCommunity::DashboardsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_student!, only: [:student_dashboard]
+  before_action :authenticate_student!, only: [:student_dashboard, :student_coming_soon_session]
   before_action :authenticate_faculty!, only: [:teacher_dashboard]
 
   def student_dashboard
@@ -15,19 +15,30 @@ class SocialCommunity::DashboardsController < ApplicationController
     # Load leaders board
   end
 
-  def get_albums_with_comments
-    if user.is_student?
-      albums_with_comments = SocialCommunity::DashboardsService.get_albums_with_comments user.op_student.id        
-    elsif user.is_teacher?
+  def albums_with_comments
+    if current_user.is_student?
+      albums_with_comments = SocialCommunity::DashboardsService.get_student_albums_with_comments current_user.student_id
+    elsif current_user.is_teacher?
 
     else
 
     end
 
-   respond_to do |format|
+    respond_to do |format|
       format.html
-      format.js {render 'albums_with_comment', {albums_with_comments: albums_with_comments}}
-   end 
+      format.js {render 'social_community/dashboards/shared/js/albums_with_comments', :locals => {albums_with_comments: albums_with_comments}}
+    end 
+  end
+
+  def student_coming_soon_session
+    binding.pry
+    @student = User::OpenEducat::OpStudent.where(id: current_user.student_id).first
+    session = User::OpenEducat::OpStudentsService.get_comming_soon_session(@student.id)
+    coming_soon_session_decor = SocialCommunity::DashboardsService.coming_session_decorator session
+    respond_to do |format|
+      format.html
+      format.js {render 'social_community/dashboards/student/js/coming_soon', :locals => {coming_soon_session: coming_soon_session_decor}}
+    end
   end
 
   def teacher_dashboard

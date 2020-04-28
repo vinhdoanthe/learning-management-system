@@ -7,6 +7,7 @@
 //=require custom_js/opstudent.js
 //=require custom_js/learning.js
 //=require rails_admin/custom/ckeditor_ajax.js
+//= require jquery.lazyload
 
 $(document).ready(function () {
 	setTimeout(function () {

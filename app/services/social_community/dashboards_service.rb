@@ -8,11 +8,11 @@ class SocialCommunity::DashboardsService
       batch = Learning::Batch::OpBatch.where(id: batch_id).first
       next if batch.nil?
       batch_code = batch.code
-      album = SocialCommunity::Album.where(batch_id: batch_id)
+      album = SocialCommunity::Album.where(batch_id: batch_id).first
       next if album.nil?
       count_images, images = SocialCommunity::AlbumsService.get_photos(album.id)
-      count_like, count_love, count_sad = SocialCommunity::AlbumsService.count_reactions(photo.id)
-      comments = SocialCommunity::AlbunsService.get_comments(album.id)
+      count_like, count_love, count_sad = SocialCommunity::AlbumsService.count_reactions(album.id)
+      comments = SocialCommunity::AlbumsService.get_comments(album.id)
 
       album_with_comments = {
         :id => album.id,
@@ -27,7 +27,18 @@ class SocialCommunity::DashboardsService
       albums_with_comments << album_with_comments
     end
 
-    binding.pry
     albums_with_comments
   end 
+  
+  def self.coming_session_decorator session
+    batch = Learning::Batch::OpBatch.where(id: session.batch_id).first
+    batch_code = batch.nil? ? '' : batch.code
+    company = Common::ResCompany.where(id: session.company_id).first
+    company_name = company.nil? ? '' : company.name
+    {
+      :batch_code => batch_code,
+      :company_name => company_name,
+      :session => session
+    }
+  end
 end

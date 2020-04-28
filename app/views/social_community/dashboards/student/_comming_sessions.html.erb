@@ -1,6 +1,7 @@
+<% binding.pry %>
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title">LỚP ĐANG DẠY: <span class="color-16BD56">HN-HN-C-LT-C1-MINECRAFT-0001</span></label>
+    <label class="filter-title">LỚP ĐANG DẠY: <span class="color-16BD56"><%= coming_soon_session[:batch_code] %></span></label>
   </div>
   <div class="bnd-time text-center">
     <div class="bnd-text">
@@ -9,7 +10,7 @@
       </p>
       <p class="text-center">
       <span>Bài 6: Ứng dụng chuyển đổi nhiệt độ</span><br />
-      tại cơ sở: <span class="font-bold">Teky cầu giấy</span>
+      tại cơ sở: <span class="font-bold"><%= coming_soon_session[:company_name] %></span>
       </p>
     </div>
     <div class="bnd-clock" id="clockdiv">

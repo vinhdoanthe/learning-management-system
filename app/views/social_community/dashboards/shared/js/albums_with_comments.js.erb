@@ -1,0 +1,2 @@
+// Render albums at Newfeed
+$('#albums_with_comments').html('<%= escape_javascript(render :partial => 'social_community/dashboards/shared/albums', :locals => {albums_with_comments: albums_with_comments}) %>')

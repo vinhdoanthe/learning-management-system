@@ -230,11 +230,11 @@ module User
       end
 
       def timetable
+        @session = User::OpenEducat::OpStudentsService.get_comming_soon_session(@op_student.id)
       end
 
       def timetable_content
         # @sessions = @op_student.op_sessions
-        # @session = User::OpenEducat::OpStudentsService.get_comming_soon_session(@op_student.id)
         # schedules = OpTeachersService.teaching_schedule(@sessions, params)
         params[:date] = Time.now
         student_courses = Learning::Batch::OpStudentCourse.where(student_id: @op_student.id)
@@ -243,7 +243,7 @@ module User
         sessions = []
         start_time = params[:date].beginning_of_week
         end_time = params[:date].end_of_week
-        
+
         student_courses.each do |sc|
           subject_ids << sc.op_subjects.pluck(:id)
         end
@@ -253,7 +253,7 @@ module User
         batch_ids.each do |batch_id|
           sessions << Learning::Batch::OpBatchService.get_sessions(batch_id, @op_student.id, subject_ids, {start: start_time, end: end_time}) 
         end
-        
+
         sessions = sessions.flatten.uniq
         schedules = User::OpenEducat::OpStudentsService.new.timetable sessions
 
@@ -327,7 +327,7 @@ module User
         sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = @op_student.id, subject_ids = subjects.pluck(:id)).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
         active_session = sessions.sort_by{|s| s.start_datetime}.select{|s| s.state == Learning::Constant::Batch::Session::STATE_DONE}.last
         active_session = sessions.last if active_session.blank?
-        
+
         if active_session.present?
           subject = active_session.op_subject
           sessions.select{|s| s.subject_id == subject.id}
@@ -354,15 +354,15 @@ module User
         active_session = sessions.last if active_session.blank?
 
         if active_session.present?
-        subject = active_session.op_subject
-        lesson = active_session.op_lession
-        batches = ''
-        subjects = ''
-        
-        respond_to do |format|
-          format.html
-          format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => {batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson}}
-        end
+          subject = active_session.op_subject
+          lesson = active_session.op_lession
+          batches = ''
+          subjects = ''
+
+          respond_to do |format|
+            format.html
+            format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => {batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson}}
+          end
         else
           respond_to do |format|
             format.js { render 'user/open_educat/op_students/js/table_homework_list', :locals => { errors: true } } 

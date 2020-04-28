@@ -18,8 +18,35 @@ class SocialCommunity::AlbumsService
     end
   end
 
+  def self.count_like album_id
+    album = SocialCommunity::Album.where(id: album_id).first
+    if album.nil?
+      nil
+    else
+      album.reactions.where(react_type: SocialCommunity::Constant::ReactionType::LIKE).count 
+    end
+  end
+
+  def self.count_love album_id
+    album = SocialCommunity::Album.where(id: album_id).first
+    if album.nil?
+      nil
+    else
+      album.reactions.where(react_type: SocialCommunity::Constant::ReactionType::LOVE).count 
+    end
+  end
+
+  def self.count_sad album_id
+    album = SocialCommunity::Album.where(id: album_id).first
+    if album.nil?
+      nil
+    else
+      album.reactions.where(react_type: SocialCommunity::Constant::ReactionType::SAD).count 
+    end
+  end
+
   def self.get_comments album_id
     album = SocialCommunity::Album.where(id: album_id).first
-    album.comments  
+    album.comments.order(created_at: :DESC).to_a 
   end
 end

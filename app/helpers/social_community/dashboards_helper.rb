@@ -1,0 +1,3 @@
+module SocialCommunity::DashboardsHelper
+
+end

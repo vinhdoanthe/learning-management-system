@@ -1,0 +1,12 @@
+// Update counting reactions
+<% if !count_like.nil? %>
+    $("#album_count_like_<%= album_id %>").html("<%= count_like %>");
+<% end %>
+
+  <% if !count_love.nil? %>
+    $("#album_count_love_<%= album_id %>").html("<%= count_love %>");
+<% end %>
+
+  <% if !count_sad.nil? %>
+    $("#album_count_sad_<%= album_id %>").html("<%= count_sad %>");
+<% end %>
