@@ -57,4 +57,44 @@ namespace :mapping do
       puts "Undefined previous days"
     end
   end
+  
+  desc 'Mapping old session photos'
+  task :mapping_old_session_photos, [] => :environment do |t, args|
+     # Find all attachment attached to sessions
+    old_attachment_ids = ActiveStorage::Attachment.where(record_type: "Learning::Batch::OpSession").pluck(:id)
+    total_count = old_attachment_ids.size
+    puts total_count
+    count = 0
+    old_attachment_ids.each do |old_attachment_id|
+      count = count + 1
+      puts count
+      old_attachment = ActiveStorage::Attachment.where(id: old_attachment_id).first
+      next if old_attachment.nil?
+      next if !old_attachment.content_type.include?('image')
+      session_id = old_attachment.record_id
+      session = Learning::Batch::OpSession.where(id: session_id).first
+      next if session.nil?
+      photo = SocialCommunity::Photo.new
+      photo.session_id = session_id
+      batch_id = session.batch_id
+      next if batch_id.nil?
+      user = User::Account::User.where(faculty_id: session.faculty_id).first
+      next if user.nil?
+      user_id = user.id
+      album = SocialCommunity::Album.where(batch_id: batch_id).first
+      if album.nil?
+        album = SocialCommunity::Album.new
+        album.batch_id = batch_id
+        album.save
+      end
+      photo.album_id = album.id
+      photo.created_by = user_id
+      photo.save
+      old_attachment.name = 'image'
+      old_attachment.record_type = 'SocialCommunity::Photo'
+      old_attachment.record_id = photo.id
+      old_attachment.save
+    end
+    #
+  end
 end

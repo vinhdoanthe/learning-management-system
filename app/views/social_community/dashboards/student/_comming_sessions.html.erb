@@ -1,6 +1,6 @@
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title">LỊCH HỌC  TIẾP THEO: <span class="color-16BD56"><%= coming_soon_session.nil? ? ' ĐÃ KẾT THÚC' :  coming_soon_session[:batch_code] %></span></label>
+    <label class="filter-title">LỊCH HỌC  TIẾP THEO: <span class="color-16BD56"><%= coming_soon_session.nil? ? ' KHÔNG CÓ BUỔI HỌC NÀO' :  coming_soon_session[:batch_code] %></span></label>
   </div>
 
   <% unless coming_soon_session.nil? %>
