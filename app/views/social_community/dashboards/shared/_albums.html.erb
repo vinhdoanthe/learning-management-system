@@ -1,13 +1,21 @@
 <div class="box-news-detail">
-  <% albums_with_comments.each do |album_with_comments| %>
-    <div class="bnd-title">
-      <h2>HOẠT ĐỘNG LỚP <span> <%= album_with_comments[:batch_code] %> </span></h2>
-    </div>
+  <% if albums_with_comments.present? %>
+    <% albums_with_comments.each do |album_with_comments| %>
+      <div class="bnd-title">
+        <h2>HOẠT ĐỘNG LỚP <span> <%= album_with_comments[:batch_code] %> </span></h2>
+      </div>
 
-    <%= render :partial => "social_community/dashboards/shared/photos", :locals => {photos: album_with_comments[:images]} %>
-    
-    <%= render :partial => "social_community/dashboards/shared/reactions", :locals => {album_id: album_with_comments[:id], count_like: album_with_comments[:count_like], count_love: album_with_comments[:count_love], count_sad: album_with_comments[:count_sad]} %>
- 
-    <%= render :partial => "social_community/dashboards/shared/comments", :locals => {comments: album_with_comments[:comments]} %>
+      <%= render :partial => "social_community/dashboards/shared/photos", :locals => {photos: album_with_comments[:images]} %>
+
+      <%= render :partial => "social_community/dashboards/shared/reactions", :locals => {album_id: album_with_comments[:id], count_like: album_with_comments[:count_like], count_love: album_with_comments[:count_love], count_sad: album_with_comments[:count_sad]} %>
+
+      <%= render :partial => "social_community/dashboards/shared/comments", :locals => {comments: album_with_comments[:comments]} %>
+    <% end %>
+  <% else %>
+      <div class="bnd-title">
+        <h2>Chưa có ảnh của lớp</h2>
+      </div>
+      <%= image_tag ('default-img.png') %>
+
   <% end %>
 </div>

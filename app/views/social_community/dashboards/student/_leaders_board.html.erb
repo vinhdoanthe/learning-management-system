@@ -1,51 +1,24 @@
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title">Top 10 học sinh tiêu biểu</label>
+    <label class="filter-title">Học sinh mới</label>
     <p><img style="width: 25px;" src="assets/global/images/star.png" alt=""></p>
   </div>
   <div class="box-student">
     <table class="table">
+      <% students.each_with_index do |student, index| %>
       <tr>
-        <td>01</td>
+        <td><%= index + 1 %></td>
         <td>
-          <label class="color-EB9138">Kiều Vũ Tuệ Nhi</label>
-          <p>Học sinh <span class="color-0654BA text-transform">TEKY - Cầu giấy</span></p>
+          <label class="color-EB9138"><%= student.full_name %></label>
+          <% if student.res_company.present? %>
+            <p>Học sinh <span class="color-0654BA text-transform"><%= student.res_company.name %></span></p>
+          <% end %>
         </td>
         <td align="right">
-          <h2>120.303</h2>
+          <!-- <h2>120.303</h2> -->
         </td>
       </tr>
-      <tr>
-        <td>01</td>
-        <td>
-          <label class="color-EB9138">Kiều Vũ Tuệ Nhi</label>
-          <p>Học sinh <span class="color-0654BA text-transform">TEKY - Cầu giấy</span></p>
-        </td>
-        <td align="right">
-          <h2>120.303</h2>
-        </td>
-      </tr>
-      <tr>
-        <td>01</td>
-        <td>
-          <label class="color-EB9138">Kiều Vũ Tuệ Nhi</label>
-          <p>Học sinh <span class="color-0654BA text-transform">TEKY - Cầu giấy</span></p>
-        </td>
-        <td align="right">
-          <h2>120.303</h2>
-        </td>
-      </tr>
-      <tr>
-        <td>01</td>
-        <td>
-          <label class="color-EB9138">Kiều Vũ Tuệ Nhi</label>
-          <p>Học sinh <span class="color-0654BA text-transform">TEKY - Cầu giấy</span></p>
-        </td>
-        <td align="right">
-          <h2>120.303</h2>
-        </td>
-      </tr>
-
+      <% end %>
     </table>
   </div>
 </div>

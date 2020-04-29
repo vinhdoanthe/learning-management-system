@@ -1,45 +1,24 @@
 <div class="panel-content">
   <div class="bnd-title">
     <label class="filter-title">THÔNG BÁO TỪ HỌC VIỆN</label>
-    <p>Có <span class="color-FF0D38">02</span> tin nhắn mới</p>
+    <% new_noti = count_notification_student(current_user)%>
+    <p>Có <span class="color-FF0D38"><%= new_noti %></span> tin nhắn mới</p>
   </div>
   <div class="bnd-noti">
-    <a href="#" class="bnn-detail">
+    <% notices.each do |noti| %>
+    <a href="/notification/broadcast/broadcast_notices"  class="bnn-detail">
       <div class="bnn-img">
-        <span><img src="" alt=""></span>
+        <span><%= image_tag('global/images/teacher-img-default.png') %></span>
       </div>
       <div class="bnn-text">
         <label for="">Thông báo từ Học viên TEKY</label>
-        <p>Lịch nghỉ tết 2019</p>
+        <p><%= noti.title %></p>
       </div>
       <div class="bnn-time">
-        <p>10 giây trước</p>
+        <p><%= noti.created_at.strftime('%d-%m-%Y') %></p>
       </div>
     </a>
-    <a href="#" class="bnn-detail">
-      <div class="bnn-img">
-        <span><img src="" alt=""></span>
-      </div>
-      <div class="bnn-text">
-        <label for="">Thông báo từ Học viên TEKY</label>
-        <p>Lịch nghỉ tết 2019</p>
-      </div>
-      <div class="bnn-time">
-        <p>10 giây trước</p>
-      </div>
-    </a>
-    <a href="#" class="bnn-detail">
-      <div class="bnn-img">
-        <span><img src="" alt=""></span>
-      </div>
-      <div class="bnn-text">
-        <label for="">Thông báo từ Học viên TEKY</label>
-        <p>Lịch nghỉ tết 2019</p>
-      </div>
-      <div class="bnn-time">
-        <p>10 giây trước</p>
-      </div>
-    </a>
-    <a href="" class="pull-right link-all">Xem tất cả</a>
+    <% end %>
+    <a href="/notification/broadcast/broadcast_notices" class="pull-right link-all">Xem tất cả</a>
   </div>
 </div>
