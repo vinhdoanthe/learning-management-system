@@ -144,6 +144,7 @@ module Learning
           next if session.start_datetime < time_now
           next if session.state == Learning::Constant::Batch::Session::STATE_CANCEL
           coming_soon_session = session
+          break
         end
         coming_soon_session
       end

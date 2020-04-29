@@ -83,11 +83,11 @@ function initializeClock(id, endtime) {
 	function updateClock() {
 		var t = getTimeRemaining(endtime);
 
-		days = (t.hours - t.hours % 24) / 24
-		$('.days').html(days.toString());
-		hoursSpan.innerHTML = t.hours % 24;
-		minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-		secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+		var days = (t.hours - t.hours % 24) / 24
+        daysSpan.innerHTML = ('0' + days).slice(-2) + 'd';
+		hoursSpan.innerHTML = (t.hours % 24) + 'h';
+		minutesSpan.innerHTML = ('0' + t.minutes).slice(-2) + 'm';
+		secondsSpan.innerHTML = ('0' + t.seconds).slice(-2) + 's';
 
 		if (t.total <= 0) {
 			clearInterval(timeinterval);
