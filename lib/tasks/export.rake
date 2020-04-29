@@ -173,6 +173,69 @@ namespace :export do
     puts "Done!"
   end
 
+  desc 'Export Users by Batch Code'
+  task :export_users_by_batch_code, [:batch_code] => :environment do |t, args|
+    binding.pry
+    batch_code = args[:batch_code].to_s
+    return if batch_code.blank?
+    batch_ids = Learning::Batch::OpBatch.where('code ilike ?', batch_code).pluck(:id).compact
+    # Find users
+    faculty_ids = Learning::Batch::OpSession.where(batch_id: batch_ids).pluck(:faculty_id).uniq.compact
+    faculty_users = User::Account::User.where(faculty_id: faculty_ids).to_a
+    student_ids = Learning::Batch::OpStudentCourse.where(batch_id: batch_ids).pluck(:student_id).uniq.compact
+    student_users = User::Account::User.where(student_id: student_ids).to_a
+    users = student_users + faculty_users
+    # Export
+    users_export = []
+    total_user = users.length()
+    index = 0
+    users.each do |user|
+      next if !(user.account_role == User::Constant::STUDENT or user.account_role == User::Constant::TEACHER)
+      user_export = []
+      index = index + 1
+
+      puts "#{index}/#{total_user}" 
+      user_export << user.username
+      user_export << user.account_role
+      if user.account_role == User::Constant::STUDENT
+        op_student = user.op_student
+        if !op_student.nil?
+          user_export << op_student.op_batches.count
+          user_export << op_student.create_date
+        else
+          user_export << '-'
+          user_export << '-'
+        end
+      else
+        op_faculty = user.op_faculty
+        if !op_faculty.nil?
+          user_export << op_faculty.op_batches.count
+          user_export << op_faculty.create_date
+        else
+          user_export << '-'
+          user_export << '-'
+        end
+      end
+      users_export << user_export
+      puts 'done'
+    end
+    puts "Starting export"
+    p = Axlsx::Package.new
+    wb = p.workbook
+    wb.add_worksheet(:name => "Acounts") do |sheet|
+      sheet.add_row ["STT","Username", "Role", "Batch Count", "Created Date"]
+      index = 0
+      users_export.each do |user_export|
+        index = index + 1
+        user_export.unshift(index)
+        sheet.add_row user_export
+      end
+    end
+    current_time_str = Time.now.strftime('%Y-%m-%d_%H-%M-%S')
+    file_name = "data_export/users_#{current_time_str}.xlsx"
+    p.serialize(file_name)
+    puts "Done!"
+  end
   desc 'Export Students by Company'
   task :export_op_student_course_by_company_of_batch, [:company_id] => :environment do |t, args|
     company_id = args[:company_id].to_i

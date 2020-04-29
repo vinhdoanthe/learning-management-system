@@ -50,7 +50,7 @@ class SocialCommunity::DashboardsController < ApplicationController
   end
 
   def new_user
-    users = User::Account::User.where(account_role: 'Student').order(created_at: :DESC).limit(4)
+    users = User::Account::User.where(account_role: 'Student').order(created_at: :DESC).limit(10)
     students = []
     users.each{ |user| students << user.op_student }
 
