@@ -1,5 +1,5 @@
 class SocialCommunity::AlbumsController < ApplicationController
-  before_action :get_album, only: [:create, :destroy, :add_photo, :add_reaction]
+  before_action :get_album, only: [:create, :destroy, :add_photo, :add_reaction, :add_comment]
 
   def new
 
@@ -19,10 +19,23 @@ class SocialCommunity::AlbumsController < ApplicationController
 
   # Add comments
   # Params:
-  # user_id
-  # comment_content
+  # album_id
+  # content
   def add_comment
-
+    return if current_user.nil?
+    unless @album.nil? and !params[:content].present?
+      comment_content = params[:content].to_s
+      return if comment_content.blank?
+      comment = SocialCommunity::Comment.new(commentable: @album)
+      comment.commented_by = current_user.id
+      comment.content = comment_content
+      comment.save
+      comment_decor = SocialCommunity::CommentsService.comment_decorator comment
+      respond_to do |format|
+        format.html
+        format.js {render 'social_community/dashboards/shared/js/update_comments', :locals => {album_id: @album.id, comment: comment_decor}}
+      end
+    end
   end
 
   # Add reactions

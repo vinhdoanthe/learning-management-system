@@ -38,7 +38,6 @@
         album_id: $(event.target).data('album-id'),
         authenticity_token: $('[name="csrf-token"]')[0].content
       };
-      console.log(data)
       add_reaction_to_album(data);
     });
 
@@ -49,7 +48,6 @@
         album_id: $(event.target).data('album-id'),
         authenticity_token: $('[name="csrf-token"]')[0].content
       };
-      console.log(data)
       add_reaction_to_album(data);
     });
 
@@ -60,7 +58,6 @@
         album_id: $(event.target).data('album-id'),
         authenticity_token: $('[name="csrf-token"]')[0].content
       };
-      console.log(data)
       add_reaction_to_album(data);
     });
   });
@@ -73,13 +70,4 @@ function add_reaction_to_album(data) {
     dataType: 'script'
   })
 }
-
-  <%# function add_comment_to_album(data) { %>
-    <%#   $.ajax({ %>
-    <%#     method: 'POST', %>
-  <%#     data: data, %>
-  <%#     url: '/social_community/albums/add_comment', %>
-  <%#     dataType: 'script' %>
-  <%#   }) %>
-  <%# } %>
 </script>

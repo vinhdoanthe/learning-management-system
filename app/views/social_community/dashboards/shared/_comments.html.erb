@@ -3,23 +3,55 @@
     <span>
       <img src="" alt="">
     </span>
-    <input type="text">
-    <a href="#"><img src="/global/images/send.png" alt=""></a>
+    <input id="album_comment_input_<%= album_id %>" type="text" class='album-comment-input' data-album-id="<%= album_id %>">
+    <a href="#"><img class='album-comment-btn' data-album-id='<%= album_id %>' src="/global/images/send.png" alt=""></a>
   </div>
-  <!--
-  <div class="bc-ansew">
-    <div class="bca-parent">
-      <div class="bpe-detail bpe-parent">
-        <span class=""><img src="" alt=""></span>
-        <p><b>Kiều Chí Công :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur, recusandae reiciendis commodi placeat fuga quisquam ipsam nam at, repudiandae aperiam illo! Dolore cumque vel repellat libero quidem? Expedita, aliquid.</p>
-      </div>
-    </div>
-    <div class="bca-child">
-      <div class="bpe-detail bce-child">
-        <span class=""><img src="" alt=""></span>
-        <p><b>Kiều Chí Công :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur, recusandae reiciendis commodi placeat fuga quisquam ipsam nam at, repudiandae aperiam illo! Dolore cumque vel repellat libero quidem? Expedita, aliquid.</p>
-      </div>
-    </div>
-    </div>
-  -->
+  <div id="album_comments_<%= album_id %>" class="bc-ansew">
+    <% comments.each do |comment| %>
+      <%= render :partial => 'social_community/dashboards/shared/comment_line', :locals => {comment: comment} %>
+    <% end %>
+  </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('.album-comment-input').on('keyup', function(event){
+      if(event.key === 'Enter') {
+        event.preventDefault();
+        album_id = $(event.target).data('album-id')
+        content = $("#album_comment_input_" + album_id).val()
+        if (content) {
+          data = {
+            content: content,
+            album_id: album_id,
+            authenticity_token: $('[name="csrf-token"]')[0].content
+          };
+          add_comment_to_album(data);
+        }
+      }
+    });
+
+    $('.album-comment-btn').click(function(event){
+      event.preventDefault();
+      album_id = $(event.target).data('album-id')
+      content = $("#album_comment_input_" + album_id).val()
+      if (content) {
+        data = {
+          content: content,
+          album_id: album_id,
+          authenticity_token: $('[name="csrf-token"]')[0].content
+        };
+        add_comment_to_album(data);
+      }
+    });
+  });
+
+function add_comment_to_album(data) {
+  $.ajax({
+    method: 'POST',
+    data: data,
+    url: '/social_community/albums/add_comment',
+    dataType: 'script'
+  })
+}
+</script>

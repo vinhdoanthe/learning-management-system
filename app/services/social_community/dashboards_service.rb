@@ -13,7 +13,10 @@ class SocialCommunity::DashboardsService
       count_images, images = SocialCommunity::AlbumsService.get_photos(album.id)
       count_like, count_love, count_sad = SocialCommunity::AlbumsService.count_reactions(album.id)
       comments = SocialCommunity::AlbumsService.get_comments(album.id)
-
+      decored_comments = []
+      comments.each do |comment|
+        decored_comments << SocialCommunity::CommentsService.comment_decorator(comment)
+      end
       album_with_comments = {
         :id => album.id,
         :batch_code => batch_code,
@@ -22,7 +25,7 @@ class SocialCommunity::DashboardsService
         :count_like => count_like,
         :count_love => count_love,
         :count_sad => count_sad,
-        :comments => comments
+        :comments => decored_comments
       }
       albums_with_comments << album_with_comments
     end

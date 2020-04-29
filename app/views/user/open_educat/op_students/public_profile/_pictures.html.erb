@@ -1,15 +1,24 @@
 <div class="bpc-achievements">
   <div class="row">
-    <% featured_photos.each do |photo| %>
-      <div class="col-sm-3">
-        <a href='#showPhotosModal' data-toggle='modal'>
-          <div class="bpa-img">
-            <% if photo.image.attached? %>
-              <%= image_tag(photo.image) %>
-            <% end %>
-          </div>
+    <% photos_size = featured_photos.size %>
+    <% if photos_size <= 4 %>
+      <% featured_photos.each do |photo| %>
+        <a href="#showPhotosModal" class="bndi-detail"  data-toggle="modal">
+          <span><%= image_tag(photo.image, :class => 'image-fit') %></span>
         </a>
-      </div>
+      <% end %>
+    <% else %>
+      <% for index in 0..2 %>
+        <a href="#showPhotosModal" class="bndi-detail"  data-toggle="modal">
+          <span><%= image_tag(featured_photos[index].image, :class => 'image-fit') %></span>
+        </a>
+      <% end %> 
+      <a href="#showPhotosModal" class="bndi-detail"  data-toggle="modal">
+        <span>
+          <%= image_tag(featured_photos[3].image, :class => 'image-fit') %>
+          <span class="detail-plus"><%= photos_size %> +</span>
+        </span>
+      </a>
     <% end %>
   </div> 
 </div>
@@ -33,3 +42,23 @@
     </div>
   </div>
 </div>
+<script>
+  $('#lightbox').owlCarousel({
+    items:1,
+    loop:true,
+    margin:10,
+    nav:true,
+    autoplayHoverPause:true,
+    autoplay:true,
+    autoplayTimeout:10000,
+  });
+</script>
+<style>
+.image-fit {
+  flex: 0 0 auto;
+  position: center;
+  width:100%; 
+  height:100%; 
+  object-fit:cover;
+}
+</style>

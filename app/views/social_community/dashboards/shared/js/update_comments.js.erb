@@ -1,0 +1,3 @@
+// Update comments area
+$("#album_comments_<%= album_id %>").prepend("<%= escape_javascript(render :partial => 'social_community/dashboards/shared/comment_line', :locals => {comment: comment}) %>");
+$("#album_comment_input_<%= album_id %>").val('');

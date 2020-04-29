@@ -47,6 +47,6 @@ class SocialCommunity::AlbumsService
 
   def self.get_comments album_id
     album = SocialCommunity::Album.where(id: album_id).first
-    album.comments.order(created_at: :DESC).to_a 
+    album.comments.order(created_at: :DESC).to_a
   end
 end
