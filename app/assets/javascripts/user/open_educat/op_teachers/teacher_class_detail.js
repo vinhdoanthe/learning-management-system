@@ -186,7 +186,7 @@ $(document).ready(function(){
   $('#session_control').on('click', '#review_photo_uploaded', function(){
     $('#upload').hide();
     $('#review_photo_tab').show();
-   session_id = $('input[name="active_session"]').val() 
+   session_id = $('input[name="active_session_id"]').val() 
     $.ajax({
       url: '/learning/op_session/session_photo_review?session_id=' + session_id,
       method: 'GET',
