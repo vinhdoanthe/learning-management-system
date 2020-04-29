@@ -20,6 +20,11 @@ class User::OpenEducat::OpStudentsService
       course = batch.op_course
       lesson = active_session.op_lession
       batch_of_course = op_student_courses.where(course_id: active_session.course_id).pluck(:batch_id).uniq
+   
+      if batch_of_course.blank?
+        batch_of_course = batch.id
+      end
+    
       batches = Learning::Batch::OpBatch.where(id: batch_of_course)
 
       { batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson }
