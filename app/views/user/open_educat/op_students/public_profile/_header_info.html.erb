@@ -17,7 +17,9 @@
           <%= image_tag('global/images/icon-BTVN.png') %>
         </span>
         <p>
-        <b>-1</b> BÀI TẬP VỀ NHÀ<br/>
+
+        <% user = User::Account::User.where(student_id: @op_student.id).first %>
+        <b><%= count_homework user %></b> BÀI TẬP VỀ NHÀ<br/>
         <b>0</b> DỰ ÁN ĐÃ PHÁT TRIỂN
         </p>
       </div>
