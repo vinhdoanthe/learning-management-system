@@ -23,7 +23,7 @@ module User
       company_id = []
       all_batches.each {|b| company_id << b.company_id}
       @company = Common::ResCompany.where(:id => company_id)
-      @batches = OpTeachersService.filter_batch @teacher, params
+      @batches = OpTeachersService.filter_batch @teacher, all_batches, params
 
       if request.method == 'POST'
         data = []

@@ -1,8 +1,8 @@
 class User::OpTeachersService
   include Rails.application.routes.url_helpers
 
-  def self.filter_batch(teacher, params)
-    @batches = teacher.op_batches
+  def self.filter_batch(teacher, batches, params)
+    @batches = batches
     return [] if @batches.blank?
 
     query = ''

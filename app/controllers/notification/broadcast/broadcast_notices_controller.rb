@@ -2,7 +2,7 @@ class Notification::Broadcast::BroadcastNoticesController < ApplicationControlle
   before_action :find_notice, only: [:show]
   
   def index
-    @notices = Notification::BroadcastNoti.where('expiry_date >= ?', Time.now).all
+    @notices = Notification::BroadcastNoti.all
   end
 
   def show
