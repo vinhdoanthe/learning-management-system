@@ -9,6 +9,7 @@ class User::OpenEducat::OpStudent < ApplicationRecord
   has_many :op_attendance_lines, class_name: 'Learning::Batch::OpAttendanceLine', foreign_key: 'student_id'
   has_many :op_sessions, through: :op_batches, class_name: 'Learning::Batch::OpSession'
   has_many :op_courses, through: :op_batches, class_name: 'Learning::Course::OpCourse'
+  has_many :users, class_name: 'User::Account::User', foreign_key: 'student_id'
 
   belongs_to :res_country, :class_name => 'Common::ResCountry', :primary_key => 'id', :foreign_key => 'nationality'
   belongs_to :res_company, :class_name => 'Common::ResCompany', :foreign_key => 'company_id'

@@ -50,7 +50,7 @@ class User::Account::User < ApplicationRecord
     else
       if student_id
         if parent_account_id
-          parent_user = User.find(parent_account_id)
+          parent_user = User::Account::User.find(parent_account_id)
           if !parent_user.nil?
             parent_user.parent_name
           else

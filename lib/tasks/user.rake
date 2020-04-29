@@ -7,8 +7,8 @@ namespace :user do
     if prev_days
       prev_seconds = prev_days*24*60*60
       create_date_offset = Time.now() - prev_seconds
-      students = User::OpStudent.where('create_date >= ?', create_date_offset).to_a
-      User::UsersController.new.map_student_new_user students
+      students = User::OpenEducat::OpStudent.where('create_date >= ?', create_date_offset).to_a
+      User::Account::UsersController.new.map_student_new_user students
     end
     puts "End create users"
   end

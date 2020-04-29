@@ -134,7 +134,7 @@ class User::Account::UsersController < ApplicationController
     students.each do |student|
       count += 1
       puts "#{count}/#{count_student}"
-      user = UsersService.new.create_student_user student
+      user = User::Account::UsersService.new.create_student_user student
       missing_email_students << user[:missing_email_student]
     end
 

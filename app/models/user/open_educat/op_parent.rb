@@ -8,7 +8,7 @@ class User::OpenEducat::OpParent < ApplicationRecord
 
   def full_name
     if name
-      res_partner = ResPartner.find(name)
+      res_partner = User::ResPartner.find(name)
       res_partner.display_name
     else
       ''
