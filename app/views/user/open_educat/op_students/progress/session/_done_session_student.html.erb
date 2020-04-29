@@ -27,7 +27,7 @@
 </td>
 <td align="right">
   <% if has_homework? current_user, session %>
-    <a class='' href="/learning/view_question/<%= session.id %>" data-toggle="tooltip" data-remote="true" data-session="<%= session.id %>" title='Làm bài tập về nhà'>
+    <a class='' href="/learning/view_question?session_id=<%= session.id %>" data-toggle="tooltip" data-session="<%= session.id %>" title='Làm bài tập về nhà'>
       <span>
         <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
       </span>
