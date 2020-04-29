@@ -10,7 +10,6 @@ class User::OpenEducat::OpStudentsService
   def student_homework student
     op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student.id)
     batch_ids = op_student_courses.pluck(:batch_id)
-    batches = Learning::Batch::OpBatch.where(id: batch_ids)
     active_session =  Learning::Batch::OpBatchService.last_done_session(student.id, batch_ids)
 
     if active_session.present?
@@ -20,6 +19,7 @@ class User::OpenEducat::OpStudentsService
       sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = student.id, subject_ids = subject.id).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
       course = batch.op_course
       lesson = active_session.op_lession
+      batches = Learning::Batch::OpBatch.where(id: sessions.pluck(:batch_id))
 
       { batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson }
     else
