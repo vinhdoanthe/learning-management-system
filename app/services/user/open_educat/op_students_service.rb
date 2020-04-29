@@ -19,7 +19,8 @@ class User::OpenEducat::OpStudentsService
       sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = student.id, subject_ids = subject.id).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
       course = batch.op_course
       lesson = active_session.op_lession
-      batches = Learning::Batch::OpBatch.where(id: sessions.pluck(:batch_id))
+      batch_of_course = op_student_courses.where(course_id: active_session.course_id).pluck(:batch_id).uniq
+      batches = Learning::Batch::OpBatch.where(id: batch_of_course)
 
       { batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson }
     else
@@ -128,10 +129,10 @@ class User::OpenEducat::OpStudentsService
     schedule_hash = {'s1' => {}, 's2' => {}, 'c1' => {}, 'c2' => {}, 't1' => {}, 't2' => {}}
 
     sessions.each do |session|
-      time = session.end_datetime
+      time = session.start_datetime
       name = session.op_subject.name
-      start_time = session.start_datetime.strftime('%H:%M')
-      end_time = time.strftime('%H:%M')
+      start_time = time.strftime('%H:%M')
+      end_time = session.end_datetime.strftime('%H:%M')
       day = time.strftime('%Y-%m-%d')
       company = Common::ResCompany.find(session.company_id).name
       subject = session.op_subject.name
