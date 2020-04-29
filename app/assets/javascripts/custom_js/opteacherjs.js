@@ -11,9 +11,9 @@ $(document).ready(function () {
             success: function (response) {
                 $.each(response.data, function (i, batch) {
                     if (batch.status == true) {
-                        $('#batch_list').append("<tr class='batch_info'><td><a href='/user/teacher_class_detail?batch_id=" + batch.id + "'>" + batch.code + "</a></td><td>" + batch.name + " </td><td>" + batch.student_count + "</td><td>" + batch.start_date + " - " + batch.end_date + "</td><td>" + batch.progress + "</td><td align='right'><span class='label-edit label label-primary'>Đang diễn ra</span></td></tr>")
+                        $('#batch_list').append("<tr class='batch_info'><td><a href='/user/open_educat/op_teacher/teacher_class_detail?batch_id=" + batch.id + "'>" + batch.code + "</a></td><td>" + batch.name + " </td><td>" + batch.student_count + "</td><td>" + batch.start_date + " - " + batch.end_date + "</td><td>" + batch.progress + "</td><td align='right'><span class='label-edit label label-primary'>Đang diễn ra</span></td></tr>")
                     } else {
-                        $('#batch_list').append("<tr class='batch_info'><td><a href='/user/teacher_class_detail?batch_id=" + batch.id + "'>" + batch.code + "</td><td>" + batch.name + " </td><td>" + batch.student_count + "</td><td>" + batch.start_date + " - " + batch.end_date + "</td><td>" + batch.progress + "</td><td align='right'><span class='label-edit label label-stop'>Đã hoàn thành</span></td></tr>")
+                        $('#batch_list').append("<tr class='batch_info'><td><a href='/user/open_educat/op_teacher/teacher_class_detail?batch_id=" + batch.id + "'>" + batch.code + "</td><td>" + batch.name + " </td><td>" + batch.student_count + "</td><td>" + batch.start_date + " - " + batch.end_date + "</td><td>" + batch.progress + "</td><td align='right'><span class='label-edit label label-stop'>Đã hoàn thành</span></td></tr>")
                     }
                 })
             },
