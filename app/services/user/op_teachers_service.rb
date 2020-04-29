@@ -9,9 +9,9 @@ class User::OpTeachersService
 
     if params[:active] && params[:active] != 'all'
       if params[:active] == 'true'
-        query += "op_session.active = true AND "
+        query += "active = true AND "
       else
-        query += "op_session.active = false AND "
+        query += "active = false AND "
       end
     end
 

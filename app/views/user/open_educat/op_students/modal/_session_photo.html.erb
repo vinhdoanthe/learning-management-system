@@ -6,11 +6,15 @@
             </div>
             <div class="modal-body">
               <% if photos.present? %>
-                <% photos.each do |photo| %>
-                  <div class="bnd-img">
-                    <span><%= image_tag(photo.image) if photo.image.attached? %></span>
-                  </div>
-                <% end %>
+                <ul class="owl-carousel list-lightbox" id="session_photo_show">
+                  <% photos.each do |photo| %>
+                    <li>
+                      <span>
+                        <%= image_tag(photo.image, class: 'session_photo_show') if photo.image.attached? %>
+                      </span>
+                    </li>
+                  <% end %>
+                </ul>
               <% else %>
                 <div> Không có ảnh </div>
               <% end %>
@@ -70,3 +74,32 @@
             
         </div>
 </div>
+<script>
+  $('#session_photo_show').owlCarousel({
+    items:1,
+    loop:true,
+    margin:10,
+    nav:true,
+    autoplayHoverPause:true,
+    autoplay:true,
+    autoplayTimeout:10000,
+  });
+</script>
+
+<style>
+.list-lightbox .owl-nav button span {
+    font-size: 50px;
+    position: absolute;
+    position: absolute;
+    top: -10px;
+    right: 15px;
+}
+
+.owl-next {
+  right: -40px !important;
+}
+
+.owl-prev {
+  left: -20px !important;
+}
+</style>
