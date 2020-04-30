@@ -169,7 +169,7 @@ module User
 
       def student_homework
         @student = @op_student
-        data = User::OpenEducat::OpStudentsService.new.student_homework @student
+        data = User::OpenEducat::OpStudentsService.new.student_homework @student, params
         @courses = @student.op_courses
         @session = data[:session]
         @batch = data[:batch]

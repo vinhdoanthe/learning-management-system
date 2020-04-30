@@ -54,6 +54,19 @@
       </span>
     </a>
   <% end %>
+  <% if session.lession_id.present? %>
+    <a class='' href="/user/open_educat/op_students/student_homework?show_video=true&session=<%= session.id %>" data-toggle="tooltip" title='Ôn bài qua video' data-session="<%= session.id %>" >
+      <span>
+        <%= image_tag('global/images/youtube-button.png', style: 'width: 20px;margin-right: 10px') %>
+      </span>
+    </a>
+  <% else %>
+    <a class='' data-toggle="tooltip" title='Ôn bài qua video' style='opacity: 0.5'>
+      <span>
+        <%= image_tag('global/images/youtube-button.png', style: 'width: 20px;margin-right: 10px') %>
+      </span>
+    </a>
+  <% end %>
   <span data-toggle="modal" data-target="#session_photo">
     <a href='/learning/op_session/session_photo?session_id=<%= session.id %>' data-remote='true' data-toggle="tooltip" title="Hình ảnh lớp học">
       <span>
