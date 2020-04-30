@@ -31,8 +31,9 @@
       </div>
       <br/>
       <%= link_to 'Vào lớp', user_open_educat_op_students_batch_detail_path(coming_soon_session[:batch_id]), :class => 'link-other color-5DC2A7 m-t-10' %>
-      <%# <a href="#" class="link-other color-5DC2A7 m-t-10">Vào lớp</a> %>
     </div>
   <% end %>
 </div>
-<%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true %>
+<% unless coming_soon_session.nil? %>
+  <%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true %>
+<% end %>

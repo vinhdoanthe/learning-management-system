@@ -3,11 +3,12 @@
 <% end %>
 <div class="page-content page-thin">
 
-  <!-- InstanceBeginEditable name="EditRegion1" -->
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h2 class="color-fff text-transform">Học liệu Bài <%= @lesson.lession_number %> - Level <%= @subject.level %> - <%= @course.name %></h2>
+        <h2 class="color-fff text-transform">Học liệu Bài <%= @lesson.lession_number %> - Level <%= @subject.level %> - <%= @course.name %>
+        <%= link_to 'Preview', learning_preview_lesson_path(@lesson.id), class: 'btn btn-primary' %>
+        </h2>
       </div>
     </div>
   </div>
@@ -47,29 +48,34 @@
                 <h4>Bài giảng</h4>
                 <br>
                 <div id='listMaterial'>
-                <% unless teaching_materials.empty? %>
-                  <% teaching_materials.each do |material| %>
-                    <% unless material.google_drive_link.nil? %>
-                      <div><%= material.google_drive_link.html_safe %></div>
+                  <% unless teaching_materials.empty? %>
+                    <% teaching_materials.each do |material| %>
+                      <% unless material.google_drive_link.nil? %>
+                        <div><%= material.google_drive_link.html_safe %></div>
+                      <% end %>
                     <% end %>
                   <% end %>
-                <% end %>
                 </div>
-
               </div>
               <div class="box-progress">
                 <h4>Video ôn tập</h4>
                 <br>
                 <div id='listVideo'>
-                <% unless review_videos.empty? %>
-                  <% review_videos.each do |video| %>
-                    <% unless video.ziggeo_file_id.nil? %>
-                      <div>
-                        <ziggeoplayer ziggeo-video="<%= video.ziggeo_file_id %>"></ziggeoplayer>
-                      </div>
+                  <% unless review_videos.empty? %>
+                    <% review_videos.each do |video| %>
+                      <% unless video.ziggeo_file_id.nil? %>
+                        <div>
+                          <input type="text" value='<%= video.ziggeo_file_id %>'>
+                          <input type="submit" value="Cập nhật video">
+                        </div>
+                      <% end %>
                     <% end %>
+                  <% else %>
+                    <div id='addVideo'>
+                      <input type="text" id="addVideoInput">
+                      <input type="submit" value="Thêm video" id="addVideoBtn">
+                    </div>
                   <% end %>
-                <% end %>
                 </div>
               </div>
             </div>

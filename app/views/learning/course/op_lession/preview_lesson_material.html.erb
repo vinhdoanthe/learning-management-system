@@ -3,7 +3,6 @@
 <% end %>
 <div class="page-content page-thin">
 
-  <!-- InstanceBeginEditable name="EditRegion1" -->
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
@@ -63,7 +62,7 @@
                   <% review_videos.each do |video| %>
                     <% unless video.ziggeo_file_id.nil? %>
                       <div>
-                        <ziggeoplayer ziggeo-video="<%= video.ziggeo_file_id %>"></ziggeoplayer>
+                        <%= render :partial => 'learning/material/learning_materials/vimeo', :locals => {video_id: video.ziggeo_file_id} %>
                       </div>
                     <% end %>
                   <% end %>
