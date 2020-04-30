@@ -153,4 +153,11 @@ $('document').ready(function () {
       }
     };
   })
+  
+
+  if (window.location.href.includes('show_video=true')){
+    $('#student_homework_videos').trigger('click')
+    $('#homework_tab2_new').addClass('active in')
+    $('#homework_tab1').removeClass('active')
+  }
 })

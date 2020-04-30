@@ -7,10 +7,15 @@ class User::OpenEducat::OpStudentsService
     batch_states
   end
 
-  def student_homework student
+  def student_homework student, params
+    if params[:session_id].present?
+    op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student.id)
+    active_session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+    else
     op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student.id)
     batch_ids = op_student_courses.pluck(:batch_id)
-    active_session =  Learning::Batch::OpBatchService.last_done_session(student.id, batch_ids)
+    active_session = Learning::Batch::OpBatchService.last_done_session(student.id, batch_ids)
+    end
 
     if active_session.present?
       batch = active_session.op_batch
