@@ -64,6 +64,12 @@
                       <div>
                         <%= render :partial => 'learning/material/learning_materials/vimeo', :locals => {video_id: video.ziggeo_file_id} %>
                       </div>
+                      <% if video.thumbnail_image.attached? %>
+                        <div>
+                          <label>Video thumbnail </label>
+                          <%= image_tag video.thumbnail_image %>
+                        </div>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
