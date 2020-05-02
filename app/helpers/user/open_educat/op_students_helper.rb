@@ -46,6 +46,19 @@ module User
         current_user.send(reference).op_sessions.where('start_datetime >= ? AND end_datetime <= ?', Time.now.beginning_of_week, Time.now.end_of_week).count
       end
 
+      def count_timetable_week
+        student = current_user.op_student
+        batch_ids = student.op_batches.pluck(:id).uniq
+        subject_ids = student.op_sessions.pluck(:subject_id).uniq
+        sessions = []
+        
+        batch_ids.each do |batch_id|
+          sessions << Learning::Batch::OpBatchService.get_sessions(batch_id, student.id, subject_ids, {start: Time.now.beginning_of_week, end: Time.now.end_of_week})
+        end
+        
+        sessions.flatten.uniq.count
+      end
+
       def count_homework user
         questions = Learning::Homework::UserQuestion.where(student_id: user.id).pluck(:id)
         questions_count = questions.count
@@ -77,9 +90,10 @@ module User
 
       # Lay so thong bao cua hoc sinh
       def count_notification_student user
-        all_noti = Notification::BroadcastNoti.where('expiry_date >= ? ', Time.now)
-        read_noti = Notification::BroadcastNotiState.where(user_id: current_user.id, broadcast_notice_id: all_noti.pluck(:id)).count
-        return all_noti.count - read_noti 
+        # all_noti = Notification::BroadcastNoti.where('expiry_date >= ? ', Time.now)
+        all_noti = Notification::BroadcastNoti.pluck(:id)
+        read_noti = Notification::BroadcastNotiState.where(user_id: current_user.id, broadcast_notice_id: all_noti).count
+        all_noti.count - read_noti
       end
       # get Menu for User is Student
       def get_menus_student(fullpath)
@@ -145,7 +159,7 @@ module User
           {'path' => user_open_educat_op_students_timetable_path,
            'icon' => 'ico-TienDoHocTap.png',
            'title' => 'Thời khoá biểu', 
-           'right_content' => '<span class="left-badge">' << count_sessions_week('op_student').to_s << '</span>'
+           'right_content' => '<span class="left-badge">' << count_timetable_week.to_s << '</span>'
           },
           {'path' => user_open_educat_op_students_student_homework_path,
            'icon' => 'ico-BaiTapOnBai.png',
