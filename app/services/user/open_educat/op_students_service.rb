@@ -107,7 +107,7 @@ class User::OpenEducat::OpStudentsService
       subject_ids.concat op_student_course.op_subjects.pluck(:id).uniq
     end
     time_now = Time.now()
-    next_sessions = Learning::Batch::OpSession.where('batch_id IN (?) AND subject_id IN (?) AND start_datetime >= ?', batch_ids, subject_ids, time_now).order(start_datetime: :ASC).to_a
+    next_sessions = Learning::Batch::OpSession.where('batch_id IN (?) AND subject_id IN (?) AND start_datetime >= ? AND state != ?', batch_ids, subject_ids, time_now, Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC).to_a
     next_sessions.each do |session|
       if !session.is_offset
         coming_soon_session = session

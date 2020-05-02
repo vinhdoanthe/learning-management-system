@@ -234,16 +234,18 @@ module User
       end
 
       def timetable_content
-        # @sessions = @op_student.op_sessions
-        # schedules = OpTeachersService.teaching_schedule(@sessions, params)
-        params[:date] = Time.now
+        if !params[:date].present?
+          filter_date = Time.now
+        else
+          filter_date = DateTime.parse(params[:date]).to_time
+        end
+
         student_courses = Learning::Batch::OpStudentCourse.where(student_id: @op_student.id)
         batch_ids = student_courses.pluck(:batch_id)
         subject_ids = []
         sessions = []
-        start_time = params[:date].beginning_of_week
-        end_time = params[:date].end_of_week
-
+        start_time = filter_date.beginning_of_week
+        end_time = filter_date.end_of_week
         student_courses.each do |sc|
           subject_ids << sc.op_subjects.pluck(:id)
         end
