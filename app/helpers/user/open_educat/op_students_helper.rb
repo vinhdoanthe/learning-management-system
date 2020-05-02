@@ -60,11 +60,27 @@ module User
       end
 
       def count_homework user
-        questions = Learning::Homework::UserQuestion.where(student_id: user.id).pluck(:id)
-        questions_count = questions.count
+        # questions = Learning::Homework::UserQuestion.where(student_id: user.id).pluck(:id)
+        # questions_count = questions.count
+
+        # user_answers_count = Learning::Homework::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
+        # (questions_count - user_answers_count).to_s
+        student = user.op_student
+        op_student_course_ids = student.op_student_courses.pluck(:id)
+        op_session_students = Learning::Batch::OpSessionStudent.where(student_course_id: op_student_course_ids)
+        lesson_id = []
+
+        op_session_students.each do |st|
+          session = st.op_session
+          # lesson_id << session.lession_id if session.state != 'cancel'
+          lesson_id << session.lession_id if session.state != 'cancel'
+        end
+
+        lesson_id = lesson_id.compact.uniq
+        questions = Learning::Homework::UserQuestion.joins(:question).where(student_id: @student.id).where(questions: { op_lession_id: lesson_id})
 
         user_answers_count = Learning::Homework::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
-        (questions_count - user_answers_count).to_s
+        (questions.count - user_answers_count).to_s
       end
 
       #Lay coin_star_transactions
@@ -161,10 +177,15 @@ module User
            'title' => 'Thời khoá biểu', 
            'right_content' => '<span class="left-badge">' << count_timetable_week.to_s << '</span>'
           },
+          # {'path' => user_open_educat_op_students_student_homework_path,
+          #  'icon' => 'ico-BaiTapOnBai.png',
+          #  'title' => 'Bài tập & Ôn bài',
+          #  'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
+          # }
           {'path' => user_open_educat_op_students_student_homework_path,
            'icon' => 'ico-BaiTapOnBai.png',
            'title' => 'Bài tập & Ôn bài',
-           'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
+           'right_content' => '<span class="left-badge"></span>'
           }
 
           # {'path' => '#', 
