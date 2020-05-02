@@ -2,7 +2,7 @@ class Notification::Broadcast::BroadcastNoticesController < ApplicationControlle
   before_action :find_notice, only: [:show]
   
   def index
-    @notices = Notification::BroadcastNoti.all
+    @notices = Notification::BroadcastNoti.order(created_at: :DESC).all
   end
 
   def show
