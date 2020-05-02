@@ -9,6 +9,7 @@ module Learning
       enumerize :learning_type, in: [Learning::Constant::Material::MATERIAL_TYPE_TEACH, Learning::Constant::Material::MATERIAL_TYPE_REVIEW]
 
       has_one_attached :material_file
+      has_one_attached :thumbnail_image
 
       def self.get_drive_files(lesson_id)
         files = Array.new
