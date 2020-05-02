@@ -1,7 +1,7 @@
 class Learning::Course::OpLessionController < ApplicationController
 
-  before_action :find_lesson, only: [:edit, :update, :preview_lesson_material]
-  before_action :authenticate_admin!, only: [:preview_lesson_material, :index, :edit, :update, :index_by_category, :index_by_course, :index_by_subject]
+  before_action :find_lesson, only: [:edit, :update, :preview_lesson_material, :add_vimeo, :update_vimeo]
+  before_action :authenticate_admin!, only: [:preview_lesson_material, :index, :edit, :update, :index_by_category, :index_by_course, :index_by_subject, :update_vimeo, :add_vimeo]
 
   def index 
     @categories = Learning::Course::CourseCateg.pluck(:id,:name)
@@ -127,6 +127,16 @@ class Learning::Course::OpLessionController < ApplicationController
   end
 
   def update
+    
+  end
+
+  def add_vimeo
+    unless @lesson.nil? or params[:video_id]
+
+    end
+  end
+
+  def update_vimeo
 
   end
 
