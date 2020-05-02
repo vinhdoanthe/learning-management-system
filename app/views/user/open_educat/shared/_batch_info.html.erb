@@ -10,10 +10,11 @@
         <li>
           <%= image_tag('global/images/qr-code.png') %>
           <p><span class="span-text">Mã lớp học: </span><%= batch.code %></p></li>
-        <li>
-          <%= image_tag('global/images/calendar-4.png') %>
-          <p><span class="span-text">Thời gian học: </span><%= batch.start_date.strftime('%d/%m/%Y') %>
-        đến <%= batch.end_date.strftime('%d/%m/%Y') %></p></li>
+        <%# <li> %>
+        <%#   <%= image_tag('global/images/calendar-4.png') %1> %>
+        <%#   <p><span class="span-text">Thời gian học: </span><%= batch.start_date.strftime('%d/%m/%Y') %1> %>
+        <%# đến <%= batch.end_date.strftime('%d/%m/%Y') %1></p> %>
+        <%# </li> %>
         <li>
           <%= image_tag('global/images/clock.png') %>
           <% time_line = batch_timeline batch %> 
