@@ -78,6 +78,12 @@ module Learning
             all_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_ids).order(start_datetime: :ASC).to_a
           end
         end
+
+        # Hot fix: học sinh đã kết thúc học hoặc bảo lưu
+        if op_student_course.state != Learning::Constant::STUDENT_BATCH_STATUS_ON
+          all_sessions = all_sessions.select {|session| session.state == Learning::Constant::Batch::Session::STATE_DONE or session.state == Learning::Constant::Batch::Session::STATE_CANCEL}
+        end
+
         sessions = []
         all_sessions.each do |session|
           if !session.is_offset
@@ -202,7 +208,7 @@ module Learning
         else
           active_session = Learning::Batch::OpSession.where(batch_id: batch_ids).order(start_datetime: :DESC).first
         end
-        
+
         active_session
       end
 
