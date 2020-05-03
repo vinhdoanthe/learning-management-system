@@ -130,16 +130,6 @@ class Learning::Course::OpLessionController < ApplicationController
     
   end
 
-  def add_vimeo
-    unless @lesson.nil? or params[:video_id]
-
-    end
-  end
-
-  def update_vimeo
-
-  end
-
   def preview_lesson_material
     @questions = @lesson.questions
     @subject = @lesson.op_subject

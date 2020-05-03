@@ -124,6 +124,50 @@ module Learning
       end
     end
 
+    def add_vimeo
+      if params[:lesson_id].present? and params[:file_id].present?
+        lesson = Learning::Course::OpLession.where(id: params[:lesson_id]).first
+        return if lesson.nil?
+
+        video = Learning::Material::LearningMaterial.new
+        video.op_lession_id = lesson.id
+        video.title = lesson.name
+        video.material_type = Learning::Constant::Material::MATERIAL_TYPE_VIDEO
+        video.learning_type = Learning::Constant::Material::MATERIAL_TYPE_REVIEW
+        video.ziggeo_file_id = params[:file_id]
+        video.save
+        if params[:thumbnail].present?
+          video.thumbnail_image.attach(params[:thumbnail])
+        end
+        respond_to do |format|
+          format.html {redirect_to learning_preview_lesson_path(lesson.id)}
+          format.js {}
+        end
+      end
+    end
+
+    def update_vimeo
+      if params[:lesson_id].present? and params[:video_id].present? and params[:file_id].present?
+        lesson = Learning::Course::OpLession.where(id: params[:lesson_id]).first
+        return if lesson.nil?
+        video = Learning::Material::LearningMaterial.where(id: params[:video_id]).first
+        return if video.nil?
+        video.title = lesson.name
+        video.ziggeo_file_id = params[:file_id]
+        video.save
+        if params[:thumbnail].present?
+          if video.thumbnail_image.attached?
+            video.thumbnail_image.purge
+          end
+          video.thumbnail_image.attach(params[:thumbnail])
+        end
+        respond_to do |format|
+          format.html {redirect_to learning_preview_lesson_path(lesson.id)}
+          format.js {}
+        end
+      end 
+    end
+
     def ziggeo
       @videos = Learning::Material::LearningMaterial.ziggeo_list_video
       respond_to do |format|

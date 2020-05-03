@@ -65,15 +65,34 @@
                     <% review_videos.each do |video| %>
                       <% unless video.ziggeo_file_id.nil? %>
                         <div>
-                          <input type="text" value='<%= video.ziggeo_file_id %>'>
-                          <input type="submit" value="Cập nhật video">
+                          <%= form_with(url: '/learning/update_vimeo', method: 'put', multipart: true) do %>
+                            <%= hidden_field_tag(:lesson_id, @lesson.id) %>
+                            <%= hidden_field_tag(:video_id, video.id) %>
+                            <br>
+                            <%= label_tag(:file_id, "File ID") %>
+                            <%= text_field_tag(:file_id, video.ziggeo_file_id) %>
+                            <br>
+                            <%= label_tag(:thumbnail, "Thumbnail Image") %>
+                            <%= file_field_tag(:thumbnail) %>
+                            <br>
+                            <%= submit_tag("Update") %>
+                          <% end %>
                         </div>
                       <% end %>
                     <% end %>
                   <% else %>
                     <div id='addVideo'>
-                      <input type="text" id="addVideoInput">
-                      <input type="submit" value="Thêm video" id="addVideoBtn">
+                      <%= form_with(url: '/learning/add_vimeo', method: 'post', multipart: true) do %>
+                        <%= hidden_field_tag(:lesson_id, @lesson.id) %>
+                        <br>
+                        <%= label_tag(:file_id, "File ID") %>
+                        <%= text_field_tag(:file_id) %>
+                        <br>
+                        <%= label_tag(:thumbnail, "Thumbnail Image") %>
+                        <%= file_field_tag(:thumbnail) %>
+                        <br>
+                        <%= submit_tag("Add video") %>
+                      <% end %>
                     </div>
                   <% end %>
                 </div>
