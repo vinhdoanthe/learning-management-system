@@ -49,16 +49,19 @@ module Learning
     end
 
     def show_video
-      video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last
-      fallback_video_id = Learning::Constant::Material::DEFAULT_VIDEO_ID
+      # video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last
+      # fallback_video_id = Learning::Constant::Material::DEFAULT_VIDEO_ID
       lesson = ''
       session = ''
       name = ''
+      errors = ''
+      @video_id = ''
 
       if params[:session_id].present?
         session = Learning::Batch::OpSession.where(id: params[:session_id]).first
-        if session.nil?
-          @video_id = fallback_video_id
+        if session.blank?
+       #   @video_id = fallback_video_id
+          errors = 'Không có video!'
         else
           if session.lession_id.blank?
             session = current_user.op_student.op_sessions.where('start_datetime <= ?', Time.now).where(state: Learning::Constant::Batch::Session::STATE_DONE, subject_id: params[:subject_id], batch_id: params[:batch_id]).where.not(lession_id: nil).order(start_datetime: :DESC).first
@@ -73,15 +76,16 @@ module Learning
             name = session_video.title
           else
             name = ''
-            @video_id = fallback_video_id
+            errors = 'Không có video!'
           end
         end
       else
-        @video_id = fallback_video_id
+        # @video_id = fallback_video_id
+        errors = 'Không có video!'
       end
 
       respond_to do |format|
-        format.js {render 'learning/show_homework_video', :locals => { session: session, video_id: @video_id, lesson: lesson, name: name }}
+        format.js {render 'learning/show_homework_video', :locals => { session: session, video_id: @video_id, lesson: lesson, name: name, errors: errors }}
       end
     end
 
