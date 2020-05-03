@@ -21,7 +21,9 @@ module Learning
       def get_video_thumbnail op_session
         session_video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => op_session.lession_id).order(created_at: :DESC).first if session.present?
         if session_video.present?
-          url = session_video.thumbnail_image.service_url
+          if session_video.thumbnail_image.attached?
+            url = url_for(session_video.thumbnail_image)
+          end
         else
           url = '/global/images/Logo-2.png'
         end

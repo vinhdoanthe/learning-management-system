@@ -12,12 +12,12 @@
             <div class="fcv-big" style='height: 100%'>
               <div id='no_play_video' style='display: none'>
                 <%= image_tag '/global/images/Logo-2.png', class: 'no_video_thumbnail' %>
-                <h3 style='position: absolute; top: 40%; left: 30%; font-size: 25px; color: blue; #5DC2A7 !important'> Chưa có video ôn bài!</h3>
+                <h3 style='position: absolute; top: 40%; left: 30%; font-size: 25px; color: #5DC2A7 !important'> Chưa có video ôn bài!</h3>
               </div>
               <div id='play_video_box' >
               </div>
               <div class="title-video">
-                <p>Nội dung Video: <span id="video_description"><%= lesson.present? ? lesson.note : "" %></span></p>
+                <p>Nội dung Video: <span id="video_description"><%= lesson.present? ? lesson.name : "" %></span></p>
               </div>
             </div>
             <div class="owl-carousel video_carousel" style='display: block'>

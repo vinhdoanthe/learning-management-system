@@ -175,7 +175,7 @@ namespace :export do
 
   desc 'Export Users by Batch Code'
   task :export_users_by_batch_code, [:batch_code] => :environment do |t, args|
-    binding.pry
+    # binding.pry
     batch_code = args[:batch_code].to_s
     return if batch_code.blank?
     batch_ids = Learning::Batch::OpBatch.where('code ilike ?', batch_code).pluck(:id).compact

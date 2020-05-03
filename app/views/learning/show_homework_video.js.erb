@@ -1,3 +1,4 @@
+<% binding.pry %>
 <% if errors.blank? %>
     $('#no_video_play').hide()
     $('#play_video_box').html("<%= escape_javascript(render partial: '/learning/material/learning_materials/vimeo', locals: { video_id: video_id } ) %>");
