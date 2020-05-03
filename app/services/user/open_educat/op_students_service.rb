@@ -102,6 +102,7 @@ class User::OpenEducat::OpStudentsService
     subject_ids = []
     student_course_ids = []
     op_student_courses.each do |op_student_course|
+      next if op_student_course.state != Learning::Constant::STUDENT_BATCH_STATUS_ON
       student_course_ids << op_student_course.id
       batch_ids << op_student_course.batch_id
       subject_ids.concat op_student_course.op_subjects.pluck(:id).uniq
