@@ -20,5 +20,10 @@
   $(document).ready(function(){
     $('#homework_tab2_new').html('<%= escape_javascript(render partial: 'user/open_educat/op_students/partials/homework_video', locals: { sessions: sessions, course: course, subject: subject, lesson: lesson, batch: batch, session: session } ) %> ');
   })
-<% end %> 
+<% end %>
   $('[data-toggle="tooltip"]').tooltip();
+
+$('#homework_session_table').on('click', '.student_homework_view', function(){
+  session_id = $(this).data('session')
+  window.location.href = '/learning/view_question?session_id=' + session_id
+})
