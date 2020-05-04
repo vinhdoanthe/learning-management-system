@@ -23,14 +23,16 @@ class User::Account::UsersService
     user.password = '123456'
 
     old_user = User::Account::User.where('username ILIKE ?', username).order(created_at: :DESC).first
-
-    if old_user.present?
-      number_account = (old_user.username[/(\d+)(?!.*\d)/].to_i + 1).to_s
-      if number_account == '1'
-        username = old_user.username + number_account
-      else
-        username = old_user.username.gsub(/(\d+)(?!.*\d)/, number_account)
+    while !old_user.nil?
+      if old_user.present?
+        number_account = (old_user.username[/(\d+)(?!.*\d)/].to_i + 1).to_s
+        if number_account == '1'
+          username = old_user.username + number_account
+        else
+          username = old_user.username.gsub(/(\d+)(?!.*\d)/, number_account)
+        end
       end
+      old_user = User::Account::User.where('username ILIKE ?', username).order(created_at: :DESC).first
     end
 
     user.username = username
