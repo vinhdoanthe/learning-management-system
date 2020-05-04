@@ -17,7 +17,7 @@
         <% elsif homework_state == 'undone' %>
           <td align="right"><span class="label-edit label label-danger" style="width: 100%; padding:6px">Chưa làm <%= homework_state[:progress] %></span></td>
         <% else %>
-          <td align="right"><span class="label-edit label label-primary" style="width: 100%; padding:6px">Đang làm <%= homework_state[:progress] %></span></td>
+          <td align="right"><a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' ><span class="label-edit label label-primary" style="width: 100%; padding:6px">Đang làm <%= homework_state[:progress] %></span></a></td>
         <% end %>
       <% else %>
         <td width="70%">
@@ -29,18 +29,22 @@
       <td align="right">
         <% if has_homework %>
           <% if session.start_datetime >= Time.now %>
-          <a style='opacity: 0.5' title='Tạm khoá: Buổi học chưa diễn ra' data-toggle="tooltip">
             <span>
-              <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
+              <a style='opacity: 0.5' title='Tạm khoá: Buổi học chưa diễn ra' data-toggle="tooltip">
+                <span>
+                  <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
+                </span>
+              </a>
             </span>
-          </a>
           <% else %>
-          <a href="/learning/view_question?session_id=<%= session.id %>"  title='Làm bài tập về nhà' class='student_homework_view' data-toggle="tooltip">
             <span>
-              <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
+              <a href="/learning/view_question?session_id=<%= session.id %>"  title='Làm bài tập về nhà' class='student_homework_view' data-toggle="tooltip">
+                <span>
+                  <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
+                </span>
+              </a>
             </span>
-          </a>
-        <% end %>
+          <% end %>
         <% else %>
           <a style='opacity: 0.5' title='Làm bài tập về nhà' data-toggle="tooltip">
             <span>
