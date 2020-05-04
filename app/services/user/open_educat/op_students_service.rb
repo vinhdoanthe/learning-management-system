@@ -168,11 +168,11 @@ class User::OpenEducat::OpStudentsService
         schedule_hash['s1'].merge!(record)
       when 10..12
         schedule_hash['s2'].merge!(record)
-      when 12..15
+      when 13..15
         schedule_hash['c1'].merge!(record)
-      when 15..18
+      when 16..17
         schedule_hash['c2'].merge!(record)
-      when 18..20
+      when 18..19
         schedule_hash['t1'].merge!(record)
       when 20..24
         schedule_hash['t2'].merge!(record)
