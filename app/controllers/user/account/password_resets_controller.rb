@@ -25,7 +25,7 @@ class User::Account::PasswordResetsController < ApplicationController
   end
 
   def update
-    if params[:user_user][:password].empty?
+    if params[:user_account_user][:password].empty?
       @user.errors.add(:password, "can't be empty")
       render 'edit'
     elsif @user.update_attributes(user_params)
@@ -52,7 +52,7 @@ class User::Account::PasswordResetsController < ApplicationController
   end
 
   def user_params
-    params.require(:user_user).permit(:password, :password_confirmation)
+    params.require(:user_account_user).permit(:password, :password_confirmation)
   end
 
 

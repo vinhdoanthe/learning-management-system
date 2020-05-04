@@ -20,6 +20,9 @@ namespace :user do
     namespace :avatars do
       get 'show_fullsize', action: 'show_fullsize'
     end
+ 
+  resources :password_resets, only: [:new, :create, :edit, :update]
+  
   end
 
   get 'teacher_info' => 'op_teachers#teacher_info'

@@ -27,7 +27,7 @@
           Hotline lãnh đạo: +84 948-666-183
         </p>
       <% end %>
-      <%= form_for(:password_reset, url: password_resets_path, :html => {display: 'block', class: "form-password"}) do |f| %>
+      <%= form_for(:password_reset, url: user_account_password_resets_path, :html => {display: 'block', class: "form-password"}) do |f| %>
         <h3><strong>Reset</strong> mật khẩu</h3>
         <div class="append-icon m-b-20">
           <%= f.text_field :username, class: "form-control", placeholder: "Tên đăng nhập", required: true %>

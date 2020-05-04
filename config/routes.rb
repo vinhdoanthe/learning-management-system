@@ -50,7 +50,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :password_resets, only: [:new, :create, :edit, :update]
+#  resources :password_resets, only: [:new, :create, :edit, :update]
   post 'add_photo_attachment' => 'learning/batch/sessions#add_photo_attachment'
 
   delete 'sign_out', :to => 'user/sessions#destroy', as: 'logout'
