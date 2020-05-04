@@ -23,10 +23,10 @@ class User::OpenEducat::OpTeachersService
     schedule_hash = {'s1' => {}, 's2' => {}, 'c1' => {}, 'c2' => {}, 't1' => {}, 't2' => {}}
 
     sessions.each do |session|
-      time = session.end_datetime
+      time = session.start_datetime
       name = session.op_subject.name
-      start_time = session.start_datetime.strftime('%H:%M')
-      end_time = time.strftime('%H:%M')
+      end_time = session.end_datetime.strftime('%H:%M')
+      start_time = time.strftime('%H:%M')
       day = time.strftime('%Y-%m-%d')
       company = Common::ResCompany.find(session.company_id).name
       subject = session.op_subject.name
