@@ -8,7 +8,7 @@
   </div>
   <div class="panel m-t--70">
     <div class="panel-content">
-      <% if @batches.nil? %>
+      <% if @batches.empty? %>
         <h4>Bạn chưa có khóa học nào</h4>
       <% else %>
           <% op_student_id = current_user.op_student.id %>

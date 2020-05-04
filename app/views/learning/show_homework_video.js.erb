@@ -1,5 +1,6 @@
 <% if errors.blank? %>
-    $('#no_video_play').hide()
+    $('#no_play_video').hide()
+    $('#play_video_box').show()
     $('#play_video_box').html("<%= escape_javascript(render partial: '/learning/material/learning_materials/vimeo', locals: { video_id: video_id } ) %>");
 
     <% if lesson.present? %>

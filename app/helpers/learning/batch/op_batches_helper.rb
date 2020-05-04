@@ -3,12 +3,10 @@ module Learning
     module OpBatchesHelper
 
       def get_batch_type(batch)
-        if batch.select_type.nil?
+        if batch.type_id.nil?
           ''
-        elsif batch.select_type == '1'
-          'Group class'
-        elsif batch.select_type == '2'
-          'Coaching class'
+        else
+          batch.op_batch_type.name
         end
       end
 

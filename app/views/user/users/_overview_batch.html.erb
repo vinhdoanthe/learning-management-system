@@ -30,8 +30,12 @@
         <% if time_line.blank? %>
           Hàng tuần Tại
         <% else %>
-          <% time_line.each do |time| %>
-            <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) %>
+          <% time_line.each_with_index do |time, i| %>
+            <% if time_line.length - i != 1 %>
+              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + "; "%>
+            <% else %>
+              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + " "%>
+            <% end %>
           <% end %>
           hàng tuần Tại
         <% end %>
