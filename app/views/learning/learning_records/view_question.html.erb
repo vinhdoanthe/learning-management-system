@@ -42,7 +42,7 @@
                         <% @user_questions.each_with_index do |user_quest, index| %>
 
                           <% user_answer = user_quest.user_answers.order(created_at: :DESC).first %>
-                          <% if user_answer && (user_answer.state == 'right' || user_answer.state == 'waiting') %>
+                          <% if user_answer.present? && (user_answer.state == 'right' || user_answer.state == 'waiting') %>
                             <li>
                               <a href="/learning/question_content?user_question_id=<%= user_quest.id %>&index=<%= index %>" class="btn btn-embossed done_question question_select" data-remote='true'><%= index + 1 %></a>
                               <input type="hidden" value="<%= user_quest.id %>" name="student_question_id">
