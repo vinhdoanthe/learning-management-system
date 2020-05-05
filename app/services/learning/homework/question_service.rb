@@ -5,7 +5,7 @@ class Learning::Homework::QuestionService
 
     if question.present? && user_question.present?
       user_answer = user_question.user_answers.order(created_at: :DESC).first
-      if user_answer.present? && user_answer.state == 'right'
+      if user_answer.present? && (user_answer.state == 'right' || user_answer.state == 'waiting' )
         return {state: 'done', user_question_id: user_question.id}
       else
         user_answer = create_user_answer user_question, student, params
@@ -45,6 +45,7 @@ class Learning::Homework::QuestionService
   end
 
   def mark_answer params, user
+    return { state: 'danger', message: 'Chưa chấm bài' } if (params[:teacher_mark_content].blank? || params[:teacher_mark].blank?)
     answer_mark = Learning::Homework::AnswerMark.new
     user_answer = find_user_answer params[:user_answer_id]
     answer_mark.user_answer_id = user_answer.id
@@ -60,7 +61,11 @@ class Learning::Homework::QuestionService
 
     answer_mark.mark_time = Time.now
     answer_mark.teacher_id = user.id
-    answer_mark.save
+    if answer_mark.save
+      { state: 'success', message: 'Chấm bài thành công' }
+    else
+      { state: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau!' }
+    end
   end
 
   def create_user_question student_course

@@ -2,6 +2,7 @@
   <tr>
     <td><%= answer.user_question.user.op_student.full_name if answer.user_question.present? %></td>
     <td>
+    <input type='hidden' name='student_answer' value="<%= answer.id %>" >
     	<a class='teacher_marking_view' href="/learning/get_user_answer?user_answer_id=<%= answer.id%>" data-remote="true" data-toggle="modal" data-target="#modal_teacher_marking">
 	    <%= image_tag('global/images/right-arrow.png', style: 'width: 20px;margin-right: 10px') %>
 	  </a>
