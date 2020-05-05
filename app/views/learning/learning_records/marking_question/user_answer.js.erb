@@ -1,1 +1,7 @@
-$('#marking_question_content').html("<%= escape_javascript(render partial: 'learning/learning_records/marking_question/user_answer', locals: { question: question, answer: answer } ) %>")
+$('#modal_teacher_marking').html("<%= escape_javascript(render partial: 'learning/learning_records/marking_question/modal_marking', locals: { question: question, answer: answer, answer_mark: answer_mark } ) %>")
+
+$(document).ready(function(){
+  <% if answer_mark.present? %>
+  $('#checked_answer').find('input[value="<%= answer_mark.answer_is_right.to_s %>"]').prop('checked', 'checked')
+  <% end %>
+})

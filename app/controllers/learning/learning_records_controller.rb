@@ -17,12 +17,8 @@ module Learning
 
     def mark_answer
       mark = Homework::QuestionService.new.mark_answer params, current_user
-      if mark
-        result = { type: 'success', message: "Chấm bài thành công"}
-      else
-        result = { type: 'success', message: "Chấm bài thành công"}
-      end
-      render json: result
+      
+      render json: { type: mark[:state], message: mark[:message] }
     end
 
     def question_content
@@ -73,9 +69,11 @@ module Learning
     def get_user_answer
       user_answer = Learning::Homework::UserAnswer.find(params[:user_answer_id])
       question = user_answer.user_question.question if user_answer.user_question.present?
+      answer_mark = user_answer.answer_marks.order(created_at: :DESC).first
+
       respond_to do |format|
         format.html
-        format.js { render 'learning/learning_records/marking_question/user_answer', locals: { question: question, answer: user_answer}}
+        format.js { render 'learning/learning_records/marking_question/user_answer', locals: { question: question, answer: user_answer, answer_mark: answer_mark}}
       end
     end
 
