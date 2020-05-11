@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_24_024620) do
+ActiveRecord::Schema.define(version: 2020_05_07_104848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -7537,7 +7537,9 @@ ActiveRecord::Schema.define(version: 2020_04_24_024620) do
     t.bigint "created_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "sc_post_id"
     t.index ["album_id"], name: "index_photos_on_album_id"
+    t.index ["sc_post_id"], name: "index_photos_on_sc_post_id"
     t.index ["session_id"], name: "index_photos_on_session_id"
   end
 
@@ -9304,6 +9306,13 @@ ActiveRecord::Schema.define(version: 2020_04_24_024620) do
     t.index ["tag_id"], name: "sale_order_tag_rel_tag_id_idx"
   end
 
+  create_table "sc_posts", force: :cascade do |t|
+    t.string "type"
+    t.integer "posted_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "sc_products", force: :cascade do |t|
     t.text "description"
     t.text "presentation"
@@ -9360,9 +9369,11 @@ ActiveRecord::Schema.define(version: 2020_04_24_024620) do
     t.integer "reward_type_id", limit: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "sc_post_id"
     t.index ["reward_type_id"], name: "index_session_student_rewards_on_reward_type_id"
     t.index ["rewarded_by"], name: "index_session_student_rewards_on_rewarded_by"
     t.index ["rewarded_to"], name: "index_session_student_rewards_on_rewarded_to"
+    t.index ["sc_post_id"], name: "index_session_student_rewards_on_sc_post_id"
     t.index ["session_id"], name: "index_session_student_rewards_on_session_id"
   end
 
@@ -12162,6 +12173,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_024620) do
   add_foreign_key "payslip_lines_contribution_register", "res_users", column: "write_uid", name: "payslip_lines_contribution_register_write_uid_fkey", on_delete: :nullify
   add_foreign_key "photos", "albums"
   add_foreign_key "photos", "op_session", column: "session_id"
+  add_foreign_key "photos", "sc_posts"
   add_foreign_key "photos", "users", column: "created_by"
   add_foreign_key "portal_wizard", "res_groups", column: "portal_id", name: "portal_wizard_portal_id_fkey", on_delete: :nullify
   add_foreign_key "portal_wizard", "res_users", column: "create_uid", name: "portal_wizard_create_uid_fkey", on_delete: :nullify
@@ -12572,6 +12584,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_024620) do
   add_foreign_key "sale_order_line_subject_rel", "sale_order_line", column: "order_line_id", name: "sale_order_line_subject_rel_order_line_id_fkey", on_delete: :cascade
   add_foreign_key "sale_order_tag_rel", "crm_lead_tag", column: "tag_id", name: "sale_order_tag_rel_tag_id_fkey", on_delete: :cascade
   add_foreign_key "sale_order_tag_rel", "sale_order", column: "order_id", name: "sale_order_tag_rel_order_id_fkey", on_delete: :cascade
+  add_foreign_key "sc_posts", "users", column: "posted_by"
   add_foreign_key "session_change_tutors_id", "op_faculty", column: "faculty_id", name: "session_change_tutors_id_faculty_id_fkey", on_delete: :cascade
   add_foreign_key "session_change_tutors_id", "op_session_change_faculty", column: "change_id", name: "session_change_tutors_id_change_id_fkey", on_delete: :cascade
   add_foreign_key "session_confirmation", "res_users", column: "create_uid", name: "session_confirmation_create_uid_fkey", on_delete: :nullify
@@ -12583,6 +12596,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_024620) do
   add_foreign_key "session_student_feedbacks", "users", column: "feedback_by"
   add_foreign_key "session_student_rewards", "op_session", column: "session_id"
   add_foreign_key "session_student_rewards", "reward_types"
+  add_foreign_key "session_student_rewards", "sc_posts"
   add_foreign_key "session_student_rewards", "users", column: "rewarded_by"
   add_foreign_key "session_student_rewards", "users", column: "rewarded_to"
   add_foreign_key "slide_category", "res_users", column: "create_uid", name: "slide_category_create_uid_fkey", on_delete: :nullify
