@@ -1,7 +1,7 @@
 class Learning::Batch::SessionStudentRewardsService
   def reward_student params, user 
     errors = ''
-    binding.pry
+    # binding.pry
     ActiveRecord::Base.transaction do
       params[:students].each do |student|
         reward = Learning::Batch::SessionStudentReward.new
@@ -18,8 +18,8 @@ class Learning::Batch::SessionStudentRewardsService
 
         # add transaction point, star, notification
         User::Reward::CoinStarsService.new.create_coin_star
-        SocialCommunity::Feed::RewardPostsService.new.create_noti
-        #  post.create_notifications
+        # SocialCommunity::Feed::RewardPostsService.new.create_noti
+        post.create_notifications
       end
     end
 
