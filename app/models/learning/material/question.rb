@@ -11,6 +11,16 @@ module Learning
       has_many :question_choices, :dependent => :destroy, inverse_of: :question
       has_many :user_questions, class_name: 'Learning::Homework::UserQuestion', :dependent => :nullify
       accepts_nested_attributes_for :question_choices, allow_destroy: true
+
+      validates :question_type, presence: true
+      validates :question, presence: true
+      validate :has_question_choice
+
+      def has_question_choice
+        if question_type != 'text' && question_choices.length == 0
+          errors.add(:question_choice, 'Thiếu lựa chọn trả lời')
+        end
+      end
     end
   end
 end
