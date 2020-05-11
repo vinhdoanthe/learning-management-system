@@ -186,7 +186,13 @@ module User
            'icon' => 'ico-BaiTapOnBai.png',
            'title' => 'Bài tập & Ôn bài',
            'right_content' => '<span class="left-badge"></span>'
-          }
+          },
+
+          {'path' => redeem_redeem_products_path, 
+            'icon' => 'ico-Redem.png',
+            'title' => 'Đổi điểm lấy quà', 
+            'right_content' => ''
+          },
 
           # {'path' => '#', 
           #   'icon' => 'ico-Certificate.png',
@@ -237,12 +243,6 @@ module User
           # {'path' => '#', 
           #   'icon' => 'ico-Certificate.png',
           #   'title' => 'Huy hiệu', 
-          #   'right_content' => ''
-          # },
-
-          # {'path' => user_student_redeem_path, 
-          #   'icon' => 'ico-Redem.png',
-          #   'title' => 'Đổi điểm lấy quà', 
           #   'right_content' => ''
           # },
 
