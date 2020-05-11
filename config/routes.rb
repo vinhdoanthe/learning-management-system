@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   draw :op_teacher
   draw :social_community
   draw :user
+  draw :redeem
 
   namespace :learning do
     get 'view_learning_material/:material_id' => 'learning_materials#view_learning_material'

@@ -1,0 +1,59 @@
+<% transactions.each do |transaction| %>
+  <% product = transaction.product %>
+  <div class="col-sm-4">
+    <div class="rt-detail">
+      <div class="rtd-img">
+        <ul class="owl-carousel" id="product1">
+          <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
+          <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
+          <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
+          <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
+        </ul>
+      </div>
+      <div class="rtd-text">
+        <span><%= product.brand %></span>
+        <div class="rtd-center clearfix">
+          <div class="rtdt-left">
+            <div class="form-group pos-relative">
+              <label for="exampleInputEmail1" class="form-title pos-absolute">Màu sắc</label>
+              <input type="radio" name="product_color" value='<%= transaction.color %>'>
+              <span class="checkmark" style="background-color: <%= transactioncolor %>"></span>
+              </label>
+            </div>
+          </div>
+          <div class="rtdt-right">
+            <ul>
+              <li>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Số lượng: <%= transaction.amount %></label>
+                </div>
+              </li>
+              <li>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Kích cỡ: <%= transaction.size %></label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <p><%= product.description %>
+
+      <div class="rtd-btn clearfix">
+        <div class="rtdb-right">
+          <% case transaction.status
+            when 'new' %>
+            <button type="button" data-state="ready" class="btn btn-primary btn-embossed bg-5DC2A7">Ready</button>
+          <% when 'ready' %>
+            <button type="button" data-state="complete" class="btn btn-primary btn-embossed bg-5DC2A7">Complete</button>
+          <% end %>
+          <% unless transaction.status == 'complete' %>
+            <form>
+            <button type="submit" data-state="cancel" class="btn btn-danger">Hủy yêu cầu</button>
+            <textarea rows='5' name='reject_reason' required></textarea>
+            </form>
+          <% end %>
+        </div>
+      </div>
+      </div>
+    </div>
+  <% end %>

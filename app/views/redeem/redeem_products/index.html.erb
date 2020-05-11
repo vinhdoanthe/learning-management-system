@@ -1,0 +1,196 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "redeem/redeem_product.js" %>
+<% end %>
+
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+        <div class="ph-text">
+          <h2 class="color-fff text-transform">Đổi điểm</h2>
+        </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+
+    <div class="panel-content">
+
+      <div class="redem-all">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="ra-detail">
+              <h2>1,200</h2>
+              <p><span>T-điểm</span>, Teky điểm thưởng</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="ra-detail">
+              <a href="">Làm sao để kiểm được điểm T-Điểm?</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="redem-filter">
+        <div class="filter-box FlowupLabels" id='formBody'>
+          <div class="row">
+            <div class="col-md-4">
+              <label class="filter-title">Danh mục quá</label>
+            </div>
+            <div class="col-md-offset-5 col-md-3">
+              <div class='fl_wrap m-0'>
+                <label class='fl_label' for='rf_name'>Danh mục:</label>
+                <select class='product_categories fl_input' id='rf_name' >
+                  <option value='-1'>Tất cả</option>
+                  <%= Redeem::RedeemProductCategory.all.each do |category| %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                  <% end %>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="redem-tab">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+        <!--   <li class=""><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Thông tin chung</a></li>
+        <li class=""><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Năng lực giảng viên</a></li> -->
+          <li class="active"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Đổi điểm lấy quà</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane" id="home">...</div>
+          <div class="tab-pane" id="profile">...</div>
+          <div class="tab-pane active" id="messages">
+            <div class="row">
+              <% @redeem_products.each_with_index do |product, index| %>
+                <div class="col-sm-4 product_item product_<%= product.category %>">
+                  <div class="rt-detail product_infomation">
+                    <div class="rtd-img">
+                      <ul class="owl-carousel" id="product<%= index %>">
+                        <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
+                        <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
+                        <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
+                        <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
+                      </ul>
+                    </div>
+                    <div class="rtd-text">
+                      <span><%= product.brand %></span>
+                      <div class="rtd-center clearfix">
+                        <div class="rtdt-left">
+                          <div class="form-group pos-relative">
+                            <label for="exampleInputEmail1" class="form-title pos-absolute">Màu sắc</label>
+                            <ul>
+                              <% product.available_color.each do |color| %>
+                                <li>
+                                  <label class="check-multi">
+                                    <input type="radio" name="product_color" value='<%= color %>'>
+                                    <span class="checkmark" style="background-color: <%= color %>"></span>
+                                  </label>
+                                </li>
+                              <% end %>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="rtdt-right">
+                          <ul>
+                            <li>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Số lượng</label>
+                                <select name="" class="product_amount form-control">
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                </select>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Kích cỡ</label>
+                                <select name="" class="product_size form-control">
+                                  <% product.available_size.each do |size| %>
+                                    <option value="<%= size %>"><%= size %></option>
+                                  <% end %>
+                                </select>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <p><%= product.description %></p>
+                    </div>
+                    <div class="rtd-btn clearfix">
+                      <div class="rtdb-left">
+                        <p><span>Star</span><br/><%= product.price %></p>
+                      </div>
+                      <div class="rtdb-right">
+                        <input type='hidden' name="redeem_product_id"  value='<%= product.id %>'>
+                        <button class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit' data-toggle="modal" data-target="#redeem_company_select" type="button" >Đổi quà ngay</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="redeem_company_select" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Thông tin đổi quà</h4>
+        </div>
+        <div class="modal-body">
+          <label>Cơ sở nhận quà: </label>
+          <select id="select_redeem_company" >
+            <% Common::ResCompany.all.each do |company| %>
+              <option value='<%= company.id %>'><%= company.name %></option>
+            <% end %>
+          </select>
+          <div>
+            <p>Thời gian nhận quà </p>
+            <input type="text" id="redeem_time" name='expected_time'  value="<%= Time.now.strftime('%m/%d/%Y') %>" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id='redeem_product_confirm' data-dismiss="modal">Đổi quà</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $(function() {
+      $('input[name="expected_time"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 2020,
+        maxYear: 2030,
+      })
+    });
+
+    $('.product_categories').on('change', function(){
+      $('.product_item').hide();
+      category_id = $(this).val();
+      if (category_id == '-1'){
+        $('.product_item').show()
+      }
+      else{
+        $('.product_' + category_id).show();
+      }
+    })
+  })
+
+</script>
