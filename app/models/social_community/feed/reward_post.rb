@@ -14,7 +14,7 @@ class SocialCommunity::Feed::RewardPost < SocialCommunity::Feed::Post
     },
     # Path to move when the notification is opened by the target user
     # This is an optional configuration since activity_notification uses polymorphic_path as default
-    notifiable_path: sc_reward_post_notifiable_path
+    notifiable_path: :sc_reward_post_notifiable_path
 
   def sc_reward_post_notifiable_path
     sc_reward_post_path(id)

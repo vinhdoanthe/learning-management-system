@@ -6,6 +6,6 @@ class SocialCommunity::Feed::Post < ApplicationRecord
   has_many :reactable
 
   def create_notifications
-    notify :users, key: 'reward_post.create'
+    notify :users, key: 'post.create'
   end
 end
