@@ -20,7 +20,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     @active_lesson = @active_session.op_lession
     
     if @active_lesson && @active_lesson.thumbnail.attached?
-      @thumbnail = @active_lesson.thumbnail.service_url
+      @thumbnail = url_for(@active_lesson.thumbnail)
     else
       @thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
     end

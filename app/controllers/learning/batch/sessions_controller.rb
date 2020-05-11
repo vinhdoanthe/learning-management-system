@@ -2,6 +2,7 @@ class Learning::Batch::SessionsController < ApplicationController
   def add_photo_attachment
     session = Learning::Batch::OpSession.where(id: params[:upload_session_id]).first
     result = SocialCommunity::PhotoService.new.add_photo_attachment session, params[:photos], current_user
+    
     if result.present?
       render json: {type: 'danger', message: result}
     else
@@ -15,7 +16,7 @@ class Learning::Batch::SessionsController < ApplicationController
     subject = session.op_subject
 
     if lesson.present? && lesson.thumbnail.attached?
-      thumbnail = lesson.thumbnail.service_url
+      thumbnail = url_for(lesson.thumbnail)
     else
       thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
     end
