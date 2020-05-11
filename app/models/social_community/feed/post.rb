@@ -4,4 +4,8 @@ class SocialCommunity::Feed::Post < ApplicationRecord
 
   has_many :commentable
   has_many :reactable
+
+  def create_notifications
+    notify :users, key: 'post.create'
+  end
 end

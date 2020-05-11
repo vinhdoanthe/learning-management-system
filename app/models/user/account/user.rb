@@ -21,6 +21,8 @@ class User::Account::User < ApplicationRecord
   has_many :users, class_name: 'User::Account::User', foreign_key: 'parent_account_id'
 
   belongs_to :avatar, required: false
+  
+  acts_as_target # User as target for Activity Notification 
 
   enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
 

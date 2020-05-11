@@ -2065,6 +2065,14 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "batch_subject_rel", id: false, comment: "RELATION BETWEEN op_batch AND op_subject", force: :cascade do |t|
+    t.integer "batch_id", null: false
+    t.integer "subject_id", null: false
+    t.index ["batch_id", "subject_id"], name: "batch_subject_rel_batch_id_subject_id_key", unique: true
+    t.index ["batch_id"], name: "batch_subject_rel_batch_id_idx"
+    t.index ["subject_id"], name: "batch_subject_rel_subject_id_idx"
+  end
+
   create_table "broadcast_noti", force: :cascade do |t|
     t.text "content"
     t.text "title"
@@ -2561,6 +2569,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.datetime "date_sale", comment: "First SO Confirmed"
     t.datetime "date_invoice", comment: "First SO Invoiced"
     t.boolean "cocall", comment: "Check Cocall"
+    t.integer "mautic_id", comment: "Mautic id"
+    t.datetime "last_write_time", comment: "Last write Time"
     t.index ["company_id"], name: "crm_lead_company_id_index"
     t.index ["convert_uid"], name: "crm_lead_convert_uid_index"
     t.index ["date_last_stage_update"], name: "crm_lead_date_last_stage_update_index"
@@ -3458,6 +3468,19 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.index ["res_users_id"], name: "gamification_invited_user_ids_rel_res_users_id_idx"
   end
 
+  create_table "gen_batch_table_line", id: :serial, comment: "Generate Batch Table Lines", force: :cascade do |t|
+    t.integer "batch_id", null: false, comment: "Batch"
+    t.integer "faculty_id", comment: "Faculty"
+    t.integer "subject_id", comment: "Subject"
+    t.integer "timing_id", null: false, comment: "Timing"
+    t.integer "classroom_id", comment: "Classroom"
+    t.string "day", null: false, comment: "Day"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
   create_table "gen_time_table_line", id: :serial, comment: "Generate Time Table Lines", force: :cascade do |t|
     t.integer "gen_time_table", null: false, comment: "Time Table"
     t.integer "faculty_id", null: false, comment: "Faculty"
@@ -3469,6 +3492,36 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "generate_student_test_room", id: :serial, comment: "Generate room", force: :cascade do |t|
+    t.string "name", comment: "Room name"
+    t.integer "company_id", comment: "Company"
+    t.string "room_type", null: false, comment: "Room Type"
+    t.date "start_date", null: false, comment: "Start Date"
+    t.date "end_date", null: false, comment: "End Date"
+    t.integer "faculty_id", comment: "Faculty"
+    t.integer "user_id", comment: "Operator"
+    t.integer "course_id", null: false, comment: "Course"
+    t.integer "slot", null: false, comment: "Slot"
+    t.integer "total", null: false, comment: "Total room"
+    t.integer "timing_id", comment: "Timing"
+    t.text "note", comment: "Note"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "generate_student_test_room_day", id: :serial, comment: "day of week", force: :cascade do |t|
+    t.string "name", null: false, comment: "Name"
+    t.string "value", null: false, comment: "Value"
+    t.integer "color", comment: "Color Index"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.index ["name"], name: "generate_student_test_room_day_name_uniq", unique: true
   end
 
   create_table "generate_time_table", id: :serial, comment: "Generate Sessions", force: :cascade do |t|
@@ -5173,6 +5226,19 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.date "date_done", comment: "Completed Date"
     t.string "result", comment: "Result"
     t.datetime "datetime_deadline", comment: "Due Datetime"
+    t.string "student_name", comment: "Student Name"
+    t.integer "student_id", comment: "Student"
+    t.boolean "already_student", comment: "Already Student"
+    t.date "student_dob", comment: "Date of Birth"
+    t.string "test_type", comment: "Test Type"
+    t.date "test_date", comment: "Test Date"
+    t.integer "course_id", comment: "Course"
+    t.integer "room_company_id", comment: "Company"
+    t.integer "room_id", comment: "Room"
+    t.integer "timing_id", comment: "Timing"
+    t.text "note_for_test", comment: "Note For Test"
+    t.integer "student_test_id", comment: "Student test"
+    t.string "gender", comment: "Gender"
     t.index ["date_deadline"], name: "mail_activity_date_deadline_index"
     t.index ["date_done"], name: "mail_activity_date_done_index"
     t.index ["res_id"], name: "mail_activity_res_id_index"
@@ -6242,7 +6308,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.datetime "write_date", comment: "Last Updated on"
     t.integer "company_id", comment: "Company"
     t.string "full_name", comment: "Full name"
-    t.string "note", comment: "Sale Order"
+    t.text "note", comment: "Sale Order"
     t.integer "sale_order_id", comment: "Sale Order"
     t.integer "sale_order_line_id", comment: "Sale Order Line"
     t.string "admission_type", comment: "Type"
@@ -6254,6 +6320,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.boolean "last_subject", comment: "Last Subject Sessions Created?"
     t.boolean "last_subject_sessions_created", comment: "Last Subject Sessions Created?"
     t.integer "claim_id", comment: "Claim"
+    t.integer "start_session_number", comment: "Start session"
   end
 
   create_table "op_admission_register", id: :serial, comment: "Admission Register", force: :cascade do |t|
@@ -6500,7 +6567,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.string "code", null: false, comment: "Code"
     t.string "name", null: false, comment: "Name"
     t.date "start_date", null: false, comment: "Start Date"
-    t.date "end_date", null: false, comment: "End Date"
+    t.date "end_date", comment: "End Date"
     t.integer "course_id", null: false, comment: "Course"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
@@ -6523,6 +6590,19 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.string "note_time", comment: "Giờ học dự kiến"
     t.text "lesson_link", comment: "Link bài tập"
     t.index ["code"], name: "op_batch_unique_batch_code", unique: true
+  end
+
+  create_table "op_batch_gen", id: :serial, comment: "op.batch.gen", force: :cascade do |t|
+    t.integer "batch_id", null: false, comment: "Batch"
+    t.integer "subject_id", comment: "Subject"
+    t.integer "total_session", null: false, comment: "Total session"
+    t.boolean "gen_all", comment: "Gennerate all"
+    t.date "start_date", comment: "Start Date"
+    t.boolean "skip_cancel", comment: "Skip cancel session"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "op_batch_type", id: :serial, comment: "op.batch.type", force: :cascade do |t|
@@ -7170,7 +7250,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.string "language", comment: "Language"
     t.string "select_place_related", comment: "Select Place"
     t.string "reason_cancel_class", comment: "Select Reason Cancel"
-    t.string "reason_cancel", comment: "Lí do"
+    t.text "reason_cancel", comment: "Lí do"
     t.string "select_type", comment: "Select Type"
     t.boolean "last_session", comment: "Cuối khóa"
     t.integer "logistic_line_count", comment: "Logistic Count"
@@ -7180,6 +7260,9 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.float "salary_per_hour", comment: "Lương theo giờ"
     t.boolean "active", comment: "Active"
     t.integer "lession_id", comment: "Lesson"
+    t.integer "offset_session_id", comment: "offset for"
+    t.integer "batch_type_id", comment: "Batch Type"
+    t.string "batch_state", comment: "State"
   end
 
   create_table "op_session_change_faculty", id: :serial, comment: "op.session.change.faculty", force: :cascade do |t|
@@ -7189,6 +7272,17 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.integer "subject_id", null: false, comment: "Subject"
     t.datetime "start_datetime", comment: "Start Time"
     t.datetime "end_datetime", comment: "End Time"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "op_session_holiday", id: :serial, comment: "op.session.holiday", force: :cascade do |t|
+    t.string "name", null: false, comment: "Name"
+    t.integer "day", null: false, comment: "Day of month"
+    t.integer "month", null: false, comment: "Month"
+    t.boolean "active", comment: "Active"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -7227,6 +7321,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.datetime "end_datetime", comment: "End Time"
     t.integer "company_id", comment: "Company"
     t.integer "classroom_id", comment: "Classroom"
+    t.integer "student_id", comment: "Student"
   end
 
   create_table "op_student", id: :serial, comment: "op.student", force: :cascade do |t|
@@ -7307,6 +7402,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.date "birth_date", comment: "Birth Date"
     t.text "lesson_link", comment: "Link bài tập"
     t.string "parent_email", comment: "Parent email"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.index ["roll_number", "course_id", "batch_id", "student_id"], name: "op_student_course_unique_name_roll_number_id", unique: true
     t.index ["roll_number", "course_id", "batch_id"], name: "op_student_course_unique_name_roll_number_course_id", unique: true
     t.index ["student_id", "course_id", "batch_id"], name: "op_student_course_unique_name_roll_number_student_id", unique: true
@@ -8285,6 +8381,12 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
   end
 
+  create_table "redeem_product_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "redeem_products", force: :cascade do |t|
     t.string "name", limit: 255, null: false
     t.decimal "price", precision: 10, scale: 2
@@ -8294,6 +8396,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.string "brand", limit: 255
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "description"
     t.index ["category"], name: "index_redeem_products_on_category"
     t.index ["name"], name: "index_redeem_products_on_name"
   end
@@ -8308,6 +8411,9 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "admin_note"
+    t.integer "company_id"
+    t.datetime "expected_time"
     t.index ["redeem_product_id"], name: "index_redeem_transactions_on_redeem_product_id"
     t.index ["student_id"], name: "index_redeem_transactions_on_student_id"
   end
@@ -9223,6 +9329,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.string "order_mode", comment: "Order Mode"
     t.float "probability", comment: "Probability"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.string "business_model", comment: "Type"
     t.index ["confirmation_date"], name: "sale_order_confirmation_date_index"
     t.index ["create_date"], name: "sale_order_create_date_index"
     t.index ["date_order"], name: "sale_order_date_order_index"
@@ -9278,6 +9385,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.string "line_mode", comment: "Line Mode"
     t.integer "task_id", comment: "Task"
     t.boolean "is_service", comment: "Is a Service"
+    t.string "gender", comment: "Gender"
     t.index ["order_id"], name: "sale_order_line_order_id_index"
     t.index ["task_id"], name: "sale_order_line_task_id_index"
   end
@@ -9505,6 +9613,29 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "student_course_admission", id: :serial, comment: "student.course.admission", force: :cascade do |t|
+    t.integer "student_course_id", null: false, comment: "Student course"
+    t.integer "admission_id", null: false, comment: "Admission"
+    t.integer "batch_id", comment: "Batch"
+    t.integer "student_id", comment: "Student"
+    t.integer "start_session_number", comment: "Start session"
+    t.datetime "date", comment: "Create Date"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.index ["admission_id", "batch_id"], name: "student_course_admission_unique_batch_admission", unique: true
+  end
+
+  create_table "student_gen_test_room_day", id: false, comment: "RELATION BETWEEN generate_student_test_room AND generate_student_test_room_day", force: :cascade do |t|
+    t.integer "day_id", null: false
+    t.integer "gen_room_id", null: false
+    t.index ["day_id", "gen_room_id"], name: "student_gen_test_room_day_day_id_gen_room_id_key", unique: true
+    t.index ["day_id"], name: "student_gen_test_room_day_day_id_idx"
+    t.index ["gen_room_id"], name: "student_gen_test_room_day_gen_room_id_idx"
+  end
+
   create_table "student_hall_ticket", id: :serial, comment: "student.hall.ticket", force: :cascade do |t|
     t.integer "exam_session_id", null: false, comment: "Exam Session"
     t.integer "create_uid", comment: "Created by"
@@ -9588,10 +9719,49 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.integer "partner_id", comment: "Customer"
     t.integer "survey_id", comment: "Survey"
     t.integer "input_id", comment: "Input"
-    t.string "test_type", null: false, comment: "Test Type"
+    t.string "test_type", comment: "Test Type"
     t.datetime "test_time", comment: "Test Time"
     t.text "test_note", comment: "Test note"
     t.integer "sale_channel_id", comment: "Sales Channel"
+    t.integer "room_id", comment: "Room"
+    t.integer "timing_id", comment: "Test Time"
+    t.datetime "start_datetime", comment: "Start Time"
+    t.string "gender", comment: "Gender"
+  end
+
+  create_table "student_test_room", id: :serial, comment: "Student Test Rooms", force: :cascade do |t|
+    t.string "name", null: false, comment: "Name"
+    t.integer "company_id", comment: "Company"
+    t.string "room_type", null: false, comment: "Room Type"
+    t.integer "course_id", comment: "Course"
+    t.integer "slot", null: false, comment: "Slot"
+    t.boolean "available", comment: "available"
+    t.integer "faculty_id", comment: "Faculty"
+    t.integer "user_id", comment: "Assigned to"
+    t.integer "timing_id", null: false, comment: "Test Time"
+    t.datetime "start_datetime", null: false, comment: "Start Time"
+    t.datetime "end_datetime", null: false, comment: "End Time"
+    t.string "state", null: false, comment: "Status"
+    t.text "note", comment: "Note"
+    t.string "day", comment: "Day"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "student_test_timing", id: :serial, comment: "Period", force: :cascade do |t|
+    t.string "name", limit: 16, null: false, comment: "Name"
+    t.string "hour", null: false, comment: "Hours"
+    t.string "minute", null: false, comment: "Minute"
+    t.float "duration", comment: "Duration"
+    t.string "am_pm", null: false, comment: "AM/PM"
+    t.integer "sequence", comment: "Sequence"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "student_test_wizard", id: :serial, comment: "student.test.wizard", force: :cascade do |t|
@@ -9876,6 +10046,14 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "timetable_batch_line_faculty_rel", id: false, comment: "RELATION BETWEEN gen_batch_table_line AND op_faculty", force: :cascade do |t|
+    t.integer "timetable_batch_line_id", null: false
+    t.integer "faculty_id", null: false
+    t.index ["faculty_id"], name: "timetable_batch_line_faculty_rel_faculty_id_idx"
+    t.index ["timetable_batch_line_id", "faculty_id"], name: "timetable_batch_line_faculty__timetable_batch_line_id_facul_key", unique: true
+    t.index ["timetable_batch_line_id"], name: "timetable_batch_line_faculty_rel_timetable_batch_line_id_idx"
   end
 
   create_table "timetable_line_faculty_rel", id: false, comment: "RELATION BETWEEN gen_time_table_line AND op_faculty", force: :cascade do |t|
@@ -10768,6 +10946,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "base_update_translations", "res_users", column: "write_uid", name: "base_update_translations_write_uid_fkey", on_delete: :nullify
   add_foreign_key "batch_reject_wizard", "res_users", column: "create_uid", name: "batch_reject_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "batch_reject_wizard", "res_users", column: "write_uid", name: "batch_reject_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "batch_subject_rel", "op_batch", column: "batch_id", name: "batch_subject_rel_batch_id_fkey", on_delete: :cascade
+  add_foreign_key "batch_subject_rel", "op_subject", column: "subject_id", name: "batch_subject_rel_subject_id_fkey", on_delete: :cascade
   add_foreign_key "bt_asset", "asset_table", column: "asset_table", name: "bt_asset_asset_table_fkey", on_delete: :nullify
   add_foreign_key "bt_asset", "bt_asset_category", column: "categ_id", name: "bt_asset_categ_id_fkey", on_delete: :nullify
   add_foreign_key "bt_asset", "bt_asset_category", column: "category_id", name: "bt_asset_category_id_fkey", on_delete: :nullify
@@ -11110,6 +11290,13 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "gamification_goal_wizard", "res_users", column: "write_uid", name: "gamification_goal_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "gamification_invited_user_ids_rel", "gamification_challenge", name: "gamification_invited_user_ids_re_gamification_challenge_id_fkey", on_delete: :cascade
   add_foreign_key "gamification_invited_user_ids_rel", "res_users", column: "res_users_id", name: "gamification_invited_user_ids_rel_res_users_id_fkey", on_delete: :cascade
+  add_foreign_key "gen_batch_table_line", "op_batch", column: "batch_id", name: "gen_batch_table_line_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "gen_batch_table_line", "op_classroom", column: "classroom_id", name: "gen_batch_table_line_classroom_id_fkey", on_delete: :nullify
+  add_foreign_key "gen_batch_table_line", "op_faculty", column: "faculty_id", name: "gen_batch_table_line_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "gen_batch_table_line", "op_subject", column: "subject_id", name: "gen_batch_table_line_subject_id_fkey", on_delete: :nullify
+  add_foreign_key "gen_batch_table_line", "op_timing", column: "timing_id", name: "gen_batch_table_line_timing_id_fkey", on_delete: :nullify
+  add_foreign_key "gen_batch_table_line", "res_users", column: "create_uid", name: "gen_batch_table_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "gen_batch_table_line", "res_users", column: "write_uid", name: "gen_batch_table_line_write_uid_fkey", on_delete: :nullify
   add_foreign_key "gen_time_table_line", "generate_time_table", column: "gen_time_table", name: "gen_time_table_line_gen_time_table_fkey", on_delete: :nullify
   add_foreign_key "gen_time_table_line", "op_classroom", column: "classroom_id", name: "gen_time_table_line_classroom_id_fkey", on_delete: :nullify
   add_foreign_key "gen_time_table_line", "op_faculty", column: "faculty_id", name: "gen_time_table_line_faculty_id_fkey", on_delete: :nullify
@@ -11117,6 +11304,15 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "gen_time_table_line", "op_timing", column: "timing_id", name: "gen_time_table_line_timing_id_fkey", on_delete: :nullify
   add_foreign_key "gen_time_table_line", "res_users", column: "create_uid", name: "gen_time_table_line_create_uid_fkey", on_delete: :nullify
   add_foreign_key "gen_time_table_line", "res_users", column: "write_uid", name: "gen_time_table_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "generate_student_test_room", "op_course", column: "course_id", name: "generate_student_test_room_course_id_fkey", on_delete: :nullify
+  add_foreign_key "generate_student_test_room", "op_faculty", column: "faculty_id", name: "generate_student_test_room_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "generate_student_test_room", "res_company", column: "company_id", name: "generate_student_test_room_company_id_fkey", on_delete: :nullify
+  add_foreign_key "generate_student_test_room", "res_users", column: "create_uid", name: "generate_student_test_room_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "generate_student_test_room", "res_users", column: "user_id", name: "generate_student_test_room_user_id_fkey", on_delete: :nullify
+  add_foreign_key "generate_student_test_room", "res_users", column: "write_uid", name: "generate_student_test_room_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "generate_student_test_room", "student_test_timing", column: "timing_id", name: "generate_student_test_room_timing_id_fkey", on_delete: :nullify
+  add_foreign_key "generate_student_test_room_day", "res_users", column: "create_uid", name: "generate_student_test_room_day_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "generate_student_test_room_day", "res_users", column: "write_uid", name: "generate_student_test_room_day_write_uid_fkey", on_delete: :nullify
   add_foreign_key "generate_time_table", "op_batch", column: "batch_id", name: "generate_time_table_batch_id_fkey", on_delete: :nullify
   add_foreign_key "generate_time_table", "op_course", column: "course_id", name: "generate_time_table_course_id_fkey", on_delete: :nullify
   add_foreign_key "generate_time_table", "op_subject", column: "subject_id", name: "generate_time_table_subject_id_fkey", on_delete: :nullify
@@ -11538,9 +11734,15 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "mail_activity", "mail_activity_type", column: "activity_type_id", name: "mail_activity_activity_type_id_fkey", on_delete: :nullify
   add_foreign_key "mail_activity", "mail_activity_type", column: "previous_activity_type_id", name: "mail_activity_previous_activity_type_id_fkey", on_delete: :nullify
   add_foreign_key "mail_activity", "mail_activity_type", column: "recommended_activity_type_id", name: "mail_activity_recommended_activity_type_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_activity", "op_course", column: "course_id", name: "mail_activity_course_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_activity", "op_student", column: "student_id", name: "mail_activity_student_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_activity", "res_company", column: "room_company_id", name: "mail_activity_room_company_id_fkey", on_delete: :nullify
   add_foreign_key "mail_activity", "res_users", column: "create_uid", name: "mail_activity_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_activity", "res_users", column: "user_id", name: "mail_activity_user_id_fkey", on_delete: :nullify
   add_foreign_key "mail_activity", "res_users", column: "write_uid", name: "mail_activity_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_activity", "student_test", name: "mail_activity_student_test_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_activity", "student_test_room", column: "room_id", name: "mail_activity_room_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_activity", "student_test_timing", column: "timing_id", name: "mail_activity_timing_id_fkey", on_delete: :nullify
   add_foreign_key "mail_activity_rel", "mail_activity_type", column: "activity_id", name: "mail_activity_rel_activity_id_fkey", on_delete: :cascade
   add_foreign_key "mail_activity_rel", "mail_activity_type", column: "recommended_id", name: "mail_activity_rel_recommended_id_fkey", on_delete: :cascade
   add_foreign_key "mail_activity_type", "ir_model", column: "res_model_id", name: "mail_activity_type_res_model_id_fkey", on_delete: :nullify
@@ -11877,6 +12079,10 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "op_batch", "res_company", column: "company_id", name: "op_batch_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "res_users", column: "create_uid", name: "op_batch_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "res_users", column: "write_uid", name: "op_batch_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_gen", "op_batch", column: "batch_id", name: "op_batch_gen_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_gen", "op_subject", column: "subject_id", name: "op_batch_gen_subject_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_gen", "res_users", column: "create_uid", name: "op_batch_gen_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_gen", "res_users", column: "write_uid", name: "op_batch_gen_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch_type", "res_users", column: "create_uid", name: "op_batch_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch_type", "res_users", column: "write_uid", name: "op_batch_type_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_board_affiliation", "res_company", column: "company_id", name: "op_board_affiliation_company_id_fkey", on_delete: :nullify
@@ -12061,12 +12267,14 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "op_room_distribution_op_student_rel", "op_student", name: "op_room_distribution_op_student_rel_op_student_id_fkey", on_delete: :cascade
   add_foreign_key "op_session", "course_categ", column: "course_categ", name: "op_session_course_categ_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_batch", column: "batch_id", name: "op_session_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session", "op_batch_type", column: "batch_type_id", name: "op_session_batch_type_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_classroom", column: "classroom_id", name: "op_session_classroom_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_course", column: "course_id", name: "op_session_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_faculty", column: "assessor", name: "op_session_assessor_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_faculty", column: "faculty_id", name: "op_session_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_faculty", column: "observe_faculty", name: "op_session_observe_faculty_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_lession", column: "lession_id", name: "op_session_lession_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session", "op_session", column: "offset_session_id", name: "op_session_offset_session_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_student_course", column: "student_course_id", name: "op_session_student_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_subject", column: "subject_id", name: "op_session_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_timing", column: "timing_id", name: "op_session_timing_id_fkey", on_delete: :nullify
@@ -12080,6 +12288,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "op_session_change_faculty", "op_subject", column: "subject_id", name: "op_session_change_faculty_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_change_faculty", "res_users", column: "create_uid", name: "op_session_change_faculty_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_session_change_faculty", "res_users", column: "write_uid", name: "op_session_change_faculty_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_session_holiday", "res_users", column: "create_uid", name: "op_session_holiday_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_session_holiday", "res_users", column: "write_uid", name: "op_session_holiday_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_session_offset_student", "op_session", column: "session_id", name: "op_session_offset_student_session_id_fkey", on_delete: :cascade
   add_foreign_key "op_session_offset_student", "op_student", column: "student_id", name: "op_session_offset_student_student_id_fkey", on_delete: :cascade
   add_foreign_key "op_session_res_users_rel", "op_session", name: "op_session_res_users_rel_op_session_id_fkey", on_delete: :cascade
@@ -12087,6 +12297,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "op_session_student", "op_batch", column: "batch_id", name: "op_session_student_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "op_classroom", column: "classroom_id", name: "op_session_student_classroom_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "op_session", column: "session_id", name: "op_session_student_session_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_student", "op_student", column: "student_id", name: "op_session_student_student_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "op_student_course", column: "student_course_id", name: "op_session_student_student_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "res_company", column: "company_id", name: "op_session_student_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "res_users", column: "create_uid", name: "op_session_student_create_uid_fkey", on_delete: :nullify
@@ -12623,6 +12834,14 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "sparse_fields_test", "res_users", column: "write_uid", name: "sparse_fields_test_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_attendance", "res_users", column: "create_uid", name: "student_attendance_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_attendance", "res_users", column: "write_uid", name: "student_attendance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_course_admission", "op_admission", column: "admission_id", name: "student_course_admission_admission_id_fkey", on_delete: :nullify
+  add_foreign_key "student_course_admission", "op_batch", column: "batch_id", name: "student_course_admission_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "student_course_admission", "op_student", column: "student_id", name: "student_course_admission_student_id_fkey", on_delete: :nullify
+  add_foreign_key "student_course_admission", "op_student_course", column: "student_course_id", name: "student_course_admission_student_course_id_fkey", on_delete: :nullify
+  add_foreign_key "student_course_admission", "res_users", column: "create_uid", name: "student_course_admission_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_course_admission", "res_users", column: "write_uid", name: "student_course_admission_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_gen_test_room_day", "generate_student_test_room", column: "day_id", name: "student_gen_test_room_day_day_id_fkey", on_delete: :cascade
+  add_foreign_key "student_gen_test_room_day", "generate_student_test_room_day", column: "gen_room_id", name: "student_gen_test_room_day_gen_room_id_fkey", on_delete: :cascade
   add_foreign_key "student_hall_ticket", "op_exam_session", column: "exam_session_id", name: "student_hall_ticket_exam_session_id_fkey", on_delete: :nullify
   add_foreign_key "student_hall_ticket", "res_users", column: "create_uid", name: "student_hall_ticket_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_hall_ticket", "res_users", column: "write_uid", name: "student_hall_ticket_write_uid_fkey", on_delete: :nullify
@@ -12655,8 +12874,19 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "student_test", "res_users", column: "write_uid", name: "student_test_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test", "sale_order", column: "order_id", name: "student_test_order_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "sale_order_line", column: "order_line_id", name: "student_test_order_line_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test", "student_test_room", column: "room_id", name: "student_test_room_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test", "student_test_timing", column: "timing_id", name: "student_test_timing_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "survey_survey", column: "survey_id", name: "student_test_survey_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "survey_user_input", column: "input_id", name: "student_test_input_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test_room", "op_course", column: "course_id", name: "student_test_room_course_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test_room", "op_faculty", column: "faculty_id", name: "student_test_room_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test_room", "res_company", column: "company_id", name: "student_test_room_company_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test_room", "res_users", column: "create_uid", name: "student_test_room_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_test_room", "res_users", column: "user_id", name: "student_test_room_user_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test_room", "res_users", column: "write_uid", name: "student_test_room_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_test_room", "student_test_timing", column: "timing_id", name: "student_test_room_timing_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test_timing", "res_users", column: "create_uid", name: "student_test_timing_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_test_timing", "res_users", column: "write_uid", name: "student_test_timing_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test_wizard", "res_users", column: "create_uid", name: "student_test_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test_wizard", "res_users", column: "write_uid", name: "student_test_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "subject_compulsory_rel", "op_subject", column: "subject_id", name: "subject_compulsory_rel_subject_id_fkey", on_delete: :cascade
@@ -12731,6 +12961,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "time_table_report", "op_faculty", column: "faculty_id", name: "time_table_report_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "time_table_report", "res_users", column: "create_uid", name: "time_table_report_create_uid_fkey", on_delete: :nullify
   add_foreign_key "time_table_report", "res_users", column: "write_uid", name: "time_table_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "timetable_batch_line_faculty_rel", "gen_batch_table_line", column: "timetable_batch_line_id", name: "timetable_batch_line_faculty_rel_timetable_batch_line_id_fkey", on_delete: :cascade
+  add_foreign_key "timetable_batch_line_faculty_rel", "op_faculty", column: "faculty_id", name: "timetable_batch_line_faculty_rel_faculty_id_fkey", on_delete: :cascade
   add_foreign_key "timetable_line_faculty_rel", "gen_time_table_line", column: "timetable_line_id", name: "timetable_line_faculty_rel_timetable_line_id_fkey", on_delete: :cascade
   add_foreign_key "timetable_line_faculty_rel", "op_faculty", column: "faculty_id", name: "timetable_line_faculty_rel_faculty_id_fkey", on_delete: :cascade
   add_foreign_key "user_answers", "op_faculty", column: "faculty_id"
