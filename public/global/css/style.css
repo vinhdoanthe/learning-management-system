@@ -10555,7 +10555,7 @@ thead .fc-widget-header {
 .morphsearch-submit {
   -webkit-transform: translate3d(-30px, -50%, 0) scale3d(0, 0, 1);
   background-size: 100%;
-  background: transparent url(http://themes-lab.com/make/admin/assets/global/images/magnifier.svg) no-repeat center center;
+  background: transparent url(https://themes-lab.com/make/admin/assets/global/images/magnifier.svg) no-repeat center center;
   border: none;
   height: 80px;
   opacity: 0;
