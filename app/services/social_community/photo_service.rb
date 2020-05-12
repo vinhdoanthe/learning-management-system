@@ -11,6 +11,8 @@ class SocialCommunity::PhotoService
       list_photos.each do |photo|
         create_new_photo session.id, album.id, photo, user, post
       end
+      
+      post.create_notifications
     end
 
     errors
@@ -22,16 +24,17 @@ class SocialCommunity::PhotoService
   def create_new_album batch_id
     album = SocialCommunity::Album.new
     album.batch_id = batch_id
-    album.save
+    album.save!
     album
   end
 
   def create_new_photo session_id, album_id, image, user, post
     photo = SocialCommunity::Photo.new
     photo.album_id = album_id
+    photo.session_id = session_id
     photo.created_by = user.id
     photo.sc_post_id = post.id
-    photo.save
+    photo.save!
     photo.image.attach(image)
     photo
   end
@@ -39,7 +42,7 @@ class SocialCommunity::PhotoService
   def create_photo_post user
     post = SocialCommunity::Feed::PhotoPost.new
     post.posted_by = user.id
-    post.save
+    post.save!
     post
   end
 end
