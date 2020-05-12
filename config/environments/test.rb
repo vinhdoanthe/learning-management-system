@@ -36,7 +36,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # ActionMailer
-  config.action_mailer.default_url_options = { :host => 'alphalms.teky.vn' }
+  config.action_mailer.default_url_options = { :host => 'stagging.lms.teky.vn' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail

@@ -143,6 +143,7 @@ GEM
     caxlsx_rails (0.6.2)
       actionpack (>= 3.1)
       caxlsx (>= 3.0)
+    chartkick (3.3.1)
     childprocess (3.0.0)
     chronic (0.10.2)
     coderay (1.1.2)
@@ -431,6 +432,7 @@ DEPENDENCIES
   capistrano-rbenv (~> 2.1, >= 2.1.4)
   capybara (>= 2.15)
   caxlsx_rails
+  chartkick
   ckeditor!
   composite_primary_keys (~> 12.0)
   config
