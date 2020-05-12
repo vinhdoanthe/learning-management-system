@@ -26,6 +26,19 @@
   <% end %>
 </td>
 <td align="right">
+  <% if !attendance_line.nil? and attendance_line.present %>
+    <span data-toggle="modal" data-target="#session_student_feedback"> 
+      <a class='student_feedback_modal' data-session='<%= session.id %>' data-toggle="tooltip" title='Đánh giá buổi học'>
+        <span>
+          <%= image_tag('global/images/tekyheart.png', style: 'width: 20px') %>
+        </span>
+      </a>
+    </span>
+  <% else %>
+    <span data-toggle="tooltip" title="Đánh giá buổi học" style="opacity: 0.5">
+      <%= image_tag('global/images/tekyheart.png', style: 'width: 20px') %>
+    </span>
+  <% end %>
   <% if has_homework? current_user, session %>
     <a class='' href="/learning/view_question?session_id=<%= session.id %>" data-toggle="tooltip" data-session="<%= session.id %>" title='Làm bài tập về nhà'>
       <span>
