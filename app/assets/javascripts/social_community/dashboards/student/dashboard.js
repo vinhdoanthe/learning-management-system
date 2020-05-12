@@ -6,7 +6,8 @@
 $(document).ready(function(){
 	get_feed_content();
 	get_noti_content();
-	get_new_user()
+	get_new_user();
+  get_attendance_report();
 })
 
 // Catch events
@@ -38,4 +39,12 @@ function get_new_user(){
 		url: '/social_community/new_user',
 		dataType: 'script'
 	})
+}
+
+function get_attendance_report() {
+  $.ajax({
+    method: 'GET',
+    url: '/user/open_educat/op_students/attendance_report',
+    dataType: 'script'
+  })
 }

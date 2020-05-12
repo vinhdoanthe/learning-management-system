@@ -67,6 +67,10 @@ module Learning
       def self.get_sessions(batch_id, student_id, subject_ids = [], interval = {})
         op_student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch_id, student_id: student_id).last
         op_student_course_id = op_student_course.nil? ? nil : op_student_course.id
+        
+        if subject_ids.blank?
+          subject_ids = op_student_course.op_subjects.pluck(:id).uniq.compact
+        end
 
         all_sessions = []
         if interval[:start].present? and interval[:end].present? 

@@ -1,0 +1,20 @@
+<div class="panel-content">
+  <div class="bnd-title">
+    <label class="filter-title" style = "text-transform:uppercase;">Báo cáo buổi học</label>
+  </div>
+  <div class="owl-carousel owl-theme">
+    <% report_objects.each do |report_object| %>
+      <div class='item'>
+        <%= pie_chart report_object[:count] %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<script>
+  $('.owl-carousel').owlCarousel({
+    items: 1,
+    loop:true,
+    margin:10,
+    nav:true
+  })
+</script>
