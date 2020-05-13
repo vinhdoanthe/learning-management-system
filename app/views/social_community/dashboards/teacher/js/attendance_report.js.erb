@@ -1,0 +1,30 @@
+$(document).ready(function(){
+  var chartDiv = $("#barChartAttendance");
+  var myChart = new Chart(chartDiv, {
+    type: 'pie',
+    data: {
+      labels: ["Hợp lệ", "Không hợp lệ", "Không xác định"],
+      datasets: [
+        {
+          data:<%= report.values %>,
+          backgroundColor: [
+            "#4BC0C0",
+            "#FFCE56",
+            "#E7E9ED"
+          ]
+        }]
+    },
+    options: {
+      legend: {
+        position: 'bottom',
+        align: 'start',
+        labels: {
+          boxWidth: 20,
+          padding: 20
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+    }
+  });
+})

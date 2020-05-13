@@ -66,4 +66,45 @@ class User::OpenEducat::OpTeachersService
     
     schedule_hash
   end
+
+  def self.checkin_report teacher
+    sessions = teacher.op_sessions.where(start_datetime: Time.now.all_month, state: Learning::Constant::Batch::Session::STATE_DONE)
+    report = {
+      checkin: 0,
+      none: 0,
+      late: 0
+    }
+    sessions.each do |session|
+      if session.check_in_state == 'good'
+        report[:checkin] += 1
+      elsif session.check_in_state == 'late'
+        report[:late] += 1
+      else
+        report[:none] += 1
+      end
+    end
+
+    report
+  end
+
+  def self.attendance_report teacher
+    sessions = teacher.op_sessions.where(start_datetime: Time.now.all_month, state: Learning::Constant::Batch::Session::STATE_DONE)
+    report = {
+      match: 0,
+      unmatch: 0,
+      undefined: 0
+    }
+    sessions.each do |session|
+      if session.attend_match == 'true'
+        report[:match] += 1
+      elsif session.attend_match == 'false'
+        report[:unmatch] += 1
+      else
+        report[:undefined] += 1
+      end
+    end
+
+    report
+
+  end
 end

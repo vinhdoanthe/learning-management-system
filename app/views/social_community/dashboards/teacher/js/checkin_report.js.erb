@@ -1,0 +1,33 @@
+// Variables: report_objects
+$('#checkin_report').html("<%= escape_javascript(render :partial => 'social_community/dashboards/teacher/checkin_report') %>")
+
+$(document).ready(function(){
+  var chartDiv = $("#barChartCheckin");
+  var myChart = new Chart(chartDiv, {
+    type: 'pie',
+    data: {
+      labels: ["Checkin đúng giờ", "Quên checkin", "Checkin muộn"],
+      datasets: [
+        {
+          data:<%= reports.values %>,
+          backgroundColor: [
+            "#4BC0C0",
+            "#E7E9ED",
+            "#FFCE56"
+          ]
+        }]
+    },
+    options: {
+      legend: {
+        position: 'bottom',
+        align: 'start',
+        labels: {
+          boxWidth: 20,
+          padding: 20
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+    }
+  });
+})
