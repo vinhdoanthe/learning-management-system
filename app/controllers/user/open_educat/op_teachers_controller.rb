@@ -75,6 +75,24 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     render json: {schedules: schedules}
   end
 
+  def checkin_report
+    result = User::OpenEducat::OpTeachersService.checkin_report @teacher
+
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/dashboards/teacher/js/checkin_report', locals: { reports: result } }
+    end
+  end
+
+  def attendance_report
+    report = User::OpenEducat::OpTeachersService.attendance_report @teacher
+    
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/dashboards/teacher/js/attendance_report', locals: { report: report } }
+    end
+  end
+
   private
 
   def find_teacher

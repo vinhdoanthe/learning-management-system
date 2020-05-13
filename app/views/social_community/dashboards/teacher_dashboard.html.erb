@@ -1,3 +1,32 @@
-<html>
-
-</html>
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'social_community/dashboards/teacher/dashboard.js' %>
+<% end %>
+<div class="page-content page-thin">  <div class="row">
+    <div class="col-md-7 ">
+      <div class="panel">
+        <div class="panel-content" id='albums_with_comments'>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="panel" id='coming_soon_session'>
+      </div>
+      <div class="panel" id='dashboard_noti'>
+      </div>
+      <div class='panel' id ='checkin_report'>
+      </div>
+      <div class='panel' id ='attendance_report'>
+        <div class="panel-content">
+          <div class="bnd-title">
+            <label class="filter-title" style = "text-transform:uppercase;">Báo cáo Điểm danh</label>
+          </div>
+          <div class="">
+            <canvas id="barChartAttendance" width="400" height="400"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="panel" id='dashboard_leader'>
+      </div>
+    </div>
+  </div>
+</div>

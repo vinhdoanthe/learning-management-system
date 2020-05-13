@@ -5,5 +5,9 @@ namespace :user do
     post 'teacher_attendance' => 'op_teachers#teacher_attendance'
     post 'teaching_schedule_content' => 'op_teachers#teaching_schedule_content'
     get 'teacher_schedule' => 'op_teachers#teaching_schedule'
+    namespace :op_teachers do
+    get 'checkin_report', action: 'checkin_report', as: 'checkin_report'
+    get 'attendance_report', action: 'attendance_report', as: 'attendance_report'
+    end
   end
 end

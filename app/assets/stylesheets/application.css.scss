@@ -200,3 +200,31 @@ ul.header-menu.nav.navbar-nav li span {
 .active_subject {
   background: #5DC2A7 !important;
 }
+
+.clockdiv{
+font-family: sans-serif;
+    color: #000;
+    display: inline-block;
+    font-family: 'Montserrat-Bold';
+    text-align: center;
+    font-size: 14px;
+}
+
+.clockdiv > div{
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.clockdiv div > span{
+	padding: 8px;
+    border-radius: 3px;
+	background-image: -webkit-linear-gradient(top left, #5DC2A7, #FCF055);
+	background-image: -o-linear-gradient(top left, #5DC2A7, #FCF055);
+	background-image: linear-gradient(to bottom right, #5DC2A7, #FCF055);
+    display: inline-block;
+}
+
+.smalltext{
+	padding-top: 5px;
+	font-size: 16px;
+}

@@ -63,4 +63,14 @@ class SocialCommunity::DashboardsController < ApplicationController
   def teacher_dashboard
 
   end
+
+  def teacher_coming_soon_sessions
+    teacher = current_user.op_faculty
+    coming_soon_sessions = teacher.op_sessions.where(start_datetime: Time.now..(Time.now + 30.days)).order(start_datetime: :ASC).limit(3)
+
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/dashboards/teacher/js/comming_soon', locals: { coming_soon_sessions: coming_soon_sessions } }
+    end
+  end
 end
