@@ -489,4 +489,54 @@ namespace :export do
     p.serialize(file_name)
     puts "Done!"
   end
+
+  desc 'export wrong question'
+  task export_wrong_question: :environment do
+   export_questions = []
+   # No question_type
+   no_question_type = Learning::Material::Question.where(question_type: ['', nil]).pluck(:id)
+   # No question
+   no_question_content = Learning::Material::Question.where(question: ['', nil]).pluck(:id)
+   # Question don't have question_choices
+   all_question = Learning::Material::Question.where.not(question_type: 'text').pluck(:id)
+   all_question_choice = Learning::Material::QuestionChoice.pluck(:question_id).uniq
+   no_question_choice = all_question - all_question_choice
+   # No choice_content
+   no_choice_content = Learning::Material::QuestionChoice.where(choice_content: ['', nil]).pluck(:question_id)
+
+   export_questions = no_question_type + no_question_content + no_question_choice + no_choice_content
+   export_questions.uniq
+
+   questions = Learning::Material::Question.where(id: export_questions)
+   export_rows = []
+
+   questions.each_with_index do |question, index|
+     export_row = []
+     lesson = question.op_lession
+     next if lesson.blank?
+     export_row << index + 1
+     export_row << question.id
+     export_row << lesson.id
+     export_row << lesson.name
+     export_row << (lesson.op_subject ? lesson.op_subject.name : 'Không có subject')
+     export_row << lesson.op_course_name ? lesson.op_course_name : ""
+
+     export_rows << export_row
+   end
+
+    puts "Starting export"
+    p = Axlsx::Package.new
+    wb = p.workbook
+    wb.add_worksheet(:name => "Questions") do |sheet|
+      sheet.add_row ["STT", "Question_id", "Lesson_id", "Lesson Name","Subject Name", "Course Name"]
+      export_rows.each do |export_row|
+        sheet.add_row export_row
+      end
+    end
+    current_time_str = Time.now.strftime('%Y-%m-%d_%H-%M-%S')
+    file_name = "wrong_questions__#{current_time_str}.xlsx"
+    p.serialize(file_name)
+    puts "Done!"
+  end
+
 end

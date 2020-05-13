@@ -3,18 +3,20 @@
     <label class="filter-title" style = "text-transform:uppercase;">Báo cáo buổi học</label>
   </div>
   <div class="owl-carousel owl-theme">
-    <% report_objects.each do |report_object| %>
+    <% report_objects.each_with_index do |report_object, index| %>
       <div class='item'>
-        <%= pie_chart report_object[:count] %>
-      </div>
+      <canvas id="barChart<%= index %>" width="400" height="400"></canvas>
+        </div>
     <% end %>
   </div>
 </div>
 <script>
+$(document).ready(function(){
   $('.owl-carousel').owlCarousel({
     items: 1,
-    loop:true,
     margin:10,
-    nav:true
+    nav:true,
+    autoplay:true
   })
+})
 </script>
