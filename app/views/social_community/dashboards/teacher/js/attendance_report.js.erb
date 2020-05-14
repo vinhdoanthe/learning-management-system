@@ -21,7 +21,8 @@ $(document).ready(function(){
         align: 'start',
         labels: {
           boxWidth: 20,
-          padding: 20
+          padding: 20,
+          fontFamily: 'Montserrat-Medium'
         }
       },
       responsive: true,
@@ -30,5 +31,5 @@ $(document).ready(function(){
   });
 })
 <% else %>
-    $('.attendance_report_content').html('<h2>Chưa hoàn thành buổi học nào trong tháng</h2>')
+    $('.no-attendance-data').show()
 <% end %>
