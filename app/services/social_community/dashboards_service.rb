@@ -1,5 +1,4 @@
 class SocialCommunity::DashboardsService
-
   def self.get_student_albums_with_comments student_id
     albums_with_comments = []
     batch_ids = User::OpenEducat::OpStudentsService.get_batch_ids student_id

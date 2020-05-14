@@ -89,6 +89,8 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
+    autoprefixer-rails (9.7.6)
+      execjs
     aws-eventstream (1.0.3)
     aws-partitions (1.285.0)
     aws-sdk-core (3.91.1)
@@ -109,6 +111,11 @@ GEM
     bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
+    bootstrap-sass (3.4.1)
+      autoprefixer-rails (>= 5.2.1)
+      sassc (>= 2.0.0)
+    bootstrap-will_paginate (1.0.0)
+      will_paginate
     bson (4.8.2)
     builder (3.2.4)
     byebug (11.1.1)
@@ -196,6 +203,7 @@ GEM
     enumerize (2.3.1)
       activesupport (>= 3.2)
     erubi (1.9.0)
+    execjs (2.7.0)
     ffi (1.12.2)
     ffi (1.12.2-x64-mingw32)
     globalid (0.4.2)
@@ -410,6 +418,7 @@ GEM
     websocket-extensions (0.1.4)
     whenever (1.0.0)
       chronic (>= 0.6.3)
+    will_paginate (3.3.0)
     xmlrpc (0.3.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -425,6 +434,8 @@ DEPENDENCIES
   aws-sdk-s3
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
+  bootstrap-sass
+  bootstrap-will_paginate
   byebug
   capistrano (~> 3.11)
   capistrano-passenger (~> 0.2.0)
@@ -464,6 +475,7 @@ DEPENDENCIES
   webdrivers
   webpacker (~> 4.0)
   whenever
+  will_paginate
   xmlrpc
 
 RUBY VERSION

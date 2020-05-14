@@ -1,0 +1,14 @@
+// Variables: feeds,next_time_offset
+  $('#homeFeeds').append('<%= j render :partial => 'social_community/dashboards/shared/feeds', :locals => {feeds: @feeds, next_time_offset: @next_time_offset} %>');
+<%# <% if @posts.next_page %1> %>
+<%#     $('.pagination').replaceWith('<%= j will_paginate @posts %1>'); %>
+<%# <% else %1> %>
+<%#     $(window).off('scroll'); %>
+<%# $('.pagination').remove(); %>
+<%# <% end %1> %>
+
+  // Load more posts if page is not scrollable
+  <%# more_posts_url = $('.pagination .next_page a').attr('href'); %>
+<%# if (more_posts_url && ($('#homeFeeds').height() < $(window).height())) { %>
+  <%# getNextPosts(); %>
+<%# } %>

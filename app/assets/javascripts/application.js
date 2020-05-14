@@ -10,7 +10,7 @@
 //= require jquery.lazyload
 //= require chartkick
 //= require Chart.bundle
-//
+//= require bootstrap
 //
 $(document).ready(function () {
 	setTimeout(function () {

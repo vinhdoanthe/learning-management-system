@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_07_104848) do
+ActiveRecord::Schema.define(version: 2020_05_13_085951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -7263,6 +7263,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.integer "offset_session_id", comment: "offset for"
     t.integer "batch_type_id", comment: "Batch Type"
     t.string "batch_state", comment: "State"
+    t.integer "request_offset_id", comment: "Offset request"
   end
 
   create_table "op_session_change_faculty", id: :serial, comment: "op.session.change.faculty", force: :cascade do |t|
@@ -7289,12 +7290,54 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "op_session_offset", id: :serial, comment: "op.session.offset", force: :cascade do |t|
+    t.string "name", null: false, comment: "Name"
+    t.integer "batch_id", null: false, comment: "Batch"
+    t.string "state", comment: "State"
+    t.date "start_date", null: false, comment: "Start Date"
+    t.integer "subject_id", null: false, comment: "Subject"
+    t.integer "total_session", null: false, comment: "Total session"
+    t.integer "timing_id", null: false, comment: "Timing"
+    t.integer "faculty_id", null: false, comment: "Faculty"
+    t.integer "classroom_id", comment: "Classroom"
+    t.text "note", comment: "Note"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.datetime "message_last_post", comment: "Last Message Date"
+  end
+
+  create_table "op_session_offset_day", id: false, comment: "RELATION BETWEEN op_session_offset AND generate_student_test_room_day", force: :cascade do |t|
+    t.integer "day_id", null: false
+    t.integer "session_offset_id", null: false
+    t.index ["day_id", "session_offset_id"], name: "op_session_offset_day_day_id_session_offset_id_key", unique: true
+    t.index ["day_id"], name: "op_session_offset_day_day_id_idx"
+    t.index ["session_offset_id"], name: "op_session_offset_day_session_offset_id_idx"
+  end
+
   create_table "op_session_offset_student", id: false, comment: "RELATION BETWEEN op_session AND op_student", force: :cascade do |t|
     t.integer "session_id", null: false
     t.integer "student_id", null: false
     t.index ["session_id", "student_id"], name: "op_session_offset_student_session_id_student_id_key", unique: true
     t.index ["session_id"], name: "op_session_offset_student_session_id_idx"
     t.index ["student_id"], name: "op_session_offset_student_student_id_idx"
+  end
+
+  create_table "op_session_offset_student_request", id: false, comment: "RELATION BETWEEN op_session_offset AND op_student", force: :cascade do |t|
+    t.integer "session_id", null: false
+    t.integer "student_id", null: false
+    t.index ["session_id", "student_id"], name: "op_session_offset_student_request_session_id_student_id_key", unique: true
+    t.index ["session_id"], name: "op_session_offset_student_request_session_id_idx"
+    t.index ["student_id"], name: "op_session_offset_student_request_student_id_idx"
+  end
+
+  create_table "op_session_request_offset_day", id: false, comment: "RELATION BETWEEN op_session_offset AND generate_student_test_room_day", force: :cascade do |t|
+    t.integer "day_id", null: false
+    t.integer "request_offset_id", null: false
+    t.index ["day_id", "request_offset_id"], name: "op_session_request_offset_day_day_id_request_offset_id_key", unique: true
+    t.index ["day_id"], name: "op_session_request_offset_day_day_id_idx"
+    t.index ["request_offset_id"], name: "op_session_request_offset_day_request_offset_id_idx"
   end
 
   create_table "op_session_res_users_rel", id: false, comment: "RELATION BETWEEN op_session AND res_users", force: :cascade do |t|
@@ -9458,6 +9501,14 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.index ["partner_id"], name: "session_fa_rel_partner_id_idx"
   end
 
+  create_table "session_offset_faculty_rel", id: false, comment: "RELATION BETWEEN op_session_offset AND op_faculty", force: :cascade do |t|
+    t.integer "name", null: false
+    t.integer "partner_id", null: false
+    t.index ["name", "partner_id"], name: "session_offset_faculty_rel_name_partner_id_key", unique: true
+    t.index ["name"], name: "session_offset_faculty_rel_name_idx"
+    t.index ["partner_id"], name: "session_offset_faculty_rel_partner_id_idx"
+  end
+
   create_table "session_student_feedbacks", force: :cascade do |t|
     t.bigint "session_id"
     t.bigint "feedback_by"
@@ -10077,6 +10128,15 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
     t.index ["faculty_id"], name: "index_user_answers_on_faculty_id"
     t.index ["question_choice_id"], name: "index_user_answers_on_question_choice_id"
     t.index ["user_question_id"], name: "index_user_answers_on_user_question_id"
+  end
+
+  create_table "user_posts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "sc_post_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sc_post_id"], name: "index_user_posts_on_sc_post_id"
+    t.index ["user_id"], name: "index_user_posts_on_user_id"
   end
 
   create_table "user_questions", force: :cascade do |t|
@@ -12275,6 +12335,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "op_session", "op_faculty", column: "observe_faculty", name: "op_session_observe_faculty_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_lession", column: "lession_id", name: "op_session_lession_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_session", column: "offset_session_id", name: "op_session_offset_session_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session", "op_session_offset", column: "request_offset_id", name: "op_session_request_offset_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_student_course", column: "student_course_id", name: "op_session_student_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_subject", column: "subject_id", name: "op_session_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_timing", column: "timing_id", name: "op_session_timing_id_fkey", on_delete: :nullify
@@ -12290,8 +12351,21 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "op_session_change_faculty", "res_users", column: "write_uid", name: "op_session_change_faculty_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_session_holiday", "res_users", column: "create_uid", name: "op_session_holiday_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_session_holiday", "res_users", column: "write_uid", name: "op_session_holiday_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_batch", column: "batch_id", name: "op_session_offset_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_classroom", column: "classroom_id", name: "op_session_offset_classroom_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_faculty", column: "faculty_id", name: "op_session_offset_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_subject", column: "subject_id", name: "op_session_offset_subject_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_timing", column: "timing_id", name: "op_session_offset_timing_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "res_users", column: "create_uid", name: "op_session_offset_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "res_users", column: "write_uid", name: "op_session_offset_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset_day", "generate_student_test_room_day", column: "session_offset_id", name: "op_session_offset_day_session_offset_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_offset_day", "op_session_offset", column: "day_id", name: "op_session_offset_day_day_id_fkey", on_delete: :cascade
   add_foreign_key "op_session_offset_student", "op_session", column: "session_id", name: "op_session_offset_student_session_id_fkey", on_delete: :cascade
   add_foreign_key "op_session_offset_student", "op_student", column: "student_id", name: "op_session_offset_student_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_offset_student_request", "op_session_offset", column: "session_id", name: "op_session_offset_student_request_session_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_offset_student_request", "op_student", column: "student_id", name: "op_session_offset_student_request_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_request_offset_day", "generate_student_test_room_day", column: "request_offset_id", name: "op_session_request_offset_day_request_offset_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_request_offset_day", "op_session_offset", column: "day_id", name: "op_session_request_offset_day_day_id_fkey", on_delete: :cascade
   add_foreign_key "op_session_res_users_rel", "op_session", name: "op_session_res_users_rel_op_session_id_fkey", on_delete: :cascade
   add_foreign_key "op_session_res_users_rel", "res_users", column: "res_users_id", name: "op_session_res_users_rel_res_users_id_fkey", on_delete: :cascade
   add_foreign_key "op_session_student", "op_batch", column: "batch_id", name: "op_session_student_batch_id_fkey", on_delete: :nullify
@@ -12802,6 +12876,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_104848) do
   add_foreign_key "session_confirmation", "res_users", column: "write_uid", name: "session_confirmation_write_uid_fkey", on_delete: :nullify
   add_foreign_key "session_fa_rel", "op_faculty", column: "partner_id", name: "session_fa_rel_partner_id_fkey", on_delete: :cascade
   add_foreign_key "session_fa_rel", "op_session", column: "name", name: "session_fa_rel_name_fkey", on_delete: :cascade
+  add_foreign_key "session_offset_faculty_rel", "op_faculty", column: "partner_id", name: "session_offset_faculty_rel_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "session_offset_faculty_rel", "op_session_offset", column: "name", name: "session_offset_faculty_rel_name_fkey", on_delete: :cascade
   add_foreign_key "session_student_feedbacks", "feeling_types"
   add_foreign_key "session_student_feedbacks", "op_session", column: "session_id"
   add_foreign_key "session_student_feedbacks", "users", column: "feedback_by"

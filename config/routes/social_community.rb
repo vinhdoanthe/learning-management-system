@@ -13,7 +13,12 @@ namespace :social_community do
 
   namespace :reactions do
   end
+  
+  namespace :feed do
+    get 'my_posts' => 'posts#index', as: 'my_posts'
+  end
 
+  get 'home_feeds' => 'dashboards#home_feeds', as: 'home_feeds'
   get 'student_dashboard' => 'dashboards#student_dashboard', as: 'student_dashboard'
   get 'teacher_dashboard' => 'dashboards#teacher_dashboard', as: 'teacher_dashboard'
   get 'student_coming_soon_session' => 'dashboards#student_coming_soon_session'
