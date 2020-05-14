@@ -1,3 +1,4 @@
+<% if report.values.inject(0, :+) != 0 %>
 $(document).ready(function(){
   var chartDiv = $("#barChartAttendance");
   var myChart = new Chart(chartDiv, {
@@ -28,3 +29,6 @@ $(document).ready(function(){
     }
   });
 })
+<% else %>
+    $('.attendance_report_content').html('<h2>Chưa hoàn thành buổi học nào trong tháng</h2>')
+<% end %>
