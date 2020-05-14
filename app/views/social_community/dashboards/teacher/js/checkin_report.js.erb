@@ -1,6 +1,5 @@
 // Variables: report_objects
-$('#checkin_report').html("<%= escape_javascript(render :partial => 'social_community/dashboards/teacher/checkin_report') %>")
-
+<% if reports.values.inject(0, :+) != 0 %>
 $(document).ready(function(){
   var chartDiv = $("#barChartCheckin");
   var myChart = new Chart(chartDiv, {
@@ -31,3 +30,6 @@ $(document).ready(function(){
     }
   });
 })
+<% else %>
+    $('.checkin_report_content').html('<h3>Chưa hoàn thành buổi học nào trong tháng</h3>')
+  <% end %>

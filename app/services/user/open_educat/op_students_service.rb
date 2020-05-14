@@ -2,23 +2,44 @@ class User::OpenEducat::OpStudentsService
   def self.get_attendance_report student_id
     report_objects = []
     op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id).uniq.to_a
+    last_sessions = []
     op_student_courses.each do |op_student_course|
       subject_ids = op_student_course.op_subjects.pluck(:id).uniq.compact
       batch_code = op_student_course.op_batch.code
       subject_ids.each do |subject_id|
         sessions = Learning::Batch::OpBatchService.get_sessions(op_student_course.batch_id, student_id, [subject_id])
+
+        done_sessions = sessions.select { |t| t.state == 'done' }
+        if done_sessions.present?
+          lastest_session = done_sessions.max { |t| t.start_datetime } 
+          last_sessions << lastest_session
+        end
+
         next if sessions.empty?
         count_object = Learning::Batch::OpSessionsService.report_attendance(sessions, student_id)
         next if count_object.empty?
-        subject_level = Learning::Course::OpSubject.where(id: subject_id).pluck(:level).first
+        subject = Learning::Course::OpSubject.where(id: subject_id).first
+        subject_level = subject.level
+        course_name = subject.op_course.name
         report_object = {
           :batch_code => batch_code,
           :subject_level => subject_level,
+          :course_name => course_name,
           :count => count_object
         }
         report_objects << report_object
       end
     end
+    
+    if last_sessions.present?
+      active_session = last_sessions.flatten.compact.max { |t| t.start_datetime }
+      active_batch_code = active_session.op_batch.code
+      subject_level = Learning::Course::OpSubject.where(id: active_session.subject_id).first.level
+      active_index = report_objects.find_index { |t| (t.values.include? active_batch_code) && (t.values.include? subject_level) }
+      report_objects.unshift (report_objects[active_index])
+      report_objects.delete_at(active_index + 1)
+    end
+
     report_objects
   end
 

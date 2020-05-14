@@ -22,7 +22,9 @@ $(document).ready(function(){
     options: {
       title: {
         display: true,
-        text: '<%= object[:batch_code] %>'
+        text: 'Lớp: <%= object[:course_name] %> | Học phần: <%= object[:subject_level] %>',
+        fontColor: '#5DC2A7',
+        fontSize: 15
       },
       legend: {
         position: 'bottom',
