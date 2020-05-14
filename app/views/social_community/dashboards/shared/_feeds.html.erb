@@ -1,0 +1,10 @@
+<!-- Variables: feeds, next_time_offset -->
+
+<% feeds.each do |feed| %>
+  <% if feed.post.is_a?(SocialCommunity::Feed::RewardPost) %>
+    <% message, reward = reward_feed(feed) %>
+    <% binding.pry %>
+  <% else %>
+
+  <% end %> 
+<% end %>

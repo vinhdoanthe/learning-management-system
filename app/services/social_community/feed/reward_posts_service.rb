@@ -1,4 +1,5 @@
 class SocialCommunity::Feed::RewardPostsService < SocialCommunity::Feed::PostsService
+  @reward_post = SocialCommunity::Feed::RewardPost.new
   def self.get_subscribed_users post_id
     subscribed_users = []
 
@@ -11,5 +12,9 @@ class SocialCommunity::Feed::RewardPostsService < SocialCommunity::Feed::PostsSe
     end
 
     subscribed_users
+  end
+
+  def decor_post_to_feed
+    
   end
 end

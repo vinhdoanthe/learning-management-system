@@ -1,0 +1,24 @@
+<!-- Dashboard: All posts -->
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/pagination.js' %>
+<% end %>
+<div class="page-content page-thin">  
+  <div class="col-md-7" id='homeFeeds'>
+    <div id='my-posts' class='panel'>
+      <%= render @posts %>
+    </div>
+    <div id='infinitive-scrolling' style='display:none'>
+      <%= will_paginate %>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="panel" id='coming_soon_session'>
+    </div>
+    <div class="panel" id='dashboard_noti'>
+    </div>
+    <div class='panel' id ='attendance_report'>
+    </div>
+    <div class="panel" id='dashboard_leader'>
+    </div>
+  </div>
+</div>

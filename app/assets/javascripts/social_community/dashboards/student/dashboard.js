@@ -4,11 +4,21 @@
 
 // On page loaded: call to get feed content
 $(document).ready(function(){
-	get_feed_content();
+	get_feeds();
+  get_feed_content();
 	get_noti_content();
 	get_new_user();
   get_attendance_report();
 })
+
+function get_feeds() {
+  console.log('Start load feeds')
+  $.ajax({
+    method: 'GET',
+    url: '/social_community/home_feeds',
+    dataType: 'script'
+  })
+}
 
 // Catch events
 function get_feed_content(){

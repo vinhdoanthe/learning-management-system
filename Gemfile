@@ -18,6 +18,10 @@ gem 'composite_primary_keys', '~> 12.0'
 # Notification
 gem 'activity_notification'
 
+# Pagination
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
+gem 'bootstrap-sass'
 # Chart for Reporting
 gem "chartkick"
 
