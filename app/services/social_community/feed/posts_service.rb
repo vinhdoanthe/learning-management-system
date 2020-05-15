@@ -29,10 +29,14 @@ class SocialCommunity::Feed::PostsService
       posts_service = SocialCommunity::Feed::PostsService.new(post)
       count_like, count_love, count_sad = posts_service.count_reactions
       comments = posts_service.get_comments
+      decored_comments = []
+      comments.each do |comment|
+        decored_comments << SocialCommunity::CommentsService.comment_decorator(comment)
+      end
       feed.count_like = count_like
       feed.count_love = count_love
       feed.count_sad = count_sad
-      feed.comments = comments
+      feed.comments = decored_comments
       feeds << feed
     end
     feeds

@@ -12,8 +12,13 @@ module SocialCommunity::DashboardsHelper
   end
 
   def photo_feed feed
-    photos = feed.photos
-    message = ''
+    photos = feed.post.photos
+    if feed.created_user.nil?
+      message = 'Giảng viên vừa đăng ảnh mới vào lớp học'
+    else
+      message = "Giảng viên #{feed.created_user.faculty_name} vừa đăng ảnh vào lớp học TODO"
+    end 
+    [message, photos]
     # find photos
     # render message
   end

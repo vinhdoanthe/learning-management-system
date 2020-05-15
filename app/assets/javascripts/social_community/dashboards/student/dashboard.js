@@ -1,10 +1,7 @@
 // JavaScript code for Student Dasboard
-
-// $("img").lazyload();
-
 // On page loaded: call to get feed content
 $(document).ready(function(){
-  // get_feed_content();
+  get_coming_soon_session();
 	get_noti_content();
 	get_new_user();
   get_attendance_report();
@@ -12,13 +9,7 @@ $(document).ready(function(){
 
 
 // Catch events
-function get_feed_content(){
-	// $.ajax({
-	// 	method: 'GET',
-	// 	url: '/social_community/albums_with_comments',
-	// 	dataType: 'script'
-	// })
-
+function get_coming_soon_session(){
 	$.ajax({
 		method: 'GET',
 		url: '/social_community/student_coming_soon_session',

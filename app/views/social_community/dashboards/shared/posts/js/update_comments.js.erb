@@ -1,0 +1,3 @@
+// Update comments area
+$("#post_comments_<%= post_id %>").prepend("<%= escape_javascript(render :partial => 'social_community/dashboards/shared/comment_line', :locals => {comment: comment}) %>");
+$("#post_comment_input_<%= post_id %>").val('');

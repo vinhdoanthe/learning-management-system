@@ -1,0 +1,14 @@
+<div class="bnd-comment">
+  <div class="bc-edit">
+    <span>
+      <img src="" alt="">
+    </span>
+    <input id="post_comment_input_<%= post.id %>" type="text" class='post-comment-input' data-post-id="<%= post.id %>">
+    <a href="#"><img class='post-comment-btn' data-post-id='<%= post.id %>' src="/global/images/send.png" alt=""></a>
+  </div>
+  <div id="post_comments_<%= post.id %>" class="bc-ansew">
+    <% comments.each do |comment| %>
+      <%= render :partial => 'social_community/dashboards/shared/comment_line', :locals => {comment: comment} %>
+    <% end %>
+  </div>
+</div>

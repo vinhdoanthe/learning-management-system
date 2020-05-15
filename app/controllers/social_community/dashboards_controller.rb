@@ -29,7 +29,6 @@ class SocialCommunity::DashboardsController < ApplicationController
       else
         time_offset_epoch = Time.now
       end
-      # @student = User::OpenEducat::OpStudent.where(id: current_user.student_id).first
       @feeds, @next_time_offset = SocialCommunity::Feed::PostsService.fetch_feeds(current_user.id, time_offset_epoch) 
     elsif current_user.is_teacher?
       # TODO

@@ -7,6 +7,13 @@ namespace :social_community do
     post 'add_reaction', action: 'add_reaction', as: 'add_reaction'
     post 'add_comment', action: 'add_comment', as: 'add_comment'
   end
+  
+  namespace :feed do
+    namespace :posts do 
+      post 'add_reaction', action: 'add_reaction', as: 'add_reaction'
+      post 'add_comment', action: 'add_comment', as: 'add_comment'
+    end
+  end
 
   namespace :comments do
   end

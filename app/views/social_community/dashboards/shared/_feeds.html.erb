@@ -3,8 +3,9 @@
 <% feeds.each do |feed| %>
   <% if feed.post.is_a?(SocialCommunity::Feed::RewardPost) %>
     <% message, reward = reward_feed(feed) %>
-    <% binding.pry %>
-  <% else %>
-
+    <%= render :partial => 'social_community/feed/reward_posts/reward_post', :locals => {feed: feed, message: message, reward: reward} %>
+  <% elsif feed.post.is_a?(SocialCommunity::Feed::PhotoPost) %>
+    <% message, photos = photo_feed(feed) %>
+    <%= render :partial => 'social_community/feed/photo_posts/photo_post', :locals => {feed: feed, message: message, photos: photos} %>
   <% end %> 
 <% end %>

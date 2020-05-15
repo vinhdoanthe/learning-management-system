@@ -1,6 +1,14 @@
-<!-- Variables: post -->
-<div class='row'>
-  <p>This is a photo post</p>
-</div>
-
 <!-- Render photo post here -->
+<!-- Variables: feed, message, photos-->
+<div class='panel'>
+  <div class='panel-content'>
+    <div class="bnd-title">
+      <h2> <span> <%= message %> </span></h2>
+    </div>
+
+    <%= render :partial => "social_community/dashboards/shared/photos", :locals => {photos: photos} %>
+
+    <%= render :partial => "social_community/dashboards/shared/posts/reactions", :locals => {post: feed.post, count_like: feed.count_like, count_love: feed.count_love, count_sad: feed.count_sad} %>
+    <%= render :partial => "social_community/dashboards/shared/posts/comments", :locals => {post: feed.post, comments: feed.comments} %>
+  </div>
+</div>
