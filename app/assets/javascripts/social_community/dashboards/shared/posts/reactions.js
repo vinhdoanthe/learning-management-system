@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('#homeFeeds').click('.post-like-btn', function(event){
+  $('#homeFeeds').on('click', '.post-like-btn', function(event){
     event.preventDefault();
     data = {
       reaction_type: 1,
@@ -9,7 +9,7 @@ $(document).ready(function(){
     add_reaction_to_post(data);
   });
 
-  $('#homeFeeds').click('.post-love-btn', function(event){
+  $('#homeFeeds').on('click', '.post-love-btn', function(event){
     event.preventDefault();
     data = {
       reaction_type: 2,
@@ -19,7 +19,7 @@ $(document).ready(function(){
     add_reaction_to_post(data);
   });
 
-  $('#homeFeeds').click('.post-sad-btn', function(event){
+  $('#homeFeeds').on('click', '.post-sad-btn', function(event){
     event.preventDefault();
     data = {
       reaction_type: 3,

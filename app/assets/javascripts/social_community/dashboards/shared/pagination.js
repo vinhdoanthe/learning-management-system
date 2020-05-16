@@ -1,15 +1,19 @@
 $(document).ready(function () {
-
-	get_feeds();
+  // Get initial posts
+  get_feeds();
   
-  more_posts_url = $('.pagination .next_page a').attr('href');
-  // Load more posts if page is not scrollable
-  if (more_posts_url && ($('#homeFeeds').height() < $(window).height())) {
-    getNextPosts();
-  }
-
+  // Listen to scroll action
+  var position = $(window).scrollTop(); 
   $(window).on('scroll', function(){
-    loadMorePosts();
+    var scroll = $(window).scrollTop();
+    if(scroll > position) {
+      console.log('scrollDown');
+      // TODO
+      loadMorePosts();
+    } else {
+      console.log('scrollUp');
+    }
+    position = scroll;
   })
 });
 
@@ -24,19 +28,19 @@ function get_feeds() {
 }
 
 function loadMorePosts() {
-  more_posts_url = $('.pagination .next_page a').attr('href');
-  if (more_posts_url && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
-    console.log(more_posts_url);
-    $('.pagination').html('<img src="/ajax-loader.gif" alt="Loading..." title="Loading..." />');
-    $.getScript(more_posts_url);
-  }
-}
-
-function getNextPosts() {
-  console.log('Initialize posts to get enough for scrollable');
-  more_posts_url = $('.pagination .next_page a').attr('href');
-  if (more_posts_url) {
-    $('.pagination').html('<img src="/ajax-loader.gif" alt="Loading..." title="Loading..." />');
-    $.getScript(more_posts_url);
+  // Get next time offset
+  date_time_offset = $('#infinitive-scrolling').attr('date-time-offset');
+  $('#infinitive-scrolling').attr('date-time-offset', '0');
+  console.log(date_time_offset)
+  if (date_time_offset != 0  && $(window).scrollTop() > $('#homeFeeds').height() - $(window).height() - 100) {
+    $.ajax({
+      method: 'GET',
+      url: '/social_community/home_feeds',
+      data: {
+        time_offset_epoch: date_time_offset,
+        authenticity_token: $('[name="csrf-token"]')[0].content
+      },
+      dataType: 'script'
+    }) 
   }
 }
