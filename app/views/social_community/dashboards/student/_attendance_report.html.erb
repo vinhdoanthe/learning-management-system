@@ -5,6 +5,8 @@
   <div class="owl-carousel owl-theme">
     <% report_objects.each_with_index do |report_object, index| %>
       <div class='item'>
+        <div id='report_name<%= index %>'>
+        </div>
       <canvas id="barChart<%= index %>" width="400" height="400"></canvas>
         </div>
     <% end %>

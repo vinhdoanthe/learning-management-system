@@ -4,6 +4,7 @@ $('#attendance_report').html("<%= escape_javascript(render :partial => 'social_c
 $(document).ready(function(){
   <% report_objects.each_with_index do |object, index| %>
       var chartDiv = $("#barChart<%= index %>");
+  $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase;">Lớp: <span style="color: #5DC2A7"> <%= object[:course_name] %></span> | Học phần: <%= object[:subject_level] %></h4>')
   var myChart = new Chart(chartDiv, {
     type: 'pie',
     data: {
@@ -22,7 +23,6 @@ $(document).ready(function(){
     options: {
       title: {
         display: true,
-        text: 'Lớp: <%= object[:course_name] %> | Học phần: <%= object[:subject_level] %>',
         fontColor: '#5DC2A7',
         fontSize: 15
       },
