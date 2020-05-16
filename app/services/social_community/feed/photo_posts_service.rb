@@ -16,4 +16,10 @@ class SocialCommunity::Feed::PhotoPostsService < SocialCommunity::Feed::PostsSer
     # return
   end
 
+  def self.subscribed_users session_id
+    session = Learning::Batch::OpSession.where(id: session_id).first
+    return nil if session.blank?
+    student_ids = Learning::Batch::OpStudentCourse.where(batch_id: session.batch_id, state: 'on').pluck(:student_id)
+    User::Account::User.where(student_id: student_ids).pluck(:id)
+  end
 end

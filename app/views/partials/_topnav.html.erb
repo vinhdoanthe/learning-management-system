@@ -18,6 +18,9 @@
                 <span class="teky-coin-point"><%= number_with_delimiter(current_user.star.to_i, delimiter: ".")%></span><span class="teky-coin-text">  Teky đồng</span>
             </li>
             <% end%>
+            <li class="dropdown" id="notifications-header">
+              <%= render_notifications_of current_user, index_content: :with_attributes, fallback: :default %>
+            </li>
             <li class="dropdown" id="language-header">
                 <a id="li-language" href="" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
                     <%= image_tag "global/images/flags/vietnam.png", style:"width:34px;"%>
