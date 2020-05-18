@@ -62,6 +62,7 @@ gem 'rails', '~> 6.0.0'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use MongoDB for store key-value object
 gem "mongoid", "~> 7.0.2"
+gem 'rspec-rails'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
