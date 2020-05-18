@@ -23,7 +23,7 @@ class SocialCommunity::DashboardsController < ApplicationController
   # posts
   # next_time_offset
   def home_feeds
-    if current_user.is_student?    
+#    if current_user.is_student?    
       if params[:time_offset_epoch].present?
         # binding.pry
         time_offset_epoch = DateTime.parse(params[:time_offset_epoch])
@@ -32,9 +32,9 @@ class SocialCommunity::DashboardsController < ApplicationController
         time_offset_epoch = DateTime.now
       end
       @feeds, @next_time_offset = SocialCommunity::Feed::PostsService.fetch_feeds(current_user.id, time_offset_epoch) 
-    elsif current_user.is_teacher?
+ #   elsif current_user.is_teacher?
       # TODO
-    end
+   # end
 
     respond_to do |format|
       format.js {

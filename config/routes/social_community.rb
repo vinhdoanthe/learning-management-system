@@ -22,6 +22,7 @@ namespace :social_community do
   end
   
   namespace :feed do
+    resources :posts
     get 'my_posts' => 'posts#index', as: 'my_posts'
   end
 

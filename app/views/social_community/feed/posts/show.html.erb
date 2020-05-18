@@ -1,0 +1,22 @@
+<div class="page-content page-thin">  
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'social_community/dashboards/student/dashboard.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
+<% end %>
+  <div class="row">
+    <div class="col-md-7">
+      <%= render 'social_community/dashboards/shared/feeds', { feeds: @feeds } %>
+    </div>
+    <div class="col-md-5">
+      <div class="panel" id='coming_soon_session'>
+      </div>
+      <div class="panel" id='dashboard_noti'>
+      </div>
+      <div class='panel' id ='attendance_report'>
+      </div>
+      <div class="panel" id='dashboard_leader'>
+      </div>
+    </div>
+  </div>
+</div>

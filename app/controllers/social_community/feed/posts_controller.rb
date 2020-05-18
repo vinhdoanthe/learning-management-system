@@ -61,7 +61,7 @@ class SocialCommunity::Feed::PostsController < ApplicationController
   end
 
   def show
-
+    @feeds = SocialCommunity::Feed::PostsService.decor_post_to_feed [@post]
   end
 
   def create
@@ -80,6 +80,8 @@ class SocialCommunity::Feed::PostsController < ApplicationController
   def get_post
     if !params[:post_id].nil?
       @post = SocialCommunity::Feed::Post.where(id: params[:post_id]).first
+    elsif params[:id].present?
+      @post = SocialCommunity::Feed::Post.where(id: params[:id]).first
     else
       @post = nil
     end

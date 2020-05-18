@@ -9,6 +9,7 @@ class SocialCommunity::PhotoService
       post = create_photo_post user
       subscribed_users = SocialCommunity::Feed::PhotoPostsService.subscribed_users session.id
       SocialCommunity::Feed::UserPostsService.create_multiple post.id, subscribed_users
+      SocialCommunity::Feed::UserPostsService.create_multiple post.id, [user.id]
 
       list_photos.each do |photo|
         create_new_photo session.id, album.id, photo, user, post

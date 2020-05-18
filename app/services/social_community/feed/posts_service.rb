@@ -11,9 +11,12 @@ class SocialCommunity::Feed::PostsService
     next_offset_epoch = time_offset_epoch
 
     user = User::Account::User.where(id: user_id).first
+    
     unless user.nil?
       posts = user.sc_posts.where('sc_posts.created_at < ?', time_offset_epoch).order(created_at: :DESC).limit(1)
-      unless posts.blank?
+      if posts.blank?
+        next_offset_epoch = 0
+      else 
         next_offset_epoch = posts.last.created_at
       end
     end
@@ -39,6 +42,7 @@ class SocialCommunity::Feed::PostsService
       feed.comments = decored_comments
       feeds << feed
     end
+    
     feeds
   end
 
