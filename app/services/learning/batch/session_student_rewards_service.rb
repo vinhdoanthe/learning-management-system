@@ -11,7 +11,7 @@ class Learning::Batch::SessionStudentRewardsService
         reward.rewarded_to = student.id    
         reward.reward_type_id = params[:reward_type]
 
-        post = SocialCommunity::Feed::RewardPost.create(posted_by:  user.id)
+        post = SocialCommunity::Feed::RewardPost.create(posted_by:  student.id)
         reward.sc_post_id = post.id     
         reward.save
 
