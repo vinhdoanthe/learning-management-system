@@ -1,0 +1,33 @@
+<!-- Variables: post, count_like, count_love, count_sad -->
+
+<div class="bnd-all-other">
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="bnd-other">
+        <a class='post-like-btn' data-post-id='<%= post.id %>'> 
+          <img src="/global/images/like-3.png" alt="" class='post-like-btn' data-post-id='<%= post.id %>'>
+          Like
+          <span id="post_count_like_<%= post.id %>"><%= count_like.nil? ? 0 : count_like %></span>
+        </a>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="bnd-other">
+        <a class='post-love-btn' data-post-id='<%= post.id %>'> 
+          <img src="/global/images/love-and-romance.png" alt="">
+          Thả tim
+          <span id='post_count_love_<%= post.id %>'><%= count_love.nil? ? 0 : count_love %></span>
+        </a>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="bnd-other">
+        <a class='post-sad-btn' data-post-id='<%= post.id %>'> 
+          <img src="/global/images/iconsad.png" alt="">
+          Buồn
+          <span id="post_count_sad_<%= post.id %>"><%= count_sad.nil? ? 0 : count_sad %></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

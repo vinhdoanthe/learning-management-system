@@ -1,0 +1,51 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "admin/material.js" %>
+<% end %>
+<div class="page-content page-thin">
+
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Danh sách đổi quà
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="tab-content p-0 tab-all-content m-t-20">
+        <div class="tab-pane fade active in">
+          <div class="filter-box FlowupLabels" id='formBody'>
+            <div class="row">
+              <div class="col-md-4">
+                <label class="filter-title student_course_title"></label>
+              </div>
+              <div class="col-md-3">
+                <div class='fl_wrap m-t-0'>
+                  <label class='fl_label' for='rf_name'>Cơ sở:</label>
+                  <select class='fl_input' id='redeem_product_company'>
+                    <% Common::ResCompany.all.each do |company| %>
+                      <option value="<%= company.id %>" selected><%= company.name %></option>
+                    <% end %>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class='fl_wrap m-t-0'>
+                  <label class='fl_label' for='rf_name'>Trạng thái:</label>
+                  <select class='fl_input' id='redeem_product_state' multiple>
+                    <option value="new">Yêu cầu mới</option>
+                    <option value="ready">Sẵn sàng trao</option>
+                    <option value="done">Trao thành công</option>
+                    <option value="cancel">Đã huỷ</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div id='admin_redeem_product'>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

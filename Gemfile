@@ -3,9 +3,6 @@ git_source(:github) {|repo| "https://github.com/#{repo}.git"}
 
 ruby '2.6.5'
 
-# for win flatform
-#gem 'wdm', '>= 0.1.0'
-
 ## Manual added gems
 # For Translation
 gem 'i18n'
@@ -20,6 +17,13 @@ gem 'composite_primary_keys', '~> 12.0'
 
 # Notification
 gem 'activity_notification'
+
+# Pagination
+# gem 'will_paginate'
+# gem 'bootstrap-will_paginate'
+gem 'bootstrap-sass'
+# Chart for Reporting
+# gem "chartkick"
 
 # Image processing
 gem "aws-sdk-s3", require: false
@@ -58,6 +62,7 @@ gem 'rails', '~> 6.0.0'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use MongoDB for store key-value object
 gem "mongoid", "~> 7.0.2"
+gem 'rspec-rails'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -111,5 +116,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem "simple_calendar", "~> 2.0"
+# gem "simple_calendar", "~> 2.0"
 gem 'spreadsheet', '~> 1.2', '>= 1.2.6'

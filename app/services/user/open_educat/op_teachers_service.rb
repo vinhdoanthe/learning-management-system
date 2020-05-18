@@ -36,7 +36,7 @@ class User::OpenEducat::OpTeachersService
       faculty = session.op_faculty ? session.op_faculty.full_name : ""
       classroom = session.classroom_id.nil? ? '' : Common::OpClassroom.find(session.classroom_id).name
 
-      batch_class_online = session.op_batch.company_id == 35 ? true : false
+      batch_class_online = (['1', '2'].include? session.op_batch.select_place) ? false : true
       # batch_class = session.op_batch.is_online_class
       course = session.op_batch.op_course.name
       lesson = session.op_batch.current_session_level
@@ -65,5 +65,46 @@ class User::OpenEducat::OpTeachersService
     end
     
     schedule_hash
+  end
+
+  def self.checkin_report teacher
+    sessions = teacher.op_sessions.where(start_datetime: Time.now.all_month, state: Learning::Constant::Batch::Session::STATE_DONE)
+    report = {
+      checkin: 0,
+      none: 0,
+      late: 0
+    }
+    sessions.each do |session|
+      if session.check_in_state == 'good'
+        report[:checkin] += 1
+      elsif session.check_in_state == 'late'
+        report[:late] += 1
+      else
+        report[:none] += 1
+      end
+    end
+
+    report
+  end
+
+  def self.attendance_report teacher
+    sessions = teacher.op_sessions.where(start_datetime: Time.now.all_month, state: Learning::Constant::Batch::Session::STATE_DONE)
+    report = {
+      match: 0,
+      unmatch: 0,
+      undefined: 0
+    }
+    sessions.each do |session|
+      if session.attend_match == 'true'
+        report[:match] += 1
+      elsif session.attend_match == 'false'
+        report[:unmatch] += 1
+      else
+        report[:undefined] += 1
+      end
+    end
+
+    report
+
   end
 end

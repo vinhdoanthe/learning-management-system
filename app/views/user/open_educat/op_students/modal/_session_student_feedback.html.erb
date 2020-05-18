@@ -1,0 +1,70 @@
+
+<div id="session_student_feedback" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">HỌC SINH ĐÁNH GIÁ LỚP HỌC</h4>
+      </div>
+      <div class="modal-body">
+        <input type='hidden' value='' name='active_feedback_session'>
+        <div style='text-align: center; margin-bottom: 20px'>
+          <h3 style='text-transform: uppercase'>Cảm nhận của con về buổi học như thế nào?</h3>
+          <p style="text-align: center">Đánh giá xong con sẽ được thưởng <span style="color: red; text-transform: uppercase">150 teky đồng</span></p>
+        </div>
+        <div class="ths-list">
+          <div class="row">
+            <% Common::FeelingType.order(created_at: :ASC).all.each_with_index do |type, index| %>
+              <div class="col-sm-3 ">
+                <a class="ths-detail feeling_type <%= 'active_feeling_type' if index == 0 %>">
+                  <%= image_tag(type.icon, class: 'feeling_type_icon') if type.icon.attached? %>
+                  <input type='hidden' name='active_feeling_type' value='<%= type.id %>'>
+                  <label style="text-align: center"><%= type.name %></label>
+                </a>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <textarea id="student_feedback_content" rows="5" style="width: 100%; margin-top: 30px" placeholder='Cảm nhận khác của con'></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="student_confirm_feedback" data-dismiss="modal">GỬI ĐÁNH GIÁ</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<style>
+.active_feeling_type {
+  border: 2px solid #5DC2A7
+}
+</style>
+<script>
+  $(document).ready(function(){
+    $('.student_feedback_modal').on('click', function(){
+      $('input[name="active_feedback_session"]').val($(this).data('session'))
+    }) 
+
+    $('.feeling_type').on('click', function(){
+      $('.feeling_type').removeClass('active_feeling_type');
+      $(this).addClass('active_feeling_type')
+    })
+
+    $('#student_confirm_feedback').click(function() {
+      session_id = $('input[name="active_feedback_session"]').val();
+      content = $('#student_feedback_content').val();
+      type = $('.active_feeling_type').find($('input[name="active_feeling_type"]')).val();
+      
+      $.ajax({
+        method: 'POST',
+        url: '/learning/student_feeback',
+        data: { content: content, session_id: session_id, type: type},
+        success: function(res){
+          display_noti(res)
+        }
+      })
+    })
+  })
+</script>

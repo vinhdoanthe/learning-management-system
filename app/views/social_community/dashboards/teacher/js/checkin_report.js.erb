@@ -1,0 +1,36 @@
+// Variables: report_objects
+<% if reports.values.inject(0, :+) != 0 %>
+$(document).ready(function(){
+  var chartDiv = $("#barChartCheckin");
+  var myChart = new Chart(chartDiv, {
+    type: 'pie',
+    data: {
+      labels: ["Checkin đúng giờ", "Quên checkin", "Checkin muộn"],
+      datasets: [
+        {
+          data:<%= reports.values %>,
+          backgroundColor: [
+            "#4BC0C0",
+            "#E7E9ED",
+            "#FFCE56"
+          ]
+        }]
+    },
+    options: {
+      legend: {
+        position: 'bottom',
+        align: 'start',
+        labels: {
+          boxWidth: 20,
+          padding: 20,
+          fontFamily: 'Montserrat-Medium'
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+    }
+  });
+})
+<% else %>
+    $('.no-checkin-data').show()
+  <% end %>

@@ -1,17 +1,23 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag 'social_community/dashboards/student/dashboard.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/pagination.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
 <% end %>
-<div class="page-content page-thin">  <div class="row">
-    <div class="col-md-7 ">
-      <div class="panel">
-        <div class="panel-content" id='albums_with_comments'>
-        </div>
+<div class="page-content page-thin">  
+  <div class="row">
+    <div class="col-md-7">
+      <div id='homeFeeds'>
+      </div>
+      <div id='infinitive-scrolling' style='display:none' date-time-offset='0'>
       </div>
     </div>
     <div class="col-md-5">
       <div class="panel" id='coming_soon_session'>
       </div>
       <div class="panel" id='dashboard_noti'>
+      </div>
+      <div class='panel' id ='attendance_report'>
       </div>
       <div class="panel" id='dashboard_leader'>
       </div>

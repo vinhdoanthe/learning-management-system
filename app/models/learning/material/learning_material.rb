@@ -38,7 +38,6 @@ module Learning
         ziggeo_encrypt = Settings.ziggeo['encryption']
         ziggeo = ziggeo = Ziggeo.new(ziggeo_secret, ziggeo_key, ziggeo_encrypt)
         @videos = ziggeo.videos.index
-        # binding.pry
       end
     end
   end

@@ -1,5 +1,4 @@
 class SocialCommunity::DashboardsService
-
   def self.get_student_albums_with_comments student_id
     albums_with_comments = []
     batch_ids = User::OpenEducat::OpStudentsService.get_batch_ids student_id
@@ -39,12 +38,14 @@ class SocialCommunity::DashboardsService
       batch_code = batch.nil? ? '' : batch.code
       batch_id = batch.nil? ? nil : batch.id
       company = Common::ResCompany.where(id: session.company_id).first
+      course_name = batch.op_course.name
       company_name = company.nil? ? '' : company.name
       {
         :batch_id => batch_id,
         :batch_code => batch_code,
         :company_name => company_name,
-        :session => session
+        :session => session,
+        :course => course_name
       }
     else
       nil

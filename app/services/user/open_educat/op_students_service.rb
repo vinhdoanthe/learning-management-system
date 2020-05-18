@@ -1,4 +1,48 @@
 class User::OpenEducat::OpStudentsService
+  def self.get_attendance_report student_id
+    report_objects = []
+    op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id).uniq.to_a
+    last_sessions = []
+    op_student_courses.each do |op_student_course|
+      subject_ids = op_student_course.op_subjects.pluck(:id).uniq.compact
+      batch_code = op_student_course.op_batch.code
+      subject_ids.each do |subject_id|
+        sessions = Learning::Batch::OpBatchService.get_sessions(op_student_course.batch_id, student_id, [subject_id])
+
+        done_sessions = sessions.select { |t| t.state == 'done' }
+        if done_sessions.present?
+          lastest_session = done_sessions.max { |t| t.start_datetime } 
+          last_sessions << lastest_session
+        end
+
+        next if sessions.empty?
+        count_object = Learning::Batch::OpSessionsService.report_attendance(sessions, student_id)
+        next if count_object.empty?
+        subject = Learning::Course::OpSubject.where(id: subject_id).first
+        subject_level = subject.level
+        course_name = subject.op_course.name
+        report_object = {
+          :batch_code => batch_code,
+          :subject_level => subject_level,
+          :course_name => course_name,
+          :count => count_object
+        }
+        report_objects << report_object
+      end
+    end
+    
+    if last_sessions.present?
+      active_session = last_sessions.flatten.compact.max { |t| t.start_datetime }
+      active_batch_code = active_session.op_batch.code
+      subject_level = Learning::Course::OpSubject.where(id: active_session.subject_id).first.level
+      active_index = report_objects.find_index { |t| (t.values.include? active_batch_code) && (t.values.include? subject_level) }
+      report_objects.unshift (report_objects[active_index])
+      report_objects.delete_at(active_index + 1)
+    end
+
+    report_objects
+  end
+
   def self.batch_state student
     batch_states = {}
     student.op_student_courses.each do |course|
@@ -9,12 +53,12 @@ class User::OpenEducat::OpStudentsService
 
   def student_homework student, params
     if params[:session_id].present?
-    op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student.id)
-    active_session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+      op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student.id)
+      active_session = Learning::Batch::OpSession.where(id: params[:session_id]).first
     else
-    op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student.id)
-    batch_ids = op_student_courses.pluck(:batch_id)
-    active_session = Learning::Batch::OpBatchService.last_done_session(student.id, batch_ids)
+      op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student.id)
+      batch_ids = op_student_courses.pluck(:batch_id)
+      active_session = Learning::Batch::OpBatchService.last_done_session(student.id, batch_ids)
     end
 
     if active_session.present?
@@ -25,11 +69,11 @@ class User::OpenEducat::OpStudentsService
       course = batch.op_course
       lesson = active_session.op_lession
       batch_of_course = op_student_courses.where(course_id: active_session.course_id).pluck(:batch_id).uniq
-   
+
       if batch_of_course.blank?
         batch_of_course = batch.id
       end
-    
+
       batches = Learning::Batch::OpBatch.where(id: batch_of_course)
 
       { batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson }
@@ -153,7 +197,8 @@ class User::OpenEducat::OpStudentsService
       faculty = session.op_faculty ? session.op_faculty.full_name : ""
       classroom = session.classroom_id.nil? ? '' : Common::OpClassroom.find(session.classroom_id).name
 
-      batch_class_online = session.op_batch.company_id == 35 ? true : false
+      #      batch_class_online = session.op_batch.company_id == 35 ? true : false
+      batch_class_online = (['1', '2'].include? session.op_batch.select_place) ? false : true
       # batch_class = session.op_batch.is_online_class
       course = session.op_batch.op_course.name
       lesson = session.op_batch.current_session_level

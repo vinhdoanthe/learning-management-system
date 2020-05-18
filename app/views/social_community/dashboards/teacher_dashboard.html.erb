@@ -1,3 +1,45 @@
-<html>
-
-</html>
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'social_community/dashboards/teacher/dashboard.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/pagination.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
+<% end %>
+<div class="page-content page-thin">
+  <div class="row">
+    <div class="col-md-7 ">
+      <div id='homeFeeds'>
+      </div>
+      <div id='infinitive-scrolling' style='display:none' date-time-offset='0'>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="panel" id='coming_soon_session'>
+      </div>
+      <div class="panel" id='dashboard_noti'>
+      </div>
+      <div class='panel' id ='checkin_report'>
+        <div class="panel-content">
+          <div class="bnd-title">
+            <label class="filter-title" style = "text-transform:uppercase;">Báo cáo Checkin trong tháng</label>
+          </div>
+          <div class="checkin_report_content">
+            <canvas id="barChartCheckin" width="400" height="400"></canvas>
+    <div class='no-checkin-data' style="position: absolute; top: 50%; left: 10%; text-align: center; width: 80%;">
+            <p style='text-align: center;'>Chưa có buổi học hoàn thành trong tháng</p></div>
+          </div>
+        </div>
+      </div>
+      <div class='panel' id ='attendance_report'>
+        <div class="panel-content">
+          <div class="bnd-title">
+            <label class="filter-title" style = "text-transform:uppercase;">Báo cáo Điểm danh trong tháng</label>
+          </div>
+          <div class="attendance_report_content">
+            <canvas id="barChartAttendance" width="400" height="400"></canvas>
+            <div class='no-attendance-data' style="display: none; position: absolute; top: 50%;left: 10%; text-align: center; width: 80%;"><p style='text-align: center;'>Chưa có buổi học hoàn thành trong tháng</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

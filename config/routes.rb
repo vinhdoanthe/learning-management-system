@@ -5,6 +5,12 @@ class ActionDispatch::Routing::Mapper
 end
 
 Rails.application.routes.draw do
+  scope :user do
+    scope :account do
+      notify_to 'users', controller: 'notification/user/user_notifications'
+    end
+  end
+
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'user/home#dashboard'
@@ -14,6 +20,7 @@ Rails.application.routes.draw do
   draw :op_teacher
   draw :social_community
   draw :user
+  draw :redeem
 
   namespace :learning do
     get 'view_learning_material/:material_id' => 'learning_materials#view_learning_material'

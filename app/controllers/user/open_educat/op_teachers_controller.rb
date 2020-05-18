@@ -20,7 +20,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     @active_lesson = @active_session.op_lession
     
     if @active_lesson && @active_lesson.thumbnail.attached?
-      @thumbnail = @active_lesson.thumbnail.service_url
+      @thumbnail = url_for(@active_lesson.thumbnail)
     else
       @thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
     end
@@ -73,6 +73,24 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     schedules = User::OpenEducat::OpTeachersService.teaching_schedule(@sessions, params)
     
     render json: {schedules: schedules}
+  end
+
+  def checkin_report
+    result = User::OpenEducat::OpTeachersService.checkin_report @teacher
+
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/dashboards/teacher/js/checkin_report', locals: { reports: result } }
+    end
+  end
+
+  def attendance_report
+    report = User::OpenEducat::OpTeachersService.attendance_report @teacher
+    
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/dashboards/teacher/js/attendance_report', locals: { report: report } }
+    end
   end
 
   private

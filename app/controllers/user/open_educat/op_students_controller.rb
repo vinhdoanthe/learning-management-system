@@ -100,7 +100,17 @@ module User
         redirect_error_site(e)
       end
 
-
+      def attendance_report
+        return if @op_student.nil?
+        report_objs = User::OpenEducat::OpStudentsService.get_attendance_report @op_student.id
+        respond_to do |format|
+          format.html
+          format.js {
+            # Render here
+            render 'social_community/dashboards/student/js/attendance_report', :locals => {:report_objects => report_objs}
+          }
+        end
+      end
       # Lấy các thông tin để hiển thị cho trang Public Profile
       # Return
       # - user

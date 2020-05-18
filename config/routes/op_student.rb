@@ -16,6 +16,7 @@ namespace :user do
       get 'filter_subject_homework', action: 'filter_subject_homework', as: 'filter_subject_homework'
       get 'filter_batch_homework', action: 'filter_batch_homework', as: 'filter_batch_homework'
       get 'filter_course_homework', action: 'filter_course_homework', as: 'filter_course_homework'
+      get 'attendance_report', action: 'attendance_report', as: 'attendance_report'
     end
   end
 end

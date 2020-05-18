@@ -1,0 +1,43 @@
+// Variables: report_objects
+$('#attendance_report').html("<%= escape_javascript(render :partial => 'social_community/dashboards/student/attendance_report', :locals => {report_objects: report_objects}) %>")
+
+$(document).ready(function(){
+  <% report_objects.each_with_index do |object, index| %>
+      var chartDiv = $("#barChart<%= index %>");
+  $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase;">Lớp: <span style="color: #5DC2A7"> <%= object[:course_name] %></span> | Học phần: <%= object[:subject_level] %></h4>')
+  var myChart = new Chart(chartDiv, {
+    type: 'pie',
+    data: {
+      labels: ["Chưa diễn ra", "Buổi bị huỷ", "Có đi học", "Vắng mặt"],
+      datasets: [
+        {
+          data:<%= object[:count].values %>,
+          backgroundColor: [
+            "#FFCE56",
+            "#E7E9ED",
+            "#4BC0C0",
+            "#FF6384"
+          ]
+        }]
+    },
+    options: {
+      title: {
+        display: true,
+        fontColor: '#5DC2A7',
+        fontSize: 15
+      },
+      legend: {
+        position: 'bottom',
+        align: 'start',
+        labels: {
+          boxWidth: 20,
+          padding: 20,
+          fontFamily: 'Montserrat-Medium'
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+    }
+  });
+    <% end %>
+})

@@ -19,8 +19,12 @@ class User::Account::User < ApplicationRecord
   has_many :redeem_transactions
   has_many :user_notifications
   has_many :users, class_name: 'User::Account::User', foreign_key: 'parent_account_id'
+  has_many :user_posts, class_name: 'SocialCommunity::Feed::UserPost'
+  has_many :sc_posts, :through => :user_posts, class_name: 'SocialCommunity::Feed::Post'
 
   belongs_to :avatar, required: false
+  
+  acts_as_target # User as target for Activity Notification 
 
   enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
 

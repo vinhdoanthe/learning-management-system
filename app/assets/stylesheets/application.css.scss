@@ -103,16 +103,12 @@ button:disabled {
 }
 .owl-prev i, .owl-next i {color: #007791; padding: 0 !important; font-size: 20px}
 
-ul.header-menu.nav.navbar-nav li {
-  max-height: 48px !important;
-}
 
 ul.header-menu.nav.navbar-nav li a {
   max-height: 48px !important;
 }
 
 ul.header-menu.nav.navbar-nav li span {
-  line-height: 48px !important;
   margin-right: 15px;
 }
 
@@ -199,4 +195,42 @@ ul.header-menu.nav.navbar-nav li span {
 
 .active_subject {
   background: #5DC2A7 !important;
+}
+
+.clockdiv{
+font-family: sans-serif;
+    color: #000;
+    display: inline-block;
+    font-family: 'Montserrat-Bold';
+    text-align: center;
+    font-size: 14px;
+}
+
+.clockdiv > div{
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.clockdiv div > span{
+	padding: 8px;
+    border-radius: 3px;
+	background-image: -webkit-linear-gradient(top left, #5DC2A7, #FCF055);
+	background-image: -o-linear-gradient(top left, #5DC2A7, #FCF055);
+	background-image: linear-gradient(to bottom right, #5DC2A7, #FCF055);
+    display: inline-block;
+}
+
+.smalltext{
+	padding-top: 5px;
+	font-size: 16px;
+}
+
+.noti_teacher_name {
+  font-weight: 600;
+  color: #5DC2A7
+}
+
+.noti_course_name {
+  font-weight: 600;
+  color: #5DC2A7;
 }

@@ -100,7 +100,6 @@ module Sale
 
         orders_export.append order_export
       end
-      # binding.pry
 
       p = Axlsx::Package.new
       wb = p.workbook
@@ -115,7 +114,6 @@ module Sale
       end
       file_name = 'export.xlsx'
       p.serialize(file_name)
-      # binding.pry
     end
   end
 end

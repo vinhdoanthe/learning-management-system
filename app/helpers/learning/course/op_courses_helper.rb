@@ -3,9 +3,10 @@ module Learning
     module OpCoursesHelper
       def get_description(course)
         return '' if course.nil?
+        
         course_descriptions = course.course_description
-        # binding.pry
         return '' if course_descriptions.nil?
+        
         course_description = course_descriptions[0]
         if course_description.nil?
           return ''

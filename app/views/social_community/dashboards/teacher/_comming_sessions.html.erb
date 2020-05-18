@@ -1,0 +1,48 @@
+<div class="panel-content" style="padding-bottom:0">
+  <div class="bnd-title">
+    <label class="filter-title">LỊCH DẠY TIẾP THEO: <span class="color-16BD56"><%= coming_soon_sessions.blank? ? ' KHÔNG CÓ LỊCH DẠY TIẾP THEO' : '' %></span></label>
+  </div>
+
+  <% unless coming_soon_sessions.blank? %>
+    <% coming_soon_sessions.each_with_index do |coming_soon_session, index| %>
+      <% start = coming_soon_session.start_datetime %>
+      <div class="bnd-time text-center" style="border-bottom: 2px solid #dcdcdc">
+        <div class="bnd-text">
+          <p class="font-bold color-000 f12 text-center">
+          <%= coming_soon_session.batch_code %> <span style="color: #F16357;"><%= start.strftime('%H:%M') %> </span>
+          <span class="color-939393">đến</span> 
+          <span style="color: #F16357;"> <%= coming_soon_session.end_datetime.strftime('%H:%M') %> </span>|  
+          <span class="font-regular"><%= (get_week_day start.strftime('%A'))%></span>, <%= start.day.to_s %>/<%= start.month.to_s %>/<%= start.year.to_s %> 
+        </p>
+        <% company = Common::ResCompany.where(id: coming_soon_session.company_id).first %>
+        <% if company.present? %>
+          <p class="text-center">
+          tại cơ sở: <span class="font-bold"><%= company.name %></span>
+          </p>
+        <% end %>
+        </div>
+        <div class="bnd-clock clockdiv" id="clockdiv<%= index %>">
+          <div>
+            <span class="days"></span>
+          </div>
+          <div>
+            <span class="hours"></span>
+          </div>
+          <div>
+            <span class="minutes"></span>
+          </div>
+          <div>
+            <span class="seconds"></span>
+          </div>
+        </div>
+        <br/>
+        <a href='/user/open_educat/op_teacher/teacher_class_detail?batch_id=<%= coming_soon_session.batch_id %>' class='link-other color-5DC2A7 m-t-10'>Vào lớp</a>
+        <!-- <%#= link_to 'Vào lớp', user_open_educat_op_students_batch_detail_path(coming_soon_session[:batch_id]), :class => 'link-other color-5DC2A7 m-t-10' %> -->
+      </div>
+      <%= javascript_tag "initializeClock('clockdiv#{ index }', #{start.to_json.html_safe} );", "data-turbolinks-track" => true %>
+    <% end %>
+        <div class="bnd-noti">
+          <a href="/user/open_educat/teacher_schedule" class="pull-right link-all">Xem tất cả</a>
+        </div>
+  <% end %>
+</div>

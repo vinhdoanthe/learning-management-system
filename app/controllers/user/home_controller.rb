@@ -9,7 +9,7 @@ class User::HomeController < ApplicationController
       elsif current_user.is_parent?
         redirect_to user_parent_selection_path
       elsif current_user.is_teacher?
-        redirect_to user_teacher_class_path
+        redirect_to social_community_teacher_dashboard_path
       elsif current_user.is_admin?
         redirect_to rails_admin_path
       end

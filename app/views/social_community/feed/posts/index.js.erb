@@ -1,0 +1,21 @@
+// Variables: feeds,next_time_offset
+$('#homeFeeds').append('<%= j render :partial => 'social_community/dashboards/shared/feeds', :locals => {feeds: @feeds} %>');
+
+$('#infinitive-scrolling').attr('date-time-offset','<%= @next_time_offset %>');
+
+date_time_offset = $('#infinitive-scrolling').attr('date-time-offset');
+console.log('Return date_time_offset:')
+console.log(date_time_offset);
+if (date_time_offset != 0  && $('#homeFeeds').height() < $(window).height()) {
+  $('#infinitive-scrolling').attr('date-time-offset', '0');
+  $.ajax({
+    method: 'GET',
+    url: '/social_community/home_feeds',
+    data: {
+      time_offset_epoch: date_time_offset,
+      authenticity_token: $('[name="csrf-token"]')[0].content
+    },
+    dataType: 'script'
+  }) 
+}
+

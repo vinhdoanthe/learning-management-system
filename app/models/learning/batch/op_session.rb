@@ -58,6 +58,20 @@ module Learning
           att_sheet.picture_link
         end
       end
+
+      def done?
+        return (state == Learning::Constant::Batch::Session::STATE_DONE)
+      end
+
+      def tobe?
+        return (state == Learning::Constant::Batch::Session::STATE_DRAFT \
+               or state == Learning::Constant::Batch::Session::STATE_CONFIRM)
+
+      end
+
+      def cancelled?
+        return (state == Learning::Constant::Batch::Session::STATE_CANCEL)
+      end
     end
   end
 end

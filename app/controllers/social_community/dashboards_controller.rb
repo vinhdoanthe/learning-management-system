@@ -15,6 +15,34 @@ class SocialCommunity::DashboardsController < ApplicationController
     # Load leaders board
   end
 
+  # get posts related to users
+  # Params:
+  # user
+  # time_offset
+  # Return:
+  # posts
+  # next_time_offset
+  def home_feeds
+#    if current_user.is_student?    
+      if params[:time_offset_epoch].present?
+        # binding.pry
+        time_offset_epoch = DateTime.parse(params[:time_offset_epoch])
+        p time_offset_epoch
+      else
+        time_offset_epoch = DateTime.now
+      end
+      @feeds, @next_time_offset = SocialCommunity::Feed::PostsService.fetch_feeds(current_user.id, time_offset_epoch) 
+ #   elsif current_user.is_teacher?
+      # TODO
+   # end
+
+    respond_to do |format|
+      format.js {
+        render 'social_community/feed/posts/index'
+      }
+    end
+  end
+
   def albums_with_comments
     if current_user.is_student?
       albums_with_comments = SocialCommunity::DashboardsService.get_student_albums_with_comments current_user.student_id
@@ -62,5 +90,15 @@ class SocialCommunity::DashboardsController < ApplicationController
 
   def teacher_dashboard
 
+  end
+
+  def teacher_coming_soon_sessions
+    teacher = current_user.op_faculty
+    coming_soon_sessions = teacher.op_sessions.where(start_datetime: Time.now..(Time.now + 30.days)).order(start_datetime: :ASC).limit(3)
+
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/dashboards/teacher/js/comming_soon', locals: { coming_soon_sessions: coming_soon_sessions } }
+    end
   end
 end

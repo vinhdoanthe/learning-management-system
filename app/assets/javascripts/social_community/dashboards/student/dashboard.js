@@ -1,22 +1,15 @@
 // JavaScript code for Student Dasboard
-
-// $("img").lazyload();
-
 // On page loaded: call to get feed content
 $(document).ready(function(){
-	get_feed_content();
+  get_coming_soon_session();
 	get_noti_content();
-	get_new_user()
+	get_new_user();
+  get_attendance_report();
 })
 
-// Catch events
-function get_feed_content(){
-	$.ajax({
-		method: 'GET',
-		url: '/social_community/albums_with_comments',
-		dataType: 'script'
-	})
 
+// Catch events
+function get_coming_soon_session(){
 	$.ajax({
 		method: 'GET',
 		url: '/social_community/student_coming_soon_session',
@@ -38,4 +31,12 @@ function get_new_user(){
 		url: '/social_community/new_user',
 		dataType: 'script'
 	})
+}
+
+function get_attendance_report() {
+  $.ajax({
+    method: 'GET',
+    url: '/user/open_educat/op_students/attendance_report',
+    dataType: 'script'
+  })
 }
