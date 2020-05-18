@@ -5,7 +5,12 @@ class ActionDispatch::Routing::Mapper
 end
 
 Rails.application.routes.draw do
-  notify_to :users, controller: 'notification/user/user_notifications'
+  scope :user do
+    scope :account do
+      notify_to 'users', controller: 'notification/user/user_notifications'
+    end
+  end
+
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'user/home#dashboard'

@@ -10,7 +10,7 @@
     <div class="header-right">
         <ul class="header-menu nav navbar-nav">
             <% if current_user.is_student? %>
-            <li class="dropdown" id="teky-coin">
+            <li class="dropdown" id="teky-coin" style='height: 48px'>
                 <span class="teky-coin-star">
                     <%= image_tag "global/images/star.png", style:"width:25px;height:24px;"%>
                     &nbsp <%= number_with_delimiter(current_user.coin.to_i, delimiter: ".") %>
