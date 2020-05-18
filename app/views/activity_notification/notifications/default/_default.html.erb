@@ -1,7 +1,7 @@
 <% content_for :notification_content, flush: true do %>
   <div class='notification_list <%= notification.opened? ? "opened" : "unopened" %>'>
     <div class="notification_list_cover"></div>
-    <div class="list_image"></div>
+    <div class="list_image"><img src='<%= get_avatar %>' ></div>
     <div class="list_text_wrapper">
     <p class="list_text">
     <%= (get_feed_content notification).html_safe %>
@@ -131,7 +131,6 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: #979797;
   }
   .notification_list .list_text_wrapper {
     float: left;
