@@ -114,8 +114,6 @@ GEM
     bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
       sassc (>= 2.0.0)
-    bootstrap-will_paginate (1.0.0)
-      will_paginate
     bson (4.8.2)
     builder (3.2.4)
     byebug (11.1.1)
@@ -150,7 +148,6 @@ GEM
     caxlsx_rails (0.6.2)
       actionpack (>= 3.1)
       caxlsx (>= 3.0)
-    chartkick (3.3.1)
     childprocess (3.0.0)
     chronic (0.10.2)
     coderay (1.1.2)
@@ -370,8 +367,6 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    simple_calendar (2.3.0)
-      rails (>= 3.0)
     spreadsheet (1.2.6)
       ruby-ole (>= 1.0)
     spring (2.1.0)
@@ -418,7 +413,6 @@ GEM
     websocket-extensions (0.1.4)
     whenever (1.0.0)
       chronic (>= 0.6.3)
-    will_paginate (3.3.0)
     xmlrpc (0.3.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -435,7 +429,6 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   bootstrap-sass
-  bootstrap-will_paginate
   byebug
   capistrano (~> 3.11)
   capistrano-passenger (~> 0.2.0)
@@ -443,7 +436,6 @@ DEPENDENCIES
   capistrano-rbenv (~> 2.1, >= 2.1.4)
   capybara (>= 2.15)
   caxlsx_rails
-  chartkick
   ckeditor!
   composite_primary_keys (~> 12.0)
   config
@@ -464,7 +456,6 @@ DEPENDENCIES
   rails_admin (~> 2.0)
   sass-rails (~> 5)
   selenium-webdriver
-  simple_calendar (~> 2.0)
   spreadsheet (~> 1.2, >= 1.2.6)
   spring
   spring-watcher-listen (~> 2.0.0)
@@ -475,7 +466,6 @@ DEPENDENCIES
   webdrivers
   webpacker (~> 4.0)
   whenever
-  will_paginate
   xmlrpc
 
 RUBY VERSION

@@ -12,7 +12,7 @@ class SocialCommunity::Feed::PostsService
 
     user = User::Account::User.where(id: user_id).first
     unless user.nil?
-      posts = user.sc_posts.where('sc_posts.created_at < ?', time_offset_epoch).limit(1)
+      posts = user.sc_posts.where('sc_posts.created_at < ?', time_offset_epoch).order(created_at: :DESC).limit(1)
       unless posts.blank?
         next_offset_epoch = posts.last.created_at
       end

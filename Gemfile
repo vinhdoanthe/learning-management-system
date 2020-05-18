@@ -19,11 +19,11 @@ gem 'composite_primary_keys', '~> 12.0'
 gem 'activity_notification'
 
 # Pagination
-gem 'will_paginate'
-gem 'bootstrap-will_paginate'
+# gem 'will_paginate'
+# gem 'bootstrap-will_paginate'
 gem 'bootstrap-sass'
 # Chart for Reporting
-gem "chartkick"
+# gem "chartkick"
 
 # Image processing
 gem "aws-sdk-s3", require: false
@@ -115,5 +115,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem "simple_calendar", "~> 2.0"
+# gem "simple_calendar", "~> 2.0"
 gem 'spreadsheet', '~> 1.2', '>= 1.2.6'
