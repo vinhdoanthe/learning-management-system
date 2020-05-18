@@ -1,23 +1,32 @@
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title" style = "text-transform:uppercase;">Báo cáo buổi học</label>
+    <label class="filter-title" style = "text-transform:uppercase;">Báo cáo chuyên cần</label>
   </div>
-  <div class="owl-carousel owl-theme">
-    <% report_objects.each_with_index do |report_object, index| %>
-      <div class='item'>
-        <div id='report_name<%= index %>'>
+  <% if report_objects.empty? %>
+    <div>
+      <canvas width='400' height='400'></canvas>
+    <div class='no-checkin-data' style="position: absolute; top: 50%; left: 10%; text-align: center; width: 80%;">
+      <p style='text-align: center;'>Chưa có thông tin chuyên cần</p>
+    </div>
+    </div>
+  <% else %>
+    <div class="owl-carousel owl-theme">
+      <% report_objects.each_with_index do |report_object, index| %>
+        <div class='item'>
+          <div id='report_name<%= index %>'>
+          </div>
+          <canvas id="barChart<%= index %>" width="400" height="400"></canvas>
         </div>
-      <canvas id="barChart<%= index %>" width="400" height="400"></canvas>
-        </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 <script>
-$(document).ready(function(){
-  $('.owl-carousel').owlCarousel({
-    items: 1,
-    margin:10,
-    nav:true
+  $(document).ready(function(){
+    $('.owl-carousel').owlCarousel({
+      items: 1,
+      margin:10,
+      nav:true
+    })
   })
-})
 </script>
