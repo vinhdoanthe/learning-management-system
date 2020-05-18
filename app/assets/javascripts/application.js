@@ -8,7 +8,7 @@
 //=require custom_js/learning.js
 //=require rails_admin/custom/ckeditor_ajax.js
 //= require jquery.lazyload
-a/= require bootstrap
+//= require bootstrap
 //
 $(document).ready(function () {
 	setTimeout(function () {
