@@ -21,6 +21,11 @@ $(document).ready(function(){
         }]
     },
     options: {
+      plugins: {
+        labels: {
+          render: 'value',
+        }
+      },
       title: {
         display: true,
         fontColor: '#5DC2A7',
@@ -36,7 +41,6 @@ $(document).ready(function(){
         }
       },
       responsive: true,
-      maintainAspectRatio: false,
     }
   });
     <% end %>
