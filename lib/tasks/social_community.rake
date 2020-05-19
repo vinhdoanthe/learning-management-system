@@ -15,6 +15,7 @@ namespace :social_community do
       ActiveRecord::Base.transaction do
         photo_post = photo_service.create_photo_post user
         subscribed_users = SocialCommunity::Feed::PhotoPostsService.subscribed_users session.id
+        subscribed_users << user.id
         SocialCommunity::Feed::UserPostsService.create_multiple photo_post.id, subscribed_users
         photos.each do |photo|
           photo.update(sc_post_id: photo_post.id)
