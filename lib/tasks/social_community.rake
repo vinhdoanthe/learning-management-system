@@ -12,15 +12,20 @@ namespace :social_community do
       session = Learning::Batch::OpSession.where(id: session_id).first
       photos = SocialCommunity::Photo.where(session_id: session_id, sc_post_id: nil).to_a
       user = User::Account::User.where(faculty_id: session.faculty_id).first
-      ActiveRecord::Base.transaction do
-        photo_post = photo_service.create_photo_post user
-        subscribed_users = SocialCommunity::Feed::PhotoPostsService.subscribed_users session.id
-        subscribed_users << user.id
-        SocialCommunity::Feed::UserPostsService.create_multiple photo_post.id, subscribed_users
-        photos.each do |photo|
-          photo.update(sc_post_id: photo_post.id)
+      if !photos.empty? and !session.nil? and !user.nil?
+        created_at = photos[0].created_at
+        updated_at = photos[0].updated_at
+        ActiveRecord::Base.transaction do
+          photo_post = photo_service.create_photo_post user
+          photo_post.update(created_at: created_at, updated_at: updated_at)
+          subscribed_users = SocialCommunity::Feed::PhotoPostsService.subscribed_users session.id
+          subscribed_users << user.id
+          SocialCommunity::Feed::UserPostsService.create_multiple photo_post.id, subscribed_users
+          photos.each do |photo|
+            photo.update(sc_post_id: photo_post.id)
+          end
+          photo_post.create_notifications
         end
-        photo_post.create_notifications
       end
     end 
   end
