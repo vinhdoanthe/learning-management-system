@@ -43,19 +43,20 @@ namespace :social_community do
         post.update(batch_id: session.batch_id)
         next
       else
-        post = SocialCommunity::Feed::RewardPost.new
-        post.posted_by = reward.rewarded_by
-        post.batch_id = session.batch_id
-        post.created_at = reward.created_at
-        post.updated_at = Time.now
+        ActiveRecord::Base.transaction do
+          post = SocialCommunity::Feed::RewardPost.new
+          post.posted_by = reward.rewarded_by
+          post.batch_id = session.batch_id
+          post.created_at = reward.created_at
+          post.updated_at = Time.now
+          post.save!
+          binding.pry
+          reward.update!(sc_post_id: post.id)
+          SocialCommunity::Feed::UserPostsService.create_multiple post.id, [reward.rewarded_to, reward.rewarded_by]
+          post.create_notifications
+          puts "Done #{ index + 1}/#{ count }"
+        end
       end
-
-      if post.save
-        reward.update(sc_post_id: post.id)
-        SocialCommunity::Feed::UserPostsService.create_multiple post.id, [reward.rewarded_to, reward.rewarded_by]
-        post.create_notifications
-      end
-
     end
   end
 
