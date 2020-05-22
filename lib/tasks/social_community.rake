@@ -29,4 +29,54 @@ namespace :social_community do
       end
     end 
   end
+
+  desc 'Create session student reward post'
+  task :create_session_student_reward_posts, [] => :environment do |t, args|
+    count = Learning::Batch::SessionStudentReward.count
+    Learning::Batch::SessionStudentReward.all.each_with_index do |reward, index|
+      puts "Working on #{ index + 1}/#{ count }"
+      session = Learning::Batch::OpSession.where(id: reward.session_id).first
+      next if session.blank?
+      if reward.sc_post_id.present?
+        post = SocialCommunity::Feed::Post.where(id: reward.sc_post_id).first
+        next if (!post.blank? && post.batch_id.present?)
+        post.update(batch_id: session.batch_id)
+      else
+        ActiveRecord::Base.transaction do
+          post = SocialCommunity::Feed::RewardPost.new
+          post.posted_by = reward.rewarded_by
+          post.batch_id = session.batch_id
+          post.created_at = reward.created_at
+          post.updated_at = Time.now
+          post.save!
+          reward.update!(sc_post_id: post.id)
+          SocialCommunity::Feed::UserPostsService.create_multiple post.id, [reward.rewarded_to, reward.rewarded_by]
+          post.create_notifications
+          puts "Done #{ index + 1}/#{ count }"
+        end
+      end
+    end
+  end
+
+  desc 'Update batch_id for post'
+  task :update_batch_id_post, [] => :environment do |t, args|
+    count = SocialCommunity::Feed::Post.count
+    SocialCommunity::Feed::Post.all.each_with_index do |post, index|
+      session = ''
+      if post.type == "SocialCommunity::Feed::RewardPost"
+        reward = post.session_student_reward
+        next if reward.blank?
+        session = Learning::Batch::OpSession.where(id: reward.session_id).first
+      elsif post.type == "SocialCommunity::Feed::PhotoPost"
+        photo = post.photos.first
+        next if photo.blank?
+        session = Learning::Batch::OpSession.where(id: photo.session_id).first
+      end
+
+      next if session.blank?
+      post.update(batch_id: session.batch_id)
+      puts "Working on #{ index + 1}/#{ count }"
+    end
+  end
+
 end

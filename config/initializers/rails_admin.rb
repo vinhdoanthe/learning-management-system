@@ -27,7 +27,7 @@ RailsAdmin.config do |config|
                               Learning::Course::OpCourse Learning::Course::CourseDescription Learning::Course::OpLession 
                               Learning::Batch::OpBatch Learning::Batch::OpSession 
                               Learning::Material::Question Learning::Material::QuestionChoice Learning::Material::LearningMaterial
-                              User::Account::User User::OpenEducat::OpStudent User::Account::Avatar
+                              User::Account::User User::OpenEducat::OpStudent User::OpenEducat::OpFaculty User::Account::Avatar
                               Learning::Homework::UserQuestion
                               Notification::BroadcastNoti)
 

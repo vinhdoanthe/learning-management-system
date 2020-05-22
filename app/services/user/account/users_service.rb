@@ -78,4 +78,23 @@ class User::Account::UsersService
     teacher_user.email = res_user.login
     teacher_user.save
   end
+  
+  def self.create_faculty_user teacher
+    existed_teacher = User::Account::User.where(faculty_id: teacher.id).first
+    return if existed_teacher
+    
+    username = "gv#{teacher.id}"
+    puts username
+    teacher_user = User::Account::User.new
+    return if User::Account::User.where(username: username).first.present?
+    
+    teacher_user.username = username
+    teacher_user.password = 'TekyAcademy'
+    teacher_user.account_role = User::Constant::TEACHER
+    teacher_user.faculty_id = teacher.id
+    res_user = teacher.res_user
+    return if res_user.blank?
+    teacher_user.email = res_user.login
+    teacher_user.save
+  end
 end
