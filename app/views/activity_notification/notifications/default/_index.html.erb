@@ -11,7 +11,7 @@
     <div id="vuong" style=" position: absolute; width: 25px; height: 25px; background: #2b2e33;top: -7px;transform: rotate(45deg);right: 30px;"></div>
     <div class="notification_header_wrapper">
       <p class="notification_header_menu">
-      <%=  @target.unopened_notification_count(parameters) %> Thông báo chưa xem</p>
+      <%=  @target.unopened_notification_count(parameters) %> <%= t('notification.pending') %></p>
       </p>
     </div>
     <div class="notifications">
@@ -20,7 +20,7 @@
     <%= link_to notifications_path_for(@target, parameters.slice(:routing_scope, :devise_default_routes)) do %>
       <div class="notification_link_wrapper">
         <p class="notification_link">
-          Tất cả thông báo
+        <%= t('notification.all') %>
         </p>
       </div>
     <% end %>

@@ -1,12 +1,12 @@
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title" style = "text-transform:uppercase;">Báo cáo chuyên cần</label>
+    <label class="filter-title" style = "text-transform:uppercase;"><%= t('report.attendance') %></label>
   </div>
   <% if report_objects.empty? %>
     <div>
       <canvas width='400' height='400'></canvas>
     <div class='no-checkin-data' style="position: absolute; top: 50%; left: 10%; text-align: center; width: 80%;">
-      <p style='text-align: center;'>Chưa có thông tin chuyên cần</p>
+      <p style='text-align: center;'><%= t('report.no_attendance') %></p>
     </div>
     </div>
   <% else %>

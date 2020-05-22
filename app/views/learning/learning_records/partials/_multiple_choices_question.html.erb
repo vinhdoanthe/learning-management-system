@@ -1,6 +1,6 @@
 <div class="fco-ques">
   <div class="fcoq-tit">
-    <label for="">NỘI DUNG BÀI TẬP SỐ <%= index.to_i + 1%> (Multiple choices):</label>
+    <label for=""><%= t('homework.homework.content') %> <%= index.to_i + 1%> (Multiple choices):</label>
     <p><%= question.question.present? ? question.question.html_safe : '' %></p>
     <input type="hidden" id='question_id' value="<%= question.id %>">
     <input type="hidden" id='user_question_id' value="<%= user_question.id %>">
@@ -8,7 +8,7 @@
 </div>
 <div class="fco-answ">
   <div class="fcoa-tit">
-    <label for="">Trả lời</label>
+    <label for=""><%= t('homework.question.answer') %></label>
   </div>
   <div class="fcoa-con">
     <% question.question_choices.order(created_at: :ASC).each_with_index do |choice, i| %>

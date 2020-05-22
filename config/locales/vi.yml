@@ -1,2 +1,123 @@
 vi:
-  hello: 'Xin chào'
+  button:
+    see_all: "Xem tất cả"
+    see_more: "Xem thêm"
+    return: "Quay lại"
+    update: "Cập nhật"
+    cancel: "Huỷ"
+    back: "Quay lại"
+  select:
+    all: "Tất cả"
+  login:
+    login: "Đăng nhập"
+    forgot_password: "Quên mật khẩu?"
+    user_name: "Tên đăng nhập"
+    password: "Mật khẩu"
+    hotline: "Hotline lãnh đạo"
+    reset_password: "RESET MẬT KHẨU"
+    reset_link: "Gửi link reset mật khẩu"
+    return_login: "Đã có tài khoản? Đăng nhập"
+  topbar:
+    coin: "TEKY ĐỒNG"
+  sidebar:
+    config: "Cấu hình"
+    noti: "Thông báo"
+    my_class: "Lớp học của tôi"
+    timetable: "Thời khoá biểu"
+    homework: "Bài tập và ôn bài"
+    redeem: "Đổi điểm lấy quà"
+    teaching_schedule: "Lịch giảng dạy"
+    class_list: "Danh sách lớp học"
+    marking: "Chấm bài"
+  config:
+    general_info: "Thông tin chung"
+    parent_info: "Thông tin phụ huynh"
+    study_progress: "Quá trình học tâp"
+    change_pass: "Thay đổi mật khẩu"
+    full_name: "Họ và tên"
+    gender: "Giới tính"
+    birthday: "Ngày sinh"
+    nickname: "Nickname"
+    nationality: "Quốc tịch"
+    center: "Học viện"
+    address: "Địa chỉ"
+    district: "Quận/Huyện"
+    nation: "Quốc gia"
+    relation: "Quan hệ"
+    mobile: "Di động"
+  notification:
+    title: "Thông báo từ Học viện Teky"
+    dashboard: "Thông báo"
+    new_noti: 'thông báo mới'
+    all: "Tất cả thông báo"
+    pending: "Tin nhắn chưa xem"
+  report:
+    attendance: "BÁO CÁO CHUYÊN CẦN"
+    no_attendance: "Chưa có thông tin chuyên cần"
+    checkin: "BÁO CÁO ĐIỂM DANH"
+  learning:
+    b: "Lớp"
+    class: "Lớp"
+    subject: "Học phần"
+    lesson: "Buổi học"
+    no_lesson: "Chưa có buổi học nào"
+    course: "Khoá học"
+    attendance: "Điểm danh"
+    batch:
+      name: "Lớp học"
+      classroom: "Phòng học"
+      timetable: "Lịch học"
+      type: "Loại lớp học"
+      center: "Trung tâm"
+      code: "Mã lớp"
+      status:
+        studying: "đang học"
+        stop: "nghỉ học"
+        reversation: 'bảo lưu'
+        update: 'Đang cập nhật'
+    session:
+      no_session: "Không có buổi học nào"
+      student_coming: "LỊCH HỌC TIẾP THEO"
+      teacher_coming: "LỊCH DẠY TIẾP THEO"
+      class_time: "THỜI GIAN VÀO LỚP TIẾP THEO"
+      to: "đến"
+      at: "tại cơ sở"
+  my_class:
+    information: "Xem thông tin"
+    come_in: "Vào lớp"
+    detail:
+      class_info: "Thông tin lớp học"
+      progress:
+        name: "Quá trình học tập"
+        done_html: "Lớp học <span class='color-16BD56'>đã diễn ra</span>"
+        no_lesson: "Chưa có buổi học nào"
+        coming_html: "Buổi học <span class='color-FFC400'>Chưa diễn ra</span>"
+        cancel_html: "Buổi học <span class='color-F16357'>đã hủy</span>"
+        comming_soon_html: "Buổi học <span class='color-F16357'>Sắp diễn ra</span>"
+        end: "Đã kết thúc"
+      tooltip:
+        feedback: "Đánh giá buổi học"
+        homework: "Làm bài tập về nhà"
+        evaluation: "Nhận xét của giảng viên"
+        video: "Ôn bài qua video"
+        picture: "Hình ảnh lớp học"
+  homework:
+    name: "Bài tập về nhà"
+    review: "Ôn bài"
+    no_homework: "Chưa có bài tập"
+    doing: "Đang làm"
+    done: "Đã làm"
+    submit: "Nộp bài tập"
+    question:
+      content: "NỘI DUNG BÀI TẬP SỐ "
+      answer: "Trả lời"
+      placeholder: "Nhập nội dung câu trả lời"
+      comment: "Giảng viên đánh giá"
+  user:
+    teacher: "Giảng viên"
+    student:
+      name: "Học viên"
+      code: "Mã học viên"
+      classmate: "Bạn cùng lớp"
+      registered_subject: "Học phần đã đăng ký"
+      new: "Các bạn học sinh mới"

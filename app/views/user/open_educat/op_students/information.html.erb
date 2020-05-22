@@ -13,7 +13,7 @@
       <div class="ph-text">
         <h3 class="color-FCF055 m-0"><%= current_user.username %></h3>
         <label for=""><%= student.full_name %></label>
-        <p><strong class="color-FCF055">Mã học viên:</strong> <%= student.code %></p>
+        <p><strong class="color-FCF055"><%= t('user.student.code') %>:</strong> <%= student.code %></p>
       </div>
     </div>
   </div>
@@ -21,9 +21,9 @@
 
     <div class="panel-content">
       <ul class="nav nav-tabs nav-primary tab-menu">
-        <li class="active"><a href="#tab2_1" data-toggle="tab">Thông tin chung</a></li>
-        <li class=""><a href="#tab2_2" data-toggle="tab">Thông tin phụ huynh</a></li>
-        <li class=""><a href="#tab2_3" data-toggle="tab">Quá trình học tập</a></li>
+        <li class="active"><a href="#tab2_1" data-toggle="tab"><%= t('config.general_info') %></a></li>
+        <li class=""><a href="#tab2_2" data-toggle="tab"><%= t('config.parent_info') %></a></li>
+        <li class=""><a href="#tab2_3" data-toggle="tab"><%= t('config.study_progress') %></a></li>
 <!--        <li class=""><a href="#tab2_4" data-toggle="tab">Bài tập về nhà</a></li>-->
 <!--        <li class=""><a href="#tab2_5" data-toggle="tab">Quà tặng</a></li>-->
 <!--        <li class=""><a href="#tab2_6" data-toggle="tab">Học phí</a></li>-->
@@ -33,17 +33,17 @@
           <%= form_for :user, url: user_account_users_student_update_nickname_path, :html => {:class => 'FlowupLabels'} do |f| %>
             <div class="row">
               <div class="col-md-12 text-center">
-                <%= link_to "Đổi mật khẩu", user_account_users_change_password_path, class: 'change-password' %>
+                <%= link_to "#{ t('config.change_pass') }", user_account_users_change_password_path, class: 'change-password' %>
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
-                  <label class='fl_label' for='rf_name'>Họ và tên:</label>
+                  <label class='fl_label' for='rf_name'><%= t('config.full_name') %>:</label>
                   <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= student.full_name.to_s %>">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
-                  <label class='fl_label' for='rf_name'>Giới tính:</label>
+                  <label class='fl_label' for='rf_name'><%= t('config.gender') %>:</label>
                   <% if student.gender == 'f' %>
                     <input class='fl_input bg-f2f2f2' readonly id='rf_gender' value="Nữ">
                   <% elsif student.gender == 'm' %>
@@ -55,7 +55,7 @@
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
-                  <label class='fl_label' for='rf_name'>Ngày sinh:</label>
+                  <label class='fl_label' for='rf_name'><%= t('config.birthday') %>:</label>
                   <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= student.birth_date %>">
                 </div>
               </div>
@@ -68,40 +68,40 @@
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
-                  <label class='fl_label' for='rf_name'>Quốc tịch:</label>
+                  <label class='fl_label' for='rf_name'><%= t('config.nationality') %>:</label>
                   <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= get_nationality(student.id) %>">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
-                  <label class='fl_label' for='rf_name'>Học viện:</label>
+                  <label class='fl_label' for='rf_name'><%= t('config.center') %>:</label>
                   <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= student.res_company ? student.res_company.name.to_s : '' %>">
                 </div>
               </div>
               <% if res_partner %>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
-                    <label class='fl_label' for='rf_name'>Địa chỉ:</label>
+                    <label class='fl_label' for='rf_name'><%= t('config.address') %>:</label>
                     <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= res_partner ? res_partner.street : '' %>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
-                    <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
+                    <label class='fl_label' for='rf_name'><%= t('config.district') %>:</label>
                     <input class='fl_input bg-f2f2f2' readonly id='rf_name' value="<%= res_partner ? res_partner.street2 : ''%>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
-                    <label class='fl_label' for='rf_name'>Quốc gia:</label>
+                    <label class='fl_label' for='rf_name'><%= t('config.nationality') %>:</label>
                     <input class='fl_input bg-f2f2f2' id='rf_name' readonly value="<%= get_nationality(student.id) %>">
                   </div>
                 </div>
               <% end %>
             </div>
             <div class="panel-footer bg-D7DFE9 text-right ">
-              <%= link_to "Hủy", user_open_educat_op_students_information_path, class: 'btn btn-danger btn-embossed bg-F16357' %>
-              <%= f.submit "Cập nhật", class: "btn btn-primary btn-embossed bg-5DC2A7", remote: true %>
+              <%= link_to "#{ t('button.cancel') }", user_open_educat_op_students_information_path, class: 'btn btn-danger btn-embossed bg-F16357' %>
+              <%= f.submit "#{ t('button.update') }", class: "btn btn-primary btn-embossed bg-5DC2A7", remote: true %>
             </div>
           <% end %>
         </div>
@@ -111,13 +111,13 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class='fl_wrap'>
-                    <label class='fl_label' for='rf_name'>Họ và tên phụ huynh:</label>
+                    <label class='fl_label' for='rf_name'><%= t('config.full_name') %>:</label>
                     <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= res_partner ? res_partner.name : '' %> ">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
-                    <label class='fl_label' for='rf_name'>Quan hệ:</label>
+                    <label class='fl_label' for='rf_name'><%= t('config.relationship') %>:</label>
                     <input class='fl_input bg-f2f2f2' type="text" readonly id='rf_name' value="Cha/Mẹ">
                   </div>
                 </div>
@@ -129,25 +129,25 @@
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
-                    <label class='fl_label' for='rf_name'>Di động:</label>
+                    <label class='fl_label' for='rf_name'><%= t('config.mobile') %>:</label>
                     <input class='fl_input bg-f2f2f2' type='text' readonly id='rf_name' value="<%= parent.phone ? parent.phone : parent.mobile %> ">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
-                    <label class='fl_label' for='rf_name'>Địa chỉ:</label>
+                    <label class='fl_label' for='rf_name'><%= t('config.address') %>:</label>
                     <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner ? res_partner.street2 : '' %>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
-                    <label class='fl_label' for='rf_name'>Quận/Huyện:</label>
+                    <label class='fl_label' for='rf_name'><%= t('config.district') %>:</label>
                     <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner ? res_partner.city : ''%>">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
-                    <label class='fl_label' for='rf_name'>Quốc gia:</label>
+                    <label class='fl_label' for='rf_name'><%= t('config.nationality') %>:</label>
                     <input class='fl_input bg-f2f2f2' readonly type='text' id='rf_name' value="<%= res_partner.res_country ? res_partner.res_country.name : 'None' %>">
                   </div>
                 </div>

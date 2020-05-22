@@ -15,33 +15,34 @@
                     <%= image_tag "global/images/star.png", style:"width:25px;height:24px;"%>
                     &nbsp <%= number_with_delimiter(current_user.coin.to_i, delimiter: ".") %>
                 </span><span>&#9474;</span>
-                <span class="teky-coin-point"><%= number_with_delimiter(current_user.star.to_i, delimiter: ".")%></span><span class="teky-coin-text">  Teky đồng</span>
+                <span class="teky-coin-point"><%= number_with_delimiter(current_user.star.to_i, delimiter: ".")%></span><span class="teky-coin-text"><%= t('topbar.coin') %></span>
             </li>
             <% end%>
             <li class="dropdown" id="notifications-header">
               <%= render_notifications_of current_user, index_content: :with_attributes, fallback: :default %>
             </li>
             <li class="dropdown" id="language-header">
+              <% if params[:locale] == "en" %>
+                <a id="li-language" href="" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
+                    <%= image_tag "global/images/flags/usa.png", style:"width:34px;"%>
+                    <span>English</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <%= link_to (image_tag('global/images/flags/vietnam.png') + content_tag(:span, "Việt Nam")), locale:"vi" %>
+                  </li>
+                </ul>
+              <% else %>
                 <a id="li-language" href="" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
                     <%= image_tag "global/images/flags/vietnam.png", style:"width:34px;"%>
                     <span>Việt Nam</span>
                 </a>
-                <!--<ul class="dropdown-menu">
-                    <li>
-                        <a href="" data-lang="en"><%= image_tag "global/images/flags/usa.png" %><span>English</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="" data-lang="es"><%= image_tag "global/images/flags/spanish.png" %> <span>Español</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="" data-lang="fr"><%= image_tag "global/images/flags/french.png" %><span>Français</span>
-                        </a>
-                    </li>
-                </ul>-->
+                <ul class="dropdown-menu">
+                  <li>
+                    <%= link_to (image_tag('global/images/flags/usa.png') + content_tag(:span, "English")), locale:"en" %>
+                  </li>
+                </ul>
+              <% end %>
             </li>
             <li class="dropdown" id="teky-logout">
                 <%=link_to image_tag("global/images/logout.png", border: 0), user_logout_path %>

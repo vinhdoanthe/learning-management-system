@@ -1,33 +1,123 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  button:
+    see_all: "See all"
+    see_more: "See more"
+    return: "Return"
+    update: "Update"
+    cancel: "Cancel"
+    back: "Back"
+  select:
+    all: "All"
+  login:
+    login: "Login"
+    forgot_password: "Forgot password?"
+    user_name: "User Name"
+    password: "Password"
+    hotline: "Hotline"
+    reset_password: "RESET PASSWORD"
+    reset_link: "Send reset passwork link"
+    return_login: "Have account? Login"
+  topbar:
+    coin: "TEKY COIN"
+  sidebar:
+    config: "Config"
+    noti: "Notification"
+    my_class: "My class"
+    timetable: "Timetable"
+    homework: "Homework"
+    redeem: "Redeem"
+    teaching_schedule: "Teaching schedule"
+    class_list: "Class list"
+    marking: "Marking"
+  config:
+    general_info: "General information"
+    parent_info: "Parent information"
+    study_progress: "Study progress"
+    change_pass: "Change password"
+    full_name: "Full name"
+    gender: "Gender"
+    birthday: "Date of birth"
+    nickname: "Nickname"
+    nationality: "Nationality"
+    center: "Center"
+    address: "Address"
+    district: "District"
+    nation: "Nation"
+    relation: "Relation"
+    mobile: "Mobile"
+  notification:
+    title: "Notifications from Teky"
+    dashboard: "NOTIFICATIONS"
+    new_noti: 'new notifications'
+    all: "All notifications"
+    pending: "Pending notifications"
+  report:
+    attendance: "ATTENDANCE REPORT"
+    no_attendance: "No attendance infomation"
+    checkin: "CHECKIN REPORT"
+  learning:
+    class: "Class"
+    lesson: "Lesson"
+    subject: "Subject"
+    course: "Course"
+    attendance: "Attendance"
+    no_lesson: "No lesson yet"
+    batch:
+      b: "Batch"
+      type: "Batch type"
+      name: "Batch name"
+      code: "Batch code"
+      center: "Center"
+      timetable: "Timetable"
+      classroom: "Classroom"
+      status:
+        studying: "Studying"
+        stop: "stop"
+        reversation: 'reversation'
+        update: 'updating'
+    session:
+      student_coming: "NEXT CLASS"
+      teacher_coming: "NEXT TEACHING CLASS"
+      no_session: "No next class"
+      class_time: "TIME TO THE NEXT CLASS"
+      to: "to"
+      at: "at"
+  my_class:
+    information: "information"
+    come_in: "Come in"
+    detail:
+      class_info: "Class infomations"
+      progress:
+        name: "Study progress"
+        done_html: "<span class='color-16BD56'>Done</span> lesson"
+        no_lesson: "No lesson"
+        cancel_html: "<span class='color-F16357'>Cancel</span> lesson"
+        coming_html: "<span class='color-FFC400'>Coming</span> lesson"
+        comming_soon_html: "<span class='color-F16357'>Comming soon</span> lesson"
+        end: "End"
+      tooltip:
+        feedback: "Feedback"
+        homework: "Do homework"
+        evaluation: "Teacher's evaluation"
+        video: "Review by video"
+        picture: "Class pictures"
+  homework:
+    name: "Homework"
+    review: "Review"
+    no_homework: "No homework yet"
+    doing: "Doing"
+    done: "Done"
+    submit: "Submit homework"
+    question:
+      content: "QUESTION"
+      answer: "ANSWER"
+      placeholder: "Enter the answer"
+      comment: "Teacher comment"
+  user:
+    teacher: "Faculty"
+    student:
+      name: "Student"
+      code: "Student code"
+      classmate: "Classmate"
+      registered_subject: "Registered subject"
+      new: "Newest students"

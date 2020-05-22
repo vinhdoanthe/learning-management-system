@@ -1,7 +1,7 @@
 <% teacher_id = current_user.op_faculty.id if current_user.is_teacher? %>
 <% course = batch.op_course %>
 <div class="fc-header">
-  <h3><span class="color-F16357">LỚP HỌC:</span> <%= course.name %></h3>
+  <h3><span class="color-F16357 text-uppercase"><%= t('learning.batch.name') %>:</span> <%= course.name %></h3>
 </div>
 <div class="box-progress">
   <div class="row">
@@ -9,7 +9,7 @@
       <ul>
         <li>
           <%= image_tag('global/images/qr-code.png') %>
-          <p><span class="span-text">Mã lớp học: </span><%= batch.code %></p></li>
+          <p><span class="span-text"><%= t('learning.batch.code') %>: </span><%= batch.code %></p></li>
         <%# <li> %>
         <%#   <%= image_tag('global/images/calendar-4.png') %1> %>
         <%#   <p><span class="span-text">Thời gian học: </span><%= batch.start_date.strftime('%d/%m/%Y') %1> %>
@@ -19,7 +19,7 @@
           <%= image_tag('global/images/clock.png') %>
           <% time_line = batch_timeline batch %> 
 
-          <p style="display: inline-block"><span class="span-text">Lịch học: </span>
+          <p style="display: inline-block"><span class="span-text"><%= t('learning.batch.timetable') %>: </span>
           <% time_line.each_with_index do |time, i| %>
             <% if time_line.length - i != 1 %>
               <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + "; "%>
@@ -31,7 +31,7 @@
         </li>
         <li>
           <%= image_tag('global/images/professor.png') %>
-          <p><span class="span-text">Giảng viên: </span>
+          <p><span class="span-text"><%= t('user.teacher') %>: </span>
           <% if current_user.is_student? %>
             <a href=""><%= faculty_names.join(', ') %></a>
           <% elsif current_user.is_teacher? %>
@@ -45,11 +45,11 @@
       <ul>
         <li>
           <%= image_tag('global/images/Combined-Shape.png') %>
-          <p><span class="span-text">Môn học: </span><%= course.name %></p></li>
+          <p><span class="span-text"><%= t('learning.course') %>: </span><%= course.name %></p></li>
         <li>
           <%= image_tag('global/images/steps.png') %>
           <p id="subject_id_span">
-          <span class="span-text">Học phần: </span>
+          <span class="span-text"><%= t('learning.subject') %>: </span>
           <% if current_user.is_student? %>
             <% unless batch_subjects.blank? %>
               <% batch_subjects.each do |subject| %>
@@ -90,22 +90,22 @@
         <li>
           <% last_done_session_count = get_done_subject_count(batch) %>
           <%= image_tag('global/images/steps.png') %>
-          <p><span class='span-text'>Buổi học: </span> <%= last_done_session_count %>
+          <p><span class='span-text'><%= t('learning.lesson') %>: </span> <%= last_done_session_count %>
           </p>
         </li>
         <li>
           <%= image_tag('global/images/group-of-students.png') %>
           <p>
           <% batch_type = get_batch_type(batch) %>
-          <span class="span-text">Loại lớp học: </span><%= batch_type %>
+          <span class="span-text"><%= t('learning.batch.type') %>: </span><%= batch_type %>
           </p>
         </li>
         <li>
           <%= image_tag('global/images/hotel.png') %>
           <p>
-          <span class="span-text">Trung tâm: </span><a href=""><%= company_name %></a>
+          <span class="span-text"><%= t('learning.batch.center') %>: </span><a href=""><%= company_name %></a>
           <% unless classroom_name.blank? %>
-            <span class='span-text'>| (Phòng học: </span><a href=""><%= classroom_name %> </a> <span class='span-text'>)</span>
+            <span class='span-text'>| (<%= t('learning.batch.classroom') %>: </span><a href=""><%= classroom_name %> </a> <span class='span-text'>)</span>
           </p>
         <% end %>
         </li>

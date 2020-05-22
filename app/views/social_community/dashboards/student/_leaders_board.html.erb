@@ -1,6 +1,6 @@
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title" style = "text-transform:uppercase;">Các bạn học sinh mới</label>
+    <label class="filter-title" style = "text-transform:uppercase;"><%= t('user.student.new') %></label>
     <p><img style="width: 25px;" src="/global/images/star.png" alt=""></p>
   </div>
   <div class="box-student">
@@ -11,7 +11,7 @@
           <td>
             <label class="color-EB9138"><%= student.full_name %></label>
             <% if student.res_company.present? %>
-              <p>Học viện <span class="color-0654BA text-transform"><%= student.res_company.name %></span></p>
+              <p><%= t('config.center') %> <span class="color-0654BA text-transform"><%= student.res_company.name %></span></p>
             <% end %>
           </td>
           <td align="right">
