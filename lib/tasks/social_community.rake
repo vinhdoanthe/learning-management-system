@@ -39,8 +39,11 @@ namespace :social_community do
       next if session.blank?
       if reward.sc_post_id.present?
         post = SocialCommunity::Feed::Post.where(id: reward.sc_post_id).first
-        next if (!post.blank? && post.batch_id.present?)
-        post.update(batch_id: session.batch_id)
+        # next if (!post.blank? && post.batch_id.present?)
+        unless post.nil?
+          post.update(batch_id: session.batch_id)
+          SocialCommunity::Feed::UserPostsService.create_multiple post.id, [reward.rewarded_to, reward.rewarded_by]
+        end
       else
         ActiveRecord::Base.transaction do
           post = SocialCommunity::Feed::RewardPost.new
