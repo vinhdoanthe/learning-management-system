@@ -2,7 +2,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h2 class="color-fff text-transform">Danh sách thông báo</h2>
+        <h2 class="color-fff text-transform"><%= t('notification.dashboard') %></h2>
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
                     <p><%= notice.user.username %> đăng lúc <%= notice.created_at.strftime('%H:%M - %d/%m/%y') %></p> 
                   </div>
                   <div class='col-md-2'>
-                    <a data-toggle="collapse" data-parent="#notice_index" href="/notification/broadcast/read_notice?notice_id=<%= notice.id %>" data-remote='true' data-target="#notice_content_<%= index.to_s %>" style='float: right; cursor: pointer' class="toggle_notice_collapse">Xem thêm</a>
+                    <a data-toggle="collapse" data-parent="#notice_index" href="/notification/broadcast/read_notice?notice_id=<%= notice.id %>" data-remote='true' data-target="#notice_content_<%= index.to_s %>" style='float: right; cursor: pointer' class="toggle_notice_collapse"><%= t('button.see_more') %></a>
                   </div>
                   <% if read_notice? current_user, notice %>
                     <%= image_tag('unread_notice.png', class: 'notice_state') %>

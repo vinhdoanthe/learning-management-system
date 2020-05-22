@@ -1,6 +1,6 @@
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title">LỊCH HỌC  TIẾP THEO: <span class="color-16BD56"><%= coming_soon_session.nil? ? ' KHÔNG CÓ BUỔI HỌC NÀO' :  coming_soon_session[:course] %></span></label>
+    <label class="filter-title"><%= t('learning.session.student_coming') %>: <span class="color-16BD56"><%= coming_soon_session.nil? ? "#{ t('learning.session.no_session') }" :  coming_soon_session[:course] %></span></label>
   </div>
 
   <% unless coming_soon_session.nil? %>
@@ -8,11 +8,11 @@
     <div class="bnd-time text-center">
       <div class="bnd-text">
         <p class="font-bold color-000 f12 text-center">
-        THỜI GIAN VÀO LỚP TIẾP THEO <span style="color: #F16357;"><%= start.strftime('%H:%M') %> </span><span class="color-939393">đến</span> <span style="color: #F16357;"> <%= coming_soon_session[:session].end_datetime.strftime('%H:%M') %> </span>|  <span class="font-regular"><%= (get_week_day start.strftime('%A'))%></span>, <%= start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %> 
+        <%= t('learning.session.class_time') %> <span style="color: #F16357;"><%= start.strftime('%H:%M') %> </span><span class="color-939393"><%= t('learning.session.to') %></span> <span style="color: #F16357;"> <%= coming_soon_session[:session].end_datetime.strftime('%H:%M') %> </span>|  <span class="font-regular"><%= (get_week_day start.strftime('%A'))%></span>, <%= start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %> 
         </p>
         <p class="text-center">
         <%# <span>Bài 6: Ứng dụng chuyển đổi nhiệt độ</span><br /> %>
-        tại cơ sở: <span class="font-bold"><%= coming_soon_session[:company_name] %></span>
+        <%= t('learning.session.at') %>: <span class="font-bold"><%= coming_soon_session[:company_name] %></span>
         </p>
       </div>
       <div class="bnd-clock" id="clockdiv">

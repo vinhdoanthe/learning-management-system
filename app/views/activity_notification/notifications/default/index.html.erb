@@ -2,7 +2,7 @@
 <div class="notification_wrapper">
   <div class="notification_header">
     <h1>
-      Tất cả thông báo
+      <%= t('notification.all') %>
       <%= link_to open_all_notifications_path_for(@target, @index_options.slice(:routing_scope, :devise_default_routes)), method: :post, remote: true do %>
         <span class="notification_count"><span class="<%= 'unopened' if @target.has_unopened_notifications?(@index_options) %>">
           <%= @target.unopened_notification_count(@index_options) %>

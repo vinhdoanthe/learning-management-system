@@ -1,6 +1,6 @@
 <div class="table-responsive bo-table m-b-20">
   <div class="fc-header">
-    <h3>Buổi học <span class="color-FFC400">Chưa diễn ra</span></h3>
+    <h3><%= t('my_class.detail.progress.coming_html') %></h3>
   </div>
   <% if !tobe_sessions.nil? and !tobe_sessions.empty? %>
     <table class="table  table-link">
@@ -23,6 +23,6 @@
       </tbody>
     </table>
   <% else %>
-    <div>Không có buổi học nào chưa diễn ra</div>
+    <div><%= t('my_class.detail.progress.no_lesson') %></div>
   <% end %>
 </div>

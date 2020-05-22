@@ -2,9 +2,9 @@
   <table class="table">
     <thead>
       <tr style="color: black; font-family: 'Montserrat-Boil' !important;">
-        <th>Mã học sinh</th>
-        <th>Học viên cùng lớp</th>
-        <th>Học phần bạn đã đăng ký</th>
+        <th><%= t('user.student.code') %></th>
+        <th><%= t('user.student.classmate') %></th>
+        <th><%= t('user.student.registered_subject') %></th>
         <th></th>
       </tr>
     </thead>
@@ -31,13 +31,13 @@
             </td>
 
             <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-              <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
+              <td align="right"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
             <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
-              <td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td>
+              <td align="right"><span class="label-edit label label-danger"><%= t('learning.batch.status.stop') %></span></td>
             <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
-              <td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td>
+              <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.reversation') %></span></td>
             <% else %>
-              <td align="right"><span class="label-edit label label-stop">Đang cập nhật</span></td>
+              <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.update') %></span></td>
             <% end %>
 
           </tr>
@@ -52,13 +52,13 @@
             </td>
 
             <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-              <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
+              <td align="right"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
             <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
-              <td align="right"><span class="label-edit label label-danger">Nghỉ học</span></td>
+              <td align="right"><span class="label-edit label label-danger"><%= t('learning.batch.status.stop') %></span></td>
             <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
-              <td align="right"><span class="label-edit label label-stop">Bảo lưu</span></td>
+              <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.reversation') %></span></td>
             <% else %>
-              <td align="right"><span class="label-edit label label-stop">Đang cập nhật</span></td>
+              <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.update') %></span></td>
             <% end %>
 
           </tr>

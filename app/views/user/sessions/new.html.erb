@@ -7,36 +7,36 @@
     <div class="account-form">
       <%= form_for :session, url: user_login_path, :html => {class: "form-signin"} do |f| %>
         <div class="append-icon" >
-          <%= f.text_field :username, class: 'form-control', placeholder: "Username", required: true %>
+          <%= f.text_field :username, class: 'form-control', placeholder: "#{ I18n.t 'login.user_name' }", required: true %>
           <i class="icon-user"></i>
         </div>
         <div class="append-icon"> 
-          <%= f.password_field :password, class: 'form-control form-white password', placeholder: "Mật khẩu", required: true %>
+          <%= f.password_field :password, class: 'form-control form-white password', placeholder: "#{ I18n.t 'login.password' }", required: true %>
           <i class="icon-lock"></i>
         </div>
         <div class="append-icon m-b-20 m-t-10">
         </div>
         <div style="padding-top: 15px">
-        <%= f.submit "Đăng nhập", class: "btn btn-primary login-submit", 'data-style' => 'expand-left' %>
+        <%= f.submit "#{ I18n.t 'login.login' }", class: "btn btn-primary login-submit", 'data-style' => 'expand-left' %>
 
         <span class="forgot-password">
-              <a id="password" href="">Quên mật khẩu?</a>
+          <a id="password" href=""><%= I18n.t 'login.forgot_password' %></a>
         </span>
         </div>
         <p style="text-align: right;color: #939393;font-size: 12px;" class="m-t-20">
-          Hotline lãnh đạo: +84 948-666-183
+        <%= I18n.t 'login.hotline' %>: +84 948-666-183
         </p>
       <% end %>
       <%= form_for(:password_reset, url: user_account_password_resets_path, :html => {display: 'block', class: "form-password"}) do |f| %>
-        <h3><strong>Reset</strong> mật khẩu</h3>
+        <h3><strong><%= I18n.t ('login.reset_password') %></h3>
         <div class="append-icon m-b-20">
-          <%= f.text_field :username, class: "form-control", placeholder: "Tên đăng nhập", required: true %>
+          <%= f.text_field :username, class: "form-control", placeholder: "#{ I18n.t ('login.user_name') }", required: true %>
           <i class="icon-lock"></i>
         </div>
-        <%= f.submit 'Gửi link Reset mật khẩu', class: "btn btn-lg btn-danger btn-block ladda-button", 'data-style': "expand-left" %>
+        <%= f.submit "#{ I18n.t ('login.reset_link') }", class: "btn btn-lg btn-danger btn-block ladda-button", 'data-style': "expand-left" %>
         <div class="clearfix m-t-60">
           <p class="pull-left m-t-20 m-b-0">
-            <a id="login" href="">Đã có tài khoản? Đăng nhập</a>
+          <a id="login" href=""><%= I18n.t 'login.return_login' %></a>
           </p>
         </div>
       <% end %>
