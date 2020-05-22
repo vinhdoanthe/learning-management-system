@@ -2,7 +2,7 @@
 <div class="notification_wrapper">
   <div class="notification_header">
     <h1>
-      Notifications to <%= @target.printable_target_name %>
+      Tất cả thông báo
       <%= link_to open_all_notifications_path_for(@target, @index_options.slice(:routing_scope, :devise_default_routes)), method: :post, remote: true do %>
         <span class="notification_count"><span class="<%= 'unopened' if @target.has_unopened_notifications?(@index_options) %>">
           <%= @target.unopened_notification_count(@index_options) %>
@@ -10,7 +10,7 @@
       <% end %>
     </h1>
     <h3>
-      <span class="action_cable_status">Disabled</span>
+      <span class="action_cable_status"></span>
     </h3>
   </div>
   <div class="notifications">

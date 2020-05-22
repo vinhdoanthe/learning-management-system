@@ -21,6 +21,12 @@ $(document).ready(function(){
         }]
     },
     options: {
+      plugins: {
+        labels: {
+          render: 'value',
+          fontSize: 18,
+        }
+      },
       title: {
         display: true,
         fontColor: '#5DC2A7',
@@ -36,7 +42,6 @@ $(document).ready(function(){
         }
       },
       responsive: true,
-      maintainAspectRatio: false,
     }
   });
     <% end %>
