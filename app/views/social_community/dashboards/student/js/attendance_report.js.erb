@@ -5,6 +5,7 @@ $(document).ready(function(){
   <% report_objects.each_with_index do |object, index| %>
       var chartDiv = $("#barChart<%= index %>");
   $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase;">Lớp: <span style="color: #5DC2A7"> <%= object[:course_name] %></span> | Học phần: <%= object[:subject_level] %></h4>')
+  var sum_<%= index %> = <%= object[:count].values.sum %>
   var myChart = new Chart(chartDiv, {
     type: 'pie',
     data: {
@@ -22,9 +23,13 @@ $(document).ready(function(){
     },
     options: {
       plugins: {
-        labels: {
-          render: 'value',
-          fontSize: 18,
+        datalabels: {
+          formatter: function(value, context) {
+            if (value === 0){
+              return '';
+            }
+            return value + "(" + Math.round(value/sum_<%= index %>*100) + "%)"; 
+          },
         }
       },
       title: {

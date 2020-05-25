@@ -1,6 +1,6 @@
 <div class="table-responsive bo-table">
   <div class="fc-header">
-    <h3>Buổi học <span class="color-F16357">đã hủy</span></h3>
+    <h3><%= t('my_class.detail.progress.cancel_html') %></span></h3>
   </div>
 
   <% if !cancel_sessions.nil? and !cancel_sessions.empty? %>
@@ -24,6 +24,6 @@
       </tbody>
     </table>
   <% else %>
-    <div>Không có buổi học nào bị hủy</div>
+    <div><%= t('my_class.detail.progress.no_lesson') %></div>
   <% end %>
 </div>

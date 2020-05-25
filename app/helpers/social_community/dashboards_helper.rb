@@ -20,9 +20,12 @@ module SocialCommunity::DashboardsHelper
     # render message
     course_name = ''
     session_student_reward = feed.post.session_student_reward
-    session_id = session_student_reward.session_id
-    session = Learning::Batch::OpSession.where(id: session_id).first
-    course_name = Learning::Course::OpCourse.where(id: session.course_id).first.name if session.present?
+   # session_id = session_student_reward.session_id
+   # session = Learning::Batch::OpSession.where(id: session_id).first
+   # course_name = Learning::Course::OpCourse.where(id: session.course_id).first.name if session.present?
+    batch = Learning::Batch::OpBatch.where(id: feed.post.batch_id).first
+    course = Learning::Course::OpCourse.where(id: batch.course_id).first
+    course_name = course.name if course.present?
 
     if !feed.created_user.nil? && course_name.present? && session_student_reward.reward_type.present?
       message = "Bạn vừa được giảng viên <span class='noti_teacher_name'> #{feed.created_user.faculty_name}</span> khen thưởng vì #{session_student_reward.reward_type.description} trong lớp <span class='noti_course_name'>#{ course_name }</span>"
@@ -34,12 +37,12 @@ module SocialCommunity::DashboardsHelper
 
   def photo_feed feed
     photos = feed.post.photos
-    session = ''
     course_name = ''
     if photos.present?
-      photo = photos.first
-      session = Learning::Batch::OpSession.where(id: photo.session_id).first if photo.present?
-      course_name = Learning::Course::OpCourse.where(id: session.course_id).first.name if session.present?
+#      photo = photos.first
+#      course_name = Learning::Course::OpCourse.where(id: session.course_id).first.name if session.present?
+      batch = Learning::Batch::OpBatch.where(id: feed.post.batch_id).first
+      course_name = batch.op_course.name
     end
 
     if feed.created_user.nil? && course_name.present?

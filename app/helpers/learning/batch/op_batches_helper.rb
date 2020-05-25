@@ -37,7 +37,7 @@ module Learning
       end
 
       def list_subject_level_of_student(op_student_course)
-        subjects = op_student_course.op_subjects
+        subjects = op_student_course.op_subjects.order(level: :ASC).uniq
         levels = []
         unless subjects.nil?
           subjects.each do |subject|

@@ -3,10 +3,10 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>Khóa học</th>
-          <th>Lớp học</th>
-          <th>Học phần</th>
-          <th>Loại</th>
+          <th><%= t('learning.course') %></th>
+          <th><%= t('learning.batchname') %></th>
+          <th><%= t('learning.subject') %></th>
+          <th><%= t('learning.batch.type') %></th>
           <th></th>
         </tr>
       </thead>
@@ -28,11 +28,11 @@
               <% end%>
             </td>
             <% if op_student_course.state == 'on' %>
-              <td align="right"><span class="label-edit label label-primary">Đang học</span></td>
+              <td align="right"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
             <% elsif op_student_course.state == 'off' %>
-              <td align="right"><span class="label-edit label label-danger">Đã nghỉ</span></td>
+              <td align="right"><span class="label-edit label label-danger"><%= t('learning.batch.status.stop') %></span></td>
             <% else %>
-              <td align="right"><span class="label-edit label label-stop">Đã bảo lưu</span></td>
+              <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.reversation') %></span></td>
             <% end %>
           </tr>
         <% end %>

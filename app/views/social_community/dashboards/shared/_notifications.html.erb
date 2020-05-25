@@ -1,8 +1,8 @@
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title">THÔNG BÁO TỪ HỌC VIỆN</label>
+    <label class="filter-title"><%= t('notification.dashboard') %></label>
     <% new_noti = count_notification_student(current_user)%>
-    <p>Có <span class="color-FF0D38"><%= new_noti %></span> tin nhắn mới</p>
+    <p><span class="color-FF0D38"><%= new_noti %></span> <%= t('notification.new_noti') %></p>
   </div>
   <div class="bnd-noti">
     <% notices.each do |noti| %>
@@ -11,7 +11,7 @@
         <span><%= image_tag('global/images/teacher-img-default.png') %></span>
       </div>
       <div class="bnn-text">
-        <label for="">Thông báo từ Học viên TEKY</label>
+        <label for=""><%= t('notification.title') %></label>
         <p><%= noti.title %></p>
       </div>
       <div class="bnn-time">
@@ -19,6 +19,6 @@
       </div>
     </a>
     <% end %>
-    <a href="/notification/broadcast/broadcast_notices" class="pull-right link-all">Xem tất cả</a>
+    <a href="/notification/broadcast/broadcast_notices" class="pull-right link-all"><%= t('button.see_all') %></a>
   </div>
 </div>

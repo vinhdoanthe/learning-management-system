@@ -1,6 +1,6 @@
 <div class="table-responsive bo-table m-b-20">
   <div class="fc-header">
-    <h3>Buổi học <span class="color-16BD56">đã diễn ra</span></h3>
+    <h3><%= t('my_class.detail.progress.done_html') %></h3>
   </div>
   <% if !done_sessions.nil? and !done_sessions.empty? %>
     <table class="table  table-link">
@@ -9,8 +9,8 @@
         <th width="90">&nbsp;</th>
         <th width="140"></th>
         <th></th>
-        <th class="text-center">Điểm danh</th>
-        <th></th>
+        <th class="text-center"><%= t('learning.attendance') %></th>
+        <th width="35%"></th>
       </tr>
       </thead>
       <tbody>
@@ -24,7 +24,7 @@
       </tbody>
     </table>
   <% else %>
-    <div>Chưa có buổi học nào</div>
+    <div><%= t('my_class.detail.progress.no_lesson') %></div>
   <% end %>
 </div>
 

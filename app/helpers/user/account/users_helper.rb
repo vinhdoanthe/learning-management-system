@@ -20,13 +20,13 @@ module User
         menus = [
           {'path' => user_teacher_info_path, 
            'icon' => 'icon-Setting.png',
-           'title' => 'Cấu hình', 
+           'title' => "#{ t('sidebar.config') }", 
            'right_content' => ''
         },
 
         {'path' => notification_broadcast_broadcast_notices_path, 
          'icon' => 'Icon-Bell.png',
-         'title' => 'Thông báo', 
+         'title' => "#{ t('sidebar.noti') }", 
          'right_content' => '<span class="left-badge">' << count_notification_teacher(current_user).to_s << '</span>'
         }
         ]
@@ -68,7 +68,7 @@ module User
 
           {'path' => user_open_educat_teacher_schedule_path, 
            'icon' => 'ico-TienDoHocTap.png',
-           'title' => 'Lịch giảng dạy', 
+           'title' => "#{ t('sidebar.teaching_schedule') }", 
            'right_content' => '<span class="left-badge">' << count_sessions_week('op_faculty').to_s << '</span>'
         },
 
@@ -80,13 +80,13 @@ module User
 
         {'path' => user_teacher_class_path, 
          'icon' => 'ico-TienDoHocTap.png',
-         'title' => 'Danh sách lớp học', 
+         'title' => "#{ t('sidebar.class_list') }", 
          'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
         },
 
         {'path' => learning_marking_question_path, 
          'icon' => 'ico-BaiTapOnBai.png',
-         'title' => 'Chấm bài', 
+         'title' => "#{ t('sidebar.marking') }", 
          'right_content' => '<span class="left-badge">' << count_mark_question(current_user.op_faculty) << '</span>'
         },
         ]

@@ -93,13 +93,13 @@ module User
         status = {}
         status['status'] = get_stage(op_student_id, batch_id)      
         if status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_ON
-          status['status_html'] = 'Đang học'
+          status['status_html'] = I18n.t('learning.batch.status.studying')
         elsif status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_OFF
-          status['status_html'] = 'Nghỉ học'
+          status['status_html'] = I18n.t('learning.batch.status.stop')
         elsif status['status'] == Learning::Constant::STUDENT_BATCH_STATUS_SAVE
-          status['status_html'] = 'Bảo lưu'
+          status['status_html'] = I18n.t('learning.batch.status.reversation')
         else
-          status['status_html'] = 'Đang cập nhật'
+          status['status_html'] = I18n.t('learning.batch.status.update')
         end
         return status
       end
@@ -116,13 +116,13 @@ module User
         menus = [
           {'path' => user_open_educat_op_students_information_path, 
            'icon' => 'icon-Setting.png',
-           'title' => 'Cấu hình', 
+           'title' => "#{ t('sidebar.config') }", 
            'right_content' => ''
         },
 
         {'path' => notification_broadcast_broadcast_notices_path, 
          'icon' => 'Icon-Bell.png',
-         'title' => 'Thông báo', 
+         'title' => "#{ t('sidebar.noti') }", 
          'right_content' => '<span class="left-badge">' << count_notification_student(current_user).to_s << '</span>'
         }
         ]
@@ -168,13 +168,13 @@ module User
           {
             'path' =>  user_open_educat_op_students_batches_path,
             'icon' => 'Icon-Inbox.png',
-            'title' => 'Lớp học của tôi',
+            'title' => "#{ t('sidebar.my_class') }",
             'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
           },
 
           {'path' => user_open_educat_op_students_timetable_path,
            'icon' => 'ico-TienDoHocTap.png',
-           'title' => 'Thời khoá biểu', 
+           'title' => "#{ t('sidebar.timetable') }", 
            'right_content' => '<span class="left-badge">' << count_timetable_week.to_s << '</span>'
           },
           # {'path' => user_open_educat_op_students_student_homework_path,
@@ -184,13 +184,13 @@ module User
           # }
           {'path' => user_open_educat_op_students_student_homework_path,
            'icon' => 'ico-BaiTapOnBai.png',
-           'title' => 'Bài tập & Ôn bài',
+           'title' => "#{ t('sidebar.homework') }",
            'right_content' => '<span class="left-badge"></span>'
           },
 
           {'path' => redeem_redeem_products_path, 
             'icon' => 'ico-Redem.png',
-            'title' => 'Đổi điểm lấy quà', 
+            'title' => "#{ t('sidebar.redeem') }", 
             'right_content' => ''
           },
 
