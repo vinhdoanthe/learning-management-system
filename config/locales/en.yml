@@ -93,7 +93,7 @@ en:
         no_lesson: "No lesson"
         cancel_html: "<span class='color-F16357'>Cancel</span> lesson"
         coming_html: "<span class='color-FFC400'>Coming</span> lesson"
-        comming_soon_html: "<span class='color-F16357'>Comming soon</span> lesson"
+        coming_soon_html: "<span class='color-F16357'>Comming soon</span> lesson"
         end: "End"
       tooltip:
         feedback: "Feedback"

@@ -19,17 +19,13 @@ gem 'composite_primary_keys', '~> 12.0'
 gem 'activity_notification'
 
 # Pagination
-# gem 'will_paginate'
-# gem 'bootstrap-will_paginate'
 gem 'bootstrap-sass'
 # Chart for Reporting
-# gem "chartkick"
 
 # Image processing
 gem "aws-sdk-s3", require: false
 
 gem 'image_processing'
-gem 'vimeo_me2', :git => "https://github.com/bo-oz/vimeo_me2.git"
 gem "lazyload-rails"
 
 # For import/export

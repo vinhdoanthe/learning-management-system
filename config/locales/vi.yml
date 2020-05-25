@@ -93,7 +93,7 @@ vi:
         no_lesson: "Chưa có buổi học nào"
         coming_html: "Buổi học <span class='color-FFC400'>Chưa diễn ra</span>"
         cancel_html: "Buổi học <span class='color-F16357'>đã hủy</span>"
-        comming_soon_html: "Buổi học <span class='color-F16357'>Sắp diễn ra</span>"
+        coming_soon_html: "Buổi học <span class='color-F16357'>Sắp diễn ra</span>"
         end: "Đã kết thúc"
       tooltip:
         feedback: "Đánh giá buổi học"
