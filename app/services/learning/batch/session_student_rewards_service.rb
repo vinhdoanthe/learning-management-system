@@ -8,10 +8,11 @@ class Learning::Batch::SessionStudentRewardsService
         reward.rewarded_by = user.id    
         student = User::Account::User.where(student_id: student).first
         next if user.blank?
+
         reward.rewarded_to = student.id    
         reward.reward_type_id = params[:reward_type]
-
-        post = SocialCommunity::Feed::RewardPost.create(posted_by:  user.id)
+        session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+        post = SocialCommunity::Feed::RewardPost.create(posted_by:  user.id, batch_id: session.batch_id)
         reward.sc_post_id = post.id     
         reward.save
 
