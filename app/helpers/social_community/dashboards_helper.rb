@@ -2,6 +2,7 @@ module SocialCommunity::DashboardsHelper
 
   def get_feed_content noti
     post = SocialCommunity::Feed::Post.where(id: noti.notifiable_id).first
+    return ''  if post.blank?
     feeds = SocialCommunity::Feed::PostsService.decor_post_to_feed [post] 
     feed = feeds[0]
     
