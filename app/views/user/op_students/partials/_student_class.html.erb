@@ -23,9 +23,7 @@
               <% end %>
             </td>
             <td>
-              <% unless batch.op_batch_type.nil?%>
-                <%= batch.op_batch_type.name%>
-              <% end%>
+              <%= get_batch_type(batch) %>
             </td>
             <% if op_student_course.state == 'on' %>
               <td align="right"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>

@@ -2,6 +2,7 @@
 <% if reports.values.inject(0, :+) != 0 %>
 $(document).ready(function(){
   var chartDiv = $("#barChartCheckin");
+  var sum = <%= reports.values.sum %>
   var myChart = new Chart(chartDiv, {
     type: 'pie',
     data: {
@@ -18,9 +19,13 @@ $(document).ready(function(){
     },
     options: {
       plugins: {
-        labels: {
-          render: 'percentage',
-          fontSize: 18,
+        datalabels: {
+          formatter: function(value, context) {
+            if (value === 0){
+              return '';
+            }
+            return value + "(" + Math.round(value/sum*100) + "%)"; 
+          },
         }
       },
       legend: {

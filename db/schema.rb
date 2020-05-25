@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_19_080038) do
+ActiveRecord::Schema.define(version: 2020_05_25_091204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2380,19 +2380,6 @@ ActiveRecord::Schema.define(version: 2020_05_19_080038) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["type"], name: "index_ckeditor_assets_on_type"
-  end
-
-  create_table "coin_star_transactions", force: :cascade do |t|
-    t.bigint "give_to"
-    t.bigint "give_by"
-    t.bigint "activity_id"
-    t.string "activity_type", limit: 10
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["activity_id"], name: "index_coin_star_transactions_on_activity_id"
-    t.index ["activity_type"], name: "index_coin_star_transactions_on_activity_type"
-    t.index ["give_by"], name: "index_coin_star_transactions_on_give_by"
-    t.index ["give_to"], name: "index_coin_star_transactions_on_give_to"
   end
 
   create_table "comments", comment: "table comment ve mot noi dung cua nguoi dung", force: :cascade do |t|
@@ -9470,10 +9457,10 @@ ActiveRecord::Schema.define(version: 2020_05_19_080038) do
     t.integer "batch_id"
   end
 
-  create_table "sc_products", force: :cascade do |t|
+  create_table "sc_student_projects", force: :cascade do |t|
     t.text "description"
     t.text "presentation"
-    t.text "video"
+    t.text "project_show_video"
     t.text "thumbnail"
     t.integer "batch_id"
     t.integer "user_id"
@@ -9482,6 +9469,10 @@ ActiveRecord::Schema.define(version: 2020_05_19_080038) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
+    t.string "introduction_video"
+    t.integer "subject_id"
+    t.bigint "sc_post_id"
+    t.index ["sc_post_id"], name: "index_sc_student_projects_on_sc_post_id"
   end
 
   create_table "session_change_tutors_id", id: false, comment: "RELATION BETWEEN op_session_change_faculty AND op_faculty", force: :cascade do |t|
@@ -12881,6 +12872,8 @@ ActiveRecord::Schema.define(version: 2020_05_19_080038) do
   add_foreign_key "sale_order_tag_rel", "crm_lead_tag", column: "tag_id", name: "sale_order_tag_rel_tag_id_fkey", on_delete: :cascade
   add_foreign_key "sale_order_tag_rel", "sale_order", column: "order_id", name: "sale_order_tag_rel_order_id_fkey", on_delete: :cascade
   add_foreign_key "sc_posts", "users", column: "posted_by"
+  add_foreign_key "sc_student_projects", "op_subject", column: "subject_id"
+  add_foreign_key "sc_student_projects", "sc_posts"
   add_foreign_key "session_change_tutors_id", "op_faculty", column: "faculty_id", name: "session_change_tutors_id_faculty_id_fkey", on_delete: :cascade
   add_foreign_key "session_change_tutors_id", "op_session_change_faculty", column: "change_id", name: "session_change_tutors_id_change_id_fkey", on_delete: :cascade
   add_foreign_key "session_confirmation", "res_users", column: "create_uid", name: "session_confirmation_create_uid_fkey", on_delete: :nullify

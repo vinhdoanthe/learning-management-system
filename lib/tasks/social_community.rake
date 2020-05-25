@@ -65,6 +65,7 @@ namespace :social_community do
   task :update_batch_id_post, [] => :environment do |t, args|
     count = SocialCommunity::Feed::Post.count
     SocialCommunity::Feed::Post.all.each_with_index do |post, index|
+      next if post.batch_id.present?
       session = ''
       if post.type == "SocialCommunity::Feed::RewardPost"
         reward = post.session_student_reward

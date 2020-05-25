@@ -6,7 +6,7 @@ class SocialCommunity::PhotoService
 
     ActiveRecord::Base.transaction do
       album = create_new_album batch.id if album.blank?
-      post = create_photo_post user
+      post = create_photo_post user, batch.id
       subscribed_users = SocialCommunity::Feed::PhotoPostsService.subscribed_users session.id
       SocialCommunity::Feed::UserPostsService.create_multiple post.id, subscribed_users
       SocialCommunity::Feed::UserPostsService.create_multiple post.id, [user.id]
@@ -42,9 +42,10 @@ class SocialCommunity::PhotoService
     photo
   end
 
-  def create_photo_post user
+  def create_photo_post user, batch_id
     post = SocialCommunity::Feed::PhotoPost.new
     post.posted_by = user.id
+    post.batch_id = batch_id
     post.save!
     post
   end
