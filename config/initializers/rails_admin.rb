@@ -29,7 +29,8 @@ RailsAdmin.config do |config|
                               Learning::Material::Question Learning::Material::QuestionChoice Learning::Material::LearningMaterial
                               User::Account::User User::OpenEducat::OpStudent User::OpenEducat::OpFaculty User::Account::Avatar
                               Learning::Homework::UserQuestion
-                              Notification::BroadcastNoti)
+                              Notification::BroadcastNoti
+                              User::Reward::TekyCoinStarActivitySetting)
 
 
   config.model 'Learning::Course::OpCourse' do
@@ -290,6 +291,35 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'User::Reward::TekyCoinStarActivitySetting' do
+    list do
+      field :setting_key
+      field :description
+      field :is_add_coin
+      field :is_add_star
+      field :coin
+      field :star
+      field :created_by
+    end
+
+    show do      
+      field :setting_key
+      field :description
+      field :is_add_coin
+      field :is_add_star
+      field :coin
+      field :star
+      field :created_by
+    end
+
+    edit do
+      field :is_add_coin
+      field :is_add_star
+      field :coin
+      field :star
+    end
+  end
+
   config.actions do
 
     dashboard
@@ -309,7 +339,8 @@ RailsAdmin.config do |config|
       only %w(Common::RewardType
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, 
               Learning::Course::OpLession Learning::Course::OpCourse Learning::Course::CourseDescription 
-              Notification::BroadcastNoti)
+              Notification::BroadcastNoti
+              User::Reward::TekyCoinStarActivitySetting)
     end
     delete do
       only %w(Common::RewardType

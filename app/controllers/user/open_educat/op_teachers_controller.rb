@@ -51,6 +51,8 @@ class User::OpenEducat::OpTeachersController < ApplicationController
         lines.append line
 
         Learning::Homework::QuestionService.new.assign_homework student_id, params[:lesson_id], params[:session_id]
+        User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'coin', 0
+        User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'star', 0
       end
     end
 

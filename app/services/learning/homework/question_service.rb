@@ -39,7 +39,15 @@ class Learning::Homework::QuestionService
           return false
         end
       end
-      return user_answer if user_answer.save
+
+      if user_answer.save
+        if user_answer.state == 'right'
+          User::Reward::CoinStarsService.new.reward_coin_star 'HOMEWORK_CHOICE', student.id, 'coin', 0
+          User::Reward::CoinStarsService.new.reward_coin_star 'HOMEWORK_CHOICE', student.id, 'star', 0
+        end
+
+        return user_answer
+      end
       false
     end
   end
@@ -62,6 +70,10 @@ class Learning::Homework::QuestionService
     answer_mark.mark_time = Time.now
     answer_mark.teacher_id = user.id
     if answer_mark.save
+      if user_answer.state == 'right'
+        User::Reward::CoinStarsService.new.reward_coin_star 'HOMEWORK_TEXT', student.id, 'coin', 0
+        User::Reward::CoinStarsService.new.reward_coin_star 'HOMEWORK_TEXT', student.id, 'star', 0
+      end
       { state: 'success', message: 'Chấm bài thành công' }
     else
       { state: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau!' }
