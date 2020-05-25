@@ -14,7 +14,6 @@ class SocialCommunity::Feed::PostsService
     
     unless user.nil?
       posts = user.sc_posts.where('sc_posts.created_at < ?', time_offset_epoch).order(created_at: :DESC).limit(1)
-      binding.pry
       if posts.blank?
         next_offset_epoch = 0
       else 
