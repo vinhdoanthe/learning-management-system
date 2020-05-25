@@ -56,7 +56,6 @@ vi:
     no_attendance: "Chưa có thông tin chuyên cần"
     checkin: "BÁO CÁO ĐIỂM DANH"
   learning:
-    b: "Lớp"
     class: "Lớp"
     subject: "Học phần"
     lesson: "Buổi học"
