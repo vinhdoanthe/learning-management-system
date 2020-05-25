@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_085951) do
+ActiveRecord::Schema.define(version: 2020_05_19_080038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2383,10 +2383,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   end
 
   create_table "coin_star_transactions", force: :cascade do |t|
-    t.integer "give_to"
-    t.integer "give_by"
-    t.integer "activity_id"
-    t.string "activity_type", limit: 30
+    t.bigint "give_to"
+    t.bigint "give_by"
+    t.bigint "activity_id"
+    t.string "activity_type", limit: 10
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["activity_id"], name: "index_coin_star_transactions_on_activity_id"
@@ -2428,22 +2428,6 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["op_course_id"], name: "index_course_description_on_op_course_id"
-  end
-
-  create_table "course_gen_test_room", id: false, comment: "RELATION BETWEEN generate_student_test_room AND op_course", force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.integer "gen_room_id", null: false
-    t.index ["course_id", "gen_room_id"], name: "course_gen_test_room_course_id_gen_room_id_key", unique: true
-    t.index ["course_id"], name: "course_gen_test_room_course_id_idx"
-    t.index ["gen_room_id"], name: "course_gen_test_room_gen_room_id_idx"
-  end
-
-  create_table "course_student_test_room_rel", id: false, comment: "RELATION BETWEEN student_test_room AND op_course", force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.integer "student_test_room_id", null: false
-    t.index ["course_id", "student_test_room_id"], name: "course_student_test_room_rel_course_id_student_test_room_id_key", unique: true
-    t.index ["course_id"], name: "course_student_test_room_rel_course_id_idx"
-    t.index ["student_test_room_id"], name: "course_student_test_room_rel_student_test_room_id_idx"
   end
 
   create_table "crm_claim", id: :serial, comment: "Claim", force: :cascade do |t|
@@ -2498,6 +2482,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "write_date", comment: "Last Updated on"
     t.boolean "need_create_admission", comment: "Need Create Admission"
     t.boolean "need_create_expense", comment: "Need Create Expense"
+    t.boolean "need_confirm_by_bd", comment: "Need Confirm By Bd"
+    t.boolean "need_cross_center_confirm", comment: "Need Cross Center Confirm"
   end
 
   create_table "crm_claim_rev", id: false, force: :cascade do |t|
@@ -3510,21 +3496,21 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
 
   create_table "generate_student_test_room", id: :serial, comment: "Generate room", force: :cascade do |t|
     t.string "name", comment: "Room name"
+    t.integer "company_id", comment: "Company"
     t.string "room_type", null: false, comment: "Room Type"
     t.date "start_date", null: false, comment: "Start Date"
     t.date "end_date", null: false, comment: "End Date"
     t.integer "faculty_id", comment: "Faculty"
     t.integer "user_id", comment: "Operator"
+    t.integer "course_id", null: false, comment: "Course"
     t.integer "slot", null: false, comment: "Slot"
+    t.integer "total", null: false, comment: "Total room"
     t.integer "timing_id", comment: "Timing"
     t.text "note", comment: "Note"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "course_id", null: false, comment: "Course"
-    t.integer "total", null: false, comment: "Total room"
-    t.integer "company_id", comment: "Company"
   end
 
   create_table "generate_student_test_room_day", id: :serial, comment: "day of week", force: :cascade do |t|
@@ -3838,10 +3824,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.string "shift_work", comment: "Khối"
     t.float "leaves_day", comment: "Ngày nghỉ phép còn lại"
     t.integer "id_employee", comment: "ID Employee"
+    t.decimal "timesheet_cost", comment: "Timesheet Cost"
     t.string "shift_work_do", comment: "Phân loại nhân viên"
     t.integer "contract_id", comment: "Current Contract"
     t.string "contract_state", comment: "Status"
-    t.decimal "timesheet_cost", comment: "Timesheet Cost"
     t.string "employee_code", comment: "Employee Code"
     t.index ["barcode"], name: "hr_employee_barcode_uniq", unique: true
     t.index ["company_id"], name: "hr_employee_company_id_index"
@@ -4391,8 +4377,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "job_id", comment: "Job"
     t.integer "source_number", comment: "Source Number"
+    t.integer "job_id", comment: "Job"
     t.integer "tag_id", comment: "Tag"
   end
 
@@ -4688,7 +4674,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.index "lower((name)::text), model_id, COALESCE(user_id, '-1'::integer), COALESCE(action_id, '-1'::integer)", name: "ir_filters_name_model_uid_unique_action_index", unique: true
+    t.index "lower((name)::text), model_id, (COALESCE(user_id, '-1'::integer)), (COALESCE(action_id, '-1'::integer))", name: "ir_filters_name_model_uid_unique_action_index", unique: true
     t.index ["name", "model_id", "user_id", "action_id"], name: "ir_filters_name_model_uid_unique", unique: true
   end
 
@@ -4708,6 +4694,38 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.index ["dbname"], name: "ir_logging_dbname_index"
     t.index ["level"], name: "ir_logging_level_index"
     t.index ["type"], name: "ir_logging_type_index"
+  end
+
+  create_table "ir_logging_perf_rule", id: :serial, comment: "Perf Logging Rule", force: :cascade do |t|
+    t.string "name", null: false, comment: "Name"
+    t.boolean "active", comment: "Active"
+    t.string "methods", comment: "Methods"
+    t.boolean "log_python", comment: "Profile Python methods"
+    t.boolean "log_sql", comment: "Log SQL requests"
+    t.string "path", comment: "Path"
+    t.decimal "rpc_min_duration", comment: "Slow RPC calls - Min. duration"
+    t.decimal "sql_min_duration", comment: "Slow SQL requests - Min. duration"
+    t.decimal "recompute_min_duration", comment: "Slow fields recomputation - Min. duration"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "ir_logging_perf_rule_ir_model_rel", id: false, comment: "RELATION BETWEEN ir_logging_perf_rule AND ir_model", force: :cascade do |t|
+    t.integer "ir_logging_perf_rule_id", null: false
+    t.integer "ir_model_id", null: false
+    t.index ["ir_logging_perf_rule_id", "ir_model_id"], name: "ir_logging_perf_rule_ir_model_ir_logging_perf_rule_id_ir_mo_key", unique: true
+    t.index ["ir_logging_perf_rule_id"], name: "ir_logging_perf_rule_ir_model_rel_ir_logging_perf_rule_id_idx"
+    t.index ["ir_model_id"], name: "ir_logging_perf_rule_ir_model_rel_ir_model_id_idx"
+  end
+
+  create_table "ir_logging_perf_rule_res_users_rel", id: false, comment: "RELATION BETWEEN ir_logging_perf_rule AND res_users", force: :cascade do |t|
+    t.integer "ir_logging_perf_rule_id", null: false
+    t.integer "res_users_id", null: false
+    t.index ["ir_logging_perf_rule_id", "res_users_id"], name: "ir_logging_perf_rule_res_user_ir_logging_perf_rule_id_res_u_key", unique: true
+    t.index ["ir_logging_perf_rule_id"], name: "ir_logging_perf_rule_res_users_rel_ir_logging_perf_rule_id_idx"
+    t.index ["res_users_id"], name: "ir_logging_perf_rule_res_users_rel_res_users_id_idx"
   end
 
   create_table "ir_mail_server", id: :serial, comment: "ir.mail_server", force: :cascade do |t|
@@ -5215,11 +5233,11 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.string "test_type", comment: "Test Type"
     t.date "test_date", comment: "Test Date"
     t.integer "course_id", comment: "Course"
+    t.integer "room_company_id", comment: "Company"
     t.integer "room_id", comment: "Room"
     t.integer "timing_id", comment: "Timing"
     t.text "note_for_test", comment: "Note For Test"
     t.integer "student_test_id", comment: "Student test"
-    t.integer "room_company_id", comment: "Company"
     t.string "gender", comment: "Gender"
     t.index ["date_deadline"], name: "mail_activity_date_deadline_index"
     t.index ["date_done"], name: "mail_activity_date_done_index"
@@ -5624,6 +5642,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.index ["model", "res_id"], name: "mail_message_model_res_id_idx"
     t.index ["model"], name: "mail_message_model_index"
     t.index ["parent_id"], name: "mail_message_parent_id_index"
+    t.index ["res_id"], name: "mail_message_res_id_index"
+    t.index ["subtype_id"], name: "mail_message_subtype_id_index"
   end
 
   create_table "mail_message_mail_channel_rel", id: false, comment: "RELATION BETWEEN mail_message AND mail_channel", force: :cascade do |t|
@@ -5640,18 +5660,28 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.boolean "is_read", comment: "Is Read"
     t.boolean "is_email", comment: "Sent by Email"
     t.string "email_status", comment: "Email Status"
+    t.index ["email_status"], name: "mail_message_res_partner_needaction_rel_email_status_index"
+    t.index ["is_email"], name: "mail_message_res_partner_needaction_rel_is_email_index"
+    t.index ["is_read"], name: "mail_message_res_partner_needaction_rel_is_read_index"
+    t.index ["mail_message_id"], name: "mail_message_res_partner_needaction_rel_mail_message_id_index"
+    t.index ["res_partner_id", "is_read", "email_status", "mail_message_id"], name: "mail_notification_res_partner_id_is_read_email_status_mail_mess"
+    t.index ["res_partner_id"], name: "mail_message_res_partner_needaction_rel_res_partner_id_index"
   end
 
   create_table "mail_message_res_partner_rel", id: false, comment: "RELATION BETWEEN mail_message AND res_partner", force: :cascade do |t|
     t.integer "mail_message_id", null: false
     t.integer "res_partner_id", null: false
     t.index ["mail_message_id", "res_partner_id"], name: "mail_message_res_partner_rel_mail_message_id_res_partner_id_key", unique: true
+    t.index ["mail_message_id"], name: "mail_message_res_partner_rel_mail_message_id_idx"
+    t.index ["res_partner_id"], name: "mail_message_res_partner_rel_res_partner_id_idx"
   end
 
   create_table "mail_message_res_partner_starred_rel", id: false, comment: "RELATION BETWEEN mail_message AND res_partner", force: :cascade do |t|
     t.integer "mail_message_id", null: false
     t.integer "res_partner_id", null: false
     t.index ["mail_message_id", "res_partner_id"], name: "mail_message_res_partner_star_mail_message_id_res_partner_i_key", unique: true
+    t.index ["mail_message_id"], name: "mail_message_res_partner_starred_rel_mail_message_id_idx"
+    t.index ["res_partner_id"], name: "mail_message_res_partner_starred_rel_res_partner_id_idx"
   end
 
   create_table "mail_message_subtype", id: :serial, comment: "Message subtypes", force: :cascade do |t|
@@ -5680,6 +5710,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["source"], name: "mail_shortcode_source_index"
+    t.index ["substitution"], name: "mail_shortcode_substitution_index"
   end
 
   create_table "mail_template", id: :serial, comment: "Email Templates", force: :cascade do |t|
@@ -5711,6 +5743,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["model"], name: "mail_template_model_index"
   end
 
   create_table "mail_test", id: :serial, comment: "Test Mail Model", force: :cascade do |t|
@@ -5757,6 +5790,11 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["mail_message_id"], name: "mail_tracking_email_mail_message_id_index"
+    t.index ["name"], name: "mail_tracking_email_name_index"
+    t.index ["recipient_address"], name: "mail_tracking_email_recipient_address_index"
+    t.index ["state"], name: "mail_tracking_email_state_index"
+    t.index ["time"], name: "mail_tracking_email_time_index"
   end
 
   create_table "mail_tracking_event", id: :serial, comment: "MailTracking event", force: :cascade do |t|
@@ -5783,6 +5821,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["recipient_address"], name: "mail_tracking_event_recipient_address_index"
+    t.index ["tracking_email_id"], name: "mail_tracking_event_tracking_email_id_index"
   end
 
   create_table "mail_tracking_value", id: :serial, comment: "Mail Tracking Value", force: :cascade do |t|
@@ -5806,6 +5846,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["mail_message_id"], name: "mail_tracking_value_mail_message_id_index"
   end
 
   create_table "mail_wizard_invite", id: :serial, comment: "Invite wizard", force: :cascade do |t|
@@ -5817,12 +5858,16 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["res_id"], name: "mail_wizard_invite_res_id_index"
+    t.index ["res_model"], name: "mail_wizard_invite_res_model_index"
   end
 
   create_table "mail_wizard_invite_res_partner_rel", id: false, comment: "RELATION BETWEEN mail_wizard_invite AND res_partner", force: :cascade do |t|
     t.integer "mail_wizard_invite_id", null: false
     t.integer "res_partner_id", null: false
     t.index ["mail_wizard_invite_id", "res_partner_id"], name: "mail_wizard_invite_res_partne_mail_wizard_invite_id_res_par_key", unique: true
+    t.index ["mail_wizard_invite_id"], name: "mail_wizard_invite_res_partner_rel_mail_wizard_invite_id_idx"
+    t.index ["res_partner_id"], name: "mail_wizard_invite_res_partner_rel_res_partner_id_idx"
   end
 
   create_table "maintenance_equipment", id: :serial, comment: "Equipment", force: :cascade do |t|
@@ -5890,7 +5935,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "maintenance_equipment_category_maintenance_equipment_status_rel", id: false, comment: "RELATION BETWEEN maintenance_equipment_status AND maintenance_equipment_category", force: :cascade do |t|
     t.integer "maintenance_equipment_status_id", null: false
     t.integer "maintenance_equipment_category_id", null: false
+    t.index ["maintenance_equipment_category_id"], name: "maintenance_equipment_categor_maintenance_equipment_categor_idx"
     t.index ["maintenance_equipment_status_id", "maintenance_equipment_category_id"], name: "maintenance_equipment_categor_maintenance_equipment_status__key", unique: true
+    t.index ["maintenance_equipment_status_id"], name: "maintenance_equipment_categor_maintenance_equipment_status__idx"
   end
 
   create_table "maintenance_equipment_location", id: :serial, comment: "Equipment Location", force: :cascade do |t|
@@ -5906,7 +5953,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "maintenance_equipment_maintenance_equipment_move_rel", id: false, comment: "RELATION BETWEEN maintenance_equipment_move AND maintenance_equipment", force: :cascade do |t|
     t.integer "maintenance_equipment_move_id", null: false
     t.integer "maintenance_equipment_id", null: false
+    t.index ["maintenance_equipment_id"], name: "maintenance_equipment_maintenance__maintenance_equipment_id_idx"
     t.index ["maintenance_equipment_move_id", "maintenance_equipment_id"], name: "maintenance_equipment_mainten_maintenance_equipment_move_id_key", unique: true
+    t.index ["maintenance_equipment_move_id"], name: "maintenance_equipment_mainten_maintenance_equipment_move_id_idx"
   end
 
   create_table "maintenance_equipment_move", id: :serial, comment: "Equipment Moves", force: :cascade do |t|
@@ -5991,6 +6040,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "department_id", comment: "Department"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.string "code", comment: "Code"
+    t.index ["equipment_id"], name: "maintenance_request_equipment_id_index"
   end
 
   create_table "maintenance_stage", id: :serial, comment: "Maintenance Stage", force: :cascade do |t|
@@ -6008,7 +6058,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "maintenance_stage_next_stage", id: false, comment: "RELATION BETWEEN maintenance_stage AND maintenance_stage", force: :cascade do |t|
     t.integer "stage_id", null: false
     t.integer "next_stage_id", null: false
+    t.index ["next_stage_id"], name: "maintenance_stage_next_stage_next_stage_id_idx"
     t.index ["stage_id", "next_stage_id"], name: "maintenance_stage_next_stage_stage_id_next_stage_id_key", unique: true
+    t.index ["stage_id"], name: "maintenance_stage_next_stage_stage_id_idx"
   end
 
   create_table "maintenance_team", id: :serial, comment: "Maintenance Teams", force: :cascade do |t|
@@ -6029,6 +6081,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "maintenance_team_id", null: false
     t.integer "res_users_id", null: false
     t.index ["maintenance_team_id", "res_users_id"], name: "maintenance_team_users_rel_maintenance_team_id_res_users_id_key", unique: true
+    t.index ["maintenance_team_id"], name: "maintenance_team_users_rel_maintenance_team_id_idx"
+    t.index ["res_users_id"], name: "maintenance_team_users_rel_res_users_id_idx"
   end
 
   create_table "mass_editing_wizard", id: :serial, comment: "mass.editing.wizard", force: :cascade do |t|
@@ -6041,7 +6095,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "mass_mailing_ir_attachments_rel", id: false, comment: "RELATION BETWEEN mail_mass_mailing AND ir_attachment", force: :cascade do |t|
     t.integer "mass_mailing_id", null: false
     t.integer "attachment_id", null: false
+    t.index ["attachment_id"], name: "mass_mailing_ir_attachments_rel_attachment_id_idx"
     t.index ["mass_mailing_id", "attachment_id"], name: "mass_mailing_ir_attachments_r_mass_mailing_id_attachment_id_key", unique: true
+    t.index ["mass_mailing_id"], name: "mass_mailing_ir_attachments_rel_mass_mailing_id_idx"
   end
 
   create_table "mass_object", id: :serial, comment: "Mass Editing Object", force: :cascade do |t|
@@ -6053,24 +6109,31 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["name"], name: "mass_object_name_index"
   end
 
   create_table "meeting_category_rel", id: false, comment: "RELATION BETWEEN calendar_event AND calendar_event_type", force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "type_id", null: false
     t.index ["event_id", "type_id"], name: "meeting_category_rel_event_id_type_id_key", unique: true
+    t.index ["event_id"], name: "meeting_category_rel_event_id_idx"
+    t.index ["type_id"], name: "meeting_category_rel_type_id_idx"
   end
 
   create_table "merge_opportunity_rel", id: false, comment: "RELATION BETWEEN crm_merge_opportunity AND crm_lead", force: :cascade do |t|
     t.integer "merge_id", null: false
     t.integer "opportunity_id", null: false
     t.index ["merge_id", "opportunity_id"], name: "merge_opportunity_rel_merge_id_opportunity_id_key", unique: true
+    t.index ["merge_id"], name: "merge_opportunity_rel_merge_id_idx"
+    t.index ["opportunity_id"], name: "merge_opportunity_rel_opportunity_id_idx"
   end
 
   create_table "message_attachment_rel", id: false, comment: "RELATION BETWEEN mail_message AND ir_attachment", force: :cascade do |t|
     t.integer "message_id", null: false
     t.integer "attachment_id", null: false
+    t.index ["attachment_id"], name: "message_attachment_rel_attachment_id_idx"
     t.index ["message_id", "attachment_id"], name: "message_attachment_rel_message_id_attachment_id_key", unique: true
+    t.index ["message_id"], name: "message_attachment_rel_message_id_idx"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -6122,7 +6185,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "muk_web_client_notification_user_rel", id: false, comment: "RELATION BETWEEN muk_web_client_notification_send_notifications AND res_users", force: :cascade do |t|
     t.integer "wizard_id", null: false
     t.integer "user_id", null: false
+    t.index ["user_id"], name: "muk_web_client_notification_user_rel_user_id_idx"
     t.index ["wizard_id", "user_id"], name: "muk_web_client_notification_user_rel_wizard_id_user_id_key", unique: true
+    t.index ["wizard_id"], name: "muk_web_client_notification_user_rel_wizard_id_idx"
   end
 
   create_table "note_note", id: :serial, comment: "Note", force: :cascade do |t|
@@ -6157,6 +6222,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "note_id", null: false
     t.integer "stage_id", null: false
     t.index ["note_id", "stage_id"], name: "note_stage_rel_note_id_stage_id_key", unique: true
+    t.index ["note_id"], name: "note_stage_rel_note_id_idx"
+    t.index ["stage_id"], name: "note_stage_rel_stage_id_idx"
   end
 
   create_table "note_tag", id: :serial, comment: "Note Tag", force: :cascade do |t|
@@ -6173,6 +6240,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "note_id", null: false
     t.integer "tag_id", null: false
     t.index ["note_id", "tag_id"], name: "note_tags_rel_note_id_tag_id_key", unique: true
+    t.index ["note_id"], name: "note_tags_rel_note_id_idx"
+    t.index ["tag_id"], name: "note_tags_rel_tag_id_idx"
   end
 
   create_table "op_activity", id: :serial, comment: "op.activity", force: :cascade do |t|
@@ -6199,7 +6268,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "op_admission", id: :serial, comment: "Admission", force: :cascade do |t|
     t.string "name", null: false, comment: "First Name"
     t.string "middle_name", limit: 128, comment: "Middle Name"
-    t.string "last_name", limit: 128, null: false, comment: "Last Name"
+    t.string "last_name", limit: 128, comment: "Last Name"
     t.integer "title", comment: "Title"
     t.string "application_number", limit: 16, null: false, comment: "Application Number"
     t.date "admission_date", comment: "Admission Date"
@@ -6276,12 +6345,16 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "op_admission_id", null: false
     t.integer "student_test_id", null: false
     t.index ["op_admission_id", "student_test_id"], name: "op_admission_student_test_rel_op_admission_id_student_test__key", unique: true
+    t.index ["op_admission_id"], name: "op_admission_student_test_rel_op_admission_id_idx"
+    t.index ["student_test_id"], name: "op_admission_student_test_rel_student_test_id_idx"
   end
 
   create_table "op_admission_subject_rel", id: false, comment: "RELATION BETWEEN op_admission AND op_subject", force: :cascade do |t|
     t.integer "admission_id", null: false
     t.integer "subject_id", null: false
     t.index ["admission_id", "subject_id"], name: "op_admission_subject_rel_admission_id_subject_id_key", unique: true
+    t.index ["admission_id"], name: "op_admission_subject_rel_admission_id_idx"
+    t.index ["subject_id"], name: "op_admission_subject_rel_subject_id_idx"
   end
 
   create_table "op_all_student", id: :serial, comment: "op.all.student", force: :cascade do |t|
@@ -6297,6 +6370,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "op_all_student_id", null: false
     t.integer "op_student_id", null: false
     t.index ["op_all_student_id", "op_student_id"], name: "op_all_student_op_student_rel_op_all_student_id_op_student__key", unique: true
+    t.index ["op_all_student_id"], name: "op_all_student_op_student_rel_op_all_student_id_idx"
+    t.index ["op_student_id"], name: "op_all_student_op_student_rel_op_student_id_idx"
   end
 
   create_table "op_asset", id: :serial, comment: "op.asset", force: :cascade do |t|
@@ -6334,6 +6409,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "op_assignment_id", null: false
     t.integer "op_student_id", null: false
     t.index ["op_assignment_id", "op_student_id"], name: "op_assignment_op_student_rel_op_assignment_id_op_student_id_key", unique: true
+    t.index ["op_assignment_id"], name: "op_assignment_op_student_rel_op_assignment_id_idx"
+    t.index ["op_student_id"], name: "op_assignment_op_student_rel_op_student_id_idx"
   end
 
   create_table "op_assignment_sub_line", id: :serial, comment: "Assignment Submission", force: :cascade do |t|
@@ -6459,6 +6536,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "op_author_id", null: false
     t.integer "op_media_id", null: false
     t.index ["op_author_id", "op_media_id"], name: "op_author_op_media_rel_op_author_id_op_media_id_key", unique: true
+    t.index ["op_author_id"], name: "op_author_op_media_rel_op_author_id_idx"
+    t.index ["op_media_id"], name: "op_author_op_media_rel_op_media_id_idx"
   end
 
   create_table "op_badge_student", id: :serial, comment: "Gamification Student badge", force: :cascade do |t|
@@ -6470,6 +6549,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "create_uid", comment: "Created by"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["badge_id"], name: "op_badge_student_badge_id_index"
+    t.index ["student_id"], name: "op_badge_student_student_id_index"
   end
 
   create_table "op_badge_student_wizard", id: :serial, comment: "op.badge.student.wizard", force: :cascade do |t|
@@ -6508,8 +6589,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.string "note_time", comment: "Giờ học dự kiến"
     t.text "lesson_link", comment: "Link bài tập"
-    t.string "check_send_email", comment: "Gửi email bài tập"
-    t.string "check_corona", comment: "Gửi email nghỉ học"
+    t.integer "start_subject_id", comment: "Start Subject"
+    t.string "timetable_display", comment: "Time table"
+    t.date "expected_end_date", comment: "Expected End Date"
     t.index ["code"], name: "op_batch_unique_batch_code", unique: true
   end
 
@@ -6518,12 +6600,12 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "subject_id", comment: "Subject"
     t.integer "total_session", null: false, comment: "Total session"
     t.boolean "gen_all", comment: "Gennerate all"
+    t.date "start_date", comment: "Start Date"
+    t.boolean "skip_cancel", comment: "Skip cancel session"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.date "start_date", comment: "Start Date"
-    t.boolean "skip_cancel", comment: "Skip cancel session"
   end
 
   create_table "op_batch_type", id: :serial, comment: "op.batch.type", force: :cascade do |t|
@@ -6602,19 +6684,25 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "op_course_op_media_rel", id: false, comment: "RELATION BETWEEN op_media AND op_course", force: :cascade do |t|
     t.integer "op_media_id", null: false
     t.integer "op_course_id", null: false
+    t.index ["op_course_id"], name: "op_course_op_media_rel_op_course_id_idx"
     t.index ["op_media_id", "op_course_id"], name: "op_course_op_media_rel_op_media_id_op_course_id_key", unique: true
+    t.index ["op_media_id"], name: "op_course_op_media_rel_op_media_id_idx"
   end
 
   create_table "op_course_op_subject_rel", id: false, comment: "RELATION BETWEEN op_course AND op_subject", force: :cascade do |t|
     t.integer "op_course_id", null: false
     t.integer "op_subject_id", null: false
     t.index ["op_course_id", "op_subject_id"], name: "op_course_op_subject_rel_op_course_id_op_subject_id_key", unique: true
+    t.index ["op_course_id"], name: "op_course_op_subject_rel_op_course_id_idx"
+    t.index ["op_subject_id"], name: "op_course_op_subject_rel_op_subject_id_idx"
   end
 
   create_table "op_course_student_test_rel", id: false, comment: "RELATION BETWEEN student_test AND op_course", force: :cascade do |t|
     t.integer "student_test_id", null: false
     t.integer "op_course_id", null: false
+    t.index ["op_course_id"], name: "op_course_student_test_rel_op_course_id_idx"
     t.index ["student_test_id", "op_course_id"], name: "op_course_student_test_rel_student_test_id_op_course_id_key", unique: true
+    t.index ["student_test_id"], name: "op_course_student_test_rel_student_test_id_idx"
   end
 
   create_table "op_exam", id: :serial, comment: "Exam", force: :cascade do |t|
@@ -6657,13 +6745,17 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "op_exam_attendees_op_held_exam_rel", id: false, comment: "RELATION BETWEEN op_held_exam AND op_exam_attendees", force: :cascade do |t|
     t.integer "op_held_exam_id", null: false
     t.integer "op_exam_attendees_id", null: false
+    t.index ["op_exam_attendees_id"], name: "op_exam_attendees_op_held_exam_rel_op_exam_attendees_id_idx"
     t.index ["op_held_exam_id", "op_exam_attendees_id"], name: "op_exam_attendees_op_held_exa_op_held_exam_id_op_exam_atten_key", unique: true
+    t.index ["op_held_exam_id"], name: "op_exam_attendees_op_held_exam_rel_op_held_exam_id_idx"
   end
 
   create_table "op_exam_op_faculty_rel", id: false, comment: "RELATION BETWEEN op_exam AND op_faculty", force: :cascade do |t|
     t.integer "op_exam_id", null: false
     t.integer "op_faculty_id", null: false
     t.index ["op_exam_id", "op_faculty_id"], name: "op_exam_op_faculty_rel_op_exam_id_op_faculty_id_key", unique: true
+    t.index ["op_exam_id"], name: "op_exam_op_faculty_rel_op_exam_id_idx"
+    t.index ["op_faculty_id"], name: "op_exam_op_faculty_rel_op_faculty_id_idx"
   end
 
   create_table "op_exam_room", id: :serial, comment: "op.exam.room", force: :cascade do |t|
@@ -6679,7 +6771,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "op_exam_room_op_room_distribution_rel", id: false, comment: "RELATION BETWEEN op_room_distribution AND op_exam_room", force: :cascade do |t|
     t.integer "op_room_distribution_id", null: false
     t.integer "op_exam_room_id", null: false
+    t.index ["op_exam_room_id"], name: "op_exam_room_op_room_distribution_rel_op_exam_room_id_idx"
     t.index ["op_room_distribution_id", "op_exam_room_id"], name: "op_exam_room_op_room_distribu_op_room_distribution_id_op_ex_key", unique: true
+    t.index ["op_room_distribution_id"], name: "op_exam_room_op_room_distribution_r_op_room_distribution_id_idx"
   end
 
   create_table "op_exam_session", id: :serial, comment: "Exam Session", force: :cascade do |t|
@@ -6761,18 +6855,24 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "op_faculty_id", null: false
     t.integer "op_subject_id", null: false
     t.index ["op_faculty_id", "op_subject_id"], name: "op_faculty_op_subject_rel_op_faculty_id_op_subject_id_key", unique: true
+    t.index ["op_faculty_id"], name: "op_faculty_op_subject_rel_op_faculty_id_idx"
+    t.index ["op_subject_id"], name: "op_faculty_op_subject_rel_op_subject_id_idx"
   end
 
   create_table "op_faculty_wizard_merge_faculty_rel", id: false, comment: "RELATION BETWEEN wizard_merge_faculty AND op_faculty", force: :cascade do |t|
     t.integer "wizard_merge_faculty_id", null: false
     t.integer "op_faculty_id", null: false
+    t.index ["op_faculty_id"], name: "op_faculty_wizard_merge_faculty_rel_op_faculty_id_idx"
     t.index ["wizard_merge_faculty_id", "op_faculty_id"], name: "op_faculty_wizard_merge_facul_wizard_merge_faculty_id_op_fa_key", unique: true
+    t.index ["wizard_merge_faculty_id"], name: "op_faculty_wizard_merge_faculty_rel_wizard_merge_faculty_id_idx"
   end
 
   create_table "op_faculty_wizard_op_faculty_rel", id: false, comment: "RELATION BETWEEN wizard_op_faculty AND op_faculty", force: :cascade do |t|
     t.integer "wizard_op_faculty_id", null: false
     t.integer "op_faculty_id", null: false
+    t.index ["op_faculty_id"], name: "op_faculty_wizard_op_faculty_rel_op_faculty_id_idx"
     t.index ["wizard_op_faculty_id", "op_faculty_id"], name: "op_faculty_wizard_op_faculty__wizard_op_faculty_id_op_facul_key", unique: true
+    t.index ["wizard_op_faculty_id"], name: "op_faculty_wizard_op_faculty_rel_wizard_op_faculty_id_idx"
   end
 
   create_table "op_fees_terms", id: :serial, comment: "op.fees.terms", force: :cascade do |t|
@@ -6825,7 +6925,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "op_grade_configuration_op_result_template_rel", id: false, comment: "RELATION BETWEEN op_result_template AND op_grade_configuration", force: :cascade do |t|
     t.integer "op_result_template_id", null: false
     t.integer "op_grade_configuration_id", null: false
+    t.index ["op_grade_configuration_id"], name: "op_grade_configuration_op_result__op_grade_configuration_id_idx"
     t.index ["op_result_template_id", "op_grade_configuration_id"], name: "op_grade_configuration_op_res_op_result_template_id_op_grad_key", unique: true
+    t.index ["op_result_template_id"], name: "op_grade_configuration_op_result_temp_op_result_template_id_idx"
   end
 
   create_table "op_held_exam", id: :serial, comment: "op.held.exam", force: :cascade do |t|
@@ -6947,18 +7049,24 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "op_media_id", null: false
     t.integer "op_publisher_id", null: false
     t.index ["op_media_id", "op_publisher_id"], name: "op_media_op_publisher_rel_op_media_id_op_publisher_id_key", unique: true
+    t.index ["op_media_id"], name: "op_media_op_publisher_rel_op_media_id_idx"
+    t.index ["op_publisher_id"], name: "op_media_op_publisher_rel_op_publisher_id_idx"
   end
 
   create_table "op_media_op_subject_rel", id: false, comment: "RELATION BETWEEN op_media AND op_subject", force: :cascade do |t|
     t.integer "op_media_id", null: false
     t.integer "op_subject_id", null: false
     t.index ["op_media_id", "op_subject_id"], name: "op_media_op_subject_rel_op_media_id_op_subject_id_key", unique: true
+    t.index ["op_media_id"], name: "op_media_op_subject_rel_op_media_id_idx"
+    t.index ["op_subject_id"], name: "op_media_op_subject_rel_op_subject_id_idx"
   end
 
   create_table "op_media_op_tag_rel", id: false, comment: "RELATION BETWEEN op_media AND op_tag", force: :cascade do |t|
     t.integer "op_media_id", null: false
     t.integer "op_tag_id", null: false
     t.index ["op_media_id", "op_tag_id"], name: "op_media_op_tag_rel_op_media_id_op_tag_id_key", unique: true
+    t.index ["op_media_id"], name: "op_media_op_tag_rel_op_media_id_idx"
+    t.index ["op_tag_id"], name: "op_media_op_tag_rel_op_tag_id_idx"
   end
 
   create_table "op_media_purchase", id: :serial, comment: "Media Purchase Request", force: :cascade do |t|
@@ -7034,6 +7142,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "op_parent_id", null: false
     t.integer "op_student_id", null: false
     t.index ["op_parent_id", "op_student_id"], name: "op_parent_op_student_rel_op_parent_id_op_student_id_key", unique: true
+    t.index ["op_parent_id"], name: "op_parent_op_student_rel_op_parent_id_idx"
+    t.index ["op_student_id"], name: "op_parent_op_student_rel_op_student_id_idx"
   end
 
   create_table "op_publisher", id: :serial, comment: "op.publisher", force: :cascade do |t|
@@ -7089,6 +7199,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "op_room_distribution_id", null: false
     t.integer "op_student_id", null: false
     t.index ["op_room_distribution_id", "op_student_id"], name: "op_room_distribution_op_stude_op_room_distribution_id_op_st_key", unique: true
+    t.index ["op_room_distribution_id"], name: "op_room_distribution_op_student_rel_op_room_distribution_id_idx"
+    t.index ["op_student_id"], name: "op_room_distribution_op_student_rel_op_student_id_idx"
   end
 
   create_table "op_session", id: :serial, comment: "Sessions", force: :cascade do |t|
@@ -7151,9 +7263,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.float "salary_per_hour", comment: "Lương theo giờ"
     t.boolean "active", comment: "Active"
     t.integer "lession_id", comment: "Lesson"
-    t.integer "batch_type_id", comment: "Batch Type"
-    t.string "batch_state", comment: "Status"
     t.integer "offset_session_id", comment: "offset for"
+    t.integer "batch_type_id", comment: "Batch Type"
+    t.string "batch_state", comment: "State"
+    t.integer "request_offset_id", comment: "Offset request"
   end
 
   create_table "op_session_change_faculty", id: :serial, comment: "op.session.change.faculty", force: :cascade do |t|
@@ -7180,16 +7293,62 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "op_session_offset", id: :serial, comment: "op.session.offset", force: :cascade do |t|
+    t.string "name", null: false, comment: "Name"
+    t.integer "batch_id", null: false, comment: "Batch"
+    t.string "state", comment: "State"
+    t.date "start_date", null: false, comment: "Start Date"
+    t.integer "subject_id", null: false, comment: "Subject"
+    t.integer "total_session", null: false, comment: "Total session"
+    t.integer "timing_id", null: false, comment: "Timing"
+    t.integer "faculty_id", null: false, comment: "Faculty"
+    t.integer "classroom_id", comment: "Classroom"
+    t.text "note", comment: "Note"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.datetime "message_last_post", comment: "Last Message Date"
+  end
+
+  create_table "op_session_offset_day", id: false, comment: "RELATION BETWEEN op_session_offset AND generate_student_test_room_day", force: :cascade do |t|
+    t.integer "day_id", null: false
+    t.integer "session_offset_id", null: false
+    t.index ["day_id", "session_offset_id"], name: "op_session_offset_day_day_id_session_offset_id_key", unique: true
+    t.index ["day_id"], name: "op_session_offset_day_day_id_idx"
+    t.index ["session_offset_id"], name: "op_session_offset_day_session_offset_id_idx"
+  end
+
   create_table "op_session_offset_student", id: false, comment: "RELATION BETWEEN op_session AND op_student", force: :cascade do |t|
     t.integer "session_id", null: false
     t.integer "student_id", null: false
     t.index ["session_id", "student_id"], name: "op_session_offset_student_session_id_student_id_key", unique: true
+    t.index ["session_id"], name: "op_session_offset_student_session_id_idx"
+    t.index ["student_id"], name: "op_session_offset_student_student_id_idx"
+  end
+
+  create_table "op_session_offset_student_request", id: false, comment: "RELATION BETWEEN op_session_offset AND op_student", force: :cascade do |t|
+    t.integer "session_id", null: false
+    t.integer "student_id", null: false
+    t.index ["session_id", "student_id"], name: "op_session_offset_student_request_session_id_student_id_key", unique: true
+    t.index ["session_id"], name: "op_session_offset_student_request_session_id_idx"
+    t.index ["student_id"], name: "op_session_offset_student_request_student_id_idx"
+  end
+
+  create_table "op_session_request_offset_day", id: false, comment: "RELATION BETWEEN op_session_offset AND generate_student_test_room_day", force: :cascade do |t|
+    t.integer "day_id", null: false
+    t.integer "request_offset_id", null: false
+    t.index ["day_id", "request_offset_id"], name: "op_session_request_offset_day_day_id_request_offset_id_key", unique: true
+    t.index ["day_id"], name: "op_session_request_offset_day_day_id_idx"
+    t.index ["request_offset_id"], name: "op_session_request_offset_day_request_offset_id_idx"
   end
 
   create_table "op_session_res_users_rel", id: false, comment: "RELATION BETWEEN op_session AND res_users", force: :cascade do |t|
     t.integer "op_session_id", null: false
     t.integer "res_users_id", null: false
     t.index ["op_session_id", "res_users_id"], name: "op_session_res_users_rel_op_session_id_res_users_id_key", unique: true
+    t.index ["op_session_id"], name: "op_session_res_users_rel_op_session_id_idx"
+    t.index ["res_users_id"], name: "op_session_res_users_rel_res_users_id_idx"
   end
 
   create_table "op_session_student", id: :serial, comment: "op.session.student", force: :cascade do |t|
@@ -7209,6 +7368,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "company_id", comment: "Company"
     t.integer "classroom_id", comment: "Classroom"
     t.integer "student_id", comment: "Student"
+    t.integer "faculty_id", comment: "Faculty"
   end
 
   create_table "op_student", id: :serial, comment: "op.student", force: :cascade do |t|
@@ -7299,6 +7459,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "op_student_course_id", null: false
     t.integer "op_subject_id", null: false
     t.index ["op_student_course_id", "op_subject_id"], name: "op_student_course_op_subject__op_student_course_id_op_subje_key", unique: true
+    t.index ["op_student_course_id"], name: "op_student_course_op_subject_rel_op_student_course_id_idx"
+    t.index ["op_subject_id"], name: "op_student_course_op_subject_rel_op_subject_id_idx"
   end
 
   create_table "op_student_fees_details", id: :serial, comment: "Student Fees Details", force: :cascade do |t|
@@ -7318,7 +7480,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "op_student_student_migrate_rel", id: false, comment: "RELATION BETWEEN student_migrate AND op_student", force: :cascade do |t|
     t.integer "student_migrate_id", null: false
     t.integer "op_student_id", null: false
+    t.index ["op_student_id"], name: "op_student_student_migrate_rel_op_student_id_idx"
     t.index ["student_migrate_id", "op_student_id"], name: "op_student_student_migrate_re_student_migrate_id_op_student_key", unique: true
+    t.index ["student_migrate_id"], name: "op_student_student_migrate_rel_student_migrate_id_idx"
   end
 
   create_table "op_student_subject", id: false, force: :cascade do |t|
@@ -7329,7 +7493,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "op_student_wizard_op_student_rel", id: false, comment: "RELATION BETWEEN wizard_op_student AND op_student", force: :cascade do |t|
     t.integer "wizard_op_student_id", null: false
     t.integer "op_student_id", null: false
+    t.index ["op_student_id"], name: "op_student_wizard_op_student_rel_op_student_id_idx"
     t.index ["wizard_op_student_id", "op_student_id"], name: "op_student_wizard_op_student__wizard_op_student_id_op_stude_key", unique: true
+    t.index ["wizard_op_student_id"], name: "op_student_wizard_op_student_rel_wizard_op_student_id_idx"
   end
 
   create_table "op_subject", id: :serial, comment: "op.subject", force: :cascade do |t|
@@ -7353,7 +7519,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "op_subject_op_subject_registration_rel", id: false, comment: "RELATION BETWEEN op_subject_registration AND op_subject", force: :cascade do |t|
     t.integer "op_subject_registration_id", null: false
     t.integer "op_subject_id", null: false
+    t.index ["op_subject_id"], name: "op_subject_op_subject_registration_rel_op_subject_id_idx"
     t.index ["op_subject_registration_id", "op_subject_id"], name: "op_subject_op_subject_registr_op_subject_registration_id_op_key", unique: true
+    t.index ["op_subject_registration_id"], name: "op_subject_op_subject_registrati_op_subject_registration_id_idx"
   end
 
   create_table "op_subject_registration", id: :serial, comment: "op.subject.registration", force: :cascade do |t|
@@ -7430,12 +7598,16 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "payment_acquirer_id", null: false
     t.integer "payment_icon_id", null: false
     t.index ["payment_acquirer_id", "payment_icon_id"], name: "payment_acquirer_payment_icon_payment_acquirer_id_payment_i_key", unique: true
+    t.index ["payment_acquirer_id"], name: "payment_acquirer_payment_icon_rel_payment_acquirer_id_idx"
+    t.index ["payment_icon_id"], name: "payment_acquirer_payment_icon_rel_payment_icon_id_idx"
   end
 
   create_table "payment_country_rel", id: false, comment: "RELATION BETWEEN payment_acquirer AND res_country", force: :cascade do |t|
     t.integer "payment_id", null: false
     t.integer "country_id", null: false
+    t.index ["country_id"], name: "payment_country_rel_country_id_idx"
     t.index ["payment_id", "country_id"], name: "payment_country_rel_payment_id_country_id_key", unique: true
+    t.index ["payment_id"], name: "payment_country_rel_payment_id_idx"
   end
 
   create_table "payment_icon", id: :serial, comment: "Payment Icon", force: :cascade do |t|
@@ -7543,6 +7715,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["parent_id"], name: "pos_category_parent_id_index"
   end
 
   create_table "pos_config", id: :serial, comment: "pos.config", force: :cascade do |t|
@@ -7603,24 +7776,31 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["name"], name: "pos_config_name_index"
   end
 
   create_table "pos_config_journal_rel", id: false, comment: "RELATION BETWEEN pos_config AND account_journal", force: :cascade do |t|
     t.integer "pos_config_id", null: false
     t.integer "journal_id", null: false
+    t.index ["journal_id"], name: "pos_config_journal_rel_journal_id_idx"
     t.index ["pos_config_id", "journal_id"], name: "pos_config_journal_rel_pos_config_id_journal_id_key", unique: true
+    t.index ["pos_config_id"], name: "pos_config_journal_rel_pos_config_id_idx"
   end
 
   create_table "pos_config_product_pricelist_rel", id: false, comment: "RELATION BETWEEN pos_config AND product_pricelist", force: :cascade do |t|
     t.integer "pos_config_id", null: false
     t.integer "product_pricelist_id", null: false
     t.index ["pos_config_id", "product_pricelist_id"], name: "pos_config_product_pricelist__pos_config_id_product_priceli_key", unique: true
+    t.index ["pos_config_id"], name: "pos_config_product_pricelist_rel_pos_config_id_idx"
+    t.index ["product_pricelist_id"], name: "pos_config_product_pricelist_rel_product_pricelist_id_idx"
   end
 
   create_table "pos_detail_configs", id: false, comment: "RELATION BETWEEN pos_details_wizard AND pos_config", force: :cascade do |t|
     t.integer "pos_details_wizard_id", null: false
     t.integer "pos_config_id", null: false
+    t.index ["pos_config_id"], name: "pos_detail_configs_pos_config_id_idx"
     t.index ["pos_details_wizard_id", "pos_config_id"], name: "pos_detail_configs_pos_details_wizard_id_pos_config_id_key", unique: true
+    t.index ["pos_details_wizard_id"], name: "pos_detail_configs_pos_details_wizard_id_idx"
   end
 
   create_table "pos_details_wizard", id: :serial, comment: "Open Sales Details Report", force: :cascade do |t|
@@ -7682,6 +7862,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["date_order"], name: "pos_order_date_order_index"
+    t.index ["partner_id"], name: "pos_order_partner_id_index"
+    t.index ["session_id"], name: "pos_order_session_id_index"
   end
 
   create_table "pos_order_line", id: :serial, comment: "Lines of Point of Sale Orders", force: :cascade do |t|
@@ -7724,7 +7907,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["config_id"], name: "pos_session_config_id_index"
     t.index ["name"], name: "pos_session_uniq_name", unique: true
+    t.index ["state"], name: "pos_session_state_index"
+    t.index ["user_id"], name: "pos_session_user_id_index"
   end
 
   create_table "product_attribute", id: :serial, comment: "Product Attribute", force: :cascade do |t|
@@ -7750,6 +7936,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "product_attribute_line_id", null: false
     t.integer "product_attribute_value_id", null: false
     t.index ["product_attribute_line_id", "product_attribute_value_id"], name: "product_attribute_line_produc_product_attribute_line_id_pro_key", unique: true
+    t.index ["product_attribute_line_id"], name: "product_attribute_line_product_at_product_attribute_line_id_idx"
+    t.index ["product_attribute_value_id"], name: "product_attribute_line_product_a_product_attribute_value_id_idx"
   end
 
   create_table "product_attribute_price", id: :serial, comment: "product.attribute.price", force: :cascade do |t|
@@ -7776,7 +7964,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "product_attribute_value_product_product_rel", id: false, comment: "RELATION BETWEEN product_product AND product_attribute_value", force: :cascade do |t|
     t.integer "product_product_id", null: false
     t.integer "product_attribute_value_id", null: false
+    t.index ["product_attribute_value_id"], name: "product_attribute_value_product__product_attribute_value_id_idx"
     t.index ["product_product_id", "product_attribute_value_id"], name: "product_attribute_value_produ_product_product_id_product_at_key", unique: true
+    t.index ["product_product_id"], name: "product_attribute_value_product_product__product_product_id_idx"
   end
 
   create_table "product_category", id: :serial, comment: "Product Category", force: :cascade do |t|
@@ -7789,6 +7979,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["name"], name: "product_category_name_index"
+    t.index ["parent_id"], name: "product_category_parent_id_index"
+    t.index ["parent_left"], name: "product_category_parent_left_index"
+    t.index ["parent_right"], name: "product_category_parent_right_index"
   end
 
   create_table "product_margin", id: :serial, comment: "Product Margin", force: :cascade do |t|
@@ -7799,6 +7993,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["invoice_state"], name: "product_margin_invoice_state_index"
   end
 
   create_table "product_packaging", id: :serial, comment: "Packaging", force: :cascade do |t|
@@ -7876,6 +8071,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["compute_price"], name: "product_pricelist_item_compute_price_index"
+    t.index ["pricelist_id"], name: "product_pricelist_item_pricelist_id_index"
   end
 
   create_table "product_product", id: :serial, comment: "Product", force: :cascade do |t|
@@ -7901,6 +8098,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "prod_id", null: false
     t.integer "tax_id", null: false
     t.index ["prod_id", "tax_id"], name: "product_supplier_taxes_rel_prod_id_tax_id_key", unique: true
+    t.index ["prod_id"], name: "product_supplier_taxes_rel_prod_id_idx"
+    t.index ["tax_id"], name: "product_supplier_taxes_rel_tax_id_idx"
   end
 
   create_table "product_supplierinfo", id: :serial, comment: "Information about a product vendor", force: :cascade do |t|
@@ -7921,12 +8120,16 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["company_id"], name: "product_supplierinfo_company_id_index"
+    t.index ["product_tmpl_id"], name: "product_supplierinfo_product_tmpl_id_index"
   end
 
   create_table "product_taxes_rel", id: false, comment: "RELATION BETWEEN product_template AND account_tax", force: :cascade do |t|
     t.integer "prod_id", null: false
     t.integer "tax_id", null: false
     t.index ["prod_id", "tax_id"], name: "product_taxes_rel_prod_id_tax_id_key", unique: true
+    t.index ["prod_id"], name: "product_taxes_rel_prod_id_idx"
+    t.index ["tax_id"], name: "product_taxes_rel_tax_id_idx"
   end
 
   create_table "product_template", id: :serial, comment: "Product Template", force: :cascade do |t|
@@ -7971,8 +8174,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.boolean "available_in_pos", comment: "Available in Point of Sale"
     t.boolean "to_weight", comment: "To Weigh With Scale"
     t.integer "pos_categ_id", comment: "Point of Sale Category"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.string "service_tracking", comment: "Service Tracking"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.index ["company_id"], name: "product_template_company_id_index"
     t.index ["name"], name: "product_template_name_index"
   end
@@ -8003,6 +8206,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "project_id", null: false
     t.integer "user_id", null: false
     t.index ["project_id", "user_id"], name: "project_favorite_user_rel_project_id_user_id_key", unique: true
+    t.index ["project_id"], name: "project_favorite_user_rel_project_id_idx"
+    t.index ["user_id"], name: "project_favorite_user_rel_user_id_idx"
   end
 
   create_table "project_project", id: :serial, comment: "Project", force: :cascade do |t|
@@ -8025,6 +8230,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "write_date", comment: "Last Updated on"
     t.boolean "allow_timesheets", comment: "Allow timesheets"
     t.integer "sale_line_id", comment: "Sales Order Line"
+    t.index ["date"], name: "project_project_date_index"
   end
 
   create_table "project_tags", id: :serial, comment: "Tags of project's tasks", force: :cascade do |t|
@@ -8040,7 +8246,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "project_tags_project_task_rel", id: false, comment: "RELATION BETWEEN project_task AND project_tags", force: :cascade do |t|
     t.integer "project_task_id", null: false
     t.integer "project_tags_id", null: false
+    t.index ["project_tags_id"], name: "project_tags_project_task_rel_project_tags_id_idx"
     t.index ["project_task_id", "project_tags_id"], name: "project_tags_project_task_rel_project_task_id_project_tags__key", unique: true
+    t.index ["project_task_id"], name: "project_tags_project_task_rel_project_task_id_idx"
   end
 
   create_table "project_task", id: :serial, comment: "Task", force: :cascade do |t|
@@ -8085,8 +8293,23 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.float "delay_hours", comment: "Delay Hours"
     t.float "children_hours", comment: "Sub-tasks Hours"
     t.float "rating_last_value", comment: "Rating Last Value"
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.integer "sale_line_id", comment: "Sales Order Item"
+    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.index ["create_date"], name: "project_task_create_date_index"
+    t.index ["date_assign"], name: "project_task_date_assign_index"
+    t.index ["date_deadline"], name: "project_task_date_deadline_index"
+    t.index ["date_end"], name: "project_task_date_end_index"
+    t.index ["date_last_stage_update"], name: "project_task_date_last_stage_update_index"
+    t.index ["date_start"], name: "project_task_date_start_index"
+    t.index ["email_from"], name: "project_task_email_from_index"
+    t.index ["name"], name: "project_task_name_index"
+    t.index ["parent_id"], name: "project_task_parent_id_index"
+    t.index ["priority"], name: "project_task_priority_index"
+    t.index ["project_id"], name: "project_task_project_id_index"
+    t.index ["sequence"], name: "project_task_sequence_index"
+    t.index ["stage_id"], name: "project_task_stage_id_index"
+    t.index ["user_id"], name: "project_task_user_id_index"
+    t.index ["write_date"], name: "project_task_write_date_index"
   end
 
   create_table "project_task_merge_wizard", id: :serial, comment: "project.task.merge.wizard", force: :cascade do |t|
@@ -8104,7 +8327,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "project_task_project_task_merge_wizard_rel", id: false, comment: "RELATION BETWEEN project_task_merge_wizard AND project_task", force: :cascade do |t|
     t.integer "project_task_merge_wizard_id", null: false
     t.integer "project_task_id", null: false
+    t.index ["project_task_id"], name: "project_task_project_task_merge_wizard_rel_project_task_id_idx"
     t.index ["project_task_merge_wizard_id", "project_task_id"], name: "project_task_project_task_mer_project_task_merge_wizard_id__key", unique: true
+    t.index ["project_task_merge_wizard_id"], name: "project_task_project_task_merg_project_task_merge_wizard_id_idx"
   end
 
   create_table "project_task_type", id: :serial, comment: "Task Stage", force: :cascade do |t|
@@ -8126,7 +8351,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "project_task_type_rel", id: false, comment: "RELATION BETWEEN project_task_type AND project_project", force: :cascade do |t|
     t.integer "type_id", null: false
     t.integer "project_id", null: false
+    t.index ["project_id"], name: "project_task_type_rel_project_id_idx"
     t.index ["type_id", "project_id"], name: "project_task_type_rel_type_id_project_id_key", unique: true
+    t.index ["type_id"], name: "project_task_type_rel_type_id_idx"
   end
 
   create_table "question_choices", force: :cascade do |t|
@@ -8170,6 +8397,13 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.boolean "website_published", comment: "Published"
+    t.index ["message_id"], name: "rating_rating_message_id_index"
+    t.index ["parent_res_id"], name: "rating_rating_parent_res_id_index"
+    t.index ["parent_res_model"], name: "rating_rating_parent_res_model_index"
+    t.index ["parent_res_model_id"], name: "rating_rating_parent_res_model_id_index"
+    t.index ["res_id"], name: "rating_rating_res_id_index"
+    t.index ["res_model"], name: "rating_rating_res_model_index"
+    t.index ["res_model_id"], name: "rating_rating_res_model_id_index"
   end
 
   create_table "reactions", force: :cascade do |t|
@@ -8235,36 +8469,48 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "gamification_badge_id", null: false
     t.integer "res_users_id", null: false
     t.index ["gamification_badge_id", "res_users_id"], name: "rel_badge_auth_users_gamification_badge_id_res_users_id_key", unique: true
+    t.index ["gamification_badge_id"], name: "rel_badge_auth_users_gamification_badge_id_idx"
+    t.index ["res_users_id"], name: "rel_badge_auth_users_res_users_id_idx"
   end
 
   create_table "rel_channel_groups", id: false, comment: "RELATION BETWEEN slide_channel AND res_groups", force: :cascade do |t|
     t.integer "channel_id", null: false
     t.integer "group_id", null: false
     t.index ["channel_id", "group_id"], name: "rel_channel_groups_channel_id_group_id_key", unique: true
+    t.index ["channel_id"], name: "rel_channel_groups_channel_id_idx"
+    t.index ["group_id"], name: "rel_channel_groups_group_id_idx"
   end
 
   create_table "rel_modules_langexport", id: false, comment: "RELATION BETWEEN base_language_export AND ir_module_module", force: :cascade do |t|
     t.integer "wiz_id", null: false
     t.integer "module_id", null: false
+    t.index ["module_id"], name: "rel_modules_langexport_module_id_idx"
     t.index ["wiz_id", "module_id"], name: "rel_modules_langexport_wiz_id_module_id_key", unique: true
+    t.index ["wiz_id"], name: "rel_modules_langexport_wiz_id_idx"
   end
 
   create_table "rel_server_actions", id: false, comment: "RELATION BETWEEN ir_act_server AND ir_act_server", force: :cascade do |t|
     t.integer "server_id", null: false
     t.integer "action_id", null: false
+    t.index ["action_id"], name: "rel_server_actions_action_id_idx"
     t.index ["server_id", "action_id"], name: "rel_server_actions_server_id_action_id_key", unique: true
+    t.index ["server_id"], name: "rel_server_actions_server_id_idx"
   end
 
   create_table "rel_slide_tag", id: false, comment: "RELATION BETWEEN slide_slide AND slide_tag", force: :cascade do |t|
     t.integer "slide_id", null: false
     t.integer "tag_id", null: false
     t.index ["slide_id", "tag_id"], name: "rel_slide_tag_slide_id_tag_id_key", unique: true
+    t.index ["slide_id"], name: "rel_slide_tag_slide_id_idx"
+    t.index ["tag_id"], name: "rel_slide_tag_tag_id_idx"
   end
 
   create_table "rel_upload_groups", id: false, comment: "RELATION BETWEEN slide_channel AND res_groups", force: :cascade do |t|
     t.integer "channel_id", null: false
     t.integer "group_id", null: false
     t.index ["channel_id", "group_id"], name: "rel_upload_groups_channel_id_group_id_key", unique: true
+    t.index ["channel_id"], name: "rel_upload_groups_channel_id_idx"
+    t.index ["group_id"], name: "rel_upload_groups_group_id_idx"
   end
 
   create_table "remove_draft_session", id: :serial, comment: "remove.draft.session", force: :cascade do |t|
@@ -8313,6 +8559,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["bic"], name: "res_bank_bic_index"
   end
 
   create_table "res_company", id: :serial, force: :cascade do |t|
@@ -8391,6 +8638,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "cid", null: false
     t.integer "user_id", null: false
     t.index ["cid", "user_id"], name: "res_company_users_rel_cid_user_id_key", unique: true
+    t.index ["cid"], name: "res_company_users_rel_cid_idx"
+    t.index ["user_id"], name: "res_company_users_rel_user_id_idx"
   end
 
   create_table "res_config", id: :serial, comment: "res.config", force: :cascade do |t|
@@ -8584,12 +8833,16 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "pricelist_id", null: false
     t.integer "res_country_group_id", null: false
     t.index ["pricelist_id", "res_country_group_id"], name: "res_country_group_pricelist_r_pricelist_id_res_country_grou_key", unique: true
+    t.index ["pricelist_id"], name: "res_country_group_pricelist_rel_pricelist_id_idx"
+    t.index ["res_country_group_id"], name: "res_country_group_pricelist_rel_res_country_group_id_idx"
   end
 
   create_table "res_country_res_country_group_rel", id: false, comment: "RELATION BETWEEN res_country AND res_country_group", force: :cascade do |t|
     t.integer "res_country_id", null: false
     t.integer "res_country_group_id", null: false
+    t.index ["res_country_group_id"], name: "res_country_res_country_group_rel_res_country_group_id_idx"
     t.index ["res_country_id", "res_country_group_id"], name: "res_country_res_country_group_res_country_id_res_country_gr_key", unique: true
+    t.index ["res_country_id"], name: "res_country_res_country_group_rel_res_country_id_idx"
   end
 
   create_table "res_country_state", id: :serial, comment: "Country state", force: :cascade do |t|
@@ -8628,6 +8881,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.index ["name", "currency_id", "company_id"], name: "res_currency_rate_unique_name_per_day", unique: true
+    t.index ["name"], name: "res_currency_rate_name_index"
   end
 
   create_table "res_district", id: :serial, comment: "res.district", force: :cascade do |t|
@@ -8642,6 +8896,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.string "sequence_code", comment: "Đầu mã KH"
+    t.index ["province_id"], name: "res_district_province_id_index"
   end
 
   create_table "res_groups", id: :serial, force: :cascade do |t|
@@ -8656,24 +8911,31 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.index ["category_id", "name"], name: "res_groups_name_uniq", unique: true
+    t.index ["category_id"], name: "res_groups_category_id_index"
   end
 
   create_table "res_groups_implied_rel", id: false, comment: "RELATION BETWEEN res_groups AND res_groups", force: :cascade do |t|
     t.integer "gid", null: false
     t.integer "hid", null: false
     t.index ["gid", "hid"], name: "res_groups_implied_rel_gid_hid_key", unique: true
+    t.index ["gid"], name: "res_groups_implied_rel_gid_idx"
+    t.index ["hid"], name: "res_groups_implied_rel_hid_idx"
   end
 
   create_table "res_groups_report_rel", id: false, comment: "RELATION BETWEEN ir_act_report_xml AND res_groups", force: :cascade do |t|
     t.integer "uid", null: false
     t.integer "gid", null: false
+    t.index ["gid"], name: "res_groups_report_rel_gid_idx"
     t.index ["uid", "gid"], name: "res_groups_report_rel_uid_gid_key", unique: true
+    t.index ["uid"], name: "res_groups_report_rel_uid_idx"
   end
 
   create_table "res_groups_users_rel", id: false, comment: "RELATION BETWEEN res_groups AND res_users", force: :cascade do |t|
     t.integer "gid", null: false
     t.integer "uid", null: false
     t.index ["gid", "uid"], name: "res_groups_users_rel_gid_uid_key", unique: true
+    t.index ["gid"], name: "res_groups_users_rel_gid_idx"
+    t.index ["uid"], name: "res_groups_users_rel_uid_idx"
   end
 
   create_table "res_lang", id: :serial, comment: "Languages", force: :cascade do |t|
@@ -8790,6 +9052,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["partner_id"], name: "res_partner_bank_partner_id_index"
     t.index ["sanitized_acc_number", "company_id"], name: "res_partner_bank_unique_number", unique: true
   end
 
@@ -8804,6 +9067,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["parent_id"], name: "res_partner_category_parent_id_index"
+    t.index ["parent_left"], name: "res_partner_category_parent_left_index"
+    t.index ["parent_right"], name: "res_partner_category_parent_right_index"
   end
 
   create_table "res_partner_industry", id: :serial, comment: "Industry", force: :cascade do |t|
@@ -8820,6 +9086,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "category_id", null: false
     t.integer "partner_id", null: false
     t.index ["category_id", "partner_id"], name: "res_partner_res_partner_category_rel_category_id_partner_id_key", unique: true
+    t.index ["category_id"], name: "res_partner_res_partner_category_rel_category_id_idx"
+    t.index ["partner_id"], name: "res_partner_res_partner_category_rel_partner_id_idx"
   end
 
   create_table "res_partner_title", id: :serial, comment: "res.partner.title", force: :cascade do |t|
@@ -8843,6 +9111,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.string "sequence_code", comment: "Đầu mã KH"
+    t.index ["country_id"], name: "res_province_country_id_index"
   end
 
   create_table "res_request_link", id: :serial, comment: "res.request.link", force: :cascade do |t|
@@ -8858,7 +9127,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "res_user_first_rel1", id: false, comment: "RELATION BETWEEN res_users AND res_users", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "res_user_second_rel1", null: false
+    t.index ["res_user_second_rel1"], name: "res_user_first_rel1_res_user_second_rel1_idx"
     t.index ["user_id", "res_user_second_rel1"], name: "res_user_first_rel1_user_id_res_user_second_rel1_key", unique: true
+    t.index ["user_id"], name: "res_user_first_rel1_user_id_idx"
   end
 
   create_table "res_users", id: :serial, force: :cascade do |t|
@@ -8937,6 +9208,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["district_id"], name: "res_ward_district_id_index"
   end
 
   create_table "reserve_media", id: :serial, comment: "reserve.media", force: :cascade do |t|
@@ -8968,6 +9240,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["dayofweek"], name: "resource_calendar_attendance_dayofweek_index"
+    t.index ["hour_from"], name: "resource_calendar_attendance_hour_from_index"
   end
 
   create_table "resource_calendar_leaves", id: :serial, comment: "Leave Detail", force: :cascade do |t|
@@ -9007,6 +9281,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["company_id"], name: "resource_test_company_id_index"
+    t.index ["resource_id"], name: "resource_test_resource_id_index"
   end
 
   create_table "return_media", id: :serial, comment: "return.media", force: :cascade do |t|
@@ -9029,7 +9305,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "rule_group_rel", id: false, comment: "RELATION BETWEEN ir_rule AND res_groups", force: :cascade do |t|
     t.integer "rule_group_id", null: false
     t.integer "group_id", null: false
+    t.index ["group_id"], name: "rule_group_rel_group_id_idx"
     t.index ["rule_group_id", "group_id"], name: "rule_group_rel_rule_group_id_group_id_key", unique: true
+    t.index ["rule_group_id"], name: "rule_group_rel_rule_group_id_idx"
   end
 
   create_table "sale_advance_payment_inv", id: :serial, comment: "Sales Advance Payment Invoice", force: :cascade do |t|
@@ -9098,6 +9376,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.string "order_mode", comment: "Order Mode"
     t.float "probability", comment: "Probability"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
+    t.string "business_model", comment: "Type"
+    t.string "sale_order_type", comment: "Sale Type"
     t.index ["confirmation_date"], name: "sale_order_confirmation_date_index"
     t.index ["create_date"], name: "sale_order_create_date_index"
     t.index ["date_order"], name: "sale_order_date_order_index"
@@ -9162,18 +9442,24 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "invoice_line_id", null: false
     t.integer "order_line_id", null: false
     t.index ["invoice_line_id", "order_line_id"], name: "sale_order_line_invoice_rel_invoice_line_id_order_line_id_key", unique: true
+    t.index ["invoice_line_id"], name: "sale_order_line_invoice_rel_invoice_line_id_idx"
+    t.index ["order_line_id"], name: "sale_order_line_invoice_rel_order_line_id_idx"
   end
 
   create_table "sale_order_line_subject_rel", id: false, comment: "RELATION BETWEEN sale_order_line AND op_subject", force: :cascade do |t|
     t.integer "order_line_id", null: false
     t.integer "subject_id", null: false
     t.index ["order_line_id", "subject_id"], name: "sale_order_line_subject_rel_order_line_id_subject_id_key", unique: true
+    t.index ["order_line_id"], name: "sale_order_line_subject_rel_order_line_id_idx"
+    t.index ["subject_id"], name: "sale_order_line_subject_rel_subject_id_idx"
   end
 
   create_table "sale_order_tag_rel", id: false, comment: "RELATION BETWEEN sale_order AND crm_lead_tag", force: :cascade do |t|
     t.integer "order_id", null: false
     t.integer "tag_id", null: false
     t.index ["order_id", "tag_id"], name: "sale_order_tag_rel_order_id_tag_id_key", unique: true
+    t.index ["order_id"], name: "sale_order_tag_rel_order_id_idx"
+    t.index ["tag_id"], name: "sale_order_tag_rel_tag_id_idx"
   end
 
   create_table "sc_posts", force: :cascade do |t|
@@ -9181,6 +9467,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "posted_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "batch_id"
   end
 
   create_table "sc_products", force: :cascade do |t|
@@ -9201,6 +9488,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "change_id", null: false
     t.integer "faculty_id", null: false
     t.index ["change_id", "faculty_id"], name: "session_change_tutors_id_change_id_faculty_id_key", unique: true
+    t.index ["change_id"], name: "session_change_tutors_id_change_id_idx"
+    t.index ["faculty_id"], name: "session_change_tutors_id_faculty_id_idx"
   end
 
   create_table "session_confirmation", id: :serial, comment: "Wizard for Multiple Session Confirmation", force: :cascade do |t|
@@ -9214,6 +9503,16 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "name", null: false
     t.integer "partner_id", null: false
     t.index ["name", "partner_id"], name: "session_fa_rel_name_partner_id_key", unique: true
+    t.index ["name"], name: "session_fa_rel_name_idx"
+    t.index ["partner_id"], name: "session_fa_rel_partner_id_idx"
+  end
+
+  create_table "session_offset_faculty_rel", id: false, comment: "RELATION BETWEEN op_session_offset AND op_faculty", force: :cascade do |t|
+    t.integer "name", null: false
+    t.integer "partner_id", null: false
+    t.index ["name", "partner_id"], name: "session_offset_faculty_rel_name_partner_id_key", unique: true
+    t.index ["name"], name: "session_offset_faculty_rel_name_idx"
+    t.index ["partner_id"], name: "session_offset_faculty_rel_partner_id_idx"
   end
 
   create_table "session_student_feedbacks", force: :cascade do |t|
@@ -9303,6 +9602,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["slide_id"], name: "slide_embed_slide_id_index"
   end
 
   create_table "slide_slide", id: :serial, comment: "Slides", force: :cascade do |t|
@@ -9377,19 +9677,22 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "student_id", comment: "Student"
     t.integer "start_session_number", comment: "Start session"
     t.datetime "date", comment: "Create Date"
+    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.datetime "message_last_post", comment: "Last Message Date"
+    t.date "start_date", comment: "Start Date"
+    t.date "end_date", comment: "End Date"
     t.index ["admission_id", "batch_id"], name: "student_course_admission_unique_batch_admission", unique: true
-    t.index ["batch_id", "admission_id"], name: "unique_batch_admission", unique: true
   end
 
   create_table "student_gen_test_room_day", id: false, comment: "RELATION BETWEEN generate_student_test_room AND generate_student_test_room_day", force: :cascade do |t|
     t.integer "day_id", null: false
     t.integer "gen_room_id", null: false
     t.index ["day_id", "gen_room_id"], name: "student_gen_test_room_day_day_id_gen_room_id_key", unique: true
+    t.index ["day_id"], name: "student_gen_test_room_day_day_id_idx"
+    t.index ["gen_room_id"], name: "student_gen_test_room_day_gen_room_id_idx"
   end
 
   create_table "student_hall_ticket", id: :serial, comment: "student.hall.ticket", force: :cascade do |t|
@@ -9419,7 +9722,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "student_leave_student", id: false, comment: "RELATION BETWEEN student_leave AND op_student", force: :cascade do |t|
     t.integer "student_leave_id", null: false
     t.integer "student_id", null: false
+    t.index ["student_id"], name: "student_leave_student_student_id_idx"
     t.index ["student_leave_id", "student_id"], name: "student_leave_student_student_leave_id_student_id_key", unique: true
+    t.index ["student_leave_id"], name: "student_leave_student_student_leave_id_idx"
   end
 
   create_table "student_migrate", id: :serial, comment: "student.migrate", force: :cascade do |t|
@@ -9475,21 +9780,22 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "input_id", comment: "Input"
     t.string "test_type", comment: "Test Type"
     t.datetime "test_time", comment: "Test Time"
-    t.text "test_note", comment: "Notes for Testing"
+    t.text "test_note", comment: "Test note"
     t.integer "sale_channel_id", comment: "Sales Channel"
     t.integer "room_id", comment: "Room"
     t.integer "timing_id", comment: "Test Time"
-    t.datetime "test_date", comment: "Start Time"
     t.datetime "start_datetime", comment: "Start Time"
     t.string "gender", comment: "Gender"
+    t.integer "room_company_id", comment: "Company"
   end
 
   create_table "student_test_room", id: :serial, comment: "Student Test Rooms", force: :cascade do |t|
     t.string "name", null: false, comment: "Name"
     t.integer "company_id", comment: "Company"
     t.string "room_type", null: false, comment: "Room Type"
+    t.integer "course_id", comment: "Course"
     t.integer "slot", null: false, comment: "Slot"
-    t.boolean "avalible", comment: "avalible"
+    t.boolean "available", comment: "available"
     t.integer "faculty_id", comment: "Faculty"
     t.integer "user_id", comment: "Assigned to"
     t.integer "timing_id", null: false, comment: "Test Time"
@@ -9503,12 +9809,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "course_id", comment: "Course"
-    t.boolean "available", comment: "available"
   end
 
   create_table "student_test_timing", id: :serial, comment: "Period", force: :cascade do |t|
-    t.string "name", limit: 16, null: false, comment: "Name"
+    t.string "name", limit: 128, comment: "Name"
     t.string "hour", null: false, comment: "Hours"
     t.string "minute", null: false, comment: "Minute"
     t.float "duration", comment: "Duration"
@@ -9532,18 +9836,24 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "register_id", null: false
     t.integer "subject_id", null: false
     t.index ["register_id", "subject_id"], name: "subject_compulsory_rel_register_id_subject_id_key", unique: true
+    t.index ["register_id"], name: "subject_compulsory_rel_register_id_idx"
+    t.index ["subject_id"], name: "subject_compulsory_rel_subject_id_idx"
   end
 
   create_table "summary_dept_rel", id: false, comment: "RELATION BETWEEN hr_holidays_summary_dept AND hr_department", force: :cascade do |t|
     t.integer "sum_id", null: false
     t.integer "dept_id", null: false
+    t.index ["dept_id"], name: "summary_dept_rel_dept_id_idx"
     t.index ["sum_id", "dept_id"], name: "summary_dept_rel_sum_id_dept_id_key", unique: true
+    t.index ["sum_id"], name: "summary_dept_rel_sum_id_idx"
   end
 
   create_table "summary_emp_rel", id: false, comment: "RELATION BETWEEN hr_holidays_summary_employee AND hr_employee", force: :cascade do |t|
     t.integer "sum_id", null: false
     t.integer "emp_id", null: false
+    t.index ["emp_id"], name: "summary_emp_rel_emp_id_idx"
     t.index ["sum_id", "emp_id"], name: "summary_emp_rel_sum_id_emp_id_key", unique: true
+    t.index ["sum_id"], name: "summary_emp_rel_sum_id_idx"
   end
 
   create_table "survey_label", id: :serial, comment: "Survey Label", force: :cascade do |t|
@@ -9596,18 +9906,30 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.float "rating_value", comment: "Rating Value"
+    t.index ["author_id"], name: "survey_mail_compose_message_author_id_index"
+    t.index ["mail_activity_type_id"], name: "survey_mail_compose_message_mail_activity_type_id_index"
+    t.index ["message_id"], name: "survey_mail_compose_message_message_id_index"
+    t.index ["model"], name: "survey_mail_compose_message_model_index"
+    t.index ["parent_id"], name: "survey_mail_compose_message_parent_id_index"
+    t.index ["res_id"], name: "survey_mail_compose_message_res_id_index"
+    t.index ["subtype_id"], name: "survey_mail_compose_message_subtype_id_index"
+    t.index ["template_id"], name: "survey_mail_compose_message_template_id_index"
   end
 
   create_table "survey_mail_compose_message_ir_attachments_rel", id: false, comment: "RELATION BETWEEN survey_mail_compose_message AND ir_attachment", force: :cascade do |t|
     t.integer "wizard_id", null: false
     t.integer "attachment_id", null: false
+    t.index ["attachment_id"], name: "survey_mail_compose_message_ir_attachments_re_attachment_id_idx"
     t.index ["wizard_id", "attachment_id"], name: "survey_mail_compose_message_ir_atta_wizard_id_attachment_id_key", unique: true
+    t.index ["wizard_id"], name: "survey_mail_compose_message_ir_attachments_rel_wizard_id_idx"
   end
 
   create_table "survey_mail_compose_message_res_partner_rel", id: false, comment: "RELATION BETWEEN survey_mail_compose_message AND res_partner", force: :cascade do |t|
     t.integer "wizard_id", null: false
     t.integer "partner_id", null: false
+    t.index ["partner_id"], name: "survey_mail_compose_message_res_partner_rel_partner_id_idx"
     t.index ["wizard_id", "partner_id"], name: "survey_mail_compose_message_res_partne_wizard_id_partner_id_key", unique: true
+    t.index ["wizard_id"], name: "survey_mail_compose_message_res_partner_rel_wizard_id_idx"
   end
 
   create_table "survey_page", id: :serial, comment: "Survey Page", force: :cascade do |t|
@@ -9739,6 +10061,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "team_id", null: false
     t.integer "user_id", null: false
     t.index ["team_id", "user_id"], name: "team_favorite_user_rel_team_id_user_id_key", unique: true
+    t.index ["team_id"], name: "team_favorite_user_rel_team_id_idx"
+    t.index ["user_id"], name: "team_favorite_user_rel_user_id_idx"
   end
 
   create_table "teky_qldc", id: :serial, comment: "Quản lý đổi ca", force: :cascade do |t|
@@ -9766,7 +10090,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "test_ir_rel", id: false, comment: "RELATION BETWEEN student_test AND ir_attachment", force: :cascade do |t|
     t.integer "test_id", null: false
     t.integer "attachment_id", null: false
+    t.index ["attachment_id"], name: "test_ir_rel_attachment_id_idx"
     t.index ["test_id", "attachment_id"], name: "test_ir_rel_test_id_attachment_id_key", unique: true
+    t.index ["test_id"], name: "test_ir_rel_test_id_idx"
   end
 
   create_table "time_table_report", id: :serial, comment: "Generate Time Table Report", force: :cascade do |t|
@@ -9785,13 +10111,17 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "timetable_batch_line_faculty_rel", id: false, comment: "RELATION BETWEEN gen_batch_table_line AND op_faculty", force: :cascade do |t|
     t.integer "timetable_batch_line_id", null: false
     t.integer "faculty_id", null: false
+    t.index ["faculty_id"], name: "timetable_batch_line_faculty_rel_faculty_id_idx"
     t.index ["timetable_batch_line_id", "faculty_id"], name: "timetable_batch_line_faculty__timetable_batch_line_id_facul_key", unique: true
+    t.index ["timetable_batch_line_id"], name: "timetable_batch_line_faculty_rel_timetable_batch_line_id_idx"
   end
 
   create_table "timetable_line_faculty_rel", id: false, comment: "RELATION BETWEEN gen_time_table_line AND op_faculty", force: :cascade do |t|
     t.integer "timetable_line_id", null: false
     t.integer "faculty_id", null: false
+    t.index ["faculty_id"], name: "timetable_line_faculty_rel_faculty_id_idx"
     t.index ["timetable_line_id", "faculty_id"], name: "timetable_line_faculty_rel_timetable_line_id_faculty_id_key", unique: true
+    t.index ["timetable_line_id"], name: "timetable_line_faculty_rel_timetable_line_id_idx"
   end
 
   create_table "user_answers", force: :cascade do |t|
@@ -9842,8 +10172,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.integer "coin"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.integer "faculty_id"
     t.bigint "avatar_id"
     t.index ["account_role"], name: "index_users_on_account_role"
@@ -9956,7 +10286,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "website_lang_rel", id: false, comment: "RELATION BETWEEN website AND res_lang", force: :cascade do |t|
     t.integer "website_id", null: false
     t.integer "lang_id", null: false
+    t.index ["lang_id"], name: "website_lang_rel_lang_id_idx"
     t.index ["website_id", "lang_id"], name: "website_lang_rel_website_id_lang_id_key", unique: true
+    t.index ["website_id"], name: "website_lang_rel_website_id_idx"
   end
 
   create_table "website_menu", id: :serial, comment: "Website Menu", force: :cascade do |t|
@@ -9973,6 +10305,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["parent_id"], name: "website_menu_parent_id_index"
+    t.index ["parent_left"], name: "website_menu_parent_left_index"
+    t.index ["parent_right"], name: "website_menu_parent_right_index"
   end
 
   create_table "website_page", id: :serial, comment: "Page", force: :cascade do |t|
@@ -10003,7 +10338,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   create_table "website_website_page_rel", id: false, comment: "RELATION BETWEEN website_page AND website", force: :cascade do |t|
     t.integer "website_page_id", null: false
     t.integer "website_id", null: false
+    t.index ["website_id"], name: "website_website_page_rel_website_id_idx"
     t.index ["website_page_id", "website_id"], name: "website_website_page_rel_website_page_id_website_id_key", unique: true
+    t.index ["website_page_id"], name: "website_website_page_rel_website_page_id_idx"
   end
 
   create_table "wizard_document_page_history_show_diff", id: :serial, comment: "wizard.document.page.history.show_diff", force: :cascade do |t|
@@ -10088,6 +10425,227 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
     t.string "x_name", comment: "Name"
   end
 
+  add_foreign_key "Tutors", "op_faculty", name: "Tutors_op_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "Tutors", "op_session", name: "Tutors_op_session_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account", "account_account_type", column: "user_type_id", name: "account_account_user_type_id_fkey", on_delete: :nullify
+  add_foreign_key "account_account", "account_group", column: "group_id", name: "account_account_group_id_fkey", on_delete: :nullify
+  add_foreign_key "account_account", "res_company", column: "company_id", name: "account_account_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_account", "res_currency", column: "currency_id", name: "account_account_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_account", "res_users", column: "create_uid", name: "account_account_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_account", "res_users", column: "write_uid", name: "account_account_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_account_account_tag", "account_account", name: "account_account_account_tag_account_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_account_tag", "account_account_tag", name: "account_account_account_tag_account_account_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_financial_report", "account_account", column: "account_id", name: "account_account_financial_report_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_financial_report", "account_financial_report", column: "report_line_id", name: "account_account_financial_report_report_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_financial_report_type", "account_account_type", column: "account_type_id", name: "account_account_financial_report_type_account_type_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_financial_report_type", "account_financial_report", column: "report_id", name: "account_account_financial_report_type_report_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_tag", "res_users", column: "create_uid", name: "account_account_tag_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_account_tag", "res_users", column: "write_uid", name: "account_account_tag_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_account_tag_account_tax_template_rel", "account_account_tag", name: "account_account_tag_account_tax_tem_account_account_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_tag_account_tax_template_rel", "account_tax_template", name: "account_account_tag_account_tax_te_account_tax_template_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_tax_default_rel", "account_account", column: "account_id", name: "account_account_tax_default_rel_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_tax_default_rel", "account_tax", column: "tax_id", name: "account_account_tax_default_rel_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_template", "account_account_type", column: "user_type_id", name: "account_account_template_user_type_id_fkey", on_delete: :nullify
+  add_foreign_key "account_account_template", "account_chart_template", column: "chart_template_id", name: "account_account_template_chart_template_id_fkey", on_delete: :nullify
+  add_foreign_key "account_account_template", "account_group", column: "group_id", name: "account_account_template_group_id_fkey", on_delete: :nullify
+  add_foreign_key "account_account_template", "res_currency", column: "currency_id", name: "account_account_template_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_account_template", "res_users", column: "create_uid", name: "account_account_template_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_account_template", "res_users", column: "write_uid", name: "account_account_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_account_template_account_tag", "account_account_tag", name: "account_account_template_account_ta_account_account_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_template_account_tag", "account_account_template", name: "account_account_template_accou_account_account_template_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_template_tax_rel", "account_account_template", column: "account_id", name: "account_account_template_tax_rel_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_template_tax_rel", "account_tax_template", column: "tax_id", name: "account_account_template_tax_rel_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_type", "res_users", column: "create_uid", name: "account_account_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_account_type", "res_users", column: "write_uid", name: "account_account_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_account_type_rel", "account_account", column: "account_id", name: "account_account_type_rel_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_account_type_rel", "account_journal", column: "journal_id", name: "account_account_type_rel_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_aged_trial_balance", "res_company", column: "company_id", name: "account_aged_trial_balance_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_aged_trial_balance", "res_users", column: "create_uid", name: "account_aged_trial_balance_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_aged_trial_balance", "res_users", column: "write_uid", name: "account_aged_trial_balance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_aged_trial_balance_account_journal_rel", "account_aged_trial_balance", name: "account_aged_trial_balance_ac_account_aged_trial_balance_i_fkey", on_delete: :cascade
+  add_foreign_key "account_aged_trial_balance_account_journal_rel", "account_journal", name: "account_aged_trial_balance_account_jour_account_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_account", "res_company", column: "company_id", name: "account_analytic_account_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_account", "res_partner", column: "partner_id", name: "account_analytic_account_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_account", "res_users", column: "create_uid", name: "account_analytic_account_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_account", "res_users", column: "write_uid", name: "account_analytic_account_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_account_tag_rel", "account_analytic_account", column: "account_id", name: "account_analytic_account_tag_rel_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_account_tag_rel", "account_analytic_tag", column: "tag_id", name: "account_analytic_account_tag_rel_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_line", "account_account", column: "general_account_id", name: "account_analytic_line_general_account_id_fkey", on_delete: :restrict
+  add_foreign_key "account_analytic_line", "account_analytic_account", column: "account_id", name: "account_analytic_line_account_id_fkey", on_delete: :restrict
+  add_foreign_key "account_analytic_line", "account_invoice", column: "timesheet_invoice_id", name: "account_analytic_line_timesheet_invoice_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "account_move_line", column: "move_id", name: "account_analytic_line_move_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_line", "hr_department", column: "department_id", name: "account_analytic_line_department_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "hr_employee", column: "employee_id", name: "account_analytic_line_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "hr_holidays", column: "holiday_id", name: "account_analytic_line_holiday_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "product_product", column: "product_id", name: "account_analytic_line_product_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "product_uom", name: "account_analytic_line_product_uom_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "project_project", column: "project_id", name: "account_analytic_line_project_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "project_task", column: "task_id", name: "account_analytic_line_task_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "res_company", column: "company_id", name: "account_analytic_line_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "res_currency", column: "currency_id", name: "account_analytic_line_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "res_partner", column: "partner_id", name: "account_analytic_line_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "res_users", column: "create_uid", name: "account_analytic_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "res_users", column: "user_id", name: "account_analytic_line_user_id_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "res_users", column: "write_uid", name: "account_analytic_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line", "sale_order_line", column: "so_line", name: "account_analytic_line_so_line_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_line_tag_rel", "account_analytic_line", column: "line_id", name: "account_analytic_line_tag_rel_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_line_tag_rel", "account_analytic_tag", column: "tag_id", name: "account_analytic_line_tag_rel_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_tag", "res_users", column: "create_uid", name: "account_analytic_tag_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_tag", "res_users", column: "write_uid", name: "account_analytic_tag_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_analytic_tag_account_invoice_line_rel", "account_analytic_tag", name: "account_analytic_tag_account_invoi_account_analytic_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_tag_account_invoice_line_rel", "account_invoice_line", name: "account_analytic_tag_account_invoi_account_invoice_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_tag_account_move_line_rel", "account_analytic_tag", name: "account_analytic_tag_account_move__account_analytic_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_tag_account_move_line_rel", "account_move_line", name: "account_analytic_tag_account_move_lin_account_move_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_tag_sale_order_line_rel", "account_analytic_tag", name: "account_analytic_tag_sale_order_li_account_analytic_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "account_analytic_tag_sale_order_line_rel", "sale_order_line", name: "account_analytic_tag_sale_order_line_re_sale_order_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_asset_asset", "account_asset_category", column: "category_id", name: "account_asset_asset_category_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_asset", "account_invoice", column: "invoice_id", name: "account_asset_asset_invoice_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_asset", "res_company", column: "company_id", name: "account_asset_asset_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_asset", "res_currency", column: "currency_id", name: "account_asset_asset_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_asset", "res_partner", column: "partner_id", name: "account_asset_asset_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_asset", "res_users", column: "create_uid", name: "account_asset_asset_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_asset", "res_users", column: "write_uid", name: "account_asset_asset_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_category", "account_account", column: "account_asset_id", name: "account_asset_category_account_asset_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_category", "account_account", column: "account_depreciation_expense_id", name: "account_asset_category_account_depreciation_expense_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_category", "account_account", column: "account_depreciation_id", name: "account_asset_category_account_depreciation_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_category", "account_analytic_account", column: "account_analytic_id", name: "account_asset_category_account_analytic_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_category", "account_journal", column: "journal_id", name: "account_asset_category_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_category", "res_company", column: "company_id", name: "account_asset_category_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_category", "res_users", column: "create_uid", name: "account_asset_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_category", "res_users", column: "write_uid", name: "account_asset_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_depreciation_line", "account_asset_asset", column: "asset_id", name: "account_asset_depreciation_line_asset_id_fkey", on_delete: :cascade
+  add_foreign_key "account_asset_depreciation_line", "account_move", column: "move_id", name: "account_asset_depreciation_line_move_id_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_depreciation_line", "res_users", column: "create_uid", name: "account_asset_depreciation_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_asset_depreciation_line", "res_users", column: "write_uid", name: "account_asset_depreciation_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_balance_report", "res_company", column: "company_id", name: "account_balance_report_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_balance_report", "res_users", column: "create_uid", name: "account_balance_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_balance_report", "res_users", column: "write_uid", name: "account_balance_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_balance_report_journal_rel", "account_balance_report", column: "account_id", name: "account_balance_report_journal_rel_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_balance_report_journal_rel", "account_journal", column: "journal_id", name: "account_balance_report_journal_rel_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_bank_accounts_wizard", "res_currency", column: "currency_id", name: "account_bank_accounts_wizard_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_accounts_wizard", "res_users", column: "create_uid", name: "account_bank_accounts_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_accounts_wizard", "res_users", column: "write_uid", name: "account_bank_accounts_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_accounts_wizard", "wizard_multi_charts_accounts", column: "bank_account_id", name: "account_bank_accounts_wizard_bank_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_bank_statement", "account_bank_statement_cashbox", column: "cashbox_end_id", name: "account_bank_statement_cashbox_end_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement", "account_bank_statement_cashbox", column: "cashbox_start_id", name: "account_bank_statement_cashbox_start_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement", "account_journal", column: "journal_id", name: "account_bank_statement_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement", "pos_session", name: "account_bank_statement_pos_session_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement", "res_company", column: "company_id", name: "account_bank_statement_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement", "res_users", column: "create_uid", name: "account_bank_statement_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement", "res_users", column: "user_id", name: "account_bank_statement_user_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement", "res_users", column: "write_uid", name: "account_bank_statement_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_cashbox", "res_users", column: "create_uid", name: "account_bank_statement_cashbox_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_cashbox", "res_users", column: "write_uid", name: "account_bank_statement_cashbox_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_closebalance", "res_users", column: "create_uid", name: "account_bank_statement_closebalance_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_closebalance", "res_users", column: "write_uid", name: "account_bank_statement_closebalance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_import", "res_users", column: "create_uid", name: "account_bank_statement_import_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_import", "res_users", column: "write_uid", name: "account_bank_statement_import_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_import_journal_creation", "account_journal", column: "journal_id", name: "account_bank_statement_import_journal_creation_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_bank_statement_import_journal_creation", "res_users", column: "create_uid", name: "account_bank_statement_import_journal_creation_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_import_journal_creation", "res_users", column: "write_uid", name: "account_bank_statement_import_journal_creation_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_line", "account_account", column: "account_id", name: "account_bank_statement_line_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_line", "account_bank_statement", column: "statement_id", name: "account_bank_statement_line_statement_id_fkey", on_delete: :cascade
+  add_foreign_key "account_bank_statement_line", "account_journal", column: "journal_id", name: "account_bank_statement_line_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_line", "pos_order", column: "pos_statement_id", name: "account_bank_statement_line_pos_statement_id_fkey", on_delete: :cascade
+  add_foreign_key "account_bank_statement_line", "res_company", column: "company_id", name: "account_bank_statement_line_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_line", "res_currency", column: "currency_id", name: "account_bank_statement_line_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_line", "res_partner", column: "partner_id", name: "account_bank_statement_line_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_line", "res_partner_bank", column: "bank_account_id", name: "account_bank_statement_line_bank_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_line", "res_users", column: "create_uid", name: "account_bank_statement_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_bank_statement_line", "res_users", column: "write_uid", name: "account_bank_statement_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_cash_rounding", "account_account", column: "account_id", name: "account_cash_rounding_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_cash_rounding", "res_users", column: "create_uid", name: "account_cash_rounding_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_cash_rounding", "res_users", column: "write_uid", name: "account_cash_rounding_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_cashbox_line", "account_bank_statement_cashbox", column: "cashbox_id", name: "account_cashbox_line_cashbox_id_fkey", on_delete: :nullify
+  add_foreign_key "account_cashbox_line", "pos_config", column: "default_pos_id", name: "account_cashbox_line_default_pos_id_fkey", on_delete: :nullify
+  add_foreign_key "account_cashbox_line", "res_users", column: "create_uid", name: "account_cashbox_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_cashbox_line", "res_users", column: "write_uid", name: "account_cashbox_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "expense_currency_exchange_account_id", name: "account_chart_template_expense_currency_exchange_account_i_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "income_currency_exchange_account_id", name: "account_chart_template_income_currency_exchange_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "property_account_expense_categ_id", name: "account_chart_template_property_account_expense_categ_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "property_account_expense_id", name: "account_chart_template_property_account_expense_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "property_account_income_categ_id", name: "account_chart_template_property_account_income_categ_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "property_account_income_id", name: "account_chart_template_property_account_income_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "property_account_payable_id", name: "account_chart_template_property_account_payable_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "property_account_receivable_id", name: "account_chart_template_property_account_receivable_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "property_stock_account_input_categ_id", name: "account_chart_template_property_stock_account_input_categ__fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "property_stock_account_output_categ_id", name: "account_chart_template_property_stock_account_output_categ_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "property_stock_valuation_account_id", name: "account_chart_template_property_stock_valuation_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_account_template", column: "transfer_account_id", name: "account_chart_template_transfer_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "account_chart_template", column: "parent_id", name: "account_chart_template_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "res_company", column: "company_id", name: "account_chart_template_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "res_currency", column: "currency_id", name: "account_chart_template_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "res_users", column: "create_uid", name: "account_chart_template_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_chart_template", "res_users", column: "write_uid", name: "account_chart_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_common_account_report", "res_company", column: "company_id", name: "account_common_account_report_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_common_account_report", "res_users", column: "create_uid", name: "account_common_account_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_common_account_report", "res_users", column: "write_uid", name: "account_common_account_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_common_account_report_account_journal_rel", "account_common_account_report", name: "account_common_account_report_account_common_account_repor_fkey", on_delete: :cascade
+  add_foreign_key "account_common_account_report_account_journal_rel", "account_journal", name: "account_common_account_report_account_j_account_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_common_journal_report", "res_company", column: "company_id", name: "account_common_journal_report_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_common_journal_report", "res_users", column: "create_uid", name: "account_common_journal_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_common_journal_report", "res_users", column: "write_uid", name: "account_common_journal_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_common_journal_report_account_journal_rel", "account_common_journal_report", name: "account_common_journal_report_account_common_journal_repor_fkey", on_delete: :cascade
+  add_foreign_key "account_common_journal_report_account_journal_rel", "account_journal", name: "account_common_journal_report_account_j_account_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_common_partner_report", "res_company", column: "company_id", name: "account_common_partner_report_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_common_partner_report", "res_users", column: "create_uid", name: "account_common_partner_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_common_partner_report", "res_users", column: "write_uid", name: "account_common_partner_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_common_partner_report_account_journal_rel", "account_common_partner_report", name: "account_common_partner_report_account_common_partner_repor_fkey", on_delete: :cascade
+  add_foreign_key "account_common_partner_report_account_journal_rel", "account_journal", name: "account_common_partner_report_account_j_account_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_common_report", "res_company", column: "company_id", name: "account_common_report_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_common_report", "res_users", column: "create_uid", name: "account_common_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_common_report", "res_users", column: "write_uid", name: "account_common_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_common_report_account_journal_rel", "account_common_report", name: "account_common_report_account_jou_account_common_report_id_fkey", on_delete: :cascade
+  add_foreign_key "account_common_report_account_journal_rel", "account_journal", name: "account_common_report_account_journal_r_account_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_financial_report", "account_financial_report", column: "account_report_id", name: "account_financial_report_account_report_id_fkey", on_delete: :nullify
+  add_foreign_key "account_financial_report", "account_financial_report", column: "parent_id", name: "account_financial_report_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "account_financial_report", "res_users", column: "create_uid", name: "account_financial_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_financial_report", "res_users", column: "write_uid", name: "account_financial_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_financial_year_op", "res_company", column: "company_id", name: "account_financial_year_op_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_financial_year_op", "res_users", column: "create_uid", name: "account_financial_year_op_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_financial_year_op", "res_users", column: "write_uid", name: "account_financial_year_op_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position", "res_company", column: "company_id", name: "account_fiscal_position_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position", "res_country", column: "country_id", name: "account_fiscal_position_country_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position", "res_country_group", column: "country_group_id", name: "account_fiscal_position_country_group_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position", "res_users", column: "create_uid", name: "account_fiscal_position_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position", "res_users", column: "write_uid", name: "account_fiscal_position_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_account", "account_account", column: "account_dest_id", name: "account_fiscal_position_account_account_dest_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_account", "account_account", column: "account_src_id", name: "account_fiscal_position_account_account_src_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_account", "account_fiscal_position", column: "position_id", name: "account_fiscal_position_account_position_id_fkey", on_delete: :cascade
+  add_foreign_key "account_fiscal_position_account", "res_users", column: "create_uid", name: "account_fiscal_position_account_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_account", "res_users", column: "write_uid", name: "account_fiscal_position_account_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_account_template", "account_account_template", column: "account_dest_id", name: "account_fiscal_position_account_template_account_dest_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_account_template", "account_account_template", column: "account_src_id", name: "account_fiscal_position_account_template_account_src_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_account_template", "account_fiscal_position_template", column: "position_id", name: "account_fiscal_position_account_template_position_id_fkey", on_delete: :cascade
+  add_foreign_key "account_fiscal_position_account_template", "res_users", column: "create_uid", name: "account_fiscal_position_account_template_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_account_template", "res_users", column: "write_uid", name: "account_fiscal_position_account_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_pos_config_rel", "account_fiscal_position", name: "account_fiscal_position_pos_con_account_fiscal_position_id_fkey", on_delete: :cascade
+  add_foreign_key "account_fiscal_position_pos_config_rel", "pos_config", name: "account_fiscal_position_pos_config_rel_pos_config_id_fkey", on_delete: :cascade
+  add_foreign_key "account_fiscal_position_res_country_state_rel", "account_fiscal_position", name: "account_fiscal_position_res_cou_account_fiscal_position_id_fkey", on_delete: :cascade
+  add_foreign_key "account_fiscal_position_res_country_state_rel", "res_country_state", name: "account_fiscal_position_res_country_s_res_country_state_id_fkey", on_delete: :cascade
+  add_foreign_key "account_fiscal_position_tax", "account_fiscal_position", column: "position_id", name: "account_fiscal_position_tax_position_id_fkey", on_delete: :cascade
+  add_foreign_key "account_fiscal_position_tax", "account_tax", column: "tax_dest_id", name: "account_fiscal_position_tax_tax_dest_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_tax", "account_tax", column: "tax_src_id", name: "account_fiscal_position_tax_tax_src_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_tax", "res_users", column: "create_uid", name: "account_fiscal_position_tax_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_tax", "res_users", column: "write_uid", name: "account_fiscal_position_tax_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_tax_template", "account_fiscal_position_template", column: "position_id", name: "account_fiscal_position_tax_template_position_id_fkey", on_delete: :cascade
+  add_foreign_key "account_fiscal_position_tax_template", "account_tax_template", column: "tax_dest_id", name: "account_fiscal_position_tax_template_tax_dest_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_tax_template", "account_tax_template", column: "tax_src_id", name: "account_fiscal_position_tax_template_tax_src_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_tax_template", "res_users", column: "create_uid", name: "account_fiscal_position_tax_template_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_tax_template", "res_users", column: "write_uid", name: "account_fiscal_position_tax_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_template", "account_chart_template", column: "chart_template_id", name: "account_fiscal_position_template_chart_template_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_template", "res_country", column: "country_id", name: "account_fiscal_position_template_country_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_template", "res_country_group", column: "country_group_id", name: "account_fiscal_position_template_country_group_id_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_template", "res_users", column: "create_uid", name: "account_fiscal_position_template_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_template", "res_users", column: "write_uid", name: "account_fiscal_position_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_fiscal_position_template_res_country_state_rel", "account_fiscal_position_template", name: "account_fiscal_position_templ_account_fiscal_position_temp_fkey", on_delete: :cascade
+  add_foreign_key "account_fiscal_position_template_res_country_state_rel", "res_country_state", name: "account_fiscal_position_template_res__res_country_state_id_fkey", on_delete: :cascade
+  add_foreign_key "account_full_reconcile", "account_move", column: "exchange_move_id", name: "account_full_reconcile_exchange_move_id_fkey", on_delete: :nullify
+  add_foreign_key "account_full_reconcile", "res_users", column: "create_uid", name: "account_full_reconcile_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_full_reconcile", "res_users", column: "write_uid", name: "account_full_reconcile_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_group", "account_group", column: "parent_id", name: "account_group_parent_id_fkey", on_delete: :cascade
+  add_foreign_key "account_group", "res_users", column: "create_uid", name: "account_group_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_group", "res_users", column: "write_uid", name: "account_group_write_uid_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "account_account", column: "account_id", name: "account_invoice_account_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "account_cash_rounding", column: "cash_rounding_id", name: "account_invoice_cash_rounding_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "account_fiscal_position", column: "fiscal_position_id", name: "account_invoice_fiscal_position_id_fkey", on_delete: :nullify
@@ -10110,6 +10668,113 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "account_invoice", "utm_campaign", column: "campaign_id", name: "account_invoice_campaign_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "utm_medium", column: "medium_id", name: "account_invoice_medium_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "utm_source", column: "source_id", name: "account_invoice_source_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_account_move_line_rel", "account_invoice", name: "account_invoice_account_move_line_rel_account_invoice_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_account_move_line_rel", "account_move_line", name: "account_invoice_account_move_line_rel_account_move_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_account_register_payments_rel", "account_invoice", name: "account_invoice_account_register_paymen_account_invoice_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_account_register_payments_rel", "account_register_payments", column: "account_register_payments_id", name: "account_invoice_account_regis_account_register_payments_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_confirm", "res_users", column: "create_uid", name: "account_invoice_confirm_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_confirm", "res_users", column: "write_uid", name: "account_invoice_confirm_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "account_account", column: "account_id", name: "account_invoice_line_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "account_analytic_account", column: "account_analytic_id", name: "account_invoice_line_account_analytic_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "account_asset_category", column: "asset_category_id", name: "account_invoice_line_asset_category_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "account_invoice", column: "invoice_id", name: "account_invoice_line_invoice_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_line", "product_product", column: "product_id", name: "account_invoice_line_product_id_fkey", on_delete: :restrict
+  add_foreign_key "account_invoice_line", "product_uom", column: "uom_id", name: "account_invoice_line_uom_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "res_company", column: "company_id", name: "account_invoice_line_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "res_currency", column: "currency_id", name: "account_invoice_line_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "res_partner", column: "partner_id", name: "account_invoice_line_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "res_users", column: "create_uid", name: "account_invoice_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "res_users", column: "write_uid", name: "account_invoice_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line", "sale_layout_category", column: "layout_category_id", name: "account_invoice_line_layout_category_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_line_tax", "account_invoice_line", column: "invoice_line_id", name: "account_invoice_line_tax_invoice_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_line_tax", "account_tax", column: "tax_id", name: "account_invoice_line_tax_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_payment_rel", "account_invoice", column: "invoice_id", name: "account_invoice_payment_rel_invoice_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_payment_rel", "account_payment", column: "payment_id", name: "account_invoice_payment_rel_payment_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_refund", "res_users", column: "create_uid", name: "account_invoice_refund_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_refund", "res_users", column: "write_uid", name: "account_invoice_refund_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_tax", "account_account", column: "account_id", name: "account_invoice_tax_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_tax", "account_analytic_account", column: "account_analytic_id", name: "account_invoice_tax_account_analytic_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_tax", "account_invoice", column: "invoice_id", name: "account_invoice_tax_invoice_id_fkey", on_delete: :cascade
+  add_foreign_key "account_invoice_tax", "account_tax", column: "tax_id", name: "account_invoice_tax_tax_id_fkey", on_delete: :restrict
+  add_foreign_key "account_invoice_tax", "res_company", column: "company_id", name: "account_invoice_tax_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_tax", "res_currency", column: "currency_id", name: "account_invoice_tax_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_tax", "res_users", column: "create_uid", name: "account_invoice_tax_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_invoice_tax", "res_users", column: "write_uid", name: "account_invoice_tax_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "account_account", column: "default_credit_account_id", name: "account_journal_default_credit_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "account_account", column: "default_debit_account_id", name: "account_journal_default_debit_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "account_account", column: "loss_account_id", name: "account_journal_loss_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "account_account", column: "profit_account_id", name: "account_journal_profit_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "ir_sequence", column: "refund_sequence_id", name: "account_journal_refund_sequence_id_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "ir_sequence", column: "sequence_id", name: "account_journal_sequence_id_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "res_company", column: "company_id", name: "account_journal_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "res_currency", column: "currency_id", name: "account_journal_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "res_partner_bank", column: "bank_account_id", name: "account_journal_bank_account_id_fkey", on_delete: :restrict
+  add_foreign_key "account_journal", "res_users", column: "create_uid", name: "account_journal_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_journal", "res_users", column: "write_uid", name: "account_journal_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_journal_account_print_journal_rel", "account_journal", name: "account_journal_account_print_journal_r_account_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_account_print_journal_rel", "account_print_journal", name: "account_journal_account_print_jou_account_print_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_account_report_partner_ledger_rel", "account_journal", name: "account_journal_account_report_partner__account_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_account_report_partner_ledger_rel", "account_report_partner_ledger", name: "account_journal_account_repor_account_report_partner_ledge_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_account_tax_report_rel", "account_journal", name: "account_journal_account_tax_report_rel_account_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_account_tax_report_rel", "account_tax_report", name: "account_journal_account_tax_report_r_account_tax_report_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_accounting_report_rel", "account_journal", name: "account_journal_accounting_report_rel_account_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_accounting_report_rel", "accounting_report", name: "account_journal_accounting_report_rel_accounting_report_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_inbound_payment_method_rel", "account_journal", column: "journal_id", name: "account_journal_inbound_payment_method_rel_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_inbound_payment_method_rel", "account_payment_method", column: "inbound_payment_method", name: "account_journal_inbound_payment_met_inbound_payment_method_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_outbound_payment_method_rel", "account_journal", column: "journal_id", name: "account_journal_outbound_payment_method_rel_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_outbound_payment_method_rel", "account_payment_method", column: "outbound_payment_method", name: "account_journal_outbound_payment_m_outbound_payment_method_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_type_rel", "account_account_type", column: "type_id", name: "account_journal_type_rel_type_id_fkey", on_delete: :cascade
+  add_foreign_key "account_journal_type_rel", "account_journal", column: "journal_id", name: "account_journal_type_rel_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_move", "account_journal", column: "journal_id", name: "account_move_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move", "account_partial_reconcile", column: "tax_cash_basis_rec_id", name: "account_move_tax_cash_basis_rec_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move", "res_company", column: "company_id", name: "account_move_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move", "res_currency", column: "currency_id", name: "account_move_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move", "res_partner", column: "partner_id", name: "account_move_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move", "res_users", column: "create_uid", name: "account_move_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_move", "res_users", column: "write_uid", name: "account_move_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "account_account", column: "account_id", name: "account_move_line_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_move_line", "account_account_type", column: "user_type_id", name: "account_move_line_user_type_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "account_analytic_account", column: "analytic_account_id", name: "account_move_line_analytic_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "account_bank_statement", column: "statement_id", name: "account_move_line_statement_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "account_bank_statement_line", column: "statement_line_id", name: "account_move_line_statement_line_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "account_full_reconcile", column: "full_reconcile_id", name: "account_move_line_full_reconcile_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "account_invoice", column: "invoice_id", name: "account_move_line_invoice_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "account_journal", column: "journal_id", name: "account_move_line_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "account_move", column: "move_id", name: "account_move_line_move_id_fkey", on_delete: :cascade
+  add_foreign_key "account_move_line", "account_payment", column: "payment_id", name: "account_move_line_payment_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "account_tax", column: "tax_line_id", name: "account_move_line_tax_line_id_fkey", on_delete: :restrict
+  add_foreign_key "account_move_line", "hr_expense", column: "expense_id", name: "account_move_line_expense_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "product_product", column: "product_id", name: "account_move_line_product_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "product_uom", name: "account_move_line_product_uom_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "res_company", column: "company_id", name: "account_move_line_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "res_currency", column: "company_currency_id", name: "account_move_line_company_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "res_currency", column: "currency_id", name: "account_move_line_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "res_partner", column: "partner_id", name: "account_move_line_partner_id_fkey", on_delete: :restrict
+  add_foreign_key "account_move_line", "res_users", column: "create_uid", name: "account_move_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line", "res_users", column: "write_uid", name: "account_move_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line_account_tax_rel", "account_move_line", name: "account_move_line_account_tax_rel_account_move_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_move_line_account_tax_rel", "account_tax", name: "account_move_line_account_tax_rel_account_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "account_move_line_reconcile", "res_company", column: "company_id", name: "account_move_line_reconcile_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line_reconcile", "res_users", column: "create_uid", name: "account_move_line_reconcile_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line_reconcile", "res_users", column: "write_uid", name: "account_move_line_reconcile_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line_reconcile_writeoff", "account_account", column: "writeoff_acc_id", name: "account_move_line_reconcile_writeoff_writeoff_acc_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line_reconcile_writeoff", "account_analytic_account", column: "analytic_id", name: "account_move_line_reconcile_writeoff_analytic_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line_reconcile_writeoff", "account_journal", column: "journal_id", name: "account_move_line_reconcile_writeoff_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line_reconcile_writeoff", "res_users", column: "create_uid", name: "account_move_line_reconcile_writeoff_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_move_line_reconcile_writeoff", "res_users", column: "write_uid", name: "account_move_line_reconcile_writeoff_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_move_reversal", "account_journal", column: "journal_id", name: "account_move_reversal_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "account_move_reversal", "res_users", column: "create_uid", name: "account_move_reversal_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_move_reversal", "res_users", column: "write_uid", name: "account_move_reversal_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_opening", "res_company", column: "company_id", name: "account_opening_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_opening", "res_users", column: "create_uid", name: "account_opening_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_opening", "res_users", column: "write_uid", name: "account_opening_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_partial_reconcile", "account_full_reconcile", column: "full_reconcile_id", name: "account_partial_reconcile_full_reconcile_id_fkey", on_delete: :nullify
+  add_foreign_key "account_partial_reconcile", "account_move_line", column: "credit_move_id", name: "account_partial_reconcile_credit_move_id_fkey", on_delete: :nullify
+  add_foreign_key "account_partial_reconcile", "account_move_line", column: "debit_move_id", name: "account_partial_reconcile_debit_move_id_fkey", on_delete: :nullify
+  add_foreign_key "account_partial_reconcile", "res_company", column: "company_id", name: "account_partial_reconcile_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_partial_reconcile", "res_currency", column: "currency_id", name: "account_partial_reconcile_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_partial_reconcile", "res_users", column: "create_uid", name: "account_partial_reconcile_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_partial_reconcile", "res_users", column: "write_uid", name: "account_partial_reconcile_write_uid_fkey", on_delete: :nullify
   add_foreign_key "account_payment", "account_account", column: "writeoff_account_id", name: "account_payment_writeoff_account_id_fkey", on_delete: :nullify
   add_foreign_key "account_payment", "account_journal", column: "destination_journal_id", name: "account_payment_destination_journal_id_fkey", on_delete: :nullify
   add_foreign_key "account_payment", "account_journal", column: "journal_id", name: "account_payment_journal_id_fkey", on_delete: :nullify
@@ -10121,19 +10786,113 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "account_payment", "res_partner", column: "partner_id", name: "account_payment_partner_id_fkey", on_delete: :nullify
   add_foreign_key "account_payment", "res_users", column: "create_uid", name: "account_payment_create_uid_fkey", on_delete: :nullify
   add_foreign_key "account_payment", "res_users", column: "write_uid", name: "account_payment_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_payment_method", "res_users", column: "create_uid", name: "account_payment_method_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_payment_method", "res_users", column: "write_uid", name: "account_payment_method_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_payment_term", "res_company", column: "company_id", name: "account_payment_term_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_payment_term", "res_users", column: "create_uid", name: "account_payment_term_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_payment_term", "res_users", column: "write_uid", name: "account_payment_term_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_payment_term_line", "account_payment_term", column: "payment_id", name: "account_payment_term_line_payment_id_fkey", on_delete: :cascade
+  add_foreign_key "account_payment_term_line", "res_users", column: "create_uid", name: "account_payment_term_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_payment_term_line", "res_users", column: "write_uid", name: "account_payment_term_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_print_journal", "res_company", column: "company_id", name: "account_print_journal_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_print_journal", "res_users", column: "create_uid", name: "account_print_journal_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_print_journal", "res_users", column: "write_uid", name: "account_print_journal_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_reconcile_model", "account_account", column: "account_id", name: "account_reconcile_model_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_reconcile_model", "account_account", column: "second_account_id", name: "account_reconcile_model_second_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_reconcile_model", "account_analytic_account", column: "analytic_account_id", name: "account_reconcile_model_analytic_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_reconcile_model", "account_analytic_account", column: "second_analytic_account_id", name: "account_reconcile_model_second_analytic_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_reconcile_model", "account_journal", column: "journal_id", name: "account_reconcile_model_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_reconcile_model", "account_journal", column: "second_journal_id", name: "account_reconcile_model_second_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_reconcile_model", "account_tax", column: "second_tax_id", name: "account_reconcile_model_second_tax_id_fkey", on_delete: :restrict
+  add_foreign_key "account_reconcile_model", "account_tax", column: "tax_id", name: "account_reconcile_model_tax_id_fkey", on_delete: :restrict
+  add_foreign_key "account_reconcile_model", "res_company", column: "company_id", name: "account_reconcile_model_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_reconcile_model", "res_users", column: "create_uid", name: "account_reconcile_model_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_reconcile_model", "res_users", column: "write_uid", name: "account_reconcile_model_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_reconcile_model_template", "account_account_template", column: "account_id", name: "account_reconcile_model_template_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_reconcile_model_template", "account_account_template", column: "second_account_id", name: "account_reconcile_model_template_second_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_reconcile_model_template", "account_chart_template", column: "chart_template_id", name: "account_reconcile_model_template_chart_template_id_fkey", on_delete: :nullify
+  add_foreign_key "account_reconcile_model_template", "account_tax_template", column: "second_tax_id", name: "account_reconcile_model_template_second_tax_id_fkey", on_delete: :restrict
+  add_foreign_key "account_reconcile_model_template", "account_tax_template", column: "tax_id", name: "account_reconcile_model_template_tax_id_fkey", on_delete: :restrict
+  add_foreign_key "account_reconcile_model_template", "res_users", column: "create_uid", name: "account_reconcile_model_template_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_reconcile_model_template", "res_users", column: "write_uid", name: "account_reconcile_model_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_register_payments", "account_journal", column: "journal_id", name: "account_register_payments_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "account_register_payments", "account_payment_method", column: "payment_method_id", name: "account_register_payments_payment_method_id_fkey", on_delete: :nullify
+  add_foreign_key "account_register_payments", "res_currency", column: "currency_id", name: "account_register_payments_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "account_register_payments", "res_partner", column: "partner_id", name: "account_register_payments_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "account_register_payments", "res_users", column: "create_uid", name: "account_register_payments_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_register_payments", "res_users", column: "write_uid", name: "account_register_payments_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_report_general_ledger", "res_company", column: "company_id", name: "account_report_general_ledger_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_report_general_ledger", "res_users", column: "create_uid", name: "account_report_general_ledger_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_report_general_ledger", "res_users", column: "write_uid", name: "account_report_general_ledger_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_report_general_ledger_journal_rel", "account_journal", column: "journal_id", name: "account_report_general_ledger_journal_rel_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "account_report_general_ledger_journal_rel", "account_report_general_ledger", column: "account_id", name: "account_report_general_ledger_journal_rel_account_id_fkey", on_delete: :cascade
+  add_foreign_key "account_report_partner_ledger", "res_company", column: "company_id", name: "account_report_partner_ledger_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_report_partner_ledger", "res_users", column: "create_uid", name: "account_report_partner_ledger_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_report_partner_ledger", "res_users", column: "write_uid", name: "account_report_partner_ledger_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_tax", "account_account", column: "account_id", name: "account_tax_account_id_fkey", on_delete: :restrict
+  add_foreign_key "account_tax", "account_account", column: "cash_basis_account", name: "account_tax_cash_basis_account_fkey", on_delete: :nullify
+  add_foreign_key "account_tax", "account_account", column: "cash_basis_base_account_id", name: "account_tax_cash_basis_base_account_id_fkey", on_delete: :nullify
+  add_foreign_key "account_tax", "account_account", column: "refund_account_id", name: "account_tax_refund_account_id_fkey", on_delete: :restrict
+  add_foreign_key "account_tax", "account_tax_group", column: "tax_group_id", name: "account_tax_tax_group_id_fkey", on_delete: :nullify
+  add_foreign_key "account_tax", "res_company", column: "company_id", name: "account_tax_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_tax", "res_users", column: "create_uid", name: "account_tax_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_tax", "res_users", column: "write_uid", name: "account_tax_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_account_tag", "account_account_tag", name: "account_tax_account_tag_account_account_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_account_tag", "account_tax", name: "account_tax_account_tag_account_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_filiation_rel", "account_tax", column: "child_tax", name: "account_tax_filiation_rel_child_tax_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_filiation_rel", "account_tax", column: "parent_tax", name: "account_tax_filiation_rel_parent_tax_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_group", "res_users", column: "create_uid", name: "account_tax_group_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_group", "res_users", column: "write_uid", name: "account_tax_group_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_pos_order_line_rel", "account_tax", name: "account_tax_pos_order_line_rel_account_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_pos_order_line_rel", "pos_order_line", name: "account_tax_pos_order_line_rel_pos_order_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_report", "res_company", column: "company_id", name: "account_tax_report_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_report", "res_users", column: "create_uid", name: "account_tax_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_report", "res_users", column: "write_uid", name: "account_tax_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_sale_advance_payment_inv_rel", "account_tax", name: "account_tax_sale_advance_payment_inv_rel_account_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_sale_advance_payment_inv_rel", "sale_advance_payment_inv", name: "account_tax_sale_advance_payme_sale_advance_payment_inv_id_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_sale_order_line_rel", "account_tax", name: "account_tax_sale_order_line_rel_account_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_sale_order_line_rel", "sale_order_line", name: "account_tax_sale_order_line_rel_sale_order_line_id_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_template", "account_account_template", column: "account_id", name: "account_tax_template_account_id_fkey", on_delete: :restrict
+  add_foreign_key "account_tax_template", "account_account_template", column: "cash_basis_account", name: "account_tax_template_cash_basis_account_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_template", "account_account_template", column: "refund_account_id", name: "account_tax_template_refund_account_id_fkey", on_delete: :restrict
+  add_foreign_key "account_tax_template", "account_chart_template", column: "chart_template_id", name: "account_tax_template_chart_template_id_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_template", "account_tax_group", column: "tax_group_id", name: "account_tax_template_tax_group_id_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_template", "res_company", column: "company_id", name: "account_tax_template_company_id_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_template", "res_users", column: "create_uid", name: "account_tax_template_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_template", "res_users", column: "write_uid", name: "account_tax_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_tax_template_filiation_rel", "account_tax_template", column: "child_tax", name: "account_tax_template_filiation_rel_child_tax_fkey", on_delete: :cascade
+  add_foreign_key "account_tax_template_filiation_rel", "account_tax_template", column: "parent_tax", name: "account_tax_template_filiation_rel_parent_tax_fkey", on_delete: :cascade
+  add_foreign_key "account_unreconcile", "res_users", column: "create_uid", name: "account_unreconcile_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "account_unreconcile", "res_users", column: "write_uid", name: "account_unreconcile_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "accounting_report", "account_financial_report", column: "account_report_id", name: "accounting_report_account_report_id_fkey", on_delete: :nullify
+  add_foreign_key "accounting_report", "res_company", column: "company_id", name: "accounting_report_company_id_fkey", on_delete: :nullify
+  add_foreign_key "accounting_report", "res_users", column: "create_uid", name: "accounting_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "accounting_report", "res_users", column: "write_uid", name: "accounting_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "admission_analysis", "op_course", column: "course_id", name: "admission_analysis_course_id_fkey", on_delete: :nullify
+  add_foreign_key "admission_analysis", "res_users", column: "create_uid", name: "admission_analysis_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "admission_analysis", "res_users", column: "write_uid", name: "admission_analysis_write_uid_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "op_batch", column: "batch_id", name: "admission_sent_email_batch_id_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "op_student", column: "student_id", name: "admission_sent_email_student_id_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "res_users", column: "create_uid", name: "admission_sent_email_create_uid_fkey", on_delete: :nullify
   add_foreign_key "admission_sent_email", "res_users", column: "write_uid", name: "admission_sent_email_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "albums", "op_batch", column: "batch_id"
+  add_foreign_key "answer_marks", "user_answers"
+  add_foreign_key "asset_depreciation_confirmation_wizard", "res_users", column: "create_uid", name: "asset_depreciation_confirmation_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "asset_depreciation_confirmation_wizard", "res_users", column: "write_uid", name: "asset_depreciation_confirmation_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_mass_create", "bt_asset_category", column: "category_id", name: "asset_mass_create_category_id_fkey", on_delete: :nullify
   add_foreign_key "asset_mass_create", "bt_asset_location", column: "current_loc_id", name: "asset_mass_create_current_loc_id_fkey", on_delete: :nullify
   add_foreign_key "asset_mass_create", "bt_asset_status", column: "asset_status_id", name: "asset_mass_create_asset_status_id_fkey", on_delete: :nullify
   add_foreign_key "asset_mass_create", "res_users", column: "create_uid", name: "asset_mass_create_create_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_mass_create", "res_users", column: "write_uid", name: "asset_mass_create_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "asset_modify", "res_users", column: "create_uid", name: "asset_modify_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "asset_modify", "res_users", column: "write_uid", name: "asset_modify_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "asset_move", "bt_asset", column: "asset_id", name: "asset_move_asset_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "bt_asset_location", column: "from_loc_id", name: "asset_move_from_loc_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "bt_asset_location", column: "to_loc_id", name: "asset_move_to_loc_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "hr_employee", column: "employee_id", name: "asset_move_employee_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "hr_employee", column: "manager_faculty_id", name: "asset_move_manager_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "asset_move", "hr_employee", column: "manager_id", name: "asset_move_manager_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "op_batch", column: "batch_id", name: "asset_move_batch_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "op_course", column: "course_id", name: "asset_move_course_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "op_faculty", column: "faculty_id", name: "asset_move_faculty_id_fkey", on_delete: :nullify
@@ -10141,11 +10900,25 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "asset_move", "res_company", column: "company_id", name: "asset_move_company_id_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "res_users", column: "create_uid", name: "asset_move_create_uid_fkey", on_delete: :nullify
   add_foreign_key "asset_move", "res_users", column: "write_uid", name: "asset_move_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "asset_move_bt_asset_rel", "asset_move", name: "asset_move_bt_asset_rel_asset_move_id_fkey", on_delete: :cascade
+  add_foreign_key "asset_move_bt_asset_rel", "bt_asset", name: "asset_move_bt_asset_rel_bt_asset_id_fkey", on_delete: :cascade
+  add_foreign_key "asset_table", "res_users", column: "create_uid", name: "asset_table_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "asset_table", "res_users", column: "write_uid", name: "asset_table_write_uid_fkey", on_delete: :nullify
   add_foreign_key "assign_lead", "crm_stage", column: "stage_id", name: "assign_lead_stage_id_fkey", on_delete: :nullify
   add_foreign_key "assign_lead", "crm_team", column: "team_id", name: "assign_lead_team_id_fkey", on_delete: :nullify
   add_foreign_key "assign_lead", "res_users", column: "create_uid", name: "assign_lead_create_uid_fkey", on_delete: :nullify
   add_foreign_key "assign_lead", "res_users", column: "user_id", name: "assign_lead_user_id_fkey", on_delete: :nullify
   add_foreign_key "assign_lead", "res_users", column: "write_uid", name: "assign_lead_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "attendance_company_rel", "export_attendance", column: "atten_id", name: "attendance_company_rel_atten_id_fkey", on_delete: :cascade
+  add_foreign_key "attendance_company_rel", "res_company", column: "com_id", name: "attendance_company_rel_com_id_fkey", on_delete: :cascade
+  add_foreign_key "attendance_device_zk", "res_company", column: "company_id", name: "attendance_device_zk_company_id_fkey", on_delete: :nullify
+  add_foreign_key "attendance_device_zk", "res_users", column: "create_uid", name: "attendance_device_zk_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "attendance_device_zk", "res_users", column: "write_uid", name: "attendance_device_zk_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "attendance_device_zk_line", "attendance_device_zk", column: "zk_id", name: "attendance_device_zk_line_zk_id_fkey", on_delete: :nullify
+  add_foreign_key "attendance_device_zk_line", "res_users", column: "create_uid", name: "attendance_device_zk_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "attendance_device_zk_line", "res_users", column: "write_uid", name: "attendance_device_zk_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "attendance_employee_rel", "export_attendance", column: "atten_id", name: "attendance_employee_rel_atten_id_fkey", on_delete: :cascade
+  add_foreign_key "attendance_employee_rel", "hr_employee", column: "emp_id", name: "attendance_employee_rel_emp_id_fkey", on_delete: :cascade
   add_foreign_key "attendance_report", "hr_employee", column: "employee_id", name: "attendance_report_employee_id_fkey", on_delete: :nullify
   add_foreign_key "attendance_report", "hr_job", column: "job_id", name: "attendance_report_job_id_fkey", on_delete: :nullify
   add_foreign_key "attendance_report", "res_company", column: "company_id", name: "attendance_report_company_id_fkey", on_delete: :nullify
@@ -10157,8 +10930,94 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "attendance_tutor", "op_session", column: "session_id", name: "attendance_tutor_session_id_fkey", on_delete: :nullify
   add_foreign_key "attendance_tutor", "res_users", column: "create_uid", name: "attendance_tutor_create_uid_fkey", on_delete: :nullify
   add_foreign_key "attendance_tutor", "res_users", column: "write_uid", name: "attendance_tutor_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "auth_oauth_provider", "res_users", column: "create_uid", name: "auth_oauth_provider_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "auth_oauth_provider", "res_users", column: "write_uid", name: "auth_oauth_provider_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "badge_unlocked_definition_rel", "gamification_badge", name: "badge_unlocked_definition_rel_gamification_badge_id_fkey", on_delete: :cascade
+  add_foreign_key "badge_unlocked_definition_rel", "gamification_goal_definition", name: "badge_unlocked_definition_rel_gamification_goal_definition_fkey", on_delete: :cascade
+  add_foreign_key "barcode_nomenclature", "res_users", column: "create_uid", name: "barcode_nomenclature_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "barcode_nomenclature", "res_users", column: "write_uid", name: "barcode_nomenclature_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "barcode_rule", "barcode_nomenclature", name: "barcode_rule_barcode_nomenclature_id_fkey", on_delete: :nullify
+  add_foreign_key "barcode_rule", "res_users", column: "create_uid", name: "barcode_rule_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "barcode_rule", "res_users", column: "write_uid", name: "barcode_rule_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_automation", "ir_act_server", column: "action_server_id", name: "base_automation_action_server_id_fkey", on_delete: :restrict
+  add_foreign_key "base_automation", "ir_model_fields", column: "trg_date_id", name: "base_automation_trg_date_id_fkey", on_delete: :nullify
+  add_foreign_key "base_automation", "res_users", column: "create_uid", name: "base_automation_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_automation", "res_users", column: "write_uid", name: "base_automation_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_automation", "resource_calendar", column: "trg_date_calendar_id", name: "base_automation_trg_date_calendar_id_fkey", on_delete: :nullify
+  add_foreign_key "base_automation_lead_test", "res_partner", column: "partner_id", name: "base_automation_lead_test_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "base_automation_lead_test", "res_users", column: "create_uid", name: "base_automation_lead_test_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_automation_lead_test", "res_users", column: "user_id", name: "base_automation_lead_test_user_id_fkey", on_delete: :nullify
+  add_foreign_key "base_automation_lead_test", "res_users", column: "write_uid", name: "base_automation_lead_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_automation_line_test", "base_automation_lead_test", column: "lead_id", name: "base_automation_line_test_lead_id_fkey", on_delete: :cascade
+  add_foreign_key "base_automation_line_test", "res_users", column: "create_uid", name: "base_automation_line_test_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_automation_line_test", "res_users", column: "user_id", name: "base_automation_line_test_user_id_fkey", on_delete: :nullify
+  add_foreign_key "base_automation_line_test", "res_users", column: "write_uid", name: "base_automation_line_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_import", "res_users", column: "create_uid", name: "base_import_import_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_import", "res_users", column: "write_uid", name: "base_import_import_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char", "res_users", column: "create_uid", name: "base_import_tests_models_char_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char", "res_users", column: "write_uid", name: "base_import_tests_models_char_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_noreadonly", "res_users", column: "create_uid", name: "base_import_tests_models_char_noreadonly_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_noreadonly", "res_users", column: "write_uid", name: "base_import_tests_models_char_noreadonly_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_readonly", "res_users", column: "create_uid", name: "base_import_tests_models_char_readonly_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_readonly", "res_users", column: "write_uid", name: "base_import_tests_models_char_readonly_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_required", "res_users", column: "create_uid", name: "base_import_tests_models_char_required_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_required", "res_users", column: "write_uid", name: "base_import_tests_models_char_required_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_states", "res_users", column: "create_uid", name: "base_import_tests_models_char_states_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_states", "res_users", column: "write_uid", name: "base_import_tests_models_char_states_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_stillreadonly", "res_users", column: "create_uid", name: "base_import_tests_models_char_stillreadonly_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_char_stillreadonly", "res_users", column: "write_uid", name: "base_import_tests_models_char_stillreadonly_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o", "base_import_tests_models_m2o_related", column: "value", name: "base_import_tests_models_m2o_value_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o", "res_users", column: "create_uid", name: "base_import_tests_models_m2o_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o", "res_users", column: "write_uid", name: "base_import_tests_models_m2o_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o_related", "res_users", column: "create_uid", name: "base_import_tests_models_m2o_related_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o_related", "res_users", column: "write_uid", name: "base_import_tests_models_m2o_related_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o_required", "base_import_tests_models_m2o_required_related", column: "value", name: "base_import_tests_models_m2o_required_value_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o_required", "res_users", column: "create_uid", name: "base_import_tests_models_m2o_required_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o_required", "res_users", column: "write_uid", name: "base_import_tests_models_m2o_required_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o_required_related", "res_users", column: "create_uid", name: "base_import_tests_models_m2o_required_related_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_m2o_required_related", "res_users", column: "write_uid", name: "base_import_tests_models_m2o_required_related_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_o2m", "res_users", column: "create_uid", name: "base_import_tests_models_o2m_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_o2m", "res_users", column: "write_uid", name: "base_import_tests_models_o2m_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_o2m_child", "base_import_tests_models_o2m", column: "parent_id", name: "base_import_tests_models_o2m_child_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_o2m_child", "res_users", column: "create_uid", name: "base_import_tests_models_o2m_child_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_o2m_child", "res_users", column: "write_uid", name: "base_import_tests_models_o2m_child_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_preview", "res_users", column: "create_uid", name: "base_import_tests_models_preview_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_import_tests_models_preview", "res_users", column: "write_uid", name: "base_import_tests_models_preview_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_language_export", "res_users", column: "create_uid", name: "base_language_export_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_language_export", "res_users", column: "write_uid", name: "base_language_export_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_language_import", "res_users", column: "create_uid", name: "base_language_import_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_language_import", "res_users", column: "write_uid", name: "base_language_import_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_language_install", "res_users", column: "create_uid", name: "base_language_install_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_language_install", "res_users", column: "write_uid", name: "base_language_install_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_language_install_website_rel", "base_language_install", name: "base_language_install_website_rel_base_language_install_id_fkey", on_delete: :cascade
+  add_foreign_key "base_language_install_website_rel", "website", name: "base_language_install_website_rel_website_id_fkey", on_delete: :cascade
+  add_foreign_key "base_language_update", "res_users", column: "create_uid", name: "base_language_update_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_language_update", "res_users", column: "write_uid", name: "base_language_update_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_language_update_ir_module_module_rel", "base_language_update", name: "base_language_update_ir_module_mod_base_language_update_id_fkey", on_delete: :cascade
+  add_foreign_key "base_language_update_ir_module_module_rel", "ir_module_module", name: "base_language_update_ir_module_module__ir_module_module_id_fkey", on_delete: :cascade
+  add_foreign_key "base_module_uninstall", "ir_module_module", column: "module_id", name: "base_module_uninstall_module_id_fkey", on_delete: :nullify
+  add_foreign_key "base_module_uninstall", "res_users", column: "create_uid", name: "base_module_uninstall_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_module_uninstall", "res_users", column: "write_uid", name: "base_module_uninstall_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_module_update", "res_users", column: "create_uid", name: "base_module_update_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_module_update", "res_users", column: "write_uid", name: "base_module_update_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_module_upgrade", "res_users", column: "create_uid", name: "base_module_upgrade_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_module_upgrade", "res_users", column: "write_uid", name: "base_module_upgrade_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_partner_merge_automatic_wizard", "base_partner_merge_line", column: "current_line_id", name: "base_partner_merge_automatic_wizard_current_line_id_fkey", on_delete: :nullify
+  add_foreign_key "base_partner_merge_automatic_wizard", "res_partner", column: "dst_partner_id", name: "base_partner_merge_automatic_wizard_dst_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "base_partner_merge_automatic_wizard", "res_users", column: "create_uid", name: "base_partner_merge_automatic_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_partner_merge_automatic_wizard", "res_users", column: "write_uid", name: "base_partner_merge_automatic_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_partner_merge_automatic_wizard_res_partner_rel", "base_partner_merge_automatic_wizard", name: "base_partner_merge_automatic__base_partner_merge_automatic_fkey", on_delete: :cascade
+  add_foreign_key "base_partner_merge_automatic_wizard_res_partner_rel", "res_partner", name: "base_partner_merge_automatic_wizard_res_par_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "base_partner_merge_line", "base_partner_merge_automatic_wizard", column: "wizard_id", name: "base_partner_merge_line_wizard_id_fkey", on_delete: :nullify
+  add_foreign_key "base_partner_merge_line", "res_users", column: "create_uid", name: "base_partner_merge_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_partner_merge_line", "res_users", column: "write_uid", name: "base_partner_merge_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_update_translations", "res_users", column: "create_uid", name: "base_update_translations_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "base_update_translations", "res_users", column: "write_uid", name: "base_update_translations_write_uid_fkey", on_delete: :nullify
   add_foreign_key "batch_reject_wizard", "res_users", column: "create_uid", name: "batch_reject_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "batch_reject_wizard", "res_users", column: "write_uid", name: "batch_reject_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "batch_subject_rel", "op_batch", column: "batch_id", name: "batch_subject_rel_batch_id_fkey", on_delete: :cascade
+  add_foreign_key "batch_subject_rel", "op_subject", column: "subject_id", name: "batch_subject_rel_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "bt_asset", "asset_table", column: "asset_table", name: "bt_asset_asset_table_fkey", on_delete: :nullify
   add_foreign_key "bt_asset", "bt_asset_category", column: "categ_id", name: "bt_asset_categ_id_fkey", on_delete: :nullify
   add_foreign_key "bt_asset", "bt_asset_category", column: "category_id", name: "bt_asset_category_id_fkey", on_delete: :nullify
   add_foreign_key "bt_asset", "bt_asset_category", column: "parent_id", name: "bt_asset_parent_id_fkey", on_delete: :nullify
@@ -10172,6 +11031,11 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "bt_asset_category", "res_users", column: "write_uid", name: "bt_asset_category_write_uid_fkey", on_delete: :nullify
   add_foreign_key "bt_asset_location", "res_users", column: "create_uid", name: "bt_asset_location_create_uid_fkey", on_delete: :nullify
   add_foreign_key "bt_asset_location", "res_users", column: "write_uid", name: "bt_asset_location_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "bt_asset_move", "bt_asset", column: "asset_id", name: "bt_asset_move_asset_id_fkey", on_delete: :nullify
+  add_foreign_key "bt_asset_move", "bt_asset_location", column: "from_loc_id", name: "bt_asset_move_from_loc_id_fkey", on_delete: :nullify
+  add_foreign_key "bt_asset_move", "bt_asset_location", column: "to_loc_id", name: "bt_asset_move_to_loc_id_fkey", on_delete: :nullify
+  add_foreign_key "bt_asset_move", "res_users", column: "create_uid", name: "bt_asset_move_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "bt_asset_move", "res_users", column: "write_uid", name: "bt_asset_move_write_uid_fkey", on_delete: :nullify
   add_foreign_key "bt_asset_status", "res_users", column: "create_uid", name: "bt_asset_status_create_uid_fkey", on_delete: :nullify
   add_foreign_key "bt_asset_status", "res_users", column: "write_uid", name: "bt_asset_status_write_uid_fkey", on_delete: :nullify
   add_foreign_key "bt_hr_overtime", "hr_attendance", column: "attendance_id", name: "bt_hr_overtime_attendance_id_fkey", on_delete: :nullify
@@ -10180,6 +11044,23 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "bt_hr_overtime", "res_company", column: "company_id", name: "bt_hr_overtime_company_id_fkey", on_delete: :nullify
   add_foreign_key "bt_hr_overtime", "res_users", column: "create_uid", name: "bt_hr_overtime_create_uid_fkey", on_delete: :nullify
   add_foreign_key "bt_hr_overtime", "res_users", column: "write_uid", name: "bt_hr_overtime_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "bus_bus", "res_users", column: "create_uid", name: "bus_bus_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "bus_bus", "res_users", column: "write_uid", name: "bus_bus_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "bus_presence", "res_users", column: "user_id", name: "bus_presence_user_id_fkey", on_delete: :cascade
+  add_foreign_key "bve_view", "res_users", column: "create_uid", name: "bve_view_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "bve_view", "res_users", column: "write_uid", name: "bve_view_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "calendar_alarm", "res_users", column: "create_uid", name: "calendar_alarm_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "calendar_alarm", "res_users", column: "write_uid", name: "calendar_alarm_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "calendar_alarm_calendar_event_rel", "calendar_alarm", name: "calendar_alarm_calendar_event_rel_calendar_alarm_id_fkey", on_delete: :cascade
+  add_foreign_key "calendar_alarm_calendar_event_rel", "calendar_event", name: "calendar_alarm_calendar_event_rel_calendar_event_id_fkey", on_delete: :cascade
+  add_foreign_key "calendar_attendee", "calendar_event", column: "event_id", name: "calendar_attendee_event_id_fkey", on_delete: :cascade
+  add_foreign_key "calendar_attendee", "res_partner", column: "partner_id", name: "calendar_attendee_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "calendar_attendee", "res_users", column: "create_uid", name: "calendar_attendee_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "calendar_attendee", "res_users", column: "write_uid", name: "calendar_attendee_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "calendar_contacts", "res_partner", column: "partner_id", name: "calendar_contacts_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "calendar_contacts", "res_users", column: "create_uid", name: "calendar_contacts_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "calendar_contacts", "res_users", column: "user_id", name: "calendar_contacts_user_id_fkey", on_delete: :nullify
+  add_foreign_key "calendar_contacts", "res_users", column: "write_uid", name: "calendar_contacts_write_uid_fkey", on_delete: :nullify
   add_foreign_key "calendar_event", "crm_lead", column: "opportunity_id", name: "calendar_event_opportunity_id_fkey", on_delete: :nullify
   add_foreign_key "calendar_event", "crm_phonecall", column: "phonecall_id", name: "calendar_event_phonecall_id_fkey", on_delete: :nullify
   add_foreign_key "calendar_event", "hr_applicant", column: "applicant_id", name: "calendar_event_applicant_id_fkey", on_delete: :nullify
@@ -10187,8 +11068,26 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "calendar_event", "res_users", column: "create_uid", name: "calendar_event_create_uid_fkey", on_delete: :nullify
   add_foreign_key "calendar_event", "res_users", column: "user_id", name: "calendar_event_user_id_fkey", on_delete: :nullify
   add_foreign_key "calendar_event", "res_users", column: "write_uid", name: "calendar_event_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "calendar_event_res_partner_rel", "calendar_event", name: "calendar_event_res_partner_rel_calendar_event_id_fkey", on_delete: :cascade
+  add_foreign_key "calendar_event_res_partner_rel", "res_partner", name: "calendar_event_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "calendar_event_type", "res_users", column: "create_uid", name: "calendar_event_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "calendar_event_type", "res_users", column: "write_uid", name: "calendar_event_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "cash_box_in", "res_users", column: "create_uid", name: "cash_box_in_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "cash_box_in", "res_users", column: "write_uid", name: "cash_box_in_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "cash_box_out", "res_users", column: "create_uid", name: "cash_box_out_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "cash_box_out", "res_users", column: "write_uid", name: "cash_box_out_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "change_password_user", "change_password_wizard", column: "wizard_id", name: "change_password_user_wizard_id_fkey", on_delete: :nullify
+  add_foreign_key "change_password_user", "res_users", column: "create_uid", name: "change_password_user_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "change_password_user", "res_users", column: "user_id", name: "change_password_user_user_id_fkey", on_delete: :cascade
+  add_foreign_key "change_password_user", "res_users", column: "write_uid", name: "change_password_user_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "change_password_wizard", "res_users", column: "create_uid", name: "change_password_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "change_password_wizard", "res_users", column: "write_uid", name: "change_password_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "comments", "users", column: "commented_by"
+  add_foreign_key "conversations", "op_batch", column: "batch_id"
+  add_foreign_key "conversations", "users", column: "created_by"
   add_foreign_key "course_categ", "res_users", column: "create_uid", name: "course_categ_create_uid_fkey", on_delete: :nullify
   add_foreign_key "course_categ", "res_users", column: "write_uid", name: "course_categ_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "course_description", "op_course"
   add_foreign_key "crm_claim", "crm_claim_category", column: "categ_id", name: "crm_claim_categ_id_fkey", on_delete: :nullify
   add_foreign_key "crm_claim", "crm_claim_stage", column: "stage_id", name: "crm_claim_stage_id_fkey", on_delete: :nullify
   add_foreign_key "crm_claim", "crm_team", column: "team_id", name: "crm_claim_team_id_fkey", on_delete: :nullify
@@ -10207,6 +11106,8 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "crm_claim_category", "crm_team", column: "team_id", name: "crm_claim_category_team_id_fkey", on_delete: :nullify
   add_foreign_key "crm_claim_category", "res_users", column: "create_uid", name: "crm_claim_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_claim_category", "res_users", column: "write_uid", name: "crm_claim_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_claim_sale_order_rel", "crm_claim", name: "crm_claim_sale_order_rel_crm_claim_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_claim_sale_order_rel", "sale_order", name: "crm_claim_sale_order_rel_sale_order_id_fkey", on_delete: :cascade
   add_foreign_key "crm_claim_stage", "res_users", column: "create_uid", name: "crm_claim_stage_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_claim_stage", "res_users", column: "write_uid", name: "crm_claim_stage_write_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead", "crm_lost_reason", column: "lost_reason", name: "crm_lead_lost_reason_fkey", on_delete: :nullify
@@ -10234,15 +11135,102 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "crm_lead2opportunity_partner_mass", "res_users", column: "create_uid", name: "crm_lead2opportunity_partner_mass_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead2opportunity_partner_mass", "res_users", column: "user_id", name: "crm_lead2opportunity_partner_mass_user_id_fkey", on_delete: :nullify
   add_foreign_key "crm_lead2opportunity_partner_mass", "res_users", column: "write_uid", name: "crm_lead2opportunity_partner_mass_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead2opportunity_partner_mass_res_users_rel", "crm_lead2opportunity_partner_mass", name: "crm_lead2opportunity_partner__crm_lead2opportunity_partner_fkey", on_delete: :cascade
+  add_foreign_key "crm_lead2opportunity_partner_mass_res_users_rel", "res_users", column: "res_users_id", name: "crm_lead2opportunity_partner_mass_res_users_r_res_users_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_lead_crm_lead2opportunity_partner_mass_rel", "crm_lead", name: "crm_lead_crm_lead2opportunity_partner_mass_rel_crm_lead_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_lead_crm_lead2opportunity_partner_mass_rel", "crm_lead2opportunity_partner_mass", name: "crm_lead_crm_lead2opportunit_crm_lead2opportunity_partner_fkey1", on_delete: :cascade
+  add_foreign_key "crm_lead_crm_lead2opportunity_partner_rel", "crm_lead", name: "crm_lead_crm_lead2opportunity_partner_rel_crm_lead_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_lead_crm_lead2opportunity_partner_rel", "crm_lead2opportunity_partner", name: "crm_lead_crm_lead2opportunity_crm_lead2opportunity_partner_fkey", on_delete: :cascade
+  add_foreign_key "crm_lead_lost", "crm_lost_reason", column: "lost_reason_id", name: "crm_lead_lost_lost_reason_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_lost", "res_users", column: "create_uid", name: "crm_lead_lost_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_lost", "res_users", column: "write_uid", name: "crm_lead_lost_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_tag", "res_users", column: "create_uid", name: "crm_lead_tag_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_tag", "res_users", column: "write_uid", name: "crm_lead_tag_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_tag_rel", "crm_lead", column: "lead_id", name: "crm_lead_tag_rel_lead_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_lead_tag_rel", "crm_lead_tag", column: "tag_id", name: "crm_lead_tag_rel_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_lost_reason", "res_users", column: "create_uid", name: "crm_lost_reason_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_lost_reason", "res_users", column: "write_uid", name: "crm_lost_reason_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_merge_opportunity", "crm_team", column: "team_id", name: "crm_merge_opportunity_team_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_merge_opportunity", "res_users", column: "create_uid", name: "crm_merge_opportunity_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_merge_opportunity", "res_users", column: "user_id", name: "crm_merge_opportunity_user_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_merge_opportunity", "res_users", column: "write_uid", name: "crm_merge_opportunity_write_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_partner_binding", "res_partner", column: "partner_id", name: "crm_partner_binding_partner_id_fkey", on_delete: :nullify
   add_foreign_key "crm_partner_binding", "res_users", column: "create_uid", name: "crm_partner_binding_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_partner_binding", "res_users", column: "write_uid", name: "crm_partner_binding_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "crm_lead", column: "opportunity_id", name: "crm_phonecall_opportunity_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "crm_team", column: "team_id", name: "crm_phonecall_team_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "res_company", column: "company_id", name: "crm_phonecall_company_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "res_partner", column: "partner_id", name: "crm_phonecall_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "res_users", column: "create_uid", name: "crm_phonecall_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "res_users", column: "user_id", name: "crm_phonecall_user_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "res_users", column: "write_uid", name: "crm_phonecall_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "utm_campaign", column: "campaign_id", name: "crm_phonecall_campaign_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "utm_medium", column: "medium_id", name: "crm_phonecall_medium_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall", "utm_source", column: "source_id", name: "crm_phonecall_source_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall2phonecall", "crm_team", column: "team_id", name: "crm_phonecall2phonecall_team_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall2phonecall", "res_partner", column: "partner_id", name: "crm_phonecall2phonecall_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall2phonecall", "res_users", column: "create_uid", name: "crm_phonecall2phonecall_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall2phonecall", "res_users", column: "user_id", name: "crm_phonecall2phonecall_user_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall2phonecall", "res_users", column: "write_uid", name: "crm_phonecall2phonecall_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_phonecall_tag_rel", "crm_lead_tag", column: "tag_id", name: "crm_phonecall_tag_rel_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_phonecall_tag_rel", "crm_phonecall", column: "phone_id", name: "crm_phonecall_tag_rel_phone_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_stage", "crm_team", column: "team_id", name: "crm_stage_team_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_stage", "res_users", column: "create_uid", name: "crm_stage_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_stage", "res_users", column: "write_uid", name: "crm_stage_write_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_team", "mail_alias", column: "alias_id", name: "crm_team_alias_id_fkey", on_delete: :restrict
   add_foreign_key "crm_team", "res_company", column: "company_id", name: "crm_team_company_id_fkey", on_delete: :nullify
   add_foreign_key "crm_team", "res_users", column: "create_uid", name: "crm_team_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_team", "res_users", column: "marketing_user_id", name: "crm_team_marketing_user_id_fkey", on_delete: :nullify
   add_foreign_key "crm_team", "res_users", column: "user_id", name: "crm_team_user_id_fkey", on_delete: :nullify
   add_foreign_key "crm_team", "res_users", column: "write_uid", name: "crm_team_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_team_claim_stage_rel", "crm_claim_stage", column: "stage_id", name: "crm_team_claim_stage_rel_stage_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_team_claim_stage_rel", "crm_team", column: "team_id", name: "crm_team_claim_stage_rel_team_id_fkey", on_delete: :cascade
+  add_foreign_key "decimal_precision", "res_users", column: "create_uid", name: "decimal_precision_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "decimal_precision", "res_users", column: "write_uid", name: "decimal_precision_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "decimal_precision_test", "res_users", column: "create_uid", name: "decimal_precision_test_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "decimal_precision_test", "res_users", column: "write_uid", name: "decimal_precision_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "discussions", "op_batch", column: "batch_id"
+  add_foreign_key "document_page", "document_page", column: "parent_id", name: "document_page_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "document_page", "document_page_history", column: "history_head", name: "document_page_history_head_fkey", on_delete: :nullify
+  add_foreign_key "document_page", "ir_ui_menu", column: "menu_id", name: "document_page_menu_id_fkey", on_delete: :nullify
+  add_foreign_key "document_page", "res_company", column: "company_id", name: "document_page_company_id_fkey", on_delete: :cascade
+  add_foreign_key "document_page", "res_groups", column: "approver_gid", name: "document_page_approver_gid_fkey", on_delete: :nullify
+  add_foreign_key "document_page", "res_users", column: "approved_uid", name: "document_page_approved_uid_fkey", on_delete: :nullify
+  add_foreign_key "document_page", "res_users", column: "content_uid", name: "document_page_content_uid_fkey", on_delete: :nullify
+  add_foreign_key "document_page", "res_users", column: "create_uid", name: "document_page_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "document_page", "res_users", column: "write_uid", name: "document_page_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "document_page_create_menu", "ir_ui_menu", column: "menu_parent_id", name: "document_page_create_menu_menu_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "document_page_create_menu", "res_users", column: "create_uid", name: "document_page_create_menu_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "document_page_create_menu", "res_users", column: "write_uid", name: "document_page_create_menu_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "document_page_history", "document_page", column: "page_id", name: "document_page_history_page_id_fkey", on_delete: :cascade
+  add_foreign_key "document_page_history", "res_company", column: "company_id", name: "document_page_history_company_id_fkey", on_delete: :nullify
+  add_foreign_key "document_page_history", "res_users", column: "approved_uid", name: "document_page_history_approved_uid_fkey", on_delete: :nullify
+  add_foreign_key "document_page_history", "res_users", column: "create_uid", name: "document_page_history_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "document_page_history", "res_users", column: "write_uid", name: "document_page_history_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "email_template_attachment_rel", "ir_attachment", column: "attachment_id", name: "email_template_attachment_rel_attachment_id_fkey", on_delete: :cascade
+  add_foreign_key "email_template_attachment_rel", "mail_template", column: "email_template_id", name: "email_template_attachment_rel_email_template_id_fkey", on_delete: :cascade
+  add_foreign_key "email_template_preview", "ir_act_report_xml", column: "report_template", name: "email_template_preview_report_template_fkey", on_delete: :nullify
+  add_foreign_key "email_template_preview", "ir_act_window", column: "ref_ir_act_window", name: "email_template_preview_ref_ir_act_window_fkey", on_delete: :nullify
+  add_foreign_key "email_template_preview", "ir_mail_server", column: "mail_server_id", name: "email_template_preview_mail_server_id_fkey", on_delete: :nullify
+  add_foreign_key "email_template_preview", "ir_model", column: "model_id", name: "email_template_preview_model_id_fkey", on_delete: :nullify
+  add_foreign_key "email_template_preview", "ir_model", column: "sub_object", name: "email_template_preview_sub_object_fkey", on_delete: :nullify
+  add_foreign_key "email_template_preview", "ir_model_fields", column: "model_object_field", name: "email_template_preview_model_object_field_fkey", on_delete: :nullify
+  add_foreign_key "email_template_preview", "ir_model_fields", column: "sub_model_object_field", name: "email_template_preview_sub_model_object_field_fkey", on_delete: :nullify
+  add_foreign_key "email_template_preview", "res_users", column: "create_uid", name: "email_template_preview_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "email_template_preview", "res_users", column: "write_uid", name: "email_template_preview_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "email_template_preview_res_partner_rel", "email_template_preview", name: "email_template_preview_res_partn_email_template_preview_id_fkey", on_delete: :cascade
+  add_foreign_key "email_template_preview_res_partner_rel", "res_partner", name: "email_template_preview_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "employee_category_rel", "hr_employee", column: "emp_id", name: "employee_category_rel_emp_id_fkey", on_delete: :cascade
+  add_foreign_key "employee_category_rel", "hr_employee_category", column: "category_id", name: "employee_category_rel_category_id_fkey", on_delete: :cascade
+  add_foreign_key "equipment_tag_rel", "maintenance_equipment", column: "equipment_id", name: "equipment_tag_rel_equipment_id_fkey", on_delete: :cascade
+  add_foreign_key "equipment_tag_rel", "maintenance_equipment_tag", column: "tag_id", name: "equipment_tag_rel_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "event_allowed_track_tags_rel", "event_event", name: "event_allowed_track_tags_rel_event_event_id_fkey", on_delete: :cascade
+  add_foreign_key "event_allowed_track_tags_rel", "event_track_tag", name: "event_allowed_track_tags_rel_event_track_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "event_answer", "event_question", column: "question_id", name: "event_answer_question_id_fkey", on_delete: :cascade
+  add_foreign_key "event_answer", "res_users", column: "create_uid", name: "event_answer_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_answer", "res_users", column: "write_uid", name: "event_answer_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_confirm", "res_users", column: "create_uid", name: "event_confirm_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_confirm", "res_users", column: "write_uid", name: "event_confirm_write_uid_fkey", on_delete: :nullify
   add_foreign_key "event_event", "event_type", name: "event_event_event_type_id_fkey", on_delete: :nullify
   add_foreign_key "event_event", "res_company", column: "company_id", name: "event_event_company_id_fkey", on_delete: :nullify
   add_foreign_key "event_event", "res_country", column: "country_id", name: "event_event_country_id_fkey", on_delete: :nullify
@@ -10255,6 +11243,18 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "event_lead", "event_event", column: "event_id", name: "event_lead_event_id_fkey", on_delete: :nullify
   add_foreign_key "event_lead", "res_users", column: "create_uid", name: "event_lead_create_uid_fkey", on_delete: :nullify
   add_foreign_key "event_lead", "res_users", column: "write_uid", name: "event_lead_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_mail", "event_event", column: "event_id", name: "event_mail_event_id_fkey", on_delete: :cascade
+  add_foreign_key "event_mail", "mail_template", column: "template_id", name: "event_mail_template_id_fkey", on_delete: :restrict
+  add_foreign_key "event_mail", "res_users", column: "create_uid", name: "event_mail_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_mail", "res_users", column: "write_uid", name: "event_mail_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_mail_registration", "event_mail", column: "scheduler_id", name: "event_mail_registration_scheduler_id_fkey", on_delete: :cascade
+  add_foreign_key "event_mail_registration", "event_registration", column: "registration_id", name: "event_mail_registration_registration_id_fkey", on_delete: :cascade
+  add_foreign_key "event_mail_registration", "res_users", column: "create_uid", name: "event_mail_registration_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_mail_registration", "res_users", column: "write_uid", name: "event_mail_registration_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_question", "event_event", column: "event_id", name: "event_question_event_id_fkey", on_delete: :cascade
+  add_foreign_key "event_question", "event_type", name: "event_question_event_type_id_fkey", on_delete: :cascade
+  add_foreign_key "event_question", "res_users", column: "create_uid", name: "event_question_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_question", "res_users", column: "write_uid", name: "event_question_write_uid_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "event_event", column: "event_id", name: "event_registration_event_id_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "event_type", name: "event_registration_event_type_id_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "res_company", column: "company_id", name: "event_registration_company_id_fkey", on_delete: :nullify
@@ -10262,10 +11262,103 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "event_registration", "res_users", column: "create_uid", name: "event_registration_create_uid_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "res_users", column: "user_id", name: "event_registration_user_id_fkey", on_delete: :nullify
   add_foreign_key "event_registration", "res_users", column: "write_uid", name: "event_registration_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_registration_answer", "event_answer", name: "event_registration_answer_event_answer_id_fkey", on_delete: :cascade
+  add_foreign_key "event_registration_answer", "event_registration", name: "event_registration_answer_event_registration_id_fkey", on_delete: :cascade
+  add_foreign_key "event_registration_answer", "res_users", column: "create_uid", name: "event_registration_answer_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_registration_answer", "res_users", column: "write_uid", name: "event_registration_answer_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_sponsor", "event_event", column: "event_id", name: "event_sponsor_event_id_fkey", on_delete: :nullify
+  add_foreign_key "event_sponsor", "event_sponsor_type", column: "sponsor_type_id", name: "event_sponsor_sponsor_type_id_fkey", on_delete: :nullify
+  add_foreign_key "event_sponsor", "res_partner", column: "partner_id", name: "event_sponsor_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "event_sponsor", "res_users", column: "create_uid", name: "event_sponsor_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_sponsor", "res_users", column: "write_uid", name: "event_sponsor_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_sponsor_type", "res_users", column: "create_uid", name: "event_sponsor_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_sponsor_type", "res_users", column: "write_uid", name: "event_sponsor_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_track", "event_event", column: "event_id", name: "event_track_event_id_fkey", on_delete: :nullify
+  add_foreign_key "event_track", "event_track_location", column: "location_id", name: "event_track_location_id_fkey", on_delete: :nullify
+  add_foreign_key "event_track", "event_track_stage", column: "stage_id", name: "event_track_stage_id_fkey", on_delete: :nullify
+  add_foreign_key "event_track", "res_partner", column: "partner_id", name: "event_track_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "event_track", "res_users", column: "create_uid", name: "event_track_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_track", "res_users", column: "user_id", name: "event_track_user_id_fkey", on_delete: :nullify
+  add_foreign_key "event_track", "res_users", column: "write_uid", name: "event_track_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_track_event_track_tag_rel", "event_track", name: "event_track_event_track_tag_rel_event_track_id_fkey", on_delete: :cascade
+  add_foreign_key "event_track_event_track_tag_rel", "event_track_tag", name: "event_track_event_track_tag_rel_event_track_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "event_track_location", "res_users", column: "create_uid", name: "event_track_location_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_track_location", "res_users", column: "write_uid", name: "event_track_location_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_track_stage", "mail_template", name: "event_track_stage_mail_template_id_fkey", on_delete: :nullify
+  add_foreign_key "event_track_stage", "res_users", column: "create_uid", name: "event_track_stage_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_track_stage", "res_users", column: "write_uid", name: "event_track_stage_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_track_tag", "res_users", column: "create_uid", name: "event_track_tag_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_track_tag", "res_users", column: "write_uid", name: "event_track_tag_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_track_tags_rel", "event_event", name: "event_track_tags_rel_event_event_id_fkey", on_delete: :cascade
+  add_foreign_key "event_track_tags_rel", "event_track_tag", name: "event_track_tags_rel_event_track_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "event_type", "res_users", column: "create_uid", name: "event_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_type", "res_users", column: "write_uid", name: "event_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_type_mail", "event_type", name: "event_type_mail_event_type_id_fkey", on_delete: :cascade
+  add_foreign_key "event_type_mail", "mail_template", column: "template_id", name: "event_type_mail_template_id_fkey", on_delete: :restrict
+  add_foreign_key "event_type_mail", "res_users", column: "create_uid", name: "event_type_mail_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "event_type_mail", "res_users", column: "write_uid", name: "event_type_mail_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "expense_tax", "account_tax", column: "tax_id", name: "expense_tax_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "expense_tax", "hr_expense", column: "expense_id", name: "expense_tax_expense_id_fkey", on_delete: :cascade
+  add_foreign_key "export_attendance", "hr_year", column: "year_id", name: "export_attendance_year_id_fkey", on_delete: :nullify
+  add_foreign_key "export_attendance", "res_users", column: "create_uid", name: "export_attendance_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "export_attendance", "res_users", column: "write_uid", name: "export_attendance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "fees_detail_report_wizard", "op_course", column: "course_id", name: "fees_detail_report_wizard_course_id_fkey", on_delete: :nullify
+  add_foreign_key "fees_detail_report_wizard", "op_student", column: "student_id", name: "fees_detail_report_wizard_student_id_fkey", on_delete: :nullify
+  add_foreign_key "fees_detail_report_wizard", "res_users", column: "create_uid", name: "fees_detail_report_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "fees_detail_report_wizard", "res_users", column: "write_uid", name: "fees_detail_report_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "fetchmail_server", "ir_act_server", column: "action_id", name: "fetchmail_server_action_id_fkey", on_delete: :nullify
   add_foreign_key "fetchmail_server", "ir_model", column: "object_id", name: "fetchmail_server_object_id_fkey", on_delete: :nullify
   add_foreign_key "fetchmail_server", "res_users", column: "create_uid", name: "fetchmail_server_create_uid_fkey", on_delete: :nullify
   add_foreign_key "fetchmail_server", "res_users", column: "write_uid", name: "fetchmail_server_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge", "res_users", column: "create_uid", name: "gamification_badge_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge", "res_users", column: "write_uid", name: "gamification_badge_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_rule_badge_rel", "gamification_badge", column: "badge1_id", name: "gamification_badge_rule_badge_rel_badge1_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_badge_rule_badge_rel", "gamification_badge", column: "badge2_id", name: "gamification_badge_rule_badge_rel_badge2_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_badge_user", "gamification_badge", column: "badge_id", name: "gamification_badge_user_badge_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_badge_user", "gamification_challenge", column: "challenge_id", name: "gamification_badge_user_challenge_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_user", "hr_employee", column: "employee_id", name: "gamification_badge_user_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_user", "res_users", column: "create_uid", name: "gamification_badge_user_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_user", "res_users", column: "sender_id", name: "gamification_badge_user_sender_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_user", "res_users", column: "user_id", name: "gamification_badge_user_user_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_badge_user", "res_users", column: "write_uid", name: "gamification_badge_user_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_user_wizard", "gamification_badge", column: "badge_id", name: "gamification_badge_user_wizard_badge_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_user_wizard", "hr_employee", column: "employee_id", name: "gamification_badge_user_wizard_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_user_wizard", "res_users", column: "create_uid", name: "gamification_badge_user_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_user_wizard", "res_users", column: "user_id", name: "gamification_badge_user_wizard_user_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_badge_user_wizard", "res_users", column: "write_uid", name: "gamification_badge_user_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge", "gamification_badge", column: "reward_first_id", name: "gamification_challenge_reward_first_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge", "gamification_badge", column: "reward_id", name: "gamification_challenge_reward_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge", "gamification_badge", column: "reward_second_id", name: "gamification_challenge_reward_second_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge", "gamification_badge", column: "reward_third_id", name: "gamification_challenge_reward_third_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge", "mail_channel", column: "report_message_group_id", name: "gamification_challenge_report_message_group_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge", "mail_template", column: "report_template_id", name: "gamification_challenge_report_template_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge", "res_users", column: "create_uid", name: "gamification_challenge_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge", "res_users", column: "manager_id", name: "gamification_challenge_manager_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge", "res_users", column: "write_uid", name: "gamification_challenge_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge_line", "gamification_challenge", column: "challenge_id", name: "gamification_challenge_line_challenge_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_challenge_line", "gamification_goal_definition", column: "definition_id", name: "gamification_challenge_line_definition_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_challenge_line", "res_users", column: "create_uid", name: "gamification_challenge_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge_line", "res_users", column: "write_uid", name: "gamification_challenge_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_challenge_users_rel", "gamification_challenge", name: "gamification_challenge_users_rel_gamification_challenge_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_challenge_users_rel", "res_users", column: "res_users_id", name: "gamification_challenge_users_rel_res_users_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_goal", "gamification_challenge", column: "challenge_id", name: "gamification_goal_challenge_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal", "gamification_challenge_line", column: "line_id", name: "gamification_goal_line_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_goal", "gamification_goal_definition", column: "definition_id", name: "gamification_goal_definition_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_goal", "res_users", column: "create_uid", name: "gamification_goal_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal", "res_users", column: "user_id", name: "gamification_goal_user_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_goal", "res_users", column: "write_uid", name: "gamification_goal_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_definition", "ir_act_window", column: "action_id", name: "gamification_goal_definition_action_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_definition", "ir_model", column: "model_id", name: "gamification_goal_definition_model_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_definition", "ir_model_fields", column: "batch_distinctive_field", name: "gamification_goal_definition_batch_distinctive_field_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_definition", "ir_model_fields", column: "field_date_id", name: "gamification_goal_definition_field_date_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_definition", "ir_model_fields", column: "field_id", name: "gamification_goal_definition_field_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_definition", "res_users", column: "create_uid", name: "gamification_goal_definition_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_definition", "res_users", column: "write_uid", name: "gamification_goal_definition_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_wizard", "gamification_goal", column: "goal_id", name: "gamification_goal_wizard_goal_id_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_wizard", "res_users", column: "create_uid", name: "gamification_goal_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_goal_wizard", "res_users", column: "write_uid", name: "gamification_goal_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "gamification_invited_user_ids_rel", "gamification_challenge", name: "gamification_invited_user_ids_re_gamification_challenge_id_fkey", on_delete: :cascade
+  add_foreign_key "gamification_invited_user_ids_rel", "res_users", column: "res_users_id", name: "gamification_invited_user_ids_rel_res_users_id_fkey", on_delete: :cascade
   add_foreign_key "gen_batch_table_line", "op_batch", column: "batch_id", name: "gen_batch_table_line_batch_id_fkey", on_delete: :nullify
   add_foreign_key "gen_batch_table_line", "op_classroom", column: "classroom_id", name: "gen_batch_table_line_classroom_id_fkey", on_delete: :nullify
   add_foreign_key "gen_batch_table_line", "op_faculty", column: "faculty_id", name: "gen_batch_table_line_faculty_id_fkey", on_delete: :nullify
@@ -10294,6 +11387,12 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "generate_time_table", "op_subject", column: "subject_id", name: "generate_time_table_subject_id_fkey", on_delete: :nullify
   add_foreign_key "generate_time_table", "res_users", column: "create_uid", name: "generate_time_table_create_uid_fkey", on_delete: :nullify
   add_foreign_key "generate_time_table", "res_users", column: "write_uid", name: "generate_time_table_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "google_drive_config", "ir_filters", column: "filter_id", name: "google_drive_config_filter_id_fkey", on_delete: :nullify
+  add_foreign_key "google_drive_config", "ir_model", column: "model_id", name: "google_drive_config_model_id_fkey", on_delete: :nullify
+  add_foreign_key "google_drive_config", "res_users", column: "create_uid", name: "google_drive_config_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "google_drive_config", "res_users", column: "write_uid", name: "google_drive_config_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "google_service", "res_users", column: "create_uid", name: "google_service_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "google_service", "res_users", column: "write_uid", name: "google_service_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_applicant", "hr_department", column: "department_id", name: "hr_applicant_department_id_fkey", on_delete: :nullify
   add_foreign_key "hr_applicant", "hr_employee", column: "emp_id", name: "hr_applicant_emp_id_fkey", on_delete: :nullify
   add_foreign_key "hr_applicant", "hr_job", column: "job_id", name: "hr_applicant_job_id_fkey", on_delete: :nullify
@@ -10311,11 +11410,20 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "hr_applicant", "utm_campaign", column: "campaign_id", name: "hr_applicant_campaign_id_fkey", on_delete: :nullify
   add_foreign_key "hr_applicant", "utm_medium", column: "medium_id", name: "hr_applicant_medium_id_fkey", on_delete: :nullify
   add_foreign_key "hr_applicant", "utm_source", column: "source_id", name: "hr_applicant_source_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_applicant_category", "res_users", column: "create_uid", name: "hr_applicant_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_applicant_category", "res_users", column: "write_uid", name: "hr_applicant_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_applicant_hr_applicant_category_rel", "hr_applicant", name: "hr_applicant_hr_applicant_category_rel_hr_applicant_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_applicant_hr_applicant_category_rel", "hr_applicant_category", name: "hr_applicant_hr_applicant_categor_hr_applicant_category_id_fkey", on_delete: :cascade
   add_foreign_key "hr_attendance", "hr_employee", column: "employee_id", name: "hr_attendance_employee_id_fkey", on_delete: :cascade
   add_foreign_key "hr_attendance", "hr_holidays", column: "holiday_id", name: "hr_attendance_holiday_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance", "res_company", column: "company_id", name: "hr_attendance_company_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance", "res_users", column: "create_uid", name: "hr_attendance_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance", "res_users", column: "write_uid", name: "hr_attendance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "hr_department", column: "department_id", name: "hr_attendance_addition_department_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "hr_employee", column: "employee_id", name: "hr_attendance_addition_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "hr_holidays_status", column: "type", name: "hr_attendance_addition_type_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "res_users", column: "create_uid", name: "hr_attendance_addition_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "res_users", column: "write_uid", name: "hr_attendance_addition_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_import", "ir_attachment", column: "attachment_id", name: "hr_attendance_import_attachment_id_fkey", on_delete: :cascade
   add_foreign_key "hr_attendance_import", "res_users", column: "create_uid", name: "hr_attendance_import_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_import", "res_users", column: "write_uid", name: "hr_attendance_import_write_uid_fkey", on_delete: :nullify
@@ -10331,6 +11439,19 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "hr_contract", "res_users", column: "create_uid", name: "hr_contract_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_contract", "res_users", column: "write_uid", name: "hr_contract_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_contract", "resource_calendar", name: "hr_contract_resource_calendar_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_contract_advantage_template", "res_users", column: "create_uid", name: "hr_contract_advantage_template_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_contract_advantage_template", "res_users", column: "write_uid", name: "hr_contract_advantage_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_contract_type", "res_users", column: "create_uid", name: "hr_contract_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_contract_type", "res_users", column: "write_uid", name: "hr_contract_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_contribution_register", "res_company", column: "company_id", name: "hr_contribution_register_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_contribution_register", "res_partner", column: "partner_id", name: "hr_contribution_register_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_contribution_register", "res_users", column: "create_uid", name: "hr_contribution_register_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_contribution_register", "res_users", column: "write_uid", name: "hr_contribution_register_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_department", "hr_department", column: "parent_id", name: "hr_department_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_department", "hr_employee", column: "manager_id", name: "hr_department_manager_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_department", "res_company", column: "company_id", name: "hr_department_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_department", "res_users", column: "create_uid", name: "hr_department_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_department", "res_users", column: "write_uid", name: "hr_department_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "hr_contract", column: "contract_id", name: "hr_employee_contract_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "hr_department", column: "department_id", name: "hr_employee_department_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "hr_employee", column: "coach_id", name: "hr_employee_coach_id_fkey", on_delete: :nullify
@@ -10345,6 +11466,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "hr_employee", "res_users", column: "create_uid", name: "hr_employee_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "res_users", column: "write_uid", name: "hr_employee_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "resource_resource", column: "resource_id", name: "hr_employee_resource_id_fkey", on_delete: :restrict
+  add_foreign_key "hr_employee_category", "res_users", column: "create_uid", name: "hr_employee_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_category", "res_users", column: "write_uid", name: "hr_employee_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_group_rel", "hr_employee", column: "employee_id", name: "hr_employee_group_rel_employee_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_employee_group_rel", "hr_payslip_employees", column: "payslip_id", name: "hr_employee_group_rel_payslip_id_fkey", on_delete: :cascade
   add_foreign_key "hr_expense", "account_account", column: "account_id", name: "hr_expense_account_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "account_analytic_account", column: "analytic_account_id", name: "hr_expense_analytic_account_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "crm_claim", column: "claim_id", name: "hr_expense_claim_id_fkey", on_delete: :nullify
@@ -10358,6 +11483,11 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "hr_expense", "res_users", column: "create_uid", name: "hr_expense_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "res_users", column: "write_uid", name: "hr_expense_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "sale_order", name: "hr_expense_sale_order_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense_hr_expense_refuse_wizard_rel", "hr_expense", name: "hr_expense_hr_expense_refuse_wizard_rel_hr_expense_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_expense_hr_expense_refuse_wizard_rel", "hr_expense_refuse_wizard", name: "hr_expense_hr_expense_refuse_w_hr_expense_refuse_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_expense_refuse_wizard", "hr_expense_sheet", name: "hr_expense_refuse_wizard_hr_expense_sheet_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense_refuse_wizard", "res_users", column: "create_uid", name: "hr_expense_refuse_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense_refuse_wizard", "res_users", column: "write_uid", name: "hr_expense_refuse_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_expense_sheet", "account_journal", column: "bank_journal_id", name: "hr_expense_sheet_bank_journal_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense_sheet", "account_journal", column: "journal_id", name: "hr_expense_sheet_journal_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense_sheet", "account_move", name: "hr_expense_sheet_account_move_id_fkey", on_delete: :restrict
@@ -10369,6 +11499,12 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "hr_expense_sheet", "res_users", column: "create_uid", name: "hr_expense_sheet_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_expense_sheet", "res_users", column: "responsible_id", name: "hr_expense_sheet_responsible_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense_sheet", "res_users", column: "write_uid", name: "hr_expense_sheet_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense_sheet_register_payment_wizard", "account_journal", column: "journal_id", name: "hr_expense_sheet_register_payment_wizard_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense_sheet_register_payment_wizard", "account_payment_method", column: "payment_method_id", name: "hr_expense_sheet_register_payment_wizard_payment_method_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense_sheet_register_payment_wizard", "res_currency", column: "currency_id", name: "hr_expense_sheet_register_payment_wizard_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense_sheet_register_payment_wizard", "res_partner", column: "partner_id", name: "hr_expense_sheet_register_payment_wizard_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense_sheet_register_payment_wizard", "res_users", column: "create_uid", name: "hr_expense_sheet_register_payment_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense_sheet_register_payment_wizard", "res_users", column: "write_uid", name: "hr_expense_sheet_register_payment_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays", "calendar_event", column: "meeting_id", name: "hr_holidays_meeting_id_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays", "hr_department", column: "department_id", name: "hr_holidays_department_id_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays", "hr_employee", column: "employee_id", name: "hr_holidays_employee_id_fkey", on_delete: :nullify
@@ -10388,6 +11524,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "hr_holidays_status", "res_company", column: "company_id", name: "hr_holidays_status_company_id_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "res_users", column: "create_uid", name: "hr_holidays_status_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "res_users", column: "write_uid", name: "hr_holidays_status_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_holidays_summary_dept", "res_users", column: "create_uid", name: "hr_holidays_summary_dept_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_holidays_summary_dept", "res_users", column: "write_uid", name: "hr_holidays_summary_dept_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_holidays_summary_employee", "res_users", column: "create_uid", name: "hr_holidays_summary_employee_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_holidays_summary_employee", "res_users", column: "write_uid", name: "hr_holidays_summary_employee_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "hr_department", column: "department_id", name: "hr_job_department_id_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "hr_employee", column: "manager_id", name: "hr_job_manager_id_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "mail_alias", column: "alias_id", name: "hr_job_alias_id_fkey", on_delete: :restrict
@@ -10397,6 +11537,87 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "hr_job", "res_users", column: "hr_responsible_id", name: "hr_job_hr_responsible_id_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "res_users", column: "user_id", name: "hr_job_user_id_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "res_users", column: "write_uid", name: "hr_job_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payroll_structure", "hr_payroll_structure", column: "parent_id", name: "hr_payroll_structure_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payroll_structure", "res_company", column: "company_id", name: "hr_payroll_structure_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payroll_structure", "res_users", column: "create_uid", name: "hr_payroll_structure_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payroll_structure", "res_users", column: "write_uid", name: "hr_payroll_structure_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip", "hr_contract", column: "contract_id", name: "hr_payslip_contract_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip", "hr_employee", column: "employee_id", name: "hr_payslip_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip", "hr_payroll_structure", column: "struct_id", name: "hr_payslip_struct_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip", "hr_payslip_run", column: "payslip_run_id", name: "hr_payslip_payslip_run_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip", "res_company", column: "company_id", name: "hr_payslip_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip", "res_users", column: "create_uid", name: "hr_payslip_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip", "res_users", column: "write_uid", name: "hr_payslip_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_employees", "res_users", column: "create_uid", name: "hr_payslip_employees_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_employees", "res_users", column: "write_uid", name: "hr_payslip_employees_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_input", "hr_contract", column: "contract_id", name: "hr_payslip_input_contract_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_input", "hr_payslip", column: "payslip_id", name: "hr_payslip_input_payslip_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_payslip_input", "res_users", column: "create_uid", name: "hr_payslip_input_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_input", "res_users", column: "write_uid", name: "hr_payslip_input_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_line", "hr_contract", column: "contract_id", name: "hr_payslip_line_contract_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_line", "hr_contribution_register", column: "register_id", name: "hr_payslip_line_register_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_line", "hr_employee", column: "employee_id", name: "hr_payslip_line_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_line", "hr_payslip", column: "slip_id", name: "hr_payslip_line_slip_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_payslip_line", "hr_salary_rule", column: "parent_rule_id", name: "hr_payslip_line_parent_rule_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_line", "hr_salary_rule", column: "salary_rule_id", name: "hr_payslip_line_salary_rule_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_line", "hr_salary_rule_category", column: "category_id", name: "hr_payslip_line_category_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_line", "res_company", column: "company_id", name: "hr_payslip_line_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_line", "res_users", column: "create_uid", name: "hr_payslip_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_line", "res_users", column: "write_uid", name: "hr_payslip_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_run", "res_users", column: "create_uid", name: "hr_payslip_run_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_run", "res_users", column: "write_uid", name: "hr_payslip_run_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_worked_days", "hr_contract", column: "contract_id", name: "hr_payslip_worked_days_contract_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_worked_days", "hr_payslip", column: "payslip_id", name: "hr_payslip_worked_days_payslip_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_payslip_worked_days", "res_users", column: "create_uid", name: "hr_payslip_worked_days_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_payslip_worked_days", "res_users", column: "write_uid", name: "hr_payslip_worked_days_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_public_holiday", "res_company", column: "company_id", name: "hr_public_holiday_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_public_holiday", "res_users", column: "create_uid", name: "hr_public_holiday_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_public_holiday", "res_users", column: "write_uid", name: "hr_public_holiday_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_public_holiday_line", "hr_public_holiday", column: "holiday_id", name: "hr_public_holiday_line_holiday_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_public_holiday_line", "res_users", column: "create_uid", name: "hr_public_holiday_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_public_holiday_line", "res_users", column: "write_uid", name: "hr_public_holiday_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_recruitment_degree", "res_users", column: "create_uid", name: "hr_recruitment_degree_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_recruitment_degree", "res_users", column: "write_uid", name: "hr_recruitment_degree_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_recruitment_source", "hr_job", column: "job_id", name: "hr_recruitment_source_job_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_recruitment_source", "mail_alias", column: "alias_id", name: "hr_recruitment_source_alias_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_recruitment_source", "res_users", column: "create_uid", name: "hr_recruitment_source_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_recruitment_source", "res_users", column: "write_uid", name: "hr_recruitment_source_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_recruitment_source", "utm_source", column: "source_id", name: "hr_recruitment_source_source_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_recruitment_stage", "hr_job", column: "job_id", name: "hr_recruitment_stage_job_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_recruitment_stage", "mail_template", column: "template_id", name: "hr_recruitment_stage_template_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_recruitment_stage", "res_users", column: "create_uid", name: "hr_recruitment_stage_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_recruitment_stage", "res_users", column: "write_uid", name: "hr_recruitment_stage_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_rule_input", "hr_salary_rule", column: "input_id", name: "hr_rule_input_input_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_rule_input", "res_users", column: "create_uid", name: "hr_rule_input_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_rule_input", "res_users", column: "write_uid", name: "hr_rule_input_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule", "hr_contribution_register", column: "register_id", name: "hr_salary_rule_register_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule", "hr_salary_rule", column: "parent_rule_id", name: "hr_salary_rule_parent_rule_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule", "hr_salary_rule_category", column: "category_id", name: "hr_salary_rule_category_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule", "res_company", column: "company_id", name: "hr_salary_rule_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule", "res_users", column: "create_uid", name: "hr_salary_rule_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule", "res_users", column: "write_uid", name: "hr_salary_rule_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule_category", "hr_salary_rule_category", column: "parent_id", name: "hr_salary_rule_category_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule_category", "res_company", column: "company_id", name: "hr_salary_rule_category_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule_category", "res_users", column: "create_uid", name: "hr_salary_rule_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_salary_rule_category", "res_users", column: "write_uid", name: "hr_salary_rule_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_structure_salary_rule_rel", "hr_payroll_structure", column: "struct_id", name: "hr_structure_salary_rule_rel_struct_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_structure_salary_rule_rel", "hr_salary_rule", column: "rule_id", name: "hr_structure_salary_rule_rel_rule_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_year", "res_users", column: "create_uid", name: "hr_year_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_year", "res_users", column: "write_uid", name: "hr_year_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "iap_account", "res_company", column: "company_id", name: "iap_account_company_id_fkey", on_delete: :nullify
+  add_foreign_key "iap_account", "res_users", column: "create_uid", name: "iap_account_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "iap_account", "res_users", column: "write_uid", name: "iap_account_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "im_livechat_channel", "res_users", column: "create_uid", name: "im_livechat_channel_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "im_livechat_channel", "res_users", column: "write_uid", name: "im_livechat_channel_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "im_livechat_channel_country_rel", "im_livechat_channel_rule", column: "channel_id", name: "im_livechat_channel_country_rel_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "im_livechat_channel_country_rel", "res_country", column: "country_id", name: "im_livechat_channel_country_rel_country_id_fkey", on_delete: :cascade
+  add_foreign_key "im_livechat_channel_im_user", "im_livechat_channel", column: "channel_id", name: "im_livechat_channel_im_user_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "im_livechat_channel_im_user", "res_users", column: "user_id", name: "im_livechat_channel_im_user_user_id_fkey", on_delete: :cascade
+  add_foreign_key "im_livechat_channel_rule", "im_livechat_channel", column: "channel_id", name: "im_livechat_channel_rule_channel_id_fkey", on_delete: :nullify
+  add_foreign_key "im_livechat_channel_rule", "res_users", column: "create_uid", name: "im_livechat_channel_rule_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "im_livechat_channel_rule", "res_users", column: "write_uid", name: "im_livechat_channel_rule_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "incoming_mail_job_rel", "hr_job", column: "job_id", name: "incoming_mail_job_rel_job_id_fkey", on_delete: :cascade
+  add_foreign_key "incoming_mail_job_rel", "incomming_mail", column: "mail_id", name: "incoming_mail_job_rel_mail_id_fkey", on_delete: :cascade
   add_foreign_key "incomming_mail", "hr_job", column: "job_id", name: "incomming_mail_job_id_fkey", on_delete: :nullify
   add_foreign_key "incomming_mail", "incomming_mail_tag", column: "tag_id", name: "incomming_mail_tag_id_fkey", on_delete: :nullify
   add_foreign_key "incomming_mail", "res_partner", column: "partner_id", name: "incomming_mail_partner_id_fkey", on_delete: :nullify
@@ -10405,11 +11626,178 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "incomming_mail", "utm_campaign", column: "campaign_id", name: "incomming_mail_campaign_id_fkey", on_delete: :nullify
   add_foreign_key "incomming_mail", "utm_medium", column: "medium_id", name: "incomming_mail_medium_id_fkey", on_delete: :nullify
   add_foreign_key "incomming_mail", "utm_source", column: "source_id", name: "incomming_mail_source_id_fkey", on_delete: :nullify
+  add_foreign_key "incomming_mail_attachment_rel", "incomming_mail", column: "mail_id", name: "incomming_mail_attachment_rel_mail_id_fkey", on_delete: :cascade
+  add_foreign_key "incomming_mail_attachment_rel", "ir_attachment", column: "attachment_id", name: "incomming_mail_attachment_rel_attachment_id_fkey", on_delete: :cascade
   add_foreign_key "incomming_mail_tag", "res_users", column: "create_uid", name: "incomming_mail_tag_create_uid_fkey", on_delete: :nullify
   add_foreign_key "incomming_mail_tag", "res_users", column: "write_uid", name: "incomming_mail_tag_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_client", "ir_model", column: "binding_model_id", name: "ir_act_client_binding_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_client", "res_users", column: "create_uid", name: "ir_act_client_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_client", "res_users", column: "write_uid", name: "ir_act_client_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_report_xml", "ir_model", column: "binding_model_id", name: "ir_act_report_xml_binding_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_report_xml", "report_paperformat", column: "paperformat_id", name: "ir_act_report_xml_paperformat_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_report_xml", "res_users", column: "create_uid", name: "ir_act_report_xml_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_report_xml", "res_users", column: "write_uid", name: "ir_act_report_xml_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_server", "ir_model", column: "binding_model_id", name: "ir_act_server_binding_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_server", "ir_model", column: "crud_model_id", name: "ir_act_server_crud_model_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_server", "ir_model", column: "model_id", name: "ir_act_server_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_server", "ir_model_fields", column: "link_field_id", name: "ir_act_server_link_field_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_server", "mail_template", column: "template_id", name: "ir_act_server_template_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_server", "res_users", column: "create_uid", name: "ir_act_server_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_server", "res_users", column: "write_uid", name: "ir_act_server_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_server_mail_channel_rel", "ir_act_server", name: "ir_act_server_mail_channel_rel_ir_act_server_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_server_mail_channel_rel", "mail_channel", name: "ir_act_server_mail_channel_rel_mail_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_server_res_partner_rel", "ir_act_server", name: "ir_act_server_res_partner_rel_ir_act_server_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_server_res_partner_rel", "res_partner", name: "ir_act_server_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_url", "ir_model", column: "binding_model_id", name: "ir_act_url_binding_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_url", "res_users", column: "create_uid", name: "ir_act_url_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_url", "res_users", column: "write_uid", name: "ir_act_url_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_window", "ir_model", column: "binding_model_id", name: "ir_act_window_binding_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_window", "ir_ui_view", column: "search_view_id", name: "ir_act_window_search_view_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_window", "ir_ui_view", column: "view_id", name: "ir_act_window_view_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_window", "res_users", column: "create_uid", name: "ir_act_window_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_window", "res_users", column: "write_uid", name: "ir_act_window_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_window_group_rel", "ir_act_window", column: "act_id", name: "ir_act_window_group_rel_act_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_window_group_rel", "res_groups", column: "gid", name: "ir_act_window_group_rel_gid_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_window_view", "ir_act_window", column: "act_window_id", name: "ir_act_window_view_act_window_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_act_window_view", "ir_ui_view", column: "view_id", name: "ir_act_window_view_view_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_window_view", "res_users", column: "create_uid", name: "ir_act_window_view_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_act_window_view", "res_users", column: "write_uid", name: "ir_act_window_view_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_actions", "ir_model", column: "binding_model_id", name: "ir_actions_binding_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_actions", "res_users", column: "create_uid", name: "ir_actions_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_actions", "res_users", column: "write_uid", name: "ir_actions_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_actions_todo", "res_users", column: "create_uid", name: "ir_actions_todo_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_actions_todo", "res_users", column: "write_uid", name: "ir_actions_todo_write_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_attachment", "res_company", column: "company_id", name: "ir_attachment_company_id_fkey", on_delete: :nullify
   add_foreign_key "ir_attachment", "res_users", column: "create_uid", name: "ir_attachment_create_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_attachment", "res_users", column: "write_uid", name: "ir_attachment_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_config_parameter", "res_users", column: "create_uid", name: "ir_config_parameter_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_config_parameter", "res_users", column: "write_uid", name: "ir_config_parameter_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_cron", "ir_act_server", column: "ir_actions_server_id", name: "ir_cron_ir_actions_server_id_fkey", on_delete: :restrict
+  add_foreign_key "ir_cron", "res_users", column: "create_uid", name: "ir_cron_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_cron", "res_users", column: "user_id", name: "ir_cron_user_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_cron", "res_users", column: "write_uid", name: "ir_cron_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_default", "ir_model_fields", column: "field_id", name: "ir_default_field_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_default", "res_company", column: "company_id", name: "ir_default_company_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_default", "res_users", column: "create_uid", name: "ir_default_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_default", "res_users", column: "user_id", name: "ir_default_user_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_default", "res_users", column: "write_uid", name: "ir_default_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_exports", "ir_model", column: "model_id", name: "ir_exports_model_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_exports", "res_users", column: "create_uid", name: "ir_exports_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_exports", "res_users", column: "write_uid", name: "ir_exports_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_exports_line", "ir_exports", column: "export_id", name: "ir_exports_line_export_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_exports_line", "ir_model_fields", column: "field1_id", name: "ir_exports_line_field1_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_exports_line", "ir_model_fields", column: "field2_id", name: "ir_exports_line_field2_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_exports_line", "ir_model_fields", column: "field3_id", name: "ir_exports_line_field3_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_exports_line", "ir_model_fields", column: "field4_id", name: "ir_exports_line_field4_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_exports_line", "res_users", column: "create_uid", name: "ir_exports_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_exports_line", "res_users", column: "write_uid", name: "ir_exports_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_filters", "res_users", column: "create_uid", name: "ir_filters_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_filters", "res_users", column: "user_id", name: "ir_filters_user_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_filters", "res_users", column: "write_uid", name: "ir_filters_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_logging", "res_users", column: "write_uid", name: "ir_logging_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_logging_perf_rule", "res_users", column: "create_uid", name: "ir_logging_perf_rule_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_logging_perf_rule", "res_users", column: "write_uid", name: "ir_logging_perf_rule_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_logging_perf_rule_ir_model_rel", "ir_logging_perf_rule", name: "ir_logging_perf_rule_ir_model_rel_ir_logging_perf_rule_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_logging_perf_rule_ir_model_rel", "ir_model", name: "ir_logging_perf_rule_ir_model_rel_ir_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_logging_perf_rule_res_users_rel", "ir_logging_perf_rule", name: "ir_logging_perf_rule_res_users_rel_ir_logging_perf_rule_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_logging_perf_rule_res_users_rel", "res_users", column: "res_users_id", name: "ir_logging_perf_rule_res_users_rel_res_users_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_mail_server", "res_users", column: "create_uid", name: "ir_mail_server_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_mail_server", "res_users", column: "write_uid", name: "ir_mail_server_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model", "ir_model_fields", column: "website_form_default_field_id", name: "ir_model_website_form_default_field_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_model", "res_users", column: "create_uid", name: "ir_model_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model", "res_users", column: "write_uid", name: "ir_model_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_access", "ir_model", column: "model_id", name: "ir_model_access_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_model_access", "res_groups", column: "group_id", name: "ir_model_access_group_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_model_access", "res_users", column: "create_uid", name: "ir_model_access_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_access", "res_users", column: "write_uid", name: "ir_model_access_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_constraint", "ir_model", column: "model", name: "ir_model_constraint_model_fkey", on_delete: :cascade
+  add_foreign_key "ir_model_constraint", "ir_module_module", column: "module", name: "ir_model_constraint_module_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_constraint", "res_users", column: "create_uid", name: "ir_model_constraint_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_constraint", "res_users", column: "write_uid", name: "ir_model_constraint_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_data", "res_users", column: "create_uid", name: "ir_model_data_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_data", "res_users", column: "write_uid", name: "ir_model_data_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_fields", "ir_model", column: "model_id", name: "ir_model_fields_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_model_fields", "ir_model_fields", column: "serialization_field_id", name: "ir_model_fields_serialization_field_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_model_fields", "res_users", column: "create_uid", name: "ir_model_fields_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_fields", "res_users", column: "write_uid", name: "ir_model_fields_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_fields_group_rel", "ir_model_fields", column: "field_id", name: "ir_model_fields_group_rel_field_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_model_fields_group_rel", "res_groups", column: "group_id", name: "ir_model_fields_group_rel_group_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_model_relation", "ir_model", column: "model", name: "ir_model_relation_model_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_relation", "ir_module_module", column: "module", name: "ir_model_relation_module_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_relation", "res_users", column: "create_uid", name: "ir_model_relation_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_model_relation", "res_users", column: "write_uid", name: "ir_model_relation_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_category", "ir_module_category", column: "parent_id", name: "ir_module_category_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_category", "res_users", column: "create_uid", name: "ir_module_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_category", "res_users", column: "write_uid", name: "ir_module_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_module", "ir_module_category", column: "category_id", name: "ir_module_module_category_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_module", "res_users", column: "create_uid", name: "ir_module_module_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_module", "res_users", column: "write_uid", name: "ir_module_module_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_module_dependency", "ir_module_module", column: "module_id", name: "ir_module_module_dependency_module_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_module_module_dependency", "res_users", column: "create_uid", name: "ir_module_module_dependency_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_module_dependency", "res_users", column: "write_uid", name: "ir_module_module_dependency_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_module_exclusion", "ir_module_module", column: "module_id", name: "ir_module_module_exclusion_module_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_module_module_exclusion", "res_users", column: "create_uid", name: "ir_module_module_exclusion_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_module_module_exclusion", "res_users", column: "write_uid", name: "ir_module_module_exclusion_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_property", "ir_model_fields", column: "fields_id", name: "ir_property_fields_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_property", "res_company", column: "company_id", name: "ir_property_company_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_property", "res_users", column: "create_uid", name: "ir_property_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_property", "res_users", column: "write_uid", name: "ir_property_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_rule", "ir_model", column: "model_id", name: "ir_rule_model_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_rule", "res_users", column: "create_uid", name: "ir_rule_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_rule", "res_users", column: "write_uid", name: "ir_rule_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_sequence", "res_company", column: "company_id", name: "ir_sequence_company_id_fkey", on_delete: :nullify
+  add_foreign_key "ir_sequence", "res_users", column: "create_uid", name: "ir_sequence_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_sequence", "res_users", column: "write_uid", name: "ir_sequence_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_sequence_date_range", "ir_sequence", column: "sequence_id", name: "ir_sequence_date_range_sequence_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_sequence_date_range", "res_users", column: "create_uid", name: "ir_sequence_date_range_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_sequence_date_range", "res_users", column: "write_uid", name: "ir_sequence_date_range_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_server_object_lines", "ir_act_server", column: "server_id", name: "ir_server_object_lines_server_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_server_object_lines", "ir_model_fields", column: "col1", name: "ir_server_object_lines_col1_fkey", on_delete: :nullify
+  add_foreign_key "ir_server_object_lines", "res_users", column: "create_uid", name: "ir_server_object_lines_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_server_object_lines", "res_users", column: "write_uid", name: "ir_server_object_lines_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_translation", "res_lang", column: "lang", primary_key: "code", name: "ir_translation_lang_fkey_res_lang"
+  add_foreign_key "ir_ui_menu", "ir_ui_menu", column: "parent_id", name: "ir_ui_menu_parent_id_fkey", on_delete: :restrict
+  add_foreign_key "ir_ui_menu", "res_users", column: "create_uid", name: "ir_ui_menu_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_ui_menu", "res_users", column: "write_uid", name: "ir_ui_menu_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_ui_menu_group_rel", "ir_ui_menu", column: "menu_id", name: "ir_ui_menu_group_rel_menu_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_ui_menu_group_rel", "res_groups", column: "gid", name: "ir_ui_menu_group_rel_gid_fkey", on_delete: :cascade
+  add_foreign_key "ir_ui_view", "ir_ui_view", column: "inherit_id", name: "ir_ui_view_inherit_id_fkey", on_delete: :restrict
+  add_foreign_key "ir_ui_view", "res_users", column: "create_uid", name: "ir_ui_view_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_ui_view", "res_users", column: "write_uid", name: "ir_ui_view_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_ui_view", "website", name: "ir_ui_view_website_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_ui_view_custom", "ir_ui_view", column: "ref_id", name: "ir_ui_view_custom_ref_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_ui_view_custom", "res_users", column: "create_uid", name: "ir_ui_view_custom_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_ui_view_custom", "res_users", column: "user_id", name: "ir_ui_view_custom_user_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_ui_view_custom", "res_users", column: "write_uid", name: "ir_ui_view_custom_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_ui_view_group_rel", "ir_ui_view", column: "view_id", name: "ir_ui_view_group_rel_view_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_ui_view_group_rel", "res_groups", column: "group_id", name: "ir_ui_view_group_rel_group_id_fkey", on_delete: :cascade
+  add_foreign_key "issue_media", "op_faculty", column: "faculty_id", name: "issue_media_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "issue_media", "op_library_card", column: "library_card_id", name: "issue_media_library_card_id_fkey", on_delete: :nullify
+  add_foreign_key "issue_media", "op_media", column: "media_id", name: "issue_media_media_id_fkey", on_delete: :nullify
+  add_foreign_key "issue_media", "op_media_unit", column: "media_unit_id", name: "issue_media_media_unit_id_fkey", on_delete: :nullify
+  add_foreign_key "issue_media", "op_student", column: "student_id", name: "issue_media_student_id_fkey", on_delete: :nullify
+  add_foreign_key "issue_media", "res_users", column: "create_uid", name: "issue_media_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "issue_media", "res_users", column: "write_uid", name: "issue_media_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "job_cv_rel", "hr_job", column: "job_id", name: "job_cv_rel_job_id_fkey", on_delete: :cascade
+  add_foreign_key "job_cv_rel", "ir_attachment", column: "cv_id", name: "job_cv_rel_cv_id_fkey", on_delete: :cascade
+  add_foreign_key "learning_materials", "op_lession"
+  add_foreign_key "link_tracker", "mail_mass_mailing", column: "mass_mailing_id", name: "link_tracker_mass_mailing_id_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "link_tracker_mass_mailing_campaign_id_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker", "res_users", column: "create_uid", name: "link_tracker_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker", "res_users", column: "write_uid", name: "link_tracker_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker", "utm_campaign", column: "campaign_id", name: "link_tracker_campaign_id_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker", "utm_medium", column: "medium_id", name: "link_tracker_medium_id_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker", "utm_source", column: "source_id", name: "link_tracker_source_id_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker_click", "link_tracker", column: "link_id", name: "link_tracker_click_link_id_fkey", on_delete: :cascade
+  add_foreign_key "link_tracker_click", "mail_mail_statistics", column: "mail_stat_id", name: "link_tracker_click_mail_stat_id_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker_click", "mail_mass_mailing", column: "mass_mailing_id", name: "link_tracker_click_mass_mailing_id_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker_click", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "link_tracker_click_mass_mailing_campaign_id_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker_click", "res_country", column: "country_id", name: "link_tracker_click_country_id_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker_click", "res_users", column: "create_uid", name: "link_tracker_click_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker_click", "res_users", column: "write_uid", name: "link_tracker_click_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker_code", "link_tracker", column: "link_id", name: "link_tracker_code_link_id_fkey", on_delete: :cascade
+  add_foreign_key "link_tracker_code", "res_users", column: "create_uid", name: "link_tracker_code_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "link_tracker_code", "res_users", column: "write_uid", name: "link_tracker_code_write_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_activity", "calendar_event", name: "mail_activity_calendar_event_id_fkey", on_delete: :cascade
   add_foreign_key "mail_activity", "ir_model", column: "res_model_id", name: "mail_activity_res_model_id_fkey", on_delete: :cascade
   add_foreign_key "mail_activity", "mail_activity_type", column: "activity_type_id", name: "mail_activity_activity_type_id_fkey", on_delete: :nullify
@@ -10424,6 +11812,149 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "mail_activity", "student_test", name: "mail_activity_student_test_id_fkey", on_delete: :nullify
   add_foreign_key "mail_activity", "student_test_room", column: "room_id", name: "mail_activity_room_id_fkey", on_delete: :nullify
   add_foreign_key "mail_activity", "student_test_timing", column: "timing_id", name: "mail_activity_timing_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_activity_rel", "mail_activity_type", column: "activity_id", name: "mail_activity_rel_activity_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_activity_rel", "mail_activity_type", column: "recommended_id", name: "mail_activity_rel_recommended_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_activity_type", "ir_model", column: "res_model_id", name: "mail_activity_type_res_model_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_activity_type", "res_users", column: "create_uid", name: "mail_activity_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_activity_type", "res_users", column: "write_uid", name: "mail_activity_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_alias", "ir_model", column: "alias_model_id", name: "mail_alias_alias_model_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_alias", "ir_model", column: "alias_parent_model_id", name: "mail_alias_alias_parent_model_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_alias", "res_users", column: "alias_user_id", name: "mail_alias_alias_user_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_alias", "res_users", column: "create_uid", name: "mail_alias_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_alias", "res_users", column: "write_uid", name: "mail_alias_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_channel", "im_livechat_channel", column: "livechat_channel_id", name: "mail_channel_livechat_channel_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_channel", "mail_alias", column: "alias_id", name: "mail_channel_alias_id_fkey", on_delete: :restrict
+  add_foreign_key "mail_channel", "res_groups", column: "group_public_id", name: "mail_channel_group_public_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_channel", "res_users", column: "create_uid", name: "mail_channel_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_channel", "res_users", column: "write_uid", name: "mail_channel_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_channel_mail_wizard_invite_rel", "mail_channel", name: "mail_channel_mail_wizard_invite_rel_mail_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_channel_mail_wizard_invite_rel", "mail_wizard_invite", name: "mail_channel_mail_wizard_invite_rel_mail_wizard_invite_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_channel_partner", "mail_channel", column: "channel_id", name: "mail_channel_partner_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_channel_partner", "mail_message", column: "seen_message_id", name: "mail_channel_partner_seen_message_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_channel_partner", "res_partner", column: "partner_id", name: "mail_channel_partner_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_channel_partner", "res_users", column: "create_uid", name: "mail_channel_partner_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_channel_partner", "res_users", column: "write_uid", name: "mail_channel_partner_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_channel_res_groups_rel", "mail_channel", name: "mail_channel_res_groups_rel_mail_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_channel_res_groups_rel", "res_groups", column: "res_groups_id", name: "mail_channel_res_groups_rel_res_groups_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message", "ir_mail_server", column: "mail_server_id", name: "mail_compose_message_mail_server_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "mail_activity_type", name: "mail_compose_message_mail_activity_type_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "mail_mass_mailing", column: "mass_mailing_id", name: "mail_compose_message_mass_mailing_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "mail_compose_message_mass_mailing_campaign_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "mail_message", column: "parent_id", name: "mail_compose_message_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "mail_message_subtype", column: "subtype_id", name: "mail_compose_message_subtype_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "mail_template", column: "template_id", name: "mail_compose_message_template_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "res_partner", column: "author_id", name: "mail_compose_message_author_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "res_users", column: "create_uid", name: "mail_compose_message_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "res_users", column: "write_uid", name: "mail_compose_message_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message_ir_attachments_rel", "ir_attachment", column: "attachment_id", name: "mail_compose_message_ir_attachments_rel_attachment_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message_ir_attachments_rel", "mail_compose_message", column: "wizard_id", name: "mail_compose_message_ir_attachments_rel_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message_mail_mass_mailing_list_rel", "mail_compose_message", name: "mail_compose_message_mail_mass_mai_mail_compose_message_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message_mail_mass_mailing_list_rel", "mail_mass_mailing_list", name: "mail_compose_message_mail_mass_m_mail_mass_mailing_list_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message_res_partner_rel", "mail_compose_message", column: "wizard_id", name: "mail_compose_message_res_partner_rel_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message_res_partner_rel", "res_partner", column: "partner_id", name: "mail_compose_message_res_partner_rel_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_followers", "mail_channel", column: "channel_id", name: "mail_followers_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_followers", "res_partner", column: "partner_id", name: "mail_followers_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_followers_mail_message_subtype_rel", "mail_followers", column: "mail_followers_id", name: "mail_followers_mail_message_subtype_rel_mail_followers_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_followers_mail_message_subtype_rel", "mail_message_subtype", name: "mail_followers_mail_message_subtyp_mail_message_subtype_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mail", "fetchmail_server", name: "mail_mail_fetchmail_server_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mail", "mail_mass_mailing", column: "mailing_id", name: "mail_mail_mailing_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mail", "mail_message", name: "mail_mail_mail_message_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mail", "res_users", column: "create_uid", name: "mail_mail_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mail", "res_users", column: "write_uid", name: "mail_mail_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mail_res_partner_rel", "mail_mail", name: "mail_mail_res_partner_rel_mail_mail_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mail_res_partner_rel", "res_partner", name: "mail_mail_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mail_statistics", "mail_mail", name: "mail_mail_statistics_mail_mail_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mail_statistics", "mail_mass_mailing", column: "mass_mailing_id", name: "mail_mail_statistics_mass_mailing_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mail_statistics", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "mail_mail_statistics_mass_mailing_campaign_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mail_statistics", "res_users", column: "create_uid", name: "mail_mail_statistics_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mail_statistics", "res_users", column: "write_uid", name: "mail_mail_statistics_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing", "ir_model", column: "mailing_model_id", name: "mail_mass_mailing_mailing_model_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "mail_mass_mailing_mass_mailing_campaign_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing", "res_users", column: "create_uid", name: "mail_mass_mailing_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing", "res_users", column: "write_uid", name: "mail_mass_mailing_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing", "utm_campaign", column: "campaign_id", name: "mail_mass_mailing_campaign_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing", "utm_medium", column: "medium_id", name: "mail_mass_mailing_medium_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing", "utm_source", column: "source_id", name: "mail_mass_mailing_source_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_campaign", "mail_mass_mailing_stage", column: "stage_id", name: "mail_mass_mailing_campaign_stage_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_campaign", "res_users", column: "create_uid", name: "mail_mass_mailing_campaign_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_campaign", "res_users", column: "user_id", name: "mail_mass_mailing_campaign_user_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_campaign", "res_users", column: "write_uid", name: "mail_mass_mailing_campaign_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_campaign", "utm_campaign", column: "campaign_id", name: "mail_mass_mailing_campaign_campaign_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_campaign", "utm_medium", column: "medium_id", name: "mail_mass_mailing_campaign_medium_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_campaign", "utm_source", column: "source_id", name: "mail_mass_mailing_campaign_source_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_contact", "res_country", column: "country_id", name: "mail_mass_mailing_contact_country_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_contact", "res_partner_title", column: "title_id", name: "mail_mass_mailing_contact_title_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_contact", "res_users", column: "create_uid", name: "mail_mass_mailing_contact_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_contact", "res_users", column: "write_uid", name: "mail_mass_mailing_contact_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_contact_list_rel", "mail_mass_mailing_contact", column: "contact_id", name: "mail_mass_mailing_contact_list_rel_contact_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_contact_list_rel", "mail_mass_mailing_list", column: "list_id", name: "mail_mass_mailing_contact_list_rel_list_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_contact_res_partner_category_rel", "mail_mass_mailing_contact", name: "mail_mass_mailing_contact_res_mail_mass_mailing_contact_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_contact_res_partner_category_rel", "res_partner_category", name: "mail_mass_mailing_contact_res_part_res_partner_category_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_list", "res_users", column: "create_uid", name: "mail_mass_mailing_list_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_list", "res_users", column: "write_uid", name: "mail_mass_mailing_list_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_list_rel", "mail_mass_mailing", name: "mail_mass_mailing_list_rel_mail_mass_mailing_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_list_rel", "mail_mass_mailing_list", name: "mail_mass_mailing_list_rel_mail_mass_mailing_list_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_list_survey_mail_compose_message_rel", "mail_mass_mailing_list", name: "mail_mass_mailing_list_survey_ma_mail_mass_mailing_list_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_list_survey_mail_compose_message_rel", "survey_mail_compose_message", name: "mail_mass_mailing_list_survey_survey_mail_compose_message__fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_stage", "res_users", column: "create_uid", name: "mail_mass_mailing_stage_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_stage", "res_users", column: "write_uid", name: "mail_mass_mailing_stage_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_tag", "res_users", column: "create_uid", name: "mail_mass_mailing_tag_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_tag", "res_users", column: "write_uid", name: "mail_mass_mailing_tag_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_tag_rel", "mail_mass_mailing_campaign", column: "tag_id", name: "mail_mass_mailing_tag_rel_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_tag_rel", "mail_mass_mailing_tag", column: "campaign_id", name: "mail_mass_mailing_tag_rel_campaign_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_test", "mail_mass_mailing", column: "mass_mailing_id", name: "mail_mass_mailing_test_mass_mailing_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_mass_mailing_test", "res_users", column: "create_uid", name: "mail_mass_mailing_test_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mass_mailing_test", "res_users", column: "write_uid", name: "mail_mass_mailing_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_message", "ir_mail_server", column: "mail_server_id", name: "mail_message_mail_server_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_message", "mail_activity_type", name: "mail_message_mail_activity_type_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_message", "mail_message", column: "parent_id", name: "mail_message_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_message", "mail_message_subtype", column: "subtype_id", name: "mail_message_subtype_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_message", "res_partner", column: "author_id", name: "mail_message_author_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_message", "res_users", column: "create_uid", name: "mail_message_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_message", "res_users", column: "write_uid", name: "mail_message_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_message_mail_channel_rel", "mail_channel", name: "mail_message_mail_channel_rel_mail_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_message_mail_channel_rel", "mail_message", name: "mail_message_mail_channel_rel_mail_message_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_message_res_partner_needaction_rel", "mail_message", name: "mail_message_res_partner_needaction_rel_mail_message_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_message_res_partner_needaction_rel", "res_partner", name: "mail_message_res_partner_needaction_rel_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_message_res_partner_rel", "mail_message", name: "mail_message_res_partner_rel_mail_message_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_message_res_partner_rel", "res_partner", name: "mail_message_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_message_res_partner_starred_rel", "mail_message", name: "mail_message_res_partner_starred_rel_mail_message_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_message_res_partner_starred_rel", "res_partner", name: "mail_message_res_partner_starred_rel_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_message_subtype", "mail_message_subtype", column: "parent_id", name: "mail_message_subtype_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_message_subtype", "res_users", column: "create_uid", name: "mail_message_subtype_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_message_subtype", "res_users", column: "write_uid", name: "mail_message_subtype_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_shortcode", "res_users", column: "create_uid", name: "mail_shortcode_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_shortcode", "res_users", column: "write_uid", name: "mail_shortcode_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_template", "ir_act_report_xml", column: "report_template", name: "mail_template_report_template_fkey", on_delete: :nullify
+  add_foreign_key "mail_template", "ir_act_window", column: "ref_ir_act_window", name: "mail_template_ref_ir_act_window_fkey", on_delete: :nullify
+  add_foreign_key "mail_template", "ir_mail_server", column: "mail_server_id", name: "mail_template_mail_server_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_template", "ir_model", column: "model_id", name: "mail_template_model_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_template", "ir_model", column: "sub_object", name: "mail_template_sub_object_fkey", on_delete: :nullify
+  add_foreign_key "mail_template", "ir_model_fields", column: "model_object_field", name: "mail_template_model_object_field_fkey", on_delete: :nullify
+  add_foreign_key "mail_template", "ir_model_fields", column: "sub_model_object_field", name: "mail_template_sub_model_object_field_fkey", on_delete: :nullify
+  add_foreign_key "mail_template", "res_users", column: "create_uid", name: "mail_template_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_template", "res_users", column: "write_uid", name: "mail_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_test", "mail_alias", column: "alias_id", name: "mail_test_alias_id_fkey", on_delete: :restrict
+  add_foreign_key "mail_test", "res_users", column: "create_uid", name: "mail_test_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_test", "res_users", column: "write_uid", name: "mail_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_test_simple", "res_users", column: "create_uid", name: "mail_test_simple_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_test_simple", "res_users", column: "write_uid", name: "mail_test_simple_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_email", "mail_mail", column: "mail_id", name: "mail_tracking_email_mail_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_email", "mail_message", name: "mail_tracking_email_mail_message_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_email", "res_partner", column: "partner_id", name: "mail_tracking_email_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_email", "res_users", column: "create_uid", name: "mail_tracking_email_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_email", "res_users", column: "write_uid", name: "mail_tracking_email_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_event", "mail_tracking_email", column: "tracking_email_id", name: "mail_tracking_event_tracking_email_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_tracking_event", "res_country", column: "user_country_id", name: "mail_tracking_event_user_country_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_event", "res_users", column: "create_uid", name: "mail_tracking_event_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_event", "res_users", column: "write_uid", name: "mail_tracking_event_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_value", "mail_message", name: "mail_tracking_value_mail_message_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_tracking_value", "res_users", column: "create_uid", name: "mail_tracking_value_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_value", "res_users", column: "write_uid", name: "mail_tracking_value_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_wizard_invite", "res_users", column: "create_uid", name: "mail_wizard_invite_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_wizard_invite", "res_users", column: "write_uid", name: "mail_wizard_invite_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_wizard_invite_res_partner_rel", "mail_wizard_invite", name: "mail_wizard_invite_res_partner_rel_mail_wizard_invite_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_wizard_invite_res_partner_rel", "res_partner", name: "mail_wizard_invite_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
   add_foreign_key "maintenance_equipment", "hr_department", column: "department_id", name: "maintenance_equipment_department_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "hr_employee", column: "employee_id", name: "maintenance_equipment_employee_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "maintenance_equipment_category", column: "category_id", name: "maintenance_equipment_category_id_fkey", on_delete: :nullify
@@ -10441,9 +11972,13 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "maintenance_equipment_category", "res_users", column: "create_uid", name: "maintenance_equipment_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_category", "res_users", column: "technician_user_id", name: "maintenance_equipment_category_technician_user_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_category", "res_users", column: "write_uid", name: "maintenance_equipment_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_equipment_category_maintenance_equipment_status_rel", "maintenance_equipment_category", name: "maintenance_equipment_categor_maintenance_equipment_catego_fkey", on_delete: :cascade
+  add_foreign_key "maintenance_equipment_category_maintenance_equipment_status_rel", "maintenance_equipment_status", name: "maintenance_equipment_categor_maintenance_equipment_status_fkey", on_delete: :cascade
   add_foreign_key "maintenance_equipment_location", "res_company", column: "company_id", name: "maintenance_equipment_location_company_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_location", "res_users", column: "create_uid", name: "maintenance_equipment_location_create_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_location", "res_users", column: "write_uid", name: "maintenance_equipment_location_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_equipment_maintenance_equipment_move_rel", "maintenance_equipment", name: "maintenance_equipment_maintenance_maintenance_equipment_id_fkey", on_delete: :cascade
+  add_foreign_key "maintenance_equipment_maintenance_equipment_move_rel", "maintenance_equipment_move", name: "maintenance_equipment_mainten_maintenance_equipment_move_i_fkey", on_delete: :cascade
   add_foreign_key "maintenance_equipment_move", "maintenance_equipment_location", column: "from_location_id", name: "maintenance_equipment_move_from_location_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_move", "maintenance_equipment_location", column: "to_location_id", name: "maintenance_equipment_move_to_location_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_move", "maintenance_equipment_move_type", column: "move_type_id", name: "maintenance_equipment_move_move_type_id_fkey", on_delete: :nullify
@@ -10453,6 +11988,66 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "maintenance_equipment_move", "res_users", column: "write_uid", name: "maintenance_equipment_move_write_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_move_type", "res_users", column: "create_uid", name: "maintenance_equipment_move_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment_move_type", "res_users", column: "write_uid", name: "maintenance_equipment_move_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_equipment_status", "res_users", column: "create_uid", name: "maintenance_equipment_status_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_equipment_status", "res_users", column: "write_uid", name: "maintenance_equipment_status_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_equipment_tag", "res_users", column: "create_uid", name: "maintenance_equipment_tag_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_equipment_tag", "res_users", column: "write_uid", name: "maintenance_equipment_tag_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "hr_department", column: "department_id", name: "maintenance_request_department_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "hr_employee", column: "employee_id", name: "maintenance_request_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "maintenance_equipment", column: "equipment_id", name: "maintenance_request_equipment_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "maintenance_equipment_category", column: "category_id", name: "maintenance_request_category_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "maintenance_stage", column: "stage_id", name: "maintenance_request_stage_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "maintenance_team", name: "maintenance_request_maintenance_team_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "res_users", column: "create_uid", name: "maintenance_request_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "res_users", column: "owner_user_id", name: "maintenance_request_owner_user_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "res_users", column: "technician_user_id", name: "maintenance_request_technician_user_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_request", "res_users", column: "write_uid", name: "maintenance_request_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_stage", "res_users", column: "create_uid", name: "maintenance_stage_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_stage", "res_users", column: "write_uid", name: "maintenance_stage_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_stage_next_stage", "maintenance_stage", column: "next_stage_id", name: "maintenance_stage_next_stage_next_stage_id_fkey", on_delete: :cascade
+  add_foreign_key "maintenance_stage_next_stage", "maintenance_stage", column: "stage_id", name: "maintenance_stage_next_stage_stage_id_fkey", on_delete: :cascade
+  add_foreign_key "maintenance_team", "ir_sequence", column: "sequence_id", name: "maintenance_team_sequence_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_team", "res_users", column: "create_uid", name: "maintenance_team_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_team", "res_users", column: "user_id", name: "maintenance_team_user_id_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_team", "res_users", column: "write_uid", name: "maintenance_team_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "maintenance_team_users_rel", "maintenance_team", name: "maintenance_team_users_rel_maintenance_team_id_fkey", on_delete: :cascade
+  add_foreign_key "maintenance_team_users_rel", "res_users", column: "res_users_id", name: "maintenance_team_users_rel_res_users_id_fkey", on_delete: :cascade
+  add_foreign_key "mass_editing_wizard", "res_users", column: "create_uid", name: "mass_editing_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mass_editing_wizard", "res_users", column: "write_uid", name: "mass_editing_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mass_mailing_ir_attachments_rel", "ir_attachment", column: "attachment_id", name: "mass_mailing_ir_attachments_rel_attachment_id_fkey", on_delete: :cascade
+  add_foreign_key "mass_mailing_ir_attachments_rel", "mail_mass_mailing", column: "mass_mailing_id", name: "mass_mailing_ir_attachments_rel_mass_mailing_id_fkey", on_delete: :cascade
+  add_foreign_key "mass_object", "res_users", column: "create_uid", name: "mass_object_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mass_object", "res_users", column: "write_uid", name: "mass_object_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "meeting_category_rel", "calendar_event", column: "event_id", name: "meeting_category_rel_event_id_fkey", on_delete: :cascade
+  add_foreign_key "meeting_category_rel", "calendar_event_type", column: "type_id", name: "meeting_category_rel_type_id_fkey", on_delete: :cascade
+  add_foreign_key "merge_opportunity_rel", "crm_lead", column: "opportunity_id", name: "merge_opportunity_rel_opportunity_id_fkey", on_delete: :cascade
+  add_foreign_key "merge_opportunity_rel", "crm_merge_opportunity", column: "merge_id", name: "merge_opportunity_rel_merge_id_fkey", on_delete: :cascade
+  add_foreign_key "message_attachment_rel", "ir_attachment", column: "attachment_id", name: "message_attachment_rel_attachment_id_fkey", on_delete: :cascade
+  add_foreign_key "message_attachment_rel", "mail_message", column: "message_id", name: "message_attachment_rel_message_id_fkey", on_delete: :cascade
+  add_foreign_key "messages", "users", column: "sent_by"
+  add_foreign_key "muk_autovacuum_rules", "res_users", column: "create_uid", name: "muk_autovacuum_rules_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "muk_autovacuum_rules", "res_users", column: "write_uid", name: "muk_autovacuum_rules_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "muk_web_client_notification_send_notifications", "res_users", column: "create_uid", name: "muk_web_client_notification_send_notifications_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "muk_web_client_notification_send_notifications", "res_users", column: "write_uid", name: "muk_web_client_notification_send_notifications_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "muk_web_client_notification_user_rel", "muk_web_client_notification_send_notifications", column: "wizard_id", name: "muk_web_client_notification_user_rel_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "muk_web_client_notification_user_rel", "res_users", column: "user_id", name: "muk_web_client_notification_user_rel_user_id_fkey", on_delete: :cascade
+  add_foreign_key "note_note", "res_users", column: "create_uid", name: "note_note_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "note_note", "res_users", column: "user_id", name: "note_note_user_id_fkey", on_delete: :nullify
+  add_foreign_key "note_note", "res_users", column: "write_uid", name: "note_note_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "note_stage", "res_users", column: "create_uid", name: "note_stage_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "note_stage", "res_users", column: "user_id", name: "note_stage_user_id_fkey", on_delete: :cascade
+  add_foreign_key "note_stage", "res_users", column: "write_uid", name: "note_stage_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "note_stage_rel", "note_note", column: "note_id", name: "note_stage_rel_note_id_fkey", on_delete: :cascade
+  add_foreign_key "note_stage_rel", "note_stage", column: "stage_id", name: "note_stage_rel_stage_id_fkey", on_delete: :cascade
+  add_foreign_key "note_tag", "res_users", column: "create_uid", name: "note_tag_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "note_tag", "res_users", column: "write_uid", name: "note_tag_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "note_tags_rel", "note_note", column: "note_id", name: "note_tags_rel_note_id_fkey", on_delete: :cascade
+  add_foreign_key "note_tags_rel", "note_tag", column: "tag_id", name: "note_tags_rel_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "op_activity", "op_activity_type", column: "type_id", name: "op_activity_type_id_fkey", on_delete: :nullify
+  add_foreign_key "op_activity", "op_faculty", column: "faculty_id", name: "op_activity_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "op_activity", "op_student", column: "student_id", name: "op_activity_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_activity", "res_users", column: "create_uid", name: "op_activity_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_activity", "res_users", column: "write_uid", name: "op_activity_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_activity_type", "res_users", column: "create_uid", name: "op_activity_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_activity_type", "res_users", column: "write_uid", name: "op_activity_type_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_admission", "crm_claim", column: "claim_id", name: "op_admission_claim_id_fkey", on_delete: :nullify
@@ -10478,6 +12073,16 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_admission_register", "res_company", column: "company_id", name: "op_admission_register_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission_register", "res_users", column: "create_uid", name: "op_admission_register_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_admission_register", "res_users", column: "write_uid", name: "op_admission_register_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_student_test_rel", "op_admission", name: "op_admission_student_test_rel_op_admission_id_fkey", on_delete: :cascade
+  add_foreign_key "op_admission_student_test_rel", "student_test", name: "op_admission_student_test_rel_student_test_id_fkey", on_delete: :cascade
+  add_foreign_key "op_admission_subject_rel", "op_admission", column: "admission_id", name: "op_admission_subject_rel_admission_id_fkey", on_delete: :cascade
+  add_foreign_key "op_admission_subject_rel", "op_subject", column: "subject_id", name: "op_admission_subject_rel_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "op_all_student", "op_batch", column: "batch_id", name: "op_all_student_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_all_student", "op_course", column: "course_id", name: "op_all_student_course_id_fkey", on_delete: :nullify
+  add_foreign_key "op_all_student", "res_users", column: "create_uid", name: "op_all_student_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_all_student", "res_users", column: "write_uid", name: "op_all_student_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_all_student_op_student_rel", "op_all_student", name: "op_all_student_op_student_rel_op_all_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_all_student_op_student_rel", "op_student", name: "op_all_student_op_student_rel_op_student_id_fkey", on_delete: :cascade
   add_foreign_key "op_asset", "op_classroom", column: "asset_id", name: "op_asset_asset_id_fkey", on_delete: :nullify
   add_foreign_key "op_asset", "product_product", column: "product_id", name: "op_asset_product_id_fkey", on_delete: :nullify
   add_foreign_key "op_asset", "res_users", column: "create_uid", name: "op_asset_create_uid_fkey", on_delete: :nullify
@@ -10490,8 +12095,15 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_assignment", "op_subject", column: "subject_id", name: "op_assignment_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_assignment", "res_users", column: "create_uid", name: "op_assignment_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_assignment", "res_users", column: "write_uid", name: "op_assignment_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_assignment_op_student_rel", "op_assignment", name: "op_assignment_op_student_rel_op_assignment_id_fkey", on_delete: :cascade
+  add_foreign_key "op_assignment_op_student_rel", "op_student", name: "op_assignment_op_student_rel_op_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_assignment_sub_line", "op_assignment", column: "assignment_id", name: "op_assignment_sub_line_assignment_id_fkey", on_delete: :nullify
+  add_foreign_key "op_assignment_sub_line", "op_student", column: "student_id", name: "op_assignment_sub_line_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_assignment_sub_line", "res_users", column: "create_uid", name: "op_assignment_sub_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_assignment_sub_line", "res_users", column: "write_uid", name: "op_assignment_sub_line_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_assignment_type", "res_users", column: "create_uid", name: "op_assignment_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_assignment_type", "res_users", column: "write_uid", name: "op_assignment_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_attendance_line", "op_attendance_register", column: "register_id", name: "op_attendance_line_register_id_fkey", on_delete: :nullify
   add_foreign_key "op_attendance_line", "op_attendance_sheet", column: "attendance_id", name: "op_attendance_line_attendance_id_fkey", on_delete: :cascade
   add_foreign_key "op_attendance_line", "op_batch", column: "batch_id", name: "op_attendance_line_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_attendance_line", "op_course", column: "course_id", name: "op_attendance_line_course_id_fkey", on_delete: :nullify
@@ -10519,9 +12131,21 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_author", "res_partner", column: "address", name: "op_author_address_fkey", on_delete: :nullify
   add_foreign_key "op_author", "res_users", column: "create_uid", name: "op_author_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_author", "res_users", column: "write_uid", name: "op_author_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_author_op_media_rel", "op_author", name: "op_author_op_media_rel_op_author_id_fkey", on_delete: :cascade
+  add_foreign_key "op_author_op_media_rel", "op_media", column: "op_media_id", name: "op_author_op_media_rel_op_media_id_fkey", on_delete: :cascade
+  add_foreign_key "op_badge_student", "op_gamification_badge", column: "badge_id", name: "op_badge_student_badge_id_fkey", on_delete: :cascade
+  add_foreign_key "op_badge_student", "op_student", column: "student_id", name: "op_badge_student_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_badge_student", "res_users", column: "create_uid", name: "op_badge_student_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_badge_student", "res_users", column: "sender_id", name: "op_badge_student_sender_id_fkey", on_delete: :nullify
+  add_foreign_key "op_badge_student", "res_users", column: "write_uid", name: "op_badge_student_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_badge_student_wizard", "op_gamification_badge", column: "badge_id", name: "op_badge_student_wizard_badge_id_fkey", on_delete: :nullify
+  add_foreign_key "op_badge_student_wizard", "op_student", column: "student_id", name: "op_badge_student_wizard_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_badge_student_wizard", "res_users", column: "create_uid", name: "op_badge_student_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_badge_student_wizard", "res_users", column: "write_uid", name: "op_badge_student_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_admission_register", column: "register_id", name: "op_batch_register_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_batch_type", column: "type_id", name: "op_batch_type_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_course", column: "course_id", name: "op_batch_course_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch", "op_subject", column: "start_subject_id", name: "op_batch_start_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "res_company", column: "company_id", name: "op_batch_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "res_users", column: "create_uid", name: "op_batch_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "res_users", column: "write_uid", name: "op_batch_write_uid_fkey", on_delete: :nullify
@@ -10531,6 +12155,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_batch_gen", "res_users", column: "write_uid", name: "op_batch_gen_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch_type", "res_users", column: "create_uid", name: "op_batch_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch_type", "res_users", column: "write_uid", name: "op_batch_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_board_affiliation", "res_company", column: "company_id", name: "op_board_affiliation_company_id_fkey", on_delete: :nullify
+  add_foreign_key "op_board_affiliation", "res_users", column: "create_uid", name: "op_board_affiliation_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_board_affiliation", "res_users", column: "write_uid", name: "op_board_affiliation_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_category", "res_users", column: "create_uid", name: "op_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_category", "res_users", column: "write_uid", name: "op_category_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_classroom", "op_batch", column: "batch_id", name: "op_classroom_batch_id_fkey", on_delete: :nullify
@@ -10548,15 +12175,34 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_course", "res_company", column: "company_id", name: "op_course_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_course", "res_users", column: "create_uid", name: "op_course_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_course", "res_users", column: "write_uid", name: "op_course_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_course_op_media_rel", "op_course", name: "op_course_op_media_rel_op_course_id_fkey", on_delete: :cascade
+  add_foreign_key "op_course_op_media_rel", "op_media", column: "op_media_id", name: "op_course_op_media_rel_op_media_id_fkey", on_delete: :cascade
+  add_foreign_key "op_course_op_subject_rel", "op_course", name: "op_course_op_subject_rel_op_course_id_fkey", on_delete: :cascade
+  add_foreign_key "op_course_op_subject_rel", "op_subject", name: "op_course_op_subject_rel_op_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "op_course_student_test_rel", "op_course", name: "op_course_student_test_rel_op_course_id_fkey", on_delete: :cascade
+  add_foreign_key "op_course_student_test_rel", "student_test", name: "op_course_student_test_rel_student_test_id_fkey", on_delete: :cascade
   add_foreign_key "op_exam", "op_batch", column: "batch_id", name: "op_exam_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_exam", "op_course", column: "course_id", name: "op_exam_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_exam", "op_exam_session", column: "session_id", name: "op_exam_session_id_fkey", on_delete: :nullify
   add_foreign_key "op_exam", "op_subject", column: "subject_id", name: "op_exam_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_exam", "res_users", column: "create_uid", name: "op_exam_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_exam", "res_users", column: "write_uid", name: "op_exam_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_exam_attendees", "op_batch", column: "batch_id", name: "op_exam_attendees_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_exam_attendees", "op_course", column: "course_id", name: "op_exam_attendees_course_id_fkey", on_delete: :nullify
+  add_foreign_key "op_exam_attendees", "op_exam", column: "exam_id", name: "op_exam_attendees_exam_id_fkey", on_delete: :cascade
+  add_foreign_key "op_exam_attendees", "op_exam_room", column: "room_id", name: "op_exam_attendees_room_id_fkey", on_delete: :nullify
+  add_foreign_key "op_exam_attendees", "op_student", column: "student_id", name: "op_exam_attendees_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_exam_attendees", "res_users", column: "create_uid", name: "op_exam_attendees_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_exam_attendees", "res_users", column: "write_uid", name: "op_exam_attendees_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_exam_attendees_op_held_exam_rel", "op_exam_attendees", column: "op_exam_attendees_id", name: "op_exam_attendees_op_held_exam_rel_op_exam_attendees_id_fkey", on_delete: :cascade
+  add_foreign_key "op_exam_attendees_op_held_exam_rel", "op_held_exam", name: "op_exam_attendees_op_held_exam_rel_op_held_exam_id_fkey", on_delete: :cascade
+  add_foreign_key "op_exam_op_faculty_rel", "op_exam", name: "op_exam_op_faculty_rel_op_exam_id_fkey", on_delete: :cascade
+  add_foreign_key "op_exam_op_faculty_rel", "op_faculty", name: "op_exam_op_faculty_rel_op_faculty_id_fkey", on_delete: :cascade
   add_foreign_key "op_exam_room", "op_classroom", column: "classroom_id", name: "op_exam_room_classroom_id_fkey", on_delete: :nullify
   add_foreign_key "op_exam_room", "res_users", column: "create_uid", name: "op_exam_room_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_exam_room", "res_users", column: "write_uid", name: "op_exam_room_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_exam_room_op_room_distribution_rel", "op_exam_room", name: "op_exam_room_op_room_distribution_rel_op_exam_room_id_fkey", on_delete: :cascade
+  add_foreign_key "op_exam_room_op_room_distribution_rel", "op_room_distribution", name: "op_exam_room_op_room_distribution__op_room_distribution_id_fkey", on_delete: :cascade
   add_foreign_key "op_exam_session", "op_batch", column: "batch_id", name: "op_exam_session_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_exam_session", "op_course", column: "course_id", name: "op_exam_session_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_exam_session", "op_exam_type", column: "exam_type", name: "op_exam_session_exam_type_fkey", on_delete: :nullify
@@ -10567,6 +12213,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_exam_type", "res_users", column: "write_uid", name: "op_exam_type_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_facility", "res_users", column: "create_uid", name: "op_facility_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_facility", "res_users", column: "write_uid", name: "op_facility_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_facility_line", "op_classroom", column: "classroom_id", name: "op_facility_line_classroom_id_fkey", on_delete: :nullify
+  add_foreign_key "op_facility_line", "op_facility", column: "facility_id", name: "op_facility_line_facility_id_fkey", on_delete: :nullify
+  add_foreign_key "op_facility_line", "res_users", column: "create_uid", name: "op_facility_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_facility_line", "res_users", column: "write_uid", name: "op_facility_line_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_faculty", "hr_employee", column: "emp_id", name: "op_faculty_emp_id_fkey", on_delete: :nullify
   add_foreign_key "op_faculty", "op_library_card", column: "library_card_id", name: "op_faculty_library_card_id_fkey", on_delete: :nullify
   add_foreign_key "op_faculty", "res_company", column: "company_id", name: "op_faculty_company_id_fkey", on_delete: :nullify
@@ -10576,9 +12226,45 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_faculty", "res_users", column: "create_uid", name: "op_faculty_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_faculty", "res_users", column: "related_user", name: "op_faculty_related_user_fkey", on_delete: :nullify
   add_foreign_key "op_faculty", "res_users", column: "write_uid", name: "op_faculty_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_faculty_op_subject_rel", "op_faculty", name: "op_faculty_op_subject_rel_op_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "op_faculty_op_subject_rel", "op_subject", name: "op_faculty_op_subject_rel_op_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "op_faculty_wizard_merge_faculty_rel", "op_faculty", name: "op_faculty_wizard_merge_faculty_rel_op_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "op_faculty_wizard_merge_faculty_rel", "wizard_merge_faculty", name: "op_faculty_wizard_merge_faculty_re_wizard_merge_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "op_faculty_wizard_op_faculty_rel", "op_faculty", name: "op_faculty_wizard_op_faculty_rel_op_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "op_faculty_wizard_op_faculty_rel", "wizard_op_faculty", name: "op_faculty_wizard_op_faculty_rel_wizard_op_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "op_fees_terms", "res_company", column: "company_id", name: "op_fees_terms_company_id_fkey", on_delete: :nullify
+  add_foreign_key "op_fees_terms", "res_users", column: "create_uid", name: "op_fees_terms_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_fees_terms", "res_users", column: "write_uid", name: "op_fees_terms_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_fees_terms_line", "op_fees_terms", column: "fees_id", name: "op_fees_terms_line_fees_id_fkey", on_delete: :nullify
+  add_foreign_key "op_fees_terms_line", "res_users", column: "create_uid", name: "op_fees_terms_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_fees_terms_line", "res_users", column: "write_uid", name: "op_fees_terms_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_gamification_badge", "res_users", column: "create_uid", name: "op_gamification_badge_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_gamification_badge", "res_users", column: "write_uid", name: "op_gamification_badge_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_grade_configuration", "res_users", column: "create_uid", name: "op_grade_configuration_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_grade_configuration", "res_users", column: "write_uid", name: "op_grade_configuration_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_grade_configuration_op_result_template_rel", "op_grade_configuration", name: "op_grade_configuration_op_result_op_grade_configuration_id_fkey", on_delete: :cascade
+  add_foreign_key "op_grade_configuration_op_result_template_rel", "op_result_template", name: "op_grade_configuration_op_result_tem_op_result_template_id_fkey", on_delete: :cascade
+  add_foreign_key "op_held_exam", "op_batch", column: "batch_id", name: "op_held_exam_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_held_exam", "op_course", column: "course_id", name: "op_held_exam_course_id_fkey", on_delete: :nullify
+  add_foreign_key "op_held_exam", "op_exam", column: "exam_id", name: "op_held_exam_exam_id_fkey", on_delete: :nullify
+  add_foreign_key "op_held_exam", "op_subject", column: "subject_id", name: "op_held_exam_subject_id_fkey", on_delete: :nullify
+  add_foreign_key "op_held_exam", "res_users", column: "create_uid", name: "op_held_exam_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_held_exam", "res_users", column: "write_uid", name: "op_held_exam_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_lession", "op_subject", column: "subject_id", name: "op_lession_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_lession", "res_users", column: "create_uid", name: "op_lession_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_lession", "res_users", column: "write_uid", name: "op_lession_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_library_card", "op_faculty", column: "faculty_id", name: "op_library_card_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "op_library_card", "op_library_card_type", column: "library_card_type_id", name: "op_library_card_library_card_type_id_fkey", on_delete: :nullify
+  add_foreign_key "op_library_card", "op_student", column: "student_id", name: "op_library_card_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_library_card", "res_partner", column: "partner_id", name: "op_library_card_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "op_library_card", "res_users", column: "create_uid", name: "op_library_card_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_library_card", "res_users", column: "write_uid", name: "op_library_card_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_library_card_type", "res_users", column: "create_uid", name: "op_library_card_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_library_card_type", "res_users", column: "write_uid", name: "op_library_card_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_marksheet_line", "op_marksheet_register", column: "marksheet_reg_id", name: "op_marksheet_line_marksheet_reg_id_fkey", on_delete: :nullify
+  add_foreign_key "op_marksheet_line", "op_student", column: "student_id", name: "op_marksheet_line_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_marksheet_line", "res_users", column: "create_uid", name: "op_marksheet_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_marksheet_line", "res_users", column: "write_uid", name: "op_marksheet_line_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_marksheet_register", "op_exam_session", column: "exam_session_id", name: "op_marksheet_register_exam_session_id_fkey", on_delete: :nullify
   add_foreign_key "op_marksheet_register", "op_result_template", column: "result_template_id", name: "op_marksheet_register_result_template_id_fkey", on_delete: :nullify
   add_foreign_key "op_marksheet_register", "res_users", column: "create_uid", name: "op_marksheet_register_create_uid_fkey", on_delete: :nullify
@@ -10600,13 +12286,55 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_media_movement", "res_partner", column: "partner_id", name: "op_media_movement_partner_id_fkey", on_delete: :nullify
   add_foreign_key "op_media_movement", "res_users", column: "create_uid", name: "op_media_movement_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_media_movement", "res_users", column: "write_uid", name: "op_media_movement_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_media_op_publisher_rel", "op_media", column: "op_media_id", name: "op_media_op_publisher_rel_op_media_id_fkey", on_delete: :cascade
+  add_foreign_key "op_media_op_publisher_rel", "op_publisher", name: "op_media_op_publisher_rel_op_publisher_id_fkey", on_delete: :cascade
+  add_foreign_key "op_media_op_subject_rel", "op_media", column: "op_media_id", name: "op_media_op_subject_rel_op_media_id_fkey", on_delete: :cascade
+  add_foreign_key "op_media_op_subject_rel", "op_subject", name: "op_media_op_subject_rel_op_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "op_media_op_tag_rel", "op_media", column: "op_media_id", name: "op_media_op_tag_rel_op_media_id_fkey", on_delete: :cascade
+  add_foreign_key "op_media_op_tag_rel", "op_tag", name: "op_media_op_tag_rel_op_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "op_media_purchase", "op_course", column: "course_ids", name: "op_media_purchase_course_ids_fkey", on_delete: :nullify
+  add_foreign_key "op_media_purchase", "op_media_type", column: "media_type_id", name: "op_media_purchase_media_type_id_fkey", on_delete: :nullify
+  add_foreign_key "op_media_purchase", "op_subject", column: "subject_ids", name: "op_media_purchase_subject_ids_fkey", on_delete: :nullify
+  add_foreign_key "op_media_purchase", "res_partner", column: "requested_id", name: "op_media_purchase_requested_id_fkey", on_delete: :nullify
+  add_foreign_key "op_media_purchase", "res_users", column: "create_uid", name: "op_media_purchase_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_media_purchase", "res_users", column: "write_uid", name: "op_media_purchase_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_media_queue", "op_media", column: "media_id", name: "op_media_queue_media_id_fkey", on_delete: :nullify
+  add_foreign_key "op_media_queue", "res_partner", column: "partner_id", name: "op_media_queue_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "op_media_queue", "res_users", column: "create_uid", name: "op_media_queue_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_media_queue", "res_users", column: "user_id", name: "op_media_queue_user_id_fkey", on_delete: :nullify
+  add_foreign_key "op_media_queue", "res_users", column: "write_uid", name: "op_media_queue_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_media_type", "res_users", column: "create_uid", name: "op_media_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_media_type", "res_users", column: "write_uid", name: "op_media_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_media_unit", "op_media", column: "media_id", name: "op_media_unit_media_id_fkey", on_delete: :nullify
+  add_foreign_key "op_media_unit", "op_media_type", column: "media_type_id", name: "op_media_unit_media_type_id_fkey", on_delete: :nullify
+  add_foreign_key "op_media_unit", "res_users", column: "create_uid", name: "op_media_unit_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_media_unit", "res_users", column: "write_uid", name: "op_media_unit_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_parent", "res_partner", column: "name", name: "op_parent_name_fkey", on_delete: :nullify
   add_foreign_key "op_parent", "res_users", column: "create_uid", name: "op_parent_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_parent", "res_users", column: "user_id", name: "op_parent_user_id_fkey", on_delete: :nullify
   add_foreign_key "op_parent", "res_users", column: "write_uid", name: "op_parent_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_parent_op_student_rel", "op_parent", name: "op_parent_op_student_rel_op_parent_id_fkey", on_delete: :cascade
+  add_foreign_key "op_parent_op_student_rel", "op_student", name: "op_parent_op_student_rel_op_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_publisher", "res_partner", column: "address_id", name: "op_publisher_address_id_fkey", on_delete: :nullify
+  add_foreign_key "op_publisher", "res_users", column: "create_uid", name: "op_publisher_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_publisher", "res_users", column: "write_uid", name: "op_publisher_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_result_line", "op_exam", column: "exam_id", name: "op_result_line_exam_id_fkey", on_delete: :nullify
+  add_foreign_key "op_result_line", "op_marksheet_line", column: "marksheet_line_id", name: "op_result_line_marksheet_line_id_fkey", on_delete: :cascade
+  add_foreign_key "op_result_line", "op_student", column: "student_id", name: "op_result_line_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_result_line", "res_users", column: "create_uid", name: "op_result_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_result_line", "res_users", column: "write_uid", name: "op_result_line_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_result_template", "op_exam_session", column: "exam_session_id", name: "op_result_template_exam_session_id_fkey", on_delete: :nullify
   add_foreign_key "op_result_template", "res_users", column: "create_uid", name: "op_result_template_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_result_template", "res_users", column: "write_uid", name: "op_result_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_room_distribution", "op_batch", column: "batch_id", name: "op_room_distribution_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_room_distribution", "op_course", column: "course_id", name: "op_room_distribution_course_id_fkey", on_delete: :nullify
+  add_foreign_key "op_room_distribution", "op_exam", column: "exam_id", name: "op_room_distribution_exam_id_fkey", on_delete: :nullify
+  add_foreign_key "op_room_distribution", "op_exam_session", column: "exam_session", name: "op_room_distribution_exam_session_fkey", on_delete: :nullify
+  add_foreign_key "op_room_distribution", "op_subject", column: "subject_id", name: "op_room_distribution_subject_id_fkey", on_delete: :nullify
+  add_foreign_key "op_room_distribution", "res_users", column: "create_uid", name: "op_room_distribution_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_room_distribution", "res_users", column: "write_uid", name: "op_room_distribution_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_room_distribution_op_student_rel", "op_room_distribution", name: "op_room_distribution_op_student_re_op_room_distribution_id_fkey", on_delete: :cascade
+  add_foreign_key "op_room_distribution_op_student_rel", "op_student", name: "op_room_distribution_op_student_rel_op_student_id_fkey", on_delete: :cascade
   add_foreign_key "op_session", "course_categ", column: "course_categ", name: "op_session_course_categ_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_batch", column: "batch_id", name: "op_session_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_batch_type", column: "batch_type_id", name: "op_session_batch_type_id_fkey", on_delete: :nullify
@@ -10614,12 +12342,16 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_session", "op_course", column: "course_id", name: "op_session_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_faculty", column: "assessor", name: "op_session_assessor_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_faculty", column: "faculty_id", name: "op_session_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session", "op_faculty", column: "observe_faculty", name: "op_session_observe_faculty_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_lession", column: "lession_id", name: "op_session_lession_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_session", column: "offset_session_id", name: "op_session_offset_session_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session", "op_session_offset", column: "request_offset_id", name: "op_session_request_offset_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session", "op_student_course", column: "student_course_id", name: "op_session_student_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_subject", column: "subject_id", name: "op_session_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_timing", column: "timing_id", name: "op_session_timing_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "res_company", column: "company_id", name: "op_session_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "res_users", column: "create_uid", name: "op_session_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_session", "res_users", column: "user_id", name: "op_session_user_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "res_users", column: "write_uid", name: "op_session_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_session_change_faculty", "op_batch", column: "batch_id", name: "op_session_change_faculty_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_change_faculty", "op_course", column: "course_id", name: "op_session_change_faculty_course_id_fkey", on_delete: :nullify
@@ -10629,14 +12361,35 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_session_change_faculty", "res_users", column: "write_uid", name: "op_session_change_faculty_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_session_holiday", "res_users", column: "create_uid", name: "op_session_holiday_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_session_holiday", "res_users", column: "write_uid", name: "op_session_holiday_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_batch", column: "batch_id", name: "op_session_offset_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_classroom", column: "classroom_id", name: "op_session_offset_classroom_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_faculty", column: "faculty_id", name: "op_session_offset_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_subject", column: "subject_id", name: "op_session_offset_subject_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "op_timing", column: "timing_id", name: "op_session_offset_timing_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "res_users", column: "create_uid", name: "op_session_offset_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset", "res_users", column: "write_uid", name: "op_session_offset_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_session_offset_day", "generate_student_test_room_day", column: "session_offset_id", name: "op_session_offset_day_session_offset_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_offset_day", "op_session_offset", column: "day_id", name: "op_session_offset_day_day_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_offset_student", "op_session", column: "session_id", name: "op_session_offset_student_session_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_offset_student", "op_student", column: "student_id", name: "op_session_offset_student_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_offset_student_request", "op_session_offset", column: "session_id", name: "op_session_offset_student_request_session_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_offset_student_request", "op_student", column: "student_id", name: "op_session_offset_student_request_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_request_offset_day", "generate_student_test_room_day", column: "request_offset_id", name: "op_session_request_offset_day_request_offset_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_request_offset_day", "op_session_offset", column: "day_id", name: "op_session_request_offset_day_day_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_res_users_rel", "op_session", name: "op_session_res_users_rel_op_session_id_fkey", on_delete: :cascade
+  add_foreign_key "op_session_res_users_rel", "res_users", column: "res_users_id", name: "op_session_res_users_rel_res_users_id_fkey", on_delete: :cascade
   add_foreign_key "op_session_student", "op_batch", column: "batch_id", name: "op_session_student_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "op_classroom", column: "classroom_id", name: "op_session_student_classroom_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_student", "op_faculty", column: "faculty_id", name: "op_session_student_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "op_session", column: "session_id", name: "op_session_student_session_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "op_student", column: "student_id", name: "op_session_student_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session_student", "op_student_course", column: "student_course_id", name: "op_session_student_student_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "res_company", column: "company_id", name: "op_session_student_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "res_users", column: "create_uid", name: "op_session_student_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_session_student", "res_users", column: "write_uid", name: "op_session_student_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_student", "op_batch", column: "batch_id", name: "op_student_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_student", "op_category", column: "category_id", name: "op_student_category_id_fkey", on_delete: :nullify
+  add_foreign_key "op_student", "op_course", column: "course_id", name: "op_student_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_student", "op_library_card", column: "library_card_id", name: "op_student_library_card_id_fkey", on_delete: :nullify
   add_foreign_key "op_student", "res_company", column: "company_id", name: "op_student_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_student", "res_country", column: "nationality", name: "op_student_nationality_fkey", on_delete: :nullify
@@ -10658,29 +12411,274 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "op_student_course", "res_company", column: "company_id", name: "op_student_course_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_student_course", "res_users", column: "create_uid", name: "op_student_course_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_student_course", "res_users", column: "write_uid", name: "op_student_course_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_student_course_op_subject_rel", "op_student_course", name: "op_student_course_op_subject_rel_op_student_course_id_fkey", on_delete: :cascade
+  add_foreign_key "op_student_course_op_subject_rel", "op_subject", name: "op_student_course_op_subject_rel_op_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "op_student_fees_details", "account_invoice", column: "invoice_id", name: "op_student_fees_details_invoice_id_fkey", on_delete: :nullify
+  add_foreign_key "op_student_fees_details", "op_fees_terms_line", column: "fees_line_id", name: "op_student_fees_details_fees_line_id_fkey", on_delete: :nullify
+  add_foreign_key "op_student_fees_details", "op_student", column: "student_id", name: "op_student_fees_details_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_student_fees_details", "product_product", column: "product_id", name: "op_student_fees_details_product_id_fkey", on_delete: :nullify
+  add_foreign_key "op_student_fees_details", "res_users", column: "create_uid", name: "op_student_fees_details_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_student_fees_details", "res_users", column: "write_uid", name: "op_student_fees_details_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_student_student_migrate_rel", "op_student", name: "op_student_student_migrate_rel_op_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_student_student_migrate_rel", "student_migrate", name: "op_student_student_migrate_rel_student_migrate_id_fkey", on_delete: :cascade
+  add_foreign_key "op_student_wizard_op_student_rel", "op_student", name: "op_student_wizard_op_student_rel_op_student_id_fkey", on_delete: :cascade
+  add_foreign_key "op_student_wizard_op_student_rel", "wizard_op_student", name: "op_student_wizard_op_student_rel_wizard_op_student_id_fkey", on_delete: :cascade
   add_foreign_key "op_subject", "op_course", column: "course_id", name: "op_subject_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_subject", "res_company", column: "company_id", name: "op_subject_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_subject", "res_users", column: "create_uid", name: "op_subject_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_subject", "res_users", column: "write_uid", name: "op_subject_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_subject_op_subject_registration_rel", "op_subject", name: "op_subject_op_subject_registration_rel_op_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "op_subject_op_subject_registration_rel", "op_subject_registration", name: "op_subject_op_subject_registrat_op_subject_registration_id_fkey", on_delete: :cascade
+  add_foreign_key "op_subject_registration", "op_batch", column: "batch_id", name: "op_subject_registration_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_subject_registration", "op_course", column: "course_id", name: "op_subject_registration_course_id_fkey", on_delete: :nullify
+  add_foreign_key "op_subject_registration", "op_student", column: "student_id", name: "op_subject_registration_student_id_fkey", on_delete: :nullify
+  add_foreign_key "op_subject_registration", "res_users", column: "create_uid", name: "op_subject_registration_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_subject_registration", "res_users", column: "write_uid", name: "op_subject_registration_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_tag", "res_users", column: "create_uid", name: "op_tag_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_tag", "res_users", column: "write_uid", name: "op_tag_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_timing", "res_users", column: "create_uid", name: "op_timing_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_timing", "res_users", column: "write_uid", name: "op_timing_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "payment_acquirer", "account_journal", column: "journal_id", name: "payment_acquirer_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_acquirer", "ir_module_module", column: "module_id", name: "payment_acquirer_module_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_acquirer", "ir_ui_view", column: "registration_view_template_id", name: "payment_acquirer_registration_view_template_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_acquirer", "ir_ui_view", column: "view_template_id", name: "payment_acquirer_view_template_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_acquirer", "res_company", column: "company_id", name: "payment_acquirer_company_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_acquirer", "res_users", column: "create_uid", name: "payment_acquirer_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "payment_acquirer", "res_users", column: "write_uid", name: "payment_acquirer_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "payment_acquirer_payment_icon_rel", "payment_acquirer", name: "payment_acquirer_payment_icon_rel_payment_acquirer_id_fkey", on_delete: :cascade
+  add_foreign_key "payment_acquirer_payment_icon_rel", "payment_icon", name: "payment_acquirer_payment_icon_rel_payment_icon_id_fkey", on_delete: :cascade
+  add_foreign_key "payment_country_rel", "payment_acquirer", column: "payment_id", name: "payment_country_rel_payment_id_fkey", on_delete: :cascade
+  add_foreign_key "payment_country_rel", "res_country", column: "country_id", name: "payment_country_rel_country_id_fkey", on_delete: :cascade
+  add_foreign_key "payment_icon", "res_users", column: "create_uid", name: "payment_icon_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "payment_icon", "res_users", column: "write_uid", name: "payment_icon_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "payment_token", "payment_acquirer", column: "acquirer_id", name: "payment_token_acquirer_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_token", "res_partner", column: "partner_id", name: "payment_token_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_token", "res_users", column: "create_uid", name: "payment_token_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "payment_token", "res_users", column: "write_uid", name: "payment_token_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "account_invoice", name: "payment_transaction_account_invoice_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "ir_model", column: "callback_model_id", name: "payment_transaction_callback_model_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "payment_acquirer", column: "acquirer_id", name: "payment_transaction_acquirer_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "payment_token", name: "payment_transaction_payment_token_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "res_country", column: "partner_country_id", name: "payment_transaction_partner_country_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "res_currency", column: "currency_id", name: "payment_transaction_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "res_partner", column: "partner_id", name: "payment_transaction_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "res_users", column: "create_uid", name: "payment_transaction_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "res_users", column: "write_uid", name: "payment_transaction_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "payment_transaction", "sale_order", name: "payment_transaction_sale_order_id_fkey", on_delete: :nullify
+  add_foreign_key "payslip_lines_contribution_register", "res_users", column: "create_uid", name: "payslip_lines_contribution_register_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "payslip_lines_contribution_register", "res_users", column: "write_uid", name: "payslip_lines_contribution_register_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "photos", "albums"
+  add_foreign_key "photos", "op_session", column: "session_id"
   add_foreign_key "photos", "sc_posts"
+  add_foreign_key "photos", "users", column: "created_by"
+  add_foreign_key "portal_wizard", "res_groups", column: "portal_id", name: "portal_wizard_portal_id_fkey", on_delete: :nullify
+  add_foreign_key "portal_wizard", "res_users", column: "create_uid", name: "portal_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "portal_wizard", "res_users", column: "write_uid", name: "portal_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "portal_wizard_user", "portal_wizard", column: "wizard_id", name: "portal_wizard_user_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "portal_wizard_user", "res_partner", column: "partner_id", name: "portal_wizard_user_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "portal_wizard_user", "res_users", column: "create_uid", name: "portal_wizard_user_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "portal_wizard_user", "res_users", column: "user_id", name: "portal_wizard_user_user_id_fkey", on_delete: :nullify
+  add_foreign_key "portal_wizard_user", "res_users", column: "write_uid", name: "portal_wizard_user_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_category", "pos_category", column: "parent_id", name: "pos_category_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_category", "res_users", column: "create_uid", name: "pos_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_category", "res_users", column: "write_uid", name: "pos_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "account_fiscal_position", column: "default_fiscal_position_id", name: "pos_config_default_fiscal_position_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "account_journal", column: "invoice_journal_id", name: "pos_config_invoice_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "account_journal", column: "journal_id", name: "pos_config_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "barcode_nomenclature", name: "pos_config_barcode_nomenclature_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "ir_sequence", column: "sequence_id", name: "pos_config_sequence_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "ir_sequence", column: "sequence_line_id", name: "pos_config_sequence_line_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "pos_category", column: "iface_start_categ_id", name: "pos_config_iface_start_categ_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "product_pricelist", column: "pricelist_id", name: "pos_config_pricelist_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "product_product", column: "tip_product_id", name: "pos_config_tip_product_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "res_company", column: "company_id", name: "pos_config_company_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "res_groups", column: "group_pos_manager_id", name: "pos_config_group_pos_manager_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "res_groups", column: "group_pos_user_id", name: "pos_config_group_pos_user_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "res_users", column: "create_uid", name: "pos_config_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_config", "res_users", column: "write_uid", name: "pos_config_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_config_journal_rel", "account_journal", column: "journal_id", name: "pos_config_journal_rel_journal_id_fkey", on_delete: :cascade
+  add_foreign_key "pos_config_journal_rel", "pos_config", name: "pos_config_journal_rel_pos_config_id_fkey", on_delete: :cascade
+  add_foreign_key "pos_config_product_pricelist_rel", "pos_config", name: "pos_config_product_pricelist_rel_pos_config_id_fkey", on_delete: :cascade
+  add_foreign_key "pos_config_product_pricelist_rel", "product_pricelist", name: "pos_config_product_pricelist_rel_product_pricelist_id_fkey", on_delete: :cascade
+  add_foreign_key "pos_detail_configs", "pos_config", name: "pos_detail_configs_pos_config_id_fkey", on_delete: :cascade
+  add_foreign_key "pos_detail_configs", "pos_details_wizard", name: "pos_detail_configs_pos_details_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "pos_details_wizard", "res_users", column: "create_uid", name: "pos_details_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_details_wizard", "res_users", column: "write_uid", name: "pos_details_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_discount", "res_users", column: "create_uid", name: "pos_discount_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_discount", "res_users", column: "write_uid", name: "pos_discount_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_make_payment", "account_journal", column: "journal_id", name: "pos_make_payment_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_make_payment", "pos_session", column: "session_id", name: "pos_make_payment_session_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_make_payment", "res_users", column: "create_uid", name: "pos_make_payment_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_make_payment", "res_users", column: "write_uid", name: "pos_make_payment_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_open_statement", "res_users", column: "create_uid", name: "pos_open_statement_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_open_statement", "res_users", column: "write_uid", name: "pos_open_statement_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "account_fiscal_position", column: "fiscal_position_id", name: "pos_order_fiscal_position_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "account_invoice", column: "invoice_id", name: "pos_order_invoice_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "account_journal", column: "sale_journal", name: "pos_order_sale_journal_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "account_move", column: "account_move", name: "pos_order_account_move_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "pos_session", column: "session_id", name: "pos_order_session_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "product_pricelist", column: "pricelist_id", name: "pos_order_pricelist_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "res_company", column: "company_id", name: "pos_order_company_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "res_partner", column: "partner_id", name: "pos_order_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "res_users", column: "create_uid", name: "pos_order_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "res_users", column: "user_id", name: "pos_order_user_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_order", "res_users", column: "write_uid", name: "pos_order_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_order_line", "pos_order", column: "order_id", name: "pos_order_line_order_id_fkey", on_delete: :cascade
+  add_foreign_key "pos_order_line", "product_product", column: "product_id", name: "pos_order_line_product_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_order_line", "res_company", column: "company_id", name: "pos_order_line_company_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_order_line", "res_users", column: "create_uid", name: "pos_order_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_order_line", "res_users", column: "write_uid", name: "pos_order_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_pack_operation_lot", "pos_order_line", name: "pos_pack_operation_lot_pos_order_line_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_pack_operation_lot", "res_users", column: "create_uid", name: "pos_pack_operation_lot_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_pack_operation_lot", "res_users", column: "write_uid", name: "pos_pack_operation_lot_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_session", "account_bank_statement", column: "cash_register_id", name: "pos_session_cash_register_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_session", "account_journal", column: "cash_journal_id", name: "pos_session_cash_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_session", "pos_config", column: "config_id", name: "pos_session_config_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_session", "res_users", column: "create_uid", name: "pos_session_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "pos_session", "res_users", column: "user_id", name: "pos_session_user_id_fkey", on_delete: :nullify
+  add_foreign_key "pos_session", "res_users", column: "write_uid", name: "pos_session_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_attribute", "res_users", column: "create_uid", name: "product_attribute_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_attribute", "res_users", column: "write_uid", name: "product_attribute_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_attribute_line", "product_attribute", column: "attribute_id", name: "product_attribute_line_attribute_id_fkey", on_delete: :restrict
+  add_foreign_key "product_attribute_line", "product_template", column: "product_tmpl_id", name: "product_attribute_line_product_tmpl_id_fkey", on_delete: :cascade
+  add_foreign_key "product_attribute_line", "res_users", column: "create_uid", name: "product_attribute_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_attribute_line", "res_users", column: "write_uid", name: "product_attribute_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_attribute_line_product_attribute_value_rel", "product_attribute_line", name: "product_attribute_line_product_a_product_attribute_line_id_fkey", on_delete: :cascade
+  add_foreign_key "product_attribute_line_product_attribute_value_rel", "product_attribute_value", name: "product_attribute_line_product__product_attribute_value_id_fkey", on_delete: :cascade
+  add_foreign_key "product_attribute_price", "product_attribute_value", column: "value_id", name: "product_attribute_price_value_id_fkey", on_delete: :cascade
+  add_foreign_key "product_attribute_price", "product_template", column: "product_tmpl_id", name: "product_attribute_price_product_tmpl_id_fkey", on_delete: :cascade
+  add_foreign_key "product_attribute_price", "res_users", column: "create_uid", name: "product_attribute_price_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_attribute_price", "res_users", column: "write_uid", name: "product_attribute_price_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_attribute_value", "product_attribute", column: "attribute_id", name: "product_attribute_value_attribute_id_fkey", on_delete: :cascade
+  add_foreign_key "product_attribute_value", "res_users", column: "create_uid", name: "product_attribute_value_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_attribute_value", "res_users", column: "write_uid", name: "product_attribute_value_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_attribute_value_product_product_rel", "product_attribute_value", name: "product_attribute_value_product_product_attribute_value_id_fkey", on_delete: :cascade
+  add_foreign_key "product_attribute_value_product_product_rel", "product_product", name: "product_attribute_value_product_product_product_product_id_fkey", on_delete: :cascade
+  add_foreign_key "product_category", "product_category", column: "parent_id", name: "product_category_parent_id_fkey", on_delete: :cascade
+  add_foreign_key "product_category", "res_users", column: "create_uid", name: "product_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_category", "res_users", column: "write_uid", name: "product_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_margin", "res_users", column: "create_uid", name: "product_margin_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_margin", "res_users", column: "write_uid", name: "product_margin_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_packaging", "product_product", column: "product_id", name: "product_packaging_product_id_fkey", on_delete: :nullify
+  add_foreign_key "product_packaging", "res_users", column: "create_uid", name: "product_packaging_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_packaging", "res_users", column: "write_uid", name: "product_packaging_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_price_history", "product_product", column: "product_id", name: "product_price_history_product_id_fkey", on_delete: :cascade
+  add_foreign_key "product_price_history", "res_company", column: "company_id", name: "product_price_history_company_id_fkey", on_delete: :nullify
+  add_foreign_key "product_price_history", "res_users", column: "create_uid", name: "product_price_history_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_price_history", "res_users", column: "write_uid", name: "product_price_history_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_price_list", "product_pricelist", column: "price_list", name: "product_price_list_price_list_fkey", on_delete: :nullify
+  add_foreign_key "product_price_list", "res_users", column: "create_uid", name: "product_price_list_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_price_list", "res_users", column: "write_uid", name: "product_price_list_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_pricelist", "res_company", column: "company_id", name: "product_pricelist_company_id_fkey", on_delete: :nullify
+  add_foreign_key "product_pricelist", "res_currency", column: "currency_id", name: "product_pricelist_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "product_pricelist", "res_users", column: "create_uid", name: "product_pricelist_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_pricelist", "res_users", column: "write_uid", name: "product_pricelist_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_pricelist_item", "product_category", column: "categ_id", name: "product_pricelist_item_categ_id_fkey", on_delete: :cascade
+  add_foreign_key "product_pricelist_item", "product_pricelist", column: "base_pricelist_id", name: "product_pricelist_item_base_pricelist_id_fkey", on_delete: :nullify
+  add_foreign_key "product_pricelist_item", "product_pricelist", column: "pricelist_id", name: "product_pricelist_item_pricelist_id_fkey", on_delete: :cascade
+  add_foreign_key "product_pricelist_item", "product_product", column: "product_id", name: "product_pricelist_item_product_id_fkey", on_delete: :cascade
+  add_foreign_key "product_pricelist_item", "product_template", column: "product_tmpl_id", name: "product_pricelist_item_product_tmpl_id_fkey", on_delete: :cascade
+  add_foreign_key "product_pricelist_item", "res_company", column: "company_id", name: "product_pricelist_item_company_id_fkey", on_delete: :nullify
+  add_foreign_key "product_pricelist_item", "res_currency", column: "currency_id", name: "product_pricelist_item_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "product_pricelist_item", "res_users", column: "create_uid", name: "product_pricelist_item_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_pricelist_item", "res_users", column: "write_uid", name: "product_pricelist_item_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_product", "product_template", column: "product_tmpl_id", name: "product_product_product_tmpl_id_fkey", on_delete: :cascade
   add_foreign_key "product_product", "res_users", column: "create_uid", name: "product_product_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_product", "res_users", column: "write_uid", name: "product_product_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_supplier_taxes_rel", "account_tax", column: "tax_id", name: "product_supplier_taxes_rel_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "product_supplier_taxes_rel", "product_template", column: "prod_id", name: "product_supplier_taxes_rel_prod_id_fkey", on_delete: :cascade
+  add_foreign_key "product_supplierinfo", "product_product", column: "product_id", name: "product_supplierinfo_product_id_fkey", on_delete: :nullify
+  add_foreign_key "product_supplierinfo", "product_template", column: "product_tmpl_id", name: "product_supplierinfo_product_tmpl_id_fkey", on_delete: :cascade
+  add_foreign_key "product_supplierinfo", "res_company", column: "company_id", name: "product_supplierinfo_company_id_fkey", on_delete: :nullify
+  add_foreign_key "product_supplierinfo", "res_currency", column: "currency_id", name: "product_supplierinfo_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "product_supplierinfo", "res_partner", column: "name", name: "product_supplierinfo_name_fkey", on_delete: :cascade
+  add_foreign_key "product_supplierinfo", "res_users", column: "create_uid", name: "product_supplierinfo_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_supplierinfo", "res_users", column: "write_uid", name: "product_supplierinfo_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_taxes_rel", "account_tax", column: "tax_id", name: "product_taxes_rel_tax_id_fkey", on_delete: :cascade
+  add_foreign_key "product_taxes_rel", "product_template", column: "prod_id", name: "product_taxes_rel_prod_id_fkey", on_delete: :cascade
   add_foreign_key "product_template", "mail_template", column: "email_template_id", name: "product_template_email_template_id_fkey", on_delete: :nullify
+  add_foreign_key "product_template", "pos_category", column: "pos_categ_id", name: "product_template_pos_categ_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "product_category", column: "categ_id", name: "product_template_categ_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "product_uom", column: "uom_id", name: "product_template_uom_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "product_uom", column: "uom_po_id", name: "product_template_uom_po_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "res_company", column: "company_id", name: "product_template_company_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "res_users", column: "create_uid", name: "product_template_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_template", "res_users", column: "write_uid", name: "product_template_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_uom", "product_uom_categ", column: "category_id", name: "product_uom_category_id_fkey", on_delete: :cascade
+  add_foreign_key "product_uom", "res_users", column: "create_uid", name: "product_uom_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_uom", "res_users", column: "write_uid", name: "product_uom_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_uom_categ", "res_users", column: "create_uid", name: "product_uom_categ_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_uom_categ", "res_users", column: "write_uid", name: "product_uom_categ_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_favorite_user_rel", "project_project", column: "project_id", name: "project_favorite_user_rel_project_id_fkey", on_delete: :cascade
+  add_foreign_key "project_favorite_user_rel", "res_users", column: "user_id", name: "project_favorite_user_rel_user_id_fkey", on_delete: :cascade
+  add_foreign_key "project_project", "account_analytic_account", column: "analytic_account_id", name: "project_project_analytic_account_id_fkey", on_delete: :cascade
+  add_foreign_key "project_project", "mail_alias", column: "alias_id", name: "project_project_alias_id_fkey", on_delete: :restrict
+  add_foreign_key "project_project", "project_project", column: "subtask_project_id", name: "project_project_subtask_project_id_fkey", on_delete: :restrict
+  add_foreign_key "project_project", "res_users", column: "create_uid", name: "project_project_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_project", "res_users", column: "user_id", name: "project_project_user_id_fkey", on_delete: :nullify
+  add_foreign_key "project_project", "res_users", column: "write_uid", name: "project_project_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_project", "resource_calendar", name: "project_project_resource_calendar_id_fkey", on_delete: :nullify
+  add_foreign_key "project_project", "sale_order_line", column: "sale_line_id", name: "project_project_sale_line_id_fkey", on_delete: :nullify
+  add_foreign_key "project_tags", "res_users", column: "create_uid", name: "project_tags_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_tags", "res_users", column: "write_uid", name: "project_tags_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_tags_project_task_rel", "project_tags", column: "project_tags_id", name: "project_tags_project_task_rel_project_tags_id_fkey", on_delete: :cascade
+  add_foreign_key "project_tags_project_task_rel", "project_task", name: "project_tags_project_task_rel_project_task_id_fkey", on_delete: :cascade
+  add_foreign_key "project_task", "ir_attachment", column: "displayed_image_id", name: "project_task_displayed_image_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task", "project_project", column: "project_id", name: "project_task_project_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task", "project_task", column: "parent_id", name: "project_task_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task", "project_task_type", column: "stage_id", name: "project_task_stage_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task", "res_company", column: "company_id", name: "project_task_company_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task", "res_partner", column: "partner_id", name: "project_task_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task", "res_users", column: "create_uid", name: "project_task_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_task", "res_users", column: "user_id", name: "project_task_user_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task", "res_users", column: "write_uid", name: "project_task_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_task", "sale_order_line", column: "sale_line_id", name: "project_task_sale_line_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task_merge_wizard", "project_project", column: "target_project_id", name: "project_task_merge_wizard_target_project_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task_merge_wizard", "project_task", column: "target_task_id", name: "project_task_merge_wizard_target_task_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task_merge_wizard", "res_users", column: "create_uid", name: "project_task_merge_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_task_merge_wizard", "res_users", column: "user_id", name: "project_task_merge_wizard_user_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task_merge_wizard", "res_users", column: "write_uid", name: "project_task_merge_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_task_project_task_merge_wizard_rel", "project_task", name: "project_task_project_task_merge_wizard_rel_project_task_id_fkey", on_delete: :cascade
+  add_foreign_key "project_task_project_task_merge_wizard_rel", "project_task_merge_wizard", name: "project_task_project_task_mer_project_task_merge_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "project_task_type", "mail_template", name: "project_task_type_mail_template_id_fkey", on_delete: :nullify
+  add_foreign_key "project_task_type", "res_users", column: "create_uid", name: "project_task_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_task_type", "res_users", column: "write_uid", name: "project_task_type_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "project_task_type_rel", "project_project", column: "project_id", name: "project_task_type_rel_project_id_fkey", on_delete: :cascade
+  add_foreign_key "project_task_type_rel", "project_task_type", column: "type_id", name: "project_task_type_rel_type_id_fkey", on_delete: :cascade
+  add_foreign_key "question_choices", "questions"
+  add_foreign_key "questions", "op_lession"
+  add_foreign_key "rating_rating", "ir_model", column: "parent_res_model_id", name: "rating_rating_parent_res_model_id_fkey", on_delete: :nullify
+  add_foreign_key "rating_rating", "ir_model", column: "res_model_id", name: "rating_rating_res_model_id_fkey", on_delete: :cascade
+  add_foreign_key "rating_rating", "mail_message", column: "message_id", name: "rating_rating_message_id_fkey", on_delete: :nullify
+  add_foreign_key "rating_rating", "res_partner", column: "partner_id", name: "rating_rating_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "rating_rating", "res_partner", column: "rated_partner_id", name: "rating_rating_rated_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "rating_rating", "res_users", column: "create_uid", name: "rating_rating_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "rating_rating", "res_users", column: "write_uid", name: "rating_rating_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "reactions", "users", column: "reacted_by"
   add_foreign_key "recruitment_source", "res_users", column: "create_uid", name: "recruitment_source_create_uid_fkey", on_delete: :nullify
   add_foreign_key "recruitment_source", "res_users", column: "write_uid", name: "recruitment_source_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "rel_badge_auth_users", "gamification_badge", name: "rel_badge_auth_users_gamification_badge_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_badge_auth_users", "res_users", column: "res_users_id", name: "rel_badge_auth_users_res_users_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_channel_groups", "res_groups", column: "group_id", name: "rel_channel_groups_group_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_channel_groups", "slide_channel", column: "channel_id", name: "rel_channel_groups_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_modules_langexport", "base_language_export", column: "wiz_id", name: "rel_modules_langexport_wiz_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_modules_langexport", "ir_module_module", column: "module_id", name: "rel_modules_langexport_module_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_server_actions", "ir_act_server", column: "action_id", name: "rel_server_actions_action_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_server_actions", "ir_act_server", column: "server_id", name: "rel_server_actions_server_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_slide_tag", "slide_slide", column: "slide_id", name: "rel_slide_tag_slide_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_slide_tag", "slide_tag", column: "tag_id", name: "rel_slide_tag_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_upload_groups", "res_groups", column: "group_id", name: "rel_upload_groups_group_id_fkey", on_delete: :cascade
+  add_foreign_key "rel_upload_groups", "slide_channel", column: "channel_id", name: "rel_upload_groups_channel_id_fkey", on_delete: :cascade
   add_foreign_key "remove_draft_session", "op_batch", column: "batch_id", name: "remove_draft_session_batch_id_fkey", on_delete: :nullify
   add_foreign_key "remove_draft_session", "op_course", column: "course_id", name: "remove_draft_session_course_id_fkey", on_delete: :nullify
   add_foreign_key "remove_draft_session", "res_users", column: "create_uid", name: "remove_draft_session_create_uid_fkey", on_delete: :nullify
   add_foreign_key "remove_draft_session", "res_users", column: "write_uid", name: "remove_draft_session_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "report_paperformat", "res_users", column: "create_uid", name: "report_paperformat_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "report_paperformat", "res_users", column: "write_uid", name: "report_paperformat_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_bank", "res_country", column: "country", name: "res_bank_country_fkey", on_delete: :nullify
+  add_foreign_key "res_bank", "res_country_state", column: "state", name: "res_bank_state_fkey", on_delete: :nullify
+  add_foreign_key "res_bank", "res_users", column: "create_uid", name: "res_bank_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_bank", "res_users", column: "write_uid", name: "res_bank_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_company", "account_account", column: "property_stock_account_input_categ_id", name: "res_company_property_stock_account_input_categ_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "account_account", column: "property_stock_account_output_categ_id", name: "res_company_property_stock_account_output_categ_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "account_account", column: "property_stock_valuation_account_id", name: "res_company_property_stock_valuation_account_id_fkey", on_delete: :nullify
@@ -10699,6 +12697,12 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "res_company", "res_users", column: "create_uid", name: "res_company_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_company", "res_users", column: "write_uid", name: "res_company_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_company", "resource_calendar", name: "res_company_resource_calendar_id_fkey", on_delete: :restrict
+  add_foreign_key "res_company_users_rel", "res_company", column: "cid", name: "res_company_users_rel_cid_fkey", on_delete: :cascade
+  add_foreign_key "res_company_users_rel", "res_users", column: "user_id", name: "res_company_users_rel_user_id_fkey", on_delete: :cascade
+  add_foreign_key "res_config", "res_users", column: "create_uid", name: "res_config_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_config", "res_users", column: "write_uid", name: "res_config_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_config_installer", "res_users", column: "create_uid", name: "res_config_installer_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_config_installer", "res_users", column: "write_uid", name: "res_config_installer_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_config_settings", "account_chart_template", column: "chart_template_id", name: "res_config_settings_chart_template_id_fkey", on_delete: :nullify
   add_foreign_key "res_config_settings", "product_product", column: "default_deposit_product_id", name: "res_config_settings_default_deposit_product_id_fkey", on_delete: :nullify
   add_foreign_key "res_config_settings", "res_company", column: "company_id", name: "res_config_settings_company_id_fkey", on_delete: :nullify
@@ -10706,7 +12710,41 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "res_config_settings", "res_users", column: "create_uid", name: "res_config_settings_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_config_settings", "res_users", column: "write_uid", name: "res_config_settings_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_config_settings", "survey_survey", column: "default_survey_id", name: "res_config_settings_default_survey_id_fkey", on_delete: :nullify
+  add_foreign_key "res_config_settings", "survey_survey", column: "student_test_survey_id", name: "res_config_settings_student_test_survey_id_fkey", on_delete: :nullify
   add_foreign_key "res_config_settings", "website", name: "res_config_settings_website_id_fkey", on_delete: :nullify
+  add_foreign_key "res_country", "ir_ui_view", column: "address_view_id", name: "res_country_address_view_id_fkey", on_delete: :nullify
+  add_foreign_key "res_country", "res_currency", column: "currency_id", name: "res_country_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "res_country", "res_users", column: "create_uid", name: "res_country_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_country", "res_users", column: "write_uid", name: "res_country_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_country_group", "res_users", column: "create_uid", name: "res_country_group_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_country_group", "res_users", column: "write_uid", name: "res_country_group_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_country_group_pricelist_rel", "product_pricelist", column: "pricelist_id", name: "res_country_group_pricelist_rel_pricelist_id_fkey", on_delete: :cascade
+  add_foreign_key "res_country_group_pricelist_rel", "res_country_group", name: "res_country_group_pricelist_rel_res_country_group_id_fkey", on_delete: :cascade
+  add_foreign_key "res_country_res_country_group_rel", "res_country", name: "res_country_res_country_group_rel_res_country_id_fkey", on_delete: :cascade
+  add_foreign_key "res_country_res_country_group_rel", "res_country_group", name: "res_country_res_country_group_rel_res_country_group_id_fkey", on_delete: :cascade
+  add_foreign_key "res_country_state", "res_country", column: "country_id", name: "res_country_state_country_id_fkey", on_delete: :nullify
+  add_foreign_key "res_country_state", "res_users", column: "create_uid", name: "res_country_state_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_country_state", "res_users", column: "write_uid", name: "res_country_state_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_currency", "res_users", column: "create_uid", name: "res_currency_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_currency", "res_users", column: "write_uid", name: "res_currency_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_currency_rate", "res_company", column: "company_id", name: "res_currency_rate_company_id_fkey", on_delete: :nullify
+  add_foreign_key "res_currency_rate", "res_currency", column: "currency_id", name: "res_currency_rate_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "res_currency_rate", "res_users", column: "create_uid", name: "res_currency_rate_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_currency_rate", "res_users", column: "write_uid", name: "res_currency_rate_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_district", "res_province", column: "province_id", name: "res_district_province_id_fkey", on_delete: :nullify
+  add_foreign_key "res_district", "res_users", column: "create_uid", name: "res_district_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_district", "res_users", column: "write_uid", name: "res_district_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_groups", "ir_module_category", column: "category_id", name: "res_groups_category_id_fkey", on_delete: :nullify
+  add_foreign_key "res_groups", "res_users", column: "create_uid", name: "res_groups_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_groups", "res_users", column: "write_uid", name: "res_groups_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_groups_implied_rel", "res_groups", column: "gid", name: "res_groups_implied_rel_gid_fkey", on_delete: :cascade
+  add_foreign_key "res_groups_implied_rel", "res_groups", column: "hid", name: "res_groups_implied_rel_hid_fkey", on_delete: :cascade
+  add_foreign_key "res_groups_report_rel", "ir_act_report_xml", column: "uid", name: "res_groups_report_rel_uid_fkey", on_delete: :cascade
+  add_foreign_key "res_groups_report_rel", "res_groups", column: "gid", name: "res_groups_report_rel_gid_fkey", on_delete: :cascade
+  add_foreign_key "res_groups_users_rel", "res_groups", column: "gid", name: "res_groups_users_rel_gid_fkey", on_delete: :cascade
+  add_foreign_key "res_groups_users_rel", "res_users", column: "uid", name: "res_groups_users_rel_uid_fkey", on_delete: :cascade
+  add_foreign_key "res_lang", "res_users", column: "create_uid", name: "res_lang_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_lang", "res_users", column: "write_uid", name: "res_lang_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "crm_team", column: "team_id", name: "res_partner_team_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_company", column: "company_id", name: "res_partner_company_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_country", column: "commercial_partner_country_id", name: "res_partner_commercial_partner_country_id_fkey", on_delete: :nullify
@@ -10722,6 +12760,28 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "res_partner", "res_users", column: "user_id", name: "res_partner_user_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_users", column: "write_uid", name: "res_partner_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_ward", column: "ward_id", name: "res_partner_ward_id_fkey", on_delete: :restrict
+  add_foreign_key "res_partner_bank", "res_bank", column: "bank_id", name: "res_partner_bank_bank_id_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_bank", "res_company", column: "company_id", name: "res_partner_bank_company_id_fkey", on_delete: :cascade
+  add_foreign_key "res_partner_bank", "res_currency", column: "currency_id", name: "res_partner_bank_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_bank", "res_partner", column: "partner_id", name: "res_partner_bank_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "res_partner_bank", "res_users", column: "create_uid", name: "res_partner_bank_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_bank", "res_users", column: "write_uid", name: "res_partner_bank_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_category", "res_partner_category", column: "parent_id", name: "res_partner_category_parent_id_fkey", on_delete: :cascade
+  add_foreign_key "res_partner_category", "res_users", column: "create_uid", name: "res_partner_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_category", "res_users", column: "write_uid", name: "res_partner_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_industry", "res_users", column: "create_uid", name: "res_partner_industry_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_industry", "res_users", column: "write_uid", name: "res_partner_industry_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_res_partner_category_rel", "res_partner", column: "partner_id", name: "res_partner_res_partner_category_rel_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "res_partner_res_partner_category_rel", "res_partner_category", column: "category_id", name: "res_partner_res_partner_category_rel_category_id_fkey", on_delete: :cascade
+  add_foreign_key "res_partner_title", "res_users", column: "create_uid", name: "res_partner_title_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_title", "res_users", column: "write_uid", name: "res_partner_title_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_province", "res_country", column: "country_id", name: "res_province_country_id_fkey", on_delete: :nullify
+  add_foreign_key "res_province", "res_users", column: "create_uid", name: "res_province_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_province", "res_users", column: "write_uid", name: "res_province_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_request_link", "res_users", column: "create_uid", name: "res_request_link_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_request_link", "res_users", column: "write_uid", name: "res_request_link_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_user_first_rel1", "res_users", column: "res_user_second_rel1", name: "res_user_first_rel1_res_user_second_rel1_fkey", on_delete: :cascade
+  add_foreign_key "res_user_first_rel1", "res_users", column: "user_id", name: "res_user_first_rel1_user_id_fkey", on_delete: :cascade
   add_foreign_key "res_users", "auth_oauth_provider", column: "oauth_provider_id", name: "res_users_oauth_provider_id_fkey", on_delete: :nullify
   add_foreign_key "res_users", "crm_team", column: "sale_team_id", name: "res_users_sale_team_id_fkey", on_delete: :nullify
   add_foreign_key "res_users", "mail_alias", column: "alias_id", name: "res_users_alias_id_fkey", on_delete: :nullify
@@ -10729,10 +12789,54 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "res_users", "res_partner", column: "partner_id", name: "res_users_partner_id_fkey", on_delete: :restrict
   add_foreign_key "res_users", "res_users", column: "create_uid", name: "res_users_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_users", "res_users", column: "write_uid", name: "res_users_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_users_log", "res_users", column: "create_uid", name: "res_users_log_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_users_log", "res_users", column: "write_uid", name: "res_users_log_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_users_role", "res_groups", column: "group_id", name: "res_users_role_group_id_fkey", on_delete: :cascade
+  add_foreign_key "res_users_role", "res_users", column: "create_uid", name: "res_users_role_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_users_role", "res_users", column: "write_uid", name: "res_users_role_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_users_role_line", "res_users", column: "create_uid", name: "res_users_role_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_users_role_line", "res_users", column: "user_id", name: "res_users_role_line_user_id_fkey", on_delete: :nullify
+  add_foreign_key "res_users_role_line", "res_users", column: "write_uid", name: "res_users_role_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_users_role_line", "res_users_role", column: "role_id", name: "res_users_role_line_role_id_fkey", on_delete: :cascade
+  add_foreign_key "res_ward", "res_district", column: "district_id", name: "res_ward_district_id_fkey", on_delete: :nullify
+  add_foreign_key "res_ward", "res_users", column: "create_uid", name: "res_ward_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_ward", "res_users", column: "write_uid", name: "res_ward_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "reserve_media", "res_partner", column: "partner_id", name: "reserve_media_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "reserve_media", "res_users", column: "create_uid", name: "reserve_media_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "reserve_media", "res_users", column: "write_uid", name: "reserve_media_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar", "res_company", column: "company_id", name: "resource_calendar_company_id_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar", "res_users", column: "create_uid", name: "resource_calendar_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar", "res_users", column: "write_uid", name: "resource_calendar_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar_attendance", "res_users", column: "create_uid", name: "resource_calendar_attendance_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar_attendance", "res_users", column: "write_uid", name: "resource_calendar_attendance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar_attendance", "resource_calendar", column: "calendar_id", name: "resource_calendar_attendance_calendar_id_fkey", on_delete: :cascade
+  add_foreign_key "resource_calendar_leaves", "hr_holidays", column: "holiday_id", name: "resource_calendar_leaves_holiday_id_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar_leaves", "res_company", column: "company_id", name: "resource_calendar_leaves_company_id_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar_leaves", "res_users", column: "create_uid", name: "resource_calendar_leaves_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar_leaves", "res_users", column: "write_uid", name: "resource_calendar_leaves_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar_leaves", "resource_calendar", column: "calendar_id", name: "resource_calendar_leaves_calendar_id_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar_leaves", "resource_resource", column: "resource_id", name: "resource_calendar_leaves_resource_id_fkey", on_delete: :nullify
+  add_foreign_key "resource_resource", "res_company", column: "company_id", name: "resource_resource_company_id_fkey", on_delete: :nullify
+  add_foreign_key "resource_resource", "res_users", column: "create_uid", name: "resource_resource_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_resource", "res_users", column: "user_id", name: "resource_resource_user_id_fkey", on_delete: :nullify
+  add_foreign_key "resource_resource", "res_users", column: "write_uid", name: "resource_resource_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_resource", "resource_calendar", column: "calendar_id", name: "resource_resource_calendar_id_fkey", on_delete: :nullify
+  add_foreign_key "resource_test", "res_company", column: "company_id", name: "resource_test_company_id_fkey", on_delete: :nullify
+  add_foreign_key "resource_test", "res_users", column: "create_uid", name: "resource_test_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_test", "res_users", column: "write_uid", name: "resource_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_test", "resource_resource", column: "resource_id", name: "resource_test_resource_id_fkey", on_delete: :restrict
+  add_foreign_key "return_media", "op_media", column: "media_id", name: "return_media_media_id_fkey", on_delete: :nullify
+  add_foreign_key "return_media", "op_media_unit", column: "media_unit_id", name: "return_media_media_unit_id_fkey", on_delete: :nullify
+  add_foreign_key "return_media", "res_users", column: "create_uid", name: "return_media_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "return_media", "res_users", column: "write_uid", name: "return_media_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "rule_group_rel", "ir_rule", column: "rule_group_id", name: "rule_group_rel_rule_group_id_fkey", on_delete: :cascade
+  add_foreign_key "rule_group_rel", "res_groups", column: "group_id", name: "rule_group_rel_group_id_fkey", on_delete: :cascade
   add_foreign_key "sale_advance_payment_inv", "account_account", column: "deposit_account_id", name: "sale_advance_payment_inv_deposit_account_id_fkey", on_delete: :nullify
   add_foreign_key "sale_advance_payment_inv", "product_product", column: "product_id", name: "sale_advance_payment_inv_product_id_fkey", on_delete: :nullify
   add_foreign_key "sale_advance_payment_inv", "res_users", column: "create_uid", name: "sale_advance_payment_inv_create_uid_fkey", on_delete: :nullify
   add_foreign_key "sale_advance_payment_inv", "res_users", column: "write_uid", name: "sale_advance_payment_inv_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "sale_layout_category", "res_users", column: "create_uid", name: "sale_layout_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "sale_layout_category", "res_users", column: "write_uid", name: "sale_layout_category_write_uid_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "account_analytic_account", column: "analytic_account_id", name: "sale_order_analytic_account_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "account_fiscal_position", column: "fiscal_position_id", name: "sale_order_fiscal_position_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "account_journal", column: "journal_id", name: "sale_order_journal_id_fkey", on_delete: :nullify
@@ -10756,6 +12860,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "sale_order", "utm_source", column: "source_id", name: "sale_order_source_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "op_batch", column: "batch_id", name: "sale_order_line_batch_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "op_course", column: "course_id", name: "sale_order_line_course_id_fkey", on_delete: :nullify
+  add_foreign_key "sale_order_line", "op_faculty", column: "faculty_id", name: "sale_order_line_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "op_student", column: "student_id", name: "sale_order_line_student_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "product_product", column: "product_id", name: "sale_order_line_product_id_fkey", on_delete: :restrict
   add_foreign_key "sale_order_line", "product_uom", column: "product_uom", name: "sale_order_line_product_uom_fkey", on_delete: :nullify
@@ -10769,19 +12874,71 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "sale_order_line", "sale_layout_category", column: "layout_category_id", name: "sale_order_line_layout_category_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "sale_order", column: "order_id", name: "sale_order_line_order_id_fkey", on_delete: :cascade
   add_foreign_key "sale_order_line", "student_test", name: "sale_order_line_student_test_id_fkey", on_delete: :nullify
+  add_foreign_key "sale_order_line_invoice_rel", "account_invoice_line", column: "invoice_line_id", name: "sale_order_line_invoice_rel_invoice_line_id_fkey", on_delete: :cascade
+  add_foreign_key "sale_order_line_invoice_rel", "sale_order_line", column: "order_line_id", name: "sale_order_line_invoice_rel_order_line_id_fkey", on_delete: :cascade
+  add_foreign_key "sale_order_line_subject_rel", "op_subject", column: "subject_id", name: "sale_order_line_subject_rel_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "sale_order_line_subject_rel", "sale_order_line", column: "order_line_id", name: "sale_order_line_subject_rel_order_line_id_fkey", on_delete: :cascade
+  add_foreign_key "sale_order_tag_rel", "crm_lead_tag", column: "tag_id", name: "sale_order_tag_rel_tag_id_fkey", on_delete: :cascade
+  add_foreign_key "sale_order_tag_rel", "sale_order", column: "order_id", name: "sale_order_tag_rel_order_id_fkey", on_delete: :cascade
   add_foreign_key "sc_posts", "users", column: "posted_by"
+  add_foreign_key "session_change_tutors_id", "op_faculty", column: "faculty_id", name: "session_change_tutors_id_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "session_change_tutors_id", "op_session_change_faculty", column: "change_id", name: "session_change_tutors_id_change_id_fkey", on_delete: :cascade
+  add_foreign_key "session_confirmation", "res_users", column: "create_uid", name: "session_confirmation_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "session_confirmation", "res_users", column: "write_uid", name: "session_confirmation_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "session_fa_rel", "op_faculty", column: "partner_id", name: "session_fa_rel_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "session_fa_rel", "op_session", column: "name", name: "session_fa_rel_name_fkey", on_delete: :cascade
+  add_foreign_key "session_offset_faculty_rel", "op_faculty", column: "partner_id", name: "session_offset_faculty_rel_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "session_offset_faculty_rel", "op_session_offset", column: "name", name: "session_offset_faculty_rel_name_fkey", on_delete: :cascade
+  add_foreign_key "session_student_feedbacks", "feeling_types"
+  add_foreign_key "session_student_feedbacks", "op_session", column: "session_id"
+  add_foreign_key "session_student_feedbacks", "users", column: "feedback_by"
+  add_foreign_key "session_student_rewards", "op_session", column: "session_id"
+  add_foreign_key "session_student_rewards", "reward_types"
   add_foreign_key "session_student_rewards", "sc_posts"
+  add_foreign_key "session_student_rewards", "users", column: "rewarded_by"
+  add_foreign_key "session_student_rewards", "users", column: "rewarded_to"
+  add_foreign_key "slide_category", "res_users", column: "create_uid", name: "slide_category_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "slide_category", "res_users", column: "write_uid", name: "slide_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "slide_category", "slide_channel", column: "channel_id", name: "slide_category_channel_id_fkey", on_delete: :cascade
+  add_foreign_key "slide_channel", "mail_template", column: "publish_template_id", name: "slide_channel_publish_template_id_fkey", on_delete: :nullify
+  add_foreign_key "slide_channel", "mail_template", column: "share_template_id", name: "slide_channel_share_template_id_fkey", on_delete: :nullify
+  add_foreign_key "slide_channel", "res_users", column: "create_uid", name: "slide_channel_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "slide_channel", "res_users", column: "write_uid", name: "slide_channel_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "slide_channel", "slide_slide", column: "custom_slide_id", name: "slide_channel_custom_slide_id_fkey", on_delete: :nullify
+  add_foreign_key "slide_channel", "slide_slide", column: "promoted_slide_id", name: "slide_channel_promoted_slide_id_fkey", on_delete: :nullify
+  add_foreign_key "slide_embed", "res_users", column: "create_uid", name: "slide_embed_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "slide_embed", "res_users", column: "write_uid", name: "slide_embed_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "slide_embed", "slide_slide", column: "slide_id", name: "slide_embed_slide_id_fkey", on_delete: :nullify
+  add_foreign_key "slide_slide", "res_users", column: "create_uid", name: "slide_slide_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "slide_slide", "res_users", column: "write_uid", name: "slide_slide_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "slide_slide", "slide_category", column: "category_id", name: "slide_slide_category_id_fkey", on_delete: :nullify
+  add_foreign_key "slide_slide", "slide_channel", column: "channel_id", name: "slide_slide_channel_id_fkey", on_delete: :nullify
+  add_foreign_key "slide_tag", "res_users", column: "create_uid", name: "slide_tag_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "slide_tag", "res_users", column: "write_uid", name: "slide_tag_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "sms_send_sms", "res_users", column: "create_uid", name: "sms_send_sms_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "sms_send_sms", "res_users", column: "write_uid", name: "sms_send_sms_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "sparse_fields_test", "res_users", column: "create_uid", name: "sparse_fields_test_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "sparse_fields_test", "res_users", column: "write_uid", name: "sparse_fields_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_attendance", "res_users", column: "create_uid", name: "student_attendance_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_attendance", "res_users", column: "write_uid", name: "student_attendance_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "op_admission", column: "admission_id", name: "student_course_admission_admission_id_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "op_batch", column: "batch_id", name: "student_course_admission_batch_id_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "op_student", column: "student_id", name: "student_course_admission_student_id_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "op_student_course", column: "student_course_id", name: "student_course_admission_student_course_id_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "res_users", column: "create_uid", name: "student_course_admission_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "res_users", column: "write_uid", name: "student_course_admission_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_gen_test_room_day", "generate_student_test_room", column: "day_id", name: "student_gen_test_room_day_day_id_fkey", on_delete: :cascade
+  add_foreign_key "student_gen_test_room_day", "generate_student_test_room_day", column: "gen_room_id", name: "student_gen_test_room_day_gen_room_id_fkey", on_delete: :cascade
+  add_foreign_key "student_hall_ticket", "op_exam_session", column: "exam_session_id", name: "student_hall_ticket_exam_session_id_fkey", on_delete: :nullify
+  add_foreign_key "student_hall_ticket", "res_users", column: "create_uid", name: "student_hall_ticket_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_hall_ticket", "res_users", column: "write_uid", name: "student_hall_ticket_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_leave", "op_batch", column: "batch_id", name: "student_leave_batch_id_fkey", on_delete: :nullify
   add_foreign_key "student_leave", "op_course", column: "course_id", name: "student_leave_course_id_fkey", on_delete: :nullify
   add_foreign_key "student_leave", "res_users", column: "create_uid", name: "student_leave_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_leave", "res_users", column: "user_id", name: "student_leave_user_id_fkey", on_delete: :nullify
   add_foreign_key "student_leave", "res_users", column: "write_uid", name: "student_leave_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_leave_student", "op_student", column: "student_id", name: "student_leave_student_student_id_fkey", on_delete: :cascade
+  add_foreign_key "student_leave_student", "student_leave", name: "student_leave_student_student_leave_id_fkey", on_delete: :cascade
   add_foreign_key "student_migrate", "op_batch", column: "batch_from_id", name: "student_migrate_batch_from_id_fkey", on_delete: :nullify
   add_foreign_key "student_migrate", "op_batch", column: "batch_id", name: "student_migrate_batch_id_fkey", on_delete: :nullify
   add_foreign_key "student_migrate", "op_course", column: "course_from_id", name: "student_migrate_course_from_id_fkey", on_delete: :nullify
@@ -10790,11 +12947,14 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "student_migrate", "res_users", column: "write_uid", name: "student_migrate_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test", "crm_lead", column: "opportunity_id", name: "student_test_opportunity_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "crm_team", column: "sale_channel_id", name: "student_test_sale_channel_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test", "op_batch", column: "batch_id", name: "student_test_batch_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_course", column: "confirm_course_id", name: "student_test_confirm_course_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_course", column: "course_id", name: "student_test_course_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_faculty", column: "faculty_id", name: "student_test_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "op_student", column: "student_id", name: "student_test_student_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test", "product_product", column: "product_id", name: "student_test_product_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "res_company", column: "company_id", name: "student_test_company_id_fkey", on_delete: :nullify
+  add_foreign_key "student_test", "res_company", column: "room_company_id", name: "student_test_room_company_id_fkey1", on_delete: :nullify
   add_foreign_key "student_test", "res_currency", column: "currency_id", name: "student_test_currency_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "res_partner", column: "partner_id", name: "student_test_partner_id_fkey", on_delete: :nullify
   add_foreign_key "student_test", "res_users", column: "create_uid", name: "student_test_create_uid_fkey", on_delete: :nullify
@@ -10817,6 +12977,64 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "student_test_timing", "res_users", column: "write_uid", name: "student_test_timing_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test_wizard", "res_users", column: "create_uid", name: "student_test_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_test_wizard", "res_users", column: "write_uid", name: "student_test_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "subject_compulsory_rel", "op_subject", column: "subject_id", name: "subject_compulsory_rel_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "subject_compulsory_rel", "op_subject_registration", column: "register_id", name: "subject_compulsory_rel_register_id_fkey", on_delete: :cascade
+  add_foreign_key "summary_dept_rel", "hr_department", column: "dept_id", name: "summary_dept_rel_dept_id_fkey", on_delete: :cascade
+  add_foreign_key "summary_dept_rel", "hr_holidays_summary_dept", column: "sum_id", name: "summary_dept_rel_sum_id_fkey", on_delete: :cascade
+  add_foreign_key "summary_emp_rel", "hr_employee", column: "emp_id", name: "summary_emp_rel_emp_id_fkey", on_delete: :cascade
+  add_foreign_key "summary_emp_rel", "hr_holidays_summary_employee", column: "sum_id", name: "summary_emp_rel_sum_id_fkey", on_delete: :cascade
+  add_foreign_key "survey_label", "res_users", column: "create_uid", name: "survey_label_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_label", "res_users", column: "write_uid", name: "survey_label_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_label", "survey_question", column: "question_id", name: "survey_label_question_id_fkey", on_delete: :cascade
+  add_foreign_key "survey_label", "survey_question", column: "question_id_2", name: "survey_label_question_id_2_fkey", on_delete: :cascade
+  add_foreign_key "survey_mail_compose_message", "ir_mail_server", column: "mail_server_id", name: "survey_mail_compose_message_mail_server_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message", "mail_activity_type", name: "survey_mail_compose_message_mail_activity_type_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message", "mail_mass_mailing", column: "mass_mailing_id", name: "survey_mail_compose_message_mass_mailing_id_fkey", on_delete: :cascade
+  add_foreign_key "survey_mail_compose_message", "mail_mass_mailing_campaign", column: "mass_mailing_campaign_id", name: "survey_mail_compose_message_mass_mailing_campaign_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message", "mail_message", column: "parent_id", name: "survey_mail_compose_message_parent_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message", "mail_message_subtype", column: "subtype_id", name: "survey_mail_compose_message_subtype_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message", "mail_template", column: "template_id", name: "survey_mail_compose_message_template_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message", "res_partner", column: "author_id", name: "survey_mail_compose_message_author_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message", "res_users", column: "create_uid", name: "survey_mail_compose_message_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message", "res_users", column: "write_uid", name: "survey_mail_compose_message_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message", "survey_survey", column: "survey_id", name: "survey_mail_compose_message_survey_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_mail_compose_message_ir_attachments_rel", "ir_attachment", column: "attachment_id", name: "survey_mail_compose_message_ir_attachments_r_attachment_id_fkey", on_delete: :cascade
+  add_foreign_key "survey_mail_compose_message_ir_attachments_rel", "survey_mail_compose_message", column: "wizard_id", name: "survey_mail_compose_message_ir_attachments_rel_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "survey_mail_compose_message_res_partner_rel", "res_partner", column: "partner_id", name: "survey_mail_compose_message_res_partner_rel_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "survey_mail_compose_message_res_partner_rel", "survey_mail_compose_message", column: "wizard_id", name: "survey_mail_compose_message_res_partner_rel_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "survey_page", "res_users", column: "create_uid", name: "survey_page_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_page", "res_users", column: "write_uid", name: "survey_page_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_page", "survey_survey", column: "survey_id", name: "survey_page_survey_id_fkey", on_delete: :cascade
+  add_foreign_key "survey_question", "res_users", column: "create_uid", name: "survey_question_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_question", "res_users", column: "write_uid", name: "survey_question_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_question", "survey_page", column: "page_id", name: "survey_question_page_id_fkey", on_delete: :cascade
+  add_foreign_key "survey_stage", "res_users", column: "create_uid", name: "survey_stage_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_stage", "res_users", column: "write_uid", name: "survey_stage_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_survey", "mail_template", column: "email_template_id", name: "survey_survey_email_template_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_survey", "res_users", column: "create_uid", name: "survey_survey_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_survey", "res_users", column: "write_uid", name: "survey_survey_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_survey", "survey_stage", column: "stage_id", name: "survey_survey_stage_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input", "res_partner", column: "partner_id", name: "survey_user_input_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input", "res_users", column: "create_uid", name: "survey_user_input_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input", "res_users", column: "write_uid", name: "survey_user_input_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input", "survey_page", column: "last_displayed_page_id", name: "survey_user_input_last_displayed_page_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input", "survey_survey", column: "survey_id", name: "survey_user_input_survey_id_fkey", on_delete: :restrict
+  add_foreign_key "survey_user_input_line", "res_users", column: "create_uid", name: "survey_user_input_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input_line", "res_users", column: "write_uid", name: "survey_user_input_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input_line", "survey_label", column: "value_suggested", name: "survey_user_input_line_value_suggested_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input_line", "survey_label", column: "value_suggested_row", name: "survey_user_input_line_value_suggested_row_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input_line", "survey_question", column: "question_id", name: "survey_user_input_line_question_id_fkey", on_delete: :restrict
+  add_foreign_key "survey_user_input_line", "survey_survey", column: "survey_id", name: "survey_user_input_line_survey_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input_line", "survey_user_input", column: "user_input_id", name: "survey_user_input_line_user_input_id_fkey", on_delete: :cascade
+  add_foreign_key "tax_adjustments_wizard", "account_account", column: "credit_account_id", name: "tax_adjustments_wizard_credit_account_id_fkey", on_delete: :nullify
+  add_foreign_key "tax_adjustments_wizard", "account_account", column: "debit_account_id", name: "tax_adjustments_wizard_debit_account_id_fkey", on_delete: :nullify
+  add_foreign_key "tax_adjustments_wizard", "account_journal", column: "journal_id", name: "tax_adjustments_wizard_journal_id_fkey", on_delete: :nullify
+  add_foreign_key "tax_adjustments_wizard", "account_tax", column: "tax_id", name: "tax_adjustments_wizard_tax_id_fkey", on_delete: :restrict
+  add_foreign_key "tax_adjustments_wizard", "res_currency", column: "company_currency_id", name: "tax_adjustments_wizard_company_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "tax_adjustments_wizard", "res_users", column: "create_uid", name: "tax_adjustments_wizard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "tax_adjustments_wizard", "res_users", column: "write_uid", name: "tax_adjustments_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "team_favorite_user_rel", "crm_team", column: "team_id", name: "team_favorite_user_rel_team_id_fkey", on_delete: :cascade
+  add_foreign_key "team_favorite_user_rel", "res_users", column: "user_id", name: "team_favorite_user_rel_user_id_fkey", on_delete: :cascade
   add_foreign_key "teky_qldc", "hr_department", column: "department_id", name: "teky_qldc_department_id_fkey", on_delete: :nullify
   add_foreign_key "teky_qldc", "hr_employee", column: "employee_id", name: "teky_qldc_employee_id_fkey", on_delete: :nullify
   add_foreign_key "teky_qldc", "hr_employee", column: "parent_id", name: "teky_qldc_parent_id_fkey", on_delete: :nullify
@@ -10824,6 +13042,89 @@ ActiveRecord::Schema.define(version: 2020_05_13_085951) do
   add_foreign_key "teky_qldc", "res_users", column: "create_uid", name: "teky_qldc_create_uid_fkey", on_delete: :nullify
   add_foreign_key "teky_qldc", "res_users", column: "user_id", name: "teky_qldc_user_id_fkey", on_delete: :nullify
   add_foreign_key "teky_qldc", "res_users", column: "write_uid", name: "teky_qldc_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "test_ir_rel", "ir_attachment", column: "attachment_id", name: "test_ir_rel_attachment_id_fkey", on_delete: :cascade
+  add_foreign_key "test_ir_rel", "student_test", column: "test_id", name: "test_ir_rel_test_id_fkey", on_delete: :cascade
+  add_foreign_key "time_table_report", "op_batch", column: "batch_id", name: "time_table_report_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "time_table_report", "op_course", column: "course_id", name: "time_table_report_course_id_fkey", on_delete: :nullify
+  add_foreign_key "time_table_report", "op_faculty", column: "faculty_id", name: "time_table_report_faculty_id_fkey", on_delete: :nullify
+  add_foreign_key "time_table_report", "res_users", column: "create_uid", name: "time_table_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "time_table_report", "res_users", column: "write_uid", name: "time_table_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "timetable_batch_line_faculty_rel", "gen_batch_table_line", column: "timetable_batch_line_id", name: "timetable_batch_line_faculty_rel_timetable_batch_line_id_fkey", on_delete: :cascade
+  add_foreign_key "timetable_batch_line_faculty_rel", "op_faculty", column: "faculty_id", name: "timetable_batch_line_faculty_rel_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "timetable_line_faculty_rel", "gen_time_table_line", column: "timetable_line_id", name: "timetable_line_faculty_rel_timetable_line_id_fkey", on_delete: :cascade
+  add_foreign_key "timetable_line_faculty_rel", "op_faculty", column: "faculty_id", name: "timetable_line_faculty_rel_faculty_id_fkey", on_delete: :cascade
+  add_foreign_key "user_answers", "op_faculty", column: "faculty_id"
+  add_foreign_key "user_answers", "question_choices"
+  add_foreign_key "user_answers", "user_questions"
+  add_foreign_key "user_questions", "op_batch"
+  add_foreign_key "user_questions", "questions"
+  add_foreign_key "user_questions", "users", column: "student_id"
+  add_foreign_key "utm_campaign", "res_users", column: "create_uid", name: "utm_campaign_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "utm_campaign", "res_users", column: "write_uid", name: "utm_campaign_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "utm_medium", "res_users", column: "create_uid", name: "utm_medium_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "utm_medium", "res_users", column: "write_uid", name: "utm_medium_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "utm_source", "res_users", column: "create_uid", name: "utm_source_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "utm_source", "res_users", column: "write_uid", name: "utm_source_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "validate_account_move", "res_users", column: "create_uid", name: "validate_account_move_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "validate_account_move", "res_users", column: "write_uid", name: "validate_account_move_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "web_editor_converter_test", "res_users", column: "create_uid", name: "web_editor_converter_test_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "web_editor_converter_test", "res_users", column: "write_uid", name: "web_editor_converter_test_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "web_editor_converter_test", "web_editor_converter_test_sub", column: "many2one", name: "web_editor_converter_test_many2one_fkey", on_delete: :nullify
+  add_foreign_key "web_editor_converter_test_sub", "res_users", column: "create_uid", name: "web_editor_converter_test_sub_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "web_editor_converter_test_sub", "res_users", column: "write_uid", name: "web_editor_converter_test_sub_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "web_planner", "ir_ui_menu", column: "menu_id", name: "web_planner_menu_id_fkey", on_delete: :nullify
+  add_foreign_key "web_planner", "ir_ui_view", column: "view_id", name: "web_planner_view_id_fkey", on_delete: :nullify
+  add_foreign_key "web_planner", "res_users", column: "create_uid", name: "web_planner_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "web_planner", "res_users", column: "write_uid", name: "web_planner_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "web_tour_tour", "res_users", column: "user_id", name: "web_tour_tour_user_id_fkey", on_delete: :nullify
+  add_foreign_key "website", "crm_team", column: "crm_default_team_id", name: "website_crm_default_team_id_fkey", on_delete: :nullify
+  add_foreign_key "website", "im_livechat_channel", column: "channel_id", name: "website_channel_id_fkey", on_delete: :nullify
+  add_foreign_key "website", "res_company", column: "company_id", name: "website_company_id_fkey", on_delete: :nullify
+  add_foreign_key "website", "res_lang", column: "default_lang_id", name: "website_default_lang_id_fkey", on_delete: :nullify
+  add_foreign_key "website", "res_users", column: "create_uid", name: "website_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "website", "res_users", column: "crm_default_user_id", name: "website_crm_default_user_id_fkey", on_delete: :nullify
+  add_foreign_key "website", "res_users", column: "user_id", name: "website_user_id_fkey", on_delete: :nullify
+  add_foreign_key "website", "res_users", column: "write_uid", name: "website_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "website", "website_page", column: "homepage_id", name: "website_homepage_id_fkey", on_delete: :nullify
+  add_foreign_key "website_lang_rel", "res_lang", column: "lang_id", name: "website_lang_rel_lang_id_fkey", on_delete: :cascade
+  add_foreign_key "website_lang_rel", "website", name: "website_lang_rel_website_id_fkey", on_delete: :cascade
+  add_foreign_key "website_menu", "res_users", column: "create_uid", name: "website_menu_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "website_menu", "res_users", column: "write_uid", name: "website_menu_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "website_menu", "website", name: "website_menu_website_id_fkey", on_delete: :nullify
+  add_foreign_key "website_menu", "website_menu", column: "parent_id", name: "website_menu_parent_id_fkey", on_delete: :cascade
+  add_foreign_key "website_menu", "website_page", column: "page_id", name: "website_menu_page_id_fkey", on_delete: :nullify
+  add_foreign_key "website_page", "ir_ui_view", column: "view_id", name: "website_page_view_id_fkey", on_delete: :cascade
+  add_foreign_key "website_page", "res_users", column: "create_uid", name: "website_page_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "website_page", "res_users", column: "write_uid", name: "website_page_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "website_redirect", "res_users", column: "create_uid", name: "website_redirect_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "website_redirect", "res_users", column: "write_uid", name: "website_redirect_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "website_redirect", "website", name: "website_redirect_website_id_fkey", on_delete: :nullify
+  add_foreign_key "website_website_page_rel", "website", name: "website_website_page_rel_website_id_fkey", on_delete: :cascade
+  add_foreign_key "website_website_page_rel", "website_page", name: "website_website_page_rel_website_page_id_fkey", on_delete: :cascade
+  add_foreign_key "wizard_document_page_history_show_diff", "res_users", column: "create_uid", name: "wizard_document_page_history_show_diff_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_document_page_history_show_diff", "res_users", column: "write_uid", name: "wizard_document_page_history_show_diff_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_ir_model_menu_create", "ir_ui_menu", column: "menu_id", name: "wizard_ir_model_menu_create_menu_id_fkey", on_delete: :cascade
+  add_foreign_key "wizard_ir_model_menu_create", "res_users", column: "create_uid", name: "wizard_ir_model_menu_create_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_ir_model_menu_create", "res_users", column: "write_uid", name: "wizard_ir_model_menu_create_write_uid_fkey", on_delete: :nullify
   add_foreign_key "wizard_merge_faculty", "res_users", column: "create_uid", name: "wizard_merge_faculty_create_uid_fkey", on_delete: :nullify
   add_foreign_key "wizard_merge_faculty", "res_users", column: "write_uid", name: "wizard_merge_faculty_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_multi_charts_accounts", "account_account_template", column: "transfer_account_id", name: "wizard_multi_charts_accounts_transfer_account_id_fkey", on_delete: :nullify
+  add_foreign_key "wizard_multi_charts_accounts", "account_chart_template", column: "chart_template_id", name: "wizard_multi_charts_accounts_chart_template_id_fkey", on_delete: :nullify
+  add_foreign_key "wizard_multi_charts_accounts", "account_tax_template", column: "purchase_tax_id", name: "wizard_multi_charts_accounts_purchase_tax_id_fkey", on_delete: :nullify
+  add_foreign_key "wizard_multi_charts_accounts", "account_tax_template", column: "sale_tax_id", name: "wizard_multi_charts_accounts_sale_tax_id_fkey", on_delete: :nullify
+  add_foreign_key "wizard_multi_charts_accounts", "res_company", column: "company_id", name: "wizard_multi_charts_accounts_company_id_fkey", on_delete: :nullify
+  add_foreign_key "wizard_multi_charts_accounts", "res_currency", column: "currency_id", name: "wizard_multi_charts_accounts_currency_id_fkey", on_delete: :nullify
+  add_foreign_key "wizard_multi_charts_accounts", "res_users", column: "create_uid", name: "wizard_multi_charts_accounts_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_multi_charts_accounts", "res_users", column: "write_uid", name: "wizard_multi_charts_accounts_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_op_faculty", "res_users", column: "create_uid", name: "wizard_op_faculty_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_op_faculty", "res_users", column: "write_uid", name: "wizard_op_faculty_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_op_faculty_employee", "res_users", column: "create_uid", name: "wizard_op_faculty_employee_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_op_faculty_employee", "res_users", column: "write_uid", name: "wizard_op_faculty_employee_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_op_student", "res_users", column: "create_uid", name: "wizard_op_student_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "wizard_op_student", "res_users", column: "write_uid", name: "wizard_op_student_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "work_hours", "hr_employee", column: "employee_id", name: "work_hours_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "work_hours", "res_users", column: "create_uid", name: "work_hours_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "work_hours", "res_users", column: "write_uid", name: "work_hours_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "x_lave", "res_users", column: "create_uid", name: "x_lave_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "x_lave", "res_users", column: "write_uid", name: "x_lave_write_uid_fkey", on_delete: :nullify
 end
