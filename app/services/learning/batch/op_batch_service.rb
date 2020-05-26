@@ -12,7 +12,6 @@ module Learning
           batch_subjects = course.op_subjects.order(level: :ASC).pluck(:id, :level).uniq.compact
           done_subjects = Learning::Batch::OpSession.where(batch_id: batch_id, state: Learning::Constant::Batch::Session::STATE_DONE).pluck(:subject_id).uniq.compact
           pinned_session = User::OpenEducat::OpStudentsService.get_comming_soon_session student_id
-          binding.pry 
           if pinned_session.nil?
             pinned_session = last_done_session(student_id, [batch_id], done_subjects)
             pinned_session = Learning::Batch::OpSession.where(state: Learning::Constant::Batch::Session::STATE_DONE, batch_id: batch.id).order(start_datetime: :ASC).last
