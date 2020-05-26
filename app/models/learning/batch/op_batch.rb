@@ -14,7 +14,8 @@ module Learning
       has_many :op_faculties, -> {distinct}, :class_name => 'User::OpenEducat::OpFaculty', through: :op_sessions
       has_many :user_questions, class_name: 'Learning::Homework::UserQuestion'
       has_many :user_answers, class_name: 'Learning::Homework::UserAnswer', foreign_key: 'batch_id'
-
+      has_many :gen_batch_table_lines, class_name: 'Learning::Batch::GenBatchTableLine', foreign_key: 'batch_id'
+      
       has_many_attached :photos
 
       # TO DO batch status

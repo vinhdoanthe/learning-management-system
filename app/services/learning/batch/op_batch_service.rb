@@ -9,20 +9,39 @@ module Learning
           course_name = course.nil? ? '' : course.name
           active_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id, batch_id: batch_id).first
           op_student_courses = Learning::Batch::OpStudentCourse.where(batch_id: batch_id).to_a
-          faculty_ids = Learning::Batch::OpSession.where('batch_id = ? AND state != ?', batch_id, Learning::Constant::Batch::Session::STATE_CANCEL).pluck(:faculty_id).uniq.compact
-          faculty_names = User::OpenEducat::OpFaculty.where(id: faculty_ids).pluck(:full_name).uniq.compact
           batch_subjects = course.op_subjects.order(level: :ASC).pluck(:id, :level).uniq.compact
           done_subjects = Learning::Batch::OpSession.where(batch_id: batch_id, state: Learning::Constant::Batch::Session::STATE_DONE).pluck(:subject_id).uniq.compact
+          pinned_session = User::OpenEducat::OpStudentsService.get_comming_soon_session student_id 
+          if pinned_session.nil?
+            pinned_session = last_done_session(student_id, [batch_id], done_subjects)
+          end
+          if pinned_session.nil?
+            faculty_names = []
+            classroom_name = '' 
+          else
+            gen_batch_table_line = batch.gen_batch_table_lines.where(subject_id: coming_session.subject_id).first
+            if !gen_batch_table_line.nil?
+              faculty = gen_batch_table_line.op_faculty
+
+              if !faculty.nil?
+                faculty_names = [faculty.full_name]
+              else
+                faculty_names = []
+              end
+              classroom = gen_batch_table_line.op_classroom
+              if !classroom.nil?
+                classroom_name = classroom.name
+              else
+                classroom_name = ''
+              end
+            else
+              faculty_names = []
+              classroom_name = '' 
+            end
+          end
           session_count = count_done_session(batch)
           company = Common::ResCompany.where(id: batch.company_id).first
           company_name = company.nil? ? '-' : company.name
-          classroom_ids= batch.op_sessions.pluck(:classroom_id).uniq.compact
-          if classroom_ids.blank?
-            classroom_name = ''
-          else
-            classroom = Common::OpClassroom.where(id: classroom_ids[0]).first
-            classroom_name = classroom.nil? ? '' : classroom.name
-          end
           return batch, course_name, active_student_course, op_student_courses, faculty_names, batch_subjects, done_subjects, session_count, company_name, classroom_name
         else
           return nil,nil,nil,nil,nil,nil,nil,nil,nil,nil
@@ -67,7 +86,7 @@ module Learning
       def self.get_sessions(batch_id, student_id, subject_ids = [], interval = {})
         op_student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch_id, student_id: student_id).last
         op_student_course_id = op_student_course.nil? ? nil : op_student_course.id
-        
+
         if subject_ids.blank?
           subject_ids = op_student_course.op_subjects.pluck(:id).uniq.compact
         end

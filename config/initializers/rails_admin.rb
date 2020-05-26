@@ -325,7 +325,7 @@ RailsAdmin.config do |config|
     dashboard
     index
     new do
-      only %w(Common::RewardType
+      only %w(Common::RewardType Common::FeelingType
               Learning::Course::CourseDescription 
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice
               Notification::BroadcastNoti
@@ -336,14 +336,14 @@ RailsAdmin.config do |config|
       only %w(Learning::Course::OpLession)
     end
     edit do
-      only %w(Common::RewardType
+      only %w(Common::RewardType Common::FeelingType
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, 
               Learning::Course::OpLession Learning::Course::OpCourse Learning::Course::CourseDescription 
               Notification::BroadcastNoti
               User::Reward::TekyCoinStarActivitySetting)
     end
     delete do
-      only %w(Common::RewardType
+      only %w(Common::RewardType Common::FeelingType
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
     end
 
