@@ -11,15 +11,17 @@ module Learning
           op_student_courses = Learning::Batch::OpStudentCourse.where(batch_id: batch_id).to_a
           batch_subjects = course.op_subjects.order(level: :ASC).pluck(:id, :level).uniq.compact
           done_subjects = Learning::Batch::OpSession.where(batch_id: batch_id, state: Learning::Constant::Batch::Session::STATE_DONE).pluck(:subject_id).uniq.compact
-          pinned_session = User::OpenEducat::OpStudentsService.get_comming_soon_session student_id 
+          pinned_session = User::OpenEducat::OpStudentsService.get_comming_soon_session student_id
+          binding.pry 
           if pinned_session.nil?
             pinned_session = last_done_session(student_id, [batch_id], done_subjects)
+            pinned_session = Learning::Batch::OpSession.where(state: Learning::Constant::Batch::Session::STATE_DONE, batch_id: batch.id).order(start_datetime: :ASC).last
           end
           if pinned_session.nil?
             faculty_names = []
             classroom_name = '' 
           else
-            gen_batch_table_line = batch.gen_batch_table_lines.where(subject_id: coming_session.subject_id).first
+            gen_batch_table_line = batch.gen_batch_table_lines.where(subject_id: pinned_session.subject_id).first
             if !gen_batch_table_line.nil?
               faculty = gen_batch_table_line.op_faculty
 
@@ -224,7 +226,7 @@ module Learning
       end
 
       def self.last_done_session(student_id, batch_ids = [], subject_ids = [])
-        att = Learning::Batch::OpAttendanceLine.joins(:op_session).where(student_id: student_id).where(op_session: { batch_id: batch_ids, subject: subject_ids }.select{|k,v| !v.blank?}).order(create_date: :DESC).first
+        att = Learning::Batch::OpAttendanceLine.joins(:op_session).where(student_id: student_id).where(op_session: { batch_id: batch_ids, subject_id: subject_ids }.select{|k,v| !v.blank?}).order(create_date: :DESC).first
 
         if att.present?
           active_session = att.op_session
