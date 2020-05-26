@@ -24,6 +24,7 @@ namespace :social_community do
   namespace :feed do
     resources :posts
     get 'my_posts' => 'posts#index', as: 'my_posts'
+    get 'get_reactions_and_comments' => 'posts#get_reactions_and_comments', as: 'get_reactions_and_comments'
   end
 
   get 'home_feeds' => 'dashboards#home_feeds', as: 'home_feeds'

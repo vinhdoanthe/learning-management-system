@@ -1,13 +1,7 @@
+$("#tab2_3").html('<%= escape_javascript( render partial: 'user/open_educat/op_students/batch_student_projects', locals: { student_projects:  student_projects } ) %>');
+
 $(document).ready(function(){
-	function get_student_product(data){
-		$.ajax({
-			method: 'GET',
-			url: '/user/student_product',
-			data: data,
-			dataType: 'script'
-		})
-	}
-	$('.owl-carousel').owlCarousel({
+  $('.student_projects_carousel').owlCarousel({
 		loop:true,
 		margin:10,
 		nav: true,
@@ -24,5 +18,4 @@ $(document).ready(function(){
 			}
 		}
 	})
-
 })

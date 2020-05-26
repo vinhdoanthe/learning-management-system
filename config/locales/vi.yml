@@ -86,6 +86,7 @@ vi:
     come_in: "Vào lớp"
     detail:
       class_info: "Thông tin lớp học"
+      student_projects: "Dự án của học sinh"
       progress:
         name: "Quá trình học tập"
         done_html: "Lớp học <span class='color-16BD56'>đã diễn ra</span>"
