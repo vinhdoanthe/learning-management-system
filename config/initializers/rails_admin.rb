@@ -23,7 +23,7 @@ RailsAdmin.config do |config|
       end
     end
   end
-  config.included_models = %w(Common::RewardType
+  config.included_models = %w(Common::RewardType Common::FeelingType
                               Learning::Course::OpCourse Learning::Course::CourseDescription Learning::Course::OpLession 
                               Learning::Batch::OpBatch Learning::Batch::OpSession 
                               Learning::Material::Question Learning::Material::QuestionChoice Learning::Material::LearningMaterial

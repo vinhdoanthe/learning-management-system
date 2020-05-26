@@ -73,6 +73,10 @@ gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 
+# Monitoring gems
+gem 'newrelic_rpm'
+gem 'sentry-raven'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
