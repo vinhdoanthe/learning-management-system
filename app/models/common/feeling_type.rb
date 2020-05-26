@@ -4,15 +4,18 @@ class Common::FeelingType < ApplicationRecord
 
   rails_admin do
     list do
-
+      field :name
+      field :icon
     end
 
     show do
-
+      field :name
+      field :icon
     end
 
     edit do
-
+      field :name
+      field :icon
     end
   end
 end
