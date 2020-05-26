@@ -45,7 +45,7 @@ namespace :user do
   # get 'student_homework' => 'op_students#student_homework'
   # get 'student_product' => 'op_students#student_product'
   # get 'course_products' => 'op_students#course_products'
-  get 'student_product_detail' => 'op_students#student_product_detail'
+  # get 'student_product_detail' => 'op_students#student_product_detail'
   # get 'student_redeem' => 'op_students#student_redeem'
   # get 'student_invoice' => 'op_students#student_invoice'
   # get 'student_timetable' => 'op_students#student_timetable'

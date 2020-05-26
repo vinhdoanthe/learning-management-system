@@ -1,5 +1,5 @@
-<% if products.length > 5 %>
-  <div class="owl-carousel">
+<% if products.length > 4 %>
+  <div class="student_projects_carousel">
     <% products.each do |product| %>
       <div class='item'>
         <div class="">                                                                              
@@ -12,7 +12,7 @@
               <p><%= product.description %></p>
               <input type='hidden' value='<%= product.id %>' name='student_product_id'>
               <input type='hidden' value='<%= product.op_batch %>' name='product_batch_id' >
-              <a id="student_product_detail" data-toggle="modal" data-remote='true' href='/user/student_product_detail?product_id=<%= product.id %>' data-target="#modal_student_product">Xem sản phẩm</a>
+              <a id="student_product_detail" href='/user/open_educat/op_students/student_project_detail?project_id=<%= product.id %>'>Xem sản phẩm</a>
             </div>
           </div>
         </div>
@@ -31,7 +31,7 @@
             <p><%= product.description %></p>
             <input type='hidden' value='<%= product.id %>' name='student_product_id'>
             <input type='hidden' value='<%= product.op_batch %>' name='product_batch_id' >
-            <a id="student_product_detail" data-toggle="modal" data-remote='true' href='/user/student_product_detail?product_id=<%= product.id %>' data-target="#modal_student_product">Xem sản phẩm</a>
+            <a id="student_product_detail" href='/user/open_educat/op_students/student_project_detail?project_id=<%= product.id %>' data-target="#modal_student_product">Xem sản phẩm</a>
           </div>
         </div>
       </div>

@@ -173,7 +173,7 @@ class User::OpenEducat::OpStudentsService
     # course_product = SocialCommunity::ScProduct.where(course_id: course_ids)
     course_products = []
     course_ids.each do |course|
-      products = SocialCommunity::ScProduct.where(course_id: course[1]).order(created_at: :DESC).limit(10).to_a
+      products = SocialCommunity::ScStudentProject.where(course_id: course[1]).order(created_at: :DESC).limit(10).to_a
       course_products << { course[0] => products }
     end
     course_products.select!{|t| t.values.flatten.present?}

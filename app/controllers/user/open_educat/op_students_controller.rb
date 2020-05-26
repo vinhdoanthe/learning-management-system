@@ -199,25 +199,23 @@ module User
         redirect_error_site(e)
       end
 
-      def student_product
-        @products = SocialCommunity::ScProduct.where(student_id: @student.id).all
-        @course_products = OpenEducat::OpStudentsService.new.course_product 
-
-      rescue StandardError => e
-        redirect_error_site(e)
-      end
-
-      def student_product_detail
-        product = SocialCommunity::ScProduct.where(id: params[:product_id]).first
-        batch = product.op_batch.name
-        course = product.op_course.name
-        student = product.op_student
-        company = student.res_company ? student.res_company.name : ''
+      def student_projects
+        @projects = SocialCommunity::ScStudentProject.where(batch_id: params[:batch_id]).all.group_by{ |product| product.subject_id }
 
         respond_to do |format|
-          format.js { render 'user/op_students/partials/student_product_detail', locals: { batch: batch, course: course, student: student.full_name, company: company, product: product } }
+          format.html
+          format.js { render 'user/open_educat/op_students/js/student_projects', locals: { student_projects: @projects } }
         end
+      end
 
+      def student_project_detail
+       @project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
+       @batch = @project.op_batch.name
+       @course = @project.op_course.name
+       @student = @project.op_student
+       @company = @student.res_company ? @student.res_company.name : ''
+       @subject = Learning::Course::OpSubject.where(id: @project.subject_id).first
+      
       rescue StandardError => e
         redirect_error_site(e)
       end

@@ -72,7 +72,31 @@ class SocialCommunity::Feed::PostsController < ApplicationController
 
   end
 
+  def get_reactions_and_comments
+    post = SocialCommunity::Feed::Post.where(id: params[:post_id]).first
+    feed = SocialCommunity::Feed::Feed.new(post)
+    posts_service = SocialCommunity::Feed::PostsService.new(post)
+    count_like, count_love, count_sad = posts_service.count_reactions
+    comments = posts_service.get_comments
+    decored_comments = []
+
+    comments.each do |comment|
+      decored_comments << SocialCommunity::CommentsService.comment_decorator(comment)
+    end
+
+    feed.count_like = count_like
+    feed.count_love = count_love
+    feed.count_sad = count_sad
+    feed.comments = decored_comments
+
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/feed/posts/reaction_comment', locals: { feed: feed }}
+    end
+  end
+
   private
+
   def feed_params
 
   end
