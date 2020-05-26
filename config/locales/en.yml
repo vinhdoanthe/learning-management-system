@@ -86,6 +86,7 @@ en:
     come_in: "Come in"
     detail:
       class_info: "Class infomations"
+      student_projects: "Student projects"
       progress:
         name: "Study progress"
         done_html: "<span class='color-16BD56'>Done</span> lesson"

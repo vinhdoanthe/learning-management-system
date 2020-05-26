@@ -1,0 +1,72 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'social_community/sc_student_project_detail.js' %>
+   <%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
+<% end %>
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform"><%= @project.name %></h2>
+        <input type='hidden' value='<%= @project.sc_post_id %>' name="sc_student_project_post_id">
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="box-product" >
+        <div class="fc-header" style='margin: 0 0 20px 0'>
+          <h3><span class="color-16BD56"><%= @project.name %></h3>
+        </div>
+        <p style="font-size:16px"><span style="font-weight: 600">Học sinh:</span> <%= @student.full_name %></p>
+        <p style="font-size:16px"><span style="font-weight: 600">Khoá học: </span><%= @course %></p>
+        <p style="font-size:16px"><span style="font-weight: 600">Lớp: </span><%= @batch %></p>
+        <p style="font-size:16px"><span style="font-weight: 600">Level: </span><%= @subject.level %></p>
+        <p style="font-size:16px"><span style="font-weight: 600">Cơ sở: </span><%= @company %></p>
+      </div>    
+    </div>
+    <% if @project.introduction_video.present? %>
+      <div class="panel-content">
+        <div class="box-product" >
+          <div class="fc-header" style='margin: 15px 0'>
+            <h3><span class="color-16BD56">Giới thiệu về dự án</h3>
+          </div>
+          <div class="project_intro">
+            <%= @project.introduction_video.html_safe %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if @project.project_show_video.present? %>
+      <div class="panel-content">
+        <div class="box-product" >
+          <div class="fc-header" style='margin: 15px 0'>
+            <h3><span class="color-16BD56">Video sản phầm</h3>
+          </div>
+          <div class="project_video">
+            <%= @project.project_show_video.html_safe %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if @project.presentation.present? %>
+      <div class="panel-content">
+        <div class="box-product" >
+          <div class="fc-header" style='margin: 15px 0'>
+            <h3><span class="color-16BD56">Slide trình bày</h3>
+          </div>
+          <div class="project_slide">
+            <%= @project.presentation.html_safe %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="panel-content">
+      <div class="box-product" >
+        <div id="student_project_feed">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,2 @@
+$('#student_project_feed').html('<%= j render :partial => "social_community/dashboards/shared/posts/reactions", :locals => {post: feed.post, count_like: feed.count_like, count_love: feed.count_love, count_sad: feed.count_sad} %>');
+$('#student_project_feed').append('<%= j render :partial => "social_community/dashboards/shared/posts/comments", :locals => {post: feed.post, comments: feed.comments} %>');
