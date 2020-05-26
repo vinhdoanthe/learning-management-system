@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
   include ApplicationHelper
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :set_raven_context
   ERROR_TURTLE = 'layouts/errors/turtle' 
 
   # Validated user!
@@ -57,4 +57,9 @@ class ApplicationController < ActionController::Base
     
     session[:current_language]
   end
+
+   def set_raven_context
+    Raven.user_context(id: session[:current_user_id]) # or anything else in session
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+   end
 end
