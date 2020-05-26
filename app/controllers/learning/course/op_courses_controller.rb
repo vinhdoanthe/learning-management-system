@@ -26,7 +26,8 @@ class Learning::Course::OpCoursesController < ApplicationController
   end
 
   def show
-    @subjects = Learning::Course::OpSubject.where(course_id: @course.id).order(level: :asc).select(:id, :name)
+    @subjects = @course.op_subjects.order(level: :ASC).select(:id, :name)
+    # @subjects = Learning::Course::OpSubject.where(course_id: @course.id).order(level: :asc).select(:id, :name)
     subject_ids = []
     @subjects.each do |subject|
       subject_ids.append subject.id

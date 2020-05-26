@@ -16,3 +16,4 @@ Rails.application.config.assets.precompile += %w( user/open_educat/op_students/b
 Rails.application.config.assets.precompile += %w( user/open_educat/op_students/homework.js )
 Rails.application.config.assets.precompile += %w( social_community/dashboards/* )
 Rails.application.config.assets.precompile += %w( redeem/* )
+Rails.application.config.assets.precompile += %w( google_analytics.js )
