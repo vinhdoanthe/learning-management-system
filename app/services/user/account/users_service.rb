@@ -1,6 +1,5 @@
 class User::Account::UsersService
   def create_student_user student
-
     existed_user = User::Account::User.where(student_id: student.id).first
     if existed_user
       return { missing_email_student: nil, errors: nil }
@@ -20,7 +19,10 @@ class User::Account::UsersService
       user.email = parent_user.email
       user.parent_account_id = parent_user.id
     end
-    user.password = '123456'
+
+    password = (0..8).map { (65 + rand(26)).chr }.join
+    user.initial_password = password 
+    user.password = password 
 
     old_user = User::Account::User.where('username ILIKE ?', username).order(created_at: :DESC).first
     while !old_user.nil?
@@ -54,7 +56,9 @@ class User::Account::UsersService
     parent_user = User::Account::User.new
     parent_user.username = parent.email[/[^@]+/]
     # parent_user.password = parent.mobile ? parent.mobile : '12345678'
-    parent_user.password = '12345678'
+    password = (0..8).map { (65 + rand(26)).chr }.join
+    parent_user.initial_password = password
+    parent_user.password = password
     parent_user.account_role = User::Constant::PARENT
     parent_user.email = parent.email
     parent_user.parent_id = parent.id
