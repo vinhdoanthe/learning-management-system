@@ -1,4 +1,10 @@
 class Notification::User::UserNotificationsController < ActivityNotification::NotificationsController
+
+  def index
+    super
+    @notifications = @target.notifications.order_by(created_at: :DESC).page(params[:page]).per(20)
+  end
+
   private
 
   def set_target

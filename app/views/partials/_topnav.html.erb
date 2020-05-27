@@ -19,7 +19,9 @@
             </li>
             <% end%>
             <li class="dropdown" id="notifications-header">
+              <div id="notifications">
               <%= render_notifications_of current_user, index_content: :with_attributes, fallback: :default %>
+              </div>
             </li>
             <li class="dropdown" id="language-header">
               <% if params[:locale] == "en" %>
@@ -51,3 +53,8 @@
     </div>
     <%= render 'partials/messages' %>
 </div>
+<style>
+#notifications .notifications {
+  max-height: 500px;
+}
+</style>
