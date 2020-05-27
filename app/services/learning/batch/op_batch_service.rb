@@ -36,8 +36,20 @@ module Learning
                 classroom_name = ''
               end
             else
-              faculty_names = []
-              classroom_name = '' 
+              # Get faculty and classroom by pinned session
+              faculty = pinned_session.op_faculty
+              if !faculty.nil?
+                faculty_names = [faculty.full_name]
+              else
+                faculty_names = []
+              end
+
+              classroom = pinned_session.op_classroom
+              if !classroom.nil?
+                classroom_name = classroom.name
+              else
+                classroom_name = ''
+              end
             end
           end
           session_count = count_done_session(batch)
