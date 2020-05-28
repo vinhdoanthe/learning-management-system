@@ -124,8 +124,12 @@
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Email:</label>
-                    <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= parent ? parent.email : '' %>">
-                  </div>
+                      <% if parent.email.present? && (parent.email.length < 40) %>
+                        <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= parent ? parent.email : '' %>">
+                      <% else %>
+                        <textarea class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly %><%= parent.email %></textarea> 
+                      <% end %>
+                    </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>

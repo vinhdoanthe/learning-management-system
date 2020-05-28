@@ -2,7 +2,9 @@ module SocialCommunity::DashboardsHelper
 
   def get_feed_content noti
     post = SocialCommunity::Feed::Post.where(id: noti.notifiable_id).first
-    return ''  if post.blank?
+    if post.blank?
+      return (blank_post_noti_content noti)
+    end
     feeds = SocialCommunity::Feed::PostsService.decor_post_to_feed [post] 
     feed = feeds[0]
     
@@ -54,6 +56,14 @@ module SocialCommunity::DashboardsHelper
     [message, photos]
     # find photos
     # render message
+  end
+
+  def blank_post_noti_content noti
+    if noti.notifiable_type == "SocialCommunity::Feed::PhotoPost"
+      "Giáo viên vừa đăng ảnh trong lớp học của con"
+    else
+      ''
+    end
   end
 
 end
