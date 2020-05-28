@@ -1,24 +1,22 @@
-### TEKY LMS
+### Hệ thống quản lý học tập
 
-References: 
-* For login/logout/remember me, follows this link: https://3rd-edition.railstutorial.org/book/log_in_log_out
-* For deployment, follows this link: 
-  * https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/apache/oss/deploy_app_main.html
-  * https://gorails.com/deploy/ubuntu/18.04
+#### Cho học sinh
 
-Secure Video Player:
-  * VdoCipher: https://www.vdocipher.com/blog/2015/09/videos-in-rails-with-vdocipher-gem/
-  * DIY Sample 1: https://www.pubnub.com/blog/building-video-sharing-app-server-messaging-ruby/
-  * DIY Sample 2: https://yalantis.com/blog/simple-video-processing-with-ffmpeg-and-ruby-on-rails/
-<pre><code>
-eme - Encrypted Media Extensions
-shaka-player
-video.js / plyr.io / hls.js
-rails gem: lockbox
-https://www.vdocipher.com/blog/2015/09/videos-in-rails-with-vdocipher-gem/
-jwplayer with hls: https://www.jwplayer.com/blog/delivering-hls-with-amazon-cloudfront/
-google dash Dynamic Adaptive Streaming over HTTP
-cloudinary https://cloudinary.com/
-</code></pre>
-Deployment notes:
-  * Have to installed: sudo apt-get install libmagickwand-dev imagemagick
+ * Quản lý thông tin cá nhân
+ * Xem quá trình học tập tại TEKY
+ * Ôn bài, làm bài tập về nhà
+ * Lịch học tại TEKY
+ * Feed các hoạt động tại TEKY
+ * Điểm thưởng, đổi quà
+ * Feedback chất lượng học tập, giảng dạy
+ * Sản phẩm cuối khóa
+
+#### Cho giảng viên
+
+ * Lịch giảng dạy tại TEKY
+ * Truy cập các tài nguyên giảng dạy
+ * Check-in, điểm danh
+ * Đánh giá học sinh
+ * Feed các hoạt động tại TEKY
+ * Chấm bài
+ * Sản phẩm cuối khóa
