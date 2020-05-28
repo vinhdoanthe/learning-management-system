@@ -13,11 +13,11 @@ class User::Account::UsersService
       username = student.full_name.mb_chars.unicode_normalize(:nfkd).gsub(/[^\x00-\x7F]/n,'').gsub(/\s+/, "").downcase.to_s
       user.email = '-'
     else
-      username = student.parent_email[/[^@]+/]
-      parent_user = User::Account::User.where(email: student.parent_email, account_role: User::Constant::PARENT).first
-      parent_user = create_parent_user student.op_parents[0] if parent_user.blank?
-      user.email = parent_user.email
-      user.parent_account_id = parent_user.id
+      username = student.parent_email[/[^@]+/].strip
+      # parent_user = User::Account::User.where(email: student.parent_email, account_role: User::Constant::PARENT).first
+      # parent_user = create_parent_user student.op_parents[0] if parent_user.blank?
+      user.email = student.parent_email
+      # user.parent_account_id = parent_user.id
     end
 
     password = (0..8).map { (65 + rand(26)).chr }.join
