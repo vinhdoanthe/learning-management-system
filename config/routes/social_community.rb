@@ -34,7 +34,7 @@ namespace :social_community do
   get 'teacher_coming_soon_sessions' => 'dashboards#teacher_coming_soon_sessions'
   get 'albums_with_comments' => 'dashboards#albums_with_comments', as: 'albums_with_comments'
   get 'dashboard_noti' => 'dashboards#dashboard_noti', as: 'dashboard_noti'
-  get 'new_user' => 'dashboards#new_user', as: 'new_user'
-
+  # get 'new_user' => 'dashboards#new_user', as: 'new_user'
+  get 'leader_board' => 'dashboards#leader_board', as: 'leader_board'
   post 'delete_session_photo' => 'photos#delete_session_photo', as: 'delete_session_photo'
 end

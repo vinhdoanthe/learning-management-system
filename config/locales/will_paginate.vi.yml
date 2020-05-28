@@ -1,0 +1,7 @@
+vi:
+  views:
+    pagination:
+      previous: "&#8592; Trang Trước"
+      next: "Trang Tiếp &#8594;"
+      first: 'Trang đầu'
+      last: "Trang Cuối"

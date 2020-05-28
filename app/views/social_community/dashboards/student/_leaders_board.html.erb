@@ -1,21 +1,23 @@
+<!-- variables: 
+  - leaders
+-->
+
 <div class="panel-content">
   <div class="bnd-title">
-    <label class="filter-title" style = "text-transform:uppercase;"><%= t('user.student.new') %></label>
+    <label class="filter-title" style = "text-transform:uppercase;"><%= t('user.student.leader_board') %></label>
     <p><img style="width: 25px;" src="/global/images/star.png" alt=""></p>
   </div>
   <div class="box-student">
     <table class="table">
-      <% students.each_with_index do |student, index| %>
+      <% leaders.each_with_index do |leader, index| %>
         <tr>
           <td><%= index + 1 %></td>
           <td>
-            <label class="color-EB9138"><%= student.full_name %></label>
-            <% if student.res_company.present? %>
-              <p><%= t('config.center') %> <span class="color-0654BA text-transform"><%= student.res_company.name %></span></p>
-            <% end %>
+            <label class="color-EB9138"><%= leader.name %></label>
+              <p><%= t('config.center') %> <span class="color-0654BA text-transform"><%= leader.center %></span></p>
           </td>
           <td align="right">
-            <!-- <h2>120.303</h2> -->
+            <h2><%= leader.star %></h2>
           </td>
         </tr>
       <% end %>

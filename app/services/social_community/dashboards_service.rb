@@ -1,4 +1,16 @@
 class SocialCommunity::DashboardsService
+  def self.community_leaders
+    users = User::Account::User.where(account_role: User::Constant::STUDENT).order(star: :DESC, created_at: :DESC).limit(10).to_a
+    leaders = []
+    users.each do |user|
+      leader = SocialCommunity::Leader.new(user)
+      leaders << leader
+    end
+
+    leaders
+  end
+
+
   def self.get_student_albums_with_comments student_id
     albums_with_comments = []
     batch_ids = User::OpenEducat::OpStudentsService.get_batch_ids student_id
