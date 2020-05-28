@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input type="submit" value="Đăng ảnh" id="upload_photo_confirm" data-dismiss="modal" class="btn btn-primary" >
+        <input type="button" value="Đăng ảnh" data-dismiss="modal" id="upload_photo_confirm" class="btn btn-primary" >
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -44,8 +44,9 @@
         reader.readAsDataURL(photo);    
       })
     } 
-  }     
-
+  }
+var error_file = 0;
+$(document).ready(function(){
 $('#upload_photo').on('click', '#upload_photo_confirm', function () {
   params = $('#photo_upload_form').serializeArray()
   var formData = new FormData();  
@@ -54,9 +55,20 @@ $('#upload_photo').on('click', '#upload_photo_confirm', function () {
     formData.append(p['name'], p['value'])
   })
   $.each($('#photos_attachment')[0].files, function (i, file) {
+    file_type = file.name.split('.').pop().toLowerCase();
+    if($.inArray(file_type, ['png','jpg','jpeg']) == -1) {
+      error_file += 1
+    }else{
     formData.append("photos[]", file);
+    }
   })
 
+  if(error_file > 0){
+    alert('Sai ảnh! Chỉ chấp nhận ảnh có đuôi "png/jpg/jpeg"!');
+    return
+  }
+
+  waitingdialog.show('Uploading');
   $.ajax({              
     method: 'POST',
     url: '/add_photo_attachment',   
@@ -64,7 +76,8 @@ $('#upload_photo').on('click', '#upload_photo_confirm', function () {
     contentType: false,
     processData: false,
     success: function (res) {
-      display_noti(res)               
+      waitingdialog.hide();
+      display_noti(res); 
     }
   })
 })  
@@ -84,12 +97,10 @@ $("#photos_attachment").change(function () {
 });
 
 $('#upload_session_photo').on('click', function () {
+  error_file = 0;
   $('#photo_review').html('')
 })
 
-$('#upload_photo_confirm').on('click', function () {
-  $('#upload_photo').modal('hide')
-});
-
+})
 </script>
 

@@ -1,6 +1,5 @@
 <% content_for :notification_content, flush: true do %>
   <% noti_content = (get_feed_content notification).html_safe %>
-  <% if noti_content.present? %>
     <div class='notification_list <%= notification.opened? ? "opened" : "unopened" %>'>
       <div class="notification_list_cover"></div>
       <div class="list_image"><img src='<%= get_avatar %>' ></div>
@@ -12,7 +11,6 @@
         </p>
       </div>
     </div>
-  <% end %>
 <% end %>
 
 <div class='<%= "notification_#{notification.id}" %>'>

@@ -6,7 +6,18 @@
 <% end %>
   <div class="row">
     <div class="col-md-7">
-      <%= render 'social_community/dashboards/shared/feeds', { feeds: @feeds } %>
+      <% if @feeds.blank? %>
+        <div class='panel'>
+          <div class='panel-content'>
+            <div>
+              <h4> <span style='color: black'>Rất tiếc, bài post này đã bị xoá!</span></h4>
+              <a href='/' style='text-decoration: underline; font-size: 15px; font-weight: 600'>Quay lại trang chủ</a>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <%= render 'social_community/dashboards/shared/feeds', { feeds: @feeds } %>
+      <% end %>
     </div>
     <div class="col-md-5">
       <div class="panel" id='coming_soon_session'>

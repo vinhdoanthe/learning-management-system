@@ -1,4 +1,20 @@
 class Notification::User::UserNotificationsController < ActivityNotification::NotificationsController
+
+  def index
+    super
+    @notifications = @target.notifications.order_by(created_at: :DESC).page(params[:page]).per(20)
+  end
+  
+  def move
+    noti = ActivityNotification::Notification.find(params[:id])
+    post = SocialCommunity::Feed::Post.where(id: noti.notifiable_id).first
+    if post.blank?
+      redirect_to social_community_feed_post_path(-1)
+    else
+      super
+    end
+  end
+
   private
 
   def set_target

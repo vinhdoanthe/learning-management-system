@@ -19,6 +19,8 @@ module TEKYLMS
     config.filter_parameters << :password
     Raven.configure do |config|
       config.dsn = 'https://cd0a4f0f5c2347879badd2965e6ba3df:972441f1488b4f97a035b7b180d63416@o398229.ingest.sentry.io/5253599'
+      config.environments = %w[ production ]
+      config.excluded_exceptions += ['ActiveStorage::FileNotFoundError']
     end
   end
 end

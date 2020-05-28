@@ -13,12 +13,8 @@ class SocialCommunity::PhotosController < ApplicationController
   end
 
   def delete_session_photo
-    photo = SocialCommunity::Photo.where(id: params[:photo_id]).first
-    if photo.delete
-      render json: { type: 'success', message: 'Xoá ảnh thành công' }
-    else
-      render json: { type: 'danger', message: 'Có lỗi xảy ra! Thử lại sau!' }
-    end
+    result = SocialCommunity::PhotoService.new.delete_photo params[:photo_id]
+    render json: result
   end
 
 end

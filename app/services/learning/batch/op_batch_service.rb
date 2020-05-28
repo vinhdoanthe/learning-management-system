@@ -20,24 +20,37 @@ module Learning
             faculty_names = []
             classroom_name = '' 
           else
-            gen_batch_table_line = batch.gen_batch_table_lines.where(subject_id: pinned_session.subject_id).first
-            if !gen_batch_table_line.nil?
-              faculty = gen_batch_table_line.op_faculty
-
+            gen_batch_table_lines = batch.gen_batch_table_lines
+            if !gen_batch_table_lines.empty?
+              faculty_names = []
+              classroom_names = []
+              gen_batch_table_lines.each do |gen_batch_table_line|
+                faculty = gen_batch_table_line.op_faculty
+                if !faculty.nil?
+                  faculty_names << faculty.full_name
+                end
+                
+                classroom = gen_batch_table_line.op_classroom
+                if !classroom.nil?
+                  classroom_names << classroom.name
+                end
+              end
+              classroom_name = classroom_names.join(', ') if !classroom_names.empty?
+            else
+              # Get faculty and classroom by pinned session
+              faculty = pinned_session.op_faculty
               if !faculty.nil?
                 faculty_names = [faculty.full_name]
               else
                 faculty_names = []
               end
-              classroom = gen_batch_table_line.op_classroom
+
+              classroom = pinned_session.op_classroom
               if !classroom.nil?
                 classroom_name = classroom.name
               else
                 classroom_name = ''
               end
-            else
-              faculty_names = []
-              classroom_name = '' 
             end
           end
           session_count = count_done_session(batch)

@@ -3,7 +3,8 @@
 $(document).ready(function(){
   get_coming_soon_session();
 	get_noti_content();
-	get_new_user();
+  get_leader_board();
+  // get_new_user();
   get_attendance_report();
 })
 
@@ -23,6 +24,15 @@ function get_noti_content(){
 		url: '/social_community/dashboard_noti',
 		dataType: 'script'
 	})
+}
+
+
+function get_leader_board(){
+  $.ajax({
+    method: 'GET',
+    url: '/social_community/leader_board',
+    dataType: 'script',
+  })
 }
 
 function get_new_user(){

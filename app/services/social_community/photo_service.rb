@@ -49,4 +49,20 @@ class SocialCommunity::PhotoService
     post.save!
     post
   end
+
+  def delete_photo photo_id
+    photo = SocialCommunity::Photo.where(id: photo_id).first
+    return { type: 'danger', message: 'Có lỗi xảy ra! Thử lại sau' } if photo.blank?
+    post = photo.sc_post
+    return { type: 'danger', message: 'Có lỗi xảy ra! Thử lại sau' } if post.blank?
+
+    if post.photos.count > 1
+      photo.delete
+      return { type: 'success', message: 'Xoá ảnh thành công' }
+    else
+      photo.delete
+      post.delete
+      return { type: 'success', message: 'Xoá ảnh thành công' }
+    end
+  end
 end
