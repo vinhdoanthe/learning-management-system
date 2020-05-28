@@ -61,7 +61,9 @@ class SocialCommunity::Feed::PostsController < ApplicationController
   end
 
   def show
-    @feeds = SocialCommunity::Feed::PostsService.decor_post_to_feed [@post]
+    if @post.present?
+      @feeds = SocialCommunity::Feed::PostsService.decor_post_to_feed [@post]
+    end
   end
 
   def create
