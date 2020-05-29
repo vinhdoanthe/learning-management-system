@@ -7,7 +7,7 @@
     <div class="panel-heading">
       <div class="ph-img">
         <span>
-        <%= image_tag(get_avatar, size: [80, 80]) %>
+        <%= image_tag(get_avatar, size: [80, 80], class: 'infomation_avatar') %>
         </span>
       </div>
       <div class="ph-text">
@@ -173,3 +173,8 @@
 
   </div>
 </div>
+<style>
+  .infomation_avatar {
+    width: 80px;
+  }
+</style>
