@@ -6,7 +6,7 @@
       <h2> <span style='color: black'> <%= message %> </span></h2>
     </div>
 
-    <%= render :partial => "social_community/dashboards/shared/photos", :locals => {photos: photos} %>
+    <%= render :partial => "social_community/dashboards/shared/photos", :locals => {photos: photos, post: feed.post} %>
 
     <%= render :partial => "social_community/dashboards/shared/posts/reactions", :locals => {post: feed.post, count_like: feed.count_like, count_love: feed.count_love, count_sad: feed.count_sad} %>
     <%= render :partial => "social_community/dashboards/shared/posts/comments", :locals => {post: feed.post, comments: feed.comments} %>

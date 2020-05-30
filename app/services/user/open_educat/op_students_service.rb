@@ -209,7 +209,7 @@ class User::OpenEducat::OpStudentsService
       record[7] = record[0]
 
       case time.hour.to_i
-      when 8..10
+      when 8..9
         schedule_hash['s1'].merge!(record)
       when 10..12
         schedule_hash['s2'].merge!(record)

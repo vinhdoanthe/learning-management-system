@@ -16,7 +16,7 @@
                     <input type='hidden' value='<%= student.id %>' name='active_reward_student'>
                     <span class="active_reward" style=" width: 15px; height: 15px; background-color: #5DC2A7 ; position: absolute; top: 0; right: 0; border-radius: 50%;"></span>
                     <!-- <img src="/global/images/Group.png" alt=""> -->
-                    <%= image_tag(avatar.thumbnail) if (avatar.present? && avatar.thumbnail.attached?) %>
+                    <%= image_tag(avatar) %>
                   </span>
                   <!--  <a href="" class="close-icon"><img src="/global/images/close.png" alt=""></a> -->
                   <p><%= student.full_name %></p>

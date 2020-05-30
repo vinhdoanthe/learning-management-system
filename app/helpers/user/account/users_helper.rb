@@ -2,13 +2,30 @@ module User
   module Account
     module UsersHelper
       def get_avatar
-        asset_path('global/images/avatar.svg')
+        if current_user.is_student?
+          get_student_user_avatar current_user
+        else
+          asset_path('global/images/avatar.svg')
+        end
       end
 
       def get_student_avatar student
         user = User.where(student_id: student.id).first
-        avatar = user ? user.avatar : ''
-        return avatar
+        get_student_user_avatar user
+      end
+
+      def get_student_user_avatar user
+        if user.avatar.present? && user.avatar.thumbnail.attached?
+          user.avatar
+        else
+          if user.gender == 'm'
+            asset_path('global/images/Group-3.png')
+          elsif user.gender == 'f'
+            asset_path('global/images/Group-5.png')
+          else
+            asset_path('global/images/icon-student.png')
+          end
+        end
       end
 
       def count_mark_question teacher

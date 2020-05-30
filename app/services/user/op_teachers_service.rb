@@ -161,21 +161,19 @@ class User::OpTeachersService
 
   def get_student_avatar student
     ActionController::Base.helpers.asset_path('global/images/avatar.svg')
-=begin
-    Temporary comment. TODO: in version 1.1
+    #Temporary comment. TODO: in version 1.1
     user = User::Account::User.where(student_id: student.id).first
 
     if user.present?
       if student.gender == 'm'
-        student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/Group-3.png')
       elsif student.gender == 'f'
-        student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/Group-5.png')
       else
-        student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/icon-student.png')
       end
     end
 
     student_avatar
-=end
   end
 end
