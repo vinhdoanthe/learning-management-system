@@ -12,98 +12,79 @@ module Api
     @@odoo_username = Settings.odoo['username']
     @@odoo_password = Settings.odoo['password']
 
-    def self.checkin(session_id:, faculty_id:, check_in_time:)
-      errors = validate_before_checkin(session_id, faculty_id, check_in_time)
-      if errors.empty?
-        session = Learning::Batch::OpSession.find(session_id)
-        session.check_in_time = check_in_time
-        if check_in_time <= session.start_datetime
-          session.check_in_state = Learning::Constant::Batch::Session::CHECKIN_STATE_GOOD
-        else
-          session.check_in_state = Learning::Constant::Batch::Session::CHECKIN_STATE_BAD
-        end
-        session.save
-        if session.errors.full_messages.any?
-          return session.errors.full_messages.to_s
-        end
-      else
-        return errors
+    def self.odoo_xml_authenticate
+        common = XMLRPC::Client.new2(@@odoo_url)
+        uid = common.call('authenticate', @@odoo_db, @@odoo_username, @@odoo_password, {})
+        models = XMLRPC::Client.new2(Settings.odoo['url'] + '/xmlrpc/2/object').proxy
+        return uid, models
       end
+
+    def self.checkin(session_id:, faculty_id:, check_in_time:)
+        errors = validate_before_checkin(session_id, faculty_id, check_in_time)
+        if errors.empty?
+            uid, models = odoo_xml_authenticate()
+            begin
+                success, mes = models.execute_kw(@@odoo_db, uid, @@odoo_password,
+                        'op.session', 'check_in_lms',
+                        [session_id], {})
+                return success, mes
+            rescue => exception
+                return false, exception
+            end
+        else
+            return false, errors
+        end
     end
 
-    def self.attendance(session_id:, faculty_id:, attendance_time:, attendance_lines:)
-      errors = validate_before_attendance(session_id, faculty_id, attendance_time, attendance_lines)
-      if errors.nil?
-        session = Learning::Batch::OpSession.find(session_id)
-        # Step 1: Create Attendance Sheet
-        lesson = session.op_lession
-        attendance_sheet = Learning::Batch::OpAttendanceSheet.find_or_create_by(session_id: session_id, faculty_id: faculty_id)
-        # attendance_sheet.session_id = session.id
-        attendance_sheet.lession_id = session.lession_id
-        attendance_sheet.name = lesson.name
-        attendance_sheet.note = lesson.note
-        attendance_sheet.course_id = session.course_id
-        attendance_sheet.attendance_date = attendance_time.to_date
-        attendance_sheet.batch_id = session.batch_id
-        # attendance_sheet.faculty_id = faculty_id
-        # attendance_sheet.create_uid
-        # attendance_sheet.create_date
-        # attendance_sheet.write_date
-        # attendance_sheet.write_uid
-        # attendance_sheet.tutors_id = session.tutors_id
-        attendance_sheet.company_id = session.company_id
-        attendance_sheet.subject_id = session.subject_id
-        if session.end_datetime + 1.day > attendance_time
-          attendance_sheet.state = '1'
-        elsif session.end_datetime + 2.days > attendance_time
-          attendance_sheet.state = '0'
-        else
-          attendance_sheet.state = '-1'
-        end
-
-        attendance_sheet.save
-        if attendance_sheet.errors.full_messages.any?
-          errors << attendance_sheet.errors.full_messages.to_s
-          #TODO : should rollback here?
-        end
-        if errors.nil?
-          # Create Attendance Lines
-          unless attendance_lines.blank?
-            attendance_lines.each do |att_line|
-              if att_line[:student_id].nil? || att_line[:is_present].nil?
-                errors << 'Một trong các attendance lines bị lỗi'
-              else
-                op_att_line = Learning::Batch::OpAttendanceLine.find_or_create_by(student_id: att_line[:student_id], session_id: session_id,
-                                                                                  attendance_id: attendance_sheet.id)
-                op_att_line.company_id = session.company_id
-                # op_att_line.attendance_id = attendance_sheet.id
-                # op_att_line.student_id = att_line[:student_id]
-                op_att_line.present = att_line[:is_present]
-                op_att_line.course_id = session.course_id
-                op_att_line.batch_id = session.batch_id
-                op_att_line.attendance_date = attendance_sheet.attendance_date
-                # op_att_line.session_id = session.id
-                op_att_line.note = att_line[:note] unless att_line[:note].blank?
-
-                op_att_line.save
-                if op_att_line.errors.full_messages.any?
-                  errors << op_att_line.errors.full_messages.to_s
-                  #TODO : should rollback here
-                end
-              end
+    def self.test()
+        evaluate(session_id: 116423, faculty_id: 3103, attendance_time: 0, attendance_lines: [{student_id: 14413, knowledge1: '1'}])
+    end
+    
+    #attendance_lines = [{student_id: 14413, state_evaluate: '1', knowledge1: '1'}]
+    def self.attendance(session_id:, faculty_id:, lession_id:, attendance_time:, attendance_lines:)
+        errors = validate_before_attendance(session_id, faculty_id, attendance_time, attendance_lines)
+        if errors.empty?
+            uid, models = odoo_xml_authenticate()
+            begin
+                id = models.execute_kw(@@odoo_db, uid, @@odoo_password, 'op.attendance.sheet', 'create', [{
+                    session_id: session_id,
+                    faculty_id: faculty_id,
+                    lession_id: lession_id,
+                    attendance_line: attendance_lines.map{|x| [0,0,x]}
+                }])
+                return id
+            rescue => exception
+                return false, exception
             end
-          end
+
+        else
+            return errors
         end
-      end
-      errors
+
+    end
+
+    def self.evaluate(session_id:, faculty_id:, attendance_time:, attendance_lines:)
+        #errors = validate_before_attendance(session_id, faculty_id, attendance_time, attendance_lines)
+        errors = []
+        if errors.empty?
+            uid, models = odoo_xml_authenticate()
+            begin
+                id = models.execute_kw(@@odoo_db, uid, @@odoo_password, 'op.attendance.sheet', 'evaluate_lms', [{
+                    session_id: session_id,
+                    attendance_line: attendance_lines.map{|x| [0,0,x]}
+                }])
+                return id
+            rescue => exception
+                return false, exception
+            end
+
+        else
+            return errors
+        end
+
     end
 
     private
-
-    def self.odoo_xml_authenticate
-      common = XMLRPC::Client.new2(@@odoo_url)
-      common.call('authenticate', @@odoo_db, @@odoo_username, @@odoo_password, {})
-    end
 
     def self.validate_before_checkin(session_id, faculty_id, check_in_time)
       errors = []
