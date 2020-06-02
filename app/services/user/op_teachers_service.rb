@@ -137,25 +137,20 @@ class User::OpTeachersService
     schedule_hash
   end
 
-  def self.teacher_evaluate params
-    attendance_line = Learning::Batch::OpAttendanceLine.where(:session_id => params[:session_id].to_i, :student_id => params[:student_id].to_s)
-    return {type: 'danger', message: 'Vui lòng điểm danh trước!'} if attendance_line.blank?
-    error = attendance_line.update(
-      "knowledge1" => params['knowledge1'].to_i,
-      "knowledge2" => params['knowledge2'].to_i,
-      "knowledge3" => params['knowledge3'].to_i,
-      "knowledge4" => params['knowledge4'].to_i,
-      "attitude1" => params['attitude1'].to_i,
-      "attitude2" => params['attitude2'].to_i,
-      "skill1" => params['skill1'].to_i,
-      "skill2" => params['skill2'].to_i,
-      "note_1" => params['teacher_note']
-    )
+  def self.teacher_evaluate params, teacher
+    faculty_id = teacher.id
+    session_id = params[:session_id]
+    evaluate_content = {}
+    params[:info].each{|k,v| evaluate_content.merge!({v['name'] => v['value']})}
+    evaluate_content.delete('session_id')
+    evaluate_content.merge!({ "student_id" => params[:student_id].to_i })
 
-    if error
-      return {type: 'success', message: 'Gửi đánh giá thành công!'}
+    errors = Api::Odoo.evaluate(session_id: session_id.to_i, faculty_id: faculty_id, attendance_lines: [evaluate_content], attendance_time: Time.now)
+
+    if errors[0]
+      { type: 'success', message: 'Đánh giá thành công' }
     else
-      return {type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!'}
+      { type: 'danger', message: errors[1] }
     end
   end
 
