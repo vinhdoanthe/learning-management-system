@@ -38,7 +38,6 @@ module Api
                     [session_id], {})
             return success, mes
         rescue XMLRPC::FaultException => exception
-            puts exception
             return false, exception
         end
     end
@@ -58,7 +57,6 @@ module Api
                 lession_id: lession_id,
                 attendance_line: attendance_lines.map{|x| [0,0,x]}
             }])        
-            puts id
             return id
         rescue XMLRPC::FaultException => exception            
             return false, get_error(exception)
