@@ -28,12 +28,12 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teacher_checkin
-    errors = Api::Odoo.checkin(session_id: params[:session_id], faculty_id: params[:faculty_id], check_in_time: params[:time])
+    errors = Api::Odoo.checkin(session_id: params[:session_id].to_i, faculty_id: params[:faculty_id].to_i, check_in_time: params[:time])
 
-    if errors.blank?
+    if errors[0]
       error = {type: 'success', message: 'Checkin thành công'}
     else
-      error = {type: 'danger', message: errors[0]}
+      error = {type: 'danger', message: errors[1]}
     end
 
     render json: {error: error}
@@ -49,18 +49,23 @@ class User::OpenEducat::OpTeachersController < ApplicationController
         line[:is_present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
         line[:note] = student_params['note'].to_s
         lines.append line
-
-        Learning::Homework::QuestionService.new.assign_homework student_id, params[:lesson_id], params[:session_id]
-        User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'coin', 0
-        User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'star', 0
       end
     end
 
-    errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines)
-    if errors.blank?
+    errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i)
+    
+    if errors[0]
+      unless params[:student].blank?
+        params[:student].each_value do |student_params|
+
+          Learning::Homework::QuestionService.new.assign_homework student_id, params[:lesson_id], params[:session_id]
+          User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'coin', 0
+          User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'star', 0
+        end
+      end
       render json: {type: 'success', message: 'Điểm danh thành công!'}
     else
-      render json: {type: 'danger', message: errors[0]}
+      render json: {type: 'danger', message: errors[1]}
     end
 
   rescue StandardError => e

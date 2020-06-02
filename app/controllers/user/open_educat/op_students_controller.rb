@@ -173,7 +173,7 @@ module User
 
         respond_to do |format|
           format.html
-          format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/student_attendance_content', locals: { attendance: attendance }}
+          format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/student_attendance_content', locals: { attendance: attendance, session_id: params[:session_id], student: student }}
         end
       end
 
