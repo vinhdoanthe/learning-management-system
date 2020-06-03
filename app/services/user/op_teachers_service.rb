@@ -44,9 +44,13 @@ class User::OpTeachersService
     if session.state == Learning::Constant::Batch::Session::STATE_CONFIRM
       session_students = session.op_session_students
       session_students.each do |st|
-        student = st.op_student_course.op_student
+        op_student_course = st.op_student_course
+        next if op_student_course.blank?
+        student = op_student_course.op_student
+        next if student.blank?
         student_avatar = get_student_avatar student
-        student_info = {student.id => {:note => st.note || '', :attendance => '', :status => st.op_student_course.state, :code => student.code || '', :name => student.full_name, :avatar_src => student_avatar}}
+        status = st.present ? 'on' : 'off'
+        student_info = {student.id => {:note => st.note || '', :attendance => '', :status => status, :code => student.code || '', :name => student.full_name, :avatar_src => student_avatar}}
         students.merge!(student_info)
       end
     elsif session.state == Learning::Constant::Batch::Session::STATE_DONE
@@ -56,8 +60,9 @@ class User::OpTeachersService
         note = st.note_2 unless note
         student = st.op_student
         student_avatar = get_student_avatar student
+        status = st.present ? 'on' : 'off'
 
-        student_info = {student.id => {:note => note || '', :attendance => st.present, :status => 'on', :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
+        student_info = {student.id => {:note => note || '', :attendance => st.present, :status => status, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
         students.merge!(student_info)
       end
     end

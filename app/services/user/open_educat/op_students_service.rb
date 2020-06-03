@@ -260,4 +260,5 @@ class User::OpenEducat::OpStudentsService
 
     [batch_ids, subject_ids]
   end
+
 end

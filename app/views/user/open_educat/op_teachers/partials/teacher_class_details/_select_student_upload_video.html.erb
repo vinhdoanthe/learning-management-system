@@ -1,0 +1,11 @@
+<div class='col-md-3'>
+  <label>Học sinh <span style='color: red'>*</span>
+</div>
+<div class='col-md-8'>
+  <select class='fl_input' id='upload_project_selection'>
+    <option value=''></option>
+    <% all_student.each do |id, student| %>
+      <option value="<%= id %>"><%= student[:name] %> </option>
+    <% end %>
+  </select>
+</div>
