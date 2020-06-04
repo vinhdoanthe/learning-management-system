@@ -73,7 +73,6 @@ class SocialCommunity::PhotoService
     end
   end
 
-
   private
   def pre_process_image image
     begin
