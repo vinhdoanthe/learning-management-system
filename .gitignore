@@ -50,3 +50,5 @@ yarn-debug.log*
 
 /data_import/*
 /data_export/*
+
+/.vscode/launch.json

@@ -25,7 +25,6 @@ class SocialCommunity::DashboardsController < ApplicationController
   def home_feeds
 #    if current_user.is_student?    
       if params[:time_offset_epoch].present?
-        # binding.pry
         time_offset_epoch = DateTime.parse(params[:time_offset_epoch])
         p time_offset_epoch
       else

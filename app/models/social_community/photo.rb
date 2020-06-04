@@ -1,4 +1,5 @@
 class SocialCommunity::Photo < ApplicationRecord
+
   self.table_name = 'photos'
 
   belongs_to :sc_post, class_name: 'SocialCommunity::Feed::PhotoPost'
