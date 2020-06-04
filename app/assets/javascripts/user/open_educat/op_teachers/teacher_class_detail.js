@@ -6,6 +6,14 @@ function student_table(session_id){
   })
 }
 
+function getStudentProjects (batch_id) {
+  $.ajax({
+    url: '/social_community/student_projects?batch_id=' + batch_id,
+    method: 'GET',
+    dataType: 'script'
+  })
+}
+
 $(document).ready(function(){
 
   var waitingdialog = waitingdialog || (function ($) {

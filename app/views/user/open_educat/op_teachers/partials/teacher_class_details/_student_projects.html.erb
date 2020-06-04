@@ -1,0 +1,210 @@
+<% subject_student_projects.each do |subject_id, projects| %>
+  <div class="panel-content">
+    <div class="box-product" >
+      <div class="fc-header" style='margin: 0 0 15px 0'>
+        <% subject = Learning::Course::OpSubject.where(id: subject_id).first %>
+      <h3><span class="color-F16357">Level <%= subject.level  %></h3>
+      </div>
+      <% total_row = projects.length / 4 %>
+      <% for i in 0..total_row %>
+        <div class='row row_<%= i %>'>
+          <% projects.each_with_index do |project, index| %>
+            <% if index / 4 == i %>
+              <div class='col-md-3'>
+                <div class='item'>
+                  <div class="">
+                    <div class="prod-detail">
+                      <div class="prod-img">
+                        <% if project.thumbnail.present? %>
+                        <span><img src="<%= project.thumbnail %>" alt=""></span>
+                        <% else %>
+                          <span><%= image_tag('global/images/Bitmap6.png') %>
+                        <% end %>
+                        <ul class="pri-box">
+                          <li class="pri-box-comment">
+                            <b><%= count_post_comments project.sc_post %></b>
+                            <%= image_tag('global/images/comment-box.png')%>
+                          </li>
+                          <li class="pri-box-heart">
+                            <b><%= count_post_reactions project.sc_post %></b>
+                            <%= image_tag('global/images/heart-box.png')%>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="prod-text">
+                        <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN <%= project.op_course.name %></label>
+                        <p><%= project.description %></p>
+                        <input type='hidden' value='<%= project.id %>' name='student_project_id'>
+                        <input type='hidden' value='<%= project.op_batch %>' name='project_batch_id' >
+                        <a class='student_project_show' href="" class="font-bold" data-toggle="modal" data-target="#studentProjectDetail">Xem sản phẩm</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <% if current_user.is_teacher? %>
+              <% if i == (projects.length / 4) && index == (projects.length - 1) %>
+                <div class='col-md-3'>
+                  <div >
+                    <input type='hidden' name="upload_project_subject" value="<%= subject.id %>">
+                    <button class='upload_project' type="button" data-toggle="modal" data-target='#upload_youtube_video_modal'>
+                      <%= image_tag('upload_video.png') %>
+                    </button>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>    
+<% end %>
+<div id="studentProjectDetail" class="modal fade" role="dialog">
+</div>
+<div id="upload_youtube_video_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Upload sản phẩm của học sinh</h4>
+      </div>
+      <div class="modal-body">
+        <div id="video_infomation">
+          <div class='row' id="student_project_upload">
+          </div>
+          <div class='row' id="student_project_subject">
+            <div class='col-md-3'>
+              <label>Học phần <span style="color: red">*</span></label>
+            </div>
+            <div class="col-md-8">
+              <select id="upload_project_subject">
+                <% subjects.each do |k, v| %>
+                  <option value="<%= k %>"><%= v %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          <div class="project_name row">
+            <div class='col-md-3'>
+              <label>Tên sản phẩm <span style='color: red'>*</span></label>
+            </div>
+            <div class='col-md-8'>
+              <input placeholder="Tên sản phẩm" name="project_name" type="text"></input>
+            </div>
+          </div>
+          <div class="project_video row">
+            <div class='col-md-3'>
+              <label>Video trình bày:</label>
+            </div>
+            <div class= 'col-md-8'>
+              <input name="project_video" type="file"></input>
+              <progress id="progressBar" value="0" max="100" style="width: 100%; height: 10px;"></progress>
+            </div>
+          </div>
+          <div class="project_slide row">
+            <div class='col-md-3'>
+            <label>Slide sản phẩm:</label> 
+            </div>
+            <div class='col-md-8'>
+            <input name="project_slide" type="file"></input>
+            </div>
+          </div>
+          <div class="project_presentation row">
+            <div class='col-md-3'>
+            <label>Link sản phẩm</label>
+            </div>
+            <div class='col-md-8'>
+            <input placeholder="Link sản phẩm" name="project_action" type="text"></input>
+            </div>
+          </div>
+          <div class="project_description row">
+            <div class='col-md-3'>
+              <label>Mô tả sản phẩm </label>
+            </div>
+            <div class='col-md-8'>
+              <textarea name='project_description' placeholder="Mô tả về sản phẩm" rows='5'></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" style="background-color: #5DC2A7;" id="upload_project_confirm">Upload video</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<style>
+  #video_infomation input{
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  #video_infomation textarea{
+      width: 100%;
+    }
+  #video_infomation select{
+    padding: 5px;
+      margin-bottom: 15px;
+    -webkit-appearance: auto;
+  }
+</style>
+<script>
+  $('.upload_project').on('click', function(){
+    $('#upload_project_subject').val($(this).parent().find($('input[name="upload_project_subject"]')).val())
+  })
+  $('#upload_project_confirm').on('click', function(){
+    var data = new FormData();
+    subject_id = $('#upload_project_subject').val()
+    student_id = $('#upload_project_selection').val()
+    data.append('student_id', student_id)
+    file = $('input[name="project_video"]').get(0).files[0]
+    data.append('file', file)
+    title = $('input[name="project_name"]').val()
+    description = $('textarea[name="project_description"]').val()
+    data.append('title', title)
+    data.append('description', description)
+    slide = $('input[name="project_slide"]').val()
+    data.append('slide', slide)
+    link = $('input[name="project_action"]').val()
+    data.append('link', link)
+    batch_id = $('input[name="active_batch"]').val()
+    data.append('batch_id', batch_id)
+    data.append('subject_id', subject_id)
+
+    $.ajax({
+      method: 'POST',
+      url: '/social_community/youtube_upload',
+      data: data,
+      contentType: false,
+      processData: false,
+      timeout: 6000000,
+      success: function(res){
+      },
+      xhr: function(){
+        //Get XmlHttpRequest object
+        var xhr = $.ajaxSettings.xhr() ;
+        //Set onprogress event handler
+        xhr.upload.onprogress = function(data){
+          var perc = Math.round((data.loaded / data.total) * 100);
+          $('#progressBar').val(perc);
+        };
+        return xhr ;
+      },
+    })
+  })
+
+$('.student_project_show').click(function(){
+    project_id = $(this).parent().find($('input[name="student_project_id"]')).val()
+    $.ajax({
+      method: 'GET',
+      url: '/social_community/student_project_detail?project_id=' + project_id,
+      dataType: 'script'
+    })
+  })
+
+</script>

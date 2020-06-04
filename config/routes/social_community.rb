@@ -27,6 +27,10 @@ namespace :social_community do
     get 'get_reactions_and_comments' => 'posts#get_reactions_and_comments', as: 'get_reactions_and_comments'
   end
 
+  post 'youtube_upload' => 'sc_student_projects#youtube_upload'
+  get 'student_project_detail' => 'sc_student_projects#student_project_detail'
+  get 'student_projects' => 'sc_student_projects#student_projects'
+
   get 'home_feeds' => 'dashboards#home_feeds', as: 'home_feeds'
   get 'student_dashboard' => 'dashboards#student_dashboard', as: 'student_dashboard'
   get 'teacher_dashboard' => 'dashboards#teacher_dashboard', as: 'teacher_dashboard'

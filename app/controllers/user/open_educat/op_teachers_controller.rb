@@ -100,6 +100,17 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     end
   end
 
+  def student_projects
+    subject_student_projects = SocialCommunity::ScStudentProject.where(batch_id: params[:batch_id]).all.group_by{ |product| product.subject_id }
+    subject_ids = subject_student_projects.keys
+    subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level)
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/student_projects', locals: { subject_student_projects: subject_student_projects, subjects: subjects } }
+    end
+  end
+
   private
 
   def find_teacher

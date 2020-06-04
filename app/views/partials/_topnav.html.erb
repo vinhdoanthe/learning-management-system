@@ -20,7 +20,7 @@
             <% end%>
             <li class="dropdown" id="notifications-header">
               <div id="notifications">
-              <%= render_notifications_of current_user, index_content: :with_attributes, fallback: :default %>
+              <%= render_notifications_of current_user, index_content: :with_attributes, fallback: :default, limit: 10 %>
               </div>
             </li>
             <li class="dropdown" id="language-header">

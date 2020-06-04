@@ -7,12 +7,14 @@ module SocialCommunity::DashboardsHelper
     end
     feeds = SocialCommunity::Feed::PostsService.decor_post_to_feed [post] 
     feed = feeds[0]
-    
+
     case post.type
     when 'SocialCommunity::Feed::RewardPost'
      content = reward_feed feed
     when 'SocialCommunity::Feed::PhotoPost'
      content = photo_feed feed
+    when 'SocialCommunity::Feed::StudentProjectPost'
+      content = student_project_feed feed
     end
 
     content[0]
@@ -56,6 +58,22 @@ module SocialCommunity::DashboardsHelper
     [message, photos]
     # find photos
     # render message
+  end
+
+  def student_project_feed feed
+    project = SocialCommunity::ScStudentProject.where(sc_post_id: feed.post.id).first
+    message = "Giảng viên vừa đăng sản phẩm cuối khoá trong lớp học của bạn"
+    if project.present?
+      course = project.op_course
+      student = project.op_student
+      subject = project.op_subject
+
+      if course.present? && student.present?
+        message = "Học sinh <span class='noti_student_name'>#{ student.full_name }</span> vừa hoàn thành dự án cuối khoá lớp <span class='noti_course_name'>#{ course.name }</span> level #{ subject.level }"
+      end
+    end
+
+    [message, project]
   end
 
   def blank_post_noti_content noti
