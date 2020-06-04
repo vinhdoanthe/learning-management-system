@@ -20,3 +20,7 @@
  * Feed các hoạt động tại TEKY
  * Chấm bài
  * Sản phẩm cuối khóa
+
+#### Danh sách thư libraries
+ * ImageMagick
+ * ipeg_optim

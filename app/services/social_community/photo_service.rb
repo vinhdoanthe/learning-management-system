@@ -76,7 +76,9 @@ class SocialCommunity::PhotoService
   private
   def pre_process_image image
     begin
+      puts image.inspect
       processed_image = MiniMagick::Image.new(image.tempfile.path)
+      puts processed_image
       processed_image.format 'jpg'
       w,h = processed_image.dimensions
       max_w = 1920
@@ -108,8 +110,9 @@ class SocialCommunity::PhotoService
                                    })
       image_optim.optimize_image!(processed_image.path)
       processed_image
-    rescue => exception
-      puts exception.backtrace
+    rescue Exception => e
+      logger.error e.message
+      e.backtrace.each { |line| logger.error line }
     end
   end
 end
