@@ -125,4 +125,3 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'spreadsheet', '~> 1.2', '>= 1.2.6'
 gem 'kaminari-mongoid'
 gem 'yt', '~> 0.32.0'
-gem 'omniauth-google-oauth2'
