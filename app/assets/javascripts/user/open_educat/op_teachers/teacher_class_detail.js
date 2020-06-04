@@ -8,7 +8,7 @@ function student_table(session_id){
 
 function getStudentProjects (batch_id) {
   $.ajax({
-    url: '/user/open_educat/op_teachers/student_projects?batch_id=' + batch_id,
+    url: '/social_community/student_projects?batch_id=' + batch_id,
     method: 'GET',
     dataType: 'script'
   })

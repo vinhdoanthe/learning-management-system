@@ -2,7 +2,7 @@ $(document).ready(function(){
 	function get_student_projects(batch_id){
 		$.ajax({
 			method: 'GET',
-			url: '/user/open_educat/op_students/student_projects?batch_id=' + batch_id,
+			url: '/social_community/student_projects?batch_id=' + batch_id,
 			dataType: 'script'
 		})
 	}

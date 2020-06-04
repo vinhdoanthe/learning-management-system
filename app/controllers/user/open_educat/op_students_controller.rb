@@ -199,15 +199,6 @@ module User
         redirect_error_site(e)
       end
 
-      def student_projects
-        @projects = SocialCommunity::ScStudentProject.where(batch_id: params[:batch_id]).all.group_by{ |product| product.subject_id }
-
-        respond_to do |format|
-          format.html
-          format.js { render 'user/open_educat/op_students/js/student_projects', locals: { student_projects: @projects } }
-        end
-      end
-
       def student_project_detail
        @project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
        @batch = @project.op_batch.name
