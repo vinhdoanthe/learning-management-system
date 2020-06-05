@@ -40,12 +40,14 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
 
   def student_projects
     subject_student_projects = SocialCommunity::ScStudentProject.where(batch_id: params[:batch_id]).all.group_by{ |product| product.subject_id }
-    subject_ids = subject_student_projects.keys
-    subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level)
-    url = if current_user.is_teacher?
-            'user/open_educat/op_teachers/js/teacher_class_details/student_projects'
-          else
+
+    batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
+    course = batch.op_course
+    subjects = course.op_subjects.pluck(:id, :level)
+    url = if current_user.is_student?
             'user/open_educat/op_students/js/student_projects'
+          else
+            'user/open_educat/op_teachers/js/teacher_class_details/student_projects'
           end
 
     respond_to do |format|
@@ -53,5 +55,4 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
       format.js { render url, locals: { subject_student_projects: subject_student_projects, subjects: subjects } }
     end
   end
-
 end

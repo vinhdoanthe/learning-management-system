@@ -18,3 +18,5 @@ Rails.application.config.assets.precompile += %w( user/open_educat/op_students/h
 Rails.application.config.assets.precompile += %w( social_community/dashboards/* )
 Rails.application.config.assets.precompile += %w( redeem/* )
 Rails.application.config.assets.precompile += %w( google_analytics.js )
+Rails.application.config.assets.precompile += %w( materialize.min.js )
+Rails.application.config.assets.precompile += %w( materialize.min.css )
