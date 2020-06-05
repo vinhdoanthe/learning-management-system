@@ -1,0 +1,32 @@
+<div class='item'>
+  <div class="">
+    <div class="prod-detail">
+      <div class="prod-img">
+        <% if project.thumbnail.present? %>
+          <span><img src="<%= project.thumbnail %>" alt=""></span>
+        <% else %>
+          <span><%= image_tag('global/images/Bitmap6.png') %>
+        <% end %>
+        <ul class="pri-box">
+          <li class="pri-box-comment">
+            <b><%= count_post_comments project.sc_post %></b>
+            <%= image_tag('global/images/comment-box.png')%>
+          </li>
+          <li class="pri-box-heart">
+            <b><%= count_post_reactions project.sc_post %></b>
+            <%= image_tag('global/images/heart-box.png')%>
+          </li>
+        </ul>
+      </div>
+      <div class="prod-text" style="height: 190px; overflow: hidden">
+        <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN <%= project.op_course.name %></label>
+        <p><%= project.description %></p>
+        <input type='hidden' value='<%= project.id %>' name='student_project_id'>
+        <input type='hidden' value='<%= project.op_batch %>' name='project_batch_id' >
+        <div style="position: absolute; right: 25px; bottom: 20px">
+          <a class='student_project_show' href="" class="font-bold" data-toggle="modal" data-target="#studentProjectDetail">Xem sản phẩm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

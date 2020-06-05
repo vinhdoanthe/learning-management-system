@@ -1,0 +1,9 @@
+<%= stylesheet_link_tag "materialize.min.css" %>
+<div class="waiting_loading" style="display: flex; justify-content: center; align-items: center">
+  <div class="progress" style="width: 60%">
+    <div class="indeterminate"></div>
+  </div>
+</div>
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'materialize.min.js' %>
+<% end %>
