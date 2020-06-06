@@ -1,8 +1,34 @@
-<div class='col-md-3'>
-  <div >
+<div class='col-md-4'>
+  <div class="add_new_div">
     <input type='hidden' name="upload_project_subject" value="<%= id %>">
     <button class='upload_project' type="button" data-toggle="modal" data-target='#upload_youtube_video_modal'>
-      <%= image_tag('upload_video.png') %>
+      <%= image_tag('add_new.png') %>
     </button>
   </div>
 </div>
+<style>
+  .add_new_div{
+    height: 100%;
+    padding-bottom: 10px;
+  }
+  .upload_project{
+    width: 100%;
+    height: 100%;
+    border: 1px dashed black;
+    background-color: white;
+    border-radius: 10px;
+    min-height: 300px;
+  }
+  .upload_project img{
+    background-color: white;
+  }
+  .upload_project:hover{
+    background-color: #F5F5F5;
+  }
+  .upload_project:hover img{
+    background-color: #F5F5F5;
+  }
+  .upload_project img:hover{
+    background-color: #F5F5F5;
+  }
+</style>

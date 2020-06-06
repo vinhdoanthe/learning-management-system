@@ -1,12 +1,34 @@
+<% student = project.op_student %>
+<% student_name, company_name  = '', '' %>
+<% if student.present? %>
+  <% student_name = student.full_name %>
+  <% company_name = student.res_company ? student.res_company.name : '' %>
+<% end %> 
 <div class='item'>
   <div class="">
     <div class="prod-detail">
       <div class="prod-img">
         <% if project.thumbnail.present? %>
-          <span><img src="<%= project.thumbnail %>" alt=""></span>
+          <span><img src="<%= project.thumbnail %>" alt="" class="project_image"></span>
         <% else %>
-          <span><%= image_tag('global/images/Bitmap6.png') %>
+          <span><%= image_tag('global/images/Bitmap6.png', class:"project_image") %>
         <% end %>
+        <div class='project_control'>
+          <div class='row'>
+            <% if current_user.is_teacher? %>
+              <div class="col-md-6">
+                <button class="edit_project" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail">Edit</button>
+              </div>
+              <div class="col-md-6">
+                <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Show</button>
+              </div>
+            <% else %>
+              <div class="">
+                <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Show</button>
+              </div>
+            <% end %>
+          </div>
+        </div>
         <ul class="pri-box">
           <li class="pri-box-comment">
             <b><%= count_post_comments project.sc_post %></b>
@@ -20,13 +42,63 @@
       </div>
       <div class="prod-text" style="height: 190px; overflow: hidden">
         <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN <%= project.op_course.name %></label>
-        <p><%= project.description %></p>
+        <div>
+          <label>Học sinh: </label><span> <%= student_name %></span><br>
+          <label>Học viện: </label><span> <%= company_name%></span><br>
+        </div>
         <input type='hidden' value='<%= project.id %>' name='student_project_id'>
         <input type='hidden' value='<%= project.op_batch %>' name='project_batch_id' >
-        <div style="position: absolute; right: 25px; bottom: 20px">
-          <a class='student_project_show' href="" class="font-bold" data-toggle="modal" data-target="#studentProjectDetail">Xem sản phẩm</a>
+        <div style="position: absolute; right: 25px; bottom: 20px; ">
+          <a class='student_project_show' href="" class="font-bold" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Xem sản phẩm</a>
         </div>
       </div>
     </div>
   </div>
 </div>
+<style>
+.student_project_show {
+  font-weight: 600;
+  font-size: 15px;
+}
+.project_image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+.project_control {
+  width: 80%;
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.prod-img:hover .project_image {
+  opacity: 0.3;
+}
+
+.prod-img:hover .project_control {
+  opacity: 1;
+}
+
+.project_control button{
+  border: none;
+  border-radius: 4px;
+  padding: 10px 30px;
+}
+
+.edit_project {
+  background: #fcf055;
+}
+
+.show_project {
+  background: #5cd2a7;
+}
+</style>

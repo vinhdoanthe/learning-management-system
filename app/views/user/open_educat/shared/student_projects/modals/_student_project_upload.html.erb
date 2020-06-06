@@ -36,7 +36,9 @@
             </div>
             <div class= 'col-md-8'>
               <input name="project_video" type="file"></input>
+              <div id='upload_progress_bar'>
               <progress id="progressBar" value="0" max="100" style="width: 100%; height: 10px;"></progress>
+              </div>
             </div>
           </div>
           <div class="project_slide row">
@@ -72,3 +74,26 @@
     </div>
   </div>
 </div>
+<style>
+  #upload_progress_bar {
+    display: none;
+  }
+  #upload_project_subject {
+    width: 100%
+  }
+  .progress{
+    margin: 0 0 15px 0;
+  }
+  .progress-bar-striped, .progress-striped .progress-bar{
+    background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent) !important;
+    animation: progress-bar-stripes 2s linear infinite !important;
+    background-size: 40px 40px;
+  }
+  .upload_done {
+    font-size: 15px;
+      color: ##5DC2A7;
+  }
+  .upload_failt {
+    font-size: 15px;
+      color: #f42929:
+</style>
