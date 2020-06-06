@@ -160,7 +160,7 @@ class User::OpTeachersService
   end
 
   def get_student_avatar student
-    ActionController::Base.helpers.asset_path('global/images/avatar.svg')
+    student_avatar = ActionController::Base.helpers.asset_path('global/images/icon-student.png')
     #Temporary comment. TODO: in version 1.1
     user = User::Account::User.where(student_id: student.id).first
 

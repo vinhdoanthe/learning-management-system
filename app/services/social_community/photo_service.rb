@@ -74,15 +74,17 @@ class SocialCommunity::PhotoService
   end
 
   private
+
+  # constraints
+  # - max dimensions: 4K resolution 3840x2160
+  # - max size in disk: 500 kB
   def pre_process_image image
     begin
-      puts image.inspect
       processed_image = MiniMagick::Image.new(image.tempfile.path)
-      puts processed_image
       processed_image.format 'jpg'
       w,h = processed_image.dimensions
-      max_w = 1920
-      max_h = 1080
+      max_w = 3840
+      max_h = 2160
       if w > max_w or h > max_h
         if (w/max_w) < (h/max_h)
           new_h = max_h
@@ -95,6 +97,22 @@ class SocialCommunity::PhotoService
         processed_image.resize(new_dimensions)
       end
       processed_image.write processed_image.path
+      image_size = processed_image.size
+      if image_size > 6000000
+        max_quality = 50
+      elsif image_size > 5000000
+        max_quality = 55
+      elsif image_size > 4000000
+        max_quality = 60
+      elsif image_size > 3000000
+        max_quality = 65
+      elsif image_size > 2000000
+        max_quality = 75
+      elsif image_size > 1000000
+        max_quality = 85
+      elsif image_size > 500000
+        max_quality = 95
+      end
       # Optimize image
       image_optim = ImageOptim.new(:pack => true,
                                    :pngout => false,
@@ -106,7 +124,7 @@ class SocialCommunity::PhotoService
                                    :jpegoptim => {
                                      :allow_lossy => true,
                                      :strip => :all,
-                                     :max_quality => 85
+                                     :max_quality => max_quality
                                    })
       image_optim.optimize_image!(processed_image.path)
       processed_image
