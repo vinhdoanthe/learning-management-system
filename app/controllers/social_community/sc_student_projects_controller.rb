@@ -9,13 +9,17 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
       video_id = new_video.id
       video = Yt::Video.new id: video_id
       embed_link = video.embed_html
+      thumbnail_video = video.thumbnail_url
+
+      user = User::Account::User.where(student_id: params[:student_id]).first
+
       SocialCommunity::ScStudentProjectsService.new.manage_youtube_playlist account, params[:batch_id], video_id
-      SocialCommunity::ScStudentProjectsService.new.create_student_project params, embed_link, current_user
-      User::Reward::CoinStarsService.new.reward_coin_star 'UPLOAD_SPCK', params[:student_id], 'coin', current_user.id
-      User::Reward::CoinStarsService.new.reward_coin_star 'UPLOAD_SPCK', params[:student_id], 'star', current_user.id
-      render json: {message: 'success'}
+      SocialCommunity::ScStudentProjectsService.new.create_student_project params, embed_link, current_user, thumbnail_video
+      User::Reward::CoinStarsService.new.reward_coin_star 'UPLOAD_SPCK', user.id, 'coin', current_user.id
+      User::Reward::CoinStarsService.new.reward_coin_star 'UPLOAD_SPCK', user.id, 'star', current_user.id
+      render json: {type: 'success', message: 'Upload thành công'}
     else
-      render json: {message: 'false'}
+      render json: {type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau'}
     end
   end
 
@@ -35,6 +39,34 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     respond_to do |format|
       format.html
       format.js { render 'user/open_educat/shared/js/student_project_detail', locals: { project: project, batch: batch, course: course, student: student, company_name: company_name}}
+    end
+  end
+
+  def edit_student_project
+    project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
+    batch = Learning::Batch::OpBatch.where(id: project.batch_id).first
+    subject_ids = batch.op_sessions.pluck(:subject_id)
+    subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level)
+    student = User::OpenEducat::OpStudent.where(id: project.student_id).first
+    student_ids = Learning::Batch::OpStudentCourse.where(batch_id: batch.id).pluck(:student_id)
+    all_student = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:id, :full_name)
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/shared/student_projects/js/edit_student_project', locals: { student: student, project: project, subjects: subjects, all_student: all_student } }
+    end
+  end
+
+  def update_student_project
+    return unless current_user.is_teacher?
+    project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
+    update_params = {}
+    params.each{|k,v| update_params.merge!({k => v}) if ['name', 'description', 'student_id', 'subject_id'].include? k }
+
+    if project.update(update_params)
+      render json: { type: 'success', 'message': 'Update thành công' }
+    else
+      render json: { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
     end
   end
 

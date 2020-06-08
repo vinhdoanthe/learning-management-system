@@ -26,7 +26,7 @@ class SocialCommunity::ScStudentProjectsService
     playlist
   end
 
-  def create_student_project params, video_link, teacher
+  def create_student_project params, video_link, teacher, thumbnail_url
     ActiveRecord::Base.transaction do
       project = SocialCommunity::ScStudentProject.new
       project.description = params[:description]
@@ -35,6 +35,7 @@ class SocialCommunity::ScStudentProjectsService
       project.project_show_video = params[:tinker]
       project.introduction_video = video_link
       project.batch_id = params[:batch_id]
+      project.thumbnail = thumbnail_url
       project.subject_id = params[:subject_id]
       project.student_id = params[:student_id]
       

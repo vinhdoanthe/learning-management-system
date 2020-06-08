@@ -1,6 +1,6 @@
 <div class="modal-news">
   <div class='panel-content'>
-    <ul>
+    <ul class='project_infomation'>
       <li>Họ tên: <span><%= student.full_name %></span></li>
       <li>Khóa học: <span><%= course.name %></span></li>
       <li>Lớp học: <span><%= batch.name %></span></li>
@@ -58,6 +58,11 @@
   <div id="student_project_feed">
   </div>
 </div>
+<style>
+  .student_infomation li span{
+   font-weight: 600; 
+  }
+</style>
 <script>
   $(document).ready(function(){
     function getReactionsAndComments(post_id){

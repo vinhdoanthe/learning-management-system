@@ -198,13 +198,5 @@
     })
   })
 
-$('.student_project_show').click(function(){
-    project_id = $(this).parent().find($('input[name="student_project_id"]')).val()
-    $.ajax({
-      method: 'GET',
-      url: '/social_community/student_project_detail?project_id=' + project_id,
-      dataType: 'script'
-    })
-  })
 
 </script>

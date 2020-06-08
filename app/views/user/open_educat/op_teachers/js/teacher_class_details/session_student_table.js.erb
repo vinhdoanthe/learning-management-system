@@ -8,10 +8,7 @@ $("#session_student_info").html("<%= escape_javascript(render partial: 'user/ope
 
 $("#attendance_table").html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/attendance_table', locals: { all_student: all_student } ) %>");
 $(document).ready(function(){
-  setTimeout(
-  function()
-  {
-  $("#student_project_upload").html('<%= j ( render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/select_student_upload_video', locals: { all_student: all_student } ) %>');
-    //do something special
-  }, 3000);
+  $('#student_projects').on('click', '.upload_project', function(){
+  $('#student_projects').find($("#student_project_upload")).html('<%= j ( render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/select_student_upload_video', locals: { all_student: all_student } ) %>');
+  })
 })
