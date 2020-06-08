@@ -109,7 +109,7 @@ class Learning::Homework::QuestionService
     errors
   end
 
-  def assign_homework student_id, lesson_id, session_id
+  def assign_homework_by_session student_id, lesson_id, session_id
     session = Learning::Batch::OpSession.where(id: session_id).first
     session.update(lession_id: lesson_id) if session.lession_id.blank?
 
@@ -129,6 +129,20 @@ class Learning::Homework::QuestionService
       user_question.question_id = question.id
       user_question.save
     end
+  end
+
+  def assign_homework student_id, question_list, batch_id
+    question_list.each do |question|
+      create_user_question student_id, question.to_i, batch_id.to_i
+    end
+  end
+
+  def create_user_question student_id, question_id, batch_id
+    user_question = Learning::Homework::UserQuestion.new
+    user_question.op_batch_id = batch_id
+    user_question.student_id = User::Account::User.where(student_id: student_id).first.id
+    user_question.question_id = question_id
+    user_question.save
   end
 
   private

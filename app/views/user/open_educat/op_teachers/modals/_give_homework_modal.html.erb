@@ -1,0 +1,142 @@
+<div class="modal-dialog" role="document" style="width: 80%">
+  <div class="modal-content">
+
+    <div class="modal-body">
+      <div class="modal-title">
+        <label>Giao bài tập về nhà</label>
+      </div>
+      <div class=" bo-table">
+        <div class="fc-header" style="margin-bottom: 30px">
+          <h3><span class="text-uppercase">Chọn học sinh:</h3>
+        </div>
+        <select class="select_assign_student" name="student[]" multiple="multiple">
+          <% students.each do |student_id, student_info| %>
+            <% if student_info[:status] == 'on' %>
+              <option selected value="<%= student_id %>"><%= student_info[:name] %></option>
+            <% end %>
+          <% end %>
+        </select>
+        <div class="ths-list">
+          <div class="fc-header" style="margin-bottom: 30px">
+            <h3><span class=" text-uppercase">Danh sách bài tập:</h3>
+          </div>
+          <div class="">
+            <% homeworks.each_with_index do |question, index| %>
+              <% if question.question_type == 'text' %>
+                <label class='homework'>Bài tập <%= index + 1 %> <%= question.question_type %>:
+                  <p> <%= question.question.html_safe %></p>
+                  <input type="checkbox" value="<%= question.id %>" name="select_homework" checked="checked">
+                  <span class="homework_checkmark"></span>
+                </label>
+              <% else %>
+                <label class='homework'>Bài tập <%= index + 1 %>(<%= question.question_type %> choice):
+                  <p><%= question.question.html_safe %></p>
+                  <div class='question_choice'>
+                    <% question.question_choices.each do |choice| %>
+                      <p style="width: auto"><%= choice.choice_content.present? ? choice.choice_content : "''" %>
+                      </p>
+                    <% end %>
+                  </div>
+                  <input type="checkbox" value="<%= question.id %>"  name="select_homework" checked="checked">
+                  <span class="homework_checkmark"></span>
+                </label>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="assign_homework_confirm" data-dismiss="modal" class="btn btn-primary">Giao bài tập</button>
+      </div>
+    </div>
+  </div>
+  <style>
+.homework {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-bottom: 20px;
+}
+
+label.homework {
+  font-size: 16px;
+}
+
+/* Hide the browser's default checkbox */
+.homework input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.homework_checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.homework:hover input ~ .homework_checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.homework input:checked ~ .homework_checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.homework_checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.homework input:checked ~ .homework_checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.homework .homework_checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.select2-selection__choice__display {
+  color: black;
+}
+
+button.select2-selection__choice__remove {
+  border: none;
+  background-color: #e4e4e4;
+  color: black !important;
+}
+
+  </style>
+  <script>
+    $(document).ready(function() {
+      $('.select_assign_student').select2({
+      });
+    });
+  </script>

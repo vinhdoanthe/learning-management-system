@@ -57,8 +57,6 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     if errors[0]
       unless params[:student].blank?
         params[:student].each_value do |student_params|
-
-          Learning::Homework::QuestionService.new.assign_homework student_id, params[:lesson_id], params[:session_id]
           User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'coin', 0
           User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'star', 0
         end
@@ -108,6 +106,35 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     respond_to do |format|
       format.html
       format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/student_projects', locals: { subject_student_projects: subject_student_projects, subjects: subjects } }
+    end
+  end
+
+  def assign_homework_details
+    session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+    return false if session.blank?
+
+    batch = session.op_batch
+    lesson = session.op_lession
+    homeworks = Learning::Material::Question.where(op_lession_id: lesson.id)
+    students = User::OpTeachersService.new.teacher_class_detail batch, session
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/give_homework', locals: { homeworks: homeworks, students: students}}
+    end
+  end
+
+  def assign_homework
+    session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+    if session.blank?
+      render json: { type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau' }
+    else
+      batch_id = session.batch_id
+      params[:student_ids].each do |student_id|
+      Learning::Homework::QuestionService.new.assign_homework student_id, params[:question_ids], batch_id
+      end
+
+      render json: { type: 'success', message: 'Giao bài tập về nhà thành công' }
     end
   end
 
