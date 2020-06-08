@@ -17,6 +17,8 @@ en:
     reset_password: "RESET PASSWORD"
     reset_link: "Send reset passwork link"
     return_login: "Have account? Login"
+    username_not_found: 'Username not found'
+    reset_email_sent: 'Email sent with password reset instructions'
   topbar:
     coin: "TEKY COIN"
   sidebar:
@@ -46,7 +48,7 @@ en:
     relation: "Relation"
     mobile: "Mobile"
   notification:
-    title: "Notifications from Teky"
+    title: "Notifications from TEKY"
     dashboard: "NOTIFICATIONS"
     new_noti: 'new notifications'
     all: "All notifications"
@@ -122,3 +124,5 @@ en:
       registered_subject: "Registered subject"
       new: "Newest students"
       leader_board: "Leaders' board"
+  social_community:
+    new_comment_placeholder: 'Typing comment here'

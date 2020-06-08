@@ -7,6 +7,9 @@
     <% elsif feed.post.is_a?(SocialCommunity::Feed::PhotoPost) %>
       <% message, photos = photo_feed(feed) %>
       <%= render :partial => 'social_community/feed/photo_posts/photo_post', :locals => {feed: feed, message: message.html_safe, photos: photos} %>
+    <% elsif feed.post.is_a?(SocialCommunity::Feed::StudentProjectPost) %>
+      <% message, project = student_project_feed(feed) %>
+      <%= render :partial => 'social_community/feed/student_project_posts/student_project_post', :locals => {feed: feed, message: message.html_safe, project: project} %>
     <% end %>
   <% end %>
 <% end %>

@@ -1,0 +1,15 @@
+<div class="bnd-img" style="text-align: center">
+  <% if project.introduction_video.present? %>
+    <div class='intro_project'>
+      <%= project.introduction_video.html_safe %>
+    </div>
+  <% elsif project.introduction_video.blank? && project.project_show_video.present? %>
+    <div class='show_project'>
+      <%= project.project_show_video.html_safe %>
+    </div>
+  <% else %>
+    <div class='presentation_project'>
+      <%= project.presentation_project.html_safe %>
+    </div>
+  <% end %>
+</div>

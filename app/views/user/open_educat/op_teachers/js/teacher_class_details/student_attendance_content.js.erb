@@ -1,2 +1,14 @@
 
-  $('#modal_evaluate').html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/modals/teacher_evaluate', locals: { attendance: attendance } ) %>" );
+$('#modal_evaluate').html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/modals/teacher_evaluate', locals: { attendance: attendance } ) %>" );
+
+$('#teacher_evaluate_confirm').on('click', function () {
+  info = $('#teacher_evaluate_session').serializeArray();
+  $.ajax({
+    url: '/user/teacher_evaluate',
+    method: 'POST',
+    data: {info: info, session_id: <%= session_id %>, student_id: <%= student.id %>},
+    success: function (res) {
+      display_noti(res);
+    }
+  })
+})

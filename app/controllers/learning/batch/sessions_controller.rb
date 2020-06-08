@@ -1,6 +1,7 @@
 class Learning::Batch::SessionsController < ApplicationController
   def add_photo_attachment
     session = Learning::Batch::OpSession.where(id: params[:upload_session_id]).first
+
     result = SocialCommunity::PhotoService.new.add_photo_attachment session, params[:photos], current_user
     
     if result.present?

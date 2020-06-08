@@ -1,5 +1,7 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "user/open_educat/op_teachers/teacher_class_detail" %>
+   <%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
 <% end %>
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
@@ -43,9 +45,23 @@
           </div>
       </div>
     </div>
-  </div>
+    <div class='bo-table'style=" margin-top: 30px;" >
+      <div class="fc-header clearfix">
+        <div class="pull-left lesson_info">
+          <h3>Sản phẩm học sinh</h3>
+        </div>
+      </div>
+      <div id="student_projects">
+      </div>
+    </div>
+    </div>
 </div>
   <%= render 'learning/modal_materials' %>
   <%= render 'user/open_educat/op_teachers/modals/teacher_attendance' %>
   <div class="modal fade" id="reward_student_modal" role="dialog">
 </div>
+  <script>
+    $(document).ready(function(){
+      getStudentProjects(<%= @batch.id %>)
+    })
+  </script>

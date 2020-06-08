@@ -2,13 +2,13 @@
   <% photos_size = photos.size %>
   <% if photos_size <= 4 %>
     <% photos.each do |photo| %>
-      <a href="#showPhotoModalInDashboard" class="bndi-detail"  data-toggle="modal">
+      <a href="#showPhotoModalInDashboard<%= post.id %>" class="bndi-detail"  data-toggle="modal">
         <span><%= image_tag(photo.image, :class => 'image-fit') %></span>
       </a>
     <% end %>
   <% else %>
     <% for index in 0..2 %>
-      <a href="#showPhotoModalInDashboard" class="bndi-detail"  data-toggle="modal">
+      <a href="#showPhotoModalInDashboard<%= post.id %>" class="bndi-detail"  data-toggle="modal">
         <span><%= image_tag(photos[index].image, :class => 'image-fit') %></span>
       </a>
     <% end %> 
@@ -21,11 +21,11 @@
   <% end %>
 
   <!-- Modal -->
-  <div class="modal fade" id="showPhotoModalInDashboard" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal fade" id="showPhotoModalInDashboard<%= post.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <ul class="owl-carousel list-lightbox" id="lightbox">
+          <ul class="owl-carousel list-lightbox" id="lightbox<%= post.id %>">
             <% photos.each do |photo| %>
               <li>
                 <span>
@@ -41,7 +41,7 @@
 </div>
 
 <script>
-  $('#lightbox').owlCarousel({
+  $('#lightbox<%= post.id %>').owlCarousel({
     items:1,
     lazyLoad:true,
     loop:true,

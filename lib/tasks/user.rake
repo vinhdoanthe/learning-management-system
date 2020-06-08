@@ -32,4 +32,24 @@ namespace :user do
     end
     puts 'End create faculty users'
   end
+
+  desc 'Update initial_password for old user'
+  task :update_initial_password, [:time] => :environment do |t, args|
+    index = 1
+    puts 'Start'
+    count = User::Account::User.where.not(account_role: 'Admin').count
+    User::Account::User.where.not(account_role: 'Admin').each do |user|
+      if user.authenticate('123456') ||  user.authenticate('TekyAcademy')
+        password = (0..8).map { (65 + rand(26)).chr }.join
+        user.initial_password = password
+        user.password = password
+        if user.save
+          puts "done #{ index } / #{ count }"
+        else
+          puts "Error user_id: #{ user.id }"
+        end
+        index += 1
+      end
+    end
+  end
 end

@@ -13,11 +13,11 @@ class User::Account::PasswordResetsController < ApplicationController
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
-      flash[:success] = "Email sent with password reset instructions"
+      flash[:success] = I18n.t('login.reset_email_sent')
       redirect_to root_url
     else
-      flash.now[:danger] = "Username not found"
-      render 'new'
+      flash.now[:danger] = I18n.t('login.username_not_found')
+      render 'user/sessions/new'
     end
   end
 

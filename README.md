@@ -20,3 +20,10 @@
  * Feed các hoạt động tại TEKY
  * Chấm bài
  * Sản phẩm cuối khóa
+
+#### Danh sách thư libraries
+ * [ImageMagick](https://github.com/ImageMagick/ImageMagick/)
+ * ipeg_optim
+ * mini_magick
+ * [libheif](https://github.com/strukturag/libheif)
+ * [libde265](https://github.com/strukturag/libde265)

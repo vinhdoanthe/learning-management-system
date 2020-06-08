@@ -8,6 +8,7 @@ namespace :user do
     namespace :op_teachers do
     get 'checkin_report', action: 'checkin_report', as: 'checkin_report'
     get 'attendance_report', action: 'attendance_report', as: 'attendance_report'
+    get 'student_projects', action: 'student_projects', as: 'student_projects'
     end
   end
 end

@@ -173,7 +173,7 @@ module User
 
         respond_to do |format|
           format.html
-          format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/student_attendance_content', locals: { attendance: attendance }}
+          format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/student_attendance_content', locals: { attendance: attendance, session_id: params[:session_id], student: student }}
         end
       end
 
@@ -197,15 +197,6 @@ module User
 
       rescue StandardError => e
         redirect_error_site(e)
-      end
-
-      def student_projects
-        @projects = SocialCommunity::ScStudentProject.where(batch_id: params[:batch_id]).all.group_by{ |product| product.subject_id }
-
-        respond_to do |format|
-          format.html
-          format.js { render 'user/open_educat/op_students/js/student_projects', locals: { student_projects: @projects } }
-        end
       end
 
       def student_project_detail

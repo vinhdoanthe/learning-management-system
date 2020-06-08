@@ -17,6 +17,8 @@ vi:
     reset_password: "RESET MẬT KHẨU"
     reset_link: "Gửi link reset mật khẩu"
     return_login: "Đã có tài khoản? Đăng nhập"
+    username_not_found: 'Không tìm thấy tài khoản trên hệ thống'
+    reset_email_sent: 'Hướng dẫn reset mật khẩu đã được gửi đến email'
   topbar:
     coin: "TEKY ĐỒNG"
   sidebar:
@@ -46,7 +48,7 @@ vi:
     relation: "Quan hệ"
     mobile: "Di động"
   notification:
-    title: "Thông báo từ Học viện Teky"
+    title: "Thông báo từ Học viện TEKY"
     dashboard: "Thông báo"
     new_noti: 'thông báo mới'
     all: "Tất cả thông báo"
@@ -122,3 +124,5 @@ vi:
       registered_subject: "Học phần đã đăng ký"
       new: "Các bạn học sinh mới"
       leader_board: 'Top 10 Học sinh tiêu biểu'
+  social_community:
+    new_comment_placeholder: 'Bình luận tại đây'

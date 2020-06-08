@@ -44,9 +44,13 @@ class User::OpTeachersService
     if session.state == Learning::Constant::Batch::Session::STATE_CONFIRM
       session_students = session.op_session_students
       session_students.each do |st|
-        student = st.op_student_course.op_student
+        op_student_course = st.op_student_course
+        next if op_student_course.blank?
+        student = op_student_course.op_student
+        next if student.blank?
         student_avatar = get_student_avatar student
-        student_info = {student.id => {:note => st.note || '', :attendance => '', :status => st.op_student_course.state, :code => student.code || '', :name => student.full_name, :avatar_src => student_avatar}}
+        status = st.present ? 'on' : 'off'
+        student_info = {student.id => {:note => st.note || '', :attendance => '', :status => status, :code => student.code || '', :name => student.full_name, :avatar_src => student_avatar}}
         students.merge!(student_info)
       end
     elsif session.state == Learning::Constant::Batch::Session::STATE_DONE
@@ -56,8 +60,9 @@ class User::OpTeachersService
         note = st.note_2 unless note
         student = st.op_student
         student_avatar = get_student_avatar student
+        status = st.present ? 'on' : 'off'
 
-        student_info = {student.id => {:note => note || '', :attendance => st.present, :status => 'on', :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
+        student_info = {student.id => {:note => note || '', :attendance => st.present, :status => status, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
         students.merge!(student_info)
       end
     end
@@ -137,45 +142,38 @@ class User::OpTeachersService
     schedule_hash
   end
 
-  def self.teacher_evaluate params
-    attendance_line = Learning::Batch::OpAttendanceLine.where(:session_id => params[:session_id].to_i, :student_id => params[:student_id].to_s)
-    return {type: 'danger', message: 'Vui lòng điểm danh trước!'} if attendance_line.blank?
-    error = attendance_line.update(
-      "knowledge1" => params['knowledge1'].to_i,
-      "knowledge2" => params['knowledge2'].to_i,
-      "knowledge3" => params['knowledge3'].to_i,
-      "knowledge4" => params['knowledge4'].to_i,
-      "attitude1" => params['attitude1'].to_i,
-      "attitude2" => params['attitude2'].to_i,
-      "skill1" => params['skill1'].to_i,
-      "skill2" => params['skill2'].to_i,
-      "note_1" => params['teacher_note']
-    )
+  def self.teacher_evaluate params, teacher
+    faculty_id = teacher.id
+    session_id = params[:session_id]
+    evaluate_content = {}
+    params[:info].each{|k,v| evaluate_content.merge!({v['name'] => v['value']})}
+    evaluate_content.delete('session_id')
+    evaluate_content.merge!({ "student_id" => params[:student_id].to_i })
 
-    if error
-      return {type: 'success', message: 'Gửi đánh giá thành công!'}
+    errors = Api::Odoo.evaluate(session_id: session_id.to_i, faculty_id: faculty_id, attendance_lines: [evaluate_content], attendance_time: Time.now)
+
+    if errors[0]
+      { type: 'success', message: 'Đánh giá thành công' }
     else
-      return {type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!'}
+      { type: 'danger', message: errors[1] }
     end
   end
 
   def get_student_avatar student
-    ActionController::Base.helpers.asset_path('global/images/avatar.svg')
-=begin
-    Temporary comment. TODO: in version 1.1
+    student_avatar = ActionController::Base.helpers.asset_path('global/images/icon-student.png')
+    #Temporary comment. TODO: in version 1.1
     user = User::Account::User.where(student_id: student.id).first
 
     if user.present?
       if student.gender == 'm'
-        student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/Group-3.png')
       elsif student.gender == 'f'
-        student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/Group-5.png')
       else
-        student_avatar = ActionController::Base.helpers.asset_path('global/images/avatar.svg')
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/icon-student.png')
       end
     end
 
     student_avatar
-=end
   end
 end
