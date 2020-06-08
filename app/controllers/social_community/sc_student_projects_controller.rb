@@ -76,6 +76,8 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
     course = batch.op_course
     subjects = course.op_subjects.pluck(:id, :level)
+    subjects.sort_by!{|s| s[1]}
+
     url = if current_user.is_student?
             'user/open_educat/op_students/js/student_projects'
           else
