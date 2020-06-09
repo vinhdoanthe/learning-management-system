@@ -98,19 +98,20 @@ class SocialCommunity::PhotoService
       end
       processed_image.write processed_image.path
       image_size = processed_image.size
-      if image_size > 6000000
+      max_quality = 100
+      if image_size > 5000000
         max_quality = 50
-      elsif image_size > 5000000
-        max_quality = 55
       elsif image_size > 4000000
         max_quality = 60
       elsif image_size > 3000000
-        max_quality = 65
+        max_quality = 70
       elsif image_size > 2000000
-        max_quality = 75
+        max_quality = 80
       elsif image_size > 1000000
         max_quality = 85
       elsif image_size > 500000
+        max_quality = 90
+      elsif image_size > 300000
         max_quality = 95
       end
       # Optimize image
