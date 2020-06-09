@@ -13,17 +13,17 @@
         <% else %>
           <span><%= image_tag('global/images/Bitmap6.png', class:"project_image") %>
         <% end %>
-        <div class='project_control'>
-          <div class='row'>
+        <div class=''>
+          <div class='project_control'>
             <% if current_user.is_teacher? %>
-              <div class="col-md-6">
+              <div class="col-md-6 control_button">
                 <button class="edit_project" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail">Edit</button>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 control_button">
                 <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Show</button>
               </div>
             <% else %>
-              <div class="">
+              <div class="project_control">
                 <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Show</button>
               </div>
             <% end %>
