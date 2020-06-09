@@ -16,7 +16,9 @@
           </div>
         </div>
       <% else %>
+        <div id='homeFeeds'>
         <%= render 'social_community/dashboards/shared/feeds', { feeds: @feeds } %>
+        </div>
       <% end %>
     </div>
     <div class="col-md-5">

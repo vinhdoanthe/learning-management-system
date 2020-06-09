@@ -56,6 +56,12 @@
         </button>
       </li>
     <% end %>
+    <% if ['done', 'confirm'].include? active_session.state %>
+      <li>
+        <button type="button" id='give_homework' data-toggle="modal" data-target="#give_homework_modal" class="btn btn-default btn-embossed">Giao bài tập
+        </button>
+      </li>
+    <% end %>
     </ul>
   </div>
 </div>
@@ -64,4 +70,6 @@
 <%= render 'user/open_educat/op_teachers/modals/upload_photo' %>
 <%= render 'user/open_educat/op_teachers/modals/learning_device', { lesson: active_lesson } %>
   <div class="modal fade" id="reward_student_modal" role="dialog">
+</div>
+<div class="modal fade" id="give_homework_modal" role="dialog">
 </div>

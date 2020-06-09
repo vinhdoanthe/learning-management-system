@@ -138,7 +138,6 @@ module User
           line[:note] = student_params['note'].to_s
           lines.append line
 
-          Learning::Homework::QuestionService.new.assign_homework student_params[:student_id], params[:lesson_id], params[:session_id]
         end
       end
 
