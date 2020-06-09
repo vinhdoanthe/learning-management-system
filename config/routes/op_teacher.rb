@@ -9,6 +9,8 @@ namespace :user do
     get 'checkin_report', action: 'checkin_report', as: 'checkin_report'
     get 'attendance_report', action: 'attendance_report', as: 'attendance_report'
     get 'student_projects', action: 'student_projects', as: 'student_projects'
+    get 'assign_homework_details', action: 'assign_homework_details', as: 'assign_homework_details'
+    post 'assign_homework', action: 'assign_homework', as: 'assign_homework'
     end
   end
 end

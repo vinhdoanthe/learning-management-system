@@ -1,9 +1,7 @@
-<%= stylesheet_link_tag "materialize.min.css" %>
-<div class="waiting_loading" style="display: flex; justify-content: center; align-items: center">
-  <div class="progress" style="width: 60%">
-    <div class="indeterminate"></div>
+<%= stylesheet_link_tag 'loading' %>
+<div class="loader__wrap" role="alertdialog" aria-busy="true" aria-live="polite" aria-label="Loading…">
+  <div class="loader" aria-hidden="true">
+    <div class="loader__sq"></div>
+    <div class="loader__sq"></div>
   </div>
 </div>
-<% content_for :javascript_includes do %>
-  <%= javascript_include_tag 'materialize.min.js' %>
-<% end %>
