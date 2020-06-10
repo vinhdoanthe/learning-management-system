@@ -22,29 +22,37 @@ module Learning
 
 
     def list_slides_of_subject
-      if params[:subject_id].present?
-        lesson_ids = Learning::Course::OpLession.where(subject_id: params[:subject_id].to_i).pluck(:id).uniq.compact
-        slides = []
-        unless lesson_ids.blank?
-          slides = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE, op_lession_id: lesson_ids).pluck(:id,:title).uniq.compact 
-        end
-        respond_to do |format|
-          format.js {render 'learning/list_slides', locals: {slides: slides}}
-        end
+      lessons = Learning::Course::OpLession.where(subject_id: params[:subject_id].to_i).pluck(:id,:name).uniq.compact
+      lessons.sort_by! { |lesson| lesson[0] }
+
+      respond_to do |format|
+        format.js {render 'learning/list_slides', locals: {lessons: lessons}}
       end
     end
 
     def show_google_slide
-      if params[:slide_id].present?
-        slide = Learning::Material::LearningMaterial.where(id: params[:slide_id].to_i).first
-        if slide.nil?
-          link = ''
-        else
-          link = slide.google_drive_link
-        end
-        respond_to do |format|
-          format.js {render 'learning/show_google_slide', locals: {link: link}}
-        end
+      lesson = Learning::Course::OpLession.where(id: params[:lesson_id]).first
+      link, plan_link = '',''
+
+      if lesson.present?
+        slide = Learning::Material::LearningMaterial.where(content_type: Learning::Constant::Material::MATERIAL_CONTENT_PRESENTATION, op_lession_id: lesson.id).first
+        plan = Learning::Material::LearningMaterial.where(content_type: Learning::Constant::Material::MATERIAL_CONTENT_LESSON_PLAN, op_lession_id: lesson.id).first
+
+        link = if slide.present?
+                 slide.google_drive_link
+               else
+                 ''
+               end
+
+        plan_link = if plan.present?
+                      plan.google_drive_link
+                    else
+                      ''
+                    end
+      end
+
+      respond_to do |format|
+        format.js {render 'learning/show_google_slide', locals: {link: link, plan_link: plan_link}}
       end
     end
 

@@ -18,6 +18,9 @@ module Learning::Constant
 
     VIMEO_PLAYER_PREFIX = "https://player.vimeo.com/video/"
     DEFAULT_VIDEO_ID = "413237835" 
+    
+    MATERIAL_CONTENT_PRESENTATION = 'presentation'
+    MATERIAL_CONTENT_LESSON_PLAN = 'lesson_plan'
   end
 
   module Batch

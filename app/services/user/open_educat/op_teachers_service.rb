@@ -35,6 +35,7 @@ class User::OpenEducat::OpTeachersService
       batch_name = batch.name
       faculty = session.op_faculty ? session.op_faculty.full_name : ""
       classroom = session.classroom_id.nil? ? '' : Common::OpClassroom.find(session.classroom_id).name
+      href = "/user/open_educat/op_teacher/teacher_class_detail?batch_id=#{ batch.id }&session_id=#{ session.id }"
 
       batch_class_online = (['1', '2'].include? session.op_batch.select_place) ? false : true
       # batch_class = session.op_batch.is_online_class
@@ -42,7 +43,7 @@ class User::OpenEducat::OpTeachersService
       lesson = session.op_batch.current_session_level
       status = session.state
 
-      session_info = { batch_class_online: batch_class_online, name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch_name, course: course, lesson: lesson, status: status, faculty: faculty, classroom: classroom}
+      session_info = { batch_class_online: batch_class_online, name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch_name, course: course, lesson: lesson, status: status, faculty: faculty, classroom: classroom, href: href }
       record = { time.wday => session_info}
       record[7] = record[0]
 

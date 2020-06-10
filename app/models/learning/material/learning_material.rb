@@ -7,6 +7,7 @@ module Learning
 
       enumerize :material_type, in: [Learning::Constant::Material::MATERIAL_TYPE_FILE, Learning::Constant::Material::MATERIAL_TYPE_VIDEO]
       enumerize :learning_type, in: [Learning::Constant::Material::MATERIAL_TYPE_TEACH, Learning::Constant::Material::MATERIAL_TYPE_REVIEW]
+      enumerize :content_type, in: [Learning::Constant::Material::MATERIAL_CONTENT_PRESENTATION, Learning::Constant::Material::MATERIAL_CONTENT_LESSON_PLAN]
 
       has_one_attached :material_file
       has_one_attached :thumbnail_image

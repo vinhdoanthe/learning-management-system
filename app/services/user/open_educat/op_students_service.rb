@@ -203,8 +203,9 @@ class User::OpenEducat::OpStudentsService
       course = session.op_batch.op_course.name
       lesson = session.op_batch.current_session_level
       status = session.state
+      href = "/user/open_educat/op_students/batch_detail/#{ batch.id }"
 
-      session_info = { batch_class_online: batch_class_online, name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch_name, course: course, lesson: lesson, status: status, faculty: faculty, classroom: classroom}
+      session_info = { batch_class_online: batch_class_online, name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch_name, course: course, lesson: lesson, status: status, faculty: faculty, classroom: classroom, href: href }
       record = { time.wday => session_info}
       record[7] = record[0]
 
