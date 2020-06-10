@@ -1,3 +1,7 @@
-<div class="bg-view bo-table baigiang-content">
-  <%= link.html_safe %>
+<div class="bg-view bo-table baigiang-content" >
+  <% if link.present? %>
+    <%= link.html_safe %>
+  <% else %>
+    <p style="text-align: center">Chưa có bài giảng</p>
+  <% end %>
 </div>

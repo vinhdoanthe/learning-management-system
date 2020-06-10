@@ -6,20 +6,33 @@
       <div class="redem-tab class-tab">
         <ul class="nav nav-tabs" role="tablist">
           <li class="active"><a href="#baigiang" data-toggle="tab">Bài giảng</a></li>
+          <li id='giaoan_tab' style='display:none'><a href="#giaoan" data-toggle="tab">Giáo án</a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
           <div class="tab-pane active in" id="baigiang">
             <ul>
-              <% slides.each do |slide| %>
+              <% lessons.each do |slide| %>
                 <li>
                   <%= link_to slide[1], learning_show_google_slide_path(slide[0]), {:class => 'btn btn-default btn-embossed', :remote => true} %>
                 </li>
               <% end %>
             </ul>
           </div>
+          <div class="tab-pane in" id="giaoan">
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<style>
+@media only screen and (min-width: 900px) {
+  #baigiang {
+    min-width: 900px;
+  }
+  #giaoan {
+    min-width: 900px;
+  }
+}
+</style>
