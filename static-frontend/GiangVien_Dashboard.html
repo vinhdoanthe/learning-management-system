@@ -487,16 +487,16 @@
             <div class="page-content page-thin">
 
                 <!-- InstanceBeginEditable name="EditRegion1" -->
-                <div class="panel panel-edits bg-232837">
+                <!-- <div class="panel panel-edits bg-232837">
                     <div class="panel-heading">
-                        <!-- <div class="ph-img">
+                        <div class="ph-img">
                             <span><img src="assets/global/images/avatar.svg" alt=""></span>
-                        </div> -->
+                        </div>
                         <div class="ph-text">
                             <h2 class="color-fff text-transform">Báo cáo lớp học</h2>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-md-7 ">
                         <div class="panel">
@@ -506,7 +506,37 @@
                                         <h2>HOẠT ĐỘNG LỚP <span>HN-HN-C-PA-1116-SNPY-0030 </span></h2>
                                     </div>
                                     <div class="bnd-img">
-                                        <span><img src="assets/global/images/banner1.png" alt=""></span>
+                                        <a href="#myModal" class="bndi-detail"  data-toggle="modal">
+                                            <span><img src="assets/global/images/banner1.png" alt=""></span>
+                                        </a>
+                                        <a href="#myModal" class="bndi-detail"  data-toggle="modal">
+                                            <span><img src="assets/global/images/banner1.png" alt=""></span>
+                                        </a>
+                                        <a href="#myModal" class="bndi-detail"  data-toggle="modal">
+                                            <span><img src="assets/global/images/banner1.png" alt=""></span>
+                                        </a>
+                                        <a href="#myModal" class="bndi-detail"  data-toggle="modal">
+                                            <span>
+                                                <img src="assets/global/images/banner1.png" alt="">
+                                                <span class="detail-plus">100 +</span>
+                                            </span>
+                                        </a>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                  
+                                                    <div class="modal-body">
+                                                        <ul class="owl-carousel list-lightbox" id="lightbox">
+                                                            <li><span><img src="assets/global/images/banner1.png" alt=""></span></li>
+                                                            <li><span><img src="assets/global/images/banner1.png" alt=""></span></li>
+                                                            <li><span><img src="assets/global/images/banner1.png" alt=""></span></li>
+                                                        </ul>
+                                                    </div>
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="bnd-all-other">
                                         <div class="row">
@@ -572,33 +602,56 @@
                                 <div class="bnd-title">
                                     <label class="filter-title">LỚP ĐANG DẠY: <span class="color-16BD56">HN-HN-C-LT-C1-MINECRAFT-0001</span></label>
                                 </div>
-                                <div class="bnd-time">
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <p class="font-bold color-000 f12">
-                                                THỜI GIAN VÀO LỚP TIẾP THEO<br/>
-                                                18:00 <span class="color-939393">đến</span> 20:00  |  <span class="font-regular">Thứ 7</span>, 20/11/2019
-                                            </p>
-
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div id="clockdiv">
-                                                <div>
-                                                    <span class="hours"></span>
-                                                </div>
-                                                <div>
-                                                    <span class="minutes"></span>
-                                                </div>
-                                                <div>
-                                                    <span class="seconds"></span>
-                                                </div>
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <p class="font-bold color-000 f12">
+                                            THỜI GIAN VÀO LỚP TIẾP THEO 18:00 <span class="color-939393">đến</span> 20:00  |  <span class="font-regular">Thứ 7</span>, 20/11/2019
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="pull-right" id="clockdiv">
+                                            <div>
+                                                <span class="hours"></span>
+                                            </div>
+                                            <div>
+                                                <span class="minutes"></span>
+                                            </div>
+                                            <div>
+                                                <span class="seconds"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="#" class="pull-right color-5DC2A7">Vào lớp</a>
+                                        
+                                    <a href="#" class="link-other color-5DC2A7 m-t-10 pull-right">Vào lớp</a>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="panel">
+                            <div class="panel-content row">
+                                <div class="box-star">
+                                    <div class="col-sm-4">
+                                        <div class="bs-detail">
+                                            <img src="assets/global/images/star.png" alt="">
+                                            <h3>20.092</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="bs-detail">
+                                            <span>Teky đồng</span>
+                                            <h3>20.092</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="bs-detail">
+                                            <a href="" class="font-medium">Xem tất cả</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                    
+                            </div>    
+                        </div>
+
                         <div class="panel">
                             <div class="panel-content">
                                 <div class="bnd-title">
@@ -643,6 +696,60 @@
                                         </div>
                                     </a>
                                     <a href="" class="pull-right link-all">Xem tất cả</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-content">
+                                <div class="bnd-title">
+                                    <label class="filter-title">Top 10 học sinh tiêu biểu</label>
+                                    <p><img style="width: 25px;" src="assets/global/images/star.png" alt=""></p>
+                                </div>
+                                <div class="box-student">
+                                    <table class="table">
+                                        <tr>
+                                            <td>01</td>
+                                            <td>
+                                                <label class="color-EB9138">Kiều Vũ Tuệ Nhi</label>
+                                                <p>Học sinh <span class="color-0654BA text-transform">TEKY - Cầu giấy</span></p>
+                                            </td>
+                                            <td align="right">
+                                                <h2>120.303</h2>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>01</td>
+                                            <td>
+                                                <label class="color-EB9138">Kiều Vũ Tuệ Nhi</label>
+                                                <p>Học sinh <span class="color-0654BA text-transform">TEKY - Cầu giấy</span></p>
+                                            </td>
+                                            <td align="right">
+                                                <h2>120.303</h2>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>01</td>
+                                            <td>
+                                                <label class="color-EB9138">Kiều Vũ Tuệ Nhi</label>
+                                                <p>Học sinh <span class="color-0654BA text-transform">TEKY - Cầu giấy</span></p>
+                                            </td>
+                                            <td align="right">
+                                                <h2>120.303</h2>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>01</td>
+                                            <td>
+                                                <label class="color-EB9138">Kiều Vũ Tuệ Nhi</label>
+                                                <p>Học sinh <span class="color-0654BA text-transform">TEKY - Cầu giấy</span></p>
+                                            </td>
+                                            <td align="right">
+                                                <h2>120.303</h2>
+                                            </td>
+                                        </tr>
+
+                                    </table>
                                 </div>
                             </div>
                         </div>

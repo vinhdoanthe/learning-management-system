@@ -503,24 +503,24 @@
                     
                     <div class="panel-content">
                         <ul class="nav nav-tabs nav-primary tab-menu">
-                            <li class=""><a href="#tab2_1" data-toggle="tab">Thông tin chung</a></li>
-                            <li class="active"><a href="#tab2_2" data-toggle="tab">Thông tin phụ khuynh</a></li>
+                            <li class="active"><a href="#tab2_1" data-toggle="tab">Thông tin chung</a></li>
+                            <li class=""><a href="#tab2_2" data-toggle="tab">Thông tin phụ khuynh</a></li>
                             <li class=""><a href="#tab2_3" data-toggle="tab">Quá trình học tập</a></li>
                             <li class=""><a href="#tab2_4" data-toggle="tab">Bài tập về nhà</a></li>
                             <li class=""><a href="#tab2_5" data-toggle="tab">Quà tặng</a></li>
                             <li class=""><a href="#tab2_6" data-toggle="tab">Học phí</a></li>
                         </ul>
                         <div class="tab-content p-0 tab-all-content">
-                            <div class="tab-pane fade" id="tab2_1">
+                            <div class="tab-pane fade active in" id="tab2_1">
                                 <form id='formBody' class='FlowupLabels'>
                                     <div class="row">
                                         <div class="col-md-12 text-center">
-                                            <a href="" class="change-password">Đổi mật khẩu</a>
+                                            <a href="" class="change-password"><img src="assets/global/images/password.png"> Đổi mật khẩu</a>
                                         </div>
                                         <div class="col-md-4">
                                             <div class='fl_wrap'>
                                                 <label class='fl_label' for='rf_name'>Họ và tên:</label>
-                                                <input class='fl_input' type='text' id='rf_name' />
+                                                <input class='fl_input' type='text' id='rf_name'  disabled="" />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -593,8 +593,12 @@
                                         </div>
                                     </div>
                                 </form>
+                                <div class="panel-footer bg-D7DFE9 text-right ">
+                                    <button type="submit" class="btn btn-danger btn-embossed bg-F16357">Hủy</button>
+                                    <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7">Yêu cầu sửa</button>
+                                </div>
                             </div>
-                            <div class="tab-pane fade active in" id="tab2_2">
+                            <div class="tab-pane fade" id="tab2_2">
                                 <form id='formBody' class='FlowupLabels'>
                                     <div class="row">
                                         <div class="col-md-4">
@@ -663,8 +667,55 @@
                                     </div>
 
                                 </form>
+                                <div class="panel-footer bg-D7DFE9 text-right ">
+                                    <button type="submit" class="btn btn-danger btn-embossed bg-F16357">Hủy</button>
+                                    <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7">Yêu cầu sửa</button>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="tab2_3">
+                                <div class="table-responsive bo-table m-t-20">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Khóa học</th>
+                                                <th>Lớp học</th>
+                                                <th>Học vấn</th>
+                                                <th>Loại</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Siêu nhân lập trình Python</td>
+                                                <td>HN-NTT-C-PA-1116-SNLT-007</td>
+                                                <td><span class="label-course label label-default">01</span> <span class="label-course label label-default">02</span> <span class="label-course label label-default">03</span></td>
+                                                <td>Groupclass</td>
+                                                <td align="right"><span class="label-edit label label-primary">đang học</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bé làm Game</td>
+                                                <td>HN-NTT-C-PA-1215-MINECRAFT-001</td>
+                                                <td><span class="label-course label label-default">01</span> <span class="label-course label label-default">02</span></td>
+                                                <td>Groupclass</td>
+                                                <td align="right"><span class="label-edit label label-danger"> nghỉ học</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Siêu nhân lập trình Python</td>
+                                                <td>HN-NTT-C-PA-1116-SNLT-008</td>
+                                                <td><span class="label-course label label-default">01</span></td>
+                                                <td>@Coaching</td>
+                                                <td align="right"><span class="label-edit label label-stop">bảo lưu</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Siêu nhân lập trình Python</td>
+                                                <td>HN-NTT-C-PA-1116-SNLT-009</td>
+                                                <td><span class="label-course label label-default">01</span> <span class="label-course label label-default">02</span></td>
+                                                <td>Groupclass</td>
+                                                <td align="right"><span class="label-edit label label-warning">chờ khai giảng</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="tab2_4">
                             </div>
@@ -674,10 +725,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer bg-D7DFE9 text-right ">
-                        <button type="submit" class="btn btn-danger btn-embossed bg-F16357">Hủy</button>
-                        <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7">Cập nhật</button>
-                    </div>
+                                
 
                 </div>
 				<!-- InstanceEndEditable -->   
