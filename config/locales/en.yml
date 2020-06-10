@@ -126,3 +126,5 @@ en:
       leader_board: "Leaders' board"
   social_community:
     new_comment_placeholder: 'Typing comment here'
+  datetime:
+    to: 'to'

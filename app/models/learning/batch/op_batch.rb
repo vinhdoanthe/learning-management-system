@@ -15,7 +15,7 @@ module Learning
       has_many :user_questions, class_name: 'Learning::Homework::UserQuestion'
       has_many :user_answers, class_name: 'Learning::Homework::UserAnswer', foreign_key: 'batch_id'
       has_many :gen_batch_table_lines, class_name: 'Learning::Batch::GenBatchTableLine', foreign_key: 'batch_id'
-      
+
       has_many_attached :photos
 
       # TO DO batch status
@@ -33,6 +33,14 @@ module Learning
           else
             last_done_session.count.to_s + ' - Level ' + last_done_session.op_subject.level.to_s
           end
+        end
+      end
+
+      def is_online?
+        if ['1','2'].include?(select_place)
+          false
+        else
+          true
         end
       end
     end

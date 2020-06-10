@@ -60,7 +60,7 @@ vi:
   learning:
     class: "Lớp"
     subject: "Học phần"
-    lesson: "Buổi học"
+    lesson: "Bài học"
     no_lesson: "Chưa có buổi học nào"
     course: "Khoá học"
     attendance: "Điểm danh"
@@ -126,3 +126,5 @@ vi:
       leader_board: 'Top 10 Học sinh tiêu biểu'
   social_community:
     new_comment_placeholder: 'Bình luận tại đây'
+  datetime:
+    to: 'đến'

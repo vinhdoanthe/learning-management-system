@@ -29,6 +29,18 @@ module Learning
         end
         url
       end
+
+
+      def is_online_session? session
+        result = false
+        unless session.nil?
+          batch = session.op_batch
+          unless batch.nil?
+            result = batch.is_online? 
+          end
+        end
+        result 
+      end
     end
   end
 end
