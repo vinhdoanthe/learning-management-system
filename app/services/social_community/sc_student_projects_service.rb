@@ -30,7 +30,7 @@ class SocialCommunity::ScStudentProjectsService
     ActiveRecord::Base.transaction do
       project = SocialCommunity::ScStudentProject.new
       project.description = params[:description]
-      project.name = params[:name]
+      project.name = params[:title]
       project.presentation = params[:slide]
       project.project_show_video = params[:tinker]
       project.introduction_video = video_link
@@ -63,5 +63,33 @@ class SocialCommunity::ScStudentProjectsService
     post.batch_id = batch_id
     post.save
     post
+  end
+
+  def social_student_projects user
+    projects = SocialCommunity::ScStudentProject.where(user_id: user.id).all
+    student_projects = (get_course_projects_hash projects)
+    course_ids = user.op_student.op_student_courses.pluck(:course_id)
+
+    course_projects = []
+    course_ids.each do |course_id|
+      projects = SocialCommunity::ScStudentProject.where(course_id: course_id, state: 'publish', permission: 'public').where.not(user_id: user.id).limit(4)
+      course_projects << (get_course_projects_hash projects)
+    end
+
+    [student_projects, course_projects]
+  end
+
+  def get_course_projects_hash projects
+    course_hash = {}
+    projects.each do |project|
+      course = project.op_course
+      if course_hash[course].present?
+        course_hash[course] << project
+      else
+        course_hash[course] = [project]
+      end
+    end
+
+    course_hash
   end
 end

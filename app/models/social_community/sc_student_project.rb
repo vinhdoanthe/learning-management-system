@@ -1,5 +1,10 @@
 class SocialCommunity::ScStudentProject < ApplicationRecord
+  extend Enumerize
   self.table_name = 'sc_student_projects'
+  paginates_per 20
+
+  enumerize :state, in: [SocialCommunity::Constant::ScStudentProject::State::PUBLISH, SocialCommunity::Constant::ScStudentProject::State::DRAFT]
+  enumerize :permission, in: [SocialCommunity::Constant::ScStudentProject::Permission::PUBLIC, SocialCommunity::Constant::ScStudentProject::Permission::PRIVATE]
 
   belongs_to :user, class_name: 'User::Account::User', foreign_key: 'user_id'
   belongs_to :op_student, class_name: 'User::OpenEducat::OpStudent', foreign_key: 'student_id'

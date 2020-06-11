@@ -4,4 +4,16 @@ module SocialCommunity::Constant
       LOVE = 2
       SAD = 3
     end
+
+    module ScStudentProject
+      module State
+        PUBLISH = 'publish'
+        DRAFT = 'draf'
+      end
+
+      module Permission
+        PUBLIC = 'public'
+        PRIVATE = 'private'
+      end
+    end
 end

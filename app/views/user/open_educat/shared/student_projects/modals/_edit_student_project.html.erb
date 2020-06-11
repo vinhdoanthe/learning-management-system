@@ -50,6 +50,12 @@
             <textarea style='width: 100%' name='project_description' placeholder="Mô tả về sản phẩm" rows='5'><%= project.description %></textarea>
           </div>
         </div>
+        <div class="project_permission row">
+          <div class="col-md-12">
+            <input type="checkbox" name="project_permission" checked value="public">
+            <label for="permission">Công khai</label><br>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -85,7 +91,9 @@
     description = div.find('textarea[name="project_description"]').val()
     student_id = $('#edit_upload_project_student').val()
     subject_id = $("#edit_upload_project_subject").val()
-    data = { name: name, description: description, subject_id: subject_id, student_id: student_id, project_id: project_id }
+    permission = $('input[name="project_permission"]:checked').val()
+    data = { name: name, description: description, subject_id: subject_id, student_id: student_id, project_id: project_id, permission: permission }
+
     $.ajax({
       method: 'POST',
       url: '/social_community/update_student_project',

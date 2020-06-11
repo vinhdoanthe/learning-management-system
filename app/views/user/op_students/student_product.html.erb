@@ -16,7 +16,13 @@
           <h3><span class="color-F16357">Sản phẩm của tôi</h3>
         </div>
         <div class='row'>
-          <%= render 'user/op_students/partials/student_products', { products: @products } %>
+          <% if @student_projects.blank? %>
+            <p>Bạn chưa có sản phẩm nào</p>
+          <% else %>
+            <% @student_projects.each do |project| %>
+              <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
+            <% end %>
+          <% end %>
         </div>
       </div>    
     </div>

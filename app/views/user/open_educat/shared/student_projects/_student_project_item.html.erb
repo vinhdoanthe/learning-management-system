@@ -1,5 +1,6 @@
 <% student = project.op_student %>
 <% student_name, company_name  = '', '' %>
+<% progress = get_project_progress project %>
 <% if student.present? %>
   <% student_name = student.full_name %>
   <% company_name = student.res_company ? student.res_company.name : '' %>
@@ -16,15 +17,22 @@
         <div class=''>
           <div class='project_control'>
             <% if current_user.is_teacher? %>
+              <%# if progress != 100 || project.state != 'publish' || project.permission != 'public'%>
+              <% if progress != 100 %>
               <div class="col-md-6 control_button">
-                <button class="edit_project" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail">Edit</button>
+                <button class="edit_project" style="width: 100%" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail">Hoàn thiện</button>
               </div>
+            <% else %>
               <div class="col-md-6 control_button">
-                <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Show</button>
+                <button class="public_project" style="width: 100%" data-project="<%= project.id %>" >Chia sẻ</button>
+              </div>
+            <% end %>
+              <div class="col-md-6 control_button">
+                <button class="show_project student_project_show" style="width: 50%" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Xem</button>
               </div>
             <% else %>
               <div class="project_control">
-                <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Show</button>
+                <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Xem</button>
               </div>
             <% end %>
           </div>
@@ -40,6 +48,16 @@
           </li>
         </ul>
       </div>
+      <div class='project_progress'>
+      <% if current_user.id == project.user_id %>
+        <div class='' style='width: 80%; margin: auto;'>
+          <div class="progress" style='margin: 0'>
+            <div class="progress-bar <%= if progress == 100;  'progress-bar-success'; else 'progress-bar-warning'; end %>  progress-bar-striped " role="progressbar" aria-valuenow="<%= progress %>" aria-valuemin="0" aria-valuemax="100" style="width:<%= progress %>%">
+            </div>
+          </div>
+        </div>
+      <% end %>
+      </div>
       <div class="prod-text" style="height: 190px; overflow: hidden">
         <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN <%= project.op_course.name %></label>
         <div>
@@ -47,7 +65,7 @@
           <label>Học viện: </label><span> <%= company_name%></span><br>
         </div>
         <input type='hidden' value='<%= project.id %>' name='student_project_id'>
-        <input type='hidden' value='<%= project.op_batch %>' name='project_batch_id' >
+        <input type='hidden' value='<%= project.batch_id %>' name='project_batch_id' >
         <div style="position: absolute; right: 25px; bottom: 20px; ">
           <a class='student_project_show' href="" class="font-bold" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Xem sản phẩm</a>
         </div>
@@ -56,6 +74,10 @@
   </div>
 </div>
 <style>
+.project_progress {
+  height: 20px;
+    margin-top: 20px;
+}
 .student_project_show {
   font-weight: 600;
   font-size: 15px;
@@ -69,7 +91,7 @@
   backface-visibility: hidden;
 }
 .project_control {
-  width: 80%;
+  width: 100%;
   transition: .5s ease;
   opacity: 0;
   position: absolute;
@@ -93,11 +115,18 @@
   border-radius: 4px;
   padding: 10px 30px;
 }
-
 .edit_project {
   background: #fcf055;
 }
-
+button.edit_project  {
+      padding: 10px !important;
+    }
+.public_project {
+  background: #9966ff;
+}
+button.public_project  {
+      padding: 10px !important;
+    }
 .show_project {
   background: #5cd2a7;
 }
