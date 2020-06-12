@@ -1,5 +1,8 @@
-<div class="page-content page-thin">
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'social_community/question_answer/session_qa_area.js' %>
+<% end %>
 
+<div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
@@ -62,19 +65,36 @@
                     <div class="modal fade" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true"></div>
                   </div>
                 </div>
+                <div class="col-md-3">
+                  <div class="fc-chat" id='qa_area' data-session-id='<%= @session.id %>' data-lesson-id='<%= @lesson.id %>'>
+                    <div class="fcc-btn">
+                      <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7 width-100 text-transform font-bold" >Ôn lại bài đã học</button>
+                    </div>
+                    <!-- add_new_question -->
+                    <%= render :partial => "social_community/question_answer/shared/add_new_question", :locals => {:session => @session, :lesson => @lesson} %>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-    <%= render 'user/op_students/partials/student_homework_videos' %>
+        <%= render 'user/op_students/partials/student_homework_videos' %>
       </div>
     </div>
   </div>
 </div>
 
-  <script>
-    $('.homework_video_link').on('click', function(){
-      session_id = $(this).data('session_id')
-      window.location.href = '/user/open_educat/op_students/student_homework?show_video=true&session=' + session_id
-    })
-  </script>
+<script>
+  $('.homework_video_link').on('click', function(){
+    session_id = $(this).data('session_id')
+    window.location.href = '/user/open_educat/op_students/student_homework?show_video=true&session=' + session_id
+  })
+  $('#qa_area').ready(function() {
+    data = {
+      'session_id': $('#qa_area').data('session-id'),
+      'lesson_id': $('#qa_area').data('lesson-id'),
+    };
+    console.log(data)
+    get_qa_threads(data);
+  })
+</script>

@@ -1,5 +1,5 @@
 <% content_for :notification_content, flush: true do %>
-  <% noti_content = (get_feed_content notification).html_safe %>
+  <% noti_content = Notification::ActivityNotificationDecorator.new(notification).notification_content.html_safe %>
     <div class='notification_list <%= notification.opened? ? "opened" : "unopened" %>'>
       <div class="notification_list_cover"></div>
       <div class="list_image"><img src='<%= get_avatar %>' ></div>
@@ -30,17 +30,6 @@
       <%= yield :notification_content %>
     <% end %>
   <% end %>
-
-  <%#= link_to "Move", move_notification_path_for(notification, parameters.slice(:routing_scope, :devise_default_routes)) %>
-  <%# if notification.unopened? %>
-    <%#= link_to "Open and move (GET)", move_notification_path_for(notification, parameters.slice(:routing_scope, :devise_default_routes).merge(open: true)) %>
-    <%#= link_to "Open and move (PUT)", open_notification_path_for(notification, parameters.slice(:routing_scope, :devise_default_routes).merge(move: true)), method: :put %>
-    <%#= link_to "Open", open_notification_path_for(notification, parameters.slice(:routing_scope, :devise_default_routes).merge(index_options: @index_options))), method: :put %>
-    <%#= link_to "Open (Ajax)", open_notification_path_for(notification, parameters.slice(:routing_scope, :devise_default_routes).merge(reload: false)), method: :put, remote: true %>
-  <%# end %>
-  <%#= link_to "Destroy", notification_path_for(notification, parameters.slice(:routing_scope, :devise_default_routes).merge(index_options: @index_options)), method: :delete %>
-  <%#= link_to "Destroy (Ajax)", notification_path_for(notification, parameters.slice(:routing_scope, :devise_default_routes).merge(reload: false)), method: :delete, remote: true %>
-
 </div>
 
 <style>

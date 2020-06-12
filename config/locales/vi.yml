@@ -53,6 +53,14 @@ vi:
     new_noti: 'thông báo mới'
     all: "Tất cả thông báo"
     pending: "Tin nhắn chưa xem"
+    qa_thread:
+      create: 'đặt câu hỏi'
+    pt_post:
+      create: 'đăng ảnh'
+    rw_post:
+      create: 'khen thưởng'
+    st_project_post:
+      create: 'hoàn thành dự án cuối khóa'
   report:
     attendance: "BÁO CÁO CHUYÊN CẦN"
     no_attendance: "Chưa có thông tin chuyên cần"

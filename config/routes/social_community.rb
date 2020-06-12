@@ -27,6 +27,11 @@ namespace :social_community do
     get 'get_reactions_and_comments' => 'posts#get_reactions_and_comments', as: 'get_reactions_and_comments'
   end
 
+  namespace :question_answer do
+    resources :threads
+    resources :messages
+  end
+
   post 'youtube_upload' => 'sc_student_projects#youtube_upload'
   get 'student_project_detail' => 'sc_student_projects#student_project_detail'
   get 'student_projects' => 'sc_student_projects#student_projects'

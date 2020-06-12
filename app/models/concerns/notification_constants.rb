@@ -1,0 +1,18 @@
+module NotificationConstants
+  module Type
+    SC_QA_THREAD = 'SocialCommunity::QuestionAnswer::Thread'
+    SC_PT_POST = 'SocialCommunity::Feed::PhotoPost'
+    SC_RW_POST = 'SocialCommunity::Feed::RewardPost'
+    SC_ST_PROJECT_POST = 'SocialCommunity::Feed::StudentProjectPost'
+  end
+  module Key
+    SC_QA_THREAD_CREATE = 'qa_thread.create'
+    SC_QA_THREAD_REPLY = 'qa_thread.reply'
+    SC_PT_POST_CREATE = 'post.create'
+    SC_PT_POST_COMMENT = 'post.comment'
+    SC_RW_POST_CREATE = 'post.create'
+    SC_RW_POST_COMMENT = 'post.comment'
+    SC_ST_PROJECT_POST_CREATE = 'post.create'
+    SC_ST_PROJECT_POST_COMMENT = 'post.comment'
+  end
+end

@@ -53,6 +53,14 @@ en:
     new_noti: 'new notifications'
     all: "All notifications"
     pending: "Pending notifications"
+    qa_thread:
+      create: 'posted a question'
+    pt_post:
+      create: 'uploaded photos'
+    rw_post:
+      create: 'felicitated'
+    st_project_post:
+      create: 'published a project'
   report:
     attendance: "ATTENDANCE REPORT"
     no_attendance: "No attendance infomation"

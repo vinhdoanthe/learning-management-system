@@ -25,9 +25,6 @@ module SocialCommunity::DashboardsHelper
     # render message
     course_name = ''
     session_student_reward = feed.post.session_student_reward
-   # session_id = session_student_reward.session_id
-   # session = Learning::Batch::OpSession.where(id: session_id).first
-   # course_name = Learning::Course::OpCourse.where(id: session.course_id).first.name if session.present?
     batch = Learning::Batch::OpBatch.where(id: feed.post.batch_id).first
     course = Learning::Course::OpCourse.where(id: batch.course_id).first
     course_name = course.name if course.present?
@@ -41,11 +38,11 @@ module SocialCommunity::DashboardsHelper
   end
 
   def photo_feed feed
+    # find photos
+    # render message
     photos = feed.post.photos
     course_name = ''
     if photos.present?
-#      photo = photos.first
-#      course_name = Learning::Course::OpCourse.where(id: session.course_id).first.name if session.present?
       batch = Learning::Batch::OpBatch.where(id: feed.post.batch_id).first
       course_name = batch.op_course.name
     end
@@ -56,8 +53,6 @@ module SocialCommunity::DashboardsHelper
       message = "Giảng viên <span class='noti_teacher_name'>#{feed.created_user.faculty_name}</span> vừa đăng ảnh vào lớp học <span class='noti_course_name'>#{ course_name }</span>"
     end 
     [message, photos]
-    # find photos
-    # render message
   end
 
   def student_project_feed feed
