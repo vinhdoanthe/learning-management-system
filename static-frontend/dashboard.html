@@ -38,7 +38,8 @@
                                 <img src="assets/global/images/avatar.png" alt="">
                                 <span class="hover-ava">
                                     <label for="">Kiều Chí Công</label>
-                                    <p>TK-0022934</p>
+                                    <p class="p-l-0 color-fff ">TK-0022934</p>
+                                    <b class="color-5DC2A7">Public Profile</b>
                                 </span>
                             </a>
                         </li>
@@ -81,7 +82,9 @@
                         <a href="#">
                             <img class="img-changes" src="assets/global/images/no-active/ico-BaiTapOnBai.png" alt="">
                             <img class="img-change-color" src="assets/global/images/active/ico-BaiTapOnBai.png" alt="">
-                            <span>Bài tập & Ôn bài</span>
+                            <span>Bài tập & Ôn bài<br/>
+                                <p>Thời gian vào lớp học: <span class="demo-cowndown" id="demo"></span></p>
+                            </span>
                         </a>
                     </li>
                     <li class="">
@@ -110,6 +113,7 @@
                             <img class="img-changes" src="assets/global/images/no-active/ico-Redem.png" alt="">
                             <img class="img-change-color" src="assets/global/images/active/ico-Redem.png" alt="">
                             <span>Đổi điểm lấy quà </span>
+                            <i><img src="assets/global/images/dot-noti.png"></i>
                         </a>
                     </li>
                     <li class="">
@@ -135,6 +139,9 @@
                 <div class="header-right">
                     <ul class="header-menu nav navbar-nav">
                         <!-- BEGIN USER DROPDOWN -->
+                        <li class="dropdown teky-star">
+                            <span><img src="assets/global/images/star.png" alt=""> <b>120.230</b></span> | <span><b>1.325</b> TEKY ĐỒNG</span>
+                        </li>
                         <li class="dropdown" id="language-header">
                             <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <i class="icon-globe"></i>
@@ -292,5 +299,35 @@
     <script src="assets/global/plugins/rateit/jquery.rateit.min.js"></script> <!-- Rating star plugin -->
     <script src="assets/global/js/pages/form_plugins.js"></script>
 	<script src="assets/global/js/owl.carousel.min.js"></script>
+    <script>
+    // Set the date we're counting down to
+    var countDownDate = new Date("jul 5, 2020 15:37:25").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+      // Get today's date and time
+      var now = new Date().getTime();
+        
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+        
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+      // Output the result in an element with id="demo"
+      document.getElementById("demo").innerHTML = days + ":" + hours + ":"
+      + minutes + ":" + seconds + " ";
+        
+      // If the count down is over, write some text 
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "Hết giờ";
+      }
+    }, 1000);
+    </script>
 </body>
 </html>

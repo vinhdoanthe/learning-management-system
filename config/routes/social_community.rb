@@ -32,6 +32,11 @@ namespace :social_community do
     get 'course_student_projects/:course_id', action: 'course_student_projects', as: 'course_student_projects'
   end
 
+    namespace :question_answer do
+    resources :threads
+    resources :messages
+  end
+
   post 'youtube_upload' => 'sc_student_projects#youtube_upload'
   get 'student_project_detail' => 'sc_student_projects#student_project_detail'
   get 'student_projects' => 'sc_student_projects#student_projects'
@@ -46,7 +51,6 @@ namespace :social_community do
   get 'teacher_coming_soon_sessions' => 'dashboards#teacher_coming_soon_sessions'
   get 'albums_with_comments' => 'dashboards#albums_with_comments', as: 'albums_with_comments'
   get 'dashboard_noti' => 'dashboards#dashboard_noti', as: 'dashboard_noti'
-  # get 'new_user' => 'dashboards#new_user', as: 'new_user'
   get 'leader_board' => 'dashboards#leader_board', as: 'leader_board'
   post 'delete_session_photo' => 'photos#delete_session_photo', as: 'delete_session_photo'
 end
