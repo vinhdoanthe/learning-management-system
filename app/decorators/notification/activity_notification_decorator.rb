@@ -12,7 +12,28 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
       sc_reward_post_notification_content
     when SC_ST_PROJECT_POST
       sc_student_project_notification_content
+    when SC_REDEEM_POST
+      sc_redeem_product_notification_content
     end
+  end
+
+  def sc_redeem_product_notification_content
+    post = SocialCommunity::Feed::RedeemPost.where(id: notifiable_id).first
+    activity_post = SocialCommunity::Feed::PostActivity.where(sc_post_id: post.id).first
+    transaction = activity_post.activitiable
+    display_html = ''
+
+    case key
+    when SC_REDEEM_POST_CREATE
+      created_user = User::Account::User.where(id: transaction.student_id).first
+      created_str = created_user.present? ? created_user.student_name : ''
+      action_str = I18n.t('notification.redeem_product_post.create')
+      product = transaction.redeem_product
+      target_str = product.present? ? product.name : ''
+      display_html = "#{ created_str } #{ action_str } #{ target_str } #{ I18n.t('notification.redeem_product_post.success') }"
+    end
+
+    display_html
   end
 
   def qa_thread_notification_content

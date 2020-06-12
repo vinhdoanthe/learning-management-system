@@ -6,5 +6,6 @@ module Redeem
     serialize :available_size, Array
 
     has_many :redeem_transactions
+    has_many_attached :images
   end
 end

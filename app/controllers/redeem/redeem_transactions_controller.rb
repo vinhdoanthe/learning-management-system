@@ -1,5 +1,6 @@
 class Redeem::RedeemTransactionsController < ApplicationController
   before_action :find_transaction, only: [:update_transaction]
+  before_action :validate_params, only: [:create_transaction]
   skip_before_action :verify_authenticity_token
 
   def company_products
@@ -28,16 +29,24 @@ class Redeem::RedeemTransactionsController < ApplicationController
 
   def create_transaction
     result = Redeem::RedeemTransactionService.new.create_transaction params, current_user
-    if result
-      render json: { type: 'success', message: 'Đổi quà thành công!' }
-    else
-      render json: { type: 'danger', message: 'Có lỗi xảy ra! Vui lòng thử lại sau!' }
-    end
+
+    render json: result
   end
 
   private
 
   def find_transaction
     @transaction = Redeem::RedeemTransaction.where(id: params[:transaction_id]).first
+  end
+
+  def validate_params
+    attributes = ['product_color', 'product_size', 'product_company', 'product_time', 'product_amount']
+    result = true
+    attributes.each{ |att| result = false if params[att].blank? }
+    
+    unless result
+      render json: { type: 'danger', message: 'Thiếu thông tin! Vui lòng kiểm tra lại!' }
+      return
+    end
   end
 end

@@ -4,6 +4,7 @@ module NotificationConstants
     SC_PT_POST = 'SocialCommunity::Feed::PhotoPost'
     SC_RW_POST = 'SocialCommunity::Feed::RewardPost'
     SC_ST_PROJECT_POST = 'SocialCommunity::Feed::StudentProjectPost'
+    SC_REDEEM_POST = 'SocialCommunity::Feed::RedeemPost'
   end
   module Key
     SC_QA_THREAD_CREATE = 'qa_thread.create'
@@ -14,5 +15,6 @@ module NotificationConstants
     SC_RW_POST_COMMENT = 'post.comment'
     SC_ST_PROJECT_POST_CREATE = 'post.create'
     SC_ST_PROJECT_POST_COMMENT = 'post.comment'
+    SC_REDEEM_POST_CREATE = 'post.create'
   end
 end

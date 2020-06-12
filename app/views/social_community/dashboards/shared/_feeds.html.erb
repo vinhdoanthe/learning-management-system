@@ -10,6 +10,9 @@
     <% elsif feed.post.is_a?(SocialCommunity::Feed::StudentProjectPost) %>
       <% message, project = student_project_feed(feed) %>
       <%= render :partial => 'social_community/feed/student_project_posts/student_project_post', :locals => {feed: feed, message: message.html_safe, project: project} %>
+    <% elsif feed.post.is_a?(SocialCommunity::Feed::RedeemPost) %>
+      <% message, product = redeem_feed(feed) %>
+      <%= render :partial => 'social_community/feed/redeem_product_posts/redeem_post', :locals => {feed: feed, message: message.html_safe, product: product} %>
     <% end %>
   <% end %>
 <% end %>
