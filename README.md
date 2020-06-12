@@ -21,7 +21,7 @@
  * Chấm bài
  * Sản phẩm cuối khóa
 
-#### Danh sách thư libraries
+#### Danh sách thư viện
  * [ImageMagick](https://github.com/ImageMagick/ImageMagick/)
  * ipeg_optim
  * mini_magick
