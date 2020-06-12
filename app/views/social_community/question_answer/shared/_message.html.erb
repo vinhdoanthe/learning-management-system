@@ -1,3 +1,7 @@
+<!-- Variables:
+  * thread
+-->
+
 <div class="fcca-main">
   <!-- add_new_message -->
   <ul>
@@ -17,3 +21,8 @@
     </div>
   </div>
 </div>
+
+
+<% content_for :javascript_includes do %>
+  <% javascript_include_tag 'social_community/question_answer/thread_messages' %>
+<% end %>

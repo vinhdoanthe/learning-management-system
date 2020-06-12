@@ -77,17 +77,6 @@ class SocialCommunity::DashboardsController < ApplicationController
     end 
   end
 
-  # def new_user
-  #   users = User::Account::User.where(account_role: 'Student').order(created_at: :DESC).limit(10)
-  #   students = []
-  #   users.each{ |user| students << user.op_student }
-
-  #   respond_to do |format|
-  #     format.html
-  #     format.js { render 'social_community/dashboards/student/js/dashboard_leader', locals: { students: students } }
-  #   end
-  # end
-
   def leader_board
     leaders = SocialCommunity::DashboardsService.community_leaders
     respond_to do |format|
