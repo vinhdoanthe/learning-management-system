@@ -129,7 +129,7 @@
                       </div>
                       <div class="rtdb-right">
                         <input type='hidden' name="redeem_product_id"  value='<%= product.id %>'>
-                        <button class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit' data-toggle="modal" data-target="#redeem_company_select" type="button" >Đổi quà ngay</button>
+                        <button href='/redeem/redeem_products/<%= product.id %>' class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit'  >Xem chi tiet</button>
                       </div>
                     </div>
                   </div>
@@ -173,15 +173,6 @@
 </div>
 <script>
   $(document).ready(function(){
-    $(function() {
-      $('input[name="expected_time"]').daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        minYear: 2020,
-        maxYear: 2030,
-      })
-    });
-
     $('.product_categories').on('change', function(){
       $('.product_item').hide();
       category_id = $(this).val();

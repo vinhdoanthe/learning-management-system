@@ -61,6 +61,9 @@ en:
       create: 'felicitated'
     st_project_post:
       create: 'published a project'
+    redeem_product_post:
+      create: 'redeemed'
+      success: 'successfuly'
   report:
     attendance: "ATTENDANCE REPORT"
     no_attendance: "No attendance infomation"

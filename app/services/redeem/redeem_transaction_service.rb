@@ -1,10 +1,12 @@
 class Redeem::RedeemTransactionService
   def create_transaction params, user
+    result = { type: "danger", message: "Đã có lỗi xảy ra! Vui lòng thử lại" }
+    post = ''
     ActiveRecord::Base.transaction do
       transaction = Redeem::RedeemTransaction.new
       transaction.student_id = user.id
       product = Redeem::RedeemProduct.where(id: params[:product_id]).first
-      return false if product.blank?
+      return { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại' } if product.blank?
 
       transaction.redeem_product_id = product.id
       transaction.color = params[:product_color]
@@ -14,14 +16,29 @@ class Redeem::RedeemTransactionService
       transaction.expected_time = params[:product_time]
       transaction.amount = params[:product_amount]
       transaction.total_paid = params[:product_amount].to_i * product.price
+      return { type: 'danger', message: 'Không đủ Teky đồng để đổi sản phẩm' } if transaction.total_paid > user.coin
 
       if transaction.save!
+      post = create_redeem_post transaction, user
+      SocialCommunity::Feed::UserPostsService.create_multiple post.id, [user.id]
         type = 1
         update_star transaction, type
-        true
+        result = { type: 'success', message: 'Yêu cầu đồi quà thành công!' }
       end
     end
+    
+    post.create_notifications
+    result
 
+  end
+
+  def create_redeem_post transaction, user
+    post = SocialCommunity::Feed::RedeemPost.create(posted_by: user.id)
+    post_redeem = SocialCommunity::Feed::PostActivity.new
+    post_redeem.sc_post_id = post.id
+    post_redeem.activitiable = transaction
+    post_redeem.save
+    post
   end
 
   def update_transaction transaction, status
@@ -38,7 +55,10 @@ class Redeem::RedeemTransactionService
     transaction.update!(status: status)
   end
 
-  def update_star transaction, type
+  private
 
+  def update_star transaction, type
+    user = User::Account::User.where(id: transaction.student_id).first
+    user.coin =  user.coin + type * transaction.total_paid
   end
 end
