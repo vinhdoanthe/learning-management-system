@@ -1,4 +1,4 @@
 // Append new thread to qa_area
-$('#qa_threads').prepend('<%= j(render :partial => 'social_community/question_answer/shared/thread', :locals => {:thread => thread, :load_messages => false}) %>')
+$('#qa_threads').prepend('<%= j(render :partial => 'social_community/question_answer/shared/thread', :locals => {:thread => thread}) %>')
 $('#qa_subject_input').val('')
 $('#qa_threads').scrollTop(0)

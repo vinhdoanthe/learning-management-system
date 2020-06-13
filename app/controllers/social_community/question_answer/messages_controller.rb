@@ -2,10 +2,13 @@ module SocialCommunity::QuestionAnswer
   class MessagesController < ApplicationController
 
     def index
+      puts 'called'
+      puts "thread_id param: #{params[:thread_id]}"
       return if !params[:thread_id].present?
-      binding.pry 
       messages = SocialCommunity::QuestionAnswer::MessagesService.get_messages(params)
+      puts "count: #{messages.count}"
       unless messages.empty?
+        puts 'rendered'
         respond_to do |format|
           format.html
           format.js {
@@ -19,6 +22,17 @@ module SocialCommunity::QuestionAnswer
     end
 
     def create
+      binding.pry
+      permitted_params = message_params
+      message= SocialCommunity::QuestionAnswer::MessagesService.create_message(permitted_params, current_user)
+      unless message.nil?
+        respond_to do |format|
+          format.html
+          format.js {
+            render 'social_community/question_answer/js/add_new_reply', :locals => {:thread_id => message.qa_thread_id, :message => message}
+          }
+        end
+      end
     end
 
     def edit
@@ -29,6 +43,11 @@ module SocialCommunity::QuestionAnswer
 
     def destroy
 
+    end
+
+    private
+    def message_params
+      params.permit(:thread_id, :content)
     end
   end
 end

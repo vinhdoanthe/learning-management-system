@@ -10,6 +10,20 @@
   <% end %>
 </div>
 
+<%= javascript_include_tag 'social_community/question_answer/thread_messages' %>
+<script>
+
+  $('#qa_threads').ready(function(){
+    c_qa_thread_ids = $('.c-qa-thread-id');
+    $.each(c_qa_thread_ids, function(index, element) {
+      var thread_id = $(element).data('thread-id')
+      console.log(thread_id)
+      load_thread_messages({thread_id: thread_id}); 
+
+    })
+  }) 
+</script>
+
 <style>
 .chat-maxheight {
   max-height: 600px;

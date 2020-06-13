@@ -1,6 +1,6 @@
 module SocialCommunity::QuestionAnswer
   class MessagesService
-    
+
     # params:
     # thread_id
     # start_datetime
@@ -18,6 +18,23 @@ module SocialCommunity::QuestionAnswer
       end
 
       messages
+    end
+
+    # params
+    # thread_id
+    # content
+    def self.create_message message_params, user
+      return nil if message_params.empty? or user.nil?
+
+      message = SocialCommunity::QuestionAnswer::Message.new
+      message.qa_thread_id = message_params[:thread_id]
+      message.content = message_params[:content]
+      message.created_by = user.id
+      if message.save
+        message
+      else
+        nil
+      end
     end
 
   end
