@@ -47,7 +47,7 @@ namespace :mapping do
             student_ids = Learning::Batch::OpStudentCourse.where(batch_id: session.batch_id).pluck(:student_id)
             if !student_ids.blank?
               student_ids.each do |student_id|
-                Learning::Homework::QuestionService.new.assign_homework(student_id, session.lession_id, session.id)
+                Learning::Homework::QuestionService.new.assign_homework_by_session(student_id, session.lession_id, session.id)
               end
             end
           end
