@@ -6,10 +6,23 @@ module Report
     def diligent
       @report_title_page = t('report.report_diligent_title')
       
-      @list_company = Common::ResCompany.where.not(:id => [3,19,36,10,11,17,12,13,18,16]).select(:id, :name)
+      @list_company = Common::ResCompany.where.not(:id => [3,19,36,10,11,17,12,13,18,16]).select(:id, :name)      
       
-      @title_report_month = Time.now.strftime("%m/%Y")
+      @title_report_month = Time.now.strftime("%d/%m/%Y")
       current_date = @title_report_month.to_s
+      
+      @frm_report = {'from_date': current_date,  'to_date': current_date.to_s}
+      
+      @params = []
+      if request.method == 'POST'
+        @params = params
+        @frm_report = {
+          'from_date': params[:frm_report][:from_date].to_s != '' ? params[:frm_report][:from_date].to_s : current_date,
+          'to_date': params[:frm_report][:to_date].to_s != '' ? params[:frm_report][:to_date].to_s : current_date
+        }
+      end
+      
+      
       
       current_date = '201912'
     

@@ -166,6 +166,7 @@ to get the desired effect
 <!-- OPTIONAL SCRIPTS -->
 <script src="/AdminLTE-3.0.5/plugins/chart.js/Chart.min.js"></script>
 <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-datalabels/chartjs-plugin-datalabels.min.js"></script>
+            <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-deferred/chartjs-plugin-deferred.min.js"></script>
 <script src="/AdminLTE-3.0.5/js/demo.js"></script>
 <script>
         var ctx = document.getElementById('reportDiligentMonthlyScale').getContext('2d');
@@ -242,7 +243,12 @@ to get the desired effect
                             },
                             formatter: function(value, context) {
                               return context.dataset.data[context.dataIndex] + '%';
+                            },
+                            font: {
+                              weight: 'normal',
+                              size: '10'
                             }
+                            
                           }
                       },
             }
@@ -273,51 +279,61 @@ to get the desired effect
                 ],      
             },
             options: {
-                      title: {
-                          display: true,
-                          text: '<%= t("report.report_chart_based_on_quantity_title")%>',
-                          fontSize: '14'
-                      },
-                      legend: { display: true },  
-                      tooltips: {
-                          callbacks: {
-                              label: function(tooltipItem, data) {
-                                  var label = data.datasets[tooltipItem.datasetIndex].label || '';              
-                                  if (label) {
-                                      label += ': ';
-                                  }
-                        
-                                  label += Math.round(tooltipItem.yLabel * 100) / 100;
-                        
-                                  return label;
-                              }
-                          },
-                          mode: 'index',
-                          intersect: false
-                        },
-                        responsive: true,
-                        maintainAspectRatio:false,
-                        scales: {
-                          xAxes: [{
-                            stacked: true,
-                          }],
-                          yAxes: [{
-                              stacked: true,
-                            ticks: {
-                              min: 0,
-                              stepSize: 200
-                              }
-                          }]
-                        },                        
-                        plugins: {
-                          datalabels: {
-                            color: 'rgb(255, 99, 132)',
-                            display: function(context) {
-                              return context.dataset.data[context.dataIndex] > 0;
-                            },
-                            formatter: Math.round
+              title: {
+                  display: true,
+                  text: '<%= t("report.report_chart_based_on_quantity_title")%>',
+                  fontSize: '14'
+              },
+              legend: { display: true },  
+              tooltips: {
+                  callbacks: {
+                      label: function(tooltipItem, data) {
+                          var label = data.datasets[tooltipItem.datasetIndex].label || '';              
+                          if (label) {
+                              label += ': ';
                           }
-                        },
+                
+                          label += Math.round(tooltipItem.yLabel * 100) / 100;
+                
+                          return label;
+                      }
+                  },
+                  mode: 'index',
+                  intersect: false
+                },
+                responsive: true,
+                maintainAspectRatio:false,
+                scales: {
+                  xAxes: [{
+                    stacked: true,
+                  }],
+                  yAxes: [{
+                      stacked: true,
+                    ticks: {
+                      min: 0,
+                      stepSize: 200
+                      }
+                  }]
+                },                        
+                plugins: {
+                  datalabels: {
+                    color: '#333',
+                    display: function(context) {
+                      return context.dataset.data[context.dataIndex] > 0;
+                    },
+                    formatter: Math.round,
+                    font: {
+                      weight: 'normal',
+                      size: '10'
+                    }                            
+                  },
+                  deferred: {
+                    enabled: true,
+                    xOffset: 100,
+                    xOffset: '100%',
+                    delay: 250
+                  }
+                }
             }
         });
     </script>
