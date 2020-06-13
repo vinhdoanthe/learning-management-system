@@ -37,8 +37,9 @@ namespace :user do
   task :update_initial_password, [:time] => :environment do |t, args|
     index = 1
     puts 'Start'
-    count = User::Account::User.where.not(account_role: 'Admin').count
-    User::Account::User.where.not(account_role: 'Admin').each do |user|
+    count = User::Account::User.where(account_role: 'Student').count
+    student_users = User::Account::User.where(account_role: 'Student').to_a
+    student_users.each do |user|
       if user.authenticate('123456') ||  user.authenticate('TekyAcademy')
         password = (0..8).map { (65 + rand(26)).chr }.join
         user.initial_password = password
