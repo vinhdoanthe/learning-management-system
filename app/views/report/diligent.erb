@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-12">  
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><%= t('report.report_month')%>: <%= @title_report_month%></h3>
+      </div>
+      <div class="card-body">
+          <div class="embed-responsive embed-responsive-16by9">
+            <canvas class="embed-responsive-item" id="reportDiligentMonthlyScale"></canvas>
+          </div>
+          <hr/>
+          <div class="embed-responsive embed-responsive-16by9" style="height: 800px;">
+            <canvas class="embed-responsive-item" id="reportDiligentMonthlyNumber" style="height: 800px;"></canvas>
+          </div>
+      </div>    
+    </div>
+  </div>
+</div>
