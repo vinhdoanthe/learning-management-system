@@ -1,14 +1,17 @@
 module SocialCommunity::QuestionAnswer
   class MessagesController < ApplicationController
-    
-    def index
-      messages = SocialCommunity::QuestionAnswer::MessagesService.get_messages(params)
 
-      respond_to do |format|
-        format.html
-        format.js {
-          render '', :partials => {:thread_id => thread_id, :messages => messages}
-        }
+    def index
+      return if !params[:thread_id].present?
+      binding.pry 
+      messages = SocialCommunity::QuestionAnswer::MessagesService.get_messages(params)
+      unless messages.empty?
+        respond_to do |format|
+          format.html
+          format.js {
+            render 'social_community/question_answer/js/messages', :locals => {:thread_id => params[:thread_id], :messages => messages}
+          }
+        end
       end
     end
 

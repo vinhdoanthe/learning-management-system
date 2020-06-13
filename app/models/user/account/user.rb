@@ -37,6 +37,30 @@ class User::Account::User < ApplicationRecord
     end
     gender
   end
+  
+  def full_name
+    if is_student?
+      student_name
+    elsif is_teacher
+      faculty_name
+    elsif is_parent?
+      parent_name
+    else
+      username
+    end
+  end
+
+  def role
+    if is_student?
+      I18n.t('role.student')
+    elsif is_teacher?
+      I18n.t('role.faculty')
+    elsif is_parent?
+      I18n.t('role.parent')
+    else
+      I18n.t('role.admin')
+    end
+  end
 
   def student_name
     if student_id

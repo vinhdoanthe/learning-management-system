@@ -136,3 +136,8 @@ en:
     new_comment_placeholder: 'Typing comment here'
   datetime:
     to: 'to'
+  role:
+    student: 'Student'
+    teacher: 'Teacher'
+    parent: 'Parent'
+    admin: 'Administrator'

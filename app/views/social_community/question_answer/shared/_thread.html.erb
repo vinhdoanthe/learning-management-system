@@ -1,8 +1,33 @@
+<!-- Variables:
+  * thread
+  * load_messages
+-->
+
 <!-- subject -->
 <div class="fcca-head">
   <label>Hỏi:</label>
   <p><%= thread.subject %> </p>
 </div>
 
-<!-- messages -->
-<%= render :partial => "social_community/question_answer/shared/message", :locals => {:thread => thread} %>
+<div class="fcca-main" id='thread_<%= thread._id %>'>
+  <!-- add_new_message -->
+  <%= render "social_community/question_answer/shared/add_new_message" %>
+
+  <!-- messages' content -->
+  <%# <%= render "social_community/question_answer/shared/thread_messages" %1> %>
+</div>
+
+<% if load_messages %>
+
+  <%= javascript_include_tag 'social_community/question_answer/thread_messages' %>
+  <script>
+    var thread_id = '<%= thread._id %>';
+    $('#thread_'+thread_id).ready( function() {
+      data = {
+        thread_id: thread_id
+      };
+      load_thread_messages(data); 
+    })
+  </script>
+
+<% end %>

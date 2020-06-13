@@ -1,0 +1,3 @@
+// Render messages of a thread return by server
+var c_id = 'thread_' + '<%= thread_id %>';
+$('#' + c_id).append('<%=j render :partial => 'social_community/question_answer/shared/thread_messages', :locals => {:messages => messages} %>')

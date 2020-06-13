@@ -1,0 +1,17 @@
+<!-- Variables:
+  * messages
+-->
+
+<% messages.each do |message| %>
+<div class="fcm-anw">
+  <div class="fcma-tit">
+    <img src="assets/global/images/Bitmaps.png" alt="">
+    <%= SocialCommunity::QuestionAnswer::MessageDecorator.new(message).display_author_name.html_safe %>
+    <%# <label for="">Kiều Chí Công<br/><span>Giảng viên</span></label> %>
+  </div>
+  <div class="fcma-cmt">
+    <p><%= message.content %></p>
+    <span>2 ngày trước</span>
+  </div>
+</div>
+<% end %>

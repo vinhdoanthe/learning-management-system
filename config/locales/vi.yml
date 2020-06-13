@@ -136,3 +136,8 @@ vi:
     new_comment_placeholder: 'Bình luận tại đây'
   datetime:
     to: 'đến'
+  role:
+    student: 'Học sinh'
+    teacher: 'Giáo viên'
+    parent: 'Phụ huynh'
+    admin: 'Quản trị viên'
