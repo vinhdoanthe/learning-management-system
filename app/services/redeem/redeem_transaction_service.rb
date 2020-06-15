@@ -20,9 +20,8 @@ class Redeem::RedeemTransactionService
 
       if transaction.save!
       post = create_redeem_post transaction, user
-      SocialCommunity::Feed::UserPostsService.create_multiple post.id, [user.id]
-        type = 1
-        update_star transaction, type
+        type = -1
+        update_coin transaction, type
         result = { type: 'success', message: 'Yêu cầu đồi quà thành công!' }
       end
     end
@@ -42,23 +41,30 @@ class Redeem::RedeemTransactionService
   end
 
   def update_transaction transaction, status
-    if status == 'ready'
+    if status == 'cancel'
       type = 1
-    elsif status == 'cancel'
-      type = -1
+      update_star transaction, type
     end
 
-    update_star transaction, type
-    coin_star_setting = Struct.new(:redeem)
-    setting = coin_star_setting.new(- transaction.amount * type)
-    User::Reward::CoinStarsService.new.create_coin_star_transaction setting, transaction.student_id, 'redeem', transaction.student_id 
-    transaction.update!(status: status)
+    if transaction.update!(status: status)
+      post = create_redeem_post transaction, user
+
+      if status == 'done'
+        SocialCommunity::Feed::UserPostsService.create_multiple post.id, [user.id]
+      end
+    end
+    true
   end
 
   private
 
-  def update_star transaction, type
-    user = User::Account::User.where(id: transaction.student_id).first
-    user.coin =  user.coin + type * transaction.total_paid
+  def update_coin transaction, type
+    create_coins_transaction transaction, type
+  end
+
+  def create_coins_transaction transaction, type
+    coin_star_setting = Struct.new(:redeem)
+    setting = coin_star_setting.new(transaction.amount)
+    User::Reward::CoinStarsService.new.create_coin_star_transaction setting, transaction.student_id, 'redeem', type
   end
 end

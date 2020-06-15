@@ -1,5 +1,5 @@
 class Redeem::RedeemTransactionsController < ApplicationController
-  before_action :find_transaction, only: [:update_transaction]
+  before_action :find_transaction, :check_checksum, only: [:update_transaction]
   before_action :validate_params, only: [:create_transaction]
   skip_before_action :verify_authenticity_token
 
@@ -17,14 +17,21 @@ class Redeem::RedeemTransactionsController < ApplicationController
   end
 
   def update_transaction
-    result = false
-    if current_user.is_admin?
-      result = Redeem::RedeemTransactionService.new.update_transaction @transaction.id, params[:status]
-    end
+   # result = false
+   # if current_user.is_admin?
+   #   result = Redeem::RedeemTransactionService.new.update_transaction @transaction.id, params[:status]
+   # end
 
-    if result
+   # if result
 
-    end
+   # end
+     result = Redeem::RedeemTransactionService.new.update_transaction @transaction.id, params[:status]
+
+     if result
+       render json: { sucess: true }
+     else
+       render json: { sucess: false }
+     end
   end
 
   def create_transaction
@@ -46,6 +53,13 @@ class Redeem::RedeemTransactionsController < ApplicationController
     
     unless result
       render json: { type: 'danger', message: 'Thiếu thông tin! Vui lòng kiểm tra lại!' }
+      return
+    end
+  end
+
+  def check_checksum
+    unless params[:checksum] == ''
+      render json: {success: false, message: "Sai thong tin"}
       return
     end
   end
