@@ -17,7 +17,7 @@
       <ul class="nav nav-tabs nav-primary tab-menu">
         <li class="active"><a href="#do_question_container" data-toggle='tab'><%= t('homework.name') %></a></li>
         <!-- <li class=""><a href="#homework_tab2" data-toggle='tab'>Ôn bài</a></li> -->
-        <li class="homework_video_link" data-session="<%= @session.id %>"><a href="/user/open_educat/op_students/student_homework?show_video=true&session=<%= @session.id %>" data-toggle='tooltip' title='<%= t('my_class.detail.tooltip.video') %>' ><%= t('homework.review') %></a></li> 
+        <li class="homework_video_link" data-session="<%= @session.id %>"><a data-toggle='tooltip' title='<%= t('my_class.detail.tooltip.video') %>' ><%= t('homework.review') %></a></li> 
       </ul>
       <div class="tab-content p-0 tab-all-content m-t-20">
         <div class="tab-pane fade active in" id="do_question_container">
@@ -86,8 +86,8 @@
 
 <script>
   $('.homework_video_link').on('click', function(){
-    session_id = $(this).data('session_id')
-    window.location.href = '/user/open_educat/op_students/student_homework?show_video=true&session=' + session_id
+    session_id = $(this).data('session')
+    window.location.href = '/user/open_educat/op_students/student_homework?show_video=true&session_id=' + session_id
   })
   $('#qa_area').ready(function() {
     data = {
