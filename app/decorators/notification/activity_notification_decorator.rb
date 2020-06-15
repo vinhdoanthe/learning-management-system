@@ -27,10 +27,18 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
     when SC_REDEEM_POST_CREATE
       created_user = User::Account::User.where(id: transaction.student_id).first
       created_str = created_user.present? ? created_user.student_name : ''
-      action_str = I18n.t('notification.redeem_product_post.create')
       product = transaction.redeem_product
       target_str = product.present? ? product.name : ''
-      display_html = "#{ created_str } #{ action_str } #{ target_str } #{ I18n.t('notification.redeem_product_post.success') }"
+      if transaction.status == 'pending'
+        action_str = I18n.t('notification.redeem_product_post.create')
+        display_html = "Yêu cầu đồi quà thành công"
+      elsif transaction.status == 'approve'
+        display_html = "Yêu cầu đổi quà đã được chấp nhận"
+      elsif transaction.status == 'done'
+        display_html = "#{ created_str } #{ action_str } #{ target_str } #{ I18n.t('notification.redeem_product_post.success') }"
+      elsif transaction.status == 'cancel'
+        display_html = "Hết quà" 
+      end
     end
 
     display_html

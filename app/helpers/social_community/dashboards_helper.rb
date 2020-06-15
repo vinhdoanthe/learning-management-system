@@ -78,7 +78,9 @@ module SocialCommunity::DashboardsHelper
     product = transaction.redeem_product
     
     if product.present?
+      if transaction.status == 2
       message = "#{ feed.created_user.student_name } vừa đổi quà #{ product.name } thành công"
+      end
     end
 
     [message, product]
