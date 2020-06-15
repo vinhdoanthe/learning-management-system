@@ -3,14 +3,19 @@ class User::Reward::CoinStarsService
     value = User::Reward::TekyCoinStarActivitySetting.where(setting_key: key).first
     return if value.blank?
       
-    create_coin_star_transaction value, target, type, give_by
+    create_coin_star_transaction value, target, type, give_by, 1
   end
 
-  def create_coin_star_transaction setting, user_id, type, give_by
+  def create_coin_star_transaction setting, user_id, type, give_by, update_type
     # User::Reward::CoinStarTransaction.with_session do |s|
     # s.start_transaction
       transaction = User::Reward::CoinStarTransaction.new
-      transaction.amount = setting.send(type)
+      if update_type.present?
+        transaction.amount = setting.send(type) * update_type
+      else
+        transaction.amount = setting.send(type)
+      end
+
       transaction.give_to = user_id
       transaction.give_by = give_by
       transaction.transaction_type = type

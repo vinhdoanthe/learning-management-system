@@ -136,6 +136,76 @@ module User
         return tag_html
 
       end
+      
+      # get Menu for User is Admin
+      def get_menus_admin(fullpath)
+        
+        # Khoi menu report
+        menus = [
+          {
+            'path' => report_diligent_path,
+            'title' => '<li><a class="app-menu__item" href="'<< report_diligent_path << '"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">'<< t('report.report_diligent_title') <<'</span></a></li>',
+            'title_active' => '<li><a class="app-menu__item active" href="'<< report_diligent_path << '"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">'<< t('report.report_diligent_title') <<'</span></a></li>'
+          },
+          
+          {
+            'path' => report_diligent_path,
+            'title' => '<li><a class="app-menu__item" href="'<< report_diligent_path << '"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">'<< t('report.report_study_title') <<'</span></a></li>',
+            'title_active' => '<li><a class="app-menu__item active" href="'<< report_diligent_path << '"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">'<< t('report.report_study_title') <<'</span></a></li>'
+          }
+
+        ]
+                
+        tag_html = '<ul class="app-menu">'
+        
+          menus.each do |menu|
+        
+              if (menu['path'] == fullpath)
+                tag_html = tag_html + menu['title_active']
+              else
+                tag_html = tag_html + menu['title']
+              end
+          
+          end
+        
+        tag_html = tag_html + '</ul>'
+          
+      end
+      
+      def get_menus_admin_lte(fullpath)
+                    
+        # Khoi menu report
+        menus = [
+          {
+            'path' => report_diligent_path,
+            'title' => '<li class="nav-item"><a class="nav-link" href="'<< report_diligent_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_diligent_title') <<'</p></a></li>',
+            'title_active' => '<li class="nav-item"><a class="nav-link active" href="'<< report_diligent_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_diligent_title') <<'</p></a></li>'
+          },
+          
+          {
+            'path' => report_study_path,
+            'title' => '<li class="nav-item"><a class="nav-link" href="'<< report_study_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_study_title') <<'</p></a></li>',
+            'title_active' => '<li class="nav-item"><a class="nav-link active" href="'<< report_study_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_study_title') <<'</p></a></li>'
+          }
+  
+        ]
+                
+        tag_html = '<ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">'
+        
+          menus.each do |menu|
+        
+              if (menu['path'] == fullpath)
+                tag_html = tag_html + menu['title_active']
+              else
+                tag_html = tag_html + menu['title']
+              end
+          
+          end
+        
+        tag_html = tag_html + '</ul>'
+              
+      end
+      
     end
   end
 end
