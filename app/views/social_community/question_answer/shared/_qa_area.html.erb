@@ -4,12 +4,11 @@
   * messages
 -->
 <!-- qa_threads -->
-<div class="fcc-anw chat-maxheight" id='qa_threads'>
+<div class='chat-maxheight' id='qa_threads'>
   <% threads.each do |thread| %>
     <%= render :partial => "social_community/question_answer/shared/thread", :locals => {:thread => thread} %>
   <% end %>
 </div>
-
 <%= javascript_include_tag 'social_community/question_answer/thread_messages' %>
 <script>
 

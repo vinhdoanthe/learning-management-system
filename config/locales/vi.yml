@@ -53,6 +53,7 @@ vi:
     new_noti: 'thông báo mới'
     all: "Tất cả thông báo"
     pending: "Tin nhắn chưa xem"
+    in_batch: 'trong lớp'
     qa_thread:
       create: 'đặt câu hỏi'
     pt_post:
@@ -143,3 +144,5 @@ vi:
     admin: 'Quản trị viên'
   qa:
     add_new_message: 'nhập câu trả lời'
+    view_detail: 'Xem chi tiết'
+    all_threads: 'Toàn bộ câu hỏi'

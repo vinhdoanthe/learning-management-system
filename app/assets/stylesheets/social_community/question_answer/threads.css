@@ -1,0 +1,21 @@
+.qa-thread-brief {
+	margin: 10px;
+}
+
+.thf-btn {
+	margin: 0px;
+	padding: 10px;
+}
+
+.thread-list-title {
+	margin: 10px !important;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.thread-subject {
+	font-weight: 800;
+}
+
+.created-dt {
+	color: red;
+}

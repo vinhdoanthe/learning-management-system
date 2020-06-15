@@ -22,7 +22,6 @@ module SocialCommunity::QuestionAnswer
     end
 
     def create
-      binding.pry
       permitted_params = message_params
       message= SocialCommunity::QuestionAnswer::MessagesService.create_message(permitted_params, current_user)
       unless message.nil?

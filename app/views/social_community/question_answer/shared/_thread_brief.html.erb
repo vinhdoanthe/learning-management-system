@@ -1,0 +1,18 @@
+<!-- Variables:
+  * thread
+  * load_messages
+-->
+
+<!-- subject -->
+<div class="fcca-head">
+  <% decorator = SocialCommunity::QuestionAnswer::ThreadDecorator.new(thread) %>
+  <%= decorator.display_thread_title %>
+  <p class='created-dt'><%= decorator.display_thread_created_at %></p>
+  <p class='thread-subject'><%= thread.subject %></p>
+</div>
+<div class='row thf-btn'>
+  <p>
+  <%= decorator.display_count_replies %>
+  <%= link_to I18n.t('qa.view_detail'),social_community_question_answer_thread_path(thread) %>
+  </p>
+</div>

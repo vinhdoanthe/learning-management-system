@@ -53,6 +53,7 @@ en:
     new_noti: 'new notifications'
     all: "All notifications"
     pending: "Pending notifications"
+    in_batch: 'in batch'
     qa_thread:
       create: 'posted a question'
     pt_post:
@@ -146,3 +147,5 @@ en:
     admin: 'Administrator'
   qa:
     add_new_message: 'add your reply'
+    view_detail: 'View detail'
+    all_threads: 'All questions'

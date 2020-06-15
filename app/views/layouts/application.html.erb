@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="/global/css/daterangepicker.css" />
 
     <%= yield :javascript_includes %>
+    <%= yield :stylesheet_includes %>
     <% if Rails.env.production? %>
       <!-- Google Analytics -->
       <script>

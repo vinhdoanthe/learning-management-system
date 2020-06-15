@@ -1,5 +1,9 @@
 module SocialCommunity::QuestionAnswer
   class ThreadsController < ApplicationController
+    def show
+      @thread = SocialCommunity::QuestionAnswer::Thread.where(_id: params[:id])
+    end
+
     def create
       new_thread = SocialCommunity::QuestionAnswer::ThreadsService.create_thread(permit_params, current_user)
       if new_thread.nil?
