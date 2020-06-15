@@ -18,7 +18,7 @@
         </div>
         <div class='row'>
           <% unless (check_projects @student_projects) %>
-            <p>Bạn chưa có sản phẩm nào</p>
+            <p class='no-projects'>Bạn chưa có sản phẩm nào</p>
           <% else %>
             <% @student_projects.each do |course, projects| %>
               <% projects.each do |project| %>
@@ -39,7 +39,7 @@
         </div>
         <div class=''>
           <% if @course_projects.blank? %>
-            <p>Bạn chưa có sản phẩm nào</p>
+            <p class='no-projects'>Bạn chưa có sản phẩm nào</p>
           <% else %>
             <% @course_projects.each do |course_project| %>
               <% course_project.each do |course, projects| %>
@@ -82,5 +82,8 @@
     font-size: 16px;
     font-weight: 600;
     margin-right: 20px;
+  }
+  .no-projects {
+        text-align: center;
   }
 </style>

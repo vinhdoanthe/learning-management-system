@@ -7,7 +7,7 @@ namespace :social_community do
     post 'add_reaction', action: 'add_reaction', as: 'add_reaction'
     post 'add_comment', action: 'add_comment', as: 'add_comment'
   end
-  
+
   namespace :feed do
     namespace :posts do 
       post 'add_reaction', action: 'add_reaction', as: 'add_reaction'
@@ -20,7 +20,7 @@ namespace :social_community do
 
   namespace :reactions do
   end
-  
+
   namespace :feed do
     resources :posts
     get 'my_posts' => 'posts#index', as: 'my_posts'
@@ -32,8 +32,9 @@ namespace :social_community do
     get 'course_student_projects/:course_id', action: 'course_student_projects', as: 'course_student_projects'
   end
 
-    namespace :question_answer do
+  namespace :question_answer do
     resources :threads
+    get 'my_threads' => 'threads#my_threads', as: 'my_threads'
     resources :messages
   end
 

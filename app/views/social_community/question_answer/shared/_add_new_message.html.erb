@@ -3,7 +3,7 @@
     <%= f.hidden_field :thread_id, :value => thread_id %>
     <li><span><%= image_tag('global/images/avatar.svg') %></span></li>
     <li>
-      <%= f.text_field :content %>
+      <%= f.text_field :content, :placeholder => t('qa.add_new_message') %>
     </li>
     <%= f.submit 'Reply', :style => "display: none;" %>
   <% end %> 

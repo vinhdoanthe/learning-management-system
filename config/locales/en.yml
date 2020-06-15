@@ -141,3 +141,5 @@ en:
     teacher: 'Teacher'
     parent: 'Parent'
     admin: 'Administrator'
+  qa:
+    add_new_message: 'add your reply'

@@ -18,7 +18,7 @@
         </div>
         <div class='row'>
           <% if @course_projects.blank? %>
-            <p>Chưa có sản phẩm nào</p>
+            <p class='no-projects'>Chưa có sản phẩm nào</p>
           <% else %>
             <% @course_projects.each do |project| %>
               <div class='col-md-3'>
@@ -28,7 +28,7 @@
           <% end %>
         </div>
         <div style='text-align: center'>
-        <%= paginate @course_projects %>
+          <%= paginate @course_projects %>
         </div>
       </div>    
     </div>
@@ -39,3 +39,10 @@
 </div>
 <div id="editStudentProjectDetail" class="modal fade" role="dialog">
 </div>
+
+
+<style>
+.no-projects {
+  text-align: center;
+}
+</style>

@@ -141,3 +141,5 @@ vi:
     teacher: 'Giáo viên'
     parent: 'Phụ huynh'
     admin: 'Quản trị viên'
+  qa:
+    add_new_message: 'nhập câu trả lời'

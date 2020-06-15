@@ -38,7 +38,6 @@ module SocialCommunity::QuestionAnswer
     end
     
     def self.create_notifications thread, key
-      # ActivityNotification::Notification.notify :users, thread, key: key
       thread.notify :users, key: key
     end
 
@@ -61,6 +60,12 @@ module SocialCommunity::QuestionAnswer
       else # TODO using more params
         []
       end  
+    end
+
+    def self.all_threads params, user
+      SocialCommunity::QuestionAnswer::Thread.where(created_by: user.id)
+        .order(updated_at: :DESC)
+        .page(params[:page])
     end
 
     def self.get_faculty_user thread

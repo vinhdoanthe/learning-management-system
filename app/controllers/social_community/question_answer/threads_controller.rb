@@ -24,6 +24,10 @@ module SocialCommunity::QuestionAnswer
       end
     end
 
+    def my_threads
+      @threads = SocialCommunity::QuestionAnswer::ThreadsService.all_threads params, current_user 
+    end
+
     def new
     end
 
