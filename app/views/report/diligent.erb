@@ -5,23 +5,40 @@
         <h3 class="card-title">
             <form name="report_filters" id="report_filters" method="post" class="form-inline">
               <i class="fas fa-chart-pie mr-1 text-success"></i>              
-                  <div class="input-group input-group-sm">
-                  <span class="input-group-append"><%= t('report.from')%></span>
-                    <input type="text" name="frm_report[from_date]" placeholder="from date" class="form-control" autocomplete="false" value="<%= @frm_report[:from_date]%>"><%= t('report.to')%>
-                    <input type="text" name="frm_report[to_date]" placeholder="to date" class="form-control" autocomplete="false" value="<%= @frm_report[:to_date]%>">
-                    <span class="input-group-append">
-                      <button type="submit" class="btn btn-default" id="btn_report_date_apply"><%= t('button.apply')%></button>
+                  <div class="input-group input-group-sm">                  
+                  <span class="input-group-append"><button class="btn btn-default"><%= t('report.from')%></button></span>
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="far fa-calendar-alt"></i>
                     </span>
+                  </div>
+                  <input type="text" required name="frm_report[from_date]" id="frm_report_from_date" placeholder="from date" class="form-control" autocomplete="false" value="<%= @frm_report[:from_date]%>"><span class="input-group-append"><button class="btn btn-default"> <%= t('report.to')%></button></span>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="far fa-calendar-alt"></i>
+                      </span>
+                    </div>
+                    <input type="text" name="frm_report[to_date]" id="frm_report_to_date" placeholder="to date" class="form-control" autocomplete="false" value="<%= @frm_report[:to_date]%>">
+                  <select name="frm_report[company_id]" id="frm_report_company_id" class="form-control form-control-sm select2" autocomplete="false" >
+                    <option value="">Tất cả cơ sở</option>
+                    <% @data_company.each do |ct| %>
+                      <option value="<%= ct[:id]%>" <% if ct[:id] ==  @frm_report[:company_id]%> selected <% end %> ><%= ct[:name]%></option>
+                    <% end %>
+                  </select>
+                  
+                  <span class="input-group-append">
+                    <button type="submit" class="btn btn-default" id="btn_report_date_apply"><%= t('button.apply')%></button>
+                  </span>
                   </div>
             </form>
         </h3>
       </div>
       <div class="card-body">
-          <div class="embed-responsive embed-responsive-16by9">
+          <div class="embed-responsive embed-responsive-16by9" style="min-height: 980px;">
             <canvas class="embed-responsive-item" id="reportDiligentMonthlyScale"></canvas>
           </div>
           <hr/>
-          <div class="embed-responsive embed-responsive-16by9" style="min-height: 500px;">
+          <div class="embed-responsive embed-responsive-16by9" style="min-height: 980px;">
             <canvas class="embed-responsive-item" id="reportDiligentMonthlyNumber"></canvas>
           </div>
       </div>    

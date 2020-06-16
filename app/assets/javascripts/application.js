@@ -8,6 +8,8 @@
 //=require custom_js/learning.js
 //=require rails_admin/custom/ckeditor_ajax.js
 //=require bootstrap
+//=require("trix")
+//=require("@rails/actiontext")
 
 var waitingdialog = waitingdialog || (function ($) {
   'use strict';
@@ -56,8 +58,8 @@ var waitingdialog = waitingdialog || (function ($) {
       $dialog.modal('hide');
     }
   };
-
 })(jQuery);
+
 $(document).ready(function () {
   setTimeout(function () {
     $('.alert').remove();

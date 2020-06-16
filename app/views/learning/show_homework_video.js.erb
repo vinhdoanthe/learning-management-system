@@ -6,6 +6,7 @@
     <% if lesson.present? %>
         $('#video_lesson_name').html('<%= lesson.name %>');
         $('#video_description').html('<%= name %>');
+$('#video_homework_chat').html("<%= j (render 'social_community/question_answer/shared/qa_box', locals: { session: session, lesson: lesson })  %>")
     <% end %>
 
     <% if session.present? && (has_homework? current_user, session) %>
