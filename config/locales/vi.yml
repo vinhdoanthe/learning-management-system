@@ -6,6 +6,8 @@ vi:
     update: "Cập nhật"
     cancel: "Huỷ"
     back: "Quay lại"
+    reply: 'Trả lời'
+    back_to_my_threads: 'Quay lại danh sách câu hỏi'
   select:
     all: "Tất cả"
   login:
@@ -139,10 +141,11 @@ vi:
     to: 'đến'
   role:
     student: 'Học sinh'
-    teacher: 'Giáo viên'
+    faculty: 'Giáo viên'
     parent: 'Phụ huynh'
     admin: 'Quản trị viên'
   qa:
     add_new_message: 'nhập câu trả lời'
     view_detail: 'Xem chi tiết'
     all_threads: 'Toàn bộ câu hỏi'
+    no_thread: 'Câu hỏi này đã bị xóa!'

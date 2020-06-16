@@ -1,7 +1,12 @@
 module SocialCommunity::QuestionAnswer
   class ThreadsController < ApplicationController
     def show
-      @thread = SocialCommunity::QuestionAnswer::Thread.where(_id: params[:id])
+      @thread = SocialCommunity::QuestionAnswer::Thread.where(_id: params[:id]).first
+      if !@thread.nil?
+        @messages = SocialCommunity::QuestionAnswer::Message.where(qa_thread_id: @thread._id).order(:created_at => :ASC)
+      else
+        @messages = nil
+      end
     end
 
     def create

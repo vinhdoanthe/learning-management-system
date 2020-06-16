@@ -12,7 +12,7 @@ module SocialCommunity::QuestionAnswer
       if params[:thread_id].present?
         messages = SocialCommunity::QuestionAnswer::Message
           .where(:qa_thread_id => params[:thread_id].to_s)
-          .order(:updated_at => :DESC)
+          .order(:updated_at => :ASC)
           .only(:created_by, :content, :updated_at).to_a
       else
       end

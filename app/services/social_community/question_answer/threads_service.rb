@@ -26,17 +26,34 @@ module SocialCommunity::QuestionAnswer
       unless lesson_id.nil?
         thread.lesson_id = lesson_id
       end
-      
+
       thread.created_by = created_user.id
-      thread.permission = PERMISSION_PUBLIC 
+      thread.permission = PERMISSION_PUBLIC
+      f_user = User::Account::User.where(faculty_id: session.faculty_id).first
+
+      # binding.pry
+      # SocialCommunity::QuestionAnswer::Thread.with_session do |session|
+      #   session.start_transaction
       if thread.save!
+        create_subscribed_users(thread, [f_user])
         create_notifications(thread, 'qa_thread.create')
         thread
       else
         nil
       end
+      # session.commit_transaction
+      # end
     end
-    
+
+    def self.create_subscribed_users thread, users
+      users.each do |user|
+        thread_subscribed_user = SocialCommunity::QuestionAnswer::ThreadSubscribedUser.new
+        thread_subscribed_user.qa_thread = thread
+        thread_subscribed_user.user_id = user.id
+        thread_subscribed_user.save
+      end
+    end
+
     def self.create_notifications thread, key
       thread.notify :users, key: key
     end
@@ -63,15 +80,22 @@ module SocialCommunity::QuestionAnswer
     end
 
     def self.all_threads params, user
-      SocialCommunity::QuestionAnswer::Thread.where(created_by: user.id)
-        .order(updated_at: :DESC)
-        .page(params[:page])
+      if user.is_student?
+        SocialCommunity::QuestionAnswer::Thread.where(created_by: user.id)
+          .order(updated_at: :DESC)
+          .page(params[:page])
+      elsif user.is_teacher?
+        SocialCommunity::QuestionAnswer::Thread.where(:_id.in => SocialCommunity::QuestionAnswer::ThreadSubscribedUser.where(user_id: user.id)
+          .distinct(:qa_thread_id))
+          .order(:updated_at => :DESC)
+          .page(params[:page])
+      end
     end
 
     def self.get_faculty_user thread
       session = Learning::Batch::OpSession.where(id: thread.session_id).first
       if session.nil?
-       nil
+        nil
       else
         User::Account::User.where(faculty_id: session.faculty_id).first
       end 

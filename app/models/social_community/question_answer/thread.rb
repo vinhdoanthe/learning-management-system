@@ -4,6 +4,7 @@ module SocialCommunity::QuestionAnswer
     include Mongoid::Timestamps
     include ActivityNotification::Models
     store_in collection: "qa_threads"
+    paginates_per 5
 
     field :course_id, type: Integer
     field :batch_id, type: Integer
@@ -16,7 +17,7 @@ module SocialCommunity::QuestionAnswer
     field :updated_by, type: Integer
 
     has_many :qa_messages, class_name: 'SocialCommunity::QuestionAnswer::Message'
-    
+
     acts_as_notifiable :users,
       targets: ->(thread, key) {
       if key == 'qa_thread.create'
@@ -28,7 +29,7 @@ module SocialCommunity::QuestionAnswer
     notifiable_path: :thread_path
 
     def thread_path
-      social_community_question_answer_thread_path(thread)
+      social_community_question_answer_thread_path(_id)
     end
   end
 end

@@ -2,8 +2,6 @@ module SocialCommunity::QuestionAnswer
   class MessagesController < ApplicationController
 
     def index
-      puts 'called'
-      puts "thread_id param: #{params[:thread_id]}"
       return if !params[:thread_id].present?
       messages = SocialCommunity::QuestionAnswer::MessagesService.get_messages(params)
       puts "count: #{messages.count}"

@@ -9,11 +9,12 @@ gem 'i18n'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 # Use for store enums
-gem 'enumerize'
+  gem 'enumerize'
 # User for administration
 gem 'rails_admin', '~> 2.0'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'composite_primary_keys', '~> 12.0'
+gem 'tinymce-rails'
 
 # Notification
 gem 'activity_notification'
