@@ -1,6 +1,7 @@
 class SocialCommunity::ScStudentProject < ApplicationRecord
   extend Enumerize
   self.table_name = 'sc_student_projects'
+  has_rich_text :content
   paginates_per 20
 
   enumerize :state, in: [SocialCommunity::Constant::ScStudentProject::State::PUBLISH, SocialCommunity::Constant::ScStudentProject::State::DRAFT]

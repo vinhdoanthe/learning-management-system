@@ -54,6 +54,12 @@
 </div>
 <div id="editStudentProjectDetail" class="modal fade" role="dialog">
 </div>
+<%= form_with model: @student_project do |form| %>
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.rich_text_area :content %>
+  </div>
+<% end %>
 <%= render 'user/open_educat/shared/student_projects/modals/student_project_upload', { subjects: subjects } %>
 <style>
 #video_infomation input{

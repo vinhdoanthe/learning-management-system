@@ -9,7 +9,8 @@
 //=require rails_admin/custom/ckeditor_ajax.js
 //=require jquery.lazyload
 //=require bootstrap
-//
+//=require("trix")
+//=require("@rails/actiontext")
 
   var waitingdialog = waitingdialog || (function ($) {
     'use strict';
