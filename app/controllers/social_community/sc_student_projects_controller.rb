@@ -63,14 +63,19 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   end
 
   def update_student_project
-    list_params = ['name', 'description', 'student_id', 'subject_id', 'state', 'permission']
+    update_params = {}
+    update_params.merge! params[:social_community_sc_student_project].permit! if params[:social_community_sc_student_project].present?
+    update_params.merge! params[:state] if params[:state].present?
+
+    if update_params['permission'] == '1'
+      update_params['permission'] = 'public'
+    end
+
     return unless current_user.is_teacher?
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
-    update_params = {}
-    params.each{|k,v| update_params.merge!({k => v}) if list_params.include? k }
     update_params.select!{ |k, v| v.present? }
 
-    if project.update(update_params)
+    if project.update!(update_params)
       render json: { type: 'success', 'message': 'Update thành công' }
     else
       render json: { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }

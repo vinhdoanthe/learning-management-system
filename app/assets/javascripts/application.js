@@ -8,6 +8,7 @@
 //=require custom_js/learning.js
 //=require rails_admin/custom/ckeditor_ajax.js
 //=require bootstrap
+//=require trix/dist/trix
 //=require("trix")
 //=require("@rails/actiontext")
 
