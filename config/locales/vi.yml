@@ -6,6 +6,7 @@ vi:
     update: "Cập nhật"
     cancel: "Huỷ"
     back: "Quay lại"
+    apply: "Áp dụng"
   select:
     all: "Tất cả"
   login:
@@ -66,6 +67,14 @@ vi:
     attendance: "BÁO CÁO CHUYÊN CẦN"
     no_attendance: "Chưa có thông tin chuyên cần"
     checkin: "BÁO CÁO ĐIỂM DANH"
+    report_diligent_title: "Báo cáo chuyên cần"
+    report_study_title: "Báo cáo học tập"
+    report_attend_title: "Đi học"
+    report_absent_title: "Nghỉ học"
+    report_chart_prorata_title: "Báo cáo theo tỷ lệ"
+    report_chart_based_on_quantity_title: "Báo cáo theo số lượng"
+    report_month_title: "Báo cáo tháng"
+    report_day_title: "Báo cáo ngày"
   learning:
     class: "Lớp"
     subject: "Học phần"

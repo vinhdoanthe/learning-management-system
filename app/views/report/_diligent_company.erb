@@ -1,0 +1,75 @@
+<script>
+       var labels = <%= raw @list_date%>
+       var ctx_scale = document.getElementById('reportDiligentMonthlyScale').getContext('2d');
+       var myChart = new Chart(ctx_scale, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: '<%= t("report.report_absent_title")%>',
+                    fill: false,
+                    data: [<% @data_company.each do |ct| %> <%= ct[:scale_no_present] %>,<% end %>],
+                    backgroundColor: 'rgb(201, 203, 207)',
+                    borderColor: 'rgb(201, 203, 207)',
+                    borderWidth:2
+                  },  
+                  {
+                    label: '<%= t("report.report_attend_title")%>',
+                    fill: false,
+                    data: [<% @data_company.each do |ct| %> <%= ct[:scale_present] %>,<% end %>],
+                    backgroundColor: 'rgb(54, 162, 235)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    borderWidth:2
+                  },
+                     
+                ],      
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '<%= t("report.report_chart_prorata_title")%>',
+                    fontSize: '14'
+               },  
+               
+               responsive: true,
+               scales: {
+                 yAxes: [{
+                   stacked: false,
+                   ticks: {
+                       min: 0,
+                       max: 100,
+                       stepSize: 10,
+                       callback: function(value, index, values) {
+                           return value + ' %';
+                       }
+                   }
+                 }],
+                 
+                },
+                
+                plugins: {
+                    datalabels: {
+                      backgroundColor: function(context) {
+                        return context.dataset.backgroundColor;
+                      },
+                      borderRadius: 4,
+                      color: '#000',
+                      display: function(context) {
+                        return context.dataset.data[context.dataIndex] > 0;
+                      },
+                      formatter: function(value, context) {
+                        return context.dataset.data[context.dataIndex] + '%';
+                      },
+                      font: {
+                        weight: 'normal',
+                        size: '10'
+                      }
+                      
+                    }
+                },
+            }
+        });
+
+        
+</script>
