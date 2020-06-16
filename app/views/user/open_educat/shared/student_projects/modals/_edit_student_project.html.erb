@@ -1,3 +1,5 @@
+<% all_student.map! { |st| [st[1], st[0]] } %>
+<% subjects.map! { |s| [s[1], s[0]] } %>
 <div class="modal-dialog">
   <!-- Modal content-->
   <div class="modal-content">
@@ -6,20 +8,24 @@
     </div>
     <div class="modal-body">
       <div id="edit_video_infomation">
+        <% binding.pry %>
+        <%= form_with model: project, url: social_community_update_student_project_path(project_id: project.id), method: :post, locals: true,  html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
         <div class='row' id="edit_student_project_upload">
           <div class='col-md-3'>
             <label>Học sinh <span style="color: red">*</span></label>
           </div>
           <div class='col-md-8'>
-            <select class='fl_input' id='edit_upload_project_student'>
-              <% all_student.each do |st| %>
-                <% if student.id == st[0] %>
-                  <option selected value="<%= st[0] %>"><%= st[1] %> </option>
-                <% else %>
-                  <option value="<%= st[0] %>"><%= st[1] %> </option>
-                <% end %>
-              <% end %>
-            </select>
+            <%= f.select :student_id,
+              options_for_select(all_student, project.student_id), {} , { class: 'project_detail' } %>
+            <!-- <select class='fl_input' id='edit_upload_project_student'>
+              <%# all_student.each do |st| %>
+                <#% if student.id == st[0] %>
+                  <option selected value="<%#= st[0] %>"><%#= st[1] %> </option>
+                <%# else %>
+                  <option value="<%#= st[0] %>"><%#= st[1] %> </option>
+                <%# end %>
+              <%# end %>
+            </select> -->
           </div>
         </div>
         <div class='row' id="edit_student_project_subject">
@@ -27,11 +33,13 @@
             <label>Học phần <span style="color: red">*</span></label>
           </div>
           <div class="col-md-8">
-            <select id="edit_upload_project_subject">
-              <% subjects.each do |k, v| %>
-                <option value="<%= k %>"><%= v %></option>
-              <% end %>
-            </select>
+            <%= f.select :subject_id,
+              options_for_select(subjects, project.subject_id), {} , { class: 'project_detail' }  %>
+            <!-- <select id="edit_upload_project_subject">
+              <%# subjects.each do |k, v| %>
+                <option value="<%#= k %>"><%#= v %></option>
+              <%# end %>
+            </select> -->
           </div>
         </div>
         <div class="project_name row">
@@ -39,7 +47,8 @@
             <label>Tên sản phẩm <span style='color: red'>*</span></label>
           </div>
           <div class='col-md-8'>
-            <input style='width: 100%' placeholder="Tên sản phẩm" value="<%= project.name %>" name="project_name" type="text"></input>
+            <%= f.text_field :name, class: 'project_detail', placeholder: 'Tên sản phẩm' %>
+            <!-- <input style='width: 100%' placeholder="Tên sản phẩm" value="<%#= project.name %>" name="project_name" type="text"></input> -->
           </div>
         </div>
         <div class="project_description row">
@@ -47,24 +56,44 @@
             <label>Mô tả sản phẩm </label>
           </div>
           <div class='col-md-8'>
-            <textarea style='width: 100%' name='project_description' placeholder="Mô tả về sản phẩm" rows='5'><%= project.description %></textarea>
+            <%#= f.text_area :description, class: 'project_detail', placeholder: "Mô tả sản phẩm", rows: '5' %>
+            <!--  <textarea style='width: 100%' name='project_description' placeholder="Mô tả về sản phẩm" rows='5'><%#= project.description %></textarea> -->
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <%= f.label :description %>
+            <%= f.rich_text_area :description %>
           </div>
         </div>
         <div class="project_permission row">
           <div class="col-md-12">
-            <input type="checkbox" name="project_permission" checked value="public">
+            <%= f.check_box :permission, checked: true, value: 'public' %>
+            <!-- <input type="checkbox" name="project_permission" checked value="public"> -->
             <label for="permission">Công khai</label><br>
           </div>
         </div>
+      <% end %>
       </div>
     </div>
 
     <div class="modal-footer">
+      <input type="submit" value="Submit" form="edit_student_project_form" class='btn btn-primary'>
       <button data-dismiss="modal" data-project="<%= project.id %>" type="button" class="btn btn-primary" style="background-color: #5DC2A7;" id="edit_project_confirm">Edit video</button>
     </div>
   </div>
 </div>
 <style>
+.project_detail {
+  width: 100%;
+  margin-bottom: 10px;
+}
+#edit_student_project_form select:hover {
+  -webkit-appearance: auto;
+}
+#edit_student_project_form select {
+  padding: 10px;
+}
 #edit_upload_project_subject:hover {
   -webkit-appearance: auto;
 }
@@ -82,6 +111,7 @@
   -webkit-appearance: auto;
 }
 .project_name{ margin-bottom: 10px }
+.project_name input { padding: 10px }
 </style>
 <script>
   $('#edit_project_confirm').on('click', function(){
