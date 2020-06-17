@@ -11,7 +11,7 @@
         <li class="nav-active">
           <input type="hidden" id="public_profile_id" value="<%= current_user.op_student.id %>" >
           <a href="<%= root_path %>">
-            <%= image_tag(get_avatar, size: [80, 80]) %>
+            <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
             <span class='public_profile'>
               <label class="user_full_name"><%= current_user.op_student.full_name %></label>
               <p class="user_code" style="padding: 0; text-align: left">&nbsp<%= current_user.op_student.code %></p>

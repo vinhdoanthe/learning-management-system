@@ -10,7 +10,8 @@
       <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
         <li class="nav-active">
           <a href="<%= root_path %>">
-            <%= image_tag(get_avatar, size: [80, 80]) %>
+            <%#= image_tag(get_avatar, size: [80, 80]) %>
+            <%= (User::Account::UserDecorator.new(current_user).display_avatar 80).html_safe %>
             <span>
                 <label for=""><%= current_user.op_faculty.full_name %></label>
                 <p>Level: &nbsp<%= current_user.op_faculty.faculty_level %></p>
