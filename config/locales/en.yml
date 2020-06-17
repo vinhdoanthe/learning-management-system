@@ -33,6 +33,7 @@ en:
     teaching_schedule: "Teaching schedule"
     class_list: "Class list"
     marking: "Marking"
+    question_answer: "Question Answer"
   config:
     general_info: "General information"
     parent_info: "Parent information"

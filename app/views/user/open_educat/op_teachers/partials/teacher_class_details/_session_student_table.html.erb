@@ -18,7 +18,9 @@
         <td><%= student[:code] %></td>
         <td>
           <span class="table-img">
-            <img src="<%= student[:avatar_src] %>" alt="">
+            <% user = User::Account::User.where(student_id: st[0]).first %>
+            <!-- <img src="<%= student[:avatar_src] %>" alt=""> -->
+            <%= User::Account::UserDecorator.new(user).display_avatar.html_safe %>
           </span>
           <span class="table-name"><%= student[:name] %></span>
         </td>

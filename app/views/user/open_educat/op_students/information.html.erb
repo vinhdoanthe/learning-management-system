@@ -7,7 +7,8 @@
     <div class="panel-heading">
       <div class="ph-img">
         <span>
-        <%= image_tag(get_avatar, size: [80, 80], class: 'infomation_avatar') %>
+        <%#= image_tag(get_avatar, size: [80, 80], class: 'infomation_avatar') %>
+          <%= (User::Account::UserDecorator.new(current_user).display_avatar 80).html_safe %>
         </span>
       </div>
       <div class="ph-text">

@@ -11,12 +11,14 @@
             <% students.each do |student| %>
               <li>
                 <div class="ths-people">
-                  <% avatar = get_student_avatar student %>
+                  <%# avatar = get_student_avatar student %>
                   <span class="big-icon icon_reward" style='position: relative'>
                     <input type='hidden' value='<%= student.id %>' name='active_reward_student'>
                     <span class="active_reward" style=" width: 15px; height: 15px; background-color: #5DC2A7 ; position: absolute; top: 0; right: 0; border-radius: 50%;"></span>
                     <!-- <img src="/global/images/Group.png" alt=""> -->
-                    <%= image_tag(avatar) %>
+                    <%#= image_tag(avatar) %>
+                    <% user = User::Account::User.where(student_id: student.id).first %>
+                    <%= User::Account::UserDecorator.new(user).display_avatar.html_safe %>
                   </span>
                   <!--  <a href="" class="close-icon"><img src="/global/images/close.png" alt=""></a> -->
                   <p><%= student.full_name %></p>

@@ -11,8 +11,7 @@ class SocialCommunity::QuestionAnswer::MessageDecorator < SimpleDelegator
   end
 
   def display_author_avatar
-    # TODO: get real user avatar
-    "<img src='/global/images/Bitmaps.png' alt="">"
+    User::Account::UserDecorator.new(@created_user).display_avatar
   end
   
   def display_created_time

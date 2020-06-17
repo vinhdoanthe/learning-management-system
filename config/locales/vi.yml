@@ -8,7 +8,6 @@ vi:
     back: "Quay lại"
     reply: 'Trả lời'
     back_to_my_threads: 'Quay lại danh sách câu hỏi'
-    apply: "Áp dụng"
   select:
     all: "Tất cả"
   login:
@@ -34,6 +33,7 @@ vi:
     teaching_schedule: "Lịch giảng dạy"
     class_list: "Danh sách lớp học"
     marking: "Chấm bài"
+    question_answer: "Hỏi đáp"
   config:
     general_info: "Thông tin chung"
     parent_info: "Thông tin phụ huynh"
@@ -69,15 +69,6 @@ vi:
     attendance: "BÁO CÁO CHUYÊN CẦN"
     no_attendance: "Chưa có thông tin chuyên cần"
     checkin: "BÁO CÁO ĐIỂM DANH"
-    report_diligent_title: "Báo cáo chuyên cần"
-    report_study_title: "Báo cáo học tập"
-    report_attend_title: "Đi học"
-    report_absent_title: "Nghỉ học"
-    report_chart_prorata_title: "Báo cáo theo tỷ lệ"
-    report_chart_based_on_quantity_title: "Báo cáo theo số lượng"
-    report: "Báo cáo"
-    report_month_title: "Báo cáo tháng"
-    report_day_title: "Báo cáo ngày"
   learning:
     class: "Lớp"
     subject: "Học phần"

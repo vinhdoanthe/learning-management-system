@@ -1,7 +1,8 @@
 <div class="bnd-comment">
   <div class="bc-edit">
     <span>
-      <img src="" alt="">
+      <!-- <img src="" alt=""> -->
+      <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
     </span>
     <input id="album_comment_input_<%= album_id %>" type="text" class='album-comment-input' data-album-id="<%= album_id %>" placeholder='<%=t('social_community.new_comment_placeholder') %>'>
     <a href="#"><img class='album-comment-btn' data-album-id='<%= album_id %>' src="/global/images/send.png" alt=""></a>

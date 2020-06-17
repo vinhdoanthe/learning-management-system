@@ -73,7 +73,7 @@ module SocialCommunity::DashboardsHelper
 
   def redeem_feed feed
     post_activity = SocialCommunity::Feed::PostActivity.where(sc_post_id: feed.post.id).first
-    # message = "#{ feed.created_user.student_name } vừa đổi quà thành công"
+    message = "#{ feed.created_user.student_name } vừa đổi quà thành công"
     transaction = post_activity.activitiable
     product = transaction.redeem_product
     
