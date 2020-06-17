@@ -47,6 +47,7 @@ yarn-debug.log*
 /config/environments/*.local.yml
 /config/mongoid.yml
 /config/newrelic.yml
+/config/appsignal.yml
 
 /data_import/*
 /data_export/*

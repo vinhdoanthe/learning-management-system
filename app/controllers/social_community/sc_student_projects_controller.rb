@@ -74,7 +74,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     return unless current_user.is_teacher?
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
     update_params.select!{ |k, v| v.present? }
-
+    binding.pry
     if project.update!(update_params)
       render json: { type: 'success', 'message': 'Update thành công' }
     else

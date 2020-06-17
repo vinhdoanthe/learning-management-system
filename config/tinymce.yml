@@ -1,7 +1,19 @@
-toolbar:
-  - bold italic | undo redo
-plugins:
-  - image
-  - link
-  - code
-  - lists
+default: &default
+  toolbar:
+    - bold italic | undo redo
+simple:
+  <<: *default
+  menubar: false
+  toolbar:
+    - bold italic | undo redo
+normal:
+  <<: *default
+  toolbar:
+    - bold italic | undo redo | image
+  plugins:
+    - image
+    - link
+    - code
+    - lists
+  images_upload_url: '/uploader/image'
+

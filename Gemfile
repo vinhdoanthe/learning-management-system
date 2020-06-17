@@ -81,6 +81,8 @@ gem 'jbuilder', '~> 2.7'
 
 # Monitoring gems
 gem 'newrelic_rpm'
+gem 'appsignal'
+
 gem 'sentry-raven'
 
 # Use Active Storage variant

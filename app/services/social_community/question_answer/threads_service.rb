@@ -31,18 +31,13 @@ module SocialCommunity::QuestionAnswer
       thread.permission = PERMISSION_PUBLIC
       f_user = User::Account::User.where(faculty_id: session.faculty_id).first
 
-      # binding.pry
-      # SocialCommunity::QuestionAnswer::Thread.with_session do |session|
-      #   session.start_transaction
       if thread.save!
         create_subscribed_users(thread, [f_user])
-        create_notifications(thread, 'qa_thread.create')
+        create_notifications(thread, SC_QA_THREAD_CREATE)
         thread
       else
         nil
       end
-      # session.commit_transaction
-      # end
     end
 
     def self.create_subscribed_users thread, users
@@ -58,7 +53,7 @@ module SocialCommunity::QuestionAnswer
       thread.notify :users, key: key
     end
 
-    # params {
+      # params {
     # user
     # start_time
     # end_time
