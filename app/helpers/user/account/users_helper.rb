@@ -16,7 +16,7 @@ module User
 
       def get_student_user_avatar user
         if user.avatar.present? && user.avatar.thumbnail.attached?
-          user.avatar
+          user.avatar.thumbnail
         else
           if user.gender == 'm'
             asset_path('global/images/Group-3.png')
@@ -105,6 +105,11 @@ module User
          'icon' => 'ico-BaiTapOnBai.png',
          'title' => "#{ t('sidebar.marking') }", 
          'right_content' => '<span class="left-badge">' << count_mark_question(current_user.op_faculty) << '</span>'
+        },
+        {'path' => social_community_question_answer_my_threads_path, 
+         'icon' => 'ico-BaiTapOnBai.png',
+         'title' => "#{ t('sidebar.question_answer') }", 
+         'right_content' => '<span class="left-badge"></span>'
         },
         ]
 
