@@ -4,8 +4,15 @@
       <div class="card-header">
         <h3 class="card-title">
             <form name="report_filters" id="report_filters" method="post" class="form-inline">
-              <i class="fas fa-chart-pie mr-1 text-success"></i>              
-                  <div class="input-group input-group-sm">                  
+              <i class="fas fa-chart-pie mr-1 text-success"></i>
+                  <div class="input-group input-group-sm">
+                  <span class="input-group-append"><button class="btn btn-default">Theo</button></span>
+                  <select name="frm_report[report_type]" id="frm_report_report_type" class="form-control form-control-sm select2" autocomplete="false" >
+                    <option value="range">Quãng thời gian</option>
+                    <option value="week" <% if @frm_report[:report_type] == 'week' %> selected <% end %> >Tuần</option>
+                    <option value="month" <% if @frm_report[:report_type] == 'month' %> selected <% end %> >Tháng</option>
+                    <option value="year" <% if @frm_report[:report_type] == 'year' %> selected <% end %> >Năm</option>
+                  </select>              
                   <span class="input-group-append"><button class="btn btn-default"><%= t('report.from')%></button></span>
                   <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -21,7 +28,7 @@
                     <input type="text" name="frm_report[to_date]" id="frm_report_to_date" placeholder="to date" class="form-control" autocomplete="false" value="<%= @frm_report[:to_date]%>">
                   <select name="frm_report[company_id]" id="frm_report_company_id" class="form-control form-control-sm select2" autocomplete="false" >
                     <option value="">Tất cả cơ sở</option>
-                    <% @data_company.each do |ct| %>
+                    <% @list_company.each do |ct| %>
                       <option value="<%= ct[:id]%>" <% if ct[:id] ==  @frm_report[:company_id]%> selected <% end %> ><%= ct[:name]%></option>
                     <% end %>
                   </select>
@@ -34,11 +41,11 @@
         </h3>
       </div>
       <div class="card-body">
-          <div class="embed-responsive embed-responsive-16by9" style="min-height: 980px;">
+          <div class="embed-responsive embed-responsive-16by9">
             <canvas class="embed-responsive-item" id="reportDiligentMonthlyScale"></canvas>
           </div>
           <hr/>
-          <div class="embed-responsive embed-responsive-16by9" style="min-height: 980px;">
+          <div class="embed-responsive embed-responsive-16by9">
             <canvas class="embed-responsive-item" id="reportDiligentMonthlyNumber"></canvas>
           </div>
       </div>    
