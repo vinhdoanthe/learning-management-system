@@ -200,11 +200,11 @@ module User
           #   'right_content' => ''
           # },
 
-          {'path' => social_community_sc_student_projects_social_student_projects_path, 
-           'icon' => 'ico-SPhocsinh.png',
-           'title' => 'Sản phẩm của tôi', 
-           'right_content' => ''
-          },
+          # {'path' => social_community_sc_student_projects_social_student_projects_path, 
+          #  'icon' => 'ico-SPhocsinh.png',
+          #  'title' => 'Sản phẩm của tôi', 
+          #  'right_content' => ''
+          # },
 
           # {'path' => '#', 
           #   'icon' => 'ico-SPhocsinh.png',
