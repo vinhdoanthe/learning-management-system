@@ -37,11 +37,9 @@
                     <div class="table-responsive" id="lesson_infomation">
                       <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/lesson_detail', {active_session: @active_session, active_lesson: @active_lesson, thumbnail: @thumbnail} %>
                     </div>
-                    <hr>
                     <div class="table-responsive" id="session_control">
                       <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/session_control', { active_lesson: @active_lesson, active_session: @active_session, active_subject: @active_subject} %>
                     </div>
-                    <hr>
                     <input type='hidden' name='active_session' value="<%= @active_session.id %>">
                     <input type='hidden' name='active_batch' value="<%= @batch.id %>" >
                     <div class="table-responsive" id="session_student_info">
