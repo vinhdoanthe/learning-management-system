@@ -1,6 +1,6 @@
 <% start_time = active_session.start_datetime %>
 <% end_time = active_session.end_datetime %>
-<div class="fc-header clearfix">
+<div class="fc-header clearfix" style="border-bottom: none">
   <div class="pull-left lesson_info">
     <h3>Học phần <%= active_subject.level %> - Buổi học: <%= active_session.count %></h3>
     <p><%= start_time.strftime('%H:%M') %> - <%= end_time.strftime('%H:%M') %> | <%= start_time.strftime('%d/%m/%y') %></p>
