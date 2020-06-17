@@ -17,6 +17,6 @@ class SocialCommunity::QuestionAnswer::MessageDecorator < SimpleDelegator
   
   def display_created_time
     return '' if @message.nil?
-    "<span>#{@message.created_at.strftime('%d/%m/%Y %I:%M%p')}</span>"
+    "<span>#{@message.created_at.strftime('%d/%m/%Y %I:%M %p')}</span>"
   end
 end
