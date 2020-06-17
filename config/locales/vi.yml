@@ -6,6 +6,8 @@ vi:
     update: "Cập nhật"
     cancel: "Huỷ"
     back: "Quay lại"
+    reply: 'Trả lời'
+    back_to_my_threads: 'Quay lại danh sách câu hỏi'
   select:
     all: "Tất cả"
   login:
@@ -31,6 +33,7 @@ vi:
     teaching_schedule: "Lịch giảng dạy"
     class_list: "Danh sách lớp học"
     marking: "Chấm bài"
+    question_answer: "Hỏi đáp"
   config:
     general_info: "Thông tin chung"
     parent_info: "Thông tin phụ huynh"
@@ -53,6 +56,15 @@ vi:
     new_noti: 'thông báo mới'
     all: "Tất cả thông báo"
     pending: "Tin nhắn chưa xem"
+    in_batch: 'trong lớp'
+    qa_thread:
+      create: 'đặt câu hỏi'
+    pt_post:
+      create: 'đăng ảnh'
+    rw_post:
+      create: 'khen thưởng'
+    st_project_post:
+      create: 'hoàn thành dự án cuối khóa'
   report:
     attendance: "BÁO CÁO CHUYÊN CẦN"
     no_attendance: "Chưa có thông tin chuyên cần"
@@ -60,7 +72,7 @@ vi:
   learning:
     class: "Lớp"
     subject: "Học phần"
-    lesson: "Buổi học"
+    lesson: "Bài học"
     no_lesson: "Chưa có buổi học nào"
     course: "Khoá học"
     attendance: "Điểm danh"
@@ -91,7 +103,7 @@ vi:
       student_projects: "Dự án của học sinh"
       progress:
         name: "Quá trình học tập"
-        done_html: "Lớp học <span class='color-16BD56'>đã diễn ra</span>"
+        done_html: "Buổi học <span class='color-16BD56'>đã diễn ra</span>"
         no_lesson: "Chưa có buổi học nào"
         coming_html: "Buổi học <span class='color-FFC400'>Chưa diễn ra</span>"
         cancel_html: "Buổi học <span class='color-F16357'>đã hủy</span>"
@@ -126,3 +138,15 @@ vi:
       leader_board: 'Top 10 Học sinh tiêu biểu'
   social_community:
     new_comment_placeholder: 'Bình luận tại đây'
+  datetime:
+    to: 'đến'
+  role:
+    student: 'Học sinh'
+    faculty: 'Giáo viên'
+    parent: 'Phụ huynh'
+    admin: 'Quản trị viên'
+  qa:
+    add_new_message: 'nhập câu trả lời'
+    view_detail: 'Xem chi tiết'
+    all_threads: 'Toàn bộ câu hỏi'
+    no_thread: 'Câu hỏi này đã bị xóa!'

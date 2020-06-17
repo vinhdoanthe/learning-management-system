@@ -9,11 +9,12 @@ gem 'i18n'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 # Use for store enums
-gem 'enumerize'
+  gem 'enumerize'
 # User for administration
 gem 'rails_admin', '~> 2.0'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'composite_primary_keys', '~> 12.0'
+gem 'tinymce-rails'
 
 # Notification
 gem 'activity_notification'
@@ -80,6 +81,8 @@ gem 'jbuilder', '~> 2.7'
 
 # Monitoring gems
 gem 'newrelic_rpm'
+gem 'appsignal'
+
 gem 'sentry-raven'
 
 # Use Active Storage variant
@@ -124,4 +127,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # gem "simple_calendar", "~> 2.0"
 gem 'spreadsheet', '~> 1.2', '>= 1.2.6'
 gem 'kaminari-mongoid'
-gem 'yt', '~> 0.32.0'
+gem 'kaminari'

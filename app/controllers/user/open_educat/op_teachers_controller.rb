@@ -3,26 +3,49 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   skip_before_action :verify_authenticity_token
   
   def teacher_class_detail
-    @batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
-    @course = @batch.op_course
-    @faculty = @teacher
-    @sessions = @batch.op_sessions.where(faculty_id: @faculty.id).order(start_datetime: :ASC)
-    @active_session = @sessions.where('start_datetime >= ?', Time.now).first
-    @active_session = @sessions.last if @active_session.blank?
-    classroom = Common::OpClassroom.where(id: @active_session.classroom_id).first
-    @classroom_name = classroom ? classroom.name : ''
-    company = @batch.res_company
-    @company_name = company ? company.name : ''
-    @active_subject = @active_session.op_subject
-    subject_ids = @sessions.pluck(:subject_id)
-    @subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level).uniq
-    @sessions = @sessions.where(subject_id: @active_subject.id)
-    @active_lesson = @active_session.op_lession
-    
-    if @active_lesson && @active_lesson.thumbnail.attached?
-      @thumbnail = url_for(@active_lesson.thumbnail)
+    if params[:session_id].present?
+      @active_session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+      @active_lesson = @active_session.op_lession
+      @batch = @active_session.op_batch
+      @course = @batch.op_course
+      @faculty = @teacher
+      @sessions = @batch.op_sessions.where(faculty_id: @faculty.id).order(start_datetime: :ASC)
+      classroom = Common::OpClassroom.where(id: @active_session.classroom_id).first
+      @classroom_name = classroom ? classroom.name : ''
+      company = @batch.res_company
+      @company_name = company ? company.name : ''
+      @active_subject = @active_session.op_subject
+      subject_ids = @sessions.pluck(:subject_id)
+      @subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level).uniq
+      @sessions = @sessions.where(subject_id: @active_subject.id)
+      if @active_lesson && @active_lesson.thumbnail.attached?
+        @thumbnail = url_for(@active_lesson.thumbnail)
+      else
+        @thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
+      end
+      
     else
-      @thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
+      @batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
+      @course = @batch.op_course
+      @faculty = @teacher
+      @sessions = @batch.op_sessions.where(faculty_id: @faculty.id).order(start_datetime: :ASC)
+      @active_session = @sessions.where('start_datetime >= ?', Time.now).first
+      @active_session = @sessions.last if @active_session.blank?
+      classroom = Common::OpClassroom.where(id: @active_session.classroom_id).first
+      @classroom_name = classroom ? classroom.name : ''
+      company = @batch.res_company
+      @company_name = company ? company.name : ''
+      @active_subject = @active_session.op_subject
+      subject_ids = @sessions.pluck(:subject_id)
+      @subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level).uniq
+      @sessions = @sessions.where(subject_id: @active_subject.id)
+      @active_lesson = @active_session.op_lession
+
+      if @active_lesson && @active_lesson.thumbnail.attached?
+        @thumbnail = url_for(@active_lesson.thumbnail)
+      else
+        @thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
+      end
     end
 
   end

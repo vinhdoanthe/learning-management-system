@@ -2,18 +2,23 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def youtube_upload
+    user = User::Account::User.where(student_id: params[:student_id]).first
     if validate_youtube_upload_params params
-      account = Yt::Account.new refresh_token: Settings.youtube['refresh_token']
-      file = params[:file].try(:tempfile).try(:to_path)
-      new_video = account.upload_video file, title: params[:title], description: params[:description]
-      video_id = new_video.id
-      video = Yt::Video.new id: video_id
-      embed_link = video.embed_html
-      thumbnail_video = video.thumbnail_url
+      if params[:file].present? && params[:title].present?
+        account = Yt::Account.new refresh_token: Settings.youtube['refresh_token']
+        file = params[:file].try(:tempfile).try(:to_path)
+        new_video = account.upload_video file, title: params[:title], description: params[:description]
+        video_id = new_video.id
+        video = Yt::Video.new id: video_id
+        embed_link = video.embed_html
+        thumbnail_video = video.thumbnail_url
 
-      user = User::Account::User.where(student_id: params[:student_id]).first
+        SocialCommunity::ScStudentProjectsService.new.manage_youtube_playlist account, params[:batch_id], video_id
+      else
+        embed_link = ''
+        thumbnail_video = ''
+      end
 
-      SocialCommunity::ScStudentProjectsService.new.manage_youtube_playlist account, params[:batch_id], video_id
       SocialCommunity::ScStudentProjectsService.new.create_student_project params, embed_link, current_user, thumbnail_video
       User::Reward::CoinStarsService.new.reward_coin_star 'UPLOAD_SPCK', user.id, 'coin', current_user.id
       User::Reward::CoinStarsService.new.reward_coin_star 'UPLOAD_SPCK', user.id, 'star', current_user.id
@@ -24,7 +29,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   end
 
   def validate_youtube_upload_params params
-    params[:file].present? && params[:title].present? && params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?
+    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:file].present? && params[:title].present?) || params[:slide].present? || params[:link].present?)
   end
 
   def student_project_detail
@@ -58,12 +63,18 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   end
 
   def update_student_project
+    update_params = {}
+    update_params.merge! params[:social_community_sc_student_project].permit! if params[:social_community_sc_student_project].present?
+    update_params.merge! params[:state] if params[:state].present?
+
+    if update_params['permission'] == '1'
+      update_params['permission'] = 'public'
+    end
+
     return unless current_user.is_teacher?
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
-    update_params = {}
-    params.each{|k,v| update_params.merge!({k => v}) if ['name', 'description', 'student_id', 'subject_id'].include? k }
-
-    if project.update(update_params)
+    update_params.select!{ |k, v| v.present? }
+    if project.update!(update_params)
       render json: { type: 'success', 'message': 'Update thành công' }
     else
       render json: { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
@@ -88,5 +99,16 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
       format.html
       format.js { render url, locals: { subject_student_projects: subject_student_projects, subjects: subjects } }
     end
+  end
+
+  def social_student_projects
+    data = SocialCommunity::ScStudentProjectsService.new.social_student_projects current_user
+    @student_projects = data[0]
+    @course_projects = data[1]
+  end
+
+  def course_student_projects
+    @course = Learning::Course::OpCourse.where(id: params[:course_id]).first
+    @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id], permission: 'public', state: 'publish').page params[:page]
   end
 end

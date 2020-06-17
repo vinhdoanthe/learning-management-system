@@ -1,0 +1,48 @@
+<%= javascript_include_tag 'social_community/sc_student_projects/sc_student_project.js' %>
+<%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
+<%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
+
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform"><%= @course.name %></h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="box-product" >
+        <div class="fc-header" style='margin: 15px 0'>
+          <h2><span class="color-000">Sản phẩm cộng đồng</h2>
+        </div>
+        <div class='row'>
+          <% if @course_projects.blank? %>
+            <p class='no-projects'>Chưa có sản phẩm nào</p>
+          <% else %>
+            <% @course_projects.each do |project| %>
+              <div class='col-md-3'>
+                <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div style='text-align: center'>
+          <%= paginate @course_projects %>
+        </div>
+      </div>    
+    </div>
+  </div>
+
+</div>
+<div id="studentProjectDetail" class="modal fade" role="dialog">
+</div>
+<div id="editStudentProjectDetail" class="modal fade" role="dialog">
+</div>
+
+
+<style>
+.no-projects {
+  text-align: center;
+}
+</style>

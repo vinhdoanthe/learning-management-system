@@ -1,0 +1,21 @@
+<!-- Variables:
+  * thread
+  * load_messages
+-->
+<div class='fcc-anw qa-thread' >
+  <!-- subject -->
+  <div class="fcca-head">
+    <label>Hỏi:</label>
+    <p><%= thread.subject %> </p>
+  </div>
+
+  <div class="fcca-main c-qa-thread-id" data-thread-id='<%= thread._id %>' id='thread_<%= thread._id %>'>
+    <!-- add_new_message -->
+    <%= render :partial => "social_community/question_answer/shared/add_new_message", :locals => {:thread_id => thread._id} %>
+  </div>
+</div>
+<style>
+.qa-thread {
+  margin-top: 10px;
+}
+</style>

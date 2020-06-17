@@ -1,0 +1,139 @@
+<%= stylesheet_link_tag ('swiper.min.css') %>
+
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Đổi điểm lấy quà</h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class='row'>
+        <div class='col-md-6'>
+            <div class="swiper-container gallery-top">
+              <div class="swiper-wrapper">
+                <% @redeem_product.images.each do |img| %>
+                  <div class="swiper-slide" ><%= image_tag(img)  %></div>
+                <% end %>
+              </div>
+            </div>
+            <div class="swiper-container gallery-thumbs">
+              <div class="swiper-wrapper">
+                  <% @redeem_product.images.each do |img| %>
+                    <div class="swiper-slide" ><%= image_tag(img)  %></div>
+                  <% end %>
+              </div>
+            </div>
+
+        </div>
+        <div class='col-md-6 product_infomation'>
+          <div>
+            <div class='product_title'>
+              <h3><%= @redeem_product.name %></h3>
+              <span class='product_brand'><%= @redeem_product.brand %></span>
+            </div>
+            <div class='product_description'>
+              <label>Giới thiệu sản phẩm</label>
+              <hr>
+              <p><%= @redeem_product.description %></p>
+            </div>
+            <div class="rtd-center clearfix redeem_info">
+              <label>Thông tin sản phẩm</label>
+              <hr style="margin: 0">
+              <div class="rtdt-left">
+                <div class="form-group pos-relative">
+                  <label for="exampleInputEmail1" class="form-title pos-absolute">Màu sắc</label>
+                  <ul>
+                    <% @redeem_product.available_color.each do |color| %>
+                      <li>
+                        <label class="check-multi">
+                          <input type="radio" name="product_color" value='<%= color %>'>
+                          <span class="checkmark" style="background-color: <%= color %>"></span>
+                        </label>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+              <div class="rtdt-left">
+                <div class='row'>
+                  <div class='col-md-6'>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Số lượng</label>
+                      <select name="" class="product_amount form-control">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class='col-md-6'>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Kích cỡ</label>
+                      <select name="" class="product_size form-control">
+                        <% @redeem_product.available_size.each do |size| %>
+                          <option value="<%= size %>"><%= size %></option>
+                        <% end %>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="rtdt-left">
+              <div class='row'>
+                <div class='col-md-12'>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Cơ sở nhận quà:</label>
+                  <select name="" id="select_redeem_company" class=" form-control">
+                    <% Common::ResCompany.all.each do |company| %>
+                      <option value='<%= company.id %>'><%= company.name %></option>
+                    <% end %>
+                  </select>
+                </div>
+                </div>
+              </div>
+              <div class='row'>
+                <div class='col-md-12'>
+                  <label for="exampleInputEmail1">Thời gian nhận quà:</label>
+                  <input type="text" id="redeem_time"  class='form-control' name='expected_time'  value="<%= Time.now.strftime('%m/%d/%Y') %>" />
+                </div>
+              </div>
+            </div>
+
+            <div class="rtd-btn clearfix" style="margin-top: 20px">
+              <div class="rtdb-left">
+                <p><span>Star</span><br/><%= @redeem_product.price %></p>
+              </div>
+              <div class="rtdb-right">
+                <input type='hidden' name="redeem_product_id" value='<%= @redeem_product.id %>'>
+                <button  data-toggle="modal" data-target="#confirm_redeem_modal"  class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit'  >Đổi quà ngay</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='confirm_redeem_modal' class="modal fade" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h4>Bạn chắc chắn muốn đổi quà? </h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+          <button type="button" class="btn btn-primary" id='redeem_product_confirm' data-dismiss="modal">Đổi quà ngay</button>
+      </div>
+  </div>
+</div>
+<%= stylesheet_link_tag 'redeem/redeem_product_detail' %>
+<%= javascript_include_tag 'redeem/redeem_product.js' %>

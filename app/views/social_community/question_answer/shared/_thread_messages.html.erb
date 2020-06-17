@@ -1,0 +1,17 @@
+<!-- Variables:
+  * messages
+-->
+
+<% messages.each do |message| %>
+  <div class="fcm-anw">
+    <% message_decorator = SocialCommunity::QuestionAnswer::MessageDecorator.new(message) %>
+    <div class="fcma-tit">
+      <%= message_decorator.display_author_avatar.html_safe %>
+      <%= message_decorator.display_author_name.html_safe %>
+    </div>
+    <div class="fcma-cmt">
+      <p><%= message.content.html_safe %></p>
+      <%= message_decorator.display_created_time.html_safe %>
+    </div>
+  </div>
+<% end %>

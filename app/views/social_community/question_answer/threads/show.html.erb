@@ -1,0 +1,5 @@
+<!-- Show thread -->
+<div class="page-content page-thin">
+  <%= link_to ('&larr;' + + t('button.back_to_my_threads')).html_safe, social_community_question_answer_my_threads_path %>
+  <%= render :partial => 'social_community/question_answer/shared/full_thread', :locals => {:thread => @thread, :messages => @messages} %>
+</div>

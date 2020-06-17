@@ -1,0 +1,8 @@
+<div class="fcc-que">
+  <%= form_with( url: social_community_question_answer_threads_path, method: :post, class: 'form-group') do |f| %>
+    <%= f.hidden_field :session_id, value: session.id %>
+    <%= f.hidden_field :lesson_id, value: lesson.id %> 
+    <%= f.text_field :subject, id: 'qa_subject_input', class: 'form-control form-white', placeholder: 'Bạn muốn hỏi gì?' %>
+    <%= f.button 'Hỏi', class: "btn btn-primary btn-embossed bg-5DC2A7" %>
+  <% end %>
+</div>

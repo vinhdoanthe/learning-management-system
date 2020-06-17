@@ -12,7 +12,8 @@ class SocialCommunity::CommentsService
     end
     {
       :user_fullname => user_fullname,
-      :content => comment.content
+      :content => comment.content,
+      :author_id => comment.commented_by
     }
   end
 end

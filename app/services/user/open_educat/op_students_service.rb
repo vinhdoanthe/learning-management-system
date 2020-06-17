@@ -168,6 +168,24 @@ class User::OpenEducat::OpStudentsService
     coming_soon_session
   end
 
+  def self.coming_soon_lesson coming_soon_session, student_id
+    return nil if coming_soon_session.nil?
+    if !coming_soon_session.lession_id.nil?
+      coming_soon_lesson = coming_soon_session.op_lession
+    else
+    # find last done session of a student
+      last_att_line = Learning::Batch::OpAttendanceLine.where(student_id: student_id, batch_id: coming_soon_session.batch_id).last
+      return nil if last_att_line.nil?
+      att = last_att_line.op_attendance_sheet
+      return nil if att.nil?
+      lesson = att.op_lession
+      return nil if lesson.nil?
+      courses_service = Learning::Course::OpCoursesService.new(coming_soon_session.course_id)
+      coming_soon_lesson = courses_service.get_next_lesson(lesson.id)
+    end
+    coming_soon_lesson
+  end
+
   def course_product
     course_ids = Learning::Course::OpCourse.pluck(:name, :id).uniq
     # course_product = SocialCommunity::ScProduct.where(course_id: course_ids)
@@ -203,8 +221,9 @@ class User::OpenEducat::OpStudentsService
       course = session.op_batch.op_course.name
       lesson = session.op_batch.current_session_level
       status = session.state
+      href = "/user/open_educat/op_students/batch_detail/#{ batch.id }"
 
-      session_info = { batch_class_online: batch_class_online, name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch_name, course: course, lesson: lesson, status: status, faculty: faculty, classroom: classroom}
+      session_info = { batch_class_online: batch_class_online, name: name, start_time: start_time, end_time: end_time, day: day, company: company, subject: subject, level: level, batch: batch_name, course: course, lesson: lesson, status: status, faculty: faculty, classroom: classroom, href: href }
       record = { time.wday => session_info}
       record[7] = record[0]
 

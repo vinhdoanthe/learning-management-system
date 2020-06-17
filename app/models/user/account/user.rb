@@ -23,7 +23,7 @@ class User::Account::User < ApplicationRecord
   has_many :sc_posts, :through => :user_posts, class_name: 'SocialCommunity::Feed::Post'
 
   belongs_to :avatar, required: false
-  
+
   acts_as_target # User as target for Activity Notification 
 
   enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
@@ -36,6 +36,30 @@ class User::Account::User < ApplicationRecord
       gender = op_faculty.gender if !op_faculty.nil?
     end
     gender
+  end
+
+  def full_name
+    if is_student?
+      student_name
+    elsif is_teacher?
+      faculty_name
+    elsif is_parent?
+      parent_name
+    else
+      username
+    end
+  end
+
+  def role
+    if is_student?
+      I18n.t('role.student')
+    elsif is_teacher?
+      I18n.t('role.faculty')
+    elsif is_parent?
+      I18n.t('role.parent')
+    else
+      I18n.t('role.admin')
+    end
   end
 
   def student_name

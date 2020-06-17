@@ -7,11 +7,8 @@ $(document).ready(function () {
   $(window).on('scroll', function(){
     var scroll = $(window).scrollTop();
     if(scroll > position) {
-      console.log('scrollDown');
       // TODO
       loadMorePosts();
-    } else {
-      console.log('scrollUp');
     }
     position = scroll;
   })
@@ -19,7 +16,6 @@ $(document).ready(function () {
 
 
 function get_feeds() {
-  console.log('Start load feeds')
   $.ajax({
     method: 'GET',
     url: '/social_community/home_feeds',

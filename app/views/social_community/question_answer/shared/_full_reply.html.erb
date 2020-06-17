@@ -1,0 +1,20 @@
+<!-- Full reply -->
+<%= tinymce_assets %>
+<%= form_with(url: social_community_question_answer_messages_path, method: :post) do |f| %>
+  <%= f.hidden_field :thread_id, :value => thread_id %>
+  <li>
+    <%= f.text_area :content, class: 'tinymce', :rows => 6, :cols => 120, :id => "add_new_reply_#{thread_id}" %>
+  </li>
+  <%= f.submit t('button.reply'), class: 'btn btn-primary btn-reply' %>
+<% end %> 
+<%= tinymce :simple %>
+
+<style>
+
+.new-reply {
+  border-radius: 5px !important;
+}
+.btn-reply {
+  margin-top: 5px;
+}
+</style>

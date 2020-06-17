@@ -1,17 +1,16 @@
+<%= javascript_include_tag 'social_community/sc_student_projects/sc_student_project.js' %>
 <% no_project = true %>
 <% subject_student_projects.each{|k, v| no_project = false if v.present? } %>
 <% if no_project && current_user.is_student? %>
-<div class='panel'>
-  <div class='panel-content'>
-    <div>
-      <h4> <span style='color: black'>Chưa có sản phẩm cuối khoá!</span></h4>
-      <!-- <a href='/' style='text-decoration: underline; font-size: 15px; font-weight: 600'>Quay lại trang chủ</a>-->
+  <div class='panel'>
+    <div class='panel-content'>
+      <div>
+        <p style='text-align: center'> <span style='color: black'>Chưa có sản phẩm cuối khoá!</span></p>
+      </div>
     </div>
   </div>
-</div>
 <% else %>
-<% subjects.each do |id, level| %>
-  <div class="panel-content">
+  <% subjects.each do |id, level| %>
     <div class="box-product" >
       <% projects = subject_student_projects[id] %>
       <% if projects.blank? %>
@@ -24,9 +23,9 @@
           </div>
         <% end %>
       <% else %>
-      <div class="fc-header" style='margin: 0 0 15px 0'>
-        <h3><span class="color-F16357">Level <%= level  %></h3>
-      </div>
+        <div class="fc-header" style='margin: 0 0 15px 0'>
+          <h3><span class="color-F16357">Level <%= level  %></h3>
+        </div>
         <% total_row = projects.length / 3 %>
         <% for i in 0..total_row %>
           <div class='row projects_row row_<%= i %>'>
@@ -46,8 +45,7 @@
         <% end %>
       <% end %>
     </div>
-  </div>    
-<% end %>
+  <% end %>
 <% end %>
 <div id="studentProjectDetail" class="modal fade" role="dialog">
 </div>
@@ -55,10 +53,10 @@
 </div>
 <%= render 'user/open_educat/shared/student_projects/modals/student_project_upload', { subjects: subjects } %>
 <style>
-#video_infomation input{
-  width: 100%;
-  margin-bottom: 15px;
-}
+  #video_infomation input{
+    width: 100%;
+    margin-bottom: 15px;
+  }
   #video_infomation textarea{
     width: 100%;
   }
@@ -69,81 +67,6 @@
   }
   .projects_row {
     display: flex;
-      flex-wrap: wrap
+    flex-wrap: wrap
   }
 </style>
-<script>
-  $('.upload_project').on('click', function(){
-    $('#upload_project_subject').val($(this).parent().find($('input[name="upload_project_subject"]')).val())
-    $('#upload_project_bar').html('<progress id="progressBar" value="0" max="100" style="width: 100%; height: 10px;"></progress>');
-    $('#upload_project_bar').hide()
-  })
-$('#upload_project_confirm').on('click', function(){
-  $('#upload_progress_bar').show()
-  var data = new FormData();
-  subject_id = $('#upload_project_subject').val()
-  student_id = $('#upload_project_selection').val()
-  data.append('student_id', student_id)
-  file = $('input[name="project_video"]').get(0).files[0]
-  data.append('file', file)
-  title = $('input[name="project_name"]').val()
-  description = $('textarea[name="project_description"]').val()
-  data.append('title', title)
-  data.append('description', description)
-  slide = $('input[name="project_slide"]').val()
-  data.append('slide', slide)
-  link = $('input[name="project_action"]').val()
-  data.append('link', link)
-  batch_id = $('input[name="active_batch"]').val()
-  data.append('batch_id', batch_id)
-  data.append('subject_id', subject_id)
-
-  $.ajax({
-    method: 'POST',
-    url: '/social_community/youtube_upload',
-    data: data,
-    contentType: false,
-    processData: false,
-    timeout: 6000000,
-    success: function(res){
-      if (!res && res.type == 'success'){
-        $('#upload_progress_bar').html('<span class="upload_done">Done</span>')
-      }else{
-        $('#upload_progress_bar').html('<span class="upload_fail">Fail</span>');
-      }
-    },
-    xhr: function(){
-      //Get XmlHttpRequest object
-      var xhr = $.ajaxSettings.xhr() ;
-      //Set onprogress event handler
-      xhr.upload.onprogress = function(data){
-        var perc = Math.round((data.loaded / data.total) * 100);
-        $('#progressBar').val(perc);
-        if (perc === 100){
-          $('#upload_progress_bar').html('<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div>')
-        }
-      };
-      return xhr ;
-    },
-  })
-})
-
-$('.student_project_show').click(function(){
-  //project_id = $(this).parent().parent().find($('input[name="student_project_id"]')).val()
-  project_id = $(this).data('project');
-  $.ajax({
-    method: 'GET',
-    url: '/social_community/student_project_detail?project_id=' + project_id,
-    dataType: 'script'
-  })
-})
-
-$('.edit_project').click(function(){
-  project_id = $(this).data('project');
-  $.ajax({
-    method: 'GET',
-    url: '/social_community/edit_student_project?project_id=' + project_id,
-    dataType: 'script'
-  })
-})
-</script>

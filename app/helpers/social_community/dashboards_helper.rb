@@ -25,9 +25,6 @@ module SocialCommunity::DashboardsHelper
     # render message
     course_name = ''
     session_student_reward = feed.post.session_student_reward
-   # session_id = session_student_reward.session_id
-   # session = Learning::Batch::OpSession.where(id: session_id).first
-   # course_name = Learning::Course::OpCourse.where(id: session.course_id).first.name if session.present?
     batch = Learning::Batch::OpBatch.where(id: feed.post.batch_id).first
     course = Learning::Course::OpCourse.where(id: batch.course_id).first
     course_name = course.name if course.present?
@@ -41,11 +38,11 @@ module SocialCommunity::DashboardsHelper
   end
 
   def photo_feed feed
+    # find photos
+    # render message
     photos = feed.post.photos
     course_name = ''
     if photos.present?
-#      photo = photos.first
-#      course_name = Learning::Course::OpCourse.where(id: session.course_id).first.name if session.present?
       batch = Learning::Batch::OpBatch.where(id: feed.post.batch_id).first
       course_name = batch.op_course.name
     end
@@ -56,8 +53,6 @@ module SocialCommunity::DashboardsHelper
       message = "Giảng viên <span class='noti_teacher_name'>#{feed.created_user.faculty_name}</span> vừa đăng ảnh vào lớp học <span class='noti_course_name'>#{ course_name }</span>"
     end 
     [message, photos]
-    # find photos
-    # render message
   end
 
   def student_project_feed feed
@@ -74,6 +69,21 @@ module SocialCommunity::DashboardsHelper
     end
 
     [message, project]
+  end
+
+  def redeem_feed feed
+    post_activity = SocialCommunity::Feed::PostActivity.where(sc_post_id: feed.post.id).first
+    message = "#{ feed.created_user.student_name } vừa đổi quà thành công"
+    transaction = post_activity.activitiable
+    product = transaction.redeem_product
+    
+    if product.present?
+      if transaction.status == 2
+      message = "#{ feed.created_user.student_name } vừa đổi quà #{ product.name } thành công"
+      end
+    end
+
+    [message, product]
   end
 
   def blank_post_noti_content noti

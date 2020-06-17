@@ -52,7 +52,7 @@ class SocialCommunity::Feed::PostsController < ApplicationController
       comment.content = comment_content
       comment.save
       comment_decor = SocialCommunity::CommentsService.comment_decorator comment
-   
+
       respond_to do |format|
         format.html
         format.js {render 'social_community/dashboards/shared/posts/js/update_comments', :locals => {post_id: @post.id, comment: comment_decor}}

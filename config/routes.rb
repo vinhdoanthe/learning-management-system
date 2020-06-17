@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'user/home#dashboard'
+  
+  post 'uploader/image' => 'uploader#image', as: 'image_uploader'
 
   draw :op_student
   draw :learning
@@ -21,6 +23,7 @@ Rails.application.routes.draw do
   draw :social_community
   draw :user
   draw :redeem
+  draw :report
 
   namespace :learning do
     get 'view_learning_material/:material_id' => 'learning_materials#view_learning_material'

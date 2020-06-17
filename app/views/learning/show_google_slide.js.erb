@@ -1,1 +1,3 @@
 $("#baigiang").html("<%= escape_javascript(render partial: 'learning/material/slide_content', locals: { link: link } ) %>");
+$('#giaoan_tab').show();
+$("#giaoan").html("<%= escape_javascript(render partial: 'learning/material/lesson_plan_content', locals: { link: link, plan_link: plan_link } ) %>");

@@ -95,7 +95,7 @@ module Learning
 
         levels
       end
-      
+
       def list_teacher_subject_level batch_id
         levels = []
         op_batch = Learning::Batch::OpBatch.find(batch_id)
@@ -182,6 +182,10 @@ module Learning
         end
 
         sessions_time
+      end
+
+      def get_coming_soon_lesson coming_soon_session, student_id
+        User::OpenEducat::OpStudentsService.coming_soon_lesson coming_soon_session, student_id
       end
     end
   end

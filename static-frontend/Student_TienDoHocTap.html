@@ -502,11 +502,11 @@
                     <div class="panel-content bg-fff">
                         <a href="Student_BT-OB_BTVN-LIST.html" class="PC-back"><img src="assets/global/images/quaylai.svg" alt="">Quay lại</a>
                         <ul class="nav nav-tabs nav-primary tab-menu">
-                            <li class=""><a href="#tab2_1" data-toggle="tab">Thông tin lớp học</a></li>
-                            <li class="active"><a href="#tab2_2" data-toggle="tab">Quá trình học tập</a></li>
+                            <li class="active"><a href="#tab2_1" data-toggle="tab">Thông tin lớp học</a></li>
+                            <li class=""><a href="#tab2_2" data-toggle="tab">Quá trình học tập</a></li>
                         </ul>
                         <div class="tab-content p-0 tab-all-content m-t-20">
-                            <div class="tab-pane fade" id="tab2_1">
+                            <div class="tab-pane fade active in" id="tab2_1">
                                 <div class="bo-table">
                                     <div class="form-content">
                                         <div class="fc-header">
@@ -525,7 +525,16 @@
                                                 <div class="col-md-6">
                                                     <ul> 
                                                         <li><img src="assets/global/images/Combined-Shape.png" alt=""><p><span class="span-text">Môn học: </span>Khám phá ROBOT</p></li>
-                                                        <li><img src="assets/global/images/steps.png" alt=""><p><span class="span-text">Học phần: </span><span class="label-course label label-default">01</span> <span class="label-course label label-default">01</span></p></li>
+                                                        <li>
+                                                            <img src="assets/global/images/steps.png" alt="">
+                                                            <p>
+                                                                <span class="span-text">Học phần: </span>
+                                                                <span class="label-course label label-default">01</span> 
+                                                                <span class="label-course label label-default">01</span>
+                                                                <span class="label-course label label-success bg-5DC2A7">01</span>
+                                                            </p>
+                                                        </li>
+                                                        <li><img src="assets/global/images/steps.png" alt=""><p><span class="span-text">Buổi học: </span>4/12 <span class="color-F16357">(nghỉ học)</span></p></li>
                                                         <li><img src="assets/global/images/group-of-students.png" alt=""><p><span class="span-text">Loại lớp học: </span>Group Class</p></li>
                                                         <li><img src="assets/global/images/hotel.png" alt=""><p><span class="span-text">Trung tâm: </span><a href="">TEKY Cầu Giấy</a></p></li>
                                                     </ul>
@@ -548,7 +557,12 @@
                                                     <tr>
                                                         <td>[HCM-CT-000625]</td>
                                                         <td>Kiều Chí Công</td>
-                                                        <td><span class="label-course label label-default">01</span> <span class="label-course label label-default">02</span> <span class="label-course label label-default">03</span></td>
+                                                        <td>
+                                                            <span class="label-course label label-default">01</span> 
+                                                            <span class="label-course label label-default">02</span> 
+                                                            <span class="label-course label label-default">03</span>
+                                                            <span class="label-course label label-default bg-cfcfcf">03</span>
+                                                        </td>
                                                         <td align="right">
                                                             <span class="table-star"><img src="assets/global/images/star.png" alt="">202</span>
                                                         </td>
@@ -671,7 +685,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade active in" id="tab2_2">
+                            <div class="tab-pane fade" id="tab2_2">
                                 
                                 <div class="filter-box FlowupLabels" id='formBody'>
                                     <div class="row">
@@ -747,6 +761,9 @@
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content modal-test">
                                             <div class="modal-body modal-body-fix">
+                                                <div class="bfx-title">
+                                                    <h2 class="text-center">Phiếu đánh giá học sinh</h2>
+                                                </div>
                                                 <div class="box-mt">
                                                     <div class="bmt-img">
                                                         <span><img src="assets/global/images/Bitmaps.png" alt=""></span>
@@ -765,7 +782,7 @@
                                                     <div class="bmd-content">
                                                         <span class="bmdc-title">
                                                             <img src="assets/global/images/icon-date.png">
-                                                            <h3>Tôi có đi học</h3>
+                                                            <h3 class="color-fff">Tôi có đi học</h3>
                                                         </span>
                                                         <div class="row">
                                                             <div class="col-md-6">
@@ -977,8 +994,8 @@
                                     <div class="fc-header">
                                         <h3 class="pull-left p-t-10">Buổi <span class="color-F16357">Bảo vệ cuối khóa</span></h3>
                                         <ul class="list-modal">
-                                            <li><button type="submit" class="btn btn-primary btn-embossed bg-fff color-000">Bài tập cuối khóa</button></li>
-                                            <li><button type="submit" class="btn btn-primary btn-embossed bg-fff color-000">Bài Thuyết trình</button></li>
+                                            <li><button type="submit" class="btn btn-primary btn-embossed btn-fix">Bài tập cuối khóa</button></li>
+                                            <li><button type="submit" class="btn btn-primary btn-embossed btn-fix">Bài Thuyết trình</button></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -1021,9 +1038,12 @@
                                                     Kiến thức buổi học: …
 
                                                 </td>
-                                                <td align="center"><img src="assets/global/images/remove.png" style="width: 20px" alt=""></td>
+                                                <td align="center"><img src="assets/global/images/remove.png" width="20px;" alt=""></td>
                                                 <td align="right">
-                                                    <a href="#"><img src="assets/global/images/add-comment-button.png" style="width: 20px;margin-right: 10px" alt=""></a> <a href="#"><img src="assets/global/images/more-4.png" style="width: 20px" alt=""></a>
+                                                    <a href="#myModal1" data-toggle="modal" data-toggle="tooltip" data-placement="top"><img src="assets/global/images/icon-BTVN.png" alt=""></a> 
+                                                    <a href="#myModal2" data-toggle="modal" data-toggle="tooltip" data-placement="top"><img src="assets/global/images/icon-Comment.png" alt=""></a>
+                                                    <a href="#myModal3" data-toggle="modal" data-toggle="tooltip" data-placement="top"><img src="assets/global/images/icon-image.png" alt=""></a>
+                                                    <a href="#myModal4" data-toggle="modal" data-toggle="tooltip" data-placement="top"><img src="assets/global/images/icon-heart.png" alt=""></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1207,8 +1227,158 @@
                                         </tbody>
                                     </table>
                                 </div>
+
                             </div>
-                            
+                            <!-- Modal 3 -->
+                            <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Hình ảnh lớp học</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="bnd-img">
+                                                <a href="#myModal" class="bndi-detail"  data-toggle="modal"  data-dismiss="modal">
+                                                    <span><img src="assets/global/images/banner1.png" alt=""></span>
+                                                </a>
+                                                <a href="#myModal" class="bndi-detail"  data-toggle="modal"  data-dismiss="modal">
+                                                    <span><img src="assets/global/images/banner1.png" alt=""></span>
+                                                </a>
+                                                <a href="#myModal" class="bndi-detail"  data-toggle="modal"  data-dismiss="modal">
+                                                    <span><img src="assets/global/images/banner1.png" alt=""></span>
+                                                </a>
+                                                <a href="#myModal" class="bndi-detail"  data-toggle="modal"  data-dismiss="modal">
+                                                    <span>
+                                                        <img src="assets/global/images/banner1.png" alt="">
+                                                        <span class="detail-plus">100 +</span>
+                                                    </span>
+                                                </a>
+                                                
+                                            </div>
+                                            <div class="bnd-all-other">
+                                                <div class="row">
+                                                    <div class="col-xs-4">
+                                                        <div class="bnd-other">
+                                                            <a> 
+                                                                <img src="assets/global/images/like-3.png" alt="">
+                                                                Like
+                                                                <span>0</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <div class="bnd-other">
+                                                            <a> 
+                                                                <img src="assets/global/images/love-and-romance.png" alt="">
+                                                                Thả tim
+                                                                <span>0</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <div class="bnd-other">
+                                                            <a> 
+                                                                <img src="assets/global/images/iconsad.png" alt="">
+                                                                Buồn
+                                                                <span>0</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="bnd-comment">
+                                                <div class="bc-edit">
+                                                    <span><img src="" alt=""></span>
+                                                    <input type="text">
+                                                    <a href="#"><img src="assets/global/images/send.png" alt=""></a>
+                                                </div>
+                                                <div class="bc-ansew">
+                                                    <div class="bca-parent">
+                                                        <div class="bpe-detail bpe-parent">
+                                                            <span class=""><img src="" alt=""></span>
+                                                            <p><b>Kiều Chí Công :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur, recusandae reiciendis commodi placeat fuga quisquam ipsam nam at, repudiandae aperiam illo! Dolore cumque vel repellat libero quidem? Expedita, aliquid.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bca-child">
+                                                        <div class="bpe-detail bce-child">
+                                                            <span class=""><img src="" alt=""></span>
+                                                            <p><b>Kiều Chí Công :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur, recusandae reiciendis commodi placeat fuga quisquam ipsam nam at, repudiandae aperiam illo! Dolore cumque vel repellat libero quidem? Expedita, aliquid.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      
+                                        <div class="modal-body">
+                                            <ul class="owl-carousel list-lightbox" id="lightbox">
+                                                <li><span><img src="assets/global/images/banner1.png" alt=""></span></li>
+                                                <li><span><img src="assets/global/images/banner1.png" alt=""></span></li>
+                                                <li><span><img src="assets/global/images/banner1.png" alt=""></span></li>
+                                            </ul>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal 4 -->
+                            <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Học sinh đánh giá lợp học</h4>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <div class="modal-evaluate-title">
+                                                <h3 class="f14">Cảm nhận của con về buổi học như thế nào</h3>
+                                                <p>Đánh giá xong con sẽ được thưởng <span>150 teky đồng</span></p>
+                                            </div>
+                                            <div class="me-content row">
+                                                <div class="col-sm-3">
+                                                    <a href="" class="mec-detail">
+                                                        <span><img src="assets/global/images/smile.png"></span>
+                                                        <p>Con rất thích</p>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <a href="" class="mec-detail active">
+                                                        <span><img src="assets/global/images/emoji.png"></span>
+                                                        <p>Con thấy bình thường</p>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <a href="" class="mec-detail">
+                                                        <span><img src="assets/global/images/dubious.png"></span>
+                                                        <p>Con không hiểu gì ?</p>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <a href="" class="mec-detail">
+                                                        <span><img src="assets/global/images/angry.png"></span>
+                                                        <p>Con không thích</p>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <textarea rows="3">Cảm nhận khác của con</textarea>
+                                                </div>
+                                            </div>    
+                                        </div>
+                                        <div class="modal-footer bg-D7DFE9">
+                                            <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7 font-bold text-transform" data-dismiss="modal">Gửi đánh giá</button>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                        

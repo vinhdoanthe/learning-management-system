@@ -1,22 +1,31 @@
-<div class="table-responsive bo-table" style="padding-left: 38px !important; margin-bottom: 30px !important;">
+<!-- Variables:
+  * coming_soon_session
+-->
+<% coming_soon_lesson = get_coming_soon_lesson(coming_soon_session, current_user.student_id) %>
+
+<div class="table-responsive bo-table" style="margin-bottom: 30px !important;">
   <div class="fc-header b-0">
-    <h3 class="pull-left p-t-10"><%= t('my_class.detail.progress.coming_soon_html') %></h3>
-    <ul class="list-modal">
-      <li>
-        <button type="submit" class="btn btn-primary btn-embossed height-auto btn-fix" data-toggle="modal" data-target="#study_guide">
-          <img src="/global/images/laptop.png"> 
-          Hướng dẫn cài đặt ứng dụng và<br/>học trực tuyến trên máy tính
-        </button>
-      </li>
-    </ul>
-    <span class="comming">COMMING</span>
+    <% is_online = is_online_session?(coming_soon_session) %>
+    <% if is_online %>
+      <h3 class='pull-left p-t-10'><%= t('my_class.detail.progress.coming_soon_html') %></h3>
+      <ul class="list-modal">
+        <li>
+          <button type="submit" class="btn btn-primary btn-embossed height-auto btn-fix" data-toggle="modal" data-target="#study_guide">
+            <img src="/global/images/laptop.png"> 
+            Hướng dẫn cài đặt ứng dụng và<br/>học trực tuyến trên máy tính
+          </button>
+        </li>
+      </ul>
+    <% else %>
+      <h3><%= t('my_class.detail.progress.coming_soon_html') %></h3>
+    <% end %>
   </div>
   <table class="table m-b-0">
     <tbody>
       <tr>
-        <td>
+        <td class='no-padding-left'>
           <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
-            <p><strong><%= coming_soon_session.op_subject.name %></strong></p>
+            <p><strong><%= coming_soon_lesson.nil? ? coming_soon_session.op_subject.name : coming_soon_lesson.name %></strong></p>
             <% start = coming_soon_session.start_datetime %>
           <% else %>
             <div><strong><%= t('my_class.detail.progress.end') %></strong></div>
@@ -25,8 +34,8 @@
         </td>
         <td align="right">
           <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
-            <p class="text-right"><b><%= start.strftime('%H:%M') %></b>
-            đến <b><%= coming_soon_session.end_datetime.strftime('%H:%M') %></b> | <b><%= (get_week_day start.strftime('%A')) + ', ' + start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %></b>
+            <p class="text-right">
+            <%= Learning::Batch::OpSessionDecorator.new(coming_soon_session).display_session_time.html_safe %>
             </p>
           <% end %> 
         </td>
@@ -50,22 +59,24 @@
     </tbody>
   </table>
 </div>
-<div class="modal fade" id="study_guide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Hướng dẫn cài đặt</h4>
-      </div>
-      <div class="modal-body">
-        <iframe src="https://drive.google.com/file/d/1Y-9zjG3P6e7qN_QOenH21Q9rFC9ln7xY/preview" width="100%" height="600"></iframe>
-      </div>
-      <div class="modal-footer  bg-D7DFE9">
-        <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">Đồng ý</button>
+<% if is_online %>
+  <div class="modal fade" id="study_guide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Hướng dẫn cài đặt</h4>
+        </div>
+        <div class="modal-body">
+          <iframe src="https://drive.google.com/file/d/1Y-9zjG3P6e7qN_QOenH21Q9rFC9ln7xY/preview" width="100%" height="600"></iframe>
+        </div>
+        <div class="modal-footer  bg-D7DFE9">
+          <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">Đồng ý</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 <style>
 .btn-fix{
   background: #fff !important;
@@ -73,6 +84,9 @@
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
   position: relative;
   padding-left: 35px !important;
+}
+.no-padding-left {
+  padding-left: 0px !important;
 }
 </style>
 <%= javascript_tag "initializeClock('clockdiv', #{start.to_json.html_safe} );", "data-turbolinks-track" => true %>

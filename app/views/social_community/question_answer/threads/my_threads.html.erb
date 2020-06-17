@@ -1,0 +1,22 @@
+<!-- List all thread of an user -->
+
+<% content_for :stylesheet_includes do %>
+<%= stylesheet_link_tag 'social_community/question_answer/threads.css' %>
+<% end %>
+
+<div class="page-content page-thin">
+  <h3 class='thread-list-title'><%= t('qa.all_threads') %></h3>
+  <div>
+    <!-- qa_threads -->
+    <% @threads.each do |thread| %>
+      <div class="fcc-anw qa-thread-brief" id='qa_threads'>
+        <%= render :partial => "social_community/question_answer/shared/thread_brief", :locals => {:thread => thread} %>
+      </div>
+    <% end %> 
+  </div>
+  <%= paginate @threads %>
+</div>
+
+
+<style>
+</style>

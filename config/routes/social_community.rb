@@ -7,7 +7,7 @@ namespace :social_community do
     post 'add_reaction', action: 'add_reaction', as: 'add_reaction'
     post 'add_comment', action: 'add_comment', as: 'add_comment'
   end
-  
+
   namespace :feed do
     namespace :posts do 
       post 'add_reaction', action: 'add_reaction', as: 'add_reaction'
@@ -20,11 +20,22 @@ namespace :social_community do
 
   namespace :reactions do
   end
-  
+
   namespace :feed do
     resources :posts
     get 'my_posts' => 'posts#index', as: 'my_posts'
     get 'get_reactions_and_comments' => 'posts#get_reactions_and_comments', as: 'get_reactions_and_comments'
+  end
+
+  namespace :sc_student_projects do
+    get 'social_student_projects', action: 'social_student_projects', as: 'social_student_projects'
+    get 'course_student_projects/:course_id', action: 'course_student_projects', as: 'course_student_projects'
+  end
+
+  namespace :question_answer do
+    resources :threads
+    get 'my_threads' => 'threads#my_threads', as: 'my_threads'
+    resources :messages
   end
 
   post 'youtube_upload' => 'sc_student_projects#youtube_upload'
@@ -41,7 +52,6 @@ namespace :social_community do
   get 'teacher_coming_soon_sessions' => 'dashboards#teacher_coming_soon_sessions'
   get 'albums_with_comments' => 'dashboards#albums_with_comments', as: 'albums_with_comments'
   get 'dashboard_noti' => 'dashboards#dashboard_noti', as: 'dashboard_noti'
-  # get 'new_user' => 'dashboards#new_user', as: 'new_user'
   get 'leader_board' => 'dashboards#leader_board', as: 'leader_board'
   post 'delete_session_photo' => 'photos#delete_session_photo', as: 'delete_session_photo'
 end

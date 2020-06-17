@@ -1,3 +1,4 @@
+//=require swiper.min.js
 function filter_redeem_product(){
   $.ajax({
     method: "GET",
@@ -6,22 +7,22 @@ function filter_redeem_product(){
   })
 }
 
-$(document).ready(function(){
-  var product_id = '';
-  var color = '';
-  var size = '';
-  var amount = '';
-  var company = '';
-  var time = '';
 
-  $('.redeem_product_submit').on('click', function(){
-    product_id = $(this).parent().find($('input[name="redeem_product_id"]')).val()
-    color = $(this).parent().closest('.product_infomation').find($('input[name="product_color"]')).val()
-    amount = $(this).parent().closest('.rt-detail').find($('select.product_amount')).val()
-    size = $(this).parent().closest('.rt-detail').find($('select.product_size')).val()
-  })
-  
+$(document).ready(function(){
+  $(function() {
+      $('input[name="expected_time"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 2020,
+        maxYear: 2030,
+      })
+    });
+
   $('#redeem_product_confirm').on('click', function(){
+    product_id = $('input[name="redeem_product_id"]').val();
+    color = $('input[name="product_color"]:checked').val();
+    amount = $('.product_amount').val();
+    size = $('.product_size').val();
    company = $('#select_redeem_company').val();
     time = $('#redeem_time').val();
     $.ajax({
@@ -33,4 +34,26 @@ $(document).ready(function(){
       }
     })
   })
+
+  var galleryThumbs = new Swiper('.gallery-thumbs', {
+    spaceBetween: 10,
+    slidesPerView: 4,
+    loop: true,
+    freeMode: true,
+    loopedSlides: 5, //looped slides should be the same
+    watchSlidesVisibility: true,
+    watchSlidesProgress: true,
+  });
+  var galleryTop = new Swiper('.gallery-top', {
+    spaceBetween: 10,
+    loop:true,
+    loopedSlides: 5, //looped slides should be the same
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    thumbs: {
+      swiper: galleryThumbs,
+    },
+  });
 })

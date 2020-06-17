@@ -1,5 +1,5 @@
 namespace :redeem do
-  resources :redeem_products, only: [:index]
+  resources :redeem_products, only: [:index, :show]
   namespace :redeem_products do
     get 'admin_product', action: 'admin_product', as: 'admin_product'
   end

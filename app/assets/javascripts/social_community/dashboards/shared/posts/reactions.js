@@ -3,7 +3,7 @@ function addReaction(target){
     event.preventDefault();
     data = {
       reaction_type: 1,
-      post_id: $(event.target).data('post-id'),
+      post_id: $(this).data('post-id'),
       authenticity_token: $('[name="csrf-token"]')[0].content
     };
     add_reaction_to_post(data);
@@ -13,7 +13,7 @@ function addReaction(target){
     event.preventDefault();
     data = {
       reaction_type: 2,
-      post_id: $(event.target).data('post-id'),
+      post_id: $(this).data('post-id'),
       authenticity_token: $('[name="csrf-token"]')[0].content
     };
     add_reaction_to_post(data);
@@ -23,7 +23,7 @@ function addReaction(target){
     event.preventDefault();
     data = {
       reaction_type: 3,
-      post_id: $(event.target).data('post-id'),
+      post_id: $(this).data('post-id'),
       authenticity_token: $('[name="csrf-token"]')[0].content
     };
     add_reaction_to_post(data);

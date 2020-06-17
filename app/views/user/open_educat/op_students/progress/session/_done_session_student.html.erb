@@ -9,7 +9,7 @@
   </div>
 </td>
 <td>
-  <strong><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : 'Bài ' + lesson.lession_number.to_s %></strong><br/>
+  <strong><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : Learning::Course::OpLessonDecorator.new(lesson).display_lesson_with_subject %></strong><br/>
   <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %> <br/>
   <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : sanitize(truncate(lesson.note, :length => 50)) %>
 </td>

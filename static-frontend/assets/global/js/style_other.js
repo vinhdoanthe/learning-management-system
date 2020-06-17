@@ -74,6 +74,20 @@ $(document).ready(function(){
 	    }
 	})
 
+	$('#lightbox').owlCarousel({
+		items:1,
+	    loop:true,
+	    margin:10,
+	    nav:true,
+        autoplayHoverPause:true,
+        autoplay:true,
+        autoplayTimeout:10000,
+	});
+
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
+	
 	$(".tr-child").hide();
 	$(".tr-child1").hide();
 	$("#tr-parent").click(function(){

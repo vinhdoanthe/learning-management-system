@@ -1,0 +1,89 @@
+<%= javascript_include_tag 'social_community/sc_student_projects/sc_student_project.js' %>
+<%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
+<%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
+
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Sản phẩm cộng đồng</h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="box-product" >
+        <div class="fc-header" style='margin: 15px 0'>
+          <h2><span class="color-000">Sản phẩm của tôi</h2>
+        </div>
+        <div class='row'>
+          <% unless (check_projects @student_projects) %>
+            <p class='no-projects'>Bạn chưa có sản phẩm nào</p>
+          <% else %>
+            <% @student_projects.each do |course, projects| %>
+              <% projects.each do |project| %>
+                <div class='col-md-3'>
+                  <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>    
+    </div>
+
+    <div class="panel-content">
+      <div class="box-product" >
+        <div class="fc-header" style='margin: 15px 0'>
+          <h2><span class="color-000">Sản phẩm cộng đồng</h2>
+        </div>
+        <div class=''>
+          <% if @course_projects.blank? %>
+            <p class='no-projects'>Bạn chưa có sản phẩm nào</p>
+          <% else %>
+            <% @course_projects.each do |course_project| %>
+              <% course_project.each do |course, projects| %>
+                <div class="fc-header" style='margin: 15px 0'>
+                  <div class='row'>
+                    <div class='col-md-9'>
+                      <h4><span class="color-000"><%= course.name %></h4>
+                    </div>
+                    <div class='col-md-3'>
+                      <a class='show_course_projects' href="/social_community/sc_student_projects/course_student_projects/<%= course.id %>">Xem thêm</a>
+                    </div>
+                  </div>
+                </div>
+                  <div class='row'>
+                  <% projects.each do |project| %>
+                    <div class='col-md-3'>
+                    <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
+                    </div>
+                  <% end %>
+                  </div>
+                <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>    
+    </div>
+  </div>
+
+</div>
+<div id="studentProjectDetail" class="modal fade" role="dialog">
+</div>
+<div id="editStudentProjectDetail" class="modal fade" role="dialog">
+</div>
+<style>
+  .color-000{
+    color: #000 !important;
+  }
+  .show_course_projects {
+    float: right;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 20px;
+  }
+  .no-projects {
+        text-align: center;
+  }
+</style>
