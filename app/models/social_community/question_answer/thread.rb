@@ -4,7 +4,7 @@ module SocialCommunity::QuestionAnswer
     include Mongoid::Timestamps
     include ActivityNotification::Models
     store_in collection: "qa_threads"
-    paginates_per 5
+    paginates_per 20
 
     field :course_id, type: Integer
     field :batch_id, type: Integer

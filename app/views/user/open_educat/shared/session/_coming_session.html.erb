@@ -3,11 +3,11 @@
 -->
 <% coming_soon_lesson = get_coming_soon_lesson(coming_soon_session, current_user.student_id) %>
 
-<div class="table-responsive bo-table" style="padding-left: 38px !important; margin-bottom: 30px !important;">
+<div class="table-responsive bo-table" style="margin-bottom: 30px !important;">
   <div class="fc-header b-0">
-    <h3 class="pull-left p-t-10"><%= t('my_class.detail.progress.coming_soon_html') %></h3>
     <% is_online = is_online_session?(coming_soon_session) %>
     <% if is_online %>
+      <h3 class='pull-left p-t-10'><%= t('my_class.detail.progress.coming_soon_html') %></h3>
       <ul class="list-modal">
         <li>
           <button type="submit" class="btn btn-primary btn-embossed height-auto btn-fix" data-toggle="modal" data-target="#study_guide">
@@ -16,8 +16,9 @@
           </button>
         </li>
       </ul>
+    <% else %>
+      <h3><%= t('my_class.detail.progress.coming_soon_html') %></h3>
     <% end %>
-    <span class="comming">COMMING</span>
   </div>
   <table class="table m-b-0">
     <tbody>

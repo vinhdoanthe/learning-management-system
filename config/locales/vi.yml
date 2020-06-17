@@ -103,7 +103,7 @@ vi:
       student_projects: "Dự án của học sinh"
       progress:
         name: "Quá trình học tập"
-        done_html: "Lớp học <span class='color-16BD56'>đã diễn ra</span>"
+        done_html: "Buổi học <span class='color-16BD56'>đã diễn ra</span>"
         no_lesson: "Chưa có buổi học nào"
         coming_html: "Buổi học <span class='color-FFC400'>Chưa diễn ra</span>"
         cancel_html: "Buổi học <span class='color-F16357'>đã hủy</span>"
