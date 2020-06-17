@@ -47,14 +47,14 @@
           </div>
         </div>
         <%= render 'batch_student_progress', {:batch => batch} %>
-        <div class="tab-pane fade active in" id="tab2_3" >
+        <div class="tab-pane fade" id="tab2_3" >
         </div>
       </div>
     </div>
   </div>
 </div>
-  <script>
-    $('#student_projects_li').one('click', function(){
-      $('#tab2_3').html('<%= escape_javascript( render partial: "partials/loading") %>')
-    })
-  </script>
+<script>
+  $('#student_projects_li').one('click', function(){
+    $('#tab2_3').html('<%= escape_javascript( render partial: "partials/loading") %>')
+  })
+</script>
