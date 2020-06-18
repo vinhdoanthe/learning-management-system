@@ -46,6 +46,7 @@ namespace :social_community do
   post 'update_student_project' => 'sc_student_projects#update_student_project'
 
   get 'home_feeds' => 'dashboards#home_feeds', as: 'home_feeds'
+  get 'new_feeds' => 'dashboards#new_feeds', as: 'new_feeds'
   get 'student_dashboard' => 'dashboards#student_dashboard', as: 'student_dashboard'
   get 'teacher_dashboard' => 'dashboards#teacher_dashboard', as: 'teacher_dashboard'
   get 'student_coming_soon_session' => 'dashboards#student_coming_soon_session'

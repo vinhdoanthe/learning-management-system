@@ -33,7 +33,7 @@ module SocialCommunity::QuestionAnswer
 
       if thread.save!
         create_subscribed_users(thread, [f_user])
-        create_notifications(thread, SC_QA_THREAD_CREATE)
+        create_notifications(thread, NotificationConstants::Key::SC_QA_THREAD_CREATE)
         thread
       else
         nil

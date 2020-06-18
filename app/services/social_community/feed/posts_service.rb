@@ -45,7 +45,28 @@ class SocialCommunity::Feed::PostsService
     
     feeds
   end
-
+  
+  # params
+  # user
+  # post_offset
+  # last_post_date_time
+  #
+  def self.new_feeds params
+    # permit params
+    post_offset = params[:post_offset]
+    last_post_date_time = params[:last_post_date_time]
+    if post_offset.nil? 
+      post_offset = 0
+    end
+    if last_post_date_time.nil?
+      last_post_date_time = Time.now
+    end
+    @posts = SocialCommunity::Feed::Post.where('updated_at <= ? and id != ?', last_post_date_time, post_offset)
+      .order(updated_at: :DESC)
+      .limit(2)
+    @feeds = decor_post_to_feed @posts
+  end
+  
   def self.fetch_feeds user_id, time_offset_epoch
     posts, next_time_offset = fetch_posts user_id, time_offset_epoch
     feeds = decor_post_to_feed posts

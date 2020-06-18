@@ -287,3 +287,12 @@ body:not(.sidebar-fixed, .topbar-fixed) .sidebar .logopanel {
 .sidebar-collapsed .sidebar .logopanel {
 	padding:0px;
 }
+
+/* .bnd-all-other { */
+/*     padding: 10px 0; */
+/*     border: 1px solid #dcdcdc !important; */
+/*     margin-top: 10px; */
+/*     display: inline-block; */
+/*     border-radius: 5px; */
+/*     width: 100%; */
+/* } */

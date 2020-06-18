@@ -1,21 +1,30 @@
 $(document).ready(function () {
   // Get initial posts
-  get_feeds();
-  
-  // Listen to scroll action
-  var position = $(window).scrollTop(); 
-  $(window).on('scroll', function(){
-    var scroll = $(window).scrollTop();
-    if(scroll > position) {
-      // TODO
-      loadMorePosts();
-    }
-    position = scroll;
+  get_new_feeds()  
+  $('#li_newFeeds').on('click', function() {
+    $('#newFeeds').html('')
+    get_new_feeds();
+  })
+
+  $('#li_homeFeeds').on('click', function(){
+    $('#homeFeeds').html('')
+    get_feeds();
+    // Listen to scroll action
+    var position = $(window).scrollTop(); 
+    $(window).on('scroll', function(){
+      if ($('#tab_homeFeeds').hasClass('active')) {
+        var scroll = $(window).scrollTop();
+        if(scroll > position) {
+          loadMorePosts();
+        }
+        position = scroll;
+      }
+    })
   })
 });
 
-
 function get_feeds() {
+  console.log('load feeds called')
   $.ajax({
     method: 'GET',
     url: '/social_community/home_feeds',
@@ -28,7 +37,7 @@ function loadMorePosts() {
   date_time_offset = $('#infinitive-scrolling').attr('date-time-offset');
   console.log(date_time_offset)
   if (date_time_offset != 0  && $(window).scrollTop() > $('#homeFeeds').height() - $(window).height() - 100) {
-  $('#infinitive-scrolling').attr('date-time-offset', '0');
+    $('#infinitive-scrolling').attr('date-time-offset', '0');
     $.ajax({
       method: 'GET',
       url: '/social_community/home_feeds',
@@ -39,4 +48,18 @@ function loadMorePosts() {
       dataType: 'script'
     }) 
   }
+}
+
+
+function get_new_feeds() {
+  console.log('triggered new feeds load')
+  $.ajax({
+    method: 'GET',
+    url: '/social_community/new_feeds',
+    dataType: 'script'
+  })
+}
+
+function load_more_new_feeds() {
+
 }

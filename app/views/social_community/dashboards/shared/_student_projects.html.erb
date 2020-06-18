@@ -7,7 +7,7 @@
     <div class='show_project'>
       <%= project.project_show_video.html_safe %>
     </div>
-  <% else %>
+  <% elsif project.presentation.present? %>
     <div class='presentation_project'>
       <%= project.presentation.html_safe %>
     </div>

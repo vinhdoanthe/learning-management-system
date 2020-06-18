@@ -7,9 +7,23 @@
 <div class="page-content page-thin">  
   <div class="row">
     <div class="col-md-7">
-      <div id='homeFeeds'>
-      </div>
-      <div id='infinitive-scrolling' style='display:none' date-time-offset='0'>
+      <ul class="nav nav-tabs nav-justified nav-primary tab-menu">
+        <li class="active" id='li_newFeeds'><a href="#tab_newFeeds" data-toggle="tab"><%= t('social_community.new_feeds') %></a></li>
+        <li class="" id='li_homeFeeds'><a href="#tab_homeFeeds" data-toggle="tab"><%= t('social_community.home_feeds') %></a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade active in" id="tab_newFeeds">
+          <div id='newFeeds'>
+          </div>
+          <div id='infinitive-scrolling-new-feeds' style='display:none'>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="tab_homeFeeds">
+          <div id='homeFeeds'>
+          </div>
+          <div id='infinitive-scrolling' style='display:none' date-time-offset='0'>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-5">
@@ -54,5 +68,10 @@
 
 .owl-prev span, .owl-next span {
   line-height: 50px !important
+}
+.tab-content {
+  background-color: #F5F5F5;
+  border-top: 1px solid #dfdfdf;
+  padding: 15px 0px 0px 0px;
 }
 </style>

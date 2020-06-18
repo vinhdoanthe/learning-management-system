@@ -141,6 +141,8 @@ en:
       leader_board: "Leaders' board"
   social_community:
     new_comment_placeholder: 'Typing comment here'
+    new_feeds: "TEKY's Activities"
+    home_feeds: 'My Activities'
   datetime:
     to: 'to'
   role:

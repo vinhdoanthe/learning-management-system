@@ -15,6 +15,20 @@ class SocialCommunity::DashboardsController < ApplicationController
     # Load leaders board
   end
 
+  # params
+  # user
+  # post_offset
+  # last_post_date_time
+  def new_feeds
+    @feeds = SocialCommunity::Feed::PostsService.new_feeds params
+    respond_to do |format|
+      format.html
+      format.js {
+        render 'social_community/feed/posts/new_feed'
+      }
+    end
+  end
+
   # get posts related to users
   # Params:
   # user
@@ -34,7 +48,6 @@ class SocialCommunity::DashboardsController < ApplicationController
     #   elsif current_user.is_teacher?
     # TODO
     # end
-
     respond_to do |format|
       format.html
       format.js {
