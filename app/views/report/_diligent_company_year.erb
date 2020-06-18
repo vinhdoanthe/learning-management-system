@@ -2,7 +2,7 @@
        var labels = <%= raw @list_date%>
        var ctx_scale = document.getElementById('reportDiligentMonthlyScale').getContext('2d');
        var myChart = new Chart(ctx_scale, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: labels,
                 datasets: [
@@ -13,16 +13,16 @@
                     data: [<% @data_company.each do |ct| %> <%= ct[:scale_present] %>,<% end %>],                    
                     borderColor: 'rgb(54, 162, 235)',
                     backgroundColor: 'rgb(54, 162, 235)',
-                    borderWidth:2,
+                    borderWidth:0
                   },
                   {
                     label: '<%= t("report.report_absent_title")%>',
                     fill: false,
                     lineWidth: 1,
                     data: [<% @data_company.each do |ct| %> <%= ct[:scale_no_present] %>,<% end %>],
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderWidth:2,
+                    borderColor: 'rgb(201, 203, 207)',
+                    backgroundColor: 'rgb(201, 203, 207)',
+                    borderWidth:0
                   },  
                 ],      
             },
@@ -31,8 +31,8 @@
                     display: true,
                     text: '<%= t("report.report_chart_prorata_title")%>',
                     fontSize: '14'
-               },  
-              tooltips: {
+                },  
+				tooltips: {
                     callbacks: {
                         label: function(tooltipItem, data) {
                             var label = data.datasets[tooltipItem.datasetIndex].label || '';              
@@ -46,34 +46,31 @@
                   
                             return label;
                         }
-                    },
-                    mode: 'index',
-                    intersect: false
+                    }
                },
                responsive: true,
-               scales: {
-                 yAxes: [{
-                   stacked: false,
-                   gridLines: {
-                     drawBorder: false
-                   },
-                   lineWidth: 1,
-                   ticks: {
-                       min: 0,
-                       max: 100,
-                       stepSize: 10,
-                       callback: function(value, index, values) {
-                           return value + ' %';
-                       }
-                   }
-                 }],
-                 xAxes: [{
-                    stacked: true,
+			   scales: {
+			    yAxes: [{
+					stacked: false,
+					lineWidth: 1,					
+					ticks: {
+						beginAtZero: true,
+						min: 0,
+						max: 100,
+						stepSize: 10,
+						callback: function(value, index, values) {
+							return value + ' %';
+						}
+					}
+                }],
+                xAxes: [{
+                    stacked: false,
                     lineWidth: 1,
-                    ticks: {
-                        stepSize: 1,
-                    }
-                  }]
+					gridLines: {
+						offsetGridLines: true
+					},
+					maxBarThickness:30					
+				}]
                  
                 },
                 
@@ -98,7 +95,91 @@
                     }
                 },
             }
-        });
-
-        
+        });        
+</script>
+<script>
+       var ctx_scale_1 = document.getElementById('reportDiligentMonthlyNumber').getContext('2d');
+       var myChart = new Chart(ctx_scale_1, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: '<%= t("report.report_attend_title")%>',
+                    fill: false,
+                    lineWidth: 1,
+                    data: [<% @data_company.each do |ct| %> <%= ct[:student_present] %>,<% end %>],                    
+                    borderColor: 'rgb(54, 162, 235)',
+                    backgroundColor: 'rgb(54, 162, 235)',
+                    borderWidth:0
+                  },
+                  {
+                    label: '<%= t("report.report_absent_title")%>',
+                    fill: false,
+                    lineWidth: 1,
+                    data: [<% @data_company.each do |ct| %> <%= ct[:student_no_present] %>,<% end %>],
+                    borderColor: 'rgb(201, 203, 207)',
+                    backgroundColor: 'rgb(201, 203, 207)',
+                    borderWidth:0
+                  },  
+                ],      
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '<%= t("report.report_chart_based_on_quantity_title")%>',
+                    fontSize: '14'
+                },  
+				tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';              
+                            if (label) {
+                                label += ': ';
+                            }
+                  
+                            label += Math.round(tooltipItem.yLabel * 100) / 100;
+                  
+                            return label;
+                        }
+                    }
+               },
+               responsive: true,
+			   scales: {
+			    yAxes: [{
+					stacked: false,
+					gridLines: {
+						offsetGridLines: false,
+						drawBorder: false,
+						lineWidth: 1
+					},
+					ticks: {
+						beginAtZero: true,
+						min: 0,
+						stepSize: 10
+					}
+                }],
+                xAxes: [{
+                    stacked: false,
+					maxBarThickness:30					
+				}]
+                 
+                },
+                
+                plugins: {
+                    datalabels: {
+                      color: '#000',
+                      display: function(context) {
+                        return context.dataset.data[context.dataIndex] > 0;
+                      },
+                      formatter: Math.round,
+                      font: {
+                        weight: 'normal',
+                        size: '10'
+                      }
+                      
+                    }
+                },
+            }
+        });        
 </script>
