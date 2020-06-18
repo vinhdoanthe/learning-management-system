@@ -28,12 +28,16 @@ module Report
 			@params   = params
 			company_id  = params[:frm_report][:company_id].to_i > 0 ? params[:frm_report][:company_id].to_i : 0
 			report_type = params[:frm_report][:report_type].to_s != '' ? params[:frm_report][:report_type].to_s : 'range'
+			
+      if company_id <= 0
+        report_type = 'range'
+      end
 
-			if report_type == 'year'
-			  sql_date_format_ymd    = 'YYYY'
-			elsif report_type == 'month'
-			  sql_date_format_ymd    = 'YYYYMM'
-			end
+			#if report_type == 'year'
+			  #sql_date_format_ymd    = 'YYYY'
+			#elsif report_type == 'month'
+			  #sql_date_format_ymd    = 'YYYYMM'
+			#end
 
 			from_date = Date.parse(params[:frm_report][:from_date].to_s).is_a?(Date) ? params[:frm_report][:from_date].to_s : current_date
 			to_date   = Date.parse(params[:frm_report][:to_date].to_s).is_a?(Date) ? params[:frm_report][:to_date].to_s : current_date
@@ -55,13 +59,24 @@ module Report
   				   string_date_format_ymd  = '%Y'
              string_date_format_dmy  = '%Y'
              sql_date_format_dmy     = 'YYYY'
+             @list_date = (Date.parse(from_date).strftime(string_date_format_ymd).to_s .. Date.parse(to_date).strftime(string_date_format_ymd).to_s).to_a
   				elsif report_type == 'month'
   				  string_date_format_ymd  = '%Y%m'
             string_date_format_dmy  = '%m-%Y'
             sql_date_format_dmy     = 'MM-YYYY'
+            
+            date_range = (Date.parse(from_date) .. Date.parse(to_date)).map {|d| Date.new(d.year, d.month, 1) }.uniq
+              
+            @list_date = date_range.map {|d| d.strftime(string_date_format_dmy).to_s}
+          elsif report_type == 'week'
+            
+            date_range = (Date.parse(from_date)..Date.parse(to_date)).step(7).map(&:to_s)
+              
+            date_range = (Date.parse(from_date)..Date.parse(to_date)).step(7).map {|d| d.strftime("%U").to_s}
+            
+            puts date_range
+             
   				end
-				
-			    @list_date = (Date.parse(from_date).strftime(string_date_format_ymd).to_s .. Date.parse(to_date).strftime(string_date_format_ymd).to_s).to_a
 			  end
 			end
 		end
@@ -152,10 +167,10 @@ module Report
 					data_coms <<  {
 						id: value_date,
 						name: '',
-						student_present: 0,
-						student_no_present: 0,
-						scale_present: 0,
-						scale_no_present: 0,
+						student_present: nil,
+						student_no_present: nil,
+						scale_present: nil,
+						scale_no_present: nil,
 						presentBackgroundColor: 'transparent',
 						noPresentBackgroundColor: 'transparent'
 					}
@@ -182,9 +197,9 @@ module Report
 					i = i+1
 				end
 				
-        puts data_temps
+        #puts data_temps
 
-				puts data_coms
+				#puts data_coms
 				
 				@data_company = data_coms			  
 			end
