@@ -38,12 +38,6 @@ $(function() {
                 window.location.href = "dashboard.html";
             }, 2000);
         });
-        $.backstretch(["../assets/global/images/gallery/login.jpg"],
-        {
-            fade: 600,
-            duration: 4000
-        });
-
 
         /***** DEMO CONTENT, CAN BE REMOVED ******/
         $("#account-builder").on('mouseenter', function() {
@@ -90,10 +84,10 @@ $(function() {
         /* Hide / Show Background Image */
         $('#image-cb').change(function() {
             if ($(this).is(":checked")) {
-                $.backstretch(["../assets/global/images/gallery/login.jpg"], {
-                    fade: 600,
-                    duration: 4000
-                });
+                // $.backstretch(["../assets/global/images/gallery/login.jpg"], {
+                //     fade: 600,
+                //     duration: 4000
+                // });
                 $('#slide-cb').attr('checked', false);
             }
             else $.backstretch("destroy");
@@ -101,10 +95,10 @@ $(function() {
         /* Add / Remove Slide Image */
         $('#slide-cb').change(function() {
             if ($(this).is(":checked")) {
-                $.backstretch(["../assets/global/images/gallery/login4.jpg", "../assets/global/images/gallery/login3.jpg", "../assets/global/images/gallery/login2.jpg", "../assets/global/images/gallery/login.jpg"], {
-                    fade: 600,
-                    duration: 4000
-                });
+                // $.backstretch(["../assets/global/images/gallery/login4.jpg", "../assets/global/images/gallery/login3.jpg", "../assets/global/images/gallery/login2.jpg", "../assets/global/images/gallery/login.jpg"], {
+                //     fade: 600,
+                //     duration: 4000
+                // });
                 $('#image-cb').attr('checked', false);
             }
             else {
@@ -131,11 +125,11 @@ $(function() {
     if($('body').data('page')== 'signup'){
 
         var form = $(".form-signup");
-        $.backstretch(["../assets/global/images/gallery/login.jpg"],
-        {
-            fade: 600,
-            duration: 4000
-        });
+        // $.backstretch(["../assets/global/images/gallery/login.jpg"],
+        // {
+        //     fade: 600,
+        //     duration: 4000
+        // });
         $("#account-builder").on('mouseenter', function() {
             TweenMax.to($(this), 0.35, {
                 css: {
@@ -180,10 +174,10 @@ $(function() {
         /* Hide / Show Background Image */
         $('#image-cb').change(function() {
             if ($(this).is(":checked")) {
-                $.backstretch(["../assets/global/images/gallery/login.jpg"], {
-                    fade: 600,
-                    duration: 4000
-                });
+                // $.backstretch(["../assets/global/images/gallery/login.jpg"], {
+                //     fade: 600,
+                //     duration: 4000
+                // });
                 $('#slide-cb').attr('checked', false);
             }
             else $.backstretch("destroy");
@@ -191,10 +185,10 @@ $(function() {
         /* Add / Remove Slide Image */
         $('#slide-cb').change(function() {
             if ($(this).is(":checked")) {
-                $.backstretch(["../assets/global/images/gallery/login4.jpg", "../assets/global/images/gallery/login3.jpg", "../assets/global/images/gallery/login2.jpg", "../assets/global/images/gallery/login.jpg"], {
-                    fade: 600,
-                    duration: 4000
-                });
+                // $.backstretch(["../assets/global/images/gallery/login4.jpg", "../assets/global/images/gallery/login3.jpg", "../assets/global/images/gallery/login2.jpg", "../assets/global/images/gallery/login.jpg"], {
+                //     fade: 600,
+                //     duration: 4000
+                // });
                 $('#image-cb').attr('checked', false);
             }
             else {

@@ -1,9 +1,7 @@
 //=require jquery
 //=require jquery_ujs
 //=require layout.js
-//=require custom_js/opteacherjs.js
 //=require user/open_educat/shared/share.js
-//=require custom_js/opteacherjs.js
 //=require custom_js/opstudent.js
 //=require custom_js/learning.js
 //=require rails_admin/custom/ckeditor_ajax.js
