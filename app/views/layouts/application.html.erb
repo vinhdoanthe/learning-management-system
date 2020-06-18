@@ -1,4 +1,4 @@
-<% if current_user && current_user.is_admin? %>
+<% if current_user and current_user.is_admin? and controller.controller_name == 'report/report' %>
   <%= render "partials/admin_lte_application"%>
 <% else%>
   <!DOCTYPE html>
