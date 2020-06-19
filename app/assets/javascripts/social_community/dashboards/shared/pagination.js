@@ -1,9 +1,33 @@
 $(document).ready(function () {
   // Get initial posts
+
   get_new_feeds()  
+
+  var position = $(window).scrollTop(); 
+  $(window).on('scroll', function(){
+    if ($('#tab_newFeeds').hasClass('active')) {
+      var scroll = $(window).scrollTop();
+      if(scroll > position) {
+        load_more_new_feeds();
+      }
+      position = scroll;
+    }
+  })
+
+
   $('#li_newFeeds').on('click', function() {
     $('#newFeeds').html('')
     get_new_feeds();
+    var position = $(window).scrollTop(); 
+    $(window).on('scroll', function(){
+      if ($('#tab_newFeeds').hasClass('active')) {
+        var scroll = $(window).scrollTop();
+        if(scroll > position) {
+          load_more_new_feeds();
+        }
+        position = scroll;
+      }
+    })
   })
 
   $('#li_homeFeeds').on('click', function(){
@@ -62,4 +86,24 @@ function get_new_feeds() {
 
 function load_more_new_feeds() {
 
+  post_offset = $('#infinitive-scrolling-new-feeds').attr('post-offset');
+  last_post_date_time = $('#infinitive-scrolling-new-feeds').attr('last-post-date-time');
+
+  console.log(post_offset);
+  console.log(last_post_date_time);
+
+  if (last_post_date_time != 0  && $(window).scrollTop() > $('#newFeeds').height() - $(window).height() - 100) {
+    $('#infinitive-scrolling-new-feeds').attr('last-post-date-time', '0');
+    $('#infinitive-scrolling-new-feeds').attr('post-offset', 0);
+    $.ajax({
+      method: 'GET',
+      url: '/social_community/new_feeds',
+      data: {
+        last_post_date_time: last_post_date_time,
+        post_offset: post_offset,
+        authenticity_token: $('[name="csrf-token"]')[0].content
+      },
+      dataType: 'script'
+    }) 
+  }
 }

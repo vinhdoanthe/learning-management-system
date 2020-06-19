@@ -55,13 +55,14 @@ class SocialCommunity::Feed::PostsService
     # permit params
     post_offset = params[:post_offset]
     last_post_date_time = params[:last_post_date_time]
-    if post_offset.nil? 
-      post_offset = 0
+    # binding.pry
+    if post_offset.nil? or post_offset == 0
+      post_offset = SocialCommunity::Feed::Post.last.id
     end
     if last_post_date_time.nil?
       last_post_date_time = Time.now
     end
-    @posts = SocialCommunity::Feed::Post.where('updated_at <= ? and id != ?', last_post_date_time, post_offset)
+    @posts = SocialCommunity::Feed::Post.where('updated_at <= ? and id <= ?', last_post_date_time, post_offset)
       .order(updated_at: :DESC)
       .limit(2)
     @feeds = decor_post_to_feed @posts
