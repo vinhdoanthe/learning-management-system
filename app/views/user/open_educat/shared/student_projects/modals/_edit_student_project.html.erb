@@ -1,7 +1,8 @@
 <% all_student.map! { |st| [st[1], st[0]] } %>
 <% subjects.map! { |s| [s[1], s[0]] } %>
+<% batch_id = project.batch_id %>
 <%= tinymce_assets %>
-<div class="modal-dialog">
+<div class="modal-dialog" style="width: 80%">
   <!-- Modal content-->
   <div class="modal-content">
     <div class="modal-header">
@@ -9,111 +10,13 @@
     </div>
     <div class="modal-body">
       <div id="edit_video_infomation">
-        <%= form_with model: project, url: social_community_update_student_project_path(project_id: project.id), method: :post, locals: true,  html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
-          <div class='row' id="edit_student_project_upload">
-            <div class='col-md-3'>
-              <label>Học sinh <span style="color: red">*</span></label>
-            </div>
-            <div class='col-md-8'>
-              <%= f.select :student_id,
-                options_for_select(all_student, project.student_id), {} , { class: 'project_detail' } %>
-            </div>
-          </div>
-          <div class='row' id="edit_student_project_subject">
-            <div class='col-md-3'>
-              <label>Học phần <span style="color: red">*</span></label>
-            </div>
-            <div class="col-md-8">
-              <%= f.select :subject_id,
-                options_for_select(subjects, project.subject_id), {} , { class: 'project_detail' }  %>
-            </div>
-          </div>
-          <div class="project_name row">
-            <div class='col-md-3'>
-              <label>Tên sản phẩm <span style='color: red'>*</span></label>
-            </div>
-            <div class='col-md-8'>
-              <%= f.text_field :name, class: 'project_detail', placeholder: 'Tên sản phẩm' %>
-            </div>
-          </div>
-          <div class="project_description row">
-            <div class='col-md-3'>
-              <label>Mô tả sản phẩm </label>
-            </div>
-            <div class='col-md-8'>
-            </div>
-          </div>
-          <div class='row'>
-            <div class='col-md-12'>
-              <%= f.label :description %>
-              <%= f.text_area :description, class: 'tinymce', :rows => 6 %>
-              <%= tinymce :simple %>
-            </div>
-          </div>
-          <div class="project_permission row">
-            <div class="col-md-12">
-              <%= f.check_box :permission, checked: true, value: 'public' %>
-              <label for="permission">Công khai</label><br>
-            </div>
-          </div>
-        <% end %>
+        <%= render "user/open_educat/shared/student_projects/forms/student_project_info", { project: project, all_student: all_student, subjects: subjects, url: social_community_update_student_project_path(project_id: project.id), batch_id: batch_id} %>
       </div>
     </div>
 
     <div class="modal-footer">
       <input type='submit' form='edit_student_project_form' class='btn btn-primary' value='Submit'>
-      <button data-dismiss="modal" data-project="<%= project.id %>" type="button" class="btn btn-primary" style="background-color: #5DC2A7;" id="edit_project_confirm">Edit video</button>
+      <button data-dismiss="modal" data-project="<%= project.id %>" type="button" class="btn btn-primary" style="background-color: #5DC2A7;">Close</button>
     </div>
   </div>
 </div>
-<style>
-.project_detail {
-  width: 100%;
-  margin-bottom: 10px;
-}
-#edit_student_project_form select:hover {
-  -webkit-appearance: auto;
-}
-#edit_student_project_form select {
-  padding: 10px;
-}
-#edit_upload_project_subject:hover {
-  -webkit-appearance: auto;
-}
-
-#edit_upload_project_subject {
-  width: 100% !important;
-  margin: 10px 0;
-  padding: 5px 1px;
-}
-#edit_upload_project_student{
-  width: 100% !important;
-  padding: 5px 1px;
-}
-#edit_upload_project_student:hover{
-  -webkit-appearance: auto;
-}
-.project_name{ margin-bottom: 10px }
-.project_name input { padding: 10px }
-</style>
-<script>
-  $('#edit_project_confirm').on('click', function(){
-    div = $('#editStudentProjectDetail')
-    project_id = $(this).data('project')
-    name = div.find('input[name="project_name"]').val()
-    description = div.find('textarea[name="project_description"]').val()
-    student_id = $('#edit_upload_project_student').val()
-    subject_id = $("#edit_upload_project_subject").val()
-    permission = $('input[name="project_permission"]:checked').val()
-    data = { name: name, description: description, subject_id: subject_id, student_id: student_id, project_id: project_id, permission: permission }
-
-    $.ajax({
-      method: 'POST',
-      url: '/social_community/update_student_project',
-      data: data,
-      sucess: function(res){
-        display_noti(res)
-      }
-    })
-  })
-</script>

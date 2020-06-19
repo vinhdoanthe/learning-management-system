@@ -30,6 +30,8 @@ namespace :social_community do
   namespace :sc_student_projects do
     get 'social_student_projects', action: 'social_student_projects', as: 'social_student_projects'
     get 'course_student_projects/:course_id', action: 'course_student_projects', as: 'course_student_projects'
+    get 'prepare_upload_project', action: 'prepare_upload_project', as:'prepare_upload_project'
+    post 'create_student_project', action: 'create_student_project', as: 'create_student_project'
   end
 
   namespace :question_answer do
@@ -38,7 +40,6 @@ namespace :social_community do
     resources :messages
   end
 
-  post 'youtube_upload' => 'sc_student_projects#youtube_upload'
   get 'student_project_detail' => 'sc_student_projects#student_project_detail'
   get 'student_projects' => 'sc_student_projects#student_projects'
   get 'teacher_student_projects' => 'sc_student_projects#teacher_student_projects'

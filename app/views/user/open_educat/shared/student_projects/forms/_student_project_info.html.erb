@@ -1,0 +1,198 @@
+<%= tinymce_assets %>
+<%= form_with model: project, url: url, method: :post, locals: true,  html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
+  <%= f.hidden_field :batch_id, value: batch_id %>
+  <div class='row' id="edit_student_project_upload">
+    <div class='col-md-3'>
+      <label>Học sinh <span style="color: red">*</span></label>
+    </div>
+    <% if current_user.is_teacher? %>
+      <div class='col-md-8'>
+        <%= f.select :student_id, options_for_select(all_student, project.student_id), {} , { class: 'project_detail' } %>
+      </div>
+    <% elsif current_user.is_student? %>
+      <div class='col-md-8' >
+        <%= f.hidden_field :student_id, value: current_user.id %>
+        <input type='text' readonly value="<%= current_user.op_student.full_name %>">
+      </div>
+    <% end %>
+  </div>
+  <div class='row' id="edit_student_project_subject">
+    <div class='col-md-3'>
+      <label>Học phần <span style="color: red">*</span></label>
+    </div>
+    <div class="col-md-8">
+      <%= f.select :subject_id, options_for_select(subjects, project.subject_id), {} , { class: 'project_detail' }  %>
+  </div>
+  </div>
+  <div class="project_name row">
+    <div class='col-md-3'>
+      <label>Tên sản phẩm <span style='color: red'>*</span></label>
+    </div>
+    <div class='col-md-8'>
+      <%= f.text_field :name, class: 'project_detail', placeholder: 'Tên sản phẩm' %>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-12'>
+      <label>Mô tả sản phẩm </label>
+      <%= f.text_area :description, class: 'tinymce', :rows => 6 %>
+      <%= tinymce :simple %>
+    </div>
+  </div>
+  <div class='row' style='margin-top: 30px; margin-bottom: 30px; display: flex'>
+    <div class='col-md-4' style="display: flex">
+      <div class='upload_layer upload_project_presentation'>
+        <div class="upload_image ">
+          <%= image_tag('global/images/youtube-button.png') %>
+        </div>
+        <div class="upload_info">
+          <% if project.presentation.attached? %>
+            <p style="font-size: 16px; font-weight: 700">Slide trình bày dự án</p>
+             <%= link_to "Click to download", rails_blob_path(project.presentation, disposition: 'attachment') %>
+            <p style="text-align: center">Click để tải về</p>
+          <% else %>
+            <p style="font-size: 16px; font-weight: 700">Slide trình bày dự án</p>
+            <p style="text-align: center"> <span class="project_presentation_state">Chưa có slide</span> </p>
+          <% end %>
+        </div>
+      </div>
+      <%= f.file_field :presentation, id: "upload_project_presentation" %>
+    </div>
+    <div class='col-md-4' style="display: flex">
+      <div class='upload_layer upload_project_video'>
+        <% if project.introduction_video.present? %>
+          <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
+          <p>Click để update sản phẩm</p>
+        <% else %>
+          <div class="upload_image">
+            <%= image_tag('global/images/youtube-button.png') %>
+          </div>
+          <div class="upload_info">
+            <p style="font-size: 16px; font-weight: 700">Video giới thiệu về dự án</p>
+            <p style="text-align: center"> <span class="project_presentation_state">Chưa có video</span> </p>
+          </div>
+        <% end %>
+      </div>
+      <!-- <input type='file' id='upload_project_video' style="display: none"> -->
+      <%= f.file_field :introduction_video, id: "upload_project_video" %>
+    </div>
+    <div class='col-md-4' style="display: flex">
+      <div class='upload_layer upload_project_file'>
+        <% if project.project_show_video.present? %>
+          <div class="upload_image">
+            <%= image_tag('global/images/youtube-button.png') %>
+          </div>
+          <div class="upload_info">
+            <%= f.text_field :project_show_video, class:"present_show_video", id: "upload_project_file", readonly: true %>
+            <p style="text-align: center"> <span class="project_presentation_state">Click để cập nhật </span> </p>
+          </div>
+        <% else %>
+          <div class="upload_image">
+            <%= image_tag('global/images/youtube-button.png') %>
+          </div>
+          <div class="upload_info">
+            <label>Link chi tiết sản phẩm</label>
+            <%= f.text_field :project_show_video, id: "upload_project_file", class:"blank_show_video" %>
+            <p style="text-align: center; width: 100%"> <span class="no_link_file">Chưa có link</span> </p>
+            <p style="text-align: center"> <span class="project_presentation_state">Click để cập nhật</span> </p>
+          </div>
+        <% end %>
+      </div>
+      <!-- <input type='file' id='upload_project_file' style="display: none"> -->
+    </div>
+  </div>
+  <div class="project_permission row">
+    <div class="col-md-12">
+      <%= f.check_box :permission, checked: true, value: 'public' %>
+      <label for="permission">Công khai</label><br>
+    </div>
+  </div>
+<% end %>
+<style>
+.project_detail {
+  width: 100%;
+  margin-bottom: 10px;
+}
+#edit_student_project_form select:hover {
+  -webkit-appearance: auto;
+}
+#edit_student_project_form select {
+  padding: 10px;
+}
+#edit_upload_project_subject:hover {
+  -webkit-appearance: auto;
+}
+
+#edit_upload_project_subject {
+  width: 100% !important;
+  margin: 10px 0;
+  padding: 5px 1px;
+}
+#edit_upload_project_student{
+  width: 100% !important;
+  padding: 5px 1px;
+}
+#edit_upload_project_student:hover{
+  -webkit-appearance: auto;
+}
+.project_name{ margin-bottom: 10px }
+.project_name input { padding: 10px }
+.upload_layer{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #e3e3e3;
+    padding: 20px;
+}
+.upload_image{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+    .upload_image img{
+      width: 30%
+    }
+    #upload_project_video{
+      display: none;
+    }
+    .blank_show_video{
+      display: none;
+    }
+    .present_show_video{
+      display: block;
+    }
+    #upload_project_presentation{
+      display: none;
+    }
+    .upload_project_video iframe {
+      width: 100%;
+        height: 100%;
+    }
+    #upload_project_file{
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .upload_project_file .upload_info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+</style>
+<script>
+  $("#edit_video_infomation").ready(function(){
+    $('.upload_project_presentation').on('click', function(){
+      $('#upload_project_presentation').trigger('click')
+    })
+    $('.upload_project_video').on('click', function(){
+      $('#upload_project_video').trigger('click')
+    })
+    $('.upload_project_file').on('click', function(){
+      $('#upload_project_file').show();
+      $('#upload_project_file').val('');
+      $("#upload_project_file").attr("readonly", false); 
+      $('#upload_project_file').focus();
+      $('.no_link_file').hide();
+    })
+  })
+</script>
