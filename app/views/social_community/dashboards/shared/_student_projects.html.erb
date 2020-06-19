@@ -9,7 +9,7 @@
     </div>
   <% elsif project.presentation.present? %>
     <div class='presentation_project'>
-      <%= project.presentation.html_safe %>
+      <%= link_to 'Click to download', rails_blob_path(project.presentation, disposition: "attachment") %>
     </div>
   <% end %>
 </div>

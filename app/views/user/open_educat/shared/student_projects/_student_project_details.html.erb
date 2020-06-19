@@ -13,7 +13,7 @@
         <h3 style="margin: 0 !important">Mô tả sản phẩm</h3>
       </div>
       <div class="project_description">
-        <p><%= project.description %></p>
+        <p><%= project.description.html_safe if project.description.present?%></p>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
           <h3 style="margin: 0 !important">Giới thiệu sản phẩm</h3>
         </div>
         <div class="project_intro">
-          <%= project.introduction_video.html_safe %>
+          <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
           <h3 style="margin: 0 !important">Slide sản phẩm</h3>
         </div>
         <div class="project_intro">
-          <%= project.presentation.html_safe %>
+          <%= project.presentation %>
         </div>
       </div>
     </div>

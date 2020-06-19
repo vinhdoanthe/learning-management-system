@@ -16,6 +16,12 @@ $(document).ready(function(){
 
 
   $('.upload_project').on('click', function(){
+    batch_id = $('input[name="active_batch"]').val()
+    $.ajax({
+      method: 'GET',
+      url: '/social_community/sc_student_projects/prepare_upload_project?batch_id=' + batch_id,
+      dataType: 'script'
+    })
     $('#upload_project_subject').val($(this).parent().find($('input[name="upload_project_subject"]')).val())
     $('#upload_project_bar').html('<progress id="progressBar" value="0" max="100" style="width: 100%; height: 10px;"></progress>');
     $('#upload_project_bar').hide()
