@@ -1,2 +1,8 @@
-display_noti(<%= result %>);
-$('#editStudentProjectDetail').modal('hide')
+$(document).ready(function(){
+display_noti("<%= result %>");
+  <% if result[:type] == 'success' %>
+    $('.progress').html('<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"><span style="font-weight: 700">ERROR</span></div>');
+  <% else %>
+      $('.progress').html('<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"><span style="font-weight: 700">ERROR</span></div>');
+  <% end %>
+})
