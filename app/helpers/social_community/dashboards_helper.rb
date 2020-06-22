@@ -31,6 +31,15 @@ module SocialCommunity::DashboardsHelper
     [message, product]
   end
 
+  def refer_friend_feed feed
+    post_activity = SocialCommunity::Feed::PostActivity.where(sc_post_id: feed.post.id).first
+    refer = post_activity.activitiable
+
+    message = "#{ feed.created_user.student_name } đã giới thiệu thành công bạn #{ refer.student_name }"
+
+    [message, refer]
+  end
+
   def blank_post_noti_content noti
     if noti.notifiable_type == "SocialCommunity::Feed::PhotoPost"
       "Giáo viên vừa đăng ảnh trong lớp học của con"

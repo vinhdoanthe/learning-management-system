@@ -15,8 +15,15 @@
     </div>
 
     <div class="modal-footer">
-      <input type='submit' form='edit_student_project_form' class='btn btn-primary' value='Submit'>
+      <input type='submit' form='edit_student_project_form' class='btn btn-primary edit_student_project_form_submit' value='Chỉnh sửa'>
       <button data-dismiss="modal" data-project="<%= project.id %>" type="button" class="btn btn-primary" style="background-color: #5DC2A7;">Close</button>
     </div>
   </div>
 </div>
+  <script>
+    $('#edit_student_project_form').ready(function(){
+      $('.edit_student_project_form_submit').on('click', function(){
+        $('.progress').show()
+      })
+    })
+  </script>

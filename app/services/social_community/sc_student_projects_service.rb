@@ -3,7 +3,7 @@ class SocialCommunity::ScStudentProjectsService
   def update_student_project params
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
     
-    if params[:introduction_video].present?
+    if params[:introduction_video].present? && params[:change_video] == '1'
       title = params[:name] || project.name
       description ||= params[:description] || project.description
       video_detail = upload_video_youtube title, params[:introduction_video], description, params[:batch_id]

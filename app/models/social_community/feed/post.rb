@@ -10,4 +10,8 @@ class SocialCommunity::Feed::Post < ApplicationRecord
   def create_notifications
     notify :users, key: 'post.create'
   end
+
+  def create_update_notifications
+    notify :users, key: 'post.update'
+  end
 end

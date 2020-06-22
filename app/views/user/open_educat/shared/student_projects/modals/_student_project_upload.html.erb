@@ -76,15 +76,15 @@
       </div> -->
 
       <div class="modal-footer">
-        <input type='submit' form='edit_student_project_form' class='btn btn-primary' value='Submit'>
+        <input type='submit' form='edit_student_project_form' class='btn btn-primary edit_student_project_form_submit' value='Submit'>
         <button data-dismiss="modal" type="button" class="btn btn-primary" style="background-color: #5DC2A7;">Close</button>
       </div>
     </div>
   </div>
 <style>
-  #upload_progress_bar {
-    display: none;
-  }
+#upload_progress_bar {
+  display: none;
+}
   #upload_project_subject {
     width: 100%
   }
@@ -98,9 +98,17 @@
   }
   .upload_done {
     font-size: 15px;
-      color: ##5DC2A7;
+    color: ##5DC2A7;
   }
   .upload_failt {
     font-size: 15px;
-      color: #f42929:
+    color: #f42929;
+  }
 </style>
+  <script>
+    $('#edit_student_project_form').ready(function(){
+    $('.edit_student_project_form_submit').on('click', function(){
+      $('.progress').show()
+    })
+    })
+  </script>
