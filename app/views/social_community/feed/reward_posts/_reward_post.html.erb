@@ -1,9 +1,9 @@
 <!-- Render reward post here -->
 <!-- Variables: feed, message, reward-->
-<div class='panel'>
+<div class='panel post-box'>
   <div class='panel-content'>
     <div class="bnd-title">
-      <h2> <span style='color: black'> <%= message %> </span></h2>
+      <h2><span style='color: black' class='post-content'> <%= message %> </span></h2>
     </div>
 
     <%= render :partial => "social_community/dashboards/shared/reward", :locals => {reward: reward} %>
