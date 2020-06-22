@@ -1,4 +1,4 @@
-class SocialCommunity::Feed::RedeemPostsService < SocialCommunity::Feed::PostsService
+class SocialCommunity::Feed::ReferFriendPostsService < SocialCommunity::Feed::PostsService
   def self.get_subscribed_users post_id
     subscribed_users = []
 
@@ -6,8 +6,8 @@ class SocialCommunity::Feed::RedeemPostsService < SocialCommunity::Feed::PostsSe
     return [] if post_activity.blank?
 
     refer = SocialCommunity::ReferFriend.where(id: post_activity.activitiable_id).first
-    return [] if redeem_transaction.blank?
-#TODO
+    return [] if refer.blank?
+
     user = User::Account::User.where(id: refer.refer_by).first
     subscribed_users << user if !user.nil?
 
