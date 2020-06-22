@@ -194,11 +194,11 @@ module User
          #    'right_content' => ''
          #  },
 
-          # {'path' => '#', 
-          #   'icon' => 'ico-Certificate.png',
-          #   'title' => 'Chứng chỉ', 
-          #   'right_content' => ''
-          # },
+          {'path' => social_community_question_answer_my_threads_path, 
+            'icon' => 'Icon-Inbox.png',
+            'title' => "#{t('sidebar.question_answer')}", 
+            'right_content' => ''
+          },
 
           # {'path' => social_community_sc_student_projects_social_student_projects_path, 
           #  'icon' => 'ico-SPhocsinh.png',

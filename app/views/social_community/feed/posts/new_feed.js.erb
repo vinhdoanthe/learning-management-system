@@ -1,4 +1,5 @@
 // Variables: feeds
+$('#loading-new-feeds').hide();
 $('#newFeeds').append('<%= j render :partial => 'social_community/dashboards/shared/feeds', :locals => {feeds: @feeds} %>');
 
 <% if !@feeds.empty? %>

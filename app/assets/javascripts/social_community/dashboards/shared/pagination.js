@@ -48,7 +48,7 @@ $(document).ready(function () {
 });
 
 function get_feeds() {
-  console.log('load feeds called')
+  // console.log('load feeds called')
   $.ajax({
     method: 'GET',
     url: '/social_community/home_feeds',
@@ -59,9 +59,12 @@ function get_feeds() {
 function loadMorePosts() {
   // Get next time offset
   date_time_offset = $('#infinitive-scrolling').attr('date-time-offset');
-  console.log(date_time_offset)
+  // console.log(date_time_offset)
   if (date_time_offset != 0  && $(window).scrollTop() > $('#homeFeeds').height() - $(window).height() - 100) {
     $('#infinitive-scrolling').attr('date-time-offset', '0');
+    //
+    // render loading
+    $('#loading-home-feeds').show();
     $.ajax({
       method: 'GET',
       url: '/social_community/home_feeds',
@@ -76,7 +79,7 @@ function loadMorePosts() {
 
 
 function get_new_feeds() {
-  console.log('triggered new feeds load')
+  // console.log('triggered new feeds load')
   $.ajax({
     method: 'GET',
     url: '/social_community/new_feeds',
@@ -89,12 +92,15 @@ function load_more_new_feeds() {
   post_offset = $('#infinitive-scrolling-new-feeds').attr('post-offset');
   last_post_date_time = $('#infinitive-scrolling-new-feeds').attr('last-post-date-time');
 
-  console.log(post_offset);
-  console.log(last_post_date_time);
+  // console.log(post_offset);
+  // console.log(last_post_date_time);
 
   if (last_post_date_time != 0  && $(window).scrollTop() > $('#newFeeds').height() - $(window).height() - 100) {
     $('#infinitive-scrolling-new-feeds').attr('last-post-date-time', '0');
     $('#infinitive-scrolling-new-feeds').attr('post-offset', 0);
+
+    // render loading
+    $('#loading-new-feeds').show();
     $.ajax({
       method: 'GET',
       url: '/social_community/new_feeds',

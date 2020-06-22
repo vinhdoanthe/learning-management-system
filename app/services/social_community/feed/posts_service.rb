@@ -55,7 +55,6 @@ class SocialCommunity::Feed::PostsService
     # permit params
     post_offset = params[:post_offset]
     last_post_date_time = params[:last_post_date_time]
-    # binding.pry
     if post_offset.nil? or post_offset == 0
       post_offset = SocialCommunity::Feed::Post.last.id
     end

@@ -1,4 +1,6 @@
 // Variables: feeds,next_time_offset
+$('#loading-home-feeds').hide();
+
 $('#homeFeeds').append('<%= j render :partial => 'social_community/dashboards/shared/feeds', :locals => {feeds: @feeds} %>');
 
 $('#infinitive-scrolling').attr('date-time-offset','<%= @next_time_offset %>');

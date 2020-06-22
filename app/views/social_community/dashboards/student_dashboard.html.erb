@@ -17,9 +17,15 @@
           </div>
           <div id='infinitive-scrolling-new-feeds' style='display:none'>
           </div>
+          <div id='loading-new-feeds' style='display: none;'>
+            <%= render :partial => 'partials/feed_loading' %>
+          </div>
         </div>
         <div class="tab-pane fade" id="tab_homeFeeds">
           <div id='homeFeeds'>
+          </div>
+          <div id='loading-home-feeds' style='display: none;'>
+            <%= render :partial => 'partials/feed_loading' %>
           </div>
           <div id='infinitive-scrolling' style='display:none' date-time-offset='0'>
           </div>
