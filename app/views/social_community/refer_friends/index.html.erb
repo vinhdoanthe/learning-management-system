@@ -1,0 +1,97 @@
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <!-- <div class="ph-img">
+        <span><img src="assets/global/images/avatar.svg" alt=""></span>
+        </div> -->
+        <div class="ph-text">
+          <h2 class="color-fff text-transform">Giới thiệu bạn học</h2>
+        </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+
+    <div class="panel-content">
+      <div class="step-all">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="step-detail">
+              <span>1</span><br/>
+              <label>Bước 1</label>
+              <p>Click button giới thiệu</p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="step-detail">
+              <span>2</span><br/>
+              <label>Bước 2</label>
+              <p>Nhập thông tin vào form</p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="step-detail">
+              <span>3</span><br/>
+              <label>Bước 3</label>
+              <p>Chờ đợi nhân quà</p>
+            </div>
+          </div>
+          <div class="col-sm-12 text-center m-t-20">
+            <p class="text-center m-b-20">Mời bạn bè của bạn tham gia học tại TEKY, chúng tôi sẽ cung cấp cho bạn 100 T-Coin và đồng thời bạn sẽ được giảm 20% cho lần đóng tiền học tiếp theo</p>
+            <button type="button" data-toggle="modal" data-target="#refer_friend_modal" data-backdrop="false" class="btn btn-primary btn-embossed bg-5DC2A7 text-transform" id="refer_friend_modal_button">Gửi lời mời</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive bo-table">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Mã giới thiệu</th>
+              <th>Họ và tên phụ huynh</th>
+              <th>Điện thoại</th>
+              <th>Học sinh</th>
+              <th>Ngày giới thiệu</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @refers.each do |refer| %>
+            <tr>
+              <td><%= refer.code %></td>
+              <td><%= refer.student_name %></td>
+              <td><%= refer.mobile %></td>
+              <td><%= refer.parent_name %></td>
+              <td><%= refer.created_at.strftime('%d.%m.%Y') %></td>
+              <td align="right"><span class="label-edit label label-primary"><%= refer.state %></span></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal fade" id="refer_friend_modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content m-b-20">
+          <div class="modal-body text-center modal-edit">
+            <div class="modal-title">
+              <label>Mời bạn bè</label>
+            </div>
+            <% refer = SocialCommunity::ReferFriend.new %>
+            <div class="filter-box FlowupLabels" id='formBody'>
+              <%= render 'social_community/refer_friends/forms/refer_form', { refer: refer, url: social_community_refer_friends_create_new_refer_request_path }%>
+              <div class="col-md-12 text-right">
+                <a href="#"><img src="assets/global/images/pluss.svg" style="width: 50px" alt=""></a>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer text-right">
+            <input type='submit' class="btn btn-primary btn-embossed bg-5DC2A7" form="student_refer_friend_form" value='Giới thiệu'>
+            <button type="button" id="close_refer_form" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>

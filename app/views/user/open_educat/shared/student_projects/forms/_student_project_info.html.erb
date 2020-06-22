@@ -96,6 +96,7 @@
           </div>
           <div class="upload_info">
             <%= f.text_field :project_show_video, class:"present_show_video", id: "upload_project_file", readonly: true %>
+            <%= f.hidden_field :change_video, id: "video_had_change", value: '0' %>
             <p style="text-align: center"> <span class="project_presentation_state">Click để cập nhật </span> </p>
           </div>
         <% else %>
@@ -226,6 +227,7 @@
     $('.upload_project_video').on('click', function(){
       $('#upload_project_video').trigger('click');
       $('#upload_project_video').on('change', function(){
+        $('#video_had_change').val('1')
         if($('#upload_project_video').get(0).files.length > 0){
           <% if project.introduction_video.present? %>
         html = '<div class="upload_image"><%= image_tag("global/images/youtube-button.png") %></div><div class="upload_info"><p style="font-size: 16px; font-weight: 700">Video giới thiệu về dự án</p><p id="project_video_name" style="text-align: center"><span class="project_presentation_state" style="font-size: 16px; font-weight: 600>">' +  $('#upload_project_video')[0].files[0].name.substring(0, 20) + '...</span></p></div>'

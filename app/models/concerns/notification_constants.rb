@@ -5,6 +5,8 @@ module NotificationConstants
     SC_RW_POST = 'SocialCommunity::Feed::RewardPost'
     SC_ST_PROJECT_POST = 'SocialCommunity::Feed::StudentProjectPost'
     SC_REDEEM_POST = 'SocialCommunity::Feed::RedeemPost'
+    SC_REFER_FRIEND = 'SocialCommunity::ReferFriend'
+    SC_REFER_FRIEND_POST = 'SocialCommunity::Feed::ReferFriendPost'
   end
   module Key
     SC_QA_THREAD_CREATE = 'qa_thread.create'

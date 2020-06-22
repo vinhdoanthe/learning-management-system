@@ -40,6 +40,12 @@ namespace :social_community do
     resources :messages
   end
 
+  resources :refer_friends
+  namespace :refer_friends do
+    post 'create_new_refer_request', action: 'create_new_refer_request', as: 'create_new_refer_request'
+    post 'update_refer_request', action: 'update_refer_request', as: 'update_refer_request'
+  end
+
   get 'student_project_detail' => 'sc_student_projects#student_project_detail'
   get 'student_projects' => 'sc_student_projects#student_projects'
   get 'teacher_student_projects' => 'sc_student_projects#teacher_student_projects'
