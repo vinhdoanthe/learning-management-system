@@ -16,6 +16,7 @@ $(document).ready(function(){
 
 
   $('.upload_project').on('click', function(){
+    $('#editStudentProjectDetail').html('');
     batch_id = $('input[name="active_batch"]').val()
     $.ajax({
       method: 'GET',
@@ -26,6 +27,7 @@ $(document).ready(function(){
     $('#upload_project_bar').html('<progress id="progressBar" value="0" max="100" style="width: 100%; height: 10px;"></progress>');
     $('#upload_project_bar').hide()
   })
+
   $('#upload_project_confirm').on('click', function(){
     $('#upload_progress_bar').show()
     var data = new FormData();
@@ -88,6 +90,7 @@ $(document).ready(function(){
   })
 
   $('.edit_project').click(function(){
+    $('#upload_student_project_modal').html();
     project_id = $(this).data('project');
     $.ajax({
       method: 'GET',
