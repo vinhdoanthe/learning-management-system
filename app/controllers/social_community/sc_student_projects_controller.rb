@@ -1,35 +1,32 @@
 class SocialCommunity::ScStudentProjectsController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :handling_params, only: [:create_student_project, :update_student_project]
 
-  def youtube_upload
-    user = User::Account::User.where(student_id: params[:student_id]).first
-    if validate_youtube_upload_params params
-      if params[:file].present? && params[:title].present?
-        account = Yt::Account.new refresh_token: Settings.youtube['refresh_token']
-        file = params[:file].try(:tempfile).try(:to_path)
-        new_video = account.upload_video file, title: params[:title], description: params[:description]
-        video_id = new_video.id
-        video = Yt::Video.new id: video_id
-        embed_link = video.embed_html
-        thumbnail_video = video.thumbnail_url
-
-        SocialCommunity::ScStudentProjectsService.new.manage_youtube_playlist account, params[:batch_id], video_id
+  def create_student_project
+    sc_student_service = SocialCommunity::ScStudentProjectsService.new
+    user = User::Account::User.where(student_id: @params[:student_id]).first
+    if validate_youtube_upload_params @params
+      if @params[:introduction_video].present? && @params[:name].present?
+        video_detail = sc_student_service.upload_video_youtube @params[:name], @params[:introduction_video], @params[:description], @params[:batch_id]
+        embed_link = video_detail[0]
+        thumbnail_video= video_detail[1]
       else
         embed_link = ''
         thumbnail_video = ''
       end
 
-      SocialCommunity::ScStudentProjectsService.new.create_student_project params, embed_link, current_user, thumbnail_video
+      sc_student_service.create_student_project @params, embed_link, current_user, thumbnail_video
       User::Reward::CoinStarsService.new.reward_coin_star 'UPLOAD_SPCK', user.id, 'coin', current_user.id
       User::Reward::CoinStarsService.new.reward_coin_star 'UPLOAD_SPCK', user.id, 'star', current_user.id
-      render json: {type: 'success', message: 'Upload thành công'}
+      result = {type: 'success', message: 'Upload thành công'}
     else
-      render json: {type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau'}
+      result = {type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau'}
     end
-  end
 
-  def validate_youtube_upload_params params
-    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:file].present? && params[:title].present?) || params[:slide].present? || params[:link].present?)
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/shared/student_projects/forms/ajax_response', locals: { result: result } }
+    end
   end
 
   def student_project_detail
@@ -49,12 +46,10 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
 
   def edit_student_project
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
-    batch = Learning::Batch::OpBatch.where(id: project.batch_id).first
-    subject_ids = batch.op_sessions.pluck(:subject_id)
-    subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level)
-    student = User::OpenEducat::OpStudent.where(id: project.student_id).first
-    student_ids = Learning::Batch::OpStudentCourse.where(batch_id: batch.id).pluck(:student_id)
-    all_student = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:id, :full_name)
+    student = User::Account::User.where(id: project.student_id).first
+    detail = batch_student_info project.batch_id
+    all_student = detail[1]
+    subjects = detail[0]
 
     respond_to do |format|
       format.html
@@ -62,22 +57,24 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     end
   end
 
-  def update_student_project
-    update_params = {}
-    update_params.merge! params[:social_community_sc_student_project].permit! if params[:social_community_sc_student_project].present?
-    update_params.merge! params[:state] if params[:state].present?
+  def prepare_upload_project
+    detail = batch_student_info params[:batch_id]
+    all_student = detail[1]
+    subjects= detail[0]
+    batch = detail[2]
 
-    if update_params['permission'] == '1'
-      update_params['permission'] = 'public'
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/shared/student_projects/js/prepare_upload_project', locals: { all_student: all_student, subjects: subjects, batch: batch } }
     end
+  end
 
-    return unless current_user.is_teacher?
-    project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
-    update_params.select!{ |k, v| v.present? }
-    if project.update!(update_params)
-      render json: { type: 'success', 'message': 'Update thành công' }
-    else
-      render json: { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
+  def update_student_project
+    result = SocialCommunity::ScStudentProjectsService.new.update_student_project @params
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/shared/student_projects/forms/ajax_response', locals: { result: result } }
     end
   end
 
@@ -111,4 +108,33 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     @course = Learning::Course::OpCourse.where(id: params[:course_id]).first
     @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id], permission: 'public', state: 'publish').page params[:page]
   end
+
+  private
+
+  def handling_params
+    @params = {}
+    @params.merge! params[:social_community_sc_student_project].permit! if params[:social_community_sc_student_project].present?
+    @params.merge! ({ state: params[:state]}) if params[:state].present?
+    @params.merge! ({ project_id: params[:project_id]}) if params[:project_id].present?
+
+    if @params['permission'] == '1'
+      @params['permission'] = 'public'
+    end
+    @params.select! { |k, v| v.present? }
+    @params.symbolize_keys!
+  end
+
+  def validate_youtube_upload_params params
+    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present? || params[:project_show_video].present?)
+  end
+
+  def batch_student_info batch_id
+    batch = Learning::Batch::OpBatch.where(id: batch_id).first
+    course = batch.op_course
+    subjects = course.op_subjects.pluck(:id, :level)
+    student_ids = Learning::Batch::OpStudentCourse.where(batch_id: batch.id, state: 'on').pluck(:student_id)
+    all_student = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:id, :full_name)
+    [subjects, all_student, batch]
+  end
 end
+

@@ -1,0 +1,13 @@
+// Variables: feeds
+$('#loading-new-feeds').hide();
+$('#newFeeds').append('<%= j render :partial => 'social_community/dashboards/shared/feeds', :locals => {feeds: @feeds} %>');
+
+<% if !@feeds.empty? %>
+  <% post_offset = @feeds.last.post.id %>
+  <% last_post_date_time = @feeds.last.post.updated_at %>
+<% else %>
+  <% post_offset = 0 %>
+  <% last_post_date_time = 0 %>
+<% end %>
+$('#infinitive-scrolling-new-feeds').attr('post-offset', '<%= post_offset %>')
+$('#infinitive-scrolling-new-feeds').attr('last-post-date-time', '<%= last_post_date_time %>')

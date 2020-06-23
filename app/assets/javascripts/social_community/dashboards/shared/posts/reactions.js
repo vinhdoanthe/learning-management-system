@@ -31,6 +31,7 @@ function addReaction(target){
 }
 $(document).ready(function(){
   addReaction('#homeFeeds');
+  addReaction('#newFeeds');
   // addReaction('#student_project_feed');
 });
 

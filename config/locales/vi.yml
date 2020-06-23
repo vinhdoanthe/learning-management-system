@@ -138,6 +138,8 @@ vi:
       leader_board: 'Top 10 Học sinh tiêu biểu'
   social_community:
     new_comment_placeholder: 'Bình luận tại đây'
+    new_feeds: 'Hoạt động chung của TEKY'
+    home_feeds: 'Hoạt động của riêng bạn'
   datetime:
     to: 'đến'
   role:

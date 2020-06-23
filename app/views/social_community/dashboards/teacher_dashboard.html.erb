@@ -7,9 +7,29 @@
 <div class="page-content page-thin">
   <div class="row">
     <div class="col-md-7 ">
-      <div id='homeFeeds'>
-      </div>
-      <div id='infinitive-scrolling' style='display:none' date-time-offset='0'>
+      <ul class="nav nav-tabs nav-justified nav-primary tab-menu">
+        <li class="active" id='li_newFeeds'><a href="#tab_newFeeds" data-toggle="tab"><%= t('social_community.new_feeds') %></a></li>
+        <li class="" id='li_homeFeeds'><a href="#tab_homeFeeds" data-toggle="tab"><%= t('social_community.home_feeds') %></a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade active in" id="tab_newFeeds">
+          <div id='newFeeds'>
+          </div>
+          <div id='infinitive-scrolling-new-feeds' style='display:none'>
+          </div>
+          <div id='loading-new-feeds' style='display: none;'>
+            <%= render :partial => 'partials/feed_loading' %>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="tab_homeFeeds">
+          <div id='homeFeeds'>
+          </div>
+          <div id='loading-home-feeds' style='display: none;'>
+            <%= render :partial => 'partials/feed_loading' %>
+          </div>
+          <div id='infinitive-scrolling' style='display:none' date-time-offset='0'>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-5">
@@ -24,8 +44,8 @@
           </div>
           <div class="checkin_report_content">
             <canvas id="barChartCheckin" width="400" height="400"></canvas>
-    <div class='no-checkin-data' style="position: absolute; top: 50%; left: 10%; text-align: center; width: 80%;">
-            <p style='text-align: center; display: none'>Chưa có buổi học hoàn thành trong tháng</p></div>
+            <div class='no-checkin-data' style="position: absolute; top: 50%; left: 10%; text-align: center; width: 80%;">
+              <p style='text-align: center; display: none'>Chưa có buổi học hoàn thành trong tháng</p></div>
           </div>
         </div>
       </div>
@@ -43,34 +63,6 @@
     </div>
   </div>
 </div>
-<style>
-.owl-prev {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  border: 2px solid gray !important;
-  border-radius: 50%;
-  top: 40% !important;
-  left: -20px;
-  margin-left: -20px;
-  display: block !important;
-  background-color: white !important;
-}
-
-.owl-next {
-  position: absolute;
-  right: -40px !important;
-  width: 50px;
-  height: 50px;
-  border: 2px solid gray !important;
-  border-radius: 50%;
-  top: 40% !important;
-  margin-left: -20px;
-  display: block !important;
-  background-color: white !important;
-}
-
-.owl-prev span, .owl-next span {
-  line-height: 50px !important
-}
-</style>
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag 'social_community/dashboard/dashboard' %>
+<% end %>

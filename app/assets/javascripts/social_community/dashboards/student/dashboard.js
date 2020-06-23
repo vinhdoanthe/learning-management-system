@@ -4,7 +4,6 @@ $(document).ready(function(){
   get_coming_soon_session();
 	get_noti_content();
   get_leader_board();
-  // get_new_user();
   get_attendance_report();
 })
 

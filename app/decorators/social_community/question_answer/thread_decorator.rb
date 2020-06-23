@@ -12,7 +12,7 @@ class SocialCommunity::QuestionAnswer::ThreadDecorator < SimpleDelegator
   end
 
   def display_thread_created_at
-    created_at.strftime(I18n.t('date.formats.default'))
+    created_at.strftime('%d/%m/%Y %I:%M %p')
   end
 
   def display_count_replies

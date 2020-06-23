@@ -1,4 +1,55 @@
 class SocialCommunity::ScStudentProjectsService
+  
+  def update_student_project params
+    project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
+    
+    if params[:introduction_video].present? && params[:change_video] == '1'
+      title = params[:name] || project.name
+      description ||= params[:description] || project.description
+      video_detail = upload_video_youtube title, params[:introduction_video], description, params[:batch_id]
+      params.merge! ({ introduction_video: video_detail[0], thumbnail: video_detail[1] })
+      video_id = project.introduction_video
+
+      if video_id.present? && video_id.length < 12
+        delete_video_youtube video_id
+      end
+    end
+
+    if params[:student_id].present? && params[:student_id] != project.student_id
+      user = User::Account::User.where(student_id: params[:student_id]).first
+      params.merge! ({ user_id: user.id })
+    end
+
+    update_attribute = [:introduction_video, :thumbnail, :presentation, :name, :description, :subject_id, :student_id, :user_id, :state, :permission, :project_show_video]
+    update_params = {}
+    update_attribute.each{ |att| update_params.merge! ({ att => params[att]}) if params[att].present? }
+
+    if project.update!(update_params)
+      { type: 'success', 'message': 'Update thành công' }
+    else
+      { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
+    end
+  end
+
+  def delete_video_youtube video_id
+    account = Yt::Account.new refresh_token: Settings.youtube['refresh_token']
+    video = Yt::Video.new id: video_id, auth: account
+    video.delete
+  end
+
+  def upload_video_youtube title, file, description, batch_id
+    account = Yt::Account.new refresh_token: Settings.youtube['refresh_token']
+    file = file.try(:tempfile).try(:to_path)
+    new_video = account.upload_video file, title: title
+    video_id = new_video.id
+    video = Yt::Video.new id: video_id, auth: account
+    embed_link = video_id
+    thumbnail_video = video.thumbnail_url
+
+    manage_youtube_playlist account, batch_id, video_id
+
+    [embed_link, thumbnail_video]
+  end
 
   def manage_youtube_playlist account, batch_id, video_id
     playlist_id = ''
@@ -30,9 +81,9 @@ class SocialCommunity::ScStudentProjectsService
     ActiveRecord::Base.transaction do
       project = SocialCommunity::ScStudentProject.new
       project.description = params[:description]
-      project.name = params[:title]
-      project.presentation = params[:slide]
-      project.project_show_video = params[:tinker]
+      project.name = params[:name]
+      project.presentation = params[:presentation]
+      project.project_show_video = params[:project_show_video]
       project.introduction_video = video_link
       project.batch_id = params[:batch_id]
       project.thumbnail = thumbnail_url

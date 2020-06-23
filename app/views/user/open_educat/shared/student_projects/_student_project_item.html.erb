@@ -17,8 +17,8 @@
         <div class=''>
           <div class='project_control'>
             <% if current_user.is_teacher? %>
-              <%# if progress != 100 || project.state != 'publish' || project.permission != 'public'%>
-              <% if progress != 100 %>
+              <% if progress != 100 || project.state != 'publish' || project.permission != 'public'%>
+              <%# if progress != 100 %>
                 <div class="col-md-6 control_button">
                   <button class="edit_project" style="width: 100%; padding: 10px 0 10px 0" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail">Hoàn thiện</button>
                 </div>

@@ -107,7 +107,7 @@ module User
          'right_content' => '<span class="left-badge">' << count_mark_question(current_user.op_faculty) << '</span>'
         },
         {'path' => social_community_question_answer_my_threads_path, 
-         'icon' => 'ico-BaiTapOnBai.png',
+         'icon' => 'Icon-Inbox.png',
          'title' => "#{ t('sidebar.question_answer') }", 
          'right_content' => '<span class="left-badge"></span>'
         },

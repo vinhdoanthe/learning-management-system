@@ -14,7 +14,32 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
       sc_student_project_notification_content
     when SC_REDEEM_POST
       sc_redeem_product_notification_content
+    when SC_REFER_FRIEND
+      sc_refer_friend_notification_content
+    when SC_REFER_FRIEND_POST
+      sc_refer_friend_post_notification_content
     end
+  end
+
+  def sc_refer_friend_notification_content
+   refer = notifiable
+   #user = User::Account::User.where(id: refer.refer_by)
+
+   case refer.state
+   when 'waiting'
+     "Cảm ơn con đã giới thiệu bạn #{ refer.student_name } vào học!"
+   when 'approve'
+     "Bạn #{ refer.student_name } con giới thiệu đã vào học. Con được cộng TODO TEKY đồng. Tiếp tục phát huy nhé!"
+   when 'reject'
+     "Tiếc quá! Con giới thiệu bạn chưa thành công rồi! Hãy thử lại nhé"
+   end
+  end
+
+  def sc_refer_friend_post_notification_content
+    post = notifiable
+    activity_post = SocialCommunity::Feed::PostActivity.where(sc_post_id: post.id).first
+    refer = activity_post.activitiable
+    "Bạn #{ refer.student_name } con giới thiệu đã vào học. Con được cộng TODO TEKY đồng. Tiếp tục phát huy nhé!"
   end
 
   def sc_redeem_product_notification_content

@@ -30,6 +30,8 @@ namespace :social_community do
   namespace :sc_student_projects do
     get 'social_student_projects', action: 'social_student_projects', as: 'social_student_projects'
     get 'course_student_projects/:course_id', action: 'course_student_projects', as: 'course_student_projects'
+    get 'prepare_upload_project', action: 'prepare_upload_project', as:'prepare_upload_project'
+    post 'create_student_project', action: 'create_student_project', as: 'create_student_project'
   end
 
   namespace :question_answer do
@@ -38,7 +40,12 @@ namespace :social_community do
     resources :messages
   end
 
-  post 'youtube_upload' => 'sc_student_projects#youtube_upload'
+  resources :refer_friends
+  namespace :refer_friends do
+    post 'create_new_refer_request', action: 'create_new_refer_request', as: 'create_new_refer_request'
+    post 'update_refer_request', action: 'update_refer_request', as: 'update_refer_request'
+  end
+
   get 'student_project_detail' => 'sc_student_projects#student_project_detail'
   get 'student_projects' => 'sc_student_projects#student_projects'
   get 'teacher_student_projects' => 'sc_student_projects#teacher_student_projects'
@@ -46,6 +53,7 @@ namespace :social_community do
   post 'update_student_project' => 'sc_student_projects#update_student_project'
 
   get 'home_feeds' => 'dashboards#home_feeds', as: 'home_feeds'
+  get 'new_feeds' => 'dashboards#new_feeds', as: 'new_feeds'
   get 'student_dashboard' => 'dashboards#student_dashboard', as: 'student_dashboard'
   get 'teacher_dashboard' => 'dashboards#teacher_dashboard', as: 'teacher_dashboard'
   get 'student_coming_soon_session' => 'dashboards#student_coming_soon_session'
