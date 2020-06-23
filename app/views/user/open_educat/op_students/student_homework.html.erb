@@ -16,8 +16,10 @@
       </ul>
       <div class="tab-content p-0 tab-all-content m-t-20">
         <% if @batches.blank? %>
-          <div>
-            <h3><%= t('learning.no_lesson') %><h3>
+          <div class="tab-pane fade active in" id='homework_tab1'>
+            <div class="table-responsive bo-table">
+              <p><%= t('learning.no_lesson') %><p>
+            </div>
           </div>
         <% else %>
           <div class="tab-pane fade active in" id='homework_tab1'>
@@ -81,7 +83,11 @@
         <% end%>
         <!-- <div id="video_play_tab" > -->
         <div class="tab-pane fade" id='homework_tab2_new'> 
-          <%= render 'user/open_educat/op_students/partials/homework_video', { sessions: @sessions, course: @course, subject: @subject, lesson: @lesson, session: @session, batch: @batch } %>
+          <% if @session.blank? %>
+            <%= render 'user/open_educat/op_students/partials/no_homework_video' %>
+          <% else %>
+            <%= render 'user/open_educat/op_students/partials/homework_video', { sessions: @sessions, course: @course, subject: @subject, lesson: @lesson, session: @session, batch: @batch } %>
+          <% end %>
         </div>
         <!-- </div> -->
       </div>
