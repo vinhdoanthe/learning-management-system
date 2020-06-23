@@ -6,7 +6,6 @@ class SocialCommunity::ReferFriendsController < ApplicationController
   end
 
   def create_new_refer_request
-    binding.pry
     result = SocialCommunity::ReferFriendsService.new.create_refer_request @params
 
     respond_to do |format|
