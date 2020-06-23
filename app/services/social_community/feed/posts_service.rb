@@ -56,12 +56,12 @@ class SocialCommunity::Feed::PostsService
     post_offset = params[:post_offset]
     last_post_date_time = params[:last_post_date_time]
     if post_offset.nil? or post_offset == 0
-      post_offset = SocialCommunity::Feed::Post.where(type: PostConstants::NewfeedPostTypes::ACCEPTED_NEWFEED_POST_TYPES).last.id
+      post_offset = SocialCommunity::Feed::Post.where(type: PostConstants::NewfeedPostTypes::ACCEPTED_NEWFEED_POST_TYPES).last.id + 1
     end
     if last_post_date_time.nil?
       last_post_date_time = Time.now
     end
-    @posts = SocialCommunity::Feed::Post.where('updated_at <= ? and id <= ? and type in (?)', last_post_date_time, post_offset, PostConstants::NewfeedPostTypes::ACCEPTED_NEWFEED_POST_TYPES)
+    @posts = SocialCommunity::Feed::Post.where('updated_at <= ? and id < ? and type in (?)', last_post_date_time, post_offset, PostConstants::NewfeedPostTypes::ACCEPTED_NEWFEED_POST_TYPES)
       .order(updated_at: :DESC)
       .limit(2)
     @feeds = decor_post_to_feed @posts
