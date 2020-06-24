@@ -1,0 +1,42 @@
+<%
+list_company =  Report::CompanyService.get_list_company
+%>
+<div class="card-header">
+	<h3 class="card-title">
+	<form name="report_filters" id="report_filters" method="post" class="form-inline">
+	  <i class="fas fa-chart-pie mr-1 text-success"></i>
+		  <div class="input-group input-group-sm">
+		  <span class="input-group-append"><button class="btn btn-default"><%= t('helpers.select.select')%></button></span>
+		  <select name="frm_report[report_type]" id="frm_report_report_type" class="form-control form-control-sm select2" autocomplete="false" >
+			<option value="range"><%= t('datetime.prompts.date_from_to')%></option>
+			<option value="week" <% if !@frm_report.nil? && @frm_report[:report_type] == 'week' %> selected <% end %> ><%= t('datetime.prompts.week')%></option>
+			<option value="month" <% if !@frm_report.nil? && @frm_report[:report_type] == 'month' %> selected <% end %> ><%= t('datetime.prompts.month')%></option>
+			<option value="year" <% if !@frm_report.nil? && @frm_report[:report_type] == 'year' %> selected <% end %> ><%= t('datetime.prompts.year')%></option>
+		  </select>              
+		  <span class="input-group-append"><button class="btn btn-default"><%= t('datetime.from')%></button></span>
+		  <div class="input-group-prepend">
+			<span class="input-group-text">
+			  <i class="far fa-calendar-alt"></i>
+			</span>
+		  </div>
+		  <input type="text" required name="frm_report[from_date]" id="frm_report_from_date" placeholder="from date" class="form-control" autocomplete="false" value="<%= !@frm_report.nil? && @frm_report[:from_date]%>"><span class="input-group-append"><button class="btn btn-default"> <%= t('datetime.to')%></button></span>
+			<div class="input-group-prepend">
+			  <span class="input-group-text">
+				<i class="far fa-calendar-alt"></i>
+			  </span>
+			</div>
+			<input type="text" name="frm_report[to_date]" id="frm_report_to_date" placeholder="to date" class="form-control" autocomplete="false" value="<%= !@frm_report.nil? && @frm_report[:to_date]%>">
+		  <select name="frm_report[company_id]" id="frm_report_company_id" class="form-control form-control-sm select2" autocomplete="false" >
+			<option value=""><%= t('select.all_company')%></option>
+			<% list_company.each do |ct| %>
+			  <option value="<%= ct[:id]%>" <% if ct[:id] ==  @frm_report[:company_id]%> selected <% end %> ><%= ct[:name]%></option>
+			<% end %>
+		  </select>
+		  
+		  <span class="input-group-append">
+			<button type="submit" class="btn btn-default" id="btn_report_date_apply"><%= t('button.see')%></button>
+		  </span>
+		  </div>
+	</form>
+	</h3>
+</div>

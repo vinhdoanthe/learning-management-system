@@ -171,43 +171,47 @@ to get the desired effect
 <script src="/AdminLTE-3.0.5/plugins/chart.js/Chart.min.js"></script>
 <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-datalabels/chartjs-plugin-datalabels.min.js"></script>
 <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-deferred/chartjs-plugin-deferred.min.js"></script>
-            <script src="/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js"></script>
+<script src="/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js"></script>
 <!-- AdminLTE -->
 <script src="/AdminLTE-3.0.5/js/adminlte.js"></script>
 <script src="/AdminLTE-3.0.5/js/demo.js"></script>
 <script>
-$(document)
-   .ready(
-      function() {  
-         $('#frm_report_from_date').datepicker({
-           autoclose: true,
-           format: 'dd-mm-yyyy',
-           language: '<%= locale%>'
-         });
-         
-        $('#frm_report_to_date').datepicker({
-           autoclose: true,
-           format: 'dd-mm-yyyy',
-           language: '<%= locale%>',
-           endDate:  new Date(),
-        });
-        
-        $('.select2').select2(); 
- });
+	$(document)
+	   .ready(
+			function() {  
+			 $('#frm_report_from_date').datepicker({
+			   autoclose: true,
+			   format: 'dd-mm-yyyy',
+			   language: '<%= locale%>'
+			});
+			 
+			$('#frm_report_to_date').datepicker({
+			   autoclose: true,
+			   format: 'dd-mm-yyyy',
+			   language: '<%= locale%>',
+			   endDate:  new Date(),
+			});
+			
+			$('.select2').select2(); 
+	 });
 </script>
 
-<% if !@frm_report[:company_id].nil? && @frm_report[:company_id] >0%>
-   <% if !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'range'%>
-        <%= render "report/diligent_company_range"%>
-   <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'week' %>
-        <%= render "report/diligent_company_week"%>
-    <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'month' %>
-        <%= render "report/diligent_company_month"%>
-    <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'year' %>
-        <%= render "report/diligent_company_year"%>
-    <% end %>
-<% else %>
-      <%= render "report/diligent_range"%>
+<% if @sub_module  == 'diligent'%>
+  <% if !@frm_report[:company_id].nil? && @frm_report[:company_id] >0%>
+     <% if !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'range'%>
+        <%= render "report/diligent/diligent_company_range"%>
+     <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'week' %>
+        <%= render "report/diligent/diligent_company_week"%>
+      <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'month' %>
+        <%= render "report/diligent/diligent_company_month"%>
+      <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'year' %>
+        <%= render "report/diligent/diligent_company_year"%>
+      <% end %>
+  <% else %>
+    <%= render "report/diligent/diligent_range"%>
+  <% end %>
+<% elsif @sub_module  == 'teaching_checkin'%>
+	<%= render @js_data_template%>
 <% end %>
 </body>
 </html>

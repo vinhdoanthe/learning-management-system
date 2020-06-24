@@ -12,6 +12,7 @@ vi:
     see: "Xem"
   select:
     all: "Tất cả"
+    all_company: "Tất cả cơ sở"
   login:
     login: "Đăng nhập"
     forgot_password: "Quên mật khẩu?"
@@ -67,6 +68,7 @@ vi:
     st_project_post:
       create: 'hoàn thành dự án cuối khóa'
   report:
+    report: "Báo cáo"
     attendance: "BÁO CÁO CHUYÊN CẦN"
     no_attendance: "Chưa có thông tin chuyên cần"
     checkin: "BÁO CÁO ĐIỂM DANH"
@@ -76,9 +78,12 @@ vi:
     report_absent_title: "Nghỉ học"
     report_chart_prorata_title: "Báo cáo theo tỷ lệ"
     report_chart_based_on_quantity_title: "Báo cáo theo số lượng"
-    report: "Báo cáo"
     report_month_title: "Báo cáo tháng"
     report_day_title: "Báo cáo ngày"
+    report_teaching_title: "Báo cáo giảng dạy"
+    report_teaching_checkin_title: "Giảng viên Check-in"
+    report_checkin_title: "Check-in"
+    report_not_checkin_title: "Not check-in"
   learning:
     class: "Lớp"
     subject: "Học phần"
@@ -149,6 +154,7 @@ vi:
   social_community:
     new_comment_placeholder: 'Bình luận tại đây'
   datetime:
+    from: 'từ'
     to: 'đến'
   role:
     student: 'Học sinh'
