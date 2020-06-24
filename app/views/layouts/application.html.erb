@@ -1,11 +1,10 @@
-<% if current_user and current_user.is_admin? and controller.controller_name == 'report/report' %>
+<% if current_user && current_user.is_admin? %>
   <%= render "partials/admin_lte_application"%>
 <% else%>
   <!DOCTYPE html>
   <html>
     <head>
       <title>TEKY Learning Management System</title>
-
       <%= csrf_meta_tags %>
       <%= csp_meta_tag %>
       <%= favicon_link_tag 'Logo-fav.ico' %>

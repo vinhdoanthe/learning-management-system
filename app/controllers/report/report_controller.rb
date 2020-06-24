@@ -285,7 +285,7 @@ module Report
           @js_data_template     = 'report/teaching/js/range_js_data_single_company'
         end
 
-        @list_data = Report::ReportService.statistic_teaching_checkin_range company_id,sql_date_format_ymd,sql_from_date, sql_to_date
+        @list_data = Report::ReportService.statistic_teaching_checkin_range company_id,sql_date_format_ymd,sql_date_format_dmy,sql_from_date, sql_to_date
       
       elsif report_type == 'year' || report_type == 'month'
         
