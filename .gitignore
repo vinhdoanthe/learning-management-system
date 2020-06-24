@@ -57,3 +57,5 @@ yarn-debug.log*
 .buildpath
 .project
 
+lms.sublime-project
+lms.sublime-workspace
