@@ -10,10 +10,10 @@
                     label: '<%= t("report.report_checkin_title")%>',
                     fill: false,
                     lineWidth: 1,
-                    data: [<% @list_data.each do |ct| %> <%= ct[:total_check_in] %>,<% end %>],                    
+                    data: [<% @list_data.each do |ct| %> <%= ct[:total_check_in] %>,<% end %>],
                     borderColor: 'rgb(54, 162, 235)',
                     backgroundColor: 'rgb(54, 162, 235)',
-                    borderWidth:2,
+                    borderWidth:2
                   },
                   {
                     label: '<%= t("report.report_not_checkin_title")%>',
@@ -22,7 +22,7 @@
                     data: [<% @list_data.each do |ct| %> <%= ct[:total_not_check_in] %>,<% end %>],
                     borderColor: 'rgb(255, 99, 132)',
                     backgroundColor: 'rgb(255, 99, 132)',
-                    borderWidth:2,
+                    borderWidth:2
                   },  
                 ],      
             },
@@ -56,7 +56,7 @@
                    lineWidth: 1,
                    ticks: {
                        min: 0,
-                       stepSize: 10
+                       stepSize: 50
                    }
                  }],
                  xAxes: [{
@@ -72,8 +72,7 @@
                       borderRadius: 4,
                       color: '#000',
                       display: function(context) {
-                        //return context.dataset.data[context.dataIndex] > 0;
-                        return false;
+                        return context.dataset.data[context.dataIndex] > 0;
                       },
                       formatter: Math.round,
                       font: {

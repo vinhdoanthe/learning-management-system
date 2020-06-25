@@ -3,16 +3,11 @@
     <div class="card">
       <%= render "report/partials/form_teaching"%>
       <div class="card-body">
-        <div class="row">
-            <div class="col-sm-12 col-md-12">
-              <div class="embed-responsive embed-responsive-16by9" style="min-height: 800px;">
-                <canvas class="embed-responsive-item" id="reportNumber"></canvas>
-              </div>
-            </div>
-            <hr/>
-            <div class="col-sm-12 col-md-12">
-            	<%= render @table_data_template%>
-            </div>
+        <div <%= raw @style%> style="width: 95%;">
+          <canvas id="reportNumber"></canvas>
+        </div>
+        <div style="margin-top: 20px;">
+              <%= render @table_data_template%>
         </div>
       </div>    
     </div>

@@ -47,9 +47,9 @@ class Report::ReportService
       sql_date_format_dmy     = 'IW-YYYY'
       sql_date_format_ymd     = 'YYYYIW'
       if (Date.parse(from_date).strftime("%Y").to_i != Date.parse(to_date).strftime("%Y").to_i)
-        labels = (Date.parse(from_date).Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%Y").to_s + ")" + "(" + d.strftime("%d-%m-%Y").to_s + " : " +  (d.end_of_week).strftime("%d-%m-%Y").to_s   +   ")")}
+        labels = (Date.parse(from_date)..Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%Y").to_s + ")" + "(" + d.strftime("%d-%m-%Y").to_s + " : " +  (d.end_of_week).strftime("%d-%m-%Y").to_s   +   ")")}
       else
-        labels = (Date.parse(from_date).Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%d-%m-%Y").to_s + " : " +  (d.end_of_week).strftime("%d-%m-%Y").to_s   +   ")")}
+        labels = (Date.parse(from_date)..Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%d-%m-%Y").to_s + " : " + (d.end_of_week).strftime("%d-%m-%Y").to_s + ")")}
       end
     end
     
@@ -83,6 +83,7 @@ class Report::ReportService
           .joins("left join op_batch as bat ON res_company.id = bat.company_id")
           .joins("left join op_session as a ON (a.batch_id = bat.id AND (TO_CHAR(a.start_datetime, '#{sql_date_format_ymd}') >=  '#{sql_from_date}' AND TO_CHAR(a.end_datetime, '#{sql_date_format_ymd}') <=  '#{sql_to_date}'))")
           .where.not(:id => [3,19,36,10,11,17,12,13,18,16])
+          .where("a.start_datetime IS NOT NULL")
           .select("res_company.id as id, res_company.name as name, res_company.code as code,
             SUM(case WHEN a.check_in_state = 'good' then 1 ELSE 0 END) as total_check_in,
             SUM(case WHEN a.check_in_state = 'none' then 1 ELSE 0 END) as total_not_check_in")
@@ -93,13 +94,14 @@ class Report::ReportService
             .joins("left join op_batch as bat ON res_company.id = bat.company_id")
             .joins("left join op_session as a ON (a.batch_id = bat.id AND (TO_CHAR(a.start_datetime, '#{sql_date_format_ymd}') >=  '#{sql_from_date}' AND TO_CHAR(a.end_datetime, '#{sql_date_format_ymd}') <=  '#{sql_to_date}'))")
             .where(:id => company_id)
-            .select("res_company.id as id, res_company.name as name, res_company.code as code,
+            .where("a.start_datetime IS NOT NULL")
+            .select("
               TO_CHAR(a.start_datetime, '#{sql_date_format_ymd}') as date_report_ymd,
               TO_CHAR(a.start_datetime, '#{sql_date_format_dmy}') as date_report,
               SUM(case WHEN a.check_in_state = 'good' then 1 ELSE 0 END) as total_check_in,
               SUM(case WHEN a.check_in_state = 'none' then 1 ELSE 0 END) as total_not_check_in")
-            .group('res_company.id,date_report_ymd,date_report')
-            .order(code: :DESC)
+            .group('date_report_ymd,date_report')
+            .order("date_report_ymd")
     end
   end
 
@@ -110,6 +112,7 @@ class Report::ReportService
           .joins("left join op_batch as bat ON res_company.id = bat.company_id")
           .joins("left join op_session as a ON (a.batch_id = bat.id AND (TO_CHAR(a.start_datetime, '#{sql_date_format_ymd}') >=  '#{sql_from_date}' AND TO_CHAR(a.end_datetime, '#{sql_date_format_ymd}') <=  '#{sql_to_date}'))")
           .where.not(:id => [3,19,36,10,11,17,12,13,18,16])
+          .where("a.start_datetime IS NOT NULL")
           .select("res_company.id as id, res_company.name as name, res_company.code as code,
             TO_CHAR(a.start_datetime, '#{sql_date_format_ymd}') as date_report_ymd,
             TO_CHAR(a.start_datetime, '#{sql_date_format_dmy}') as date_report,
@@ -122,6 +125,7 @@ class Report::ReportService
             .joins("left join op_batch as bat ON res_company.id = bat.company_id")
             .joins("left join op_session as a ON (a.batch_id = bat.id AND (TO_CHAR(a.start_datetime, '#{sql_date_format_ymd}') >=  '#{sql_from_date}' AND TO_CHAR(a.end_datetime, '#{sql_date_format_ymd}') <=  '#{sql_to_date}'))")
             .where(:id => company_id)
+            .where("a.start_datetime IS NOT NULL")
             .select("res_company.id as id, res_company.name as name, res_company.code as code,
               TO_CHAR(a.start_datetime, '#{sql_date_format_ymd}') as date_report_ymd,
               TO_CHAR(a.start_datetime, '#{sql_date_format_dmy}') as date_report,
@@ -130,6 +134,22 @@ class Report::ReportService
             .group('res_company.id,date_report_ymd,date_report')
             .order("date_report_ymd")
     end
+  end
+
+  # Ham thong ke giao vien check-in; not check in cua mot company_id va quang thoi gian
+  def self.statistic_teacher_checkin(company_id, sql_date_format_ymd,sql_date_format_dmy, sql_from_date, sql_to_date)
+
+    return Learning::Batch::OpSession
+    .joins("inner join op_faculty as op_f ON op_f.id = op_session.faculty_id")
+    .where(:company_id => company_id)
+    .where("op_session.start_datetime IS NOT NULL")
+    .where("TO_CHAR(op_session.start_datetime, '#{sql_date_format_ymd}') >=  '#{sql_from_date}' AND TO_CHAR(op_session.end_datetime, '#{sql_date_format_ymd}') <=  '#{sql_to_date}'")
+    .select("op_session.faculty_id, op_f.middle_name as middle_name, op_f.last_name as last_name,
+      SUM(case WHEN op_session.check_in_state = 'good' then 1 ELSE 0 END) as total_check_in,
+      SUM(case WHEN op_session.check_in_state = 'none' then 1 ELSE 0 END) as total_not_check_in")
+    .group("op_session.faculty_id,op_f.id")
+    .order("op_session.faculty_id")
+
   end
   
 end

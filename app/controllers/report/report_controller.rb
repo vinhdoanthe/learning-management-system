@@ -71,10 +71,21 @@ module Report
               # Lay so thu tu cua tuan
               @list_date = (Date.parse(from_date)..Date.parse(to_date)).step(7).map {|d|d.strftime("%V-%Y").to_s}
 
+              puts "Tuan: "
+              puts @list_date
+
+              puts "Start date: "
+              monday = Date.parse(from_date).beginning_of_week
+              puts monday
+
+              sunday = Date.parse(from_date).end_of_week
+              puts "End date: "
+              puts sunday
+
               if (Date.parse(from_date).strftime("%Y").to_i != Date.parse(to_date).strftime("%Y").to_i)
-                @labels = (Date.parse(from_date).Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%Y").to_s + ")" + "(" + d.strftime("%d-%m-%Y").to_s + " : " +  (d.end_of_week).strftime("%d-%m-%Y").to_s   +   ")")}
+                @labels = (Date.parse(from_date)..Date.parse(to_date)).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%Y").to_s + ")" + "(" + d.beginning_of_week.last_week.to_s + " : " +  (d.beginning_of_week.last_week + 7).to_s   +   ")")}
               else
-                @labels = (Date.parse(from_date).Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%d-%m-%Y").to_s + " : " +  (d.end_of_week).strftime("%d-%m-%Y").to_s   +   ")")}
+                @labels = (Date.parse(from_date)..Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%d-%m-%Y").to_s + " : " +  (d.end_of_week).strftime("%d-%m-%Y").to_s   +   ")")}
               end
             end
           end
@@ -151,7 +162,9 @@ module Report
           # Danh sach di hoc theo tuan
           @list_present = Learning::Batch::OpSessionStudent
             .where(:company_id => company_id)
-            .where("op_session_student.present IS true AND (TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') >=  '#{sql_from_date}' AND TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') <=  '#{sql_to_date}')")
+            .where("op_session_student.present IS true")
+            .where("TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') >=  TO_CHAR(TIMESTAMP '#{sql_from_date}', '#{sql_date_format_ymd}') ")
+            .where("TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') <=  TO_CHAR(TIMESTAMP '#{sql_to_date}', '#{sql_date_format_ymd}') ")
             .select("op_session_student.company_id as id, '' as name, count(op_session_student.id) as cnt_present, TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') as date_report_ymd ,TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_dmy}') as date_report")
             .group('op_session_student.company_id,date_report_ymd, date_report')
             .order("date_report_ymd")
@@ -159,10 +172,12 @@ module Report
           # Danh sach nghi hoc theo tuan
           @list_no_present = Learning::Batch::OpSessionStudent
             .where(:company_id => company_id)
-            .where("op_session_student.present IS false AND (TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') >=  '#{sql_from_date}' AND TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') <=  '#{sql_to_date}')")
+            .where("op_session_student.present IS false")
+            .where("TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') >=  TO_CHAR(TIMESTAMP '#{sql_from_date}', '#{sql_date_format_ymd}') ")
+            .where("TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') <=  TO_CHAR(TIMESTAMP '#{sql_to_date}', '#{sql_date_format_ymd}') ")
             .select("op_session_student.company_id as id, '' as name, count(op_session_student.id) as cnt_present, TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_ymd}') as date_report_ymd ,TO_CHAR(op_session_student.start_datetime, '#{sql_date_format_dmy}') as date_report")
             .group('op_session_student.company_id,date_report_ymd, date_report')
-            .order("date_report_ymd")
+            .order('date_report_ymd')
         end
 
         for present in @list_present
@@ -264,27 +279,33 @@ module Report
       # form
       @frm_report         = param_form['frm_report']
       @labels             = param_form['labels']
-      
-      if company_id <= 0
-        @js_data_template     = 'report/teaching/js/js_data_all_company'
-        @table_data_template  = 'report/partials/list_company'
-      else
-        @js_data_template     = 'report/teaching/js/js_data_single_company'
-        @table_data_template  = 'report/partials/list_teacher'        
-      end
+      @list_data_table    = []
+
+      # tieu de cua chart
+      @report_title_chart  = t("report.report_" + report_type + "_title")
 
       # convert format for query param sql
       sql_from_date = Date.parse(from_date).strftime(string_date_format_ymd).to_s
       sql_to_date   = Date.parse(to_date).strftime(string_date_format_ymd).to_s
 
+      @style = ''
+      
+      if company_id <= 0
+        @js_data_template     = 'report/teaching/js/js_data_all_company'
+        @table_data_template  = 'report/partials/list_company'
+        @style = "style='min-height: 1500px; width: 100%;'"
+      else
+        @js_data_template     = 'report/teaching/js/js_data_single_company'
+        @table_data_template  = 'report/partials/list_teacher'
+
+        # Danh sach giao vien
+        @list_data_table = Report::ReportService.statistic_teacher_checkin company_id,sql_date_format_ymd,sql_date_format_dmy,sql_from_date, sql_to_date
+
+      end      
+
       # Danh sach check in ; not check in
       if report_type == 'range'
-        if company_id <= 0
-          @js_data_template     = 'report/teaching/js/range_js_data_all_company'
-        else
-          @js_data_template     = 'report/teaching/js/range_js_data_single_company'
-        end
-
+        
         @list_data = Report::ReportService.statistic_teaching_checkin_range company_id,sql_date_format_ymd,sql_date_format_dmy,sql_from_date, sql_to_date
       
       elsif report_type == 'year' || report_type == 'month'
@@ -293,9 +314,15 @@ module Report
       
       elsif report_type == 'week'
 
+        @list_data = Report::ReportService.statistic_teaching_checkin_year_or_month company_id,sql_date_format_ymd,sql_date_format_dmy,sql_from_date, sql_to_date
+
       end
 
-
+      if company_id <= 0
+        @js_data_template     = 'report/teaching/js/' + report_type + '_js_data_all_company'
+      else
+        @js_data_template     = 'report/teaching/js/' + report_type + '_js_data_single_company'
+      end
 
       respond_to do |format|
         format.html { render 'report/teaching_checkin'}

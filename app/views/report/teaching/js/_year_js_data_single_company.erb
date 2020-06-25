@@ -1,0 +1,89 @@
+<script>
+	var labels = <%= raw @labels%>;
+	var ctx_scale_1 = document.getElementById('reportNumber').getContext('2d');
+	var myChart = new Chart(ctx_scale_1, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '<%= t("report.report_checkin_title")%>',
+                data: [<% @list_data.each do |ct| %>'<%= ct[:total_check_in] %>',<% end %>],
+                backgroundColor: '#007BFF',
+                borderWidth: 0
+            },
+            {
+                label: '<%= t("report.report_not_checkin_title")%>',
+                data: [<% @list_data.each do |ct| %>'<%= ct[:total_not_check_in] %>',<% end %>],
+                backgroundColor: '#DC3545',
+                borderWidth: 0
+            }     
+            ],      
+        },
+        options: {
+            title: {
+                display: true,
+                text: '<%= raw @report_title_chart%>',
+                fontSize: '14'
+            },
+                
+       tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';              
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += Math.round(tooltipItem.yLabel * 100) / 100;
+                        return label;
+                    }
+                }
+      },
+      responsive: true,
+		   scales: {
+		    yAxes: [{
+  			      stacked: false,
+    					gridLines: {
+    						offsetGridLines: false,
+    						drawBorder: false,
+    						lineWidth: 1
+    					},
+    					ticks: {
+    						beginAtZero: true,
+    						min: 0
+    					}
+      }],
+      xAxes: [{
+          stacked: false,
+					maxBarThickness:30,
+          ticks: {
+            beginAtZero: true
+          },
+          
+				}]
+       
+      },
+            
+      plugins: {
+              datalabels: {
+                color: '#333',
+                display: function(context) {
+                  return context.dataset.data[context.dataIndex] > 0;
+                },
+                formatter: Math.round,
+                font: {
+                  weight: 'normal',
+                  size: '10'
+                },
+                align: 'top',
+                anchor: 'end',                            
+              },
+              deferred: {
+                enabled: true,
+                xOffset: 100,
+                xOffset: '100%',
+                delay: 250
+              }
+            },
+        }
+    });        
+</script>

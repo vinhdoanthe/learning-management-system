@@ -3,20 +3,35 @@
         <thead>
         <tr>
             <th style="width: 10px" class="text-center">#</th>
-            <th>Center</th>
+            <th>Teacher</th>
             <th style="width: 10%;color:#007BFF" class="text-center">Check in</th>
             <th style="width: 10%; color:#DC3545" class="text-center">Not</th>
         </tr>
         </thead>
         <tbody>
-        <% @list_data.each_with_index  do |ct, index| %>
-        <tr class="company_detail" data-id="company_<%= ct[:id]%>">
+        <%
+        total_check_in = 0;
+        total_not_check_in = 0;
+
+        @list_data_table.each_with_index  do |ct, index|
+
+            total_check_in = total_check_in + ct[:total_check_in]
+            total_not_check_in = total_not_check_in + ct[:total_not_check_in]
+        %>
+        <tr>
             <td style="width:10px" class="text-center"><%= (index + 1)%></td>
-            <td title="<%= ct[:name]%>"><a href="#company_<%= ct[:code]%>" style="color:#869099"><i class="fa fa-plus" style="font-size:10px;"></i>  <%= ct[:name]%></a></td>
+            <td title="<%= ct[:middle_name]%> <%= ct[:last_name]%>">
+                <%= ct[:middle_name]%> <%= ct[:last_name]%></td>
             <td class="text-center"><span class="badge bg-primary"><%= ct[:total_check_in]%></span></td>
             <td class="text-center"><span class="badge bg-danger"><%= ct[:total_not_check_in]%></span></td>
         </tr>
         <% end %>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="text-center"><span class="badge bg-primary"><%= total_check_in%></span></td>
+            <td class="text-center"><span class="badge bg-danger"><%= total_not_check_in%></span></td>
+        </tr>
         </tbody>
     </table>
 </div>
