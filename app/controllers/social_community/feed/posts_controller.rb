@@ -35,7 +35,6 @@ class SocialCommunity::Feed::PostsController < ApplicationController
         end
         respond_to do |format|
           format.html
-
           format.js {render 'social_community/dashboards/shared/posts/js/update_reactions', :locals => {post_id: @post.id, count_like: count_like, count_love: count_love, count_sad: count_sad}}
         end
       end

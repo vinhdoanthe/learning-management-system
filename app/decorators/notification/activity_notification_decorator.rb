@@ -22,17 +22,17 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
   end
 
   def sc_refer_friend_notification_content
-   refer = notifiable
-   #user = User::Account::User.where(id: refer.refer_by)
+    refer = notifiable
+    #user = User::Account::User.where(id: refer.refer_by)
 
-   case refer.state
-   when 'waiting'
-     "Cảm ơn con đã giới thiệu bạn #{ refer.student_name } vào học!"
-   when 'approve'
-     "Bạn #{ refer.student_name } con giới thiệu đã vào học. Con được cộng TODO TEKY đồng. Tiếp tục phát huy nhé!"
-   when 'reject'
-     "Tiếc quá! Con giới thiệu bạn chưa thành công rồi! Hãy thử lại nhé"
-   end
+    case refer.state
+    when 'waiting'
+      "Cảm ơn con đã giới thiệu bạn #{ refer.student_name } vào học!"
+    when 'approve'
+      "Bạn #{ refer.student_name } con giới thiệu đã vào học. Con được cộng TODO TEKY đồng. Tiếp tục phát huy nhé!"
+    when 'reject'
+      "Tiếc quá! Con giới thiệu bạn chưa thành công rồi! Hãy thử lại nhé"
+    end
   end
 
   def sc_refer_friend_post_notification_content
@@ -86,6 +86,12 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
       end
     when SC_QA_THREAD_REPLY
       begin
+        updated_user = User::Account::User.where(id: thread.updated_by).first
+        updated_str = (updated_user.nil? ? '' : updated_user.full_name)
+        action_str = I18n.t('notification.qa_thread.reply')
+        lesson = Learning::Course::OpLession.where(id: thread.lesson_id).first
+        target_str = (lesson.nil? ? '' : lesson.name)
+        display_html = "#{updated_str} #{action_str} #{target_str}"
       end
     end
 

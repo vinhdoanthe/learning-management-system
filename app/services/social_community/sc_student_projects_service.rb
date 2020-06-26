@@ -36,7 +36,7 @@ class SocialCommunity::ScStudentProjectsService
     video = Yt::Video.new id: video_id, auth: account
     begin
       video.delete
-    rescue Yt::Errors => error
+    rescue Yt::Errors::RequestError => error
       Rails.logger.error(error.to_s)
     ensure
       # do nothing

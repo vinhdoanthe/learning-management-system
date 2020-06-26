@@ -30,9 +30,9 @@ module SocialCommunity::QuestionAnswer
       thread.created_by = created_user.id
       thread.permission = PERMISSION_PUBLIC
       f_user = User::Account::User.where(faculty_id: session.faculty_id).first
-
-      if thread.save!
-        create_subscribed_users(thread, [f_user])
+      
+      if thread.save
+        create_subscribed_users(thread, [created_user, f_user])
         create_notifications(thread, NotificationConstants::Key::SC_QA_THREAD_CREATE)
         thread
       else

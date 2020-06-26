@@ -23,7 +23,9 @@ module SocialCommunity::QuestionAnswer
       if key == 'qa_thread.create'
         [SocialCommunity::QuestionAnswer::ThreadsService.get_faculty_user(thread)]
       elsif key == 'qa_thread.reply'
-        [User::Account::User.where(id: thread.created_by).first] 
+        related_user = User::Account::User.where('id IN (?)', SocialCommunity::QuestionAnswer::ThreadSubscribedUser.where(qa_thread_id: thread._id).pluck(:user_id).uniq)
+        updated_user = User::Account::User.where(id: thread.updated_by).first
+        (related_user - [updated_user]).uniq
       end
     },
     notifiable_path: :thread_path

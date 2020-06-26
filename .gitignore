@@ -51,7 +51,7 @@ yarn-debug.log*
 
 /data_import/*
 /data_export/*
-
+/public/uploads
 /.vscode/launch.json
 
 .buildpath
