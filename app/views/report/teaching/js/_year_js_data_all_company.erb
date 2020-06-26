@@ -1,10 +1,10 @@
 <script>
-    var labels_company = [<% @list_data.each do |ct| %> '<%= ct[:name]%>',<% end %>];
-    var ctx_present = document.getElementById('reportNumber').getContext('2d');
-    var myChart_present = new Chart(ctx_present, {
-        type: 'horizontalBar',        
+  var labels = <%= raw @labels%>;
+  var ctx_scale_1 = document.getElementById('reportNumber').getContext('2d');
+  var myChart = new Chart(ctx_scale_1, {
+        type: 'bar',
         data: {
-            labels: labels_company,
+            labels: labels,
             datasets: [{
                 label: '<%= t("report.report_checkin_title")%>',
                 data: [<% @list_data.each do |ct| %>'<%= ct[:total_check_in] %>',<% end %>],
@@ -20,45 +20,50 @@
             ],      
         },
         options: {
-          title: {
-              display: true,
-              text: '<%= raw @report_title_chart%>',
-              fontSize: '14'
-          },
-          legend: {
-            display: true
-          },  
-          tooltips: {
-              callbacks: {
-                  label: function(tooltipItem, data) {
-                      var label = data.datasets[tooltipItem.datasetIndex].label || '';              
-                      if (label) {
-                          label += ': ';
-                      }
-                      label += Math.round(tooltipItem.xLabel * 100) / 100;
-                      
-                      return label;
-                  }
-              },
-              mode: 'index',
-              intersect: false
+            title: {
+                display: true,
+                text: '<%= raw @report_title_chart%>',
+                fontSize: '14'
             },
-            responsive: true,
-            maintainAspectRatio:false,
-            scales: {
-              xAxes: [{
-                stacked: false,
-                ticks: {
-                    min: 0,
-                    stepSize: 200
-                }                
-              }],
-              yAxes: [{
-                  stacked: false,
-                  
-              }]
-            },                        
-            plugins: {
+                
+       tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';              
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += Math.round(tooltipItem.yLabel * 100) / 100;
+                        return label;
+                    }
+                }
+      },
+      responsive: true,
+       scales: {
+        yAxes: [{
+              stacked: false,
+              gridLines: {
+                offsetGridLines: false,
+                drawBorder: false,
+                lineWidth: 1
+              },
+              ticks: {
+                beginAtZero: true,
+                min: 0
+              }
+      }],
+      xAxes: [{
+          stacked: false,
+          maxBarThickness:30,
+          ticks: {
+            beginAtZero: true
+          },
+          
+        }]
+       
+      },
+            
+      plugins: {
               datalabels: {
                 color: '#333',
                 display: function(context) {
@@ -69,8 +74,8 @@
                   weight: 'normal',
                   size: '10'
                 },
-                align: 'center',
-                anchor: 'end'
+                align: 'top',
+                anchor: 'end',                            
               },
               deferred: {
                 enabled: true,
@@ -78,15 +83,7 @@
                 xOffset: '100%',
                 delay: 250
               }
-            }
+            },
         }
-    });
-</script>
-<script>
-$(document).ready(function() {
-
-  $('.company_detail').click(function() {     
-    alert($(this).data("id"));
-  });
-});
+    });        
 </script>

@@ -1,5 +1,5 @@
 <script>
-    var labels_company = [<% Report::CompanyService.get_list_company.each do |ct| %> '<%= ct[:name]%>',<% end %>];
+    var labels_company = [<% @list_data.each do |ct| %> '<%= ct[:name]%>',<% end %>];
     var ctx_present = document.getElementById('reportNumber').getContext('2d');
     var myChart_present = new Chart(ctx_present, {
         type: 'horizontalBar',        
@@ -47,15 +47,15 @@
             maintainAspectRatio:false,
             scales: {
               xAxes: [{
-                stacked: true,
-                
+                stacked: false,
+                ticks: {
+                    min: 0,
+                    stepSize: 200
+                }                
               }],
               yAxes: [{
-                  stacked: true,
-                  ticks: {
-                    min: 0,
-                    stepSize: 100
-                  }
+                  stacked: false,
+                  
               }]
             },                        
             plugins: {
@@ -69,8 +69,8 @@
                   weight: 'normal',
                   size: '10'
                 },
-                align: 'right',
-                anchor: 'end',                            
+                align: 'center',
+                anchor: 'end'
               },
               deferred: {
                 enabled: true,

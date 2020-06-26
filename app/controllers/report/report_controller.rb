@@ -35,7 +35,7 @@ module Report
         end
 
         from_date = Date.parse(params[:frm_report][:from_date].to_s).is_a?(Date) ? params[:frm_report][:from_date].to_s : current_date_dmy
-        to_date   = Date.parse(params[:frm_report][:to_date].to_s).is_a?(Date) ? params[:frm_report][:to_date].to_s : current_date_dmy
+        to_date   = params[:frm_report][:to_date] != '' && Date.parse(params[:frm_report][:to_date]).is_a?(Date) ? params[:frm_report][:to_date].to_s : current_date_dmy
         to_date = Date.parse(from_date).strftime(string_date_format_ymd).to_i > Date.parse(to_date).strftime(string_date_format_ymd).to_i ? from_date : to_date
 
         @frm_report = {'report_type': report_type,'from_date': from_date,'to_date': to_date,'company_id': company_id}
@@ -71,7 +71,7 @@ module Report
               # Lay so thu tu cua tuan
               @list_date = (Date.parse(from_date)..Date.parse(to_date)).step(7).map {|d|d.strftime("%V-%Y").to_s}
 
-              puts "Tuan: "
+              puts "Danh sach tuan:"
               puts @list_date
 
               puts "Start date: "
@@ -83,9 +83,9 @@ module Report
               puts sunday
 
               if (Date.parse(from_date).strftime("%Y").to_i != Date.parse(to_date).strftime("%Y").to_i)
-                @labels = (Date.parse(from_date)..Date.parse(to_date)).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%Y").to_s + ")" + "(" + d.beginning_of_week.last_week.to_s + " : " +  (d.beginning_of_week.last_week + 7).to_s   +   ")")}
+                @labels = (Date.parse(from_date)..Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%Y").to_s + ")" + "(" + d.beginning_of_week.strftime("%d-%m-%Y").to_s + " : " +  d.end_of_week.strftime("%d-%m-%Y").to_s   +   ")")}
               else
-                @labels = (Date.parse(from_date)..Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.strftime("%d-%m-%Y").to_s + " : " +  (d.end_of_week).strftime("%d-%m-%Y").to_s   +   ")")}
+                @labels = (Date.parse(from_date)..Date.parse(to_date)).step(7).map {|d| (d.strftime("%V").to_s + "(" + d.beginning_of_week.strftime("%d-%m-%Y").to_s + " : " +  d.end_of_week.strftime("%d-%m-%Y").to_s   +   ")")}
               end
             end
           end
@@ -99,9 +99,9 @@ module Report
       # get list company
       @list_company =  Report::CompanyService.get_list_company
       @data_company = []
-      data = []
-      data_temps = []
-
+      data          = []
+      data_temps    = []
+      
       if company_id <= 0
         # Danh sach di hoc
         @list_present = Common::ResCompany
@@ -142,6 +142,21 @@ module Report
         @data_company = data
       else
 
+        data_coms     = []
+
+        for value_date in @list_date
+          data_coms <<  {
+            id: value_date,
+            name: '',
+            student_present: nil,
+            student_no_present: nil,
+            scale_present: nil,
+            scale_no_present: nil,
+            presentBackgroundColor: 'transparent',
+            noPresentBackgroundColor: 'transparent'
+          }
+        end
+
         if report_type != 'week'
           # Danh sach di hoc
           @list_present = Learning::Batch::OpSessionStudent
@@ -180,75 +195,121 @@ module Report
             .order('date_report_ymd')
         end
 
-        for present in @list_present
-          for no_present in @list_no_present
-            if (present.date_report == no_present.date_report)
-              scale_present = (present.cnt_present.to_i == 0 && no_present.cnt_present.to_i==0) ? 0 : 100*present.cnt_present.to_i/(present.cnt_present.to_i + no_present.cnt_present.to_i)
-              data_temps << {
+        puts "Di hoc:"
+        puts @list_present
+
+        puts "Nghi hoc:"
+        puts @list_no_present
+
+        # MAP data di hoc
+        i = 0
+        for data_com in data_coms
+          for present in @list_present
+            if (data_com[:id] == present.date_report)
+              data_coms[i] = {
                 id: present.date_report || '',
                 name: present.name || '',
                 student_present: present.cnt_present.to_i || 0,
-                student_no_present: no_present.cnt_present.to_i || 0,
-                scale_present: scale_present,
-                scale_no_present: (present.cnt_present.to_i == 0 && no_present.cnt_present.to_i==0) ? 0 : (100 - scale_present).to_i,
-                presentBackgroundColor: (present.cnt_present.to_i == 0 && no_present.cnt_present.to_i==0) ? 'transparent' : 'rgb(54, 162, 235)',                       
-                noPresentBackgroundColor: (present.cnt_present.to_i == 0 && no_present.cnt_present.to_i==0) ? 'transparent' : 'rgb(201, 203, 207)'
-              }
-            end
-          end
-        end
-
-        data_coms = []
-
-        if report_type != 'week'
-          for value_date in @list_date
-            data_coms <<  {
-              id: value_date,
-              name: '',
-              student_present: nil,
-              student_no_present: nil,
-              scale_present: nil,
-              scale_no_present: nil,
-              presentBackgroundColor: 'transparent',
-              noPresentBackgroundColor: 'transparent'
-            }
-          end
-        else
-          for value_date in @list_date
-            data_coms <<  {
-              id: value_date,
-              name: '',
-              student_present: nil,
-              student_no_present: nil,
-              scale_present: nil,
-              scale_no_present: nil,
-              presentBackgroundColor: 'transparent',
-              noPresentBackgroundColor: 'transparent'
-            }
-          end
-        end
-
-        #puts data_coms
-
-        i = 0
-        for data_com in data_coms
-          for data_temp in data_temps
-            if data_temp[:id].to_s == data_com[:id].to_s
-              scale_present = (data_temp[:student_present] == 0 && data_temp[:student_no_present] == 0) ? 0 : 100*data_temp[:student_present]/(data_temp[:student_present] + data_temp[:student_no_present])
-              data_coms[i] = {
-                id: data_temp[:id],
-                name: data_temp[:name] || '',
-                student_present: data_temp[:student_present],
-                student_no_present: data_temp[:student_no_present],
-                scale_present: scale_present,
-                scale_no_present: (data_temp[:student_present] == 0 && data_temp[:student_no_present] == 0) ? 0 : (100 - scale_present).to_i,
-                presentBackgroundColor: (data_temp[:student_present] == 0 && data_temp[:student_no_present] == 0) ? 'transparent' : 'rgb(54, 162, 235)',
-                noPresentBackgroundColor: (data_temp[:student_present] == 0 && data_temp[:student_no_present] == 0) ? 'transparent' : 'rgb(201, 203, 207)'
+                student_no_present: 0,
+                scale_present: 0,
+                scale_no_present: 0,
+                presentBackgroundColor: 'transparent',                       
+                noPresentBackgroundColor: 'transparent'
               }
             end
           end
           i = i+1
         end
+
+        # MAP data nghi hoc
+        i = 0
+        for data_com in data_coms
+          for no_present in @list_no_present
+            if (data_com[:id] == no_present.date_report)
+              scale_present = (data_com[:student_present].to_i == 0 && no_present.cnt_present.to_i==0) ? 0 : 100*data_com[:student_present].to_i/(data_com[:student_present].to_i + no_present.cnt_present.to_i)
+              data_coms[i] = {
+                id: data_com[:id] || '',
+                name: data_com[:name] || '',
+                student_present: data_com[:student_present],
+                student_no_present: no_present.cnt_present.to_i || 0,
+                scale_present: scale_present,
+                scale_no_present: (data_com[:student_present].to_i == 0 && no_present.cnt_present.to_i==0) ? 0 : (100 - scale_present).to_i,
+                presentBackgroundColor: (data_com[:student_present].to_i == 0 && no_present.cnt_present.to_i==0) ? 'transparent' : 'rgb(54, 162, 235)',                       
+                noPresentBackgroundColor: (data_com[:student_present].to_i == 0 && no_present.cnt_present.to_i==0) ? 'transparent' : 'rgb(201, 203, 207)'
+              }
+            end
+          end
+          i = i+1
+        end
+
+        #
+        #for present in @list_present
+        #  for no_present in @list_no_present
+        #    if (present.date_report == no_present.date_report)
+        #      scale_present = (present.cnt_present.to_i == 0 && no_present.cnt_present.to_i==0) ? 0 : 100*present.cnt_present.to_i/(present.cnt_present.to_i + no_present.cnt_present.to_i)
+        #      data_temps << {
+        #        id: present.date_report || '',
+        #        name: present.name || '',
+        #        student_present: present.cnt_present.to_i || 0,
+        #        student_no_present: no_present.cnt_present.to_i || 0,
+        #        scale_present: scale_present,
+        #        scale_no_present: (present.cnt_present.to_i == 0 && no_present.cnt_present.to_i==0) ? 0 : (100 - scale_present).to_i,
+        #        presentBackgroundColor: (present.cnt_present.to_i == 0 && no_present.cnt_present.to_i==0) ? 'transparent' : 'rgb(54, 162, 235)',                       
+        #        noPresentBackgroundColor: (present.cnt_present.to_i == 0 && no_present.cnt_present.to_i==0) ? 'transparent' : 'rgb(201, 203, 207)'
+        #      }
+        #    end
+        #  end
+        #end
+        #
+
+        # if report_type != 'week'
+        #   for value_date in @list_date
+        #     data_coms <<  {
+        #       id: value_date,
+        #       name: '',
+        #       student_present: nil,
+        #       student_no_present: nil,
+        #       scale_present: nil,
+        #       scale_no_present: nil,
+        #       presentBackgroundColor: 'transparent',
+        #       noPresentBackgroundColor: 'transparent'
+        #     }
+        #   end
+        # else
+        #   for value_date in @list_date
+        #     data_coms <<  {
+        #       id: value_date,
+        #       name: '',
+        #       student_present: nil,
+        #       student_no_present: nil,
+        #       scale_present: nil,
+        #       scale_no_present: nil,
+        #       presentBackgroundColor: 'transparent',
+        #       noPresentBackgroundColor: 'transparent'
+        #     }
+        #   end
+        # end
+
+        #puts data_coms
+        #i = 0
+        #for data_com in data_coms
+        #  for data_temp in data_temps
+        #    if data_temp[:id].to_s == data_com[:id].to_s
+        #      scale_present = (data_temp[:student_present] == 0 && data_temp[:student_no_present] == 0) ? 0 : 100*data_temp[:student_present]/(data_temp[:student_present] + data_temp[:student_no_present])
+        #      data_coms[i] = {
+        #        id: data_temp[:id],
+        #        name: data_temp[:name] || '',
+        #        student_present: data_temp[:student_present],
+        #        student_no_present: data_temp[:student_no_present],
+        #        scale_present: scale_present,
+        #        scale_no_present: (data_temp[:student_present] == 0 && data_temp[:student_no_present] == 0) ? 0 : (100 - scale_present).to_i,
+        #        presentBackgroundColor: (data_temp[:student_present] == 0 && data_temp[:student_no_present] == 0) ? 'transparent' : 'rgb(54, 162, 235)',
+        #        noPresentBackgroundColor: (data_temp[:student_present] == 0 && data_temp[:student_no_present] == 0) ? 'transparent' : 'rgb(201, 203, 207)'
+        #      }
+        #    end
+        #  end
+        #  i = i+1
+        #end
 
         @data_company = data_coms
       end
@@ -291,11 +352,11 @@ module Report
       @style = ''
       
       if company_id <= 0
-        @js_data_template     = 'report/teaching/js/js_data_all_company'
+        @js_data_template     = 'report/teaching/js/range_js_data_all_company'
         @table_data_template  = 'report/partials/list_company'
-        @style = "style='min-height: 1500px; width: 100%;'"
+        @style = "style='min-height: 1000px; width: 100%;'"
       else
-        @js_data_template     = 'report/teaching/js/js_data_single_company'
+        @js_data_template     = 'report/teaching/js/range_js_data_single_company'
         @table_data_template  = 'report/partials/list_teacher'
 
         # Danh sach giao vien
@@ -304,25 +365,7 @@ module Report
       end      
 
       # Danh sach check in ; not check in
-      if report_type == 'range'
-        
-        @list_data = Report::ReportService.statistic_teaching_checkin_range company_id,sql_date_format_ymd,sql_date_format_dmy,sql_from_date, sql_to_date
-      
-      elsif report_type == 'year' || report_type == 'month'
-        
-        @list_data = Report::ReportService.statistic_teaching_checkin_year_or_month company_id,sql_date_format_ymd,sql_date_format_dmy,sql_from_date, sql_to_date
-      
-      elsif report_type == 'week'
-
-        @list_data = Report::ReportService.statistic_teaching_checkin_year_or_month company_id,sql_date_format_ymd,sql_date_format_dmy,sql_from_date, sql_to_date
-
-      end
-
-      if company_id <= 0
-        @js_data_template     = 'report/teaching/js/' + report_type + '_js_data_all_company'
-      else
-        @js_data_template     = 'report/teaching/js/' + report_type + '_js_data_single_company'
-      end
+      @list_data = Report::ReportService.statistic_teaching_checkin_range company_id,sql_date_format_ymd,sql_date_format_dmy,sql_from_date, sql_to_date
 
       respond_to do |format|
         format.html { render 'report/teaching_checkin'}
