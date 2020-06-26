@@ -17,6 +17,7 @@ $(document).ready(function () {
 
   $('#li_newFeeds').on('click', function() {
     $('#newFeeds').html('')
+    $('#homeFeeds').html('')
     get_new_feeds();
     var position = $(window).scrollTop(); 
     $(window).on('scroll', function(){
@@ -32,6 +33,7 @@ $(document).ready(function () {
 
   $('#li_homeFeeds').on('click', function(){
     $('#homeFeeds').html('')
+    $('#newFeeds').html('')
     get_feeds();
     // Listen to scroll action
     var position = $(window).scrollTop(); 

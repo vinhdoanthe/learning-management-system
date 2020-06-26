@@ -9,5 +9,28 @@ $('#newFeeds').append('<%= j render :partial => 'social_community/dashboards/sha
   <% post_offset = 0 %>
   <% last_post_date_time = 0 %>
 <% end %>
+
 $('#infinitive-scrolling-new-feeds').attr('post-offset', '<%= post_offset %>')
 $('#infinitive-scrolling-new-feeds').attr('last-post-date-time', '<%= last_post_date_time %>')
+
+var js_post_offset = $('#infinitive-scrolling-new-feeds').attr('post-offset');
+var js_last_post_date_time = $('#infinitive-scrolling-new-feeds').attr('last-post-date-time');
+
+if (js_last_post_date_time != 0  && $('#newFeeds').height() < $(window).height()) {
+
+  // $('#infinitive-scrolling-new-feeds').attr('last-post-date-time', '0');
+  // $('#infinitive-scrolling-new-feeds').attr('post-offset', 0);
+
+  // render loading
+  $('#loading-new-feeds').show();
+  $.ajax({
+    method: 'GET',
+    url: '/social_community/new_feeds',
+    data: {
+      last_post_date_time: js_last_post_date_time,
+      post_offset: js_post_offset,
+      authenticity_token: $('[name="csrf-token"]')[0].content
+    },
+    dataType: 'script'
+  }) 
+}

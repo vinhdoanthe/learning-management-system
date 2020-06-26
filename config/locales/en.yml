@@ -59,6 +59,7 @@ en:
     in_batch: 'in batch'
     qa_thread:
       create: 'posted a question'
+      reply: 'reply'
     pt_post:
       create: 'uploaded photos'
     rw_post:
