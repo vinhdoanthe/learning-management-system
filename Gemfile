@@ -16,9 +16,9 @@ gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'composite_primary_keys', '~> 12.0'
 gem 'tinymce-rails'
 gem 'jquery-fileupload-rails'
-gem 'dragonfly', '~> 1.2.0'
+# gem 'dragonfly', '~> 1.2.0'
 gem 'carrierwave', '~> 2.0'
-gem 'fog'
+# gem 'fog'
 
 # Notification
 gem 'activity_notification'

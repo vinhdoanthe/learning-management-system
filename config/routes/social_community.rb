@@ -1,5 +1,5 @@
 namespace :social_community do
-  resources :pictures, :only => [:index, :new, :create, :destroy]
+  # resources :pictures, :only => [:index, :new, :create, :destroy]
 
   namespace :photos do
 
