@@ -12682,6 +12682,7 @@ ActiveRecord::Schema.define(version: 2020_07_01_085005) do
   add_foreign_key "recruitment_source", "res_users", column: "create_uid", name: "recruitment_source_create_uid_fkey", on_delete: :nullify
   add_foreign_key "recruitment_source", "res_users", column: "write_uid", name: "recruitment_source_write_uid_fkey", on_delete: :nullify
   add_foreign_key "refer_friends", "users", column: "refer_by"
+<<<<<<< HEAD
   add_foreign_key "rel_badge_auth_users", "gamification_badge", name: "rel_badge_auth_users_gamification_badge_id_fkey", on_delete: :cascade
   add_foreign_key "rel_badge_auth_users", "res_users", column: "res_users_id", name: "rel_badge_auth_users_res_users_id_fkey", on_delete: :cascade
   add_foreign_key "rel_channel_groups", "res_groups", column: "group_id", name: "rel_channel_groups_group_id_fkey", on_delete: :cascade
@@ -12694,6 +12695,8 @@ ActiveRecord::Schema.define(version: 2020_07_01_085005) do
   add_foreign_key "rel_slide_tag", "slide_tag", column: "tag_id", name: "rel_slide_tag_tag_id_fkey", on_delete: :cascade
   add_foreign_key "rel_upload_groups", "res_groups", column: "group_id", name: "rel_upload_groups_group_id_fkey", on_delete: :cascade
   add_foreign_key "rel_upload_groups", "slide_channel", column: "channel_id", name: "rel_upload_groups_channel_id_fkey", on_delete: :cascade
+=======
+>>>>>>> Create Model and Controller for UserCustomPost
   add_foreign_key "remove_draft_session", "op_batch", column: "batch_id", name: "remove_draft_session_batch_id_fkey", on_delete: :nullify
   add_foreign_key "remove_draft_session", "op_course", column: "course_id", name: "remove_draft_session_course_id_fkey", on_delete: :nullify
   add_foreign_key "remove_draft_session", "res_users", column: "create_uid", name: "remove_draft_session_create_uid_fkey", on_delete: :nullify
