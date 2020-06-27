@@ -3,13 +3,9 @@
     <div class="card">
       <%= render "report/partials/form_teaching"%>
       <div class="card-body">
-        <div><span class="type_chart" data-id="line">Line</span> | <span class="type_chart" data-id="bar">Bar</span> </div>
-        <div <%= raw @style%> style="width: 95%;">
+        <div <%= raw @style%>>
           <canvas id="reportNumber"></canvas>
-        </div>
-        <div <%= raw @style%> style="width: 95%;">
-        <canvas id="reportNumber2"></canvas>
-        </div>
+        </div>        
         <div style="margin-top: 20px;">
           <%= render @table_data_template%>
         </div>
