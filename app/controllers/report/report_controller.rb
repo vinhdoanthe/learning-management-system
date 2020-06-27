@@ -354,7 +354,7 @@ module Report
       if company_id <= 0
         @js_data_template     = 'report/teaching/js/range_js_data_all_company'
         @table_data_template  = 'report/partials/list_company'
-        @style = "style='min-height:300px; width: 100%;'"
+        @style = "style='min-height:600px; height:100%;width: 100%;'"
       else
         @js_data_template     = 'report/teaching/js/range_js_data_single_company'
         @table_data_template  = 'report/partials/list_teacher'

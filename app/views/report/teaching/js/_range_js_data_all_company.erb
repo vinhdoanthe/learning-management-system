@@ -1,21 +1,25 @@
 <script>
-    var labels_company = [<% Report::CompanyService.get_list_company.each do |ct| %> '<%= ct[:name]%>',<% end %>];
-    var ctx_present = document.getElementById('reportNumber').getContext('2d');
-    var myChart_present = new Chart(ctx_present, {
+    var labels = [<% @list_company.each do |ct| %> '<%= ct[:name]%>',<% end %>];
+    var ctx_scale      = document.getElementById('reportNumber').getContext('2d');
+    var config_bar         = {
         type: 'horizontalBar',        
         data: {
-            labels: labels_company,
+            labels: labels,
             datasets: [{
                 label: '<%= t("report.report_checkin_title")%>',
                 data: [<% @list_data.each do |ct| %>'<%= ct[:total_check_in] %>',<% end %>],
                 backgroundColor: '#007BFF',
+                borderColor: '#007BFF',
                 borderWidth: 0
             },
             {
                 label: '<%= t("report.report_not_checkin_title")%>',
                 data: [<% @list_data.each do |ct| %>'<%= ct[:total_not_check_in] %>',<% end %>],
                 backgroundColor: '#DC3545',
-                borderWidth: 0
+                borderColor: '#DC3545',
+                borderWidth: 0,
+                fill: false,
+                lineWidth: 1
             }     
             ],      
         },
@@ -47,15 +51,15 @@
             maintainAspectRatio:false,
             scales: {
               xAxes: [{
-                stacked: true,
-                
+                stacked: true
               }],
               yAxes: [{
                   stacked: true,
                   ticks: {
                     min: 0,
                     stepSize: 100
-                  }
+                  },
+                  //barThickness:30
               }]
             },                        
             plugins: {
@@ -69,8 +73,8 @@
                   weight: 'normal',
                   size: '10'
                 },
-                align: 'right',
-                anchor: 'end',                            
+                align: 'center',
+                anchor: 'center',                            
               },
               deferred: {
                 enabled: true,
@@ -80,13 +84,112 @@
               }
             }
         }
-    });
+    };
+    var myChart = new Chart(ctx_scale, config_bar);
+
+    var config_line = {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: '<%= t("report.report_checkin_title")%>',
+                    fill: false,
+                    lineWidth: 1,
+                    data: [<% @list_data.each do |ct| %> <%= ct[:total_check_in] %>,<% end %>],
+                    borderColor: '#007BFF',
+                    backgroundColor: '#007BFF',
+                    borderWidth:2,
+                  },
+                  {
+                    label: '<%= t("report.report_not_checkin_title")%>',
+                    fill: false,
+                    lineWidth: 1,
+                    data: [<% @list_data.each do |ct| %> <%= ct[:total_not_check_in] %>,<% end %>],
+                    borderColor: '#DC3545',
+                    backgroundColor: '#DC3545',
+                    borderWidth:2,
+                  },  
+                ],      
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '<%= raw @report_title_chart%>',
+                    fontSize: '14'
+               },  
+        tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';              
+                            if (label) {
+                                label += ': ';
+                            }
+                  
+                            label += Math.round(tooltipItem.yLabel * 100) / 100;
+                            
+                            return label;
+                        }
+                    }
+               },
+        responsive: true,
+        scales: {
+                 yAxes: [{
+                   stacked: false,
+                   gridLines: {
+                     drawBorder: false
+                   },
+                   lineWidth: 1,
+                   ticks: {
+                       min: 0,                       
+                       beginAtZero: true
+                   }
+                 }],
+                 xAxes: [{
+                    stacked: false,
+                    ticks: {
+                      beginAtZero: true
+                    },
+                    
+                  }]                 
+                },                
+                plugins: {
+                  datalabels: {
+                    color: '#333',
+                    display: function(context) {
+                      return context.dataset.data[context.dataIndex] > 0;
+                    },
+                    formatter: Math.round,
+                    font: {
+                      weight: 'normal',
+                      size: '10'
+                    },
+                    align: 'top',
+                    anchor: 'end',                            
+                  },
+                  deferred: {
+                    enabled: true,
+                    xOffset: 100,
+                    xOffset: '100%',
+                    delay: 250
+                  }
+              },
+            }
+        }
 </script>
 <script>
 $(document).ready(function() {
-
+  
   $('.company_detail').click(function() {     
     alert($(this).data("id"));
+  });
+
+  // change  type chart
+  $('.type_chart').click(function() {      
+      
+      config_new = $(this).data("id") == 'line' ? config_line : config_bar;
+      myChart.destroy();
+      myChart = new Chart(ctx_scale,config_new);
   });
 });
 </script>
