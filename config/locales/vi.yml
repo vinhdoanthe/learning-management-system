@@ -113,6 +113,7 @@ vi:
     detail:
       class_info: "Thông tin lớp học"
       student_projects: "Dự án của học sinh"
+      student_homeworks: 'Bài tập về nhà'
       progress:
         name: "Quá trình học tập"
         done_html: "Lớp học <span class='color-16BD56'>đã diễn ra</span>"

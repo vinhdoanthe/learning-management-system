@@ -248,6 +248,18 @@ module Learning
 
         active_session
       end
+      
+      def self.get_student_homework_report batch_id, subject_id = nil , faculty_id = nil, student_ids = []
+        if !student_ids.blank? # get report for all students in batch
+          # find sessions
+          sessions = Learning::Batch::OpSessionsService.get_sessions(batch_id, subject_id, faculty_id)
+
+          # find students
+          # caculate the report          
+        else
+
+        end 
+      end
 
     end
   end

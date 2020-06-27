@@ -105,6 +105,7 @@ en:
     detail:
       class_info: "Class infomations"
       student_projects: "Student projects"
+      student_homeworks: 'Students Homework'
       progress:
         name: "Study progress"
         done_html: "<span class='color-16BD56'>Done</span> lesson"
