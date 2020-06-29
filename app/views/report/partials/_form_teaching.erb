@@ -5,15 +5,15 @@
 	<h3 class="card-title">
 	<form name="report_filters" id="report_filters" method="post" class="form-inline">
 		<input type="hidden" name="frm_report[report_type]" value="range"/>
-	  <i class="fas fa-chart-pie mr-1 text-success"></i>
-		  <div class="input-group input-group-sm">
-		  <span class="input-group-append"><button class="btn btn-default"><%= t('datetime.from')%></button></span>
-		  <div class="input-group-prepend">
-			<span class="input-group-text">
-			  <i class="far fa-calendar-alt"></i>
-			</span>
-		  </div>
-		  <input type="text" required name="frm_report[from_date]" id="frm_report_from_date" placeholder="from date" class="form-control" autocomplete="false" value="<%= !@frm_report.nil? && @frm_report[:from_date]%>"><span class="input-group-append"><button class="btn btn-default"> <%= t('datetime.to')%></button></span>
+		<i class="fas fa-chart-pie mr-1 text-success"></i>
+		<div class="input-group input-group-sm">
+		<span class="input-group-append"><button class="btn btn-default"><%= t('datetime.from')%></button></span>
+		<div class="input-group-prepend">
+		<span class="input-group-text">
+		  <i class="far fa-calendar-alt"></i>
+		</span>
+		</div>
+		<input type="text" required name="frm_report[from_date]" id="frm_report_from_date" placeholder="from date" class="form-control" autocomplete="false" value="<%= !@frm_report.nil? && @frm_report[:from_date]%>"><span class="input-group-append"><button class="btn btn-default"> <%= t('datetime.to')%></button></span>
 			<div class="input-group-prepend">
 			  <span class="input-group-text">
 				<i class="far fa-calendar-alt"></i>

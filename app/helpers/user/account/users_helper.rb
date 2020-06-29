@@ -188,8 +188,24 @@ module User
                 'path'          => report_teaching_checkin_path,
                 'title'         => '<li class="nav-item"><a class="nav-link" href="'<< report_teaching_checkin_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('report.report_teaching_checkin_title') <<'</p></a></li>',
                 'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< report_teaching_checkin_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('report.report_teaching_checkin_title') <<'</p></a></li>',
+              },              
+           ],
+           'learning_activity_management' => [
+              {
+                'path'          => adm_learning_activity_homework_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_activity_homework_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_homework') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_activity_homework_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_homework') <<'</p></a></li>',
               },
-              
+              {
+                'path'          => adm_learning_activity_question_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_activity_question_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_question') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_activity_question_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_question') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_learning_activity_project_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_activity_project_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_project') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_activity_project_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_project') <<'</p></a></li>',
+              },              
            ]
         }
 
@@ -208,11 +224,11 @@ module User
           },
           
           {
-            'path'          => report_study_path,
-            'title'         => '<li class="nav-item"><a class="nav-link" href="'<< report_study_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_study_title') <<'</p></a></li>',
-            'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< report_study_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_study_title') <<'</p></a></li>',
-            'sub_menu'      => nil
-          }
+            'path'          => '#',
+            'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'sub_menu'      => sub_menus['learning_activity_management']
+          },
   
         ]
                 

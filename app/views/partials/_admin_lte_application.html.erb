@@ -192,7 +192,13 @@ to get the desired effect
 			   endDate:  new Date(),
 			});
 			
-			$('.select2').select2(); 
+			$('.select2').select2();
+
+      $('.ui_date').datepicker({
+         autoclose: true,
+         format: 'dd-mm-yyyy',
+         language: '<%= locale%>'
+      });
 	 });
 </script>
 
@@ -211,7 +217,9 @@ to get the desired effect
     <%= render "report/diligent/diligent_range"%>
   <% end %>
 <% else%>
+  <% if !@js_data_template.nil?%>
 	<%= render @js_data_template%>
+  <% end%>
 <% end %>
 </body>
 </html>

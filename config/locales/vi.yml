@@ -36,6 +36,7 @@ vi:
     teaching_schedule: "Lịch giảng dạy"
     class_list: "Danh sách lớp học"
     marking: "Chấm bài"
+    question_answer: "Question Answer"
   config:
     general_info: "Thông tin chung"
     parent_info: "Thông tin phụ huynh"
@@ -67,6 +68,9 @@ vi:
       create: 'khen thưởng'
     st_project_post:
       create: 'hoàn thành dự án cuối khóa'
+    redeem_product_post:
+      create: 'redeemed'
+      success: 'successfuly'
   report:
     report: "Báo cáo"
     attendance: "BÁO CÁO CHUYÊN CẦN"
@@ -90,17 +94,17 @@ vi:
   learning:
     class: "Lớp"
     subject: "Học phần"
-    lesson: "Bài học"
-    no_lesson: "Chưa có buổi học nào"
+    lesson: "Bài học"    
     course: "Khoá học"
     attendance: "Điểm danh"
+    no_lesson: "Chưa có buổi học nào"    
     batch:
-      name: "Lớp học"
-      classroom: "Phòng học"
-      timetable: "Lịch học"
       type: "Loại lớp học"
-      center: "Trung tâm"
+      name: "Lớp học"
       code: "Mã lớp"
+      center: "Trung tâm"
+      timetable: "Lịch học"
+      classroom: "Phòng học"
       status:
         studying: "đang học"
         stop: "nghỉ học"
@@ -156,6 +160,8 @@ vi:
       leader_board: 'Top 10 Học sinh tiêu biểu'
   social_community:
     new_comment_placeholder: 'Bình luận tại đây'
+    new_feeds: "TEKY's Activities"
+    home_feeds: 'My Activities'
   datetime:
     from: 'từ'
     to: 'đến'
@@ -169,3 +175,8 @@ vi:
     view_detail: 'Xem chi tiết'
     all_threads: 'Toàn bộ câu hỏi'
     no_thread: 'Câu hỏi này đã bị xóa!'
+  adm:
+    learning_activity_management: "Q/lý hoạt động học tập"
+    learning_activity_management_homework: "Bài tập về nhà"
+    learning_activity_management_question: "Câu hỏi"
+    learning_activity_management_project: "Dự án"

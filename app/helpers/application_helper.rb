@@ -61,4 +61,10 @@ module ApplicationHelper
       return false
     end
   end
+
+
+  # danh sach state of user_answers
+  def get_state_user_answers
+    return list_state = ['right', 'waiting','wrong']
+  end
 end

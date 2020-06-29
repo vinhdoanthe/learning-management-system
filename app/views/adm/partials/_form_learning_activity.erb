@@ -1,0 +1,37 @@
+<%
+	if !@frm_report.nil?
+		from_date 	= @frm_report[:from_date]
+		to_date 	= @frm_report[:to_date]
+		state 		= @frm_report[:state]
+	else
+		from_date 	= ''
+		to_date 	= ''
+		state 		= 'right'
+	end
+%>
+<form name="frm_filters" id="frm_filters" method="post" class="form-inline">
+  	<div class="input-group input-group-sm">
+  		<span class="input-group-append"><button class="btn btn-default"><%= t('datetime.from')%></button></span>
+  		<div class="input-group-prepend">
+			<span class="input-group-text">
+			  <i class="far fa-calendar-alt"></i>
+			</span>
+		</div>
+		<input type="text" required name="frm[from_date]" id="frm_from_date" placeholder="from date" class="form-control ui_date" autocomplete="false" value="<%= from_date%>">
+		<div class="input-group-prepend">
+			<span class="input-group-text">
+			  <i class="far fa-calendar-alt"></i>
+			</span>
+		</div>
+		<input type="text" name="frm[to_date]" id="frm_to_date" placeholder="to date" class="form-control ui_date" autocomplete="false" value="<%= to_date%>">
+		<select name="frm[state]" id="frm_state" class="form-control form-control-sm" autocomplete="false" >
+			<option value="-1">-Trạng thái-</option>
+			<% get_state_user_answers.each do |_state| %>
+			<option value="<%= _state%>" <% if _state == state%> selected <% end %> ><%= _state%></option>
+			<% end %>
+		</select>
+		<span class="input-group-append">
+			<button type="submit" class="btn btn-default" id="btn_report_date_apply"><%= t('button.see')%></button>
+		</span>
+	</div>
+</form>
