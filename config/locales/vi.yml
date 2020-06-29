@@ -68,6 +68,11 @@ vi:
       create: 'khen thưởng'
     st_project_post:
       create: 'hoàn thành dự án cuối khóa'
+    student_feedback:
+      create: 'đánh giá lớp học'
+    redeem_product_post:
+      create: 'đổi quà'
+      success: 'thành công'
   report:
     attendance: "BÁO CÁO CHUYÊN CẦN"
     no_attendance: "Chưa có thông tin chuyên cần"

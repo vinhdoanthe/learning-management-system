@@ -86,6 +86,9 @@ module Learning
         else
           current_index = sorted_lessons.index{|lesson| lesson[:id] == last_done_lesson.id}
         end
+        if current_index.nil?
+          current_index = -1
+        end
         start_index = current_index + 1
         end_index = sorted_lessons.size - 1
         for index in start_index..end_index
