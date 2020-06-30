@@ -58,7 +58,7 @@
         </div>
         <div class="tab-pane fade" id="tab2_3">
           <div id="student_homeworks">
-            <%= render :partial => 'user/open_educat/op_teachers/partials/teacher_class_details/student_homework_filter', :locals => {:batch => @batch, :subjects => @subjects}%>
+            <%= render :partial => 'user/open_educat/op_teachers/partials/teacher_class_details/student_homework_filter', :locals => {:batch => @batch, :subjects => @subjects, :active_subject => @active_subject}%>
             <div id='student_homework_report_data'>
               <%= render 'partials/loading' %>
             </div>

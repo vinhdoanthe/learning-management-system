@@ -262,9 +262,10 @@ module Learning
           op_student_ids = Learning::Batch::OpSessionStudent.where(session_id: session_ids).pluck(:student_id).uniq
           user_ids = User::Account::User.where(student_id: op_student_ids).pluck(:id).uniq
           lesson_ids = (sessions.map {|session| session.lession_id}).uniq.compact
+          questions = Learning::Material::Question.where(op_lession_id: lesson_ids).compact
+          question_ids = questions.map {|question| question.id}
           question_ids = Learning::Material::Question.where(op_lession_id: lesson_ids).pluck(:id).compact
           user_questions = Learning::Homework::UserQuestion.where(op_batch_id: batch_id, question_id: question_ids, student_id: user_ids).to_a
-          binding.pry
           user_question_ids = user_questions.map {|user_question| user_question.id}
           user_answers = Learning::Homework::UserAnswer.where(user_question_id: user_question_ids, state: [UserAnswer::ANSWER_RIGHT, UserAnswer::ANSWER_WAITING]).to_a
           # caculate the report          
@@ -272,7 +273,6 @@ module Learning
           # op_students = User::OpenEducat::OpStudent.where(id: op_student_ids).to_a
           r_data = []
           student_users.each do |student_user|
-            binding.pry
             r_data_row = Learning::Homework::Report::StudentHomeworkDataRow.new
             r_data_row.student_id = student_user.op_student.id
             r_data_row.student_name = student_user.op_student.full_name
@@ -281,7 +281,8 @@ module Learning
               # count done user_question
               # count total user_question
               lesson_id = r_session.lesson_id
-              l_question_ids = Learning::Material::Question.where(op_lession_id: lesson_id).pluck(:id)
+              l_questions = questions.select {|question| question.op_lession_id == lesson_id}
+              l_question_ids = l_questions.map {|question| question.id}
               l_user_questions = user_questions.select {|user_question| (l_question_ids.include?(user_question.question_id) and user_question.student_id == student_user.id) }
               count_total = l_user_questions.size
               l_user_question_ids = l_user_questions.map {|user_question| user_question.id}

@@ -19,7 +19,13 @@
         <td><%= data_row.student_name %></td>
         <% count_homework_state = data_row.count_homework_state %>
         <% count_homework_state.each do |report_item| %>
-          <td><%= "#{report_item[0]}/#{report_item[1]}" %></td>
+          <% if report_item[1] == 0 %>
+            <td class='active'><%= "#{report_item[0]}/#{report_item[1]}" %></td>
+          <% elsif report_item[0] == report_item[1] %>
+            <td class='success'><%= "#{report_item[0]}/#{report_item[1]}" %></td>
+          <% else %>
+            <td class='warning'><%= "#{report_item[0]}/#{report_item[1]}" %></td>
+          <% end %>
         <% end %>
       </tr>
     <% end %>

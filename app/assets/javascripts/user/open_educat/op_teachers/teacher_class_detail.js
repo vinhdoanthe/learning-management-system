@@ -14,26 +14,25 @@ function getStudentProjects (batch_id) {
   })
 }
 
-function get_sessions(batch_id, faculty_id) {
-  $.ajax({
-    url: '/learning/get_sessions',
-    method: 'get',
-    data: {
-      batch_id: batch_id,
-      faculty_id: faculty_id
-    },
-    dataType: 'script'
-  })
-}
+// function get_sessions(batch_id, faculty_id) {
+//   $.ajax({
+//     url: '/learning/get_sessions',
+//     method: 'get',
+//     data: {
+//       batch_id: batch_id,
+//       faculty_id: faculty_id
+//     },
+//     dataType: 'script'
+//   })
+// }
 
 function get_student_homework_report(batch_id, subject_id, faculty_id) {
-  // alert(batch_id + ' ' + subject_id + ' ' + faculty_id)
   $.ajax({
     url: '/learning/student_homework_report',
     method: 'get',
     data: {
       batch_id: batch_id,
-      subject_id: 648,
+      subject_id: subject_id,
       faculty_id: faculty_id
     },
     dataType: 'script'
