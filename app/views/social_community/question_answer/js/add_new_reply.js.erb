@@ -3,7 +3,6 @@
 var c_id = 'thread_' + '<%= thread_id %>';
 $('#' + c_id).append('<%=j render :partial => 'social_community/question_answer/shared/thread_messages', :locals => {:messages => [message]} %>')
 var c_add_new_reply_id = 'add_new_reply_' + '<%= thread_id %>';
-console.log(c_add_new_reply_id)
 $('#' + c_add_new_reply_id).val('');
 if (typeof tinyMCE != 'undefined') {
   tinyMCE.activeEditor.setContent('');

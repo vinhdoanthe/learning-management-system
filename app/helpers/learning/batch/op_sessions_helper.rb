@@ -25,7 +25,7 @@ module Learning
             url = url_for(session_video.thumbnail_image)
           end
         else
-          url = '/global/images/default-video-thumbnail.png'
+          url = image_path 'video-camera-icon-1.png'
         end
         url
       end

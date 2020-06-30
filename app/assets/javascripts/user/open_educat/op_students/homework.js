@@ -58,9 +58,9 @@ $('document').ready(function () {
     get_video(active_batch, active_subject)
   })
 
-  $('#homework_tab2_new').on('click', '.thumbnail_layer', function(){
-    $('.thumbnail_layer').css("background-color", "rgba(44, 42, 41, 0.52)");
-    $(this).css('background-color', 'rgba(44, 42, 41, 0)');
+  $('#homework_tab2_new').on('click', '.swiper-slide', function(){
+    $('.swiper-slide').css("background", "#dcdcdc");
+    $(this).css('background', '#ffffff');
     session_id = $(this).find($('input[name="change_video"]')).val()
     $('input[name="active_session"]').val(session_id);
     get_video(active_batch, active_subject)
