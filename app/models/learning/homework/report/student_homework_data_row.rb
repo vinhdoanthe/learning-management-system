@@ -4,17 +4,14 @@ module Learning
       class StudentHomeworkDataRow
         attr_accessor :student_id
         attr_accessor :student_name
-        attr_accessor :count_done
-        attr_accessor :count_total
+        attr_accessor :count_homework_state
 
         def initialize(student_id = nil, 
                        student_name = nil,
-                       count_done = nil,
-                       count_total = nil)
+                       count_homework_state = [])
           @student_id = student_id
           @student_name = student_name
-          @count_done = count_done
-          @count_total = count_total
+          @count_homework_state = count_homework_state
         end
       end
     end

@@ -58,7 +58,10 @@
         </div>
         <div class="tab-pane fade" id="tab2_3">
           <div id="student_homeworks">
-            <%= render 'partials/loading' %>
+            <%= render :partial => 'user/open_educat/op_teachers/partials/teacher_class_details/student_homework_filter', :locals => {:batch => @batch, :subjects => @subjects}%>
+            <div id='student_homework_report_data'>
+              <%= render 'partials/loading' %>
+            </div>
           </div>
         </div>
       </div>
@@ -71,15 +74,16 @@
 </div>
 <style>
 .box-product {
-margin-top: 0px;
+  margin-top: 0px;
 }
 </style>
+
 <script>
   $(document).ready(function(){
     getStudentProjects(<%= @batch.id %>)
 
     $('#student_homework_menu').on('click', function(e) {
-      get_sessions(<%= @batch.id %>, <%= current_user.faculty_id %>)
+      get_student_homework_report(<%= @batch.id %>, <%= @active_subject.id %>, <%= current_user.faculty_id %>) 
     })
   })
 

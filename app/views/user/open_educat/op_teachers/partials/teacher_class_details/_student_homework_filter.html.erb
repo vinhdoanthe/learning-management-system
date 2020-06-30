@@ -1,0 +1,22 @@
+<div class="filter-box FlowupLabels" id='formBody'>
+  <div class="row">
+    <div class="col-md-2">
+      <div class='fl_wrap m-t-0 populated'>
+        <label class='fl_label' for='rf_name'><%= t('learning.subject') %>:</label>
+        <% unless subjects.blank? %>
+          <select class='fl_input student_subject_filter' id='rf_name' onchange="update_data_report()">
+            <% subjects.each do |subject| %>
+              <option value="<%= subject[0] %>"><%= subject[1] %></option>
+            <% end %>
+          </select>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function update_data_report() {
+    subject_id = $('.student_subject_filter').val();
+    get_student_homework_report(<%= batch.id %>, subject_id, <%= current_user.faculty_id %>) 
+  }
+</script>

@@ -22,15 +22,21 @@ function get_sessions(batch_id, faculty_id) {
       batch_id: batch_id,
       faculty_id: faculty_id
     },
-    datatype: 'script'
+    dataType: 'script'
   })
 }
 
-function get_student_homeworks(session_id, batch_id) {
+function get_student_homework_report(batch_id, subject_id, faculty_id) {
+  // alert(batch_id + ' ' + subject_id + ' ' + faculty_id)
   $.ajax({
-    url: '',
+    url: '/learning/student_homework_report',
     method: 'get',
-    datatype: 'script'
+    data: {
+      batch_id: batch_id,
+      subject_id: 648,
+      faculty_id: faculty_id
+    },
+    dataType: 'script'
   })
 }
 

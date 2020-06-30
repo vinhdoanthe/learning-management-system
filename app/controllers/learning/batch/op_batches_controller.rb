@@ -1,5 +1,5 @@
-class Learning::Batch::OpBatchesController
- 
+class Learning::Batch::OpBatchesController < ApplicationController
+
   # get report homework of all students in a batch
   # params
   # batch_id
@@ -11,7 +11,7 @@ class Learning::Batch::OpBatchesController
       format.html
       format.json
       format.js {
-        render '', :locals => {:data => data}
+        render 'user/open_educat/op_teachers/js/teacher_class_details/student_homework_report', :locals => {:data => data}
       }
     end
   end
