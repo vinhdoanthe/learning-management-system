@@ -4,7 +4,7 @@ $('#attendance_report').html("<%= escape_javascript(render :partial => 'social_c
 $(document).ready(function(){
   <% report_objects.each_with_index do |object, index| %>
       var chartDiv = $("#barChart<%= index %>");
-  $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase;">Lớp: <span style="color: #5DC2A7"> <%= object[:course_name] %></span> | Học phần: <%= object[:subject_level] %></h4>')
+  $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;">Lớp: <span style="color: #5DC2A7"> <%= object[:course_name] %></span> | Học phần: <%= object[:subject_level] %></h4>')
   var sum_<%= index %> = <%= object[:count].values.sum %>
   var myChart = new Chart(chartDiv, {
     type: 'pie',
@@ -49,5 +49,5 @@ $(document).ready(function(){
       responsive: true,
     }
   });
-    <% end %>
+<% end %>
 })
