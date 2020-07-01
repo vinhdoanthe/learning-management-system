@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/user/account/users/:user_id/notifications/:id/open', :to => 'notification/user/user_notifications#open', target_type: 'users'
+
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'user/home#dashboard'

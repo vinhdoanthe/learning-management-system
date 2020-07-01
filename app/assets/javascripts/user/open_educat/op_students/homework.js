@@ -1,28 +1,27 @@
 function get_video( batch_id, subject_id){
   session_id = $('input[name="active_session"]').val();
-    $.ajax({
-      method: 'GET',
-      url: '/learning/show_video/' + session_id + '?session_id=' + session_id + '&batch_id=' + batch_id + '&subject_id=' + subject_id,
-      dataType: 'script',
-      success: function(){
-        $('.video_carousel').owlCarousel({
-          margin:10,
-          nav:true,
-          responsive:{
-            0:{
-              items:1    
-            },
-            600:{
-              items:3
-            },
-            1000:{
-              items:5
-            }
+  $.ajax({
+    method: 'GET',
+    url: '/learning/show_video/' + session_id + '?session_id=' + session_id + '&batch_id=' + batch_id + '&subject_id=' + subject_id,
+    dataType: 'script',
+    success: function(){
+      $('.video_carousel').owlCarousel({
+        margin:10,
+        nav:true,
+        responsive:{
+          0:{
+            items:1    
+          },
+          600:{
+            items:3
+          },
+          1000:{
+            items:5
           }
-        })
-
-      }
-    })
+        }
+      })
+    }
+  })
 }
 
 function get_homework(data, url){
@@ -42,9 +41,17 @@ function get_homework(data, url){
   })
 }
 
-// function filter_learning_params(){
-
 $('document').ready(function () {
+
+  var swiper = new Swiper('.swiper-container', {
+    slidesPerView: 5,
+    spaceBetween: 5,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  }).swiper;
+
   active_batch = $('input[name="active_batch"]').val();
   active_subject = $('input[name="active_subject"]').val();
 
@@ -58,9 +65,9 @@ $('document').ready(function () {
     get_video(active_batch, active_subject)
   })
 
-  $('#homework_tab2_new').on('click', '.thumbnail_layer', function(){
-    $('.thumbnail_layer').css("background-color", "rgba(44, 42, 41, 0.52)");
-    $(this).css('background-color', 'rgba(44, 42, 41, 0)');
+  $('#homework_tab2_new').on('click', '.swiper-slide', function(){
+    $('.swiper-slide').css("background", "#dcdcdc");
+    $(this).css('background', '#ffffff');
     session_id = $(this).find($('input[name="change_video"]')).val()
     $('input[name="active_session"]').val(session_id);
     get_video(active_batch, active_subject)
@@ -69,14 +76,14 @@ $('document').ready(function () {
   $('#homework_course_selection').on('change', function(){
     course = $('#homework_course_selection').val()
     get_homework({course: course}, '/user/open_educat/op_students/filter_course_homework'
-)
+    )
   })
 
   $('#homework_batch_selection').on('change', function(){
     course = $('#homework_course_selection').val()
     batch = $('#homework_batch_selection').val() 
     get_homework({course: course, batch: batch}, '/user/open_educat/op_students/filter_batch_homework'
-)
+    )
   })  
 
   $('#homework_subject_selection').on('change', function(){
@@ -84,7 +91,7 @@ $('document').ready(function () {
     batch = $('#homework_batch_selection').val() 
     subject = $('#homework_subject_selection').val()
     get_homework({course: course, batch: batch, subject: subject}, '/user/open_educat/op_students/filter_subject_homework'
-)
+    )
   })
 
   $('.video_carousel').owlCarousel({
@@ -153,7 +160,7 @@ $('document').ready(function () {
       }
     };
   })
-  
+
 
   if (window.location.href.includes('show_video=true')){
     $('#student_homework_videos').trigger('click')

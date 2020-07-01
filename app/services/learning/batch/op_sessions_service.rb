@@ -28,4 +28,8 @@ class Learning::Batch::OpSessionsService
     end
     report_obj
   end
+
+  def self.get_sessions batch_id, subject_id, faculty_id
+    Learning::Batch::OpSession.includes(:op_subject, :op_lession).where(batch_id: batch_id, subject_id: subject_id, faculty_id: faculty_id).to_a
+  end
 end

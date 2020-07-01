@@ -178,6 +178,7 @@ module User
       end
 
       def student_homework
+        # binding.pry
         @student = @op_student
         data = User::OpenEducat::OpStudentsService.new.student_homework @student, params
         @courses = @student.op_courses
@@ -306,6 +307,16 @@ module User
         batch_ids = op_student_courses.pluck(:batch_id).uniq
         batches = Learning::Batch::OpBatch.where(id: batch_ids)
         active_session = Learning::Batch::OpBatchService.last_done_session(@op_student.id, batch_ids, [])
+
+        if active_session.blank?
+          respond_to do |format|
+            format.html
+            format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => { errors: true }}
+          end
+
+          return
+        end
+
         batch = active_session.op_batch
         subject = active_session.op_subject
         lesson = active_session.op_lession

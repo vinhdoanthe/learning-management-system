@@ -17,6 +17,7 @@
       <ul class="nav nav-tabs nav-primary tab-menu">
         <li class="active"><a href="#tab2_1" data-toggle="tab"><%= t('my_class.detail.class_info') %></a></li>
         <li><a href="#tab2_2" data-toggle="tab"><%= t('my_class.detail.student_projects') %></a></li>
+        <li><a id='student_homework_menu' href="#tab2_3" data-toggle="tab"  onclick="return false;"><%= t('my_class.detail.student_homeworks') %></a></li>
       </ul>
       <div class="tab-content p-0 tab-all-content m-t-20">
         <div class="tab-pane fade active in" id="tab2_1">
@@ -55,6 +56,14 @@
             <%= render 'partials/loading' %>
           </div>
         </div>
+        <div class="tab-pane fade" id="tab2_3">
+          <div id="student_homeworks">
+            <%= render :partial => 'user/open_educat/op_teachers/partials/teacher_class_details/student_homework_filter', :locals => {:batch => @batch, :subjects => @subjects, :active_subject => @active_subject}%>
+            <div id='student_homework_report_data'>
+              <%= render 'partials/loading' %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -65,11 +74,17 @@
 </div>
 <style>
 .box-product {
-margin-top: 0px;
+  margin-top: 0px;
 }
 </style>
+
 <script>
   $(document).ready(function(){
     getStudentProjects(<%= @batch.id %>)
+
+    $('#student_homework_menu').on('click', function(e) {
+      get_student_homework_report(<%= @batch.id %>, <%= @active_subject.id %>, <%= current_user.faculty_id %>) 
+    })
   })
+
 </script>

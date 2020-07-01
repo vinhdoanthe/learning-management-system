@@ -1,0 +1,26 @@
+<!-- variables:
+  - subjects
+  - active_subject
+-->
+<div class="filter-box FlowupLabels">
+  <div class="form-group">
+    <label><%= t('learning.subject') %></label>
+    <% unless subjects.blank? %>
+      <select class='form-control student_subject_filter' id='report_homework_select_subject_input' onchange="update_data_report()">
+        <% subjects.each do |subject| %>
+          <% if subject[0] == active_subject.id %>
+            <option value="<%= subject[0] %>" selected><%= subject[1] %></option>
+          <% else %>
+            <option value="<%= subject[0] %>"><%= subject[1] %></option>
+          <% end %>
+        <% end %>
+      </select>
+    <% end %>
+  </div>
+</div>
+<script>
+  function update_data_report() {
+    subject_id = $('.student_subject_filter').val();
+    get_student_homework_report(<%= batch.id %>, subject_id, <%= current_user.faculty_id %>) 
+  }
+</script>

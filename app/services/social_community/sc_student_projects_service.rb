@@ -1,8 +1,8 @@
 class SocialCommunity::ScStudentProjectsService
-  
+
   def update_student_project params
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
-    
+
     if params[:introduction_video].present? && params[:change_video] == '1'
       title = params[:name] || project.name
       description ||= params[:description] || project.description
@@ -10,7 +10,7 @@ class SocialCommunity::ScStudentProjectsService
       params.merge! ({ introduction_video: video_detail[0], thumbnail: video_detail[1] })
       video_id = project.introduction_video
 
-      if video_id.present? && video_id.length < 12
+      if video_id.present?
         delete_video_youtube video_id
       end
     end
@@ -34,19 +34,32 @@ class SocialCommunity::ScStudentProjectsService
   def delete_video_youtube video_id
     account = Yt::Account.new refresh_token: Settings.youtube['refresh_token']
     video = Yt::Video.new id: video_id, auth: account
-    video.delete
+    begin
+      video.delete
+    rescue Yt::Errors::RequestError => error
+      Rails.logger.error(error.to_s)
+    ensure
+      # do nothing
+    end
   end
 
   def upload_video_youtube title, file, description, batch_id
     account = Yt::Account.new refresh_token: Settings.youtube['refresh_token']
     file = file.try(:tempfile).try(:to_path)
-    new_video = account.upload_video file, title: title
-    video_id = new_video.id
-    video = Yt::Video.new id: video_id, auth: account
-    embed_link = video_id
-    thumbnail_video = video.thumbnail_url
 
-    manage_youtube_playlist account, batch_id, video_id
+    begin 
+      new_video = account.upload_video file, title: title, privacy_status: 'private'
+      video_id = new_video.id
+      video = Yt::Video.new id: video_id, auth: account
+      embed_link = video_id
+      thumbnail_video = video.thumbnail_url
+      manage_youtube_playlist account, batch_id, video_id
+    rescue Yt::Errors => error
+      Rails.logger.error(error.to_s)
+      embed_link = ''
+      thumbnail_video = ''
+    ensure
+    end
 
     [embed_link, thumbnail_video]
   end
@@ -58,7 +71,7 @@ class SocialCommunity::ScStudentProjectsService
       playlist = create_youtube_playlist account, batch_id
       playlist_id = playlist.id
     end
-    
+
     playlist_id = batch_playlist.playlist_id if playlist_id.blank?
     add_video_to_playlist account, playlist_id, video_id
   end
@@ -89,7 +102,7 @@ class SocialCommunity::ScStudentProjectsService
       project.thumbnail = thumbnail_url
       project.subject_id = params[:subject_id]
       project.student_id = params[:student_id]
-      
+
       user = User::Account::User.where(student_id: params[:student_id]).first
       batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
       course = batch.op_course

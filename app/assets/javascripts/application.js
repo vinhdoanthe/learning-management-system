@@ -6,7 +6,8 @@
 //=require custom_js/learning.js
 //=require rails_admin/custom/ckeditor_ajax.js
 //=require bootstrap
-
+//=require jquery-fileupload
+//
 var waitingdialog = waitingdialog || (function ($) {
   'use strict';
   var $dialog = $(

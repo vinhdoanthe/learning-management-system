@@ -69,6 +69,8 @@
           <%= render 'partials/topnav' %>
           <%= yield %>
         </div>
+
+
         <script type="text/javascript" src="/global/plugins/jquery/jquery-3.1.0.min.js"></script>
         <script type="text/javascript" src='/global/plugins/jquery/jquery-migrate-3.0.0.min.js'></script>
         <script type="text/javascript" src='/global/plugins/jquery-ui/jquery-ui.min.js'></script>
@@ -126,6 +128,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 
+        <%= yield :body_javascript_includes %>
         <%= debug(params) if Rails.env.development? %>
       </body>
     <% else %>
@@ -143,6 +146,9 @@
         <script src="/global/plugins/backstretch/backstretch.min.js"></script>
         <script src="/global/plugins/bootstrap-loading/lada.min.js"></script>
         <script src="/global/js/pages/login-v2.js"></script>
+
+        <%= yield :body_javascript_includes %>
+
       </body>
     <% end %>
 

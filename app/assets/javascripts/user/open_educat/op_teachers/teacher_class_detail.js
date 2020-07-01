@@ -14,6 +14,31 @@ function getStudentProjects (batch_id) {
   })
 }
 
+// function get_sessions(batch_id, faculty_id) {
+//   $.ajax({
+//     url: '/learning/get_sessions',
+//     method: 'get',
+//     data: {
+//       batch_id: batch_id,
+//       faculty_id: faculty_id
+//     },
+//     dataType: 'script'
+//   })
+// }
+
+function get_student_homework_report(batch_id, subject_id, faculty_id) {
+  $.ajax({
+    url: '/learning/student_homework_report',
+    method: 'get',
+    data: {
+      batch_id: batch_id,
+      subject_id: subject_id,
+      faculty_id: faculty_id
+    },
+    dataType: 'script'
+  })
+}
+
 $(document).ready(function(){
 
   var waitingdialog = waitingdialog || (function ($) {
@@ -30,37 +55,37 @@ $(document).ready(function(){
 
     return {
       show: function (message, options) {
-        // Assigning defaults
-        if (typeof options === 'undefined') {
-          options = {};
-        }
-        if (typeof message === 'undefined') {
-          message = 'Loading';
-        }
-        var settings = $.extend({
-          dialogSize: 'm',
-          progressType: '',
-          onHide: null // This callback runs after the dialog was hidden
-        }, options);
+	// Assigning defaults
+	if (typeof options === 'undefined') {
+	  options = {};
+	}
+	if (typeof message === 'undefined') {
+	  message = 'Loading';
+	}
+	var settings = $.extend({
+	  dialogSize: 'm',
+	  progressType: '',
+	  onHide: null // This callback runs after the dialog was hidden
+	}, options);
 
-        // Configuring dialog
-        $dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
-        $dialog.find('.progress-bar').attr('class', 'progress-bar');
-        if (settings.progressType) {
-          $dialog.find('.progress-bar').addClass('progress-bar-' + settings.progressType);
-        }
-        $dialog.find('h3').text(message);
-        // Adding callbacks
-        if (typeof settings.onHide === 'function') {
-          $dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
-            settings.onHide.call($dialog);
-          });
-        }
-        // Opening dialog
-        $dialog.modal();
+	// Configuring dialog
+	$dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
+	$dialog.find('.progress-bar').attr('class', 'progress-bar');
+	if (settings.progressType) {
+	  $dialog.find('.progress-bar').addClass('progress-bar-' + settings.progressType);
+	}
+	$dialog.find('h3').text(message);
+	// Adding callbacks
+	if (typeof settings.onHide === 'function') {
+	  $dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
+	    settings.onHide.call($dialog);
+	  });
+	}
+	// Opening dialog
+	$dialog.modal();
       },
       hide: function () {
-        $dialog.modal('hide');
+	$dialog.modal('hide');
       }
     };
 
@@ -101,7 +126,7 @@ $(document).ready(function(){
       url: '/learning/reward_student',
       data: { students: students, reward_type: reward_type, session_id: session_id },
       success: function(res){        
-        display_noti(res)
+	display_noti(res)
       }
     })
   })
@@ -116,7 +141,7 @@ $(document).ready(function(){
       url: '/user/open_educat/teacher_checkin',
       data: {'faculty_id': teacher, 'time': time, 'session_id': session_id},
       success: function (res) {
-        display_noti(res.error)
+	display_noti(res.error)
       }
     })
   })
@@ -158,7 +183,7 @@ $(document).ready(function(){
       note = $(this).find($('input[name="teacher_note"]')).val();
       check = false
       if ($(element).find($('input[name="attendance"]:checked')).length > 0) {
-        check = true;
+	check = true;
       }
       data['student'].push({'student_id': student_id, 'note': note, 'check': check})
     })
@@ -168,7 +193,7 @@ $(document).ready(function(){
       url: '/user/open_educat/teacher_attendance',
       data: data,
       success: function (res) {
-        display_noti(res)
+	display_noti(res)
       }
     })
   })
@@ -186,7 +211,7 @@ $(document).ready(function(){
       url: "/learning/op_session/session_reward?session_id=" + session_id,
       dataType: "script",
       success: function(){
-        waitingdialog.hide();
+	waitingdialog.hide();
       }
     })
   })
@@ -194,13 +219,13 @@ $(document).ready(function(){
   $('#session_control').on('click', '#review_photo_uploaded', function(){
     $('#upload').hide();
     $('#review_photo_tab').show();
-   session_id = $('input[name="active_session_id"]').val() 
+    session_id = $('input[name="active_session_id"]').val() 
     $.ajax({
       url: '/learning/op_session/session_photo_review?session_id=' + session_id,
       method: 'GET',
       dataType: 'script',
       sucess: function(){
-        $(this).tab('show');
+	$(this).tab('show');
       }
     })
   })
@@ -217,8 +242,8 @@ $(document).ready(function(){
       method: 'POST',
       data: { photo_id: photo_id },
       success: function(res){
-        display_noti(res)
-        $('input[name="delete_photo"][value="' + photo_id + '"]').parent().remove();
+	display_noti(res)
+	$('input[name="delete_photo"][value="' + photo_id + '"]').parent().remove();
       }
     })
   })
@@ -239,7 +264,7 @@ $(document).ready(function(){
     var question_ids = new Array();
     $('input[name="select_homework"]').each(function(){
       if($(this).is(':checked')){
-        question_ids.push($(this).val())
+	question_ids.push($(this).val())
       }
     })
     $.ajax({
@@ -247,7 +272,7 @@ $(document).ready(function(){
       method: 'POST',
       data: { student_ids: student_ids, question_ids: question_ids, session_id: session_id },
       success: function(res){
-        display_noti(res)
+	display_noti(res)
       }
     })
   })

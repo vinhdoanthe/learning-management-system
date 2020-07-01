@@ -1,6 +1,8 @@
 module SocialCommunity::QuestionAnswer
   class MessagesService
 
+    include NotificationConstants
+
     # params:
     # thread_id
     # start_datetime
@@ -31,6 +33,11 @@ module SocialCommunity::QuestionAnswer
       message.content = message_params[:content]
       message.created_by = user.id
       if message.save
+        # create notification
+        thread = message.qa_thread
+        thread.updated_by = user.id
+        thread.save
+        ThreadsService.create_notifications(thread, Key::SC_QA_THREAD_REPLY)
         message
       else
         nil
