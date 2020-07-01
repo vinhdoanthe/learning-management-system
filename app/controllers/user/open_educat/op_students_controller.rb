@@ -178,6 +178,7 @@ module User
       end
 
       def student_homework
+        # binding.pry
         @student = @op_student
         data = User::OpenEducat::OpStudentsService.new.student_homework @student, params
         @courses = @student.op_courses

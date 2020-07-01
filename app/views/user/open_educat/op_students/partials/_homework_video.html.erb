@@ -1,9 +1,10 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag 'social_community/question_answer/session_qa_area.js' %>
+  <%= javascript_include_tag ('swiper.min.js') %>
 <% end %>
-
-<%= stylesheet_link_tag ('swiper.min.css') %>
-<%= javascript_include_tag ('swiper.min.js') %>
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag ('swiper.min.css') %>
+<% end %>
 
 <div class="tab-content p-0 tab-all-content">
   <div class="tab-pane fade active in">
@@ -31,7 +32,7 @@
           </div>
         </div>
         <div>
-          <div class="" style='display: block'>
+          <div class="" style='display: block' id='swiper-video-list'>
             <div class="swiper-container">
               <div class="swiper-wrapper">
                 <% (sessions.select{|s| s.state == Learning::Constant::Batch::Session::STATE_DONE && s.lession_id != nil}).each do |s| %>
@@ -95,15 +96,3 @@
   padding-left: 10px;
 }
 </style>
-<script>
-  $(window).on('load', function(){
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 5,
-      spaceBetween: 5,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-    }).swiper;
-  })
-</script>
