@@ -1,4 +1,4 @@
-//=require jquery3
+//=require jquery
 //=require jquery_ujs
 //=require layout.js
 //=require user/open_educat/shared/share.js
