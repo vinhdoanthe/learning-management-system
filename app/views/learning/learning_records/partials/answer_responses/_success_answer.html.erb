@@ -1,49 +1,52 @@
-  <div class="modal-dialog">
-  	<% if state == 'right' %>
-	    <div class="modal-content m-b-20">
-	      <div class="modal-body text-center modal-edit">
-	        <img src="/global/images/Happy.png" alt="">
-	        <h3>Chúc mừng</h3>
-          <!--	        <p class="text-center">Con đã <b class="text-transform color-EB9138">trả lời đúng</b> và được <b class="text-transform color-EB9138">+5XP</b> vào tài khoản<br/>Cố gắng học tốt con nhé</p> -->
-          <p class="text-center">Con đã <b class="text-transform color-EB9138">trả lời đúng rồi! </b><br/>Cố gắng học tốt con nhé</p>
-	      </div>
-	      <div class="modal-footer text-center">
-	        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">Nhận điểm</button>
-	      </div>
-	    </div>
-    <% elsif state == 'wrong' %>
-	    <div class="modal-content m-b-20">
-	      <div class="modal-body text-center modal-edit">
-	        <img src="/global/images/Sad.png" alt="">
-	        <h3>TIẾC QUÁ!</h3>
-	        <p class="text-center">Con đã <b class="text-transform color-EB9138">trả lời SAI mất rồi!</b><br/>Chịu khó học thêm nhé!</p>
-	      </div>
-	      <div class="modal-footer text-center">
-	        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">Đóng lại</button>
-	      </div>
-	    </div>
-	<% elsif state == 'waiting' %>
-	    <div class="modal-content">
-	      <div class="modal-body text-center modal-edit">
-	        <img src="/global/images/Pending.png" alt="">
-	        <h3>Cảm ơn Con đã hoàn thành bài tập</h3>
-          <!-- <p class="text-center">Thầy/Cô sẽ xem và chấm điểm cho con sau nhé!<br/> Thưởng con <b class="text-transform color-EB9138">+3XP</b> vào tài khoản nhé</p> -->
-	        <p class="text-center">Thầy/Cô sẽ xem và chấm điểm cho con sau nhé!<br/></p>
-	      </div>
-	      <div class="modal-footer text-center">
-	        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">ĐÓng lại</button>
-	      </div>
-	    </div>
-    <% elsif state == 'done' %>
-	    <div class="modal-content">
-	      <div class="modal-body text-center modal-edit">
-	        <img src="/global/images/Pending.png" alt="">
-	        <h3>Con đã hoàn thành bài tập này rồi!</h3>
-	        <p class="text-center">Con giỏi lắm! Hãy tiếp tục phát huy nhé!</p>
-	      </div>
-	      <div class="modal-footer text-center">
-	        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">ĐÓng lại</button>
-	      </div>
-	    </div>
-	<% end %>
-  </div>
+<% reward = User::Reward::TekyCoinStarActivitySetting.where(setting_key: User::Constant::TekyCoinStarActivitySetting::HOMEWORK_CHOICE).first %>
+<% star = reward.present? ? reward.star : 20 %>
+<% coin = reward.present? ? reward.coin : 20 %>
+<div class="modal-dialog">
+  <% if state == 'right' %>
+    <div class="modal-content m-b-20">
+      <div class="modal-body text-center modal-edit">
+        <img src="/global/images/Happy.png" alt="">
+        <h3>Chúc mừng</h3>
+        <!--	        <p class="text-center">Con đã <b class="text-transform color-EB9138">trả lời đúng</b> và được <b class="text-transform color-EB9138">+5XP</b> vào tài khoản<br/>Cố gắng học tốt con nhé</p> -->
+        <p class="text-center">Con đã <b class="text-transform color-EB9138">trả lời đúng rồi!</b> Con được thưởng <b class="text-transform color-EB9138"><%= star %> star</b> và <b class="text-transform color-EB9138"><%= coin %> Teky đồng</b> vào tài khoản! <br/>Cố gắng học tốt con nhé</p>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">Nhận điểm</button>
+      </div>
+    </div>
+  <% elsif state == 'wrong' %>
+    <div class="modal-content m-b-20">
+      <div class="modal-body text-center modal-edit">
+        <img src="/global/images/Sad.png" alt="">
+        <h3>TIẾC QUÁ!</h3>
+        <p class="text-center">Con đã <b class="text-transform color-EB9138">trả lời SAI mất rồi!</b><br/>Chịu khó học thêm nhé!</p>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">Đóng lại</button>
+      </div>
+    </div>
+  <% elsif state == 'waiting' %>
+    <div class="modal-content">
+      <div class="modal-body text-center modal-edit">
+        <img src="/global/images/Pending.png" alt="">
+        <h3>Cảm ơn Con đã hoàn thành bài tập</h3>
+        <!-- <p class="text-center">Thầy/Cô sẽ xem và chấm điểm cho con sau nhé!<br/> Thưởng con <b class="text-transform color-EB9138">+3XP</b> vào tài khoản nhé</p> -->
+        <p class="text-center">Thầy/Cô sẽ xem và chấm điểm cho con sau nhé!<br/></p>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">ĐÓng lại</button>
+      </div>
+    </div>
+  <% elsif state == 'done' %>
+    <div class="modal-content">
+      <div class="modal-body text-center modal-edit">
+        <img src="/global/images/Pending.png" alt="">
+        <h3>Con đã hoàn thành bài tập này rồi!</h3>
+        <p class="text-center">Con giỏi lắm! Hãy tiếp tục phát huy nhé!</p>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">ĐÓng lại</button>
+      </div>
+    </div>
+  <% end %>
+</div>
