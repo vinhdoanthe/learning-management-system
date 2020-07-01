@@ -15,6 +15,17 @@ module User::Constant::Gender
   FEMALE = 'f'
 end
 
+module User::Constant::TekyCoinStarActivitySetting
+  REWARD_LVN = 'REWARD_LVN'
+  REWARD_GB = 'REWARD_GB'
+  REWARD_LBTL = 'REWARD_LBTL'
+  REWARD_TCPB = 'REWARD_TCPB'
+  HOMEWORK_CHOICE = 'HOMEWORK_CHOICE'
+  HOMEWORK_TEXT = 'HOMEWORK_TEXT'
+  ATTENDANCE_YES = 'ATTENDANCE_YES'
+  UPLOAD_SPCK = 'UPLOAD_SPCK'
+end
+
 module User::Constant::Evaluate
   EVALUATE = {
     'KIẾN THỨC' => {
