@@ -157,3 +157,29 @@ en:
     view_detail: 'View detail'
     all_threads: 'All questions'
     no_thread: 'This question is deleted!'
+  adm:
+    user: "User"
+    setting:
+      name: "Setting"
+      coin_star: "Coin Star"
+    course:
+      name: "Course"
+      course: "Course"
+      slide_lesson: "Slide Lesson"
+      video: "Video"
+      homework: "Homework"
+    community:
+      post: "Post"
+      album: "Album"
+      photo: "Photo"
+    notice: "Notice"
+    redeem:
+      name: "Redeem"
+      coin_star: "Coin Star Transaction"
+      redeem: "Redeem Transaction"
+    refer_friend: "Refer Friend"
+    learning_activity:
+      name: "Learning Activity"
+      discussion: "Discussion"
+      homework: "Homework"
+      project: "Project"

@@ -80,8 +80,8 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     if errors[0]
       unless params[:student].blank?
         params[:student].each_value do |student_params|
-          User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'coin', 0
-          User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'star', 0
+          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, student_id, 'coin', 0
+          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, student_id, 'star', 0
         end
       end
       render json: {type: 'success', message: 'Điểm danh thành công!'}
