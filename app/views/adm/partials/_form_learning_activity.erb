@@ -1,13 +1,7 @@
 <%
-	if !@frm_report.nil?
-		from_date 	= @frm_report[:from_date]
-		to_date 	= @frm_report[:to_date]
-		state 		= @frm_report[:state]
-	else
-		from_date 	= ''
-		to_date 	= ''
-		state 		= 'right'
-	end
+	from_date 	= @param_form[:from_date]
+	to_date 	= @param_form[:to_date]
+	state 		= @param_form[:state]
 %>
 <form name="frm_filters" id="frm_filters" method="post" class="form-inline">
   	<div class="input-group input-group-sm">
@@ -25,7 +19,7 @@
 		</div>
 		<input type="text" name="frm[to_date]" id="frm_to_date" placeholder="to date" class="form-control ui_date" autocomplete="false" value="<%= to_date%>">
 		<select name="frm[state]" id="frm_state" class="form-control form-control-sm" autocomplete="false" >
-			<option value="-1">-Trạng thái-</option>
+			<option value="">-Tất cả trạng thái-</option>
 			<% get_state_user_answers.each do |_state| %>
 			<option value="<%= _state%>" <% if _state == state%> selected <% end %> ><%= _state%></option>
 			<% end %>
