@@ -33,7 +33,7 @@ gem 'mini_magick'
 gem 'image_optim'
 gem 'image_optim_pack'
 # gem 'image_optim_rails'
-
+gem 'sendgrid-ruby'
 # For import/export
 gem 'caxlsx_rails'
 

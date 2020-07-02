@@ -93,12 +93,15 @@ class User::Account::UsersService
     return if User::Account::User.where(username: username).first.present?
     
     teacher_user.username = username
-    teacher_user.password = 'TekyAcademy'
+    teacher_user.password = Settings.user.faculty[:default_password]
     teacher_user.account_role = User::Constant::TEACHER
     teacher_user.faculty_id = teacher.id
     res_user = teacher.res_user
     return if res_user.blank?
     teacher_user.email = res_user.login
-    teacher_user.save
+    if teacher_user.save
+      SendGridMailer.send_email(EmailConstants::MailType::SEND_FACULTY_ACCOUNT_INFORMATION, teacher_user)
+    else
+    end
   end
 end
