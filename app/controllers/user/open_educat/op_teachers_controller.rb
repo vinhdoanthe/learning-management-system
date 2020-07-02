@@ -64,10 +64,12 @@ class User::OpenEducat::OpTeachersController < ApplicationController
 
   def teacher_attendance
     lines = []
+    student_ids = []
     unless params[:student].blank?
       params[:student].each_value do |student_params|
         line = {}
         student_id = User::OpenEducat::OpStudent.where(code: params['student_id']).first.id
+        student_ids << student_id
         line[:student_id] = student_id
         line[:is_present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
         line[:note] = student_params['note'].to_s
@@ -78,8 +80,8 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i)
     
     if errors[0]
-      unless params[:student].blank?
-        params[:student].each_value do |student_params|
+      unless student_ids.blank?
+        student_ids.each do |student_id|
           User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, student_id, 'coin', 0
           User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, student_id, 'star', 0
         end
