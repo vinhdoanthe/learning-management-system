@@ -1,0 +1,160 @@
+<script>
+       var labels_company = [<% @data_company.each do |ct| %> '<%= ct[:name]%>',<% end %>]       
+       var ctx_scale = document.getElementById('reportDiligentMonthlyScale').getContext('2d');
+       var myChart = new Chart(ctx_scale, {
+            type: 'horizontalBar',
+            data: {
+                labels: labels_company,
+                datasets: [{
+                    label: '<%= t("report.report_attend_title")%>',
+                    data: [<% @data_company.each do |ct| %>'<%= ct[:scale_present] %>',<% end %>],
+                    backgroundColor: 'rgb(54, 162, 235)',
+                    borderWidth: 0
+                },
+                {
+                      label: '<%= t("report.report_absent_title")%>',
+                      data: [<% @data_company.each do |ct| %>'<%= ct[:scale_no_present] %>',<% end %>],
+                      backgroundColor: 'rgb(255, 99, 132)',
+                      borderWidth: 0
+                }     
+                ],      
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '<%= t("report.report_chart_prorata_title")%>',
+                    fontSize: '14'
+                },  
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';              
+                            if (label) {
+                                label += ': ';
+                            }
+                  
+                            label += Math.round(tooltipItem.xLabel * 100) / 100;
+                  
+                            label += '%';
+                  
+                            return label;
+                        }
+                    },
+                    mode: 'index',
+                    intersect: false
+               },
+               responsive: true,
+               maintainAspectRatio:false,
+               scales: {
+                  xAxes: [{
+                    stacked: true,
+                    ticks: {
+                        min: 0,
+                        max: 100,
+                        stepSize: 10,
+                        callback: function(value, index, values) {
+                            return value + ' %';
+                        }
+                    }
+                  }],
+                  yAxes: [{
+                    stacked: true,
+                    
+                  }]
+                },
+                
+                plugins: {
+                    datalabels: {
+                      color: '#000',
+                      display: function(context) {
+                        return context.dataset.data[context.dataIndex] > 0;
+                      },
+                      formatter: function(value, context) {
+                        return context.dataset.data[context.dataIndex] + '%';
+                      },
+                      font: {
+                        weight: 'normal',
+                        size: '10'
+                      }
+                      
+                    }
+                },
+            }
+        });
+
+        var ctx_present = document.getElementById('reportDiligentMonthlyNumber').getContext('2d');
+        var myChart_present = new Chart(ctx_present, {
+            type: 'horizontalBar',
+            data: {
+                labels: labels_company,
+                datasets: [{
+                  label: '<%= t("report.report_attend_title")%>',
+                    data: [<% @data_company.each do |ct| %>'<%= ct[:student_present] %>',<% end %>],
+                    backgroundColor: 'rgb(54, 162, 235)',
+                    borderWidth: 0
+                },
+                {
+                    label: '<%= t("report.report_absent_title")%>',
+                    data: [<% @data_company.each do |ct| %>'<%= ct[:student_no_present] %>',<% end %>],
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderWidth: 0
+                }     
+                ],      
+            },
+            options: {
+              title: {
+                  display: true,
+                  text: '<%= t("report.report_chart_based_on_quantity_title")%>',
+                  fontSize: '14'
+              },
+              legend: { display: true },  
+              tooltips: {
+                  callbacks: {
+                      label: function(tooltipItem, data) {
+                          var label = data.datasets[tooltipItem.datasetIndex].label || '';              
+                          if (label) {
+                              label += ': ';
+                          }
+                          label += Math.round(tooltipItem.xLabel * 100) / 100;                
+                          return label;
+                      }
+                  },
+                  mode: 'index',
+                  intersect: false
+                },
+                responsive: true,
+                maintainAspectRatio:false,
+                scales: {
+                  xAxes: [{
+                    stacked: true,
+                    ticks: {
+                      min: 0,
+                      stepSize: 200
+                    }
+                  }],
+                  yAxes: [{
+                      stacked: true,                    
+                  }]
+                },                        
+                plugins: {
+                  datalabels: {
+                    color: '#333',
+                    display: function(context) {
+                      return context.dataset.data[context.dataIndex] > 0;
+                    },
+                    formatter: Math.round,
+                    font: {
+                      weight: 'normal',
+                      size: '10'
+                    }                            
+                  },
+                  deferred: {
+                    enabled: true,
+                    xOffset: 100,
+                    xOffset: '100%',
+                    delay: 250
+                  }
+                }
+            }
+        });
+</script>

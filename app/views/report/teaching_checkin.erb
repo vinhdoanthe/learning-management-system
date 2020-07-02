@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <%= render "report/partials/form_teaching"%>
+      <div class="card-body">
+        <div <%= raw @style%>>
+          <canvas id="reportNumber"></canvas>
+        </div>        
+        <div style="margin-top: 20px;">
+          <%= render @table_data_template%>
+        </div>
+      </div>    
+    </div>
+  </div>
+</div>

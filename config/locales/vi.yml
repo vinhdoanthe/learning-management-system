@@ -12,6 +12,7 @@ vi:
     see: "Xem"
   select:
     all: "Tất cả"
+    all_company: "Tất cả cơ sở"
   login:
     login: "Đăng nhập"
     forgot_password: "Quên mật khẩu?"
@@ -68,7 +69,13 @@ vi:
       create: 'khen thưởng'
     st_project_post:
       create: 'hoàn thành dự án cuối khóa'
+    student_feedback:
+      create: 'đánh giá lớp học'
+    redeem_product_post:
+      create: 'đổi quà'
+      success: 'thành công'
   report:
+    report: "Báo cáo"
     attendance: "BÁO CÁO CHUYÊN CẦN"
     no_attendance: "Chưa có thông tin chuyên cần"
     checkin: "BÁO CÁO ĐIỂM DANH"
@@ -78,23 +85,29 @@ vi:
     report_absent_title: "Nghỉ học"
     report_chart_prorata_title: "Báo cáo theo tỷ lệ"
     report_chart_based_on_quantity_title: "Báo cáo theo số lượng"
-    report: "Báo cáo"
-    report_month_title: "Báo cáo tháng"
+    report_range_title: "Báo cáo theo thời gian"
+    report_month_title: "Báo cáo theo tháng"
+    report_year_title: "Báo cáo theo năm"
+    report_week_title: "Báo cáo theo tuần"
     report_day_title: "Báo cáo ngày"
+    report_teaching_title: "Báo cáo giảng dạy"
+    report_teaching_checkin_title: "Giảng viên Check-in"
+    report_checkin_title: "Check-in"
+    report_not_checkin_title: "Not check-in"
   learning:
     class: "Lớp"
     subject: "Học phần"
-    lesson: "Bài học"
-    no_lesson: "Chưa có buổi học nào"
+    lesson: "Bài học"    
     course: "Khoá học"
     attendance: "Điểm danh"
+    no_lesson: "Chưa có buổi học nào"    
     batch:
-      name: "Lớp học"
-      classroom: "Phòng học"
-      timetable: "Lịch học"
       type: "Loại lớp học"
-      center: "Trung tâm"
+      name: "Lớp học"
       code: "Mã lớp"
+      center: "Trung tâm"
+      timetable: "Lịch học"
+      classroom: "Phòng học"
       status:
         studying: "đang học"
         stop: "nghỉ học"
@@ -154,6 +167,7 @@ vi:
     home_feeds: 'Hoạt động của riêng tôi'
     new_feeds: 'Hoạt động chung tại TEKY'
   datetime:
+    from: 'từ'
     to: 'đến'
   role:
     student: 'Học sinh'
@@ -191,3 +205,8 @@ vi:
       discussion: "Thảo luận"
       homework: "Bài tập về nhà"
       project: "Sản phẩm học sinh"
+    learning_activity_management: "Q/lý hoạt động học tập"
+    learning_activity_management_homework: "Bài tập về nhà"
+    learning_activity_management_question: "Câu hỏi"
+    learning_activity_management_project: "Dự án"
+    learning_activity_management_homework_list: "Danh sách bài tập về nhà chưa có câu trả lời"

@@ -8,8 +8,11 @@ en:
     back: "Back"
     reply: 'Reply'
     back_to_my_threads: 'Back to my threads'
+    apply: "Apply"
+    see: "See"
   select:
     all: "All"
+    all_company: "All company"
   login:
     login: "Login"
     forgot_password: "Forgot password?"
@@ -66,17 +69,35 @@ en:
       create: 'felicitated'
     st_project_post:
       create: 'published a project'
+    student_feedback:
+      create: 'rate batch'
     redeem_product_post:
       create: 'redeemed'
       success: 'successfuly'
   report:
+    report: "report"
     attendance: "ATTENDANCE REPORT"
     no_attendance: "No attendance infomation"
     checkin: "CHECKIN REPORT"
+    report_diligent_title: "Report diligent"
+    report_study_title: "Report study"
+    report_attend_title: "Attend"
+    report_absent_title: "Absent"
+    report_chart_prorata_title: "Report by proportion"
+    report_chart_based_on_quantity_title: "Report by quantily"
+    report_range_title: "Report by range datetime"
+    report_month_title: "Report by month"
+    report_year_title: "Report by year"
+    report_week_title: "Report by week"
+    report_day_title: "Report by day"
+    report_teaching_title: "Report teaching"
+    report_teaching_checkin_title: "Report teaching checkin"
+    report_checkin_title: "Check-in"
+    report_not_checkin_title: "Not check-in"
   learning:
     class: "Class"
-    lesson: "Lesson"
     subject: "Subject"
+    lesson: "Lesson"
     course: "Course"
     attendance: "Attendance"
     no_lesson: "No lesson yet"
@@ -146,6 +167,7 @@ en:
     new_feeds: "TEKY's Activities"
     home_feeds: 'My Activities'
   datetime:
+    from: 'from'
     to: 'to'
   role:
     student: 'Student'
@@ -156,7 +178,7 @@ en:
     add_new_message: 'add your reply'
     view_detail: 'View detail'
     all_threads: 'All questions'
-    no_thread: 'This question is deleted!'
+    no_thread: 'This question was deleted!'
   adm:
     user: "User"
     setting:

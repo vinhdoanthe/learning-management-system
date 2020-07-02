@@ -102,6 +102,8 @@ vi:
       day: Ngày
       month: Tháng
       year: Năm
+      week: Tuần
+      date_from_to: "Quãng thời gian"
   errors:
     format: "%{attribute} %{message}"
     messages:
@@ -137,6 +139,7 @@ vi:
   helpers:
     select:
       prompt: Vui lòng chọn
+      select: Chọn
     submit:
       create: Tạo %{model}
       submit: Lưu %{model}

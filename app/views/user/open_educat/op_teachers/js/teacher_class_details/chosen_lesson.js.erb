@@ -6,3 +6,5 @@ $('.attendance_lesson_info').html('');
     $('.attendance_lesson_info').append('<input type="radio" name="attendance_lesson_id" style="margin: 10px" value="<%= lesson.id %>"><label for="<%= lesson.id %>"><%= lesson.name %></label></br>' )
     <% end %>
 <% end %>
+
+$("#attendance_table").html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/attendance_table', locals: { all_student: all_student } ) %>");

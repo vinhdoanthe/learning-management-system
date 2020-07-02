@@ -18,6 +18,8 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
       sc_refer_friend_notification_content
     when SC_REFER_FRIEND_POST
       sc_refer_friend_post_notification_content
+    when STUDENT_FEEDBACK
+      student_feedback_notification_content
     end
   end
 
@@ -187,6 +189,30 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
     when SC_ST_PROJECT_POST_COMMENT
       begin
       end
+    end
+
+    display_html
+  end
+
+  def student_feedback_content
+    display_html = ''
+    case key
+    when STUDENT_FEEDBACK_CREATE
+      begin
+        feedback_str = ''
+        target_str = ''
+        feedback = Learning::Batch::SessionStudentFeedback.where(id: notifiable_id).first
+        unless feedback.nil?
+          feedback_user = feedback.user
+          feedback_str = (feedback_user.nil? ? '' : feedback_user.full_name)
+          op_session = feedback.op_session
+         unless op_session.nil?
+          op_batch = op_session.op_batch
+          target_str = (op_batch.nil? ? '' : op_batch.code)
+         end 
+        end
+        display_html = "#{feedback_str} #{I18n.t('notification.student_feedback.create')} #{target_str}"
+      end 
     end
 
     display_html
