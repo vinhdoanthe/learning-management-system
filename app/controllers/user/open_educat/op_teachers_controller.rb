@@ -68,7 +68,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     unless params[:student].blank?
       params[:student].each_value do |student_params|
         line = {}
-        student_id = User::OpenEducat::OpStudent.where(code: params['student_id']).first.id
+        student_id = User::OpenEducat::OpStudent.where(code: student_params['student_id']).first.id
         student_ids << student_id
         line[:student_id] = student_id
         line[:is_present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
@@ -82,8 +82,11 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     if errors[0]
       unless student_ids.blank?
         student_ids.each do |student_id|
-          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, student_id, 'coin', 0
-          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, student_id, 'star', 0
+          user = User::Account::User.where(student_id: student_id).first
+          next if user.blank?
+
+          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'coin', 0
+          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'star', 0
         end
       end
       render json: {type: 'success', message: 'Điểm danh thành công!'}
