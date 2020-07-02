@@ -40,7 +40,8 @@ class SendGridMailer
         }
       ],
       "from": {
-        "email": Settings.sendgrid[:from_email]
+        "email": Settings.sendgrid.from[:email],
+        "name": Settings.sendgrid.from[:name]
       },
       "template_id": Settings.sendgrid.template[:send_faculty_account]
     }
