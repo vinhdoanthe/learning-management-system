@@ -69,7 +69,9 @@ en:
       create: 'felicitated'
     st_project_post:
       create: 'published a project'
-  redeem_product_post:
+    student_feedback:
+      create: 'rate batch'
+    redeem_product_post:
       create: 'redeemed'
       success: 'successfuly'
   report:
