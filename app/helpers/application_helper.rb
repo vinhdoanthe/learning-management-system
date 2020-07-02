@@ -61,4 +61,28 @@ module ApplicationHelper
       return false
     end
   end
+
+
+  # danh sach state of user_answers
+  def get_state_user_answers
+    return list_state = ['right', 'waiting','wrong']
+  end
+
+  def get_ui_state_user_answers state
+    
+    if  state == 'right'
+      return '<small class="badge badge-success">Right</small>'
+    elsif state == 'waiting'
+      return '<small class="badge badge-warning">Waiting</small>'
+    elsif state == 'wrong'
+      return '<small class="badge badge-danger">Wrong</small>'      
+    end
+  end
+
+
+
+
+
+
+  
 end

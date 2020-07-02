@@ -1,0 +1,107 @@
+<script>
+    var labels = <%= raw @labels%>
+    var	ctx_scale = document.getElementById('reportNumber').getContext('2d');
+    var  reportNumber_type = 'line';
+
+    var config = {
+            type: reportNumber_type,
+            data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: '<%= t("report.report_checkin_title")%>',
+                    fill: false,
+                    lineWidth: 1,
+                    data: [<% @list_data.each do |ct| %> <%= ct[:total_check_in] %>,<% end %>],                    
+                    borderColor: 'rgb(54, 162, 235)',
+                    backgroundColor: 'rgb(54, 162, 235)',
+                    borderWidth:2,
+                  },
+                  {
+                    label: '<%= t("report.report_not_checkin_title")%>',
+                    fill: false,
+                    lineWidth: 1,
+                    data: [<% @list_data.each do |ct| %> <%= ct[:total_not_check_in] %>,<% end %>],
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderWidth:2,
+                  },  
+                ],      
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '<%= raw @report_title_chart%>',
+                    fontSize: '14'
+               },  
+        tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';              
+                            if (label) {
+                                label += ': ';
+                            }
+                  
+                            label += Math.round(tooltipItem.yLabel * 100) / 100;
+                            
+                            return label;
+                        }
+                    }
+               },
+        responsive: true,
+        scales: {
+                 yAxes: [{
+                   stacked: false,
+                   gridLines: {
+                     drawBorder: false
+                   },
+                   lineWidth: 1,
+                   ticks: {
+                       min: 0,                       
+                       beginAtZero: true
+                   }
+                 }],
+                 xAxes: [{
+                    stacked: false,
+                    ticks: {
+                      beginAtZero: true
+                    },
+                    
+                  }]                 
+                },                
+                plugins: {
+                  datalabels: {
+                    color: '#333',
+                    display: function(context) {
+                      return context.dataset.data[context.dataIndex] > 0;
+                    },
+                    formatter: Math.round,
+                    font: {
+                      weight: 'normal',
+                      size: '10'
+                    },
+                    align: 'top',
+                    anchor: 'end',                            
+                  },
+                  deferred: {
+                    enabled: true,
+                    xOffset: 100,
+                    xOffset: '100%',
+                    delay: 250
+                  }
+              },
+            }
+        }    
+    var	myChart = new Chart(ctx_scale, config);
+</script>
+
+<script>
+  $(document).ready(function() {
+    // change  type chart
+    $('.type_chart').click(function() {      
+        config.type = $(this).data("id");
+        myChart.destroy();
+        myChart = new Chart(ctx_scale,config);
+    });
+  });
+</script>

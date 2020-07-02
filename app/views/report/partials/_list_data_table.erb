@@ -1,0 +1,28 @@
+<table width="100%" border="1">
+  <tr>
+    <td rowspan="2">&nbsp;</td>
+    <td rowspan="2">Ten co so </td>
+	
+    <% for label in @labels%>
+    <td colspan="2"><%= label%></td>
+    <% end %>	
+  </tr>
+
+  <tr>
+    <% for label in @labels%>
+    <td>Check in</td>
+    <td>Not</td>
+    <% end %>
+  </tr>
+
+  <% Report::CompanyService.get_list_company.each_with_index  do |ct, index| %>  
+  <tr>
+    <td><%= (index + 1)%></td>
+    <td><%= ct[:name]%></td>
+    <% for label in @labels%>
+    <td>x</td>
+    <td>y</td>
+    <% end %>
+  </tr>  
+  <% end %>
+</table>

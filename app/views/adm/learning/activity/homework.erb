@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-th mr-1 text-success"></i> <%= t('adm.learning_activity_management_homework')%></h3>
+      </div>
+      <div class="card-body">
+        <div class="mailbox-controls"><%= render "adm/partials/form_learning_activity"%></div>
+        <div class="table-responsive p-0" style="height: 500px;">
+          <table class="table table-sm table-head-fixed text-nowrap">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Batch</th>
+                <th><i class="fas fa-calendar hidden-md hidden-sm hidden-xs"></i>Answer time</th>
+                <th>User</th>
+                <th class="text-center">State</th>
+                <th>Faculty</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @list_user_answers.each_with_index  do |ct, index| %>  
+              <tr>
+                <td style="width:10px" class="text-center"><%= (index + 1)%></td>
+                <td><%= ct[:batch_name]%></td>
+                <td style="width:10px" class="text-center"><%= ct[:answer_time]%></td>
+                <td><%= ct[:user_question_id]%></td>
+                <td class="text-center"><%= get_ui_state_user_answers(ct[:state]).html_safe%></td>
+                <td><%= ct[:full_name]%></td>
+                <td class="text-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-xs btn-default"><i class="fas fa-exclamation-triangle text-red"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer clearfix">
+        VVV
+      </div>
+    </div>
+  </div>
+</div>

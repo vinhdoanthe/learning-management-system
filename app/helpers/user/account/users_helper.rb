@@ -177,21 +177,58 @@ module User
           
       end
       
+      # Menu for Theme Admin lte
       def get_menus_admin_lte(fullpath)
+        
                     
         # Khoi menu report
+        sub_menus = {
+          'teaching' => [
+              {
+                'path'          => report_teaching_checkin_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< report_teaching_checkin_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('report.report_teaching_checkin_title') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< report_teaching_checkin_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('report.report_teaching_checkin_title') <<'</p></a></li>',
+              },              
+           ],
+           'learning_activity_management' => [
+              {
+                'path'          => adm_learning_activity_homework_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_activity_homework_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_homework') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_activity_homework_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_homework') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_learning_activity_question_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_activity_question_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_question') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_activity_question_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_question') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_learning_activity_project_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_activity_project_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_project') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_activity_project_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_project') <<'</p></a></li>',
+              },              
+           ]
+        }
+
         menus = [
           {
-            'path' => report_diligent_path,
-            'title' => '<li class="nav-item"><a class="nav-link" href="'<< report_diligent_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_diligent_title') <<'</p></a></li>',
-            'title_active' => '<li class="nav-item"><a class="nav-link active" href="'<< report_diligent_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_diligent_title') <<'</p></a></li>'
+            'path'          => report_diligent_path,
+            'title'         => '<li class="nav-item"><a class="nav-link" href="'<< report_diligent_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_diligent_title') <<'</p></a></li>',
+            'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< report_diligent_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_diligent_title') <<'</p></a></li>'
           },
           
           {
-            'path' => report_study_path,
-            'title' => '<li class="nav-item"><a class="nav-link" href="'<< report_study_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_study_title') <<'</p></a></li>',
-            'title_active' => '<li class="nav-item"><a class="nav-link active" href="'<< report_study_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_study_title') <<'</p></a></li>'
-          }
+            'path'          => report_teaching_path,
+            'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_teaching_title') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_teaching_title') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'sub_menu'      => sub_menus['teaching']
+          },
+          
+          {
+            'path'          => '#',
+            'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'sub_menu'      => sub_menus['learning_activity_management']
+          },
   
         ]
                 
@@ -203,6 +240,19 @@ module User
                 tag_html = tag_html + menu['title_active']
               else
                 tag_html = tag_html + menu['title']
+              end
+              
+              if (!menu['sub_menu'].nil?)
+                tag_html = tag_html + '<ul class="nav nav-treeview">'
+                menu['sub_menu'].each do |sub_menu|
+                  if (sub_menu['path'] == fullpath)
+                      tag_html = tag_html + sub_menu['title_active']
+                    else
+                      tag_html = tag_html + sub_menu['title']
+                    end
+                end
+                tag_html = tag_html + '</ul>'
+                tag_html = tag_html + '</li>'
               end
           
           end
