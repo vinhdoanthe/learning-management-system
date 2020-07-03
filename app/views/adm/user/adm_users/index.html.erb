@@ -1,5 +1,5 @@
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag "adm/adm_user.js" %>
+<%= javascript_include_tag "adm/adm_user.js" %>
 <% end %>
 <% page = 0 %>
 <h3><%= t("adm.user.info") %></h3>
@@ -11,7 +11,7 @@
         <label for='filter-company'><%= t("adm.user.company") %></label>
         <select class='select2 select2-hidden-accessible' id='filter-company' data-placeholder="<%= t("adm.user.select_company") %>" name="company[]" multiple="multiple" style="width: 100%;">
           <% Common::ResCompany.all.each do |company| %>
-            <option value='<%= company.id %>'><%= company.name %></option>
+          <option value='<%= company.id %>'><%= company.name %></option>
           <% end %>
         </select>
       </div>
@@ -21,7 +21,7 @@
         <label for='filter-role'><%= t("adm.user.role") %></label>
         <select class="select2 select2-hidden-accessible" id='filter-role' data-placeholder="<%= t("adm.user.select_role") %>" name="company[]" multiple="multiple" style="width: 100%;">
           <% User::Account::User.pluck(:account_role).uniq.each do |role| %>
-            <option value='<%= role %>'><%= role %></option>
+          <option value='<%= role %>'><%= role %></option>
           <% end %>
         </select>
       </div>
@@ -57,10 +57,9 @@
 <div id="paginator">
 </div>
 <style>
-.pagination span {
-  margin: 5px;
-}
-
+  .pagination span {
+    margin: 5px;
+  }
 </style>
 
 </div>
@@ -68,7 +67,7 @@
   .filter_form {
     margin-bottom: 30px;
   }
-  
+
   #submit_filter_user {
     float: right;
     padding: 5px;

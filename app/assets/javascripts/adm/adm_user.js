@@ -1,10 +1,10 @@
-function get_data_index(data){
+function get_data_index(data) {
   $.ajax({
     url: "/adm/user/filter_users",
     method: "POST",
     data: data,
     dataType: 'script'
-  }) 
+  })
 }
 
 function get_filter_params() {
@@ -14,15 +14,15 @@ function get_filter_params() {
   var had_login = ''
   var is_active = ''
 
-  if ($('#user-has-sign-in').is(':checked')){
+  if ($('#user-has-sign-in').is(':checked')) {
     had_login = 1
-  }else{
+  } else {
     had_login = 0
   }
 
-  if ($('#user-is-active').is(':checked')){
+  if ($('#user-is-active').is(':checked')) {
     is_active = true
-  }else{
+  } else {
     is_active = false
   }
 
@@ -31,32 +31,32 @@ function get_filter_params() {
   return data
 }
 
-$(document).ready(function(){
+$(document).ready(function () {
   $("#filter-company").select2({
   });
   $("#filter-role").select2({
   });
-  
-  data = get_filter_params() 
+
+  data = get_filter_params()
   data['page'] = 0
   data['index'] = 1
   get_data_index(data);
 
-  $('#paginator').on('click', '.previous_page', function(){
+  $('#paginator').on('click', '.previous_page', function () {
     data = get_filter_params();
     data['page'] = $(this).data('page')
     data['index'] = -1;
     get_data_index(data)
   })
 
-  $('#paginator').on('click', '.next_page', function(){
+  $('#paginator').on('click', '.next_page', function () {
     data = get_filter_params();
     data['page'] = $(this).data('page')
     data['index'] = 1;
     get_data_index(data)
   })
 
-  $('#submit_filter_user').on('click', function(){
+  $('#submit_filter_user').on('click', function () {
     data = get_filter_params();
     data['page'] = 0;
     data['index'] = 1;
