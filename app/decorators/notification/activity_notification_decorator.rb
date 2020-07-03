@@ -194,7 +194,7 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
     display_html
   end
 
-  def student_feedback_content
+  def student_feedback_notification_content
     display_html = ''
     case key
     when STUDENT_FEEDBACK_CREATE
