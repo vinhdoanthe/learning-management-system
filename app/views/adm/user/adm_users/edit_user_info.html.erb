@@ -1,0 +1,108 @@
+<h3>Thông tin người dùng <%= @user.username %> </h3>
+<hr>
+<!-- <div class='row' style='justify-content:center'>
+  <div class="">
+    <div class="user_avatar">
+      <%#= (User::Account::UserDecorator.new(@user).display_avatar 150).html_safe %> 
+    </div>
+    <div class="edit_avatar">
+      <label for="avatar_file" class="btn btn-success">Thay đổi</label>
+      <input id="avatar_file" name='user_avatar' style="display: none; visibility:hidden;" type="file">
+    </div>
+  </div>
+</div> -->
+<input type='hidden' name='user_id' value="<%= @user.id %>">
+<div class='row' style='justify-content:center'>
+  <div class='edit_user_info row'>
+    <div class='row col-md-12' style='margin-bottom: 10px'>
+      <div class='col-md-4'>
+        <label>Username:</label>
+      </div>
+      <div class='col-md-8'>
+        <input name='username' required value="<%= @user.username %>">
+      </div>
+    </div>
+    <div class='row col-md-12'>
+      <div class='col-md-4'>
+        <label>Password:</label>
+      </div>
+      <div class='col-md-8'>
+        <input name='password' type="text">
+      </div>
+    </div>
+  </div>
+</div>
+<div class='row action_edit'>
+  <button class='btn btn-primary' id="submit_edit_user">Cập nhật</button>
+</div>
+
+<style>
+.edit_user_info input{
+  width: 80%;
+    padding: 5px;
+}
+.user_avatar {
+  display: flex;
+  justify-content: center;
+}
+.edit_avatar {
+  margin-top: 10px;
+  text-align: center
+}
+.action_edit {
+  display: flex;
+  justify-content: center;
+    margin-top: 10px;
+}
+.action_edit button {
+  margin: 10px;
+}
+</style>
+<script>
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('.user_avatar').find('img').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+  }
+
+$(document).ready(function(){
+  var change_avatar = false;
+  $("#avatar_file").change(function() {
+    readURL(this);
+    change_avatar = true;
+  });
+
+  $('#submit_edit_user').on('click', function(){
+    var formData = new FormData();
+    username = $('input[name="username"]').val();
+    password = $('input[name="password"]').val();
+    user_id = $('input[name="user_id"]').val();
+
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('user_id', user_id);
+
+    if (change_avatar){
+      formData.append('avatar', $('#avatar_file')[0].files[0]); 
+    }
+
+    $.ajax({
+      method: 'POST',
+      url: '/adm/user/update_user_info',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function(res){
+        display_noti(res);
+      }
+    })
+  })
+})
+</script>
+
