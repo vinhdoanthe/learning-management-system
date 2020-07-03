@@ -25,6 +25,11 @@ class User::Account::UserDecorator < SimpleDelegator
       end
     elsif account_role == 'Teacher'
       "<span>#{ image_tag(ActionController::Base.helpers.asset_path('global/images/Bitmaps.png'), width: size) }</span>"
+    elsif account_role == 'Parent'
+      "<span>#{ image_tag(ActionController::Base.helpers.asset_path('global/images/avatars/avatar11_big.png'), width: size) }</span>"
+    elsif account_role == 'Admin'
+      "<span>#{ image_tag(ActionController::Base.helpers.asset_path('global/images/Bitmaps.png'), width: size) }</span>"
+
     end
   end
 

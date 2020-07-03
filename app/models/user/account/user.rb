@@ -21,6 +21,7 @@ class User::Account::User < ApplicationRecord
   has_many :users, class_name: 'User::Account::User', foreign_key: 'parent_account_id'
   has_many :user_posts, class_name: 'SocialCommunity::Feed::UserPost'
   has_many :sc_posts, :through => :user_posts, class_name: 'SocialCommunity::Feed::Post'
+  has_one :res_user, class_name: 'Common::ResUser', foreign_key: 'login', primary_key: 'email'
 
   belongs_to :avatar, required: false
 

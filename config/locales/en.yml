@@ -204,18 +204,19 @@ en:
     course:
       name: "Course"
       course: "Course"
-      slide_lesson: "Slide Lesson"
+      slide_lesson: "Slide lesson"
       video: "Video"
       homework: "Homework"
     community:
+      name: "Community"
       post: "Post"
       album: "Album"
       photo: "Photo"
-    notice: "Notice"
     redeem:
       name: "Redeem"
-      coin_star: "Coin Star Transaction"
+      coin_star: "Coin Start Transaction"
       redeem: "Redeem Transaction"
+    notice: "Notice"
     refer_friend: "Refer Friend"
     learning_activity:
       name: "Learning Activity"

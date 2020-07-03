@@ -259,6 +259,32 @@ vi:
     learning_activity_management_project: "Dự án"
     learning_activity_management_homework_list: "Danh sách bài tập về nhà chưa có câu trả lời"
     answer_time: "Thời gian trả lời"
+    user: "Người dùng"
+    setting:
+      name: "Cài đặt"
+      coin_star: "Điểm thưởng"
+    course:
+      name: "Khoá học"
+      course: "Khoá học"
+      slide_lesson: "Tài liệu"
+      video: "Video"
+      homework: "Bài tập về nhà"
+    community:
+      name: "Cộng đồng"
+      post: "Bài đăng"
+      album: "Bộ sưu tập"
+      photo: "Hình ảnh"
+    redeem:
+      name: "Đổi thưởng"
+      coin_star: "Giao dịch điểm thưởng"
+      redeem: "Giao dịch đổi thưởng"
+    notice: "Thông báo"
+    refer_friend: "Giới thiệu bạn"
+    learning_activity:
+      name: "Hoạt động học tập"
+      discussion: "Thảo luận"
+      homework: "Bài tập về nhà"
+      project: "Sản phẩm cuối khoá" 
   reward:
     you_were_reward: 'Bạn được tặng thưởng'
     star: 'TEKY Sao'
@@ -300,3 +326,4 @@ vi:
     coming_soon: 'Trang đang trong quá trình phát triển'
   redeem:
     no_products: 'Kho quà đang trong quá trình xây dựng'
+    

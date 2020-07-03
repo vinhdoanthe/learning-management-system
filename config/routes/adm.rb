@@ -5,4 +5,12 @@ namespace :adm do
 	get 'activity_question' => 'activity#question'
     get 'activity_project'  => 'activity#project'
   end
+
+  namespace :user do
+    get 'all_user' => 'adm_users#all_user'
+    get 'index' => 'adm_users#index'
+    get 'user_info/:id' => 'adm_users#user_info'
+    get 'edit_user_info/:id' => 'adm_users#edit_user_info'
+    post 'update_user_info' => 'adm_users#update_user_info'
+  end
 end
