@@ -1,6 +1,6 @@
 class SocialCommunity::DashboardsService
   def self.community_leaders
-    users = User::Account::User.where(account_role: User::Constant::STUDENT).order(star: :DESC, created_at: :DESC).limit(10).to_a
+    users = User::Account::User.where(account_role: User::Constant::STUDENT).where.not(star: nil).order(star: :DESC, created_at: :DESC).limit(10).to_a
     leaders = []
     users.each do |user|
       leader = SocialCommunity::Leader.new(user)
