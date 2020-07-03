@@ -176,10 +176,10 @@ to get the desired effect
 <script src="/AdminLTE-3.0.5/js/adminlte.js"></script>
 <script src="/AdminLTE-3.0.5/js/demo.js"></script>
 <script>
-	$(document)
-	   .ready(
+	$(document).ready(
 			function() {  
-			 $('#frm_report_from_date').datepicker({
+			 
+       $('#frm_report_from_date').datepicker({
 			   autoclose: true,
 			   format: 'dd-mm-yyyy',
 			   language: '<%= locale%>'
@@ -193,12 +193,38 @@ to get the desired effect
 			});
 			
 			$('.select2').select2();
-
+      
       $('.ui_date').datepicker({
          autoclose: true,
          format: 'dd-mm-yyyy',
          language: '<%= locale%>'
       });
+
+      $('#frm_batch_name').on("input",function(e) {
+          
+          $("#datalist_batch").empty();
+
+          var batch_name = $(this).val();
+
+          if(batch_name === "" || batch_name.length < 3)
+            return false;
+
+          $.ajax({
+            type: "GET",
+            url: '<%= adm_learning_activity_get_batch_path%>',
+            async:false,
+            data: {batch_name: batch_name},
+            success:function(data){
+              if(data.length) {
+                for(var i=0, len=data.length; i<len; i++) {
+                  var opt = $("<option></option>").attr("value", data[i]['name']);
+                  $("#datalist_batch").append(opt);
+                }
+              }
+            }
+          });
+      });
+
 	 });
 </script>
 

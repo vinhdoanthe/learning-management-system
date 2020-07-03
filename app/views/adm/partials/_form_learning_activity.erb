@@ -24,6 +24,8 @@
 			<option value="<%= _state%>" <% if _state == state%> selected <% end %> ><%= _state%></option>
 			<% end %>
 		</select>
+		<input type="text" list="datalist_batch" name="frm[batch_name]" id="frm_batch_name" placeholder="batch name" class="form-control"/>
+		<datalist id="datalist_batch"></datalist>
 		<span class="input-group-append">
 			<button type="submit" class="btn btn-default" id="btn_report_date_apply"><%= t('button.see')%></button>
 		</span>
