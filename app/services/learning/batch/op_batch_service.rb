@@ -298,11 +298,21 @@ module Learning
           end
           student_homework_report.data = r_data
         else
-
         end 
         student_homework_report
       end
-
+      # Get list batch by paramater
+      def self.find_batch_by_params(params)
+        company_id  =  params[:company_id]
+        start_date  =  Date.parse(params[:start_date].to_s).strftime("%Y%m%d").to_i
+        end_date    =  Date.parse(params[:end_date].to_s).strftime("%Y%m%d").to_i
+        active      =  params[:active]
+        state       =  params[:state]
+        list = Learning::Batch::OpBatch.select("id, name")
+        .where(:active => active)
+        .where("TO_CHAR(start_date, 'YYYYMMDD') >='#{start_date}' AND TO_CHAR(end_date, 'YYYYMMDD') <='#{end_date}'")     
+        return list
+      end
     end
   end
 end

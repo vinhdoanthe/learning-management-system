@@ -5,8 +5,22 @@ class Adm::Learning::ActivityController < ApplicationController
 	#verify token authenticity
 	skip_before_action :verify_authenticity_token
 
+	def list_batch
+
+		#batch_name = params[:batch_name]
+
+		@param_form = Learning::Homework::UserAnswerService.form_paramater(params, request)
+
+		batch_params = {'company_id': 1,'start_date': '2019-01-01','end_date': '2020-01-01','active': true}
+		
+		list_batch = Learning::Batch::OpBatchService.find_batch_by_params(batch_params)
+
+		render json: { results: list_batch}
+	end
+
 	# Quan ly Bai tap ve nha
 	def homework
+		
 		@report_title_page = t('adm.learning_activity_management_homework')
 
 		@param_form = Learning::Homework::UserAnswerService.form_paramater(params, request)
@@ -14,8 +28,13 @@ class Adm::Learning::ActivityController < ApplicationController
 		# Danh sach
 		@list_user_answers = Learning::Homework::UserAnswerService.get_user_answers_type_question_text(@param_form)
 
-		puts @list_user_answers
 
+		batch_params = {'company_id': 1,'start_date': @param_form[:from_date].to_s,'end_date': @param_form[:to_date].to_s,'active': true}
+		
+		#@list_batch = Learning::Batch::OpBatchService.find_batch_by_params(batch_params)
+
+		#puts @list_batch
+		
 		return
 	end
 end
