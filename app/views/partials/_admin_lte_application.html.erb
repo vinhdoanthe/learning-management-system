@@ -19,8 +19,11 @@
   <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/select2/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/AdminLTE-3.0.5/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <script src="/AdminLTE-3.0.5/plugins/jquery/jquery.min.js"></script>
+      <%= javascript_include_tag 'adm/application' %>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -121,6 +124,7 @@ to get the desired effect
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+  <%= render 'partials/messages' %>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -160,7 +164,6 @@ to get the desired effect
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script src="/AdminLTE-3.0.5/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="/AdminLTE-3.0.5/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -175,6 +178,8 @@ to get the desired effect
 <!-- AdminLTE -->
 <script src="/AdminLTE-3.0.5/js/adminlte.js"></script>
 <script src="/AdminLTE-3.0.5/js/demo.js"></script>
+<script src="/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
+      <%= yield :javascript_includes %>
 <script>
 	$(document).ready(
 			function() {  

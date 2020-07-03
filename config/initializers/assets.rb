@@ -25,3 +25,4 @@ Rails.application.config.assets.precompile += %w( redeem/redeem_product_detail.c
 Rails.application.config.assets.precompile += %w( swiper.min.css )
 Rails.application.config.assets.precompile += %w( swiper.min.js )
 Rails.application.config.assets.precompile += %w( custom_js/opteacherjs.js )
+Rails.application.config.assets.precompile += %w( adm/* )
