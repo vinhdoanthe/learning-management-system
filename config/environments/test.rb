@@ -35,6 +35,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  Rails.application.routes.default_url_options[:host] = 'stagging.lms.teky.vn'
   # ActionMailer
   config.action_mailer.default_url_options = { :host => 'stagging.lms.teky.vn' }
   config.action_mailer.perform_deliveries = true

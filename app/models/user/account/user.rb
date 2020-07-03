@@ -168,7 +168,8 @@ class User::Account::User < ApplicationRecord
   end
 
   def password_reset_expired?
-    reset_sent_at < 2.days.ago
+    expire_after_hours = Settings.user.password[:expire_after_hours].to_i
+    reset_sent_at < expire_after_hours.hours.ago
   end
 
   def is_admin?

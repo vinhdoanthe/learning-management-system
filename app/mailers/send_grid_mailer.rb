@@ -1,6 +1,7 @@
 class SendGridMailer
   require 'sendgrid-ruby'
   include EmailConstants
+  include Rails.application.routes.url_helpers
 
   attr_accessor :sendgrid
 
@@ -11,6 +12,8 @@ class SendGridMailer
   def send_email type, data
     if type == MailType::SEND_FACULTY_ACCOUNT_INFORMATION
       send_faculty_account_email data 
+    elsif type == MailType::SEND_RESET_PASSWORD_EMAIL
+      send_reset_password_email data
     else
     end
   end
@@ -47,8 +50,42 @@ class SendGridMailer
     }
   end
 
-  def send_faculty_account_email data
-    data = parse_faculty_account_data(data)
+  def parse_reset_password_data user
+    {
+      "personalizations": [
+        {
+          "to": [
+            {
+              "email": user.email_address_for_sending
+            }
+          ],
+          "dynamic_template_data": {
+            "full_name": user.full_name,
+            "username": user.username,
+            "reset_link": edit_user_account_password_reset_url(user.reset_token, username: user.username), 
+            "expire_after_hours": Settings.user.password[:expire_after_hours]
+          }
+        }
+      ],
+      "from": {
+        "email": Settings.sendgrid.from[:email],
+        "name": Settings.sendgrid.from[:name]
+      },
+      "template_id": Settings.sendgrid.template[:send_reset_password]
+    }
+  end
+
+  def send_faculty_account_email teacher_user
+    data = parse_faculty_account_data(teacher_user)
+    execute_send(data)
+  end
+
+  def send_reset_password_email user
+    data = parse_reset_password_data(user)
+    execute_send(data)
+  end
+
+  def execute_send data
     begin
       response = @sendgrid.client.mail._('send').post(request_body: data)
       return response
