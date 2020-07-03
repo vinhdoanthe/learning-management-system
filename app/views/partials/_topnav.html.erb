@@ -13,9 +13,9 @@
             <li class="dropdown" id="teky-coin" style='height: 48px'>
                 <span class="teky-coin-star">
                     <%= image_tag "global/images/star.png", style:"width:25px;height:24px;"%>
-                    &nbsp <%= number_with_delimiter(current_user.coin.to_i, delimiter: ".") %>
+                    &nbsp <%= number_with_delimiter(current_user.star.to_i, delimiter: ".") %>
                 </span><span>&#9474;</span>
-                <span class="teky-coin-point"><%= number_with_delimiter(current_user.star.to_i, delimiter: ".")%></span><span class="teky-coin-text"><%= t('topbar.coin') %></span>
+                <span class="teky-coin-point"><%= number_with_delimiter(current_user.coin.to_i, delimiter: ".")%></span><span class="teky-coin-text"><%= t('topbar.coin') %></span>
             </li>
             <% end%>
             <li class="dropdown" id="notifications-header">
