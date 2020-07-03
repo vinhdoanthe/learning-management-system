@@ -100,7 +100,7 @@ class User::Account::UsersService
     return if res_user.blank?
     teacher_user.email = res_user.login
     if teacher_user.save
-      SendGridMailer.send_email(EmailConstants::MailType::SEND_FACULTY_ACCOUNT_INFORMATION, teacher_user)
+      SendGridMailer.new.send_email(EmailConstants::MailType::SEND_FACULTY_ACCOUNT_INFORMATION, teacher_user)
     else
     end
   end
