@@ -1,0 +1,70 @@
+$(document).ready(function() {
+  $('#adm_all_user').DataTable({
+    ajax: '/adm/user/all_user',
+    "scrollX": true,
+    "bLengthChange": false,
+    "bFilter": true,
+    "searching": false,
+    "binfo": true,
+    "bPaginate": false,
+    columns: [
+      {
+        className: 'user_id', 
+        data: 'id'
+      },
+      {
+        className: 'username',
+        data: 'username'
+      },
+      {
+        className: 'user_email', // used by world-flags-sprite library
+        data: 'email'
+      },
+      {
+        className: 'user_role',
+        data: 'account_role'
+      },
+      {
+        className: 'full_name',
+        data: "full_name"
+      },
+      {
+        className: 'company',
+        data: "company"
+      },
+      {
+        className: 'created_at',
+        data: "created_at"
+      },
+      {
+        className: 'last_sign_in_at',
+        data: "last_sign_in_at"
+      },
+      {
+        className: 'last_sign_out_at',
+        data: "last_sign_out_at"
+      },
+      {
+        className: 'user_info',
+        data: "id",
+        render: function(data) {
+          return '<a href="/adm/user/user_info/' + data + '" target="_blank">Xem</a>'
+        }
+      },
+      {
+        className: 'user_edit_info',
+        data: "id",
+        render: function(data) {
+          return '<a href="/adm/user/edit_user_info/' + data + '">Sửa</a>'
+        }
+      },
+      {
+        className: 'user_info',
+        data: "id",
+        render: function(data) {
+          return '<a href="/adm_user/' + data + '" target="_blank">Đăng nhập</a>'
+        }
+      }
+    ]
+  });
+});
