@@ -250,27 +250,24 @@ module Learning
       end
 
       # Get list batch by paramater
-      def self.find_batch_by_params(params)
+      def self.find_batch_by_params(batch_name, company_id)
         
-        company_id  =  params[:company_id]
-        start_date  =  Date.parse(params[:start_date].to_s).strftime("%Y%m%d").to_i
-        end_date    =  Date.parse(params[:end_date].to_s).strftime("%Y%m%d").to_i
-
-        active      =  params[:active]
-
-        state       =  params[:state]
         
-        list = Learning::Batch::OpBatch.select("id, name")
-        .where(:active => active)
-        .where("TO_CHAR(start_date, 'YYYYMMDD') >='#{start_date}' AND TO_CHAR(end_date, 'YYYYMMDD') <='#{end_date}'")     
     
-        #query = "SELECT ID, NAME FROM op_batch WHERE active = '#{active}' AND TO_CHAR(start_date, 'YYYYMMDD') >='#{start_date}' AND TO_CHAR(end_date, 'YYYYMMDD') <='#{end_date}'"
-
         #query = <<-SQL
          #     SELECT id, name FROM op_batch WHERE active = '#{active}' AND TO_CHAR(start_date, 'YYYYMMDD') >='#{start_date}' AND TO_CHAR(end_date, 'YYYYMMDD') <='#{end_date}';
           #  SQL
 
         #return ActiveRecord::Base.connection.execute(query)
+
+        if batch_name != ''
+          list = Learning::Batch::OpBatch.select("id, name")
+          .where('active = true')
+          .where("name like '%#{batch_name}%'")
+        else
+          list = Learning::Batch::OpBatch.select("id, name")
+          .where('active = true')
+        end
 
         return list
 

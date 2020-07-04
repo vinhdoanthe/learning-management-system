@@ -7,13 +7,11 @@ class Adm::Learning::ActivityController < ApplicationController
 
 	def list_batch
 
-		#batch_name = params[:batch_name]
+		batch_name = params[:batch_name]
 
-		@param_form = Learning::Homework::UserAnswerService.form_paramater(params, request)
-
-		batch_params = {'company_id': 1,'start_date': '2019-01-01','end_date': '2020-01-01','active': true}
+		company_id = 0
 		
-		list_batch = Learning::Batch::OpBatchService.find_batch_by_params(batch_params)
+		list_batch = Learning::Batch::OpBatchService.find_batch_by_params(batch_name, company_id)
 
 		render json: { results: list_batch}
 	end

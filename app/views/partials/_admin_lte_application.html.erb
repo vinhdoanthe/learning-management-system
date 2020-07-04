@@ -193,7 +193,7 @@ to get the desired effect
 			});
 			
 			$('.select2').select2();
-      
+
       $('.ui_date').datepicker({
          autoclose: true,
          format: 'dd-mm-yyyy',
@@ -206,7 +206,7 @@ to get the desired effect
 
           var batch_name = $(this).val();
 
-          if(batch_name === "" || batch_name.length < 3)
+          if(batch_name === "" || batch_name.length < 5)
             return false;
 
           $.ajax({
@@ -215,9 +215,9 @@ to get the desired effect
             async:false,
             data: {batch_name: batch_name},
             success:function(data){
-              if(data.length) {
-                for(var i=0, len=data.length; i<len; i++) {
-                  var opt = $("<option></option>").attr("value", data[i]['name']);
+              if(data.results.length) {
+                for(var i=0, len=data.results.length; i<len; i++) {
+                  var opt = $("<option></option>").attr("value", data.results[i]['name']);
                   $("#datalist_batch").append(opt);
                 }
               }
