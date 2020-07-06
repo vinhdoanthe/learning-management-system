@@ -10,12 +10,16 @@
     <div class="header-right">
         <ul class="header-menu nav navbar-nav">
             <% if current_user.is_student? %>
-            <li class="dropdown" id="teky-coin" style='height: 48px'>
+            <li class="dropdown" id="teky-coin">
+              <a>
                 <span class="teky-coin-star">
-                    <%= image_tag "global/images/star.png", style:"width:25px;height:24px;"%>
-                    &nbsp <%= number_with_delimiter(current_user.star.to_i, delimiter: ".") %>
-                </span><span>&#9474;</span>
-                <span class="teky-coin-point"><%= number_with_delimiter(current_user.coin.to_i, delimiter: ".")%></span><span class="teky-coin-text"><%= t('topbar.coin') %></span>
+                  <%= image_tag "global/images/star.png", style:"width:25px;height:24px;"%>
+                  &nbsp <%= number_with_delimiter(current_user.star.to_i, delimiter: ".") %>
+                </span>              
+              <span>&#9474;</span>
+              <span class="teky-coin-point"><%= number_with_delimiter(current_user.coin.to_i, delimiter: ".")%></span>
+              <span class="teky-coin-text"><%= t('topbar.coin') %></span>
+              </a>
             </li>
             <% end%>
             <li class="dropdown" id="notifications-header">
@@ -27,7 +31,8 @@
               <% if params[:locale] == "en" %>
                 <a id="li-language" href="" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
                     <%= image_tag "global/images/flags/usa.png", style:"width:34px;"%>
-                    <span>English</span>
+                    <span class="flag">English</span>
+                    <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                   <li>
@@ -36,8 +41,9 @@
                 </ul>
               <% else %>
                 <a id="li-language" href="" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
-                    <%= image_tag "global/images/flags/vietnam.png", style:"width:34px;"%>
-                    <span>Việt Nam</span>
+                    <%= image_tag "global/images/flags/vietnam.png", style:"width:34px;", class:"icon-flag"%>
+                    <span class="flag">Việt Nam</span>
+                    <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                   <li>

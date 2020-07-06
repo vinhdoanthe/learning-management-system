@@ -407,7 +407,7 @@ a.scrollup:hover {
   -moz-transition: color 0.2s ease-out 0;
   -webkit-transition: color 0.2s ease-out 0;
   background: #ffffff;
-  height: 50px;
+  height: 60px;
   transition: color 0.2s ease-out 0;
   position: relative;
 }
@@ -421,7 +421,7 @@ a.scrollup:hover {
 }
 .topbar .header-left .topnav {
   float: left;
-  height: 50px;
+  height: 60px;
   margin: 0;
 }
 .topbar .header-left .topnav .menutoggle {
@@ -430,10 +430,10 @@ a.scrollup:hover {
   cursor: pointer;
   float: left;
   font-size: 22px;
-  height: 50px;
+  height: 60px;
   position: relative;
   text-decoration: none !important;
-  width: 50px;
+  width: 60px;
 }
 .topbar .header-left .topnav .menutoggle i {
   display: inline-block;
@@ -1199,7 +1199,7 @@ a.scrollup:hover {
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.03);
 }
 .topbar .header-right .header-menu.navbar-nav > li > a {
-  line-height: 50px;
+  line-height: 60px;
   padding-bottom: 0;
   padding-top: 0;
 }
@@ -1362,7 +1362,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   background-color: #2b2e33;
   left: 0;
   position: absolute;
-  top: 50px;
+  top: 60px;
   bottom: 0;
   width: 240px;
   z-index: 100;
@@ -1381,7 +1381,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 }
 .sidebar .logopanel {
   background: #202226;
-  height: 50px;
+  height: 60px;
   left: 0;
   padding: 10px;
   position: fixed;

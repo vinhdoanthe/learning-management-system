@@ -421,7 +421,7 @@ a.scrollup:hover {
 }
 .topbar .header-left .topnav {
   float: left;
-  height: 50px;
+  height: 60px;
   margin: 0;
 }
 .topbar .header-left .topnav .menutoggle {
@@ -430,10 +430,10 @@ a.scrollup:hover {
   cursor: pointer;
   float: left;
   font-size: 22px;
-  height: 50px;
+  height: 60px;
   position: relative;
   text-decoration: none !important;
-  width: 50px;
+  width: 60px;
 }
 .topbar .header-left .topnav .menutoggle i {
   display: inline-block;
@@ -1091,7 +1091,7 @@ a.scrollup:hover {
   text-decoration: none;
 }
 .topbar .header-right .header-menu #language-header .dropdown-menu {
-  max-width: 140px !important;
+  /*max-width: 140px !important;*/
   min-width: 70px !important;
   width: 130px !important;
 }
@@ -1381,7 +1381,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 }
 .sidebar .logopanel {
   background: #202226;
-  height: 50px;
+  height: 60px;
   left: 0;
   padding: 10px;
   position: fixed;
