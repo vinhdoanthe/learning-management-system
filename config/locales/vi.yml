@@ -37,6 +37,10 @@ vi:
     class_list: "Danh sách lớp học"
     marking: "Chấm bài"
     question_answer: "Hỏi - Đáp"
+    my_projects: 'Sản phẩm của tôi'
+    top_achievement: 'Top thành tích'
+    redeem: 'Đổi điểm lấy quà'
+    refer_friend: 'Giới thiệu bạn bè'
   config:
     general_info: "Thông tin chung"
     parent_info: "Thông tin phụ huynh"

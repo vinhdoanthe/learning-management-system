@@ -37,6 +37,10 @@ en:
     class_list: "Class list"
     marking: "Marking"
     question_answer: "Question Answer"
+    my_projects: 'My Projects'
+    top_achievement: 'Top Achievement'
+    redeem: 'Redeem'
+    refer_friend: 'Refer friend'
   config:
     general_info: "General information"
     parent_info: "Parent information"

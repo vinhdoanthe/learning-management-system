@@ -7,7 +7,7 @@
 //=require rails_admin/custom/ckeditor_ajax.js
 //=require bootstrap
 //=require jquery-fileupload
-//
+//=require custom_js/custom_ui.js
 var waitingdialog = waitingdialog || (function ($) {
   'use strict';
   var $dialog = $(

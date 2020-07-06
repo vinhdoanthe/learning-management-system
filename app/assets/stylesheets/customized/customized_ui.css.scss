@@ -1,0 +1,65 @@
+.sidebar {
+  .logopanel {
+    height: 60px !important;
+  }
+  .sidebar-inner {
+    .mCSB_container {
+      margin-right: 0;
+      .noti-avatar {
+        padding-top: 20px;
+        ul {
+          li {
+            img {
+              width: 40px !important;
+              height: 40px;
+            }
+            span {
+              margin-top: 0
+            }
+            span.public_profile {
+              margin-left: 40px;
+              margin-top: 0px;
+              label {
+                font-size: 14px;
+                font-family: 'Montserrat-Bold'
+              }
+              p {
+                font-size: 14px;
+                color: white;
+                font-family: 'Montserrat-Thin';
+              }
+            }
+          }
+        }
+      }
+      .noti-nav {
+        padding: 10px 0 0px;
+        margin-bottom: 0px;
+        border-bottom: 1px solid #414348;
+
+      }
+    }
+  }
+  .mCS_destroyed {
+    width: 60px;
+  }
+}
+.img-changes {
+  margin-right: 20px !important
+}
+.activea {
+  a {
+    span {
+      padding-left: 20px !important
+    }
+  }
+}
+.noti-nav {
+  margin-bottom: 0 !important;
+}
+.user_full_name_over{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
