@@ -111,6 +111,7 @@ vi:
     no_lesson: "Chưa có buổi học nào"    
     batch:
       type: "Loại lớp học"
+      batch_time: "Thời gian học"
       name: "Lớp học"
       code: "Mã lớp"
       center: "Trung tâm"

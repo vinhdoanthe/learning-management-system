@@ -107,6 +107,7 @@ en:
     no_lesson: "No lesson yet"
     batch:
       type: "Batch type"
+      batch_time: "Batch time"
       name: "Batch name"
       code: "Batch code"
       center: "Center"

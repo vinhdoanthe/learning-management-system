@@ -22,6 +22,10 @@
   src: url('../fonts/Quicksand-Bold.ttf');
 }
 @font-face {
+  font-family: 'Montserrat';
+  src: url('../fonts/Quicksand-Regular.ttf');
+}
+@font-face {
   font-family: 'Montserrat-Italic';
   src: url('../fonts/Quicksand-SemiBold.ttf');
 }

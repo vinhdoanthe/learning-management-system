@@ -14,6 +14,8 @@ module Learning
 
       def done_homework? user, session
         return { state: 'Không có bài tập', progres: '' } if session.op_lession.blank?
+
+       # user_answers_info = Learning::Homework::UserAnswer.joins('left join user_questions as uq on uq.id = user_answers.user_question_id').joins('left join questions as q on q.id = uq.question_id').joins('left join op_lession as lesson on lesson.id = q.op_lession_id').joins('left join op_session as session on session.lession_id = lesson.id').where('session.id = ? and uq.student_id = ?', session.id, user.id).pluck(:id, :user_question_id, :state)
         questions = session.op_lession.questions
         user_questions = Learning::Homework::UserQuestion.where(student_id: user.id, question_id: questions).pluck(:id)
         user_answers = Learning::Homework::UserAnswer.where(user_question_id: user_questions).group_by{ |answers| answers.user_question }

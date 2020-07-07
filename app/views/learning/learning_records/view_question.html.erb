@@ -60,7 +60,7 @@
                       </ul>
                     </div>
                     <div class="btn-submit">
-                      <a type="submit" data-toggle="modal" data-target="#modal-basic" class="btn btn-primary btn-embossed bg-5DC2A7" id='answer_the_question' data-remote='true'><img src="/global/images/submit.png" alt=""><%= t('homework.submit') %></a>
+                      <a type="submit" data-toggle="modal" data-target="#modal-basic" class="btn btn-primary btn-embossed bg-5DC2A7" id='answer_the_question' data-remote='true'><img style='margin-right: 5px' src="/global/images/submit.png" alt=""><%= t('homework.submit') %></a>
                     </div>
                     <div class="modal fade" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true"></div>
                   </div>
@@ -84,6 +84,16 @@
   </div>
 </div>
 
+<style>
+  .question_select {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  #answer_the_question {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+</style>
 <script>
   $('.homework_video_link').on('click', function(){
     session_id = $(this).data('session')
