@@ -141,7 +141,8 @@
 	color: #7E858E;
 	font-size: 14px;
 	font-family: 'Montserrat-Medium';
-	display: inline-block;margin-left: 5px;
+	display: inline-block;
+	margin-left: -5px;
 }
 .table-link tbody tr td a img{
 width: 25px;
