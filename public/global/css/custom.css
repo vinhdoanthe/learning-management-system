@@ -119,13 +119,11 @@
     color: #fff !important;
     padding: 5px 10px;
 }
-
 .bo-table{
 	border: 1px solid #D7DFE9 !important;
     padding: 10px 15px !important;
     border-radius: 10px;
 }
-
 .filter-box{}
 .filter-box label.filter-title{
 	font-size: 15px;
@@ -134,8 +132,6 @@
 	margin: 20px 0;
 	text-transform: uppercase;
 }
-
-
 .table-link{}
 .table-link tbody tr td a{
 	color: #7E858E;
@@ -165,14 +161,16 @@ width: 25px;
 }
 .form-content{}
 .fc-header{
-	border-bottom: 2px solid #D7DFE9;
-	    padding: 10px 0 15px;
-	    position: relative;
+	border-bottom: 1px solid #D7DFE9;
+	/*padding: 10px 0 15px;*/
+	position: relative;
 }
 .fc-header h3{
 	color: #000;
 	font-size: 14px;
 	font-family: 'Montserrat-Bold';
+	padding-top: 20px;
+	padding-bottom: 30px;
 }
 .fc-header .fc-step{
 	position: absolute;
@@ -210,7 +208,6 @@ width: 25px;
 	right: 0;
 	top: 25%;
 }
-
 .table-star img{
 	width: 20px;
 	margin-right: 5px;
@@ -344,8 +341,6 @@ width: 25px;
 .fc-other .fco-answ .fcoa-con .line-textarea4{
     bottom: 2px;
 }
-
-
 /* The check-multi */
 .check-multi {
   display: block;
@@ -1776,8 +1771,9 @@ position: absolute;
 }
 
 .box-product{
-	margin-top: 20px;
+	/*margin-top: 20px;*/
 }
+
 .prod-detail{
 	border: 1px solid #dcdcdc;
 	border-radius: 5px;
@@ -1861,11 +1857,18 @@ position: absolute;
 	top: -4px;
 }
 
-.prod-detail .prod-text{
-	padding: 20px 10px;
+.prod-detail .prod-text {
+	padding: 20px 10px !important ;
 	display: inline-block;
     width: 100%;
 }
+
+.panel-content .box-product .project-info ul {
+	padding: 10px !important ;
+	display: inline-block;
+    width: 100%;
+}
+
 .prod-detail .prod-text label{
 	margin-bottom: 10px;
 }

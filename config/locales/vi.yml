@@ -11,6 +11,9 @@ vi:
     apply: "Áp dụng"
     see: "Xem"
     back_to_login: "Quay lại đăng nhập"
+    see_project: "Xem sản phẩm"
+    share: "Chia sẻ"
+    complete: "Hoàn thiện"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
