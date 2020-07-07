@@ -1,46 +1,6 @@
 class User::OpenEducat::OpStudentsService
   def self.get_attendance_report student_id
-    report_objects = []
-    op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id).uniq.to_a
-    last_sessions = []
-    op_student_courses.each do |op_student_course|
-      subject_ids = op_student_course.op_subjects.pluck(:id).uniq.compact
-      batch_code = op_student_course.op_batch.code
-      subject_ids.each do |subject_id|
-        sessions = Learning::Batch::OpBatchService.get_sessions(op_student_course.batch_id, student_id, [subject_id])
-
-        done_sessions = sessions.select { |t| t.state == 'done' }
-        if done_sessions.present?
-          lastest_session = done_sessions.max { |t| t.start_datetime } 
-          last_sessions << lastest_session
-        end
-
-        next if sessions.empty?
-        count_object = Learning::Batch::OpSessionsService.report_attendance(sessions, student_id)
-        next if count_object.empty?
-        subject = Learning::Course::OpSubject.where(id: subject_id).first
-        subject_level = subject.level
-        course_name = subject.op_course.name
-        report_object = {
-          :batch_code => batch_code,
-          :subject_level => subject_level,
-          :course_name => course_name,
-          :count => count_object
-        }
-        report_objects << report_object
-      end
-    end
-    
-    if last_sessions.present?
-      active_session = last_sessions.flatten.compact.max { |t| t.start_datetime }
-      active_batch_code = active_session.op_batch.code
-      subject_level = Learning::Course::OpSubject.where(id: active_session.subject_id).first.level
-      active_index = report_objects.find_index { |t| (t.values.include? active_batch_code) && (t.values.include? subject_level) }
-      report_objects.unshift (report_objects[active_index])
-      report_objects.delete_at(active_index + 1)
-    end
-
-    report_objects
+    Learning::Batch::Report::StudentAttendanceReport.new(student_id).subject_student_attendance_reports
   end
 
   def self.batch_state student
@@ -51,8 +11,25 @@ class User::OpenEducat::OpStudentsService
     batch_states
   end
 
+  def self.batch_subject_state student_id = nil, batch_id = nil, subject_id = nil, sessions = []
+    return nil if student_id.nil? or batch_id.nil? or subject_id.nil?
+    op_batch = Learning::Batch::OpBatch.where(id: batch_id).first
+    return nil if op_batch.nil?
+    if sessions.empty?
+      sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_id).to_a 
+    end 
+    if op_batch.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE
+      status = Learning::Constant::Batch::StudentSubject::STATE_SAVE
+    elsif op_batch.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF
+      status = Learning::Constant::Batch::StudentSubject::STATE_OFF
+    else
+      tobe_sessions = sessions.select {|session| session.state == (Learning::Constant::Batch::Session::STATE_DRAFT or session.state == Learning::Constant::Batch::Session::STATE_CONFIRM)}
+      status = (tobe_sessions.empty? ? Learning::Constant::Batch::StudentSubject::STATE_OFF : Learning::Constant::Batch::StudentSubject::STATE_ON)
+    end
+    status
+  end
+
   def student_homework student, params
-    # binding.pry
     if params[:session].present?
       op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student.id)
       active_session = Learning::Batch::OpSession.where(id: params[:session]).first
@@ -82,64 +59,6 @@ class User::OpenEducat::OpStudentsService
       { errors: true }
     end
   end
-
-  # def self.student_homework params, student
-  #   binding.pry
-  #   student_subject_id = student.op_sessions.pluck(:subject_id).uniq
-  #   student_batch_ids = student.op_batches.pluck(:id).uniq
-  #   show_video = false
-
-  #   if params[:session].present?
-  #     session = Learning::Batch::OpSession.find(params[:session])
-  #     batch = session.op_batch
-  #     course = batch.op_course
-  #     sessions = batch.op_sessions.where(subject_id: student_subject_id)
-  #     batches = course.op_batches.where("op_batch.id IN (#{student_batch_ids.join(', ')})")
-  #     show_video = true
-  #   else
-  #     if params[:course].blank? && params[:batch].blank? && params[:subject].blank?
-  #       session = student.op_sessions.where('end_datetime <= ? AND op_session.state = ?', Time.now, Learning::Constant::Batch::Session::STATE_DONE).order(start_datetime: :DESC).first
-  #       session = student.op_sessions.first if session.blank?
-  #       return { errors: 'Học sinh chưa có lớp học nào' } if session.blank?
-  #       batch = session.op_batch
-  #       sessions = student.op_sessions.where(batch_id: batch.id)
-  #       course = batch.op_course
-  #       batches = course.op_batches.where(id: student_batch_ids).uniq
-  #     else
-  #       course = Learning::Course::OpCourse.find(params[:course])
-  #       batches = course.op_batches.where("op_batch.id IN (#{student_batch_ids.join(', ')})")
-  #       batch_ids = batches.pluck(:id)
-
-  #       if batch_ids.include? params[:batch].to_i
-  #         batch = batches.find(params[:batch])
-  #         sessions = batch.op_sessions.where(subject_id: student_subject_id)
-  #         session = sessions.where('end_datetime <= ? AND op_session.state = ?', Time.now, Learning::Constant::Batch::Session::STATE_DONE).order(start_datetime: :DESC).first
-  #         session = sessions.first if session.blank?
-  #       else
-  #         session = student.op_sessions.where('op_session.course_id = ? AND end_datetime <= ? AND op_session.state = ?', course.id, Time.now, Learning::Constant::Batch::Session::STATE_DONE).order(start_datetime: :DESC).first
-  #         session = student.op_sessions.where(course_id: course.id).first if session.blank?
-  #         batch = session.op_batch
-  #         sessions = batch.op_sessions.where(subject_id: student_subject_id)
-  #       end
-  #     end
-  #   end
-
-  #   subject = session.op_subject
-  #   subjects = []
-  #   sessions.each{|session| subjects << session.op_subject}
-  #   subjects = subjects.uniq.sort_by{|s| s.level}
-
-  #   if params[:subject].present?
-  #     subject = Learning::Course::OpSubject.find(params[:subject])
-  #     sessions = sessions.where(subject_id: subject.id)
-  #     session = sessions.order(start_datetime: :DESC).first 
-  #   end
-
-  #   sessions = sessions.where(subject_id: subject.id).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC)
-  #   lesson = session.op_lession
-
-  #   {batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, show_video: show_video, errors: '', lesson: lesson}
-  # end
 
   def self.get_comming_soon_session(student_id)
     coming_soon_session = nil
@@ -175,7 +94,7 @@ class User::OpenEducat::OpStudentsService
     if !coming_soon_session.lession_id.nil?
       coming_soon_lesson = coming_soon_session.op_lession
     else
-    # find last done session of a student
+      # find last done session of a student
       last_att_line = Learning::Batch::OpAttendanceLine.where(student_id: student_id, batch_id: coming_soon_session.batch_id).last
       return nil if last_att_line.nil?
       att = last_att_line.op_attendance_sheet
@@ -281,5 +200,4 @@ class User::OpenEducat::OpStudentsService
 
     [batch_ids, subject_ids]
   end
-
 end

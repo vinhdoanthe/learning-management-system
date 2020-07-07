@@ -391,6 +391,7 @@ module User
           @op_student = current_user.op_student
         end
       end
+
     end
   end
 end
