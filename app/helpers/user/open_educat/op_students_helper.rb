@@ -77,7 +77,7 @@ module User
         end
 
         lesson_id = lesson_id.compact.uniq
-        questions = Learning::Homework::UserQuestion.joins(:question).where(student_id: @student.id).where(questions: { op_lession_id: lesson_id})
+        questions = Learning::Homework::UserQuestion.joins(:question).where(student_id: student.id).where(questions: { op_lession_id: lesson_id})
 
         user_answers_count = Learning::Homework::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
         (questions.count - user_answers_count).to_s

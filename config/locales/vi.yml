@@ -125,7 +125,7 @@ vi:
       to: "đến"
       at: "tại cơ sở"
   my_class:
-    information: "Xem thông tin"
+    information: "Xem lại"
     come_in: "Vào lớp"
     detail:
       class_info: "Thông tin lớp học"

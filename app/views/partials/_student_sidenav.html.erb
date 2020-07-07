@@ -18,7 +18,7 @@
             </span>
             <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
           </a>
-          <%# <%= link_to '<b class="color-5DC2A7 public_profile">Public Profile</b>'.html_safe , user_open_educat_op_students_public_profile_path(current_user.student_id) %1> %>
+          <%= link_to '<b class="color-5DC2A7 public_profile">Public Profile</b>'.html_safe , user_open_educat_op_students_public_profile_path(current_user.student_id), id: 'public_profile' %>
         </li>
       </ul>
     </div>    
