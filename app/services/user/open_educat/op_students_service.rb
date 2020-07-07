@@ -23,7 +23,7 @@ class User::OpenEducat::OpStudentsService
     elsif op_batch.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF
       status = Learning::Constant::Batch::StudentSubject::STATE_OFF
     else
-      tobe_sessions = sessions.select {|session| session.state == (Learning::Constant::Batch::Session::STATE_DRAFT or session.state == Learning::Constant::Batch::Session::STATE_CONFIRM)}
+      tobe_sessions = sessions.select {|session| (session.state == Learning::Constant::Batch::Session::STATE_DRAFT or session.state == Learning::Constant::Batch::Session::STATE_CONFIRM)}
       status = (tobe_sessions.empty? ? Learning::Constant::Batch::StudentSubject::STATE_OFF : Learning::Constant::Batch::StudentSubject::STATE_ON)
     end
     status

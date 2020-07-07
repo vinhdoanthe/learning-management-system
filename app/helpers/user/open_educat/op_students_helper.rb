@@ -60,11 +60,6 @@ module User
       end
 
       def count_homework user
-        # questions = Learning::Homework::UserQuestion.where(student_id: user.id).pluck(:id)
-        # questions_count = questions.count
-
-        # user_answers_count = Learning::Homework::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
-        # (questions_count - user_answers_count).to_s
         student = user.op_student
         op_student_course_ids = student.op_student_courses.pluck(:id)
         op_session_students = Learning::Batch::OpSessionStudent.where(student_course_id: op_student_course_ids)
@@ -72,7 +67,7 @@ module User
 
         op_session_students.each do |st|
           session = st.op_session
-          # lesson_id << session.lession_id if session.state != 'cancel'
+          next if session.nil?
           lesson_id << session.lession_id if session.state != 'cancel'
         end
 
@@ -210,7 +205,7 @@ module User
             'title' => "#{t('sidebar.my_projects')}", 
             'right_content' => ''
           },
-          {'path' => '#', 
+          {'path' => social_community_leaders_path, 
            'icon' => 'top.png',
             'title' => "#{t('sidebar.top_achievement')}", 
             'right_content' => ''

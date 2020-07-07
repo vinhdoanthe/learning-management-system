@@ -6,8 +6,8 @@
           <%= image_tag('global/images/star.png') %>
         </span>
         <p>
-        <b>0</b> ĐIỂM<br/>
-        <b>0</b> TEKY ĐỒNG
+        <b><%= number_with_delimiter(public_user.star, :delimiter => '.') %></b> ĐIỂM<br/>
+        <b><%= number_with_delimiter(public_user.coin, :delimiter => '.') %></b> TEKY ĐỒNG
         </p>
       </div>
     </li>
@@ -20,7 +20,7 @@
 
         <% user = User::Account::User.where(student_id: @op_student.id).first %>
         <b><%= count_homework user %></b> BÀI TẬP VỀ NHÀ<br/>
-        <b>0</b> DỰ ÁN ĐÃ PHÁT TRIỂN
+        <b><%= count_sc_project %></b> DỰ ÁN ĐÃ PHÁT TRIỂN
         </p>
       </div>
     </li>
@@ -30,8 +30,8 @@
           <%= image_tag('global/images/laurel-wreath.png') %>
         </span>
         <p>
-        <b>0</b> CHỨNG NHẬN<br/>
-        <b>0</b> CHỨNG CHỈ
+        <b><%= count_achievement %></b> GIẢI THƯỞNG<br/>
+        <b><%= count_badge %></b> HUY HIỆU
         </p>
       </div>
     </li>
@@ -41,7 +41,7 @@
           <%= image_tag('global/images/prize.png') %>
         </span>
         <p>
-        <b>0</b> QUÀ TẶNG<br/>
+        <b><%= count_redeem %></b> QUÀ TẶNG<br/>
         <br/>
         </p>
       </div>

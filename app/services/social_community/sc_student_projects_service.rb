@@ -132,7 +132,7 @@ class SocialCommunity::ScStudentProjectsService
   def social_student_projects user
     projects = SocialCommunity::ScStudentProject.where(user_id: user.id).all
     student_projects = (get_course_projects_hash projects)
-    course_ids = user.op_student.op_student_courses.pluck(:course_id)
+    course_ids = user.op_student.op_student_courses.pluck(:course_id).uniq
 
     course_projects = []
     course_ids.each do |course_id|

@@ -4,7 +4,7 @@
 
 <div class="page-content page-thin p-0">
   <section class="box-public">
-    <%= render :partial => "user/open_educat/op_students/public_profile/header_info", :locals => {public_user: public_user} %>
+    <%= render :partial => "user/open_educat/op_students/public_profile/header_info", :locals => {public_user: public_user, :count_achievement => achievements.size, :count_badge => badges.size, :count_sc_project => products.size, :count_redeem => 0} %>
     <div class="bp-main">
       <div class="bpm-head">
         <% if pp_can_change_avatar?(op_student.id) %> 

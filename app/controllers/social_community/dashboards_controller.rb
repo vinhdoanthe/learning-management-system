@@ -90,11 +90,15 @@ class SocialCommunity::DashboardsController < ApplicationController
     end 
   end
 
+  def leaders
+      @leaders, @offset = SocialCommunity::DashboardsService.leaders(params[:page])
+  end
+
   def leader_board
-    leaders = SocialCommunity::DashboardsService.community_leaders
+    @leaders = SocialCommunity::DashboardsService.community_leaders
     respond_to do |format|
       format.html
-      format.js { render 'social_community/dashboards/student/js/dashboard_leader', locals: { leaders: leaders } }
+      format.js { render 'social_community/dashboards/student/js/dashboard_leader', locals: { leaders: @leaders } }
     end
   end
 

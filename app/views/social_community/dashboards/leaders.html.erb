@@ -1,0 +1,37 @@
+<!-- Leaders' board -->
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h3 class="color-fff text-transform"><%= t('dashboard.leaders') %></h3>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <% if @leaders.empty? %>
+        <div class="no-transactions">
+          <p><%= t('dashboard.no_leaders') %></p>
+        </div>
+      <% else %>
+        <table class="table table-hover">
+          <tbody>
+            <% @leaders.each_with_index do |leader, index| %>
+              <tr>
+                <td><%= @offset + index + 1 %></td>
+                <td>
+                  <label class="color-EB9138"><%= leader.full_name %></label>
+                  <p><%= t('config.center') %> <span class="color-0654BA text-transform"><%= leader.center_name %></span></p>
+                </td>
+                <td align="right">
+                  <h2><%= leader.star %></h2>
+                </td>
+              </tr>
+            <% end %> 
+          </tbody>
+        </table>
+        <%= paginate @leaders %>
+      <% end %>
+    </div>
+  </div>
+</div>

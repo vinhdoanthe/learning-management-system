@@ -5,3 +5,4 @@ vi:
       next: "Trang Tiếp &#8594;"
       first: 'Trang đầu'
       last: "Trang Cuối"
+      truncate: "&hellip;"

@@ -13,7 +13,7 @@
   <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %> <br/>
   <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : sanitize(truncate(lesson.note, :length => 50)) %>
 </td>
-<td align="center">
+<td align="center" width='90'>
   <% attendance_line = attendance_line(session.id, current_user.op_student.id) %>
   <% if !attendance_line.nil? and attendance_line.present %>
     <span data-toggle='tooltip' title="Có đi học">
@@ -88,3 +88,8 @@
     </a>
   </span>
 </td>
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>

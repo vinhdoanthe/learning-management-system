@@ -11,6 +11,9 @@ vi:
     apply: "Áp dụng"
     see: "Xem"
     back_to_login: "Quay lại đăng nhập"
+    see_project: "Xem sản phẩm"
+    share: "Chia sẻ"
+    complete: "Hoàn thiện"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -108,6 +111,7 @@ vi:
     no_lesson: "Chưa có buổi học nào"    
     batch:
       type: "Loại lớp học"
+      batch_time: "Thời gian học"
       name: "Lớp học"
       code: "Mã lớp"
       center: "Trung tâm"
@@ -215,3 +219,13 @@ vi:
     learning_activity_management_question: "Câu hỏi"
     learning_activity_management_project: "Dự án"
     learning_activity_management_homework_list: "Danh sách bài tập về nhà chưa có câu trả lời"
+  reward:
+    you_were_reward: 'Bạn được tặng thưởng'
+    star: 'TEKY Sao'
+    coin: 'TEKY Đồng'
+    my_coin_star_transaction: 'Lịch sử thưởng điểm của tôi'
+    at: 'lúc'
+    no_transactions: 'Bạn chưa có lịch sử thưởng TEKY Sao và TEKY Đồng.'
+  dashboard:
+    leaders: 'Học sinh tiêu biểu'
+    no_leaders: 'Không có học sinh nào'
