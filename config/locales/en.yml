@@ -210,3 +210,13 @@ en:
       discussion: "Discussion"
       homework: "Homework"
       project: "Project"
+  reward:
+    you_were_reward: 'You were rewarded'
+    star: 'TEKY Star'
+    coin: 'TEKY Point'
+    my_coin_star_transaction: 'My TEKY Point and Star history'
+    at: 'at'
+    no_transactions: 'You have no TEKY Coin and Star reward.'
+  dashboard:
+    leaders: 'Outstanding Students'
+    no_leaders: 'No students'

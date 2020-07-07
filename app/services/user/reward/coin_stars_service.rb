@@ -37,9 +37,9 @@ class User::Reward::CoinStarsService
   def update_coin_star_user user_id, amount, type
     user = User::Account::User.where(id: user_id).first
     
-    if type == 'coin'
+    if type == RewardConstants::Type::TEKY_COIN
       user.coin = user.coin.to_i + amount
-    elsif type == 'star'
+    elsif type == RewardConstants::Type::TEKY_STAR
       user.star = user.star.to_i + amount
     end
 
