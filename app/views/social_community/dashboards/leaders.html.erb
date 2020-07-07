@@ -24,7 +24,7 @@
                   <p><%= t('config.center') %> <span class="color-0654BA text-transform"><%= leader.center_name %></span></p>
                 </td>
                 <td align="right">
-                  <h2><%= leader.star %></h2>
+                  <h2><%= number_with_delimiter(leader.star, :delimiter => '.') %></h2>
                 </td>
               </tr>
             <% end %> 
