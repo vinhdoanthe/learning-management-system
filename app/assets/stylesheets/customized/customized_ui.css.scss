@@ -1,0 +1,122 @@
+/*=============================== Sidebar =========================*/
+.sidebar {
+  .logopanel {
+    height: 60px !important;
+  }
+  .sidebar-inner {
+    .mCSB_container {
+      margin-right: 0;
+      .noti-avatar {
+        padding-top: 20px;
+        ul {
+          li {
+            img {
+              width: 40px !important;
+              height: 40px;
+            }
+            span {
+              margin-top: 0
+            }
+            span.public_profile {
+              margin-left: 40px;
+              margin-top: 0px;
+              label {
+                font-size: 14px;
+                font-family: 'Montserrat-Bold'
+              }
+              p {
+                font-size: 14px;
+                color: white;
+                font-family: 'Montserrat-Thin';
+              }
+            }
+          }
+        }
+        #public_profile {
+          position: absolute;
+          left: 65px;
+          padding: 0;
+          bottom: -3px;
+        }
+      }
+      .noti-nav {
+        padding: 10px 0 0px;
+        margin-bottom: 0px;
+        border-bottom: 1px solid #414348;
+
+      }
+    }
+  }
+  .mCS_destroyed {
+    width: 60px;
+  }
+}
+.img-changes {
+  margin-right: 20px !important
+}
+.activea {
+  a {
+    span {
+      padding-left: 20px !important
+    }
+  }
+}
+.noti-nav {
+  margin-bottom: 0 !important;
+}
+.user_full_name_over{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*================================= My Class ===========================*/
+.student_batch_list {
+  .spanimg{
+    img {
+      width: 100%;
+    }
+  }
+  .scl-text{
+    display: flex;
+    height: calc(100% - 250px);
+    .custom_scl-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    a {
+      background-color: #5DC2A7;
+      width: 100%;
+      height: auto !important;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: white;
+      font-weight: 600;
+      margin: 0;
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 24px;
+          margin-right: 5px;
+        }
+      }
+    }
+    .btn-stop-batch{
+      background-color: #505050;
+      box-shadow: 0px 2px 0px #000000;
+      border-radius: 5px;
+    }
+    .btn-studying-batch {
+      background-color: #5DC2A7;
+      box-shadow: 0px 2px 0px #41A6A2;
+      border-radius: 5px;
+    }
+  }
+  .custom_scl-right{
+    margin: 0;
+    height: 100%;
+  }
+}
