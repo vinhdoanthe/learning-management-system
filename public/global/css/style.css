@@ -407,7 +407,7 @@ a.scrollup:hover {
   -moz-transition: color 0.2s ease-out 0;
   -webkit-transition: color 0.2s ease-out 0;
   background: #ffffff;
-  height: 50px;
+  height: 60px;
   transition: color 0.2s ease-out 0;
   position: relative;
 }
@@ -421,7 +421,7 @@ a.scrollup:hover {
 }
 .topbar .header-left .topnav {
   float: left;
-  height: 50px;
+  height: 60px;
   margin: 0;
 }
 .topbar .header-left .topnav .menutoggle {
@@ -430,10 +430,10 @@ a.scrollup:hover {
   cursor: pointer;
   float: left;
   font-size: 22px;
-  height: 50px;
+  height: 60px;
   position: relative;
   text-decoration: none !important;
-  width: 50px;
+  width: 60px;
 }
 .topbar .header-left .topnav .menutoggle i {
   display: inline-block;
@@ -1199,7 +1199,7 @@ a.scrollup:hover {
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.03);
 }
 .topbar .header-right .header-menu.navbar-nav > li > a {
-  line-height: 50px;
+  line-height: 60px;
   padding-bottom: 0;
   padding-top: 0;
 }
@@ -1272,7 +1272,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   position: fixed;
   top: 0;
   right: 0;
-  left: 240px;
+  left: 250px;
   z-index: 801;
   z-index: 300;
   -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
@@ -1285,8 +1285,8 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 @media screen and (min-width: 1025px) {
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle {
     background: rgba(0, 0, 0, 0);
-    left: 14px;
-    top: 12px;
+    left: 18px;
+    top: 17px;
   }
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle::before {
     -moz-transform: rotate3d(0, 0, 1, 45deg);
@@ -1362,9 +1362,9 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   background-color: #2b2e33;
   left: 0;
   position: absolute;
-  top: 50px;
+  top: 60px;
   bottom: 0;
-  width: 240px;
+  width: 250px;
   z-index: 100;
 }
 .sidebar .nav > li + li {
@@ -1381,13 +1381,13 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 }
 .sidebar .logopanel {
   background: #202226;
-  height: 50px;
+  height: 60px;
   left: 0;
   padding: 10px;
   position: fixed;
   right: auto;
   top: 0;
-  width: 240px;
+  width: 250px;
   z-index: 2;
   -webkit-transition: color 0.2s ease-out;
   -moz-transition: color 0.2s ease-out;
@@ -2057,7 +2057,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   left: 0;
   padding: 0;
   position: fixed;
-  width: 240px;
+  width: 250px;
   z-index: 1000;
 }
 .sidebar .sidebar-inner .sidebar-footer .progress {
@@ -2242,7 +2242,7 @@ body:not(.sidebar-fixed, .topbar-fixed) .sidebar .logopanel {
   position: absolute;
   right: auto;
   top: -50px;
-  width: 240px;
+  width: 250px;
   z-index: 2;
 }
 body:not(.rtl) .sidebar .sidebar-inner .nav-sidebar li.active > a .fa.arrow:before {
@@ -2592,7 +2592,7 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar > li.nav-paren
   float: left;
   height: 49px;
   padding: 10px 10px 10px 40px;
-  width: 240px;
+  width: 250px;
 }
 .sidebar-hover .topnav .logopanel2 h1 {
   font-family: 'Lato', 'Open Sans', Helvetica, sans-serif;
@@ -2620,7 +2620,7 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar > li.nav-paren
 }
 .submenu-hover .sidebar .sidebar-inner .nav-sidebar .nav-parent .children {
   display: none;
-  left: 240px;
+  left: 250px;
   right: auto;
   margin-top: 0;
   min-width: 215px;
@@ -2741,7 +2741,7 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar > li.nav-paren
   }
   .sidebar-collapsed .sidebar {
     top: 49px;
-    width: 50px;
+    width: 60px;
     z-index: 300;
   }
   .sidebar-collapsed .sidebar .logopanel {
@@ -3225,7 +3225,7 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar > li.nav-paren
     overflow-x: hidden;
   }
   .sidebar-show .main-content {
-    margin-left: 240px !important;
+    margin-left: 250px !important;
     overflow: hidden;
   }
   .sidebar-show .topbar .header-left .topnav .menutoggle i:before {
@@ -3235,7 +3235,7 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar > li.nav-paren
     display: block;
   }
   .sidebar-show.fixed-topbar .topbar {
-    left: 240px !important;
+    left: 250px !important;
     overflow: hidden;
   }
   .nav-horizontal {

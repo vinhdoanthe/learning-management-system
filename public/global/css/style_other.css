@@ -19,23 +19,23 @@
 @import "../plugins/prettify/prettify.css";
 @font-face {
   font-family: 'Montserrat-Bold';
-  src: url('../fonts/Montserrat-Bold.ttf');
+  src: url('../fonts/Quicksand-Bold.ttf');
 }
 @font-face {
   font-family: 'Montserrat-Italic';
-  src: url('../fonts/Montserrat-Italic.ttf');
+  src: url('../fonts/Quicksand-SemiBold.ttf');
 }
 @font-face {
   font-family: 'Montserrat-Medium';
-  src: url('../fonts/Montserrat-Medium.ttf');
+  src: url('../fonts/Quicksand-Medium.ttf');
 }
 @font-face {
   font-family: 'Montserrat-Regular';
-  src: url('../fonts/Montserrat-Regular.ttf');
+  src: url('../fonts/Quicksand-Regular.ttf');
 }
 @font-face {
   font-family: 'Montserrat-Thin';
-  src: url('../fonts/Montserrat-Thin.ttf');
+  src: url('../fonts/Quicksand-Light.ttf');
 }
 .font-bold{font-family: 'Montserrat-Bold';}
 .font-italic{font-family: 'Montserrat-Italic';}

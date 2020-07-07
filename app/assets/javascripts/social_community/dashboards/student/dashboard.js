@@ -5,6 +5,7 @@ $(document).ready(function(){
 	get_noti_content();
   get_leader_board();
   get_attendance_report();
+  // get_teky_coin_star();
 })
 
 
@@ -49,3 +50,11 @@ function get_attendance_report() {
     dataType: 'script'
   })
 }
+
+// function get_teky_coin_star() {
+//   $.ajax({
+//     method: 'GET',
+//     url: '/user/open_educat/op_students/teky_coin_star',
+//     dataType: 'script'
+//   })
+// }

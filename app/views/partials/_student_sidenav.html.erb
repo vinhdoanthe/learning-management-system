@@ -8,16 +8,17 @@
   <div class="sidebar-inner" id="sidebar">
     <div class="noti-avatar">
       <ul class="nav nav-sidebar nav-sidebar-edit m-b-0">
-        <li class="nav-active">
+        <li class="nav-active menu_item">
           <input type="hidden" id="public_profile_id" value="<%= current_user.op_student.id %>" >
-          <a href="<%= root_path %>">
+          <a id='root-path-avatar-link' href="<%= root_path %>">
             <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
             <span class='public_profile'>
-              <label class="user_full_name"><%= current_user.op_student.full_name %></label>
+              <label  class="user_full_name_over"><%= current_user.op_student.full_name %></label>
               <p class="user_code" style="padding: 0; text-align: left">&nbsp<%= current_user.op_student.code %></p>
             </span>
+            <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
           </a>
-          <%# <%= link_to '<b class="color-5DC2A7 public_profile">Public Profile</b>'.html_safe , user_open_educat_op_students_public_profile_path(current_user.student_id) %1> %>
+          <%= link_to '<b class="color-5DC2A7 public_profile">Public Profile</b>'.html_safe , user_open_educat_op_students_public_profile_path(current_user.student_id), id: 'public_profile' %>
         </li>
       </ul>
     </div>    
