@@ -1,14 +1,15 @@
 <div class="table-responsive bo-table">
-  <div class="fc-header">
-    <h3><%= t('my_class.detail.progress.cancel_html') %></span></h3>
-  </div>
-
   <% if !cancel_sessions.nil? and !cancel_sessions.empty? %>
     <table class="table  table-link">
+      <colgroup>
+        <col width='90'>
+        <col width='140'>
+      </colgroup>
       <thead>
         <tr>
-          <th width="90">&nbsp;</th>
-          <th width="140"></th>
+          <th colspan='2'>
+            <h3><%= t('my_class.detail.progress.cancel_html') %></span></h3>
+          </th>
           <th></th>
           <th></th>
         </tr>
@@ -24,6 +25,9 @@
       </tbody>
     </table>
   <% else %>
-    <div><%= t('my_class.detail.progress.no_lesson') %></div>
+    <div class="fc-header">
+      <h3 style='padding-left: 10px'><%= t('my_class.detail.progress.cancel_html') %></span></h3>
+    </div>
+    <div style='padding-left: 10px'><%= t('my_class.detail.progress.no_lesson') %></div>
   <% end %>
 </div>
