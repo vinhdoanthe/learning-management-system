@@ -1285,8 +1285,8 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 @media screen and (min-width: 1025px) {
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle {
     background: rgba(0, 0, 0, 0);
-    left: 14px;
-    top: 12px;
+    left: 18px;
+    top: 17px;
   }
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle::before {
     -moz-transform: rotate3d(0, 0, 1, 45deg);

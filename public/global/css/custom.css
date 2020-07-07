@@ -3,6 +3,13 @@
 	padding-bottom: 70px;
     border-radius: 0 !important;
 }
+
+.main-content .page-content.page-thin .panel.panel-edits {margin-bottom: 0px;}
+
+.panel-edits .panel-heading {
+    padding:0px;
+}
+
 .ph-img{
 	width: 80px;
 	height: 80px;
@@ -19,9 +26,11 @@
 	max-width: 100%;
 	max-height: 100%;
 }
+
 .ph-text{
 	display: inline-block;
-	margin: 12px 0 0 10px;
+	/*margin: 12px 0 0 10px;*/
+	margin: 35px 0 20px 25px
 }
 .ph-text h3{
 	font-size: 18px;

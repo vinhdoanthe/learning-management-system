@@ -10,6 +10,7 @@ vi:
     back_to_my_threads: 'Quay lại danh sách câu hỏi'
     apply: "Áp dụng"
     see: "Xem"
+    back_to_login: "Quay lại đăng nhập"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
