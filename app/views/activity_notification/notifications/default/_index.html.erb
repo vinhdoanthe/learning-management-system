@@ -1,9 +1,12 @@
+<%
+unopened_notification_count = @target.unopened_notification_count(parameters)
+%>
 <div class="notification_wrapper">
   <a class="dropdown_notification">
     <p class="notification_count" id="notification_count">
     <i class="icon-bell"></i>
-      <span style="line-height: none !important" class="badge badge-danger badge-header <%= 'unopened' if @target.has_unopened_notifications?(parameters) %>">
-        <%= @target.unopened_notification_count(parameters) %>
+      <span style="line-height: none !important" class="badge badge-danger badge-header <%= 'unopened' if unopened_notification_count %>">
+        <%= unopened_notification_count %>
       </span>
     </p>
   </a>
@@ -11,18 +14,18 @@
     <div id="vuong" style=" position: absolute; width: 25px; height: 25px; background: #2b2e33;top: -7px;transform: rotate(45deg);right: 30px;"></div>
     <div class="notification_header_wrapper">
       <p class="notification_header_menu">
-      <%=  @target.unopened_notification_count(parameters) %> <%= t('notification.pending') %></p>
+      <%=  unopened_notification_count %> <%= t('notification.pending') %>
       </p>
     </div>
     <div class="notifications">
       <%= yield :notification_index %>
-    </div>
+    </div>    
     <%= link_to notifications_path_for(@target, parameters.slice(:routing_scope, :devise_default_routes)) do %>
-      <div class="notification_link_wrapper" style="height: 40px; bottom: 0; border-right: 1px solid #e5e5e5">
-        <p class="notification_link" style="font-size: 16px; line-height: 40px; height: 40px;">
-        <%= t('notification.all') %>
-        </p>
-      </div>
+    <div class="notification_link_wrapper" style="height: 40px; bottom: 0; border-right: 1px solid #e5e5e5">
+      <p class="notification_link" style="font-size: 16px; line-height: 40px; height: 40px;">
+      <%= t('notification.all') %>
+      </p>
+    </div>
     <% end %>
   </div>
 </div>

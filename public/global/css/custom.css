@@ -3200,20 +3200,14 @@ li #teky-coin a {color: #fff;}
 #teky-coin .teky-coin-point {padding-left: 7px;padding-right: 5px;}
 #teky-coin .teky-coin-star, #teky-coin .teky-coin-point {font-size:14px;font-weight: 700; color: #FFDC64;}
 .topbar .header-right .header-menu > li > a > span:not(.badge), #notifications .notification_wrapper, #notifications-header #notification_count i{line-height: 60px;}
-
 .topbar .header-right .header-menu > li > a > span:not(.badge) {display: inline-block;float: none;}
-
 ul.header-menu.nav.navbar-nav li a#li-language .icon-flag {margin-left:15px;}
-
 ul.header-menu.nav.navbar-nav li a#li-language span  {margin-right: 7px;}
 ul.header-menu.nav.navbar-nav li a#li-language span.flag  {margin-left: 7px;}
-
 .topbar .header-right .header-menu .dropdown-menu {top:59px;}
-.topbar .header-right .header-menu #language-header .dropdown-menu {
-  max-width: 100% !important;
-  min-width: 130px !important;
-  width: 100% !important;
+.topbar .header-right .header-menu #language-header .dropdown-menu {max-width: 100% !important;min-width: 130px !important;width: 100% !important;
 }
+.notification_wrapper .notification_list_wrapper .notification_header_wrapper {margin-bottom:25px;}
 
 
 
