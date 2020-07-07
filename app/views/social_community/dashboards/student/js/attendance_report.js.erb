@@ -2,9 +2,15 @@
 $('#attendance_report').html("<%= escape_javascript(render :partial => 'social_community/dashboards/student/attendance_report', :locals => {report_objects: report_objects}) %>")
 
 $(document).ready(function(){
-  <% report_objects.each_with_index do |object, index| %>
-      var chartDiv = $("#barChart<%= index %>");
-  $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;">Lớp: <span style="color: #5DC2A7"> <%= object[:course_name] %></span> | Học phần: <%= object[:subject_level] %></h4>')
+<% report_objects.each_with_index do |object, index| %>
+  var chartDiv = $("#barChart<%= index %>");
+  <% if object[:status] == Learning::Constant::Batch::StudentSubject::STATE_ON %>
+      $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;">Lớp: <span style="color: #5DC2A7"> <%= object[:batch_code] %></span> | Học phần: <%= object[:subject_level] %> </h4> <h4 class="att-report-status"> <span class="att-report-sub-active">Đang học</span></h4>')
+  <% elsif object[:status] == Learning::Constant::Batch::StudentSubject::STATE_OFF %>
+      $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;">Lớp: <span style="color: #5DC2A7"> <%= object[:batch_code] %></span> | Học phần: <%= object[:subject_level] %> </h4> <h4 class="att-report-status"> <span class="att-report-sub-done">Đã hoàn thành</span></h4>')
+  <% elsif object[:status] == Learning::Constant::Batch::StudentSubject::STATE_SAVE %>
+      $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;">Lớp: <span style="color: #5DC2A7"> <%= object[:batch_code] %></span> | Học phần: <%= object[:subject_level] %> </h4> <h4 class="att-report-status"> <span class="att-report-sub-save">Bảo lưu</span></h4>')
+  <% end %>
   var sum_<%= index %> = <%= object[:count].values.sum %>
   var myChart = new Chart(chartDiv, {
     type: 'pie',

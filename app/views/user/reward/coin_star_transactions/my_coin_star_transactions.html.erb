@@ -1,0 +1,10 @@
+<!-- render my_coin_star_transaction -->
+<div class="page-content page-thin">
+  <h3 class='thread-list-title'><%= t('qa.all_threads') %></h3>
+  <div>
+    <!-- qa_threads -->
+    <% @coin_star_transactions.each do |coin_star_transaction| %>
+    <% end %> 
+  </div>
+  <%= paginate @coin_star_transactions %>
+</div>
