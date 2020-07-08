@@ -1,6 +1,12 @@
-<h3 class="dis-inlineblock"><%= course.name %></h3><br/>
+<h3 style='padding: 0' class="dis-inlineblock"><%= course.name %></h3><br/>
 <p class="dis-inlineblock">Học phần <%= subject.level %> - <span id='video_lesson_name' class='video-lesson-name'><%= lesson.name if lesson.present? %> </span></p>
 <ul class="lv-btn">
-  <!--  <li><a type="submit" href='' class="do_video_homework btn bg-5DC2A7" >Làm bài tập</a></li> -->
+  <% has_lesson_homework = false %>
+  <% has_lesson_homework = Learning::Material::Question.joins(:user_questions).where(user_questions: { student_id: current_user.id }).where(op_lession_id: lesson.id).first if lesson.present? %>
+  <% if has_lesson_homework.present? %>
+  <li><a type="submit" href='/learning/view_question?session_id=<%= session.id %>' class="do_video_homework btn bg-5DC2A7" >Làm bài tập</a></li>
+<% else %>
+  <li><a type="submit" style='opacity: 0.5'  class="do_video_homework btn bg-5DC2A7" >Làm bài tập</a></li>
+<% end %>
   <!-- <li><button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7 width-100 text-transform font-bold" >Nội dung & kiến thức học được</button></li> -->
 </ul>

@@ -6,8 +6,8 @@
           <%= image_tag('global/images/star.png') %>
         </span>
         <p>
-        <b><%= number_with_delimiter(public_user.star, :delimiter => '.') %></b> ĐIỂM<br/>
-        <b><%= number_with_delimiter(public_user.coin, :delimiter => '.') %></b> TEKY ĐỒNG
+        <b><%= number_with_delimiter(public_user.star.to_i, :delimiter => '.') %></b> ĐIỂM<br/>
+        <b><%= number_with_delimiter(public_user.coin.to_i, :delimiter => '.') %></b> TEKY ĐỒNG
         </p>
       </div>
     </li>
@@ -29,9 +29,9 @@
         <span>
           <%= image_tag('global/images/laurel-wreath.png') %>
         </span>
-        <p>
-        <b><%= count_achievement %></b> GIẢI THƯỞNG<br/>
-        <b><%= count_badge %></b> HUY HIỆU
+        <p class="t-uppercase">
+        <b><%= count_achievement %></b> <%= t('public_profile.achievements') %><br/>
+        <b><%= count_badge %></b> <%= t('public_profile.badges') %>
         </p>
       </div>
     </li>

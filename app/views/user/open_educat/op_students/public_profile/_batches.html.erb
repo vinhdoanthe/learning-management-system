@@ -1,0 +1,27 @@
+<div class="bpc-product">
+  <table class="table table-sm">
+    <tbody>
+      <% op_student_courses.each do |op_student_course| %>
+        <tr>
+          <td>
+            <p><%= op_student_course.op_course.name %></p>
+            <p class="batch-code"><%= op_student_course.op_batch.code %></p>
+          </td>
+          <td class="t-align-r">
+            <%= Learning::Batch::OpStudentCourseDecorator.new(op_student_course).display_register_subject %>
+            <p class="fsize-10 t-align-r"><%= op_student_course.op_batch.op_batch_type.name %></p> 
+          </td>
+          <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
+            <td align="right"><span class="label-edit label label-primary tsize-10 t-uppercase"><%= t('learning.batch.status.studying') %></span></td>
+          <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
+            <td align="right"><span class="label-edit label label-danger tsize-10 t-uppercase"><%= t('learning.batch.status.stop') %></span></td>
+          <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
+            <td align="right"><span class="label-edit label label-stop tsize-10 t-uppercase"><%= t('learning.batch.status.reversation') %></span></td>
+          <% else %>
+            <td align="right"><span class="label-edit label label-stop tsize-10 t-uppercase"><%= t('learning.batch.status.update') %></span></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

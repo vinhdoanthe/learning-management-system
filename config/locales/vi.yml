@@ -43,7 +43,6 @@ vi:
     question_answer: "Hỏi - Đáp"
     my_projects: 'Sản phẩm của tôi'
     top_achievement: 'Top thành tích'
-    redeem: 'Đổi điểm lấy quà'
     refer_friend: 'Giới thiệu bạn bè'
   config:
     general_info: "Thông tin chung"
@@ -122,6 +121,8 @@ vi:
         stop: "nghỉ học"
         reversation: 'bảo lưu'
         update: 'Đang cập nhật'
+      op_student_course:
+        registered_subject: 'Đăng ký %{count_registered_subjects}/%{count_total_subjects} học phần'
     session:
       no_session: "Không có buổi học nào"
       student_coming: "LỊCH HỌC TIẾP THEO"
@@ -206,8 +207,16 @@ vi:
     notice: "Thông báo"
     redeem:
       name: "Đổi quà"
+      redeem_points: "Đổi điểm"
       coin_star: "Giao dịch điểm thưởng"
       redeem: "Giao dịch đổi quà"
+      how_to_check_it: "Làm sao để kiếm được"
+      category: "Danh mục"
+      category_redeem: "Danh mục quà"
+      redeem_infomation: "Thông tin đổi quà"
+      redeem_color: "Màu sắc"
+      redeem_quantily: "Số lượng"
+      redeem_available: "Kích cỡ"
     refer_friend: "Giới thiệu bạn bè"
     learning_activity:
       name: "Hoạt động học tập"
@@ -227,5 +236,22 @@ vi:
     at: 'lúc'
     no_transactions: 'Bạn chưa có lịch sử thưởng TEKY Sao và TEKY Đồng.'
   dashboard:
-    leaders: 'Học sinh tiêu biểu'
+    leaders:
+      title: 'Học sinh tiêu biểu'
+      name: 'Tên học sinh'
+      teky_star: 'TEKY Sao'
+      teky_coin: 'TEKY Đồng'
     no_leaders: 'Không có học sinh nào'
+  public_profile:
+    center: 'Học tại'
+    achievements: 'Giải thưởng'
+    no_achievements: 'Chưa có giải thưởng'
+    gender: 'Giới tính'
+    address: 'Địa chỉ'
+    batches: 'Khóa học'
+    badges: 'Huy hiệu'
+    achievements_certificates: 'Thành tích và Giải thưởng'
+    featured_photos: 'Hình ảnh'
+    products: 'Sản phẩm'
+    gender_male: 'Nam'
+    gender_femail: 'Nữ'

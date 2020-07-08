@@ -94,6 +94,8 @@ $(document).ready(function () {
     $('.notice_collapse').collapse('hide');
     $(this).closest('.notice_collapse').collapse('show');
   })
+
+  $('.fl_wrap.m-t-0').append('<span class="fa fa-caret-down" style="position: absolute; right: 20px; top: 40%"></span>');
 });
 
 window.onbeforeunload = function (e) {
