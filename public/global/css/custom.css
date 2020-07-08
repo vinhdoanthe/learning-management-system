@@ -126,7 +126,7 @@
 }
 .filter-box{}
 .filter-box label.filter-title{
-	font-size: 15px;
+	font-size: 14px;
 	color: #000;
 	font-family: 'Montserrat-Bold';
 	margin: 20px 0;
@@ -813,21 +813,26 @@ font-family: sans-serif;
 	padding: 25px 0;
 }
 .ra-detail h2{}
+.ra-detail h2.number-coin {font-size: 42px;}
+.ra-detail .teky-coin-text {font-family: 'Montserrat-Bold'}
+.ra-detail .how_to_check_it {font-size: 14px; font-weight: normal;}
+
 .ra-detail p{
 	text-align: center;
 }
 .ra-detail p span{}
-.ra-detail a{
-	color: #0654BA;
-	font-family: 'Montserrat-Bold';
-	display: inline-block;
-	margin-top: 14px;
-}
+.ra-detail a{color: #0654BA;font-family: 'Montserrat-Bold';display: inline-block;margin-top: 14px;}
 
-.redem-filter{
-	padding: 20px 0;
-	border-bottom: 2px solid #D7DFE9
-}
+.rt-detail.product_infomation .product-brand {font-size: 14px; font-weight: normal;margin-bottom: 5px;}
+.rt-detail.product_infomation .product-name {font-size: 26px; font-weight: normal; }
+
+.rt-detail.product_infomation .rtd-text {margin-top:35px;}
+.rt-detail.product_infomation .product-option {margin-top:25px;}
+.rt-detail.product_infomation .product-option label{font-weight: normal;}
+
+.product_item {background-color: #DDD;}
+
+.redem-filter {padding: 20px 0px 10px 0px;border-bottom: 2px solid #D7DFE9}
 
 .redem-tab{
 	margin-top: 20px;
@@ -857,10 +862,15 @@ font-family: sans-serif;
 }
 .rtd-img{
 	height: 460px;
+	color: #ccc;
 	overflow: hidden;
 }
+
+.rtd-img .owl-dots {}
+
+
 .rtd-text{
-	padding: 0 15px;
+	/*padding: 0 15px;*/
 }
 .rtdt-left{
 	width: 50%;
@@ -871,25 +881,22 @@ font-family: sans-serif;
 .rtdt-left ul{
 	margin-top: 20px
 }
-.rtdt-left ul li{
+.rtdt-left ul li, .right-color-li ul li{
 	display: inline-block;
 }
-.rtdt-left ul li .check-multi{
+.rtdt-left ul li .check-multi, .right-color-li ul li .check-multi{
 	width: auto;
 	margin-top: 0;
 	padding-left: 30px
 }
-.rtdt-left ul li .check-multi .checkmark{
-	top: 0px;
-	border: 0;
-	    width: 29px;
-    height: 29px;
-}
+
+.right-color-li ul li .check-multi {margin: 0;}
+.rtdt-left ul li .check-multi .checkmark {top: 0px;border: 0;width: 29px;height: 29px;}
 .rtdt-left ul li .check-multi:hover > input ~ .checkmark{}
-.rtdt-left ul li .check-multi > input:checked ~ .checkmark:before{
-position: absolute;
-    content: '';
-    background: url(../images/check-white.svg) no-repeat;
+.rtdt-left ul li .check-multi > input:checked ~ .checkmark:before {
+	position: absolute;
+	content: '';
+	background: url(../images/check-white.svg) no-repeat;
     width: 20px;
     height: 20px;
     top: 9px;
@@ -3191,6 +3198,8 @@ ul.fcv-small li:hover video{
 .list-lightbox .owl-nav button span{font-size: 50px;}
 
 /*** Custom top bar **/
+
+span.teky-coin-text, span.teky-star-text {color: #FFDC64 !important; text-transform: uppercase;}
 #teky-coin .teky-coin-star {padding-right: 18px;padding-left: 18px;}
 .header-menu.navbar-nav li{line-height: 25px;}
 #notifications-header, #teky-coin, #language-header, #teky-logout {height: 60px;line-height: 60px;border-left: 1px solid #61D5D1;}

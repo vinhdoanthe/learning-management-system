@@ -43,7 +43,6 @@ vi:
     question_answer: "Hỏi - Đáp"
     my_projects: 'Sản phẩm của tôi'
     top_achievement: 'Top thành tích'
-    redeem: 'Đổi điểm lấy quà'
     refer_friend: 'Giới thiệu bạn bè'
   config:
     general_info: "Thông tin chung"
@@ -206,8 +205,16 @@ vi:
     notice: "Thông báo"
     redeem:
       name: "Đổi quà"
+      redeem_points: "Đổi điểm"
       coin_star: "Giao dịch điểm thưởng"
       redeem: "Giao dịch đổi quà"
+      how_to_check_it: "Làm sao để kiếm được"
+      category: "Danh mục"
+      category_redeem: "Danh mục quà"
+      redeem_infomation: "Thông tin đổi quà"
+      redeem_color: "Màu sắc"
+      redeem_quantily: "Số lượng"
+      redeem_available: "Kích cỡ"
     refer_friend: "Giới thiệu bạn bè"
     learning_activity:
       name: "Hoạt động học tập"

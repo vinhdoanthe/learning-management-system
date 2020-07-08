@@ -1,6 +1,10 @@
 class Redeem::RedeemProductsController < ApplicationController
   def index
-    @redeem_products = Redeem::RedeemProduct.all
+    
+    @page_title = t('adm.redeem.redeem_points')
+
+    @redeem_products = Redeem::RedeemProduct.select('id,name,brand, available_color,available_size,description,price,category ').all
+
   end
 
   def show
