@@ -121,6 +121,8 @@ vi:
         stop: "nghỉ học"
         reversation: 'bảo lưu'
         update: 'Đang cập nhật'
+      op_student_course:
+        registered_subject: 'Đăng ký %{count_registered_subjects}/%{count_total_subjects} học phần'
     session:
       no_session: "Không có buổi học nào"
       student_coming: "LỊCH HỌC TIẾP THEO"
@@ -234,5 +236,22 @@ vi:
     at: 'lúc'
     no_transactions: 'Bạn chưa có lịch sử thưởng TEKY Sao và TEKY Đồng.'
   dashboard:
-    leaders: 'Học sinh tiêu biểu'
+    leaders:
+      title: 'Học sinh tiêu biểu'
+      name: 'Tên học sinh'
+      teky_star: 'TEKY Sao'
+      teky_coin: 'TEKY Đồng'
     no_leaders: 'Không có học sinh nào'
+  public_profile:
+    center: 'Học tại'
+    achievements: 'Giải thưởng'
+    no_achievements: 'Chưa có giải thưởng'
+    gender: 'Giới tính'
+    address: 'Địa chỉ'
+    batches: 'Khóa học'
+    badges: 'Huy hiệu'
+    achievements_certificates: 'Thành tích và Giải thưởng'
+    featured_photos: 'Hình ảnh'
+    products: 'Sản phẩm'
+    gender_male: 'Nam'
+    gender_femail: 'Nữ'

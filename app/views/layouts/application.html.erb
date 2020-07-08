@@ -21,11 +21,11 @@
       <link href="/global/plugins/maps-amcharts/ammap/ammap.css" rel="stylesheet">
       <link href="/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
       <link href="/global/plugins/rateit/rateit.css" rel="stylesheet">
+      <%= stylesheet_link_tag 'social_community/dashboards' %>
       <link href="/global/css/owl.carousel.css" rel="stylesheet">
       <!-- END PAGE STYLE -->
       <script src="/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
       <link rel="stylesheet" href="/global/css/daterangepicker.css" />
-      <%= stylesheet_link_tag 'social_community/dashboard/dashboard' %>
       <%= yield :javascript_includes %>
       <%= yield :stylesheet_includes %>
       <% if Rails.env.production? %>

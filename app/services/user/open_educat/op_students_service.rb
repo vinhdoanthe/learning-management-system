@@ -200,4 +200,25 @@ class User::OpenEducat::OpStudentsService
 
     [batch_ids, subject_ids]
   end
+
+  def self.get_products student_id
+
+  end
+
+  # return
+  # - achievements
+  # - badges
+  # - products
+  # - featured_photos
+  def self.get_public_profile student_id
+    op_student_courses = Learning::Batch::OpStudentCourse.includes(:op_batch, :op_course).where(student_id: student_id).to_a
+    achievements = []
+    badges = []
+    products = []
+    featured_photos = []
+    products = SocialCommunity::ScStudentProject.where(student_id: student_id, 
+                                                          state: SocialCommunity::Constant::ScStudentProject::State::PUBLISH, 
+                                                          permission: SocialCommunity::Constant::ScStudentProject::Permission::PUBLIC).to_a
+    [op_student_courses, achievements, badges, featured_photos, products]
+  end
 end

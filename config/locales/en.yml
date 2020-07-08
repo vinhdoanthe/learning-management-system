@@ -118,6 +118,8 @@ en:
         stop: "stop"
         reversation: 'reversation'
         update: 'updating'
+      op_student_course:
+        registered_subject: 'Registered %{count_registered_subjects}/%{count_total_subjects} subject'
     session:
       student_coming: "NEXT CLASS"
       teacher_coming: "NEXT TEACHING CLASS"
@@ -218,5 +220,22 @@ en:
     at: 'at'
     no_transactions: 'You have no TEKY Coin and Star reward.'
   dashboard:
-    leaders: 'Outstanding Students'
+    leaders:
+      title: 'Outstanding Students'
+      name: 'Student Name'
+      teky_star: 'TEKY Star'
+      teky_coin: 'TEKY Point'
     no_leaders: 'No students'
+  public_profile:
+    center: 'Center'
+    achievements: 'Achievements'
+    no_achievements: 'No achievements'
+    gender: 'Gender'
+    address: 'Address'
+    batches: 'Batches'
+    badges: 'Badges'
+    achievements_certificates: 'Achievements and Certificates'
+    featured_photos: 'Featured photos'
+    products: 'Products'
+    gender_male: 'Male'
+    gender_femail: 'Female'

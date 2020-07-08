@@ -11,7 +11,8 @@
     <table class="table">
       <% leaders.each_with_index do |leader, index| %>
         <tr>
-          <td><%= index + 1 %></td>
+          <% index_display = index.to_i + 1 %>
+          <td><%= index_display %></td>
           <td>
             <label class="color-EB9138"><%= leader.name %></label>
               <p><%= t('config.center') %> <span class="color-0654BA text-transform"><%= leader.center %></span></p>

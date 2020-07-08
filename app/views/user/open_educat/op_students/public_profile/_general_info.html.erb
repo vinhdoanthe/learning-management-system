@@ -2,27 +2,33 @@
   <ul>
     <li>
       <span>
-        <%= image_tag('global/images/profile1.png') %>
+        <%= image_tag('global/images/profile2.png') %>
       </span>
-      <p><b class="color-F16357">0</b> Điểm</p>
+      <p><b class="color-F16357"><%= number_with_delimiter(public_user.star.to_i, :delimiter => '.') %></b> <%= t('reward.star') %></p>
     </li>
     <li>
       <span>
-        <%= image_tag('global/images/profile2.png') %>
+        <%= image_tag('global/images/profile1.png') %>
       </span>
-      <p>Học tại:  <b><%= op_student.vattr_center_name %></b></p>
+      <p><%= t('public_profile.center') %>:  <b><%= op_student.vattr_center_name %></b></p>
     </li>
     <li>
       <span>
         <%= image_tag('global/images/profile4.png') %>
       </span>
-      <p>Giới tính: <b><%= op_student.vattr_gender %></b></p>
+      <p><%= t('public_profile.achievements') %>: <b><%= t('public_profile.no_achievements') %></b></p>
+    </li>
+    <li>
+      <span>
+        <%= image_tag('global/images/profile3.png') %>
+      </span>
+      <p><%= t('public_profile.gender') %>: <b><%= User::OpenEducat::OpStudentDecorator.new(op_student).display_gender %></b></p>
     </li>
     <li>
       <span>
         <%= image_tag('global/images/profile5.png') %>
       </span>
-      <p>Địa chỉ: <b><%= op_student.vattr_parent_address %></b></p>
+      <p><%= t('public_profile.address') %>: <b><%= op_student.vattr_parent_address %></b></p>
     </li>
   </ul>
 </div>

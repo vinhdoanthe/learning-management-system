@@ -23,9 +23,11 @@
 */
 @import 'user/users';
 
-body{
-
+body {
+  font-weight: 600;
+  font-size: 14px;
 }
+
 span.subject_id.active{
 	background-color: #5DC2A7;
 }
