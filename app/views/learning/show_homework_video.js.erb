@@ -21,9 +21,12 @@
 
 
 $('#swiper-video-list').ready(function() {
+var active_video = $('#active_video_slider').val();
 var swiper = new Swiper('.swiper-container', {
       slidesPerView: 5,
       spaceBetween: 5,
+      loop: false,
+      slideActiveClass: 'active_video_slide',
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -33,4 +36,5 @@ var swiper = new Swiper('.swiper-container', {
         prevEl: '.swiper-button-prev',
       },
     });
+swiper.slideTo(active_video);
 })
