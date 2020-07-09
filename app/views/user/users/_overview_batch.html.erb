@@ -1,6 +1,10 @@
 <% student_batch_status = get_student_batch_status(op_student_id, batch.id)%>
 <% student_status = student_batch_status['status'] %>
-<div class="col-md-6 student_batch_list" style='padding-top: 15px; padding-bottom: 15px'>
+<% if index == 0 %>
+<div class="col-md-6 student_batch_list" style='padding-top: 15px; padding-bottom: 15px; flex: 1'>
+<% else %>
+<div class="col-md-6 student_batch_list" style='padding-top: 15px; padding-bottom: 15px;'>
+<% end %>
   <div class="scl-detail" style='height: 100%'>
     <div class="scl-img">
       <span class="spanimg">
