@@ -16,13 +16,13 @@
 
       <div class="redem-all">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div class="ra-detail">
               <h2 class="number-coin"><%= number_with_delimiter(current_user.coin.to_i, delimiter: ".")%></h2>
               <p><span class="teky-coin-text"><%= t('reward.coin') %></span></p>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div class="ra-detail text-uppercase how_to_check_it">
               <a href=""><%= t('adm.redeem.how_to_check_it') %> <span class="teky-coin-text"><%= t('reward.coin') %></span></a>
             </div>
@@ -51,96 +51,45 @@
         </div>
       </div>
 
-      <div class="redem-tab">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">        
-          <li class="active"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><%= t('sidebar.redeem')%></a></li>
-        </ul>
+      <div class="redem-tab">        
         <!-- Tab panes -->
         <div class="tab-content">
-          <div class="tab-pane" id="home">...</div>
-          <div class="tab-pane" id="profile">...</div>
           <div class="tab-pane active" id="messages">
             <div class="row">
               <% @redeem_products.each_with_index do |product, index| %>
-                <div class="col-sm-4 product_item product_<%= product.category %>">
-                  <div class="rt-detail product_infomation">
-                    <div class="rtd-img">
-                      <ul class="owl-carousel" id="product<%= index+1 %>">
-                        <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
-                        <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
-                        <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
-                        <li><span><%= image_tag ('default_lesson_thumbnail.jpg') %></span></li>
-                      </ul>
+              <div class="col-sm-4 product_item product_<%= product.category %>">
+                <div class="rt-detail product_infomation">
+                  <div class="rtd-img">
+                    <div class="owl-carousel" id="product<%= index+1 %>">
+                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
                     </div>
-                    <div class="rtd-text">
-                      <div class="product-brand"><%= product.brand %></div>
-                      <h3 class="product-name"><%= product.name %></h3>
-                      
-                      <div class="rtd-center clearfix">
-                        <div class="rtdt-left">
-                          <div class="form-group pos-relative">
-                            <label for="exampleInputEmail1" class="form-title pos-absolute"><%= t('adm.redeem.redeem_color')%></label>
+                  </div><!-- #  rtd-img-->
+
+                  <div class="rtd-text">
+                    <div class="product-brand text-uppercase"><%= product.brand %></div>
+                    <h3 class="product-name"><%= product.name %></h3>
+                    <div class="rtd-center clearfix product-option">
+                      <div class="row">
+                        <div class="col-md-5 right-color-li">
+                          <div class="form-group">
+                            <label><%= t('adm.redeem.redeem_color')%></label>
                             <ul>
                               <% product.available_color.each do |color| %>
                                 <li>
-                                  <label class="check-multi">
+                                  <label class="check-multi form-control check-color" style="background-color: <%= color %>">
                                     <input type="radio" name="product_color" value='<%= color %>'>
-                                    <span class="checkmark" style="background-color: <%= color %>"></span>
                                   </label>
                                 </li>
                               <% end %>
                             </ul>
                           </div>
                         </div>
-                        <div class="rtdt-right">
-                          <ul>
-                            <li>
-                              <div class="form-group">
-                                <label for="exampleInputEmail1"><%= t('adm.redeem.redeem_quantily')%></label>
-                                <select name="" class="product_amount form-control">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                </select>
-                              </div>
-                            </li>
-                            <li>
-                              <div class="form-group">
-                                <label for="exampleInputEmail1"><%= t('adm.redeem.redeem_available')%></label>
-                                <select name="" class="product_size form-control">
-                                  <% product.available_size.each do |size| %>
-                                    <option value="<%= size %>"><%= size %></option>
-                                  <% end %>
-                                </select>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      
-                      <div style="margin-top:20px; margin-bottom: 20px;height: 40px;"></div>
-                      <div class="rtd-center clearfix product-option">
-                        <div class="row">
-                          <div class="col-md-6 right-color-li">
-                            <div class="form-group">
-                              <label><%= t('adm.redeem.redeem_color')%></label>
-                              <ul>
-                                <% product.available_color.each do |color| %>
-                                  <li>
-                                    <label class="check-multi">
-                                      <input type="radio" name="product_color" value='<%= color %>'>
-                                      <span class="checkmark" style="background-color: <%= color %>"></span>
-                                    </label>
-                                  </li>
-                                <% end %>
-                              </ul>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="row">
-                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-md-7">
+                          <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label><%= t('adm.redeem.redeem_quantily')%></label>
                                     <select name="" class="product_amount form-control">
@@ -161,63 +110,38 @@
                                     </select>
                                 </div>
                               </div>
-                            </div>
                           </div>
                         </div>
                       </div>
-
-                      <div class="product-description"><%= sanitize product.description %></div>
+                    </div>
+                    <div class="product-description">
+                      <%= truncate(strip_tags(product.description), length: 220, separator: ' ')%>                   
                     </div>
                     <div class="rtd-btn clearfix">
-                      <div class="rtdb-left">
-                        <p><span><%= t('reward.coin')%></span><br/><%= number_with_delimiter(product.price.to_i, delimiter: ".") %></p>
-                      </div>
-                      <div class="rtdb-right">
-                        <input type='hidden' name="redeem_product_id"  value='<%= product.id %>'>
-                        <button href='/redeem/redeem_products/<%= product.id %>' class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit'  ><%= t('qa.view_detail')%></button>
+                      <div class="row">
+                        <div class="col-md-5">
+                          <div class="product-box">
+                            <p class="product-coin-text"><%= t('reward.coin')%></p>
+                            <p class="product-coin-number"><%= number_with_delimiter(product.price.to_i, delimiter: ".") %></p>
+                          </div>
+                        </div>
+                        <div class="col-md-7">
+                          <input type='hidden' name="redeem_product_id"  value='<%= product.id %>'>
+                          <a href='/redeem/redeem_products/<%= product.id %>' class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('qa.view_detail')%></a>                          
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </div><!-- #  rtd-text-->
                 </div>
-              <% end %>
-            </div>
-          </div>
+              </div>
+              <% end %>          
         </div>
       </div>
     </div>
-  </div>
-  <div id="redeem_company_select" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><%= t('adm.redeem.redeem_infomation')%></h4>
-        </div>
-        <div class="modal-body">
-          <label>Cơ sở nhận quà: </label>
-          <select id="select_redeem_company" >
-            <% Common::ResCompany.all.each do |company| %>
-              <option value='<%= company.id %>'><%= company.name %></option>
-            <% end %>
-          </select>
-          <div>
-            <p>Thời gian nhận quà </p>
-            <input type="text" id="redeem_time" name='expected_time'  value="<%= Time.now.strftime('%m/%d/%Y') %>" />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id='redeem_product_confirm' data-dismiss="modal">Đổi quà</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
 </div>
+  
 <script>
-  $(document).ready(function(){
+  $(document).ready(function() {
     $('.product_categories').on('change', function(){
       $('.product_item').hide();
       category_id = $(this).val();
@@ -227,7 +151,8 @@
       else{
         $('.product_' + category_id).show();
       }
-    })
-  })
+    });   
+  });
+
 
 </script>
