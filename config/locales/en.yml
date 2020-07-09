@@ -29,6 +29,7 @@ en:
   sidebar:
     config: "Config"
     noti: "Notification"
+    dashboard: 'Dashboard'
     my_class: "My class"
     timetable: "Timetable"
     homework: "Homework"
