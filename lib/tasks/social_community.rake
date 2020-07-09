@@ -83,4 +83,32 @@ namespace :social_community do
     end
   end
 
+  desc 'Auto add reactions to posts'
+  task :add_reactions_to_posts, [:prev_hours, :offset_hours] => :environment do |t, args|
+    return if !args[:prev_hours].present? or !args[:offset_hours].present?
+    prev_hours = args[:prev_hours].to_i
+    offset_hours = args[:offset_hours].to_i
+    return if (prev_hours==0) or (offset_hours==0)
+    # find posts
+    puts "prev_hours #{prev_hours}"
+    puts "offset_hours #{offset_hours}"
+    e_created_at = Time.now - prev_hours.hours
+    s_created_at = e_created_at - offset_hours.hours
+    puts "s_created_at #{s_created_at}"
+    puts "e_created_at #{e_created_at}"
+
+    posts = SocialCommunity::Feed::Post.where('created_at <= ? and created_at >= ? and type in (?)', e_created_at, s_created_at, PostConstants::NewfeedPostTypes::ACCEPTED_NEWFEED_POST_TYPES)
+      .order(created_at: :DESC)
+    size = posts.size
+    puts "Total posts is #{size}"
+    post_ids = posts.map {|post| post.id}
+    generated_post_ids = Utility::TrackingAutoGenerateReactionToPost.in(post_id: post_ids).pluck(:post_id).uniq
+    puts "post_ids #{post_ids}"
+    puts "generated_post_ids #{generated_post_ids}"
+    todo_post_ids = post_ids - generated_post_ids
+    todo_posts = posts.select {|post| todo_post_ids.include?(post.id)}
+    size = todo_posts.size
+    puts "Total todo posts is #{size}"
+    Utility::TrackingAutoGenerateReactionToPostService.create_new todo_posts
+  end
 end
