@@ -34,6 +34,7 @@ vi:
   sidebar:
     config: "Cấu hình"
     noti: "Thông báo"
+    dashboard: 'Dashboard'
     my_class: "Lớp học của tôi"
     timetable: "Thời khoá biểu"
     homework: "Bài tập và ôn bài"

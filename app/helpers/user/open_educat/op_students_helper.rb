@@ -153,13 +153,6 @@ module User
 
         # Khoi menu Dashboard
         menus = [
-          # {'path' => user_student_dashboard_path, 
-          #   'icon' => 'ico-Dashboard.png',
-          #   'title' => 'Dashboard', 
-          #   'right_content' => ''
-          # },
-
-
           {
             'path' =>  root_path,
             'icon' => 'ico-Dashboard.png',
@@ -178,23 +171,11 @@ module User
             'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
           },
 
-          # {'path' => user_open_educat_op_students_student_homework_path,
-          #  'icon' => 'ico-BaiTapOnBai.png',
-          #  'title' => 'Bài tập & Ôn bài',
-          #  'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
-          # }
           {'path' => user_open_educat_op_students_student_homework_path,
            'icon' => 'ico-BaiTapOnBai.png',
            'title' => "#{ t('sidebar.homework') }",
            'right_content' => '<span class="left-badge"></span>'
           },
-
-         #  {'path' => redeem_redeem_products_path, 
-         #    'icon' => 'ico-Redem.png',
-         #    'title' => "#{ t('sidebar.redeem') }", 
-         #    'right_content' => ''
-         #  },
-
           {'path' => social_community_question_answer_my_threads_path, 
             'icon' => 'Icon-Inbox.png',
             'title' => "#{t('sidebar.question_answer')}", 
@@ -210,19 +191,6 @@ module User
             'title' => "#{t('sidebar.top_achievement')}", 
             'right_content' => ''
           },
-
-          # {'path' => social_community_sc_student_projects_social_student_projects_path, 
-          #  'icon' => 'ico-SPhocsinh.png',
-          #  'title' => 'Sản phẩm của tôi', 
-          #  'right_content' => ''
-          # },
-
-          # {'path' => '#', 
-          #   'icon' => 'ico-SPhocsinh.png',
-          #   'title' => 'Top thành tích', 
-          #   'right_content' => ''
-          # }
-
         ]
 
         tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top: 1px solid #232837; border-bottom: 1px solid #414348; margin: 0">'
