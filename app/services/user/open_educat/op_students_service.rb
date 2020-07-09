@@ -169,11 +169,11 @@ class User::OpenEducat::OpStudentsService
     schedule_hash
   end
 
-  def self.get_featured_photos student_id
-    batch_ids, subject_ids = get_batch_subject_ids student_id
-    session_ids = Learning::Batch::OpSession.where(batch_id: batch_ids, subject_id: subject_ids).pluck(:id)
-    SocialCommunity::Photo.where(session_id: session_ids).to_a
-  end
+  # def self.get_featured_photos student_id
+  #   batch_ids, subject_ids = get_batch_subject_ids student_id
+  #   session_ids = Learning::Batch::OpSession.where(batch_id: batch_ids, subject_id: subject_ids).pluck(:id)
+  #   SocialCommunity::Photo.where(session_id: session_ids).to_a
+  # end
 
   def self.get_batch_ids student_id
     op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id).to_a
@@ -211,6 +211,7 @@ class User::OpenEducat::OpStudentsService
   # - products
   # - featured_photos
   def self.get_public_profile student_id
+    count_homework = Learning::Homework::UserAnswerService.count_done_homework student_id
     op_student_courses = Learning::Batch::OpStudentCourse.includes(:op_batch, :op_course).where(student_id: student_id).to_a
     achievements = []
     badges = []
@@ -219,6 +220,6 @@ class User::OpenEducat::OpStudentsService
     products = SocialCommunity::ScStudentProject.where(student_id: student_id, 
                                                           state: SocialCommunity::Constant::ScStudentProject::State::PUBLISH, 
                                                           permission: SocialCommunity::Constant::ScStudentProject::Permission::PUBLIC).to_a
-    [op_student_courses, achievements, badges, featured_photos, products]
+    [count_homework, op_student_courses, achievements, badges, featured_photos, products]
   end
 end
