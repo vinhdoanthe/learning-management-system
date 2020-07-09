@@ -5,9 +5,9 @@
         <span>
           <%= image_tag('global/images/star.png') %>
         </span>
-        <p>
-        <b><%= number_with_delimiter(public_user.star.to_i, :delimiter => '.') %></b> ĐIỂM<br/>
-        <b><%= number_with_delimiter(public_user.coin.to_i, :delimiter => '.') %></b> TEKY ĐỒNG
+        <p class='t-uppercase'>
+        <b><%= number_with_delimiter(public_user.star.to_i, :delimiter => '.') %></b> <%= t('public_profile.teky_star') %><br/>
+        <b><%= number_with_delimiter(public_user.coin.to_i, :delimiter => '.') %></b> <%= t('public_profile.teky_coin') %>
         </p>
       </div>
     </li>
@@ -16,11 +16,9 @@
         <span>
           <%= image_tag('global/images/icon-BTVN.png') %>
         </span>
-        <p>
-
-        <% user = User::Account::User.where(student_id: @op_student.id).first %>
-        <b><%= count_homework user %></b> BÀI TẬP VỀ NHÀ<br/>
-        <b><%= count_sc_project %></b> DỰ ÁN ĐÃ PHÁT TRIỂN
+        <p class="t-uppercase">
+        <b><%= count_homework %></b> <%= t('public_profile.homework') %><br/>
+        <b><%= count_sc_project %></b> <%= t('public_profile.publish_projects') %>
         </p>
       </div>
     </li>
