@@ -14,6 +14,7 @@ vi:
     see_project: "Xem sản phẩm"
     share: "Chia sẻ"
     complete: "Hoàn thiện"
+    text_no: "Không"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -207,6 +208,7 @@ vi:
     notice: "Thông báo"
     redeem:
       name: "Đổi quà"
+      redeem_button: "Đổi quà ngay"
       redeem_points: "Đổi điểm"
       coin_star: "Giao dịch điểm thưởng"
       redeem: "Giao dịch đổi quà"
@@ -217,6 +219,11 @@ vi:
       redeem_color: "Màu sắc"
       redeem_quantily: "Số lượng"
       redeem_available: "Kích cỡ"
+      product_introduction: "Giới thiệu sản phẩm"
+      product_infomation: "Thông tin sản phẩm"
+      receiving_gifts_time: "Thời gian nhận quà:"
+      address_accepting_gifts: "Cơ sở nhận quà:"
+      Are you sure you want to redeem?: "Bạn chắc chắn muốn đổi quà?"
     refer_friend: "Giới thiệu bạn bè"
     learning_activity:
       name: "Hoạt động học tập"
