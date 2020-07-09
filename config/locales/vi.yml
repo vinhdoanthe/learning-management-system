@@ -42,7 +42,7 @@ vi:
     class_list: "Danh sách lớp học"
     marking: "Chấm bài"
     question_answer: "Hỏi - Đáp"
-    my_projects: 'Sản phẩm của tôi'
+    my_projects: 'Sản phẩm cuối khoá'
     top_achievement: 'Top thành tích'
     refer_friend: 'Giới thiệu bạn bè'
   config:
@@ -190,6 +190,18 @@ vi:
     view_detail: 'Xem chi tiết'
     all_threads: 'Toàn bộ câu hỏi'
     no_thread: 'Câu hỏi này đã bị xóa!'
+  student_project:
+    name: "Sản phẩm học sinh"
+    project_name: "Tên sản phẩm"
+    description: "Mô tả sản phẩm"
+    presentation: "Slide trình bày dự án"
+    no_presentation: "Chưa có slide"
+    video: "Video giới thiệu về dự án"
+    no_video: "Chưa có video"
+    link: "Link chi tiết sản phẩm"
+    no_link: "Chưa có link sản phẩm"
+    click_to_update: "Click để cập nhật sản phẩm"
+    public_html: "<b style='text-transform:uppercase; font-size: 15px;'>Công khai</b>(phụ huynh, học sinh sẽ xem được thông tin dự án)"
   adm:
     user: "Người dùng"
     setting:

@@ -5,14 +5,14 @@
   <% student_name = student.full_name %>
   <% company_name = student.res_company ? student.res_company.name : '' %>
 <% end %> 
-<div class='item'>
-  <div class="">
-    <div class="prod-detail">
-      <div class="prod-img">
+<div class='item' style='height: 100%'>
+  <div class="" style='height: 100%'>
+    <div class="prod-detail" style='height: 100%; margin-bottom: 0'>
+      <div class="prod-img" style="max-height: 315px !important; height: 315px">
         <% if project.thumbnail.present? %>
-          <span><img src="<%= project.thumbnail %>" alt="" class="project_image"></span>
+          <span style="max-height: 315px !important"><img src="<%= project.thumbnail %>" alt="" class="project_image"></span>
         <% else %>
-          <span><%= image_tag('global/images/Bitmap6.png', class:"project_image") %>
+          <span style="max-height: 315px !important"><%= image_tag('global/images/Bitmap3.png', class:"project_image") %>
         <% end %>
         <div class=''>
           <div class='project_control'>
@@ -83,7 +83,7 @@
   opacity: 1;
   display: block;
   width: 100%;
-  height: auto;
+  height: 315px !important;
   transition: .5s ease;
   backface-visibility: hidden;
 }
