@@ -1,3 +1,5 @@
+select.form-control{-webkit-appearance:auto !important;}
+
 .panel-edits{
 	margin: -25px;
 	padding-bottom: 70px;
@@ -823,16 +825,52 @@ font-family: sans-serif;
 .ra-detail p span{}
 .ra-detail a{color: #0654BA;font-family: 'Montserrat-Bold';display: inline-block;margin-top: 14px;}
 
-.rt-detail.product_infomation .product-brand {font-size: 14px; font-weight: normal;margin-bottom: 5px;}
-.rt-detail.product_infomation .product-name {font-size: 26px; font-weight: normal; }
+.rt-detail.product_infomation {width: 100%}
+.rt-detail.product_infomation .rtd-text .product-brand {font-size: 14px; font-weight: normal;margin-bottom: 5px;}
+.rt-detail.product_infomation .rtd-text .product-name, .rt-detail.product_infomation.box-detail .product-name{
+	font-size: 26px; font-weight: normal; font-family: 'Montserrat-Medium';text-transform: none;}
+
+.product_infomation hr.product-line{border:0px;border-bottom:2px solid #D7DFE9; padding-top: 5px;width: 100%}
 
 .rt-detail.product_infomation .rtd-text {margin-top:35px;}
 .rt-detail.product_infomation .product-option {margin-top:25px;}
-.rt-detail.product_infomation .product-option label{font-weight: normal;}
+.rt-detail.product_infomation .product-option label{font-weight: normal;font-size: 14px; font-family: 'Montserrat-Medium'; color: #313131}
 
-.product_item {background-color: #DDD;}
+.rt-detail.product_infomation .product-coin-text {
+	font-size: 10px;
+	text-align: center;
+	color: #FF0D38;
+	font-family: 'Montserrat-Bold';
+	text-transform: uppercase;
+}
 
-.redem-filter {padding: 20px 0px 10px 0px;border-bottom: 2px solid #D7DFE9}
+.rt-detail.product_infomation .product-coin-number {
+	font-size: 24px;
+	text-align: center;
+	font-family: 'Montserrat-Medium';
+	text-transform: uppercase;
+}
+
+.rt-detail.product_infomation .product-box {border: 1px solid #313131; border-radius: 4px;height: 57px;text-align: center;}
+.rt-detail.product_infomation .btn.redeem_product_submit {width: 100%; height: 57px !important; color: #2F2F3E; font-family: 'Montserrat-Bold';padding-top:17px;}
+
+.rt-detail.product_infomation .product-description {
+	height: 52px;
+	text-align: justify; 
+	color: #636B71;
+	font-size:12px;
+	font-family: 'Montserrat-Medium';
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.product_item {}
+
+.product_item .owl-carousel .owl-item img,  .product_item .owl-carousel-product .owl-item img {height: 100%;}
+
+.product_item .owl-carousel-product {padding: 0 30px !important;}
+
+.redem-filter {padding: 20px 0px 10px 0px;border-bottom: 2px solid #D7DFE9;}
 
 .redem-tab{
 	margin-top: 20px;
@@ -862,6 +900,8 @@ font-family: sans-serif;
 }
 .rtd-img{
 	height: 460px;
+	height: 370px;
+	width: 100%;
 	color: #ccc;
 	overflow: hidden;
 }
@@ -960,6 +1000,7 @@ font-family: sans-serif;
 	font-family: 'Montserrat-Bold';
 	text-transform: uppercase;
 }
+
 .rtdb-right{
 	width: 56%;
 	float: right;
@@ -1854,7 +1895,7 @@ position: absolute;
 	margin-bottom: 10px;
 	padding-left: 25px;
 }
-.name-card p span.nc-img{
+.name-card p span.nc-img {
 	width: 22px;
 	margin-right: 5px;
 	display: inline-block;
@@ -1863,6 +1904,8 @@ position: absolute;
 	left: 0;
 	top: -4px;
 }
+
+.product-option .right-color-li ul li label.check-color {border:0px; border-radius: 50%; width: 25px; height: 25px; padding: 0px;}
 
 .prod-detail .prod-text {
 	padding: 20px 10px !important ;

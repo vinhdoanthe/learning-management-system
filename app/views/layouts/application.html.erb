@@ -127,6 +127,37 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 
+        <script type="text/javascript">          
+          $('.owl-carousel').owlCarousel({
+              loop:true,
+              responsiveClass:true,
+              items:1,
+              slideBy: 1,
+              dots: false,
+              dotsEach: false,
+              autoplay: false,
+              rewind: true,
+              autoWidth: false,
+              center: true
+            });
+
+          // update width image carousel for left menu
+          updateOwlCarousel = function(){
+            $(".owl-carousel").each(function() {
+              $(this).data('owl.carousel').onResize();
+            });
+          };
+
+          $(document).on('click', '.topnav', function(){
+            setTimeout(function() {updateOwlCarousel();},   321)
+          });
+
+          $(document).ready(function() {
+            updateOwlCarousel();
+          });
+
+        </script>
+
         <%= yield :body_javascript_includes %>
         <%= debug(params) if Rails.env.development? %>
       </body>
