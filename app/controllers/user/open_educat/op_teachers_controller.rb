@@ -138,17 +138,25 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def assign_homework_details
+    result = true
+    homeworks = nil
+    students = nil
+
     session = Learning::Batch::OpSession.where(id: params[:session_id]).first
-    return false if session.blank?
+    result = false if session.blank?
 
     batch = session.op_batch
     lesson = session.op_lession
-    homeworks = Learning::Material::Question.where(op_lession_id: lesson.id)
-    students = User::OpTeachersService.new.teacher_class_detail batch, session
+    result = false if lesson.blank?
+
+    unless result
+      homeworks = Learning::Material::Question.where(op_lession_id: lesson.id)
+      students = User::OpTeachersService.new.teacher_class_detail batch, session
+    end
 
     respond_to do |format|
       format.html
-      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/give_homework', locals: { homeworks: homeworks, students: students}}
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/give_homework', locals: { result: result, homeworks: homeworks, students: students}}
     end
   end
 

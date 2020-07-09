@@ -36,7 +36,7 @@
           <h3 style="margin: 0 !important">Slide sản phẩm</h3>
         </div>
         <div class="project_intro">
-          <%= project.presentation %>
+          <%= link_to 'Click to download', rails_blob_path(project.presentation, disposition: "attachment") %>
         </div>
       </div>
     </div>
