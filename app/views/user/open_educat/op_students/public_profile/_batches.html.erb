@@ -8,8 +8,9 @@
             <p class="batch-code"><%= op_student_course.op_batch.code %></p>
           </td>
           <td class="t-align-r">
-            <%= Learning::Batch::OpStudentCourseDecorator.new(op_student_course).display_register_subject %>
-            <p class="fsize-10 t-align-r"><%= op_student_course.op_batch.op_batch_type.name %></p> 
+            <% op_student_course_decorator = Learning::Batch::OpStudentCourseDecorator.new(op_student_course) %>
+            <%= op_student_course_decorator.display_register_subject %>
+            <p class="fsize-10 t-align-r"><%= op_student_course_decorator.display_batch_type %></p> 
           </td>
           <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
             <td align="right"><span class="label-edit label label-primary tsize-10 t-uppercase"><%= t('learning.batch.status.studying') %></span></td>

@@ -138,15 +138,12 @@ module User
         end
         # Get response data
         public_user = User::Account::User.where(student_id: @op_student.id).first
-        op_student_courses, achievements, badges, featured_photos, products = User::OpenEducat::OpStudentsService.get_public_profile(@op_student.id)
-        # achievements = []
-        # badges = []
-        # products = User::OpenEducat::OpStudentsService.get_products @op_student.id
-        # featured_photos = User::OpenEducat::OpStudentsService.get_featured_photos @op_student.id
+        count_homework, op_student_courses, achievements, badges, featured_photos, products = User::OpenEducat::OpStudentsService.get_public_profile(@op_student.id)
         respond_to do |format|
           format.html {render 'public_profile', :locals => {
             op_student: @op_student,
             public_user: public_user,
+            count_homework: count_homework,
             op_student_courses: op_student_courses,
             achievements: achievements,
             badges: badges,
