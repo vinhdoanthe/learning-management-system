@@ -149,7 +149,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     lesson = session.op_lession
     result = false if lesson.blank?
 
-    unless result
+    if result
       homeworks = Learning::Material::Question.where(op_lession_id: lesson.id)
       students = User::OpTeachersService.new.teacher_class_detail batch, session
     end

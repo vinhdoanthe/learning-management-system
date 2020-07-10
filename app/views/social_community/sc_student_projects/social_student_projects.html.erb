@@ -46,7 +46,7 @@
             <% @course_projects.each do |course_project| %>
               <% course_project.each do |course, projects| %>
                 <div class="fc-header">
-                  <div class='row' style="padding-top: 15px; padding-bottom: 15px;">
+                  <div class='row' style="padding-top: 15px;">
                     <div class='col-md-9'>
                       <h4><span class="color-000"><%= course.name %></h4>
                     </div>
@@ -141,4 +141,7 @@ button.public_project  {padding: 10px !important;}
 .project-info {background-color:#D7DFE9}
 .prod-text .project-name {text-align: justify;font-size: 14px; font-weight: normal;text-transform: uppercase;}
 .prod-text .project-description {text-align: justify;font-size: 14px; font-weight: normal;}
+  .fc-header h3 {
+    padding-bottom: 0 !important;
+  }
 </style>
