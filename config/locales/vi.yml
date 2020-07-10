@@ -224,7 +224,7 @@ vi:
     redeem:
       name: "Đổi quà"
       redeem_button: "Đổi quà ngay"
-      redeem_points: "Đổi điểm"
+      redeem_points: "Đổi quà"
       coin_star: "Giao dịch điểm thưởng"
       redeem: "Giao dịch đổi quà"
       how_to_check_it: "Làm sao để kiếm được"
