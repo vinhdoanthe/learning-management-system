@@ -6,7 +6,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h3 class="color-fff text-transform"><%= @course.name %></h3>
+        <h3 class="color-fff text-transform">Sản phẩm cộng đồng</h3>
       </div>
     </div>
   </div>
@@ -14,14 +14,14 @@
     <div class="panel-content">
       <div class="box-product" >
         <div class="fc-header" style='margin: 15px 0'>
-          <h2><span class="color-000">Sản phẩm cộng đồng</h2>
+          <h2 style='padding-bottom: 15px;'><span class="color-000"><%= @course.name %></h2>
         </div>
         <div class='row'>
           <% if @course_projects.blank? %>
             <p class='no-projects'>Chưa có sản phẩm nào</p>
           <% else %>
             <% @course_projects.each do |project| %>
-              <div class='col-md-3'>
+              <div class='col-md-4 col-lg-3' style='margin-bottom: 30px'>
                 <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
               </div>
             <% end %>
