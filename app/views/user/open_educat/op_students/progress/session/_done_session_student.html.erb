@@ -27,7 +27,7 @@
 </td>
 <td align="right">
   <% if !attendance_line.nil? and attendance_line.present %>
-    <span data-toggle="modal" data-target="#session_student_feedback"> 
+    <span data-toggle="modal" data-target="#session_student_feedback" style='margin-right: 10px;'> 
       <a class='student_feedback_modal' data-session='<%= session.id %>' data-toggle="tooltip" title='<%= t('my_class.detail.tooltip.feedback') %>'>
         <span>
           <%= image_tag('icon-heart.png', style: 'width: 32px; cursor: pointer') %>
@@ -35,7 +35,7 @@
       </a>
     </span>
   <% else %>
-    <span data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.feedback') %>" style="opacity: 0.5">
+    <span data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.feedback') %>" style="opacity: 0.5; margin-right: 10px">
       <%= image_tag('icon-heart.png', style: 'width: 32px') %>
     </span>
   <% end %>

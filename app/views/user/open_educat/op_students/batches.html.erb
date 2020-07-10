@@ -12,7 +12,7 @@
         <h4>Bạn chưa có khóa học nào</h4>
       <% else %>
           <% op_student_id = current_user.op_student.id %>
-        <div class='row' style='display: flex; flex-wrap: wrap' > 
+        <div class='' style='display: grid;grid-template-columns: 50% 50%;' > 
         <% @batches.each_with_index do |batch, index| %>
           <%= render :partial => "user/users/overview_batch", :locals => {batch: batch, op_student_id: op_student_id, index: index} %>
         <% end %>

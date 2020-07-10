@@ -8,11 +8,11 @@
 <div class='item' style='height: 100%'>
   <div class="" style='height: 100%'>
     <div class="prod-detail" style='height: 100%; margin-bottom: 0'>
-      <div class="prod-img" style="max-height: 315px !important; height: 315px">
+      <div class="prod-img" style="height: 175px;">
         <% if project.thumbnail.present? %>
-          <span style="max-height: 315px !important"><img src="<%= project.thumbnail %>" alt="" class="project_image"></span>
+          <span style="max-height: 100%"><img src="<%= project.thumbnail %>" alt="" class="project_image"></span>
         <% else %>
-          <span style="max-height: 315px !important"><%= image_tag('global/images/Bitmap3.png', class:"project_image") %>
+          <span style="max-height: 100%"><%= image_tag('global/images/Bitmap3.png', class:"project_image") %>
         <% end %>
         <div class=''>
           <div class='project_control'>
@@ -83,7 +83,7 @@
   opacity: 1;
   display: block;
   width: 100%;
-  height: 315px !important;
+  height: 175px !important;
   transition: .5s ease;
   backface-visibility: hidden;
 }
