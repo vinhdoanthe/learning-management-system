@@ -6,7 +6,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h3 class="color-fff text-transform"><%= @course.name %></h3>
+        <h3 class="color-fff text-transform">Sản phẩm cộng đồng</h3>
       </div>
     </div>
   </div>
@@ -14,15 +14,15 @@
     <div class="panel-content">
       <div class="box-product" >
         <div class="fc-header" style='margin: 15px 0'>
-          <h2><span class="color-000">Sản phẩm cộng đồng</h2>
+          <h2 style='padding-bottom: 15px;'><span class="color-000"><%= @course.name %></h2>
         </div>
         <div class='row'>
           <% if @course_projects.blank? %>
             <p class='no-projects'>Chưa có sản phẩm nào</p>
           <% else %>
             <% @course_projects.each do |project| %>
-              <div class='col-md-3'>
-                <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
+              <div class='col-md-4 col-lg-3' style='margin-bottom: 30px'>
+                <%= render 'user/open_educat/shared/student_projects/student_project_community_item', { project: project } %>
               </div>
             <% end %>
           <% end %>
@@ -44,5 +44,64 @@
 <style>
 .no-projects {
   text-align: center;
+}
+.project_progress {
+  height: 20px;
+    margin-top: 20px;
+}
+.student_project_show {
+  font-weight: 600;
+  font-size: 15px;
+}
+.project_image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: 175px !important;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+.project_control {
+  width: 100%;
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.prod-img:hover .project_image {
+  opacity: 0.3;
+}
+
+.prod-img:hover .project_control {
+  opacity: 1;
+}
+
+.project_control button{
+  border: none;
+  border-radius: 4px;
+  padding: 10px 30px;
+}
+.edit_project {
+  background: #fcf055;
+}
+button.edit_project  {
+      padding: 10px !important;
+    }   
+.public_project {
+  background: #9966ff;
+}
+button.public_project  {
+      padding: 10px !important;
+    }   
+.show_project {
+  background: #5cd2a7;
+}
+.project-info {
+background-color: #D7DFE9;
 }
 </style>

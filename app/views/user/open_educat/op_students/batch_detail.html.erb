@@ -53,6 +53,9 @@
     </div>
   </div>
 </div>
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag 'user/open_educat/op_students/batch_detail' %>
+<% end %>
 <script>
   $('#student_projects_li').one('click', function(){
     $('#tab2_3').html('<%= escape_javascript( render partial: "partials/loading") %>')

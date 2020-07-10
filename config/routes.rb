@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'user/home#dashboard'
-  
+  get 'coming_soon_page' => 'user/home#coming_soon', as: 'coming_soon_page' 
   post 'uploader/image' => 'uploader#image', as: 'image_uploader'
 
   draw :op_student

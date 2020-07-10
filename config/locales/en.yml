@@ -37,6 +37,7 @@ en:
     teaching_schedule: "Teaching schedule"
     class_list: "Class list"
     marking: "Marking"
+    review_student: 'Review student'
     question_answer: "Question Answer"
     my_projects: 'Student Projects'
     top_achievement: 'Top Achievement'
@@ -245,3 +246,7 @@ en:
     teky_coin: 'TEKY Point'
     homework: 'Homework'
     publish_projects: 'Projects'
+  page:
+    coming_soon: 'Page is in developing'
+  redeem:
+    no_products: "Redeem products are in developing"
