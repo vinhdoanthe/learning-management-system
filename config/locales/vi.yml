@@ -284,3 +284,5 @@ vi:
     publish_projects: 'Dự án đã phát triển'
   page:
     coming_soon: 'Trang đang trong quá trình phát triển'
+  redeem:
+    no_products: 'Kho quà đang trong quá trình xây dựng'

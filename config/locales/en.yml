@@ -248,3 +248,5 @@ en:
     publish_projects: 'Projects'
   page:
     coming_soon: 'Page is in developing'
+  redeem:
+    no_products: "Redeem products are in developing"
