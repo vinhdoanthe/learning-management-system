@@ -61,10 +61,9 @@
                 <div class="rt-detail product_infomation">
                   <div class="rtd-img">
                     <div class="owl-carousel" id="product<%= index+1 %>">
-                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+                      <% product.images.each do |image| %>
+                        <%= image_tag(image)  %>
+                      <% end %>
                     </div>
                   </div><!-- #  rtd-img-->
 
@@ -90,7 +89,7 @@
                         <div class="col-md-7">
                           <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group fl_wrap m-t-0">
                                     <label><%= t('adm.redeem.redeem_quantily')%></label>
                                     <select name="" class="product_amount form-control">
                                       <option value="1">1</option>
@@ -101,7 +100,7 @@
                                 </div>                            
                               </div>
                               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group fl_wrap m-t-0">
                                     <label><%= t('adm.redeem.redeem_available')%></label>
                                     <select name="" class="product_size form-control">
                                       <% product.available_size.each do |size| %>
@@ -140,6 +139,14 @@
     </div>
 </div>
   
+<style>
+  .product_amount {
+    -webkit-appearance: none;
+  }
+  .product_size {
+    -webkit-appearance: none;
+  }
+</style>
 <script>
   $(document).ready(function() {
     $('.product_categories').on('change', function(){
