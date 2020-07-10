@@ -2,21 +2,41 @@
   <div class="box-star">
     <div class="col-sm-4">
       <div class="bs-detail">
-        <img src="assets/global/images/star.png" alt="">
-        <h3>20.092</h3>
+        <%= image_tag('global/images/star.png', :alt => 'TEKY Star') %>
+        <h3 class='pnl-teky-coin-star'><%= number_with_delimiter(current_user.star, delimiter: '.') %></h3>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="bs-detail">
-        <span>Teky đồng</span>
-        <h3>20.092</h3>
+        <span class='pnl-teky-coin-lbl'>Teky đồng</span>
+        <h3 class='pnl-teky-coin-star'><%= number_with_delimiter(current_user.coin, delimiter: '.') %></h3>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="bs-detail">
-        <a href="" class="font-medium">Xem tất cả</a>
+        <%= link_to 'Xem tất cả', user_my_coin_star_transactions_path, :class => "view-all-coin-star pull-right link-all" %>
       </div>
     </div>
   </div>
-
 </div>    
+<style>
+.bs-detail h3.pnl-teky-coin-star {
+  font-family: 'Montserrat-Regular' !important;
+  font-size: 34px !important;
+  font-weight: bold;
+}
+.bs-detail span.pnl-teky-coin-lbl {
+  line-height: 17px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Montserrat-Regular';
+  color: #FFC850;
+}
+.bs-detail a.view-all-coin-star {
+  font-family: 'Montserrat-Regular';
+  font-size: 14px;
+  font-weight: bold;
+  color: #0654BA;
+  text-transform: uppercase;
+}
+</style>

@@ -5,14 +5,14 @@
   <% student_name = student.full_name %>
   <% company_name = student.res_company ? student.res_company.name : '' %>
 <% end %> 
-<div class='item'>
-  <div class="">
-    <div class="prod-detail">
-      <div class="prod-img">
+<div class='item' style='height: 100%'>
+  <div class="" style='height: 100%'>
+    <div class="prod-detail" style='height: 100%; margin-bottom: 0'>
+      <div class="prod-img" style="height: 175px;">
         <% if project.thumbnail.present? %>
-          <span><img src="<%= project.thumbnail %>" alt="" class="project_image"></span>
+          <span style="max-height: 100%"><img src="<%= project.thumbnail %>" alt="" class="project_image"></span>
         <% else %>
-          <span><%= image_tag('global/images/Bitmap6.png', class:"project_image") %>
+          <span style="max-height: 100%"><%= image_tag('global/images/Bitmap3.png', class:"project_image") %>
         <% end %>
         <div class=''>
           <div class='project_control'>
@@ -20,19 +20,19 @@
               <% if progress != 100 || project.state != 'publish' || project.permission != 'public'%>
               <%# if progress != 100 %>
                 <div class="col-md-6 control_button">
-                  <button class="edit_project" style="width: 100%; padding: 10px 0 10px 0" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail">Hoàn thiện</button>
+                  <button class="edit_project" style="width: 100%; padding: 10px 0 10px 0" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail"><%= t('button.complete')%></button>
                 </div>
               <% else %>
                 <div class="col-md-6 control_button">
-                  <button class="public_project" style="width: 100%" data-project="<%= project.id %>" >Chia sẻ</button>
+                  <button class="public_project" style="width: 100%" data-project="<%= project.id %>" ><%= t('button.share')%></button>
                 </div>
               <% end %>
               <div class="col-md-6 control_button">
-                <button class="show_project student_project_show" style="width: 100%" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Xem</button>
+                <button class="show_project student_project_show" style="width: 100%" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><%= t('button.see')%></button>
               </div>
             <% else %>
               <div class="project_control">
-                <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Xem</button>
+                <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><%= t('button.see')%></button>
               </div>
             <% end %>
           </div>
@@ -59,15 +59,12 @@
       <% end %>
       </div>
       <div class="prod-text" style="height: 190px; overflow: hidden">
-        <label>SẢN PHẨM CUỐI KHÓA BỘ MÔN <%= project.op_course.name %></label>
-        <div>
-          <label>Học sinh: </label><span> <%= student_name %></span><br>
-          <label>Học viện: </label><span> <%= company_name%></span><br>
-        </div>
+        <label class="project-name"><%= project.name %></label>
+        <div class="project-description"><%= sanitize  project.description %></div>
         <input type='hidden' value='<%= project.id %>' name='student_project_id'>
         <input type='hidden' value='<%= project.batch_id %>' name='project_batch_id' >
         <div style="position: absolute; right: 25px; bottom: 20px; ">
-          <a class='student_project_show' href="" class="font-bold" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail">Xem sản phẩm</a>
+          <a class='student_project_show' href="" class="font-bold" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><%= t('button.see_project')%></a>
         </div>
       </div>
     </div>
@@ -86,7 +83,7 @@
   opacity: 1;
   display: block;
   width: 100%;
-  height: auto;
+  height: 175px !important;
   transition: .5s ease;
   backface-visibility: hidden;
 }

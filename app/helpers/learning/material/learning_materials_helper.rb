@@ -14,22 +14,16 @@ module Learning
 
       def done_homework? user, session
         return { state: 'Không có bài tập', progres: '' } if session.op_lession.blank?
-        questions = session.op_lession.questions
+
+        questions = session.op_lession.questions.pluck(:id)
         user_questions = Learning::Homework::UserQuestion.where(student_id: user.id, question_id: questions).pluck(:id)
-        user_answers = Learning::Homework::UserAnswer.where(user_question_id: user_questions).group_by{ |answers| answers.user_question }
+        done_user_answers = Learning::Homework::UserAnswer.where(user_question_id: user_questions, state: [HomeworkConstants::UserAnswer::ANSWER_RIGHT, HomeworkConstants::UserAnswer::ANSWER_WAITING]).count
 
-        count_done_question = 0
+        progress = done_user_answers.to_s + '/' + user_questions.count.to_s
 
-        user_answers.each do |_, answers|
-          states = answers.pluck(:state)
-          next if states.include? 'wrong'
-          count_done_question += 1
-        end
-
-        progress = count_done_question.to_s + '/' + user_questions.count.to_s
-        if count_done_question == user_questions.count
+        if done_user_answers == user_questions.count
           state = 'done'
-        elsif count_done_question == 0
+        elsif done_user_answers == 0
           state = 'undone'
         else
           state = 'inprogress'

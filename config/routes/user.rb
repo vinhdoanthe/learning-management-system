@@ -1,5 +1,5 @@
 namespace :user do
-
+  get 'my_coin_star_transactions' => 'reward/coin_star_transactions#my_coin_star_transactions'
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   get 'parent_selection' => 'sessions#new_parent_selection'

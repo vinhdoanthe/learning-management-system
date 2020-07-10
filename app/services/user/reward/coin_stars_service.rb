@@ -1,4 +1,11 @@
 class User::Reward::CoinStarsService
+  
+  def self.get_transactions params, user
+    User::Reward::CoinStarTransaction.where(give_to: user.id)
+      .order(:created_at => :DESC)
+      .page(params[:page])
+  end
+
   def reward_coin_star key, target, type, give_by
     value = User::Reward::TekyCoinStarActivitySetting.where(setting_key: key).first
     return if value.blank?
@@ -30,13 +37,13 @@ class User::Reward::CoinStarsService
   def update_coin_star_user user_id, amount, type
     user = User::Account::User.where(id: user_id).first
     
-    if type == 'coin'
+    if type == RewardConstants::Type::TEKY_COIN
       user.coin = user.coin.to_i + amount
-    elsif type == 'star'
+    elsif type == RewardConstants::Type::TEKY_STAR
       user.star = user.star.to_i + amount
     end
 
     user.save!
   end
-
+  
 end

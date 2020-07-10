@@ -2478,16 +2478,16 @@ ul.list-unstyled {
   color: red !important;
 }
 .modal-content {
-  border-radius: 0px;
-  border: none;
+  /*border-radius: 0px;
+  border: none;*/
 }
 .modal-dialog {
   margin-top: 10%;
   z-index: 10000;
 }
 .modal-header {
-  border-bottom: none;
-  text-transform: uppercase;
+  /*border-bottom: none;
+  text-transform: uppercase;*/
 }
 .modal-header .modal-title {
   font-size: 15px;
@@ -2504,7 +2504,7 @@ ul.list-unstyled {
   opacity: .4;
 }
 .modal-footer {
-  border-top: none;
+  /*border-top: none;*/
 }
 .modal h2 {
   font-size: 20px;

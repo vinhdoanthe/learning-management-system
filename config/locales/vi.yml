@@ -10,6 +10,12 @@ vi:
     back_to_my_threads: 'Quay lại danh sách câu hỏi'
     apply: "Áp dụng"
     see: "Xem"
+    back_to_login: "Quay lại đăng nhập"
+    see_project: "Xem sản phẩm"
+    share: "Chia sẻ"
+    complete: "Hoàn thiện"
+    text_no: "Không"
+    text_ok: "Đồng ý"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -29,14 +35,19 @@ vi:
   sidebar:
     config: "Cấu hình"
     noti: "Thông báo"
+    dashboard: 'Dashboard'
     my_class: "Lớp học của tôi"
     timetable: "Thời khoá biểu"
     homework: "Bài tập và ôn bài"
-    redeem: "Đổi điểm lấy quà"
+    redeem: "Đổi quà"
     teaching_schedule: "Lịch giảng dạy"
     class_list: "Danh sách lớp học"
     marking: "Chấm bài"
+    review_student: 'Nhận xét học sinh'
     question_answer: "Hỏi - Đáp"
+    my_projects: 'Sản phẩm cuối khoá'
+    top_achievement: 'Top thành tích'
+    refer_friend: 'Giới thiệu bạn bè'
   config:
     general_info: "Thông tin chung"
     parent_info: "Thông tin phụ huynh"
@@ -103,6 +114,7 @@ vi:
     no_lesson: "Chưa có buổi học nào"    
     batch:
       type: "Loại lớp học"
+      batch_time: "Thời gian học"
       name: "Lớp học"
       code: "Mã lớp"
       center: "Trung tâm"
@@ -113,6 +125,8 @@ vi:
         stop: "nghỉ học"
         reversation: 'bảo lưu'
         update: 'Đang cập nhật'
+      op_student_course:
+        registered_subject: 'Đăng ký %{count_registered_subjects}/%{count_total_subjects} học phần'
     session:
       no_session: "Không có buổi học nào"
       student_coming: "LỊCH HỌC TIẾP THEO"
@@ -121,7 +135,7 @@ vi:
       to: "đến"
       at: "tại cơ sở"
   my_class:
-    information: "Xem thông tin"
+    information: "Xem lại"
     come_in: "Vào lớp"
     detail:
       class_info: "Thông tin lớp học"
@@ -179,6 +193,18 @@ vi:
     view_detail: 'Xem chi tiết'
     all_threads: 'Toàn bộ câu hỏi'
     no_thread: 'Câu hỏi này đã bị xóa!'
+  student_project:
+    name: "Sản phẩm học sinh"
+    project_name: "Tên sản phẩm"
+    description: "Mô tả sản phẩm"
+    presentation: "Slide trình bày dự án"
+    no_presentation: "Chưa có slide"
+    video: "Video giới thiệu về dự án"
+    no_video: "Chưa có video"
+    link: "Link chi tiết sản phẩm"
+    no_link: "Chưa có link sản phẩm"
+    click_to_update: "Click để cập nhật sản phẩm"
+    public_html: "<b style='text-transform:uppercase; font-size: 15px;'>Công khai</b>(phụ huynh, học sinh sẽ xem được thông tin dự án)"
   adm:
     user: "Người dùng"
     setting:
@@ -197,8 +223,22 @@ vi:
     notice: "Thông báo"
     redeem:
       name: "Đổi quà"
+      redeem_button: "Đổi quà ngay"
+      redeem_points: "Đổi quà"
       coin_star: "Giao dịch điểm thưởng"
       redeem: "Giao dịch đổi quà"
+      how_to_check_it: "Làm sao để kiếm được"
+      category: "Danh mục"
+      category_redeem: "Danh mục quà"
+      redeem_infomation: "Thông tin đổi quà"
+      redeem_color: "Màu sắc"
+      redeem_quantily: "Số lượng"
+      redeem_available: "Kích cỡ"
+      product_introduction: "Giới thiệu sản phẩm"
+      product_infomation: "Thông tin sản phẩm"
+      receiving_gifts_time: "Thời gian nhận quà:"
+      address_accepting_gifts: "Cơ sở nhận quà:"
+      Are you sure you want to redeem?: "Bạn chắc chắn muốn đổi quà?"
     refer_friend: "Giới thiệu bạn bè"
     learning_activity:
       name: "Hoạt động học tập"
@@ -210,3 +250,39 @@ vi:
     learning_activity_management_question: "Câu hỏi"
     learning_activity_management_project: "Dự án"
     learning_activity_management_homework_list: "Danh sách bài tập về nhà chưa có câu trả lời"
+  reward:
+    you_were_reward: 'Bạn được tặng thưởng'
+    star: 'TEKY Sao'
+    coin: 'TEKY Đồng'
+    my_coin_star_transaction: 'Lịch sử thưởng điểm của tôi'
+    at: 'lúc'
+    no_transactions: 'Bạn chưa có lịch sử thưởng TEKY Sao và TEKY Đồng.'
+  dashboard:
+    leaders:
+      title: 'Học sinh tiêu biểu'
+      name: 'Tên học sinh'
+      teky_star: 'TEKY Sao'
+      teky_coin: 'TEKY Đồng'
+    no_leaders: 'Không có học sinh nào'
+  public_profile:
+    center: 'Học tại'
+    achievements: 'Giải thưởng'
+    no_achievements: 'Chưa có giải thưởng'
+    gender: 'Giới tính'
+    address: 'Địa chỉ'
+    batches: 'Khóa học'
+    badges: 'Huy hiệu'
+    achievements_certificates: 'Thành tích và Giải thưởng'
+    featured_photos: 'Hình ảnh'
+    products: 'Sản phẩm'
+    gender_male: 'Nam'
+    gender_femail: 'Nữ'
+    share: 'Chia sẻ'
+    teky_star: 'TEKY Sao'
+    teky_coin: 'TEKY Đồng'
+    homework: 'Bài tập về nhà'
+    publish_projects: 'Dự án đã phát triển'
+  page:
+    coming_soon: 'Trang đang trong quá trình phát triển'
+  redeem:
+    no_products: 'Kho quà đang trong quá trình xây dựng'

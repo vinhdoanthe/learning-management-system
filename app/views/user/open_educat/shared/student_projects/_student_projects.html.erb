@@ -19,30 +19,25 @@
             <h3><span class="color-F16357">Level <%= level  %></h3>
           </div>
           <div class='row'>
+            <div class='col-md-4'>
             <%= render 'user/open_educat/shared/student_projects/upload_item', { id: id } %>
+            </div>
           </div>
         <% end %>
       <% else %>
         <div class="fc-header" style='margin: 0 0 15px 0'>
           <h3><span class="color-F16357">Level <%= level  %></h3>
         </div>
-        <% total_row = projects.length / 3 %>
-        <% for i in 0..total_row %>
-          <div class='row projects_row row_<%= i %>'>
-            <% projects.each_with_index do |project, index| %>
-              <% if index / 3 == i %>
-                <div class='col-md-4'>
-                  <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
-                </div>
-              <% end %>
-              <% if current_user.is_teacher? %>
-                <% if i == (projects.length / 4) && index == (projects.length - 1) %>
-                  <%= render 'user/open_educat/shared/student_projects/upload_item', { id: id } %>
-                <% end %>
-              <% end %>
-            <% end %>
+        <div class="project_container">
+          <% projects.each do |project| %>
+          <div style="margin: 10px">
+            <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
           </div>
-        <% end %>
+          <% end %>
+          <div style="margin: 10px;">
+            <%= render 'user/open_educat/shared/student_projects/upload_item', { id: id } %>
+          </div>
+        </div>
       <% end %>
     </div>
   <% end %>
@@ -69,5 +64,10 @@
   .projects_row {
     display: flex;
     flex-wrap: wrap
+  }
+  .project_container {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-auto-rows: 1fr;
   }
 </style>

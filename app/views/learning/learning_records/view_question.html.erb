@@ -60,7 +60,7 @@
                       </ul>
                     </div>
                     <div class="btn-submit">
-                      <a type="submit" data-toggle="modal" data-target="#modal-basic" class="btn btn-primary btn-embossed bg-5DC2A7" id='answer_the_question' data-remote='true'><img src="/global/images/submit.png" alt=""><%= t('homework.submit') %></a>
+                      <a type="submit" data-toggle="modal" data-target="#modal-basic" class="btn btn-primary btn-embossed bg-5DC2A7" id='answer_the_question' data-remote='true'><img style='margin-right: 5px' src="/global/images/submit.png" alt=""><%= t('homework.submit') %></a>
                     </div>
                     <div class="modal fade" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true"></div>
                   </div>
@@ -68,7 +68,7 @@
                 <div class="col-md-3">
                   <div class="fc-chat" id='qa_area' data-session-id='<%= @session.id %>' data-lesson-id='<%= @lesson.id %>'>
                     <div class="fcc-btn">
-                      <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7 width-100 text-transform font-bold" >Ôn lại bài đã học</button>
+                      <!-- <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7 width-100 text-transform font-bold" >Ôn lại bài đã học</button> -->
                     </div>
                     <!-- add_new_question -->
                     <%= render :partial => "social_community/question_answer/shared/add_new_question", :locals => {:session => @session, :lesson => @lesson} %>
@@ -84,6 +84,25 @@
   </div>
 </div>
 
+<style>
+  .question_select {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  #answer_the_question {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .fco-ques span {
+    font-family: 'Montserrat' !important;
+  }
+  .fco-ques p {
+    font-family: 'Montserrat' !important;
+  }
+  .fco-ques h1 h2 h3 {
+    font-family: 'Montserrat' !important;
+  }
+</style>
 <script>
   $('.homework_video_link').on('click', function(){
     session_id = $(this).data('session')

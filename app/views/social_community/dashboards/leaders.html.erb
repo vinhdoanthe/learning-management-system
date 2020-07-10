@@ -1,0 +1,53 @@
+<!-- Leaders' board -->
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h3 class="color-fff text-transform"><%= t('dashboard.leaders.title') %></h3>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <% if @leaders.empty? %>
+        <div class="no-transactions">
+          <p><%= t('dashboard.no_leaders') %></p>
+        </div>
+      <% else %>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th><%= t('dashboard.leaders.name') %></th>
+              <th class="align-right"><%= t('dashboard.leaders.teky_star') %></th>
+              <th class="align-right"><%= t('dashboard.leaders.teky_coin') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @leaders.each_with_index do |leader, index| %>
+              <tr>
+                <% index_display = @offset + index.to_i + 1 %>
+                <td><%= index_display %></td>
+                <td>
+                  <label class="color-EB9138"><%= leader.full_name %></label>
+                  <p><%= t('config.center') %> <span class="color-0654BA text-transform"><%= leader.center_name %></span></p>
+                </td>
+                <td align="right">
+                  <h2><%= number_with_delimiter(leader.star, :delimiter => '.') %></h2>
+                </td>
+                <td align="right">
+                  <h2><%= number_with_delimiter(leader.coin, :delimiter => '.') %></h2>
+                </td>
+              </tr>
+            <% end %> 
+          </tbody>
+        </table>
+        <%= paginate @leaders %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag 'social_community/leaders.css' %>
+<% end %>

@@ -20,7 +20,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
       User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'star', current_user.id
       result = {type: 'success', message: 'Upload thành công'}
     else
-      result = {type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau'}
+      result = {type: 'danger', message: 'Thiếu thông tin sản phẩm! Vui lòng kiểm tra lại!'}
     end
 
     respond_to do |format|
@@ -125,7 +125,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   end
 
   def validate_youtube_upload_params params
-    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present? || params[:project_show_video].present?)
+    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present?)
   end
 
   def batch_student_info batch_id

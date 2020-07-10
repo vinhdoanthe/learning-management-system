@@ -29,6 +29,7 @@ en:
   sidebar:
     config: "Config"
     noti: "Notification"
+    dashboard: 'Dashboard'
     my_class: "My class"
     timetable: "Timetable"
     homework: "Homework"
@@ -36,7 +37,12 @@ en:
     teaching_schedule: "Teaching schedule"
     class_list: "Class list"
     marking: "Marking"
+    review_student: 'Review student'
     question_answer: "Question Answer"
+    my_projects: 'Student Projects'
+    top_achievement: 'Top Achievement'
+    redeem: 'Redeem'
+    refer_friend: 'Refer friend'
   config:
     general_info: "General information"
     parent_info: "Parent information"
@@ -103,6 +109,7 @@ en:
     no_lesson: "No lesson yet"
     batch:
       type: "Batch type"
+      batch_time: "Batch time"
       name: "Batch name"
       code: "Batch code"
       center: "Center"
@@ -113,6 +120,8 @@ en:
         stop: "stop"
         reversation: 'reversation'
         update: 'updating'
+      op_student_course:
+        registered_subject: 'Registered %{count_registered_subjects}/%{count_total_subjects} subject'
     session:
       student_coming: "NEXT CLASS"
       teacher_coming: "NEXT TEACHING CLASS"
@@ -205,3 +214,39 @@ en:
       discussion: "Discussion"
       homework: "Homework"
       project: "Project"
+  reward:
+    you_were_reward: 'You were rewarded'
+    star: 'TEKY Star'
+    coin: 'TEKY Point'
+    my_coin_star_transaction: 'My TEKY Point and Star history'
+    at: 'at'
+    no_transactions: 'You have no TEKY Coin and Star reward.'
+  dashboard:
+    leaders:
+      title: 'Outstanding Students'
+      name: 'Student Name'
+      teky_star: 'TEKY Star'
+      teky_coin: 'TEKY Point'
+    no_leaders: 'No students'
+  public_profile:
+    center: 'Center'
+    achievements: 'Achievements'
+    no_achievements: 'No achievements'
+    gender: 'Gender'
+    address: 'Address'
+    batches: 'Batches'
+    badges: 'Badges'
+    achievements_certificates: 'Achievements and Certificates'
+    featured_photos: 'Featured photos'
+    products: 'Products'
+    gender_male: 'Male'
+    gender_femail: 'Female'
+    share: 'Share'
+    teky_star: 'TEKY Star'
+    teky_coin: 'TEKY Point'
+    homework: 'Homework'
+    publish_projects: 'Projects'
+  page:
+    coming_soon: 'Page is in developing'
+  redeem:
+    no_products: "Redeem products are in developing"

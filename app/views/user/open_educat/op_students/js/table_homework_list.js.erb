@@ -5,6 +5,7 @@
 
  <% else %>
     $('.no_lesson_div').hide();
+    $('.student_course_title').html('<%= course.name %>');
     $('#homework_session_table').show();
     <% if batches.present? %>
       $("#homework_batch_selection").html('<%= escape_javascript( render partial: 'user/open_educat/op_students/partials/homework_selection', locals: { datas: batches } ) %>');

@@ -19,6 +19,9 @@ gem 'jquery-fileupload-rails'
 # gem 'dragonfly', '~> 1.2.0'
 gem 'carrierwave', '~> 2.0'
 # gem 'fog'
+gem 'fog-aws'
+gem 'discard', '~> 1.2'
+gem 'paper_trail'
 
 # Notification
 gem 'activity_notification'

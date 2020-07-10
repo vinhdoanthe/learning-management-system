@@ -63,4 +63,19 @@ class SocialCommunity::DashboardsService
       nil
     end
   end
+
+  def self.leaders page
+    page = page.to_i
+    leader = User::Account::User.where(account_role: User::Constant::STUDENT)
+      .where.not(star: nil)
+      .order(star: :DESC, created_at: :DESC)
+      .page(page)
+    if page.nil? or page == 0 or page == 1
+      offset = 0
+    else
+      offset = (page-1) * User::Account::User.default_per_page
+    end
+    [leader, offset]
+  end
+
 end

@@ -46,7 +46,12 @@
 <script>
   $('#edit_student_project_form').ready(function(){
     $('.edit_student_project_form_submit').on('click', function(){
-      $('.progress').show()
+      if ($('#presentation_had_change').val() == '1'){
+         $('.progress-presentation').show()
+      }
+      if ($('#video_had_change').val() == '1'){
+         $('.progress-video').show()
+      }
     })
   })
 </script>

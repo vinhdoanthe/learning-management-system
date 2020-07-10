@@ -1,5 +1,6 @@
 namespace :social_community do
-  # resources :pictures, :only => [:index, :new, :create, :destroy]
+  resources :pictures, :only => [:index, :new, :create, :destroy]
+  resources :user_shared_photos, :only => [:index, :create, :destroy]
 
   namespace :photos do
 
@@ -63,5 +64,6 @@ namespace :social_community do
   get 'albums_with_comments' => 'dashboards#albums_with_comments', as: 'albums_with_comments'
   get 'dashboard_noti' => 'dashboards#dashboard_noti', as: 'dashboard_noti'
   get 'leader_board' => 'dashboards#leader_board', as: 'leader_board'
+  get 'leaders' => 'dashboards#leaders', as: 'leaders'
   post 'delete_session_photo' => 'photos#delete_session_photo', as: 'delete_session_photo'
 end

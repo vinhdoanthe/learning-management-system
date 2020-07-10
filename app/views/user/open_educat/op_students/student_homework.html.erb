@@ -2,7 +2,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h2 class="color-fff text-transform"><%= t('sidebar.homework') %></h2>
+        <h3 class="color-fff text-transform"><%= t('sidebar.homework') %></h3>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
               <div class="filter-box FlowupLabels" id='formBody'>
                 <div class="row">
                   <div class="col-md-4">
-                    <label class="filter-title student_course_title"></label>
+                    <label class="filter-title student_course_title"><%= @course.name %></label>
                   </div>
                   <div class="col-md-3">
                     <div class='fl_wrap m-t-0'>
@@ -64,9 +64,9 @@
                       <select class='fl_input' id="homework_subject_selection">
                         <% @subjects.each do |subject| %>
                           <% if @subject.id == subject.id %>
-                            <option value="<%= subject.id %>" selected><%= subject.level %></option>
+                            <option value="<%= subject.id %>" selected>Học phần <%= subject.level %></option>
                           <% else %>
-                            <option value="<%= subject.id %>"><%= subject.level %></option>
+                            <option value="<%= subject.id %>">Học phần <%= subject.level %></option>
                           <% end %>
                         <% end %>
                       </select>
@@ -76,7 +76,12 @@
               </div>
               <div class="no_lesson_div" style="display: none"><%= t('learning.no_lesson') %></div>
               <table class="table table-hover table-link" id="homework_session_table" remote='true'>
-                <%= render 'user/open_educat/op_students/partials/table_homework_list', { sessions: @sessions, batch: @batch, session: @session, subject: @subject } %>
+              <colgroup>
+              <col>
+              <col width="110" align="right">
+              <col>
+              </colgroup>
+              <%= render 'user/open_educat/op_students/partials/table_homework_list', { sessions: @sessions, batch: @batch, session: @session, subject: @subject } %>
               </table>
             </div>
           </div>
