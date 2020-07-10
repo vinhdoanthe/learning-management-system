@@ -43,6 +43,7 @@ vi:
     teaching_schedule: "Lịch giảng dạy"
     class_list: "Danh sách lớp học"
     marking: "Chấm bài"
+    review_student: 'Nhận xét học sinh'
     question_answer: "Hỏi - Đáp"
     my_projects: 'Sản phẩm cuối khoá'
     top_achievement: 'Top thành tích'
@@ -281,3 +282,5 @@ vi:
     teky_coin: 'TEKY Đồng'
     homework: 'Bài tập về nhà'
     publish_projects: 'Dự án đã phát triển'
+  page:
+    coming_soon: 'Trang đang trong quá trình phát triển'

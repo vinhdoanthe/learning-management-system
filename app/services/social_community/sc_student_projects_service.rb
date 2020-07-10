@@ -130,14 +130,22 @@ class SocialCommunity::ScStudentProjectsService
   end
 
   def social_student_projects user
-    projects = SocialCommunity::ScStudentProject.where(user_id: user.id).all
-    student_projects = (get_course_projects_hash projects)
-    course_ids = user.op_student.op_student_courses.pluck(:course_id).uniq
-
+    # TODO: tuning SQL Query
+    course_ids = SocialCommunity::ScStudentProject.all.pluck(:course_id).uniq
     course_projects = []
     course_ids.each do |course_id|
       projects = SocialCommunity::ScStudentProject.where(course_id: course_id, state: 'publish', permission: 'public').where.not(user_id: user.id).limit(4)
       course_projects << (get_course_projects_hash projects)
+    end
+
+    if user.is_student?
+      projects = SocialCommunity::ScStudentProject.where(user_id: user.id).all
+      student_projects = (get_course_projects_hash projects)
+      
+    elsif user.is_teacher?
+      student_projects = []
+    else
+      student_projects = []
     end
 
     [student_projects, course_projects]
