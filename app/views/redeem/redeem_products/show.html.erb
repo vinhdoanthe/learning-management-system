@@ -59,9 +59,9 @@
               <div class="rtdt-left">
                 <div class='row'>
                   <div class='col-md-6'>
-                    <div class="form-group">
+                    <div class="form-group fl_wrap m-t-0">
                       <label for="exampleInputEmail1"><%= t('adm.redeem.redeem_quantily')%></label>
-                      <select name="" class="product_amount form-control">
+                      <select name="" class="product_amount form-control redeem_product_select">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -69,10 +69,10 @@
                       </select>
                     </div>
                   </div>
-                  <div class='col-md-6'>
+                  <div class='col-md-6 fl_wrap m-t-0'>
                     <div class="form-group">
                       <label for="exampleInputEmail1"><%= t('adm.redeem.redeem_available')%></label>
-                      <select name="" class="product_size form-control">
+                      <select name="" class="product_size form-control redeem_product_select">
                         <% @redeem_product.available_size.each do |size| %>
                           <option value="<%= size %>"><%= size %></option>
                         <% end %>
@@ -85,9 +85,9 @@
             <div class="rtdt-left">
               <div class='row'>
                 <div class='col-md-12'>
-                <div class="form-group">
+                <div class="form-group fl_wrap m-t-0">
                   <label for="exampleInputEmail1"><%= t('adm.redeem.address_accepting_gifts')%></label>
-                  <select name="" id="select_redeem_company" class=" form-control">
+                  <select name="" id="select_redeem_company" class="redeem_product_select form-control">
                     <% Common::ResCompany.all.each do |company| %>
                       <option value='<%= company.id %>'><%= company.name %></option>
                     <% end %>
@@ -96,7 +96,7 @@
                 </div>
               </div>
               <div class='row'>
-                <div class='col-md-12'>
+                <div class='col-md-12 '>
                   <label for="exampleInputEmail1"><%= t('adm.redeem.receiving_gifts_time')%></label>
                   <input type="text" id="redeem_time"  class='form-control' name='expected_time'  value="<%= Time.now.strftime('%m/%d/%Y') %>" />
                 </div>
@@ -140,5 +140,10 @@
     </div>
   </div>
 </div>
+<style>
+.redeem_product_select {
+  -webkit-appearance: none;
+}
+</style>
 <%= stylesheet_link_tag 'redeem/redeem_product_detail' %>
 <%= javascript_include_tag 'redeem/redeem_product.js' %>
