@@ -1280,7 +1280,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
 }
 .sidebar-collapsed.fixed-topbar .topbar {
-  left: 50px;
+  left: 60px;
 }
 @media screen and (min-width: 1025px) {
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle {
