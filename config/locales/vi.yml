@@ -15,6 +15,7 @@ vi:
     share: "Chia sẻ"
     complete: "Hoàn thiện"
     text_no: "Không"
+    text_ok: "Đồng ý"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -38,7 +39,7 @@ vi:
     my_class: "Lớp học của tôi"
     timetable: "Thời khoá biểu"
     homework: "Bài tập và ôn bài"
-    redeem: "Đổi điểm lấy quà"
+    redeem: "Đổi quà"
     teaching_schedule: "Lịch giảng dạy"
     class_list: "Danh sách lớp học"
     marking: "Chấm bài"
