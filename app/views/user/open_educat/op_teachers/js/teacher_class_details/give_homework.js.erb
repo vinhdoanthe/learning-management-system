@@ -1,5 +1,1 @@
-<% if result %>
-$('#give_homework_modal').html('<%= escape_javascript(render partial: 'user/open_educat/op_teachers/modals/give_homework_modal', locals: { students: students, homeworks: homeworks } ) %>' );
-<% else %>
-display_noti({ type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau' })
-<% end %>
+$('#give_homework_modal').html('<%= escape_javascript(render partial: 'user/open_educat/op_teachers/modals/give_homework_modal', locals: { students: students, homeworks: homeworks, result: result } ) %>' );

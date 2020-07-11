@@ -98,6 +98,11 @@ module User
            'title' => "#{ t('sidebar.marking') }", 
            'right_content' => '<span class="left-badge">' << count_mark_question(current_user.op_faculty) << '</span>'
           },
+          {'path' => coming_soon_page_path, 
+           'icon' => 'ico-BaiTapOnBai.png',
+           'title' => "#{ t('sidebar.review_student') }", 
+           'right_content' => ''
+          },
           {'path' => social_community_question_answer_my_threads_path, 
            'icon' => 'Icon-Inbox.png',
            'title' => "#{ t('sidebar.question_answer') }", 
@@ -106,7 +111,7 @@ module User
         ]
 
 
-        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top: 1px solid #232837; margin: 0">'
+        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top: 1px solid #232837; border-bottom: 1px solid #414348; margin: 0">'
 
         menus.each do |menu|
 
@@ -127,8 +132,38 @@ module User
           tag_html = tag_html + '</a>'
           tag_html = tag_html + '</li>'
         end
-
         tag_html = tag_html + '</ul>'
+
+        # menus for community features
+        menus = [
+          {'path' => social_community_sc_student_projects_social_student_projects_path, 
+            'icon' => 'youtube.png',
+            'title' => "#{t('sidebar.my_projects')}", 
+            'right_content' => ''
+          }
+        ]
+        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top: 1px solid #232837; margin: 0">'
+        menus.each do |menu|
+
+          if (menu['path'] == fullpath)
+            tag_html = tag_html + '<li class="nav-active menu_item">'        
+            tag_html = tag_html + '<a href="' + menu['path'] + '">'
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
+          else
+            tag_html = tag_html + '<li class="">'        
+            tag_html = tag_html + '<a href="' + menu['path'] + '">'
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
+          end
+
+          tag_html = tag_html + '<span>' + menu['title'].concat(menu['right_content']) + '</span>'
+
+          tag_html = tag_html + '</a>'
+          tag_html = tag_html + '</li>'
+        end
+        tag_html = tag_html + '</ul>'
+        tag_html = tag_html + '</div>'
 
         return tag_html
 

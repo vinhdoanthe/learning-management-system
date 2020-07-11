@@ -11,9 +11,9 @@
         <li class="nav-active">
           <a href="<%= root_path %>">
             <%= (User::Account::UserDecorator.new(current_user).display_avatar 80).html_safe %>
-            <span class='public_profile'>
+            <span class='public_profile' style="padding-top: 11px;">
                 <label class="user_full_name_over"><%= current_user.op_faculty.full_name %></label>
-                <p class="user_code" style="padding-left: 0px; text-align: left;">Level: <%= current_user.op_faculty.faculty_level %></p>
+                <p style="padding-left: 0px; text-align: left; text-transform: uppercase;">Level: <%= current_user.op_faculty.faculty_level %></p>
             </span>
           </a>
         </li>

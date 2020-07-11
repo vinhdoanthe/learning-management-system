@@ -1,6 +1,7 @@
 <% student = project.op_student %>
 <% student_name, company_name  = '', '' %>
 <% progress = get_project_progress project %>
+<% teacher_can_edit = true if teacher_can_edit.nil? %>
 <% if student.present? %>
   <% student_name = student.full_name %>
   <% company_name = student.res_company ? student.res_company.name : '' %>
@@ -16,9 +17,8 @@
         <% end %>
         <div class=''>
           <div class='project_control'>
-            <% if current_user.is_teacher? %>
-              <% if progress != 100 || project.state != 'publish' || project.permission != 'public'%>
-              <%# if progress != 100 %>
+            <% if current_user.is_teacher? and teacher_can_edit %>
+              <% if progress != 100 || project.state != 'publish' || project.permission != 'public' %>
                 <div class="col-md-6 control_button">
                   <button class="edit_project" style="width: 100%; padding: 10px 0 10px 0" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail"><%= t('button.complete')%></button>
                 </div>

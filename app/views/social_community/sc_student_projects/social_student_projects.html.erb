@@ -11,26 +11,28 @@
     </div>
   </div>
   <div class="panel m-t--70">
-    <div class="panel-content">
-      <div class="box-product" >
-        <div class="fc-header">
-          <h3><span class="color-000">Sản phẩm <span style="color:#16BD56;text-transform: uppercase;font-weight: normal;">của tôi</span></h3>
-        </div>
-        <div class='row' style="padding-top: 17px;">
-          <% unless (check_projects @student_projects) %>
-            <p class='no-projects'>Bạn chưa có sản phẩm nào</p>
-          <% else %>
-            <% @student_projects.each do |course, projects| %>
-              <% projects.each do |project| %>
-                <div class='col-md-4 col-lg-3' style='margin-bottom: 30px'>
-                  <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
-                </div>
+    <% if current_user.is_student? %>
+      <div class="panel-content">
+        <div class="box-product" >
+          <div class="fc-header">
+            <h3><span class="color-000">Sản phẩm <span style="color:#16BD56;text-transform: uppercase;font-weight: normal;">của tôi</span></h3>
+          </div>
+          <div class='row' style="padding-top: 17px;">
+            <% unless (check_projects @student_projects) %>
+              <p class='no-projects'>Bạn chưa có sản phẩm nào</p>
+            <% else %>
+              <% @student_projects.each do |course, projects| %>
+                <% projects.each do |project| %>
+                  <div class='col-md-3'>
+                    <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
-          <% end %>
-        </div>
-      </div>    
-    </div>
+          </div>
+        </div>    
+      </div>
+    <% end %>
 
     <div class="panel-content">
       <div class="box-product" >
@@ -44,7 +46,7 @@
             <% @course_projects.each do |course_project| %>
               <% course_project.each do |course, projects| %>
                 <div class="fc-header">
-                  <div class='row' style="padding-top: 15px; padding-bottom: 15px;">
+                  <div class='row' style="padding-top: 15px;">
                     <div class='col-md-9'>
                       <h4><span class="color-000"><%= course.name %></h4>
                     </div>
@@ -55,12 +57,12 @@
                 </div>
                 <div class='row' style="padding-top: 17px;">
                   <% projects.each do |project| %>
-                    <div class='col-md-4 col-lg-3' style="margin-bottom: 30px;">
-                    <%= render 'user/open_educat/shared/student_projects/student_project_community_item', { project: project } %>
+                    <div class='col-md-3' style="margin-bottom: 30px;">
+                      <%= render 'user/open_educat/shared/student_projects/student_project_community_item', { project: project, teacher_can_edit: false } %>
                     </div>
                   <% end %>
                 </div>
-                <% end %>
+              <% end %>
             <% end %>
           <% end %>
         </div>
@@ -73,15 +75,15 @@
 <div id="editStudentProjectDetail" class="modal fade" role="dialog">
 </div>
 <style>
-  .color-000 {color: #000 !important;}
-  .show_course_projects {float: right;font-size: 16px;font-weight: 600;margin-right: 20px;}
-  .no-projects {text-align: center;}
+.color-000 {color: #000 !important;}
+.show_course_projects {float: right;font-size: 16px;font-weight: 600;margin-right: 20px;}
+.no-projects {text-align: center;}
 </style>
 
 <style>
 .project_progress {
   height: 20px;
-    margin-top: 20px;
+  margin-top: 20px;
 }
 .student_project_show {
   font-weight: 600;
@@ -126,8 +128,8 @@
   background: #fcf055;
 }
 button.edit_project  {
-      padding: 10px !important;
-    }
+  padding: 10px !important;
+}
 .public_project {
   background: #9966ff;
 }
@@ -139,4 +141,7 @@ button.public_project  {padding: 10px !important;}
 .project-info {background-color:#D7DFE9}
 .prod-text .project-name {text-align: justify;font-size: 14px; font-weight: normal;text-transform: uppercase;}
 .prod-text .project-description {text-align: justify;font-size: 14px; font-weight: normal;}
+  .fc-header h3 {
+    padding-bottom: 0 !important;
+  }
 </style>
