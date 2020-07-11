@@ -1,19 +1,16 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "redeem/redeem_product.js" %>
 <% end %>
-
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
-      <div class="ph-text">
-        <h3 class="color-fff text-transform"><%= @page_title%></h3>
-      </div>
+        <div class="ph-text">
+          <h3 class="color-fff text-transform"><%= @page_title%></h3>
+        </div>
     </div>
   </div>
   <div class="panel m-t--70">
-
     <div class="panel-content">
-
       <div class="redem-all">
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -29,7 +26,6 @@
           </div>
         </div>
       </div>
-
       <div class="redem-filter">
         <div class="filter-box FlowupLabels" id='formBody'>
           <div class="row">
@@ -50,49 +46,45 @@
           </div>
         </div>
       </div>
-
       <div class="redem-tab">        
         <!-- Tab panes -->
         <div class="tab-content">
           <div class="tab-pane active" id="messages">
             <div class="row">
-              <% if !@redeem_products.empty? %>
-                <% @redeem_products.each_with_index do |product, index| %>
-                  <div class="col-sm-4 product_item product_<%= product.category %>">
-                    <div class="rt-detail product_infomation">
-                      <div class="rtd-img">
-                        <% d_index = index + 1 %>
-                        <div class="owl-carousel" id="product<%= d_index %>">
-                          <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                          <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                          <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                          <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+              <% @redeem_products.each_with_index do |product, index| %>
+              <div class="col-sm-4 product_item product_<%= product.category %>">
+                <div class="rt-detail product_infomation">
+                  <div class="rtd-img">
+                    <div class="owl-carousel" id="product<%= index+1 %>">
+                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+                      <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+                    </div>
+                  </div><!-- #  rtd-img-->
+                  <div class="rtd-text">
+                    <div class="product-brand text-uppercase"><%= product.brand %></div>
+                    <h3 class="product-name"><%= product.name %></h3>
+                    <div class="rtd-center clearfix product-option">
+                      <div class="row">
+                        <div class="col-md-5 right-color-li">
+                          <div class="form-group">
+                            <label><%= t('adm.redeem.redeem_color')%></label>
+                            <ul>
+                              <% product.available_color.each do |color| %>
+                                <li>
+                                  <label class="check-multi form-control check-color" style="background-color: <%= color %>">
+                                    <input type="radio" name="product_color" value='<%= color %>'>
+                                  </label>
+                                </li>
+                              <% end %>
+                            </ul>
+                          </div>
                         </div>
-                      </div><!-- #  rtd-img-->
-
-                      <div class="rtd-text">
-                        <div class="product-brand text-uppercase"><%= product.brand %></div>
-                        <h3 class="product-name"><%= product.name %></h3>
-                        <div class="rtd-center clearfix product-option">
+                        <div class="col-md-7">
                           <div class="row">
-                            <div class="col-md-5 right-color-li">
-                              <div class="form-group">
-                                <label><%= t('adm.redeem.redeem_color')%></label>
-                                <ul>
-                                  <% product.available_color.each do |color| %>
-                                    <li>
-                                      <label class="check-multi form-control check-color" style="background-color: <%= color %>">
-                                        <input type="radio" name="product_color" value='<%= color %>'>
-                                      </label>
-                                    </li>
-                                  <% end %>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="col-md-7">
-                              <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                  <div class="form-group">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
                                     <label><%= t('adm.redeem.redeem_quantily')%></label>
                                     <select name="" class="product_amount form-control">
                                       <option value="1">1</option>
@@ -100,25 +92,25 @@
                                       <option value="3">3</option>
                                       <option value="4">4</option>
                                     </select>
-                                  </div>                            
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                  <div class="form-group">
+                                </div>                            
+                              </div>
+                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
                                     <label><%= t('adm.redeem.redeem_available')%></label>
                                     <select name="" class="product_size form-control">
                                       <% product.available_size.each do |size| %>
                                         <option value="<%= size %>"><%= size %></option>
                                       <% end %>
                                     </select>
-                                  </div>
                                 </div>
                               </div>
-                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    
+                    <div class="product-description">
+                      <%= truncate(strip_tags(product.description), length: 220, separator: ' ')%>                   
+                    </div>
                     <div class="rtd-btn clearfix">
                       <div class="row">
                         <div class="col-md-5">
@@ -126,39 +118,22 @@
                             <p class="product-coin-text"><%= t('reward.coin')%></p>
                             <p class="product-coin-number"><%= number_with_delimiter(product.price.to_i, delimiter: ".") %></p>
                           </div>
-                        <div class="product-description">
-                          <%= truncate(strip_tags(product.description), length: 220, separator: ' ')%>
                         </div>
-                        <div class="rtd-btn clearfix">
-                          <div class="row">
-                            <div class="col-md-5">
-                              <div class="product-box">
-                                <p class="product-coin-text"><%= t('reward.coin')%></p>
-                                <p class="product-coin-number"><%= number_with_delimiter(product.price.to_i, delimiter: ".") %></p>
-                              </div>
-                            </div>
-                            <div class="col-md-7">
-                              <input type='hidden' name="redeem_product_id"  value='<%= product.id %>'>
-                              <a href='/redeem/redeem_products/<%= product.id %>' class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('qa.view_detail')%></a>                          
-                            </div>
-                          </div>
+                        <div class="col-md-7">
+                          <input type='hidden' name="redeem_product_id"  value='<%= product.id %>'>
+                          <a href='/redeem/redeem_products/<%= product.id %>' class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('qa.view_detail')%></a>                          
                         </div>
-                      </div><!-- #  rtd-text-->
+                      </div>
                     </div>
-                  </div>
-                <% end %>          
-              <% else %>
-                <div class='page--coming-soon'>
-                  <p class='page-coming-soon-text'><%= t('redeem.no_products') %></p>
+                  </div><!-- #  rtd-text-->
                 </div>
-              <% end %>
-            </div>
-          </div>
+              </div>
+              <% end %>          
         </div>
       </div>
     </div>
-  </div>
 </div>
+  
 <script>
   $(document).ready(function() {
     $('.product_categories').on('change', function(){
@@ -173,18 +148,3 @@
     });   
   });
 </script>
-<style>
-  .page--coming-soon {
-    height: 400px;
-  }
-  .page-coming-soon-text {
-    text-align: center;
-    text-transform: uppercase;
-  }
-  .product_amount {
-    -webkit-appearance: none;
-  }
-  .product_size {
-    -webkit-appearance: none;
-  }
-</style>
