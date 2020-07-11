@@ -69,7 +69,7 @@
                   <div class='col-md-6'>
                     <div class="form-group fl_wrap m-t-0">
                       <label for="exampleInputEmail1"><%= t('adm.redeem.redeem_quantily')%></label>
-                      <select name="" class="product_amount form-control redeem_product_select">
+                      <select name="product_amount" id="product_amount" class="product_amount form-control redeem_product_select">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -80,7 +80,7 @@
                   <div class='col-md-6 fl_wrap m-t-0'>
                     <div class="form-group">
                       <label for="exampleInputEmail1"><%= t('adm.redeem.redeem_available')%></label>
-                      <select name="" class="product_size form-control redeem_product_select">
+                      <select name="product_size" id="product_size" class="product_size form-control redeem_product_select">
                         <% @redeem_product.available_size.each do |size| %>
                         <option value="<%= size %>"><%= size %></option>
                         <% end %>
@@ -132,51 +132,58 @@
     </div>
   </div>
 </div>
-<div id='confirm_redeem_modal' class="modal fade" role="dialog">
-  <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><%= t('adm.redeem.Are you sure you want to redeem?')%></h4>
-        </div>
-        <div class="modal-body">
-          <p>Thông tin sản phẩm bạn đã chọn:</p>
-          <h3 class="product-name">Tên sản phẩm: <%= @redeem_product.name %></h3>
-          <div class="product-brand text-uppercase"><%= t('adm.redeem.brand')%>: <%= @redeem_product.brand %></div>
-          <div class="rtdt-left">
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-              <div class="form-group">
-                <label><%= t('adm.redeem.redeem_color')%></label>
-                <div id="confirm_redeem_color"></div>
-              </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-              <div class="form-group">
-                <label><%= t('adm.redeem.redeem_quantily')%></label>
-                <div id="confirm_redeem_quantily">XXXX</div>
-              </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-              <div class="form-group">
-                <label><%= t('adm.redeem.redeem_available')%></label>
-                <div id="confirm_redeem_available">XXXX</div>
-              </div>
-            </div>
-
+<form class="form-inline">
+  <div id='confirm_redeem_modal' class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" style="text-transform: none;"><%= t('user.hello')%> <span class="color-5DC2A7"><%= current_user.op_student.full_name %></span>, <%= t('adm.redeem.Gift information you want to redeem')%></h4>
           </div>
-        </div>
-        <div class="modal-footer fc-footer text-right">
-          <button type="button" class="btn btn-primary bg-5DC2A7" id='redeem_product_confirm' data-dismiss="modal"><%= t('button.text_ok')%></button>
-          <button type="button" class="btn btn-default btn-danger" data-dismiss="modal"><%= t('button.text_no')%></button>
-        </div>
+          <div class="modal-body">            
+              <div class="product-name"><%= t('student_project.project_name')%>: <%= @redeem_product.name %></div>
+              <div class="product-brand"><%= t('adm.redeem.brand')%>: <span class="color-0654BA text-uppercase"><%= @redeem_product.brand %></span>
+              </div>
+
+              <div class="col-sm-4">
+                <label><%= t('adm.redeem.redeem_color')%>: <span id="confirm_redeem_color"></span></label>                
+              </div>
+
+              <div class="col-sm-4">
+                <label><%= t('adm.redeem.redeem_quantily')%>: <span id="confirm_redeem_quantily" ></span></label>
+              </div>
+
+              <div class="col-sm-4">
+                <label><%= t('adm.redeem.redeem_available')%>: <span id="confirm_redeem_available" >xxxx</span></label>
+              </div>
+
+              <div class="col-sm-12">
+                <label><%= t('adm.redeem.address_accepting_gifts')%>: <span id="confirm_redeem_address_accepting_gifts" ></span></label>
+              </div>
+
+              <div class="col-sm-12">
+                <label><%= t('adm.redeem.receiving_gifts_time')%>: <span id="confirm_redeem_receiving_gifts_time" >receiving_gifts_time</span></label>
+              </div>
+
+              <div class="col-sm-12">
+                <label>Phải trả <span class="product-coin-text" id="confirm_redeem_receiving_coin" ></span> <span class="product-coin-text"><%= t('reward.coin')%></span></label>
+              </div>
+          </div>
+          <div class="modal-footer fc-footer text-right">
+            <button type="button" class="btn btn-default btn-danger" data-dismiss="modal"><%= t('button.text_no')%></button>
+            <button type="button" class="btn btn-primary bg-5DC2A7" id='redeem_product_confirm' data-dismiss="modal"><%= t('button.text_ok')%></button>
+          </div>
+      </div>
     </div>
   </div>
-</div>
+</form>
 <style>
 .redeem_product_select {
   -webkit-appearance: none;
 }
 </style>
+<script type="text/javascript">
+  var product_price = <%= @redeem_product.price.to_i%>
+</script>
 <%= stylesheet_link_tag 'redeem/redeem_product_detail' %>
 <%= javascript_include_tag 'redeem/redeem_product.js' %>

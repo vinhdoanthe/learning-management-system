@@ -841,7 +841,7 @@ font-family: sans-serif;
 .rt-detail.product_infomation .product-option {margin-top:25px;}
 .rt-detail.product_infomation .product-option label{font-weight: normal;font-size: 14px; font-family: 'Montserrat-Medium'; color: #313131; margin-bottom: 8px;}
 .rt-detail.product_infomation .product-option select.form-control{padding-top: 3px; padding-bottom: 3px;}
-.rt-detail.product_infomation .product-coin-text {
+.rt-detail.product_infomation .product-coin-text, #confirm_redeem_modal .product-coin-text {
 	font-size: 10px;
 	text-align: center;
 	color: #FF0D38;
@@ -867,6 +867,9 @@ font-family: sans-serif;
 	margin-bottom: 20px;
 }
 
+#confirm_redeem_modal #confirm_redeem_color{display: inline-block;width: 25px; height: 25px;}
+#confirm_redeem_modal .modal-body label{height: 35px;}
+
 .product_item {}
 .product_item .owl-carousel .owl-item img,  .product_item .owl-carousel-product .owl-item img {height: 100%;}
 .product_item .owl-carousel-product {padding: 0 30px !important;}
@@ -880,6 +883,7 @@ font-family: sans-serif;
 	font-family: 'Montserrat-Bold';
 	background: #fff !important
 }
+
 .redem-tab .nav-tabs > li > a::before{
 	background: transparent;
 }

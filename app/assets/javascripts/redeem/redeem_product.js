@@ -43,9 +43,16 @@ $(document).ready(function(){
     size = $('.product_size').val();
     company = $('#select_redeem_company').val();
     time = $('#redeem_time').val();
-    alert(color);
+    //alert(amount);
     /** set content for modal confirm **/
-    $('#confirm_redeem_color').attr("style", "background-color:" + color);
+    $('#confirm_redeem_color').attr("style", "background-color:" + color);   
+    $('#confirm_redeem_quantily').html($('.product_amount').val());
+    $('#confirm_redeem_available').html($('.product_size').val());
+    $('#confirm_redeem_address_accepting_gifts').html($( "#select_redeem_company option:selected" ).text());
+    $('#confirm_redeem_receiving_gifts_time').html($('#redeem_time').val());
+    $('#confirm_redeem_receiving_coin').html(amount*product_price);
+    
+
   });
 
   var galleryThumbs = new Swiper('.gallery-thumbs', {
