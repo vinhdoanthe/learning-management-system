@@ -23,8 +23,9 @@ $(document).ready(function(){
     color = $('input[name="product_color"]:checked').val();
     amount = $('.product_amount').val();
     size = $('.product_size').val();
-   company = $('#select_redeem_company').val();
+    company = $('#select_redeem_company').val();
     time = $('#redeem_time').val();
+
     $.ajax({
       method: 'POST',
       url: '/redeem/redeem_transactions/create_transaction',
@@ -33,7 +34,19 @@ $(document).ready(function(){
         display_noti(res)
       }
     })
-  })
+  });
+
+  $('#btn_redeem_product_confirm').on('click', function(){
+    product_id = $('input[name="redeem_product_id"]').val();
+    color = $('input[name="product_color"]:checked').val();
+    amount = $('.product_amount').val();
+    size = $('.product_size').val();
+    company = $('#select_redeem_company').val();
+    time = $('#redeem_time').val();
+    alert(color);
+    /** set content for modal confirm **/
+    $('#confirm_redeem_color').attr("style", "background-color:" + color);
+  });
 
   var galleryThumbs = new Swiper('.gallery-thumbs', {
     spaceBetween: 10,

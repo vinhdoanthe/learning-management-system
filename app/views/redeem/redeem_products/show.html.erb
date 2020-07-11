@@ -30,13 +30,21 @@
         </div>
         <div class='col-md-6'>
           <div class="rt-detail product_infomation box-detail">
-            <div class="product-brand text-uppercase"><%= @redeem_product.brand %></div>
+            <div class="product-brand text-uppercase"><%= t('adm.redeem.brand')%>: <%= @redeem_product.brand %></div>
             <h3 class="product-name"><%= @redeem_product.name %></h3>
             <hr class="product-line">
             <div class='product_description'>
-              <label><%= t('adm.redeem.product_introduction')%></label>
-              <hr>
-              <p><%= @redeem_product.description %></p>
+                <label><%= t('student_project.description')%></label>
+                <hr>
+                <% if !@redeem_product.description.nil? && @redeem_product.description.length > 0 %>
+                <div style="max-height:300px; overflow-y: scroll;"><%= @redeem_product.description %></div>
+                <% end %>
+                <div style="max-height:300px; overflow-y: scroll;">Thế Vinh chỉ cho Tiến để Tiến assign vận hành holdings nhắc xuống các cơ sở nhé
+                 Thế Vinh chỉ cho Tiến để Tiến assign vận hành holdings nhắc xuống các cơ sở nhé
+                 Thế Vinh chỉ cho Tiến để Tiến assign vận hành holdings nhắc xuống các cơ sở nhé
+                 Thế Vinh chỉ cho Tiến để Tiến assign vận hành holdings nhắc xuống các cơ sở nhé
+                 Thế Vinh chỉ cho Tiến để Tiến assign vận hành holdings nhắc xuống các cơ sở nhé
+                </div>
             </div>
             <div class="rtd-center clearfix redeem_info">
               <label><%= t('adm.redeem.product_infomation')%></label>
@@ -48,7 +56,7 @@
                     <% @redeem_product.available_color.each do |color| %>
                       <li>
                         <label class="check-multi">
-                          <input type="radio" name="product_color" value='<%= color %>'>
+                          <input type="radio" name="product_color" checked value='<%= color %>'>
                           <span class="checkmark" style="background-color: <%= color %>"></span>
                         </label>
                       </li>
@@ -74,13 +82,14 @@
                       <label for="exampleInputEmail1"><%= t('adm.redeem.redeem_available')%></label>
                       <select name="" class="product_size form-control">
                         <% @redeem_product.available_size.each do |size| %>
-                          <option value="<%= size %>"><%= size %></option>
+                        <option value="<%= size %>"><%= size %></option>
                         <% end %>
                       </select>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
             <div class="rtdt-left">
               <div class='row'>
@@ -112,7 +121,7 @@
                   </div>
                   <div class="col-md-7">
                     <input type='hidden' name="redeem_product_id" value='<%= @redeem_product.id %>'>
-                    <button data-toggle="modal" data-target="#confirm_redeem_modal" class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('adm.redeem.redeem_button')%></button>                          
+                    <button data-toggle="modal" data-target="#confirm_redeem_modal" id="btn_redeem_product_confirm" class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('adm.redeem.redeem_button')%></button>                          
                   </div>
                 </div>
               </div>
@@ -131,7 +140,31 @@
           <h4 class="modal-title"><%= t('adm.redeem.Are you sure you want to redeem?')%></h4>
         </div>
         <div class="modal-body">
-          Thông tin quà bạn đang muốn đổi
+          <p>Thông tin sản phẩm bạn đã chọn:</p>
+          <h3 class="product-name">Tên sản phẩm: <%= @redeem_product.name %></h3>
+          <div class="product-brand text-uppercase"><%= t('adm.redeem.brand')%>: <%= @redeem_product.brand %></div>
+          <div class="rtdt-left">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+              <div class="form-group">
+                <label><%= t('adm.redeem.redeem_color')%></label>
+                <div id="confirm_redeem_color"></div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+              <div class="form-group">
+                <label><%= t('adm.redeem.redeem_quantily')%></label>
+                <div id="confirm_redeem_quantily">XXXX</div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+              <div class="form-group">
+                <label><%= t('adm.redeem.redeem_available')%></label>
+                <div id="confirm_redeem_available">XXXX</div>
+              </div>
+            </div>
+
+          </div>
         </div>
         <div class="modal-footer fc-footer text-right">
           <button type="button" class="btn btn-primary bg-5DC2A7" id='redeem_product_confirm' data-dismiss="modal"><%= t('button.text_ok')%></button>
