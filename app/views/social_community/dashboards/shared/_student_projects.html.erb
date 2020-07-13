@@ -9,7 +9,7 @@
     </div>
   <% elsif project.presentation.present? %>
     <div class='presentation_project'>
-      <%= link_to 'Click to download', rails_blob_path(project.presentation, disposition: "attachment") %>
+      <%= link_to image_tag('/global/images/downloadinvoice.png') + 'Click to download', rails_blob_path(project.presentation, disposition: "attachment"), style: "font-size: 15px; font-weight: 600; font-family: 'Montserrat-Bold'" %>
     </div>
   <% end %>
 </div>
