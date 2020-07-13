@@ -1,9 +1,17 @@
 namespace :adm do
   namespace :learning do
     match "/activity_homework" => "activity#homework", via: [:get, :post]
-	get 'activity_get_batch' => 'activity#list_batch'
-	get 'activity_question' => 'activity#question'
+    get 'activity_get_batch' => 'activity#list_batch'
+    get 'activity_question' => 'activity#question'
     get 'activity_project'  => 'activity#project'
+
+    #Quan ly lop hoc
+    get 'class'  => 'batch#list'
+
+    #Quan ly khoa hoc
+    get 'course' => 'course#index'
+
+    
   end
 
   namespace :user do

@@ -12,15 +12,17 @@ class Learning::Homework::UserAnswerService
 	    page 				= !param_form[:page].nil? ? param_form[:page] : 1 ;
 	    
 	    #if request.method == 'POST'
+
+	    if (!param_form[:frm].nil?)
 	      
-	      state = param_form[:frm][:state].to_s != '' ? param_form[:frm][:state].to_s : 'waiting'
+	      state = param_form[:frm].nil? && param_form[:frm][:state].to_s != '' ? param_form[:frm][:state].to_s : 'waiting'
 	      batch_name = param_form[:frm][:batch_name].to_s != '' ? param_form[:frm][:batch_name].to_s : 'waiting'
 	      
 	      from_date = Date.parse(param_form[:frm][:from_date].to_s).is_a?(Date) ? param_form[:frm][:from_date].to_s : current_date_dmy
 	      to_date   = Date.parse(param_form[:frm][:to_date].to_s).is_a?(Date) ? param_form[:frm][:to_date].to_s : current_date_dmy
 	      to_date 	= Date.parse(from_date).strftime('%Y%m%d').to_i > Date.parse(to_date).strftime('%Y%m%d').to_i ? from_date : to_date
 	      
-	    #end
+	    end
 	    
 	    return {
 	    	'state': state ,

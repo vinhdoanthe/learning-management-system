@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-list mr-1"></i> <%= t('adm.course.course_list')%></h3>
+        <div class="card-tools">
+        <%= render "adm/partials/form_course"%>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="table-responsive p-0">
+              <table class="table table-bordered table-head-fixed table-hover table-striped table-sm  text-nowrap">
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Section</th>
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @list_course.each_with_index  do |ct, index| %>
+                  <tr>
+                    <td style="width:10px" class="text-center"><%= (index + 1)%></td>
+                    <td><%= ct[:code]%></td>
+                    <td><%= ct[:name]%></td>
+                    <td><%= ct[:section]%></td>
+                    <td>#</td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer clearfix">
+      
+      </div>
+    </div>
+  </div>
+</div>

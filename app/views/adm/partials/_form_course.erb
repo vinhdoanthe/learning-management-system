@@ -1,0 +1,13 @@
+<%
+	course_name 	= @param_form[:course_name]
+	course_code 	= @param_form[:course_code]
+%>
+<form name="frm_filters" id="frm_filters" method="post" class="form-inline">
+  	<div class="input-group input-group-sm">
+  		<input type="text" name="frm[course_name]" id="frm_course_name" placeholder="Name" class="form-control float-right"/>
+  		<input type="text" name="frm[course_code]" id="frm_course_code" placeholder="Code" class="form-control float-right"/>
+		<span class="input-group-append">
+			<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+		</span>
+	</div>
+</form>
