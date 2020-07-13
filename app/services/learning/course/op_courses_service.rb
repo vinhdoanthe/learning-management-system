@@ -15,4 +15,29 @@ class Learning::Course::OpCoursesService
     next_lesson_id = lesson_ids[c_index + 1]
     Learning::Course::OpLession.where(id: next_lesson_id).first
   end
+
+  # Lay param form
+  def self.form_paramater(param_form, request)
+      
+      # Khoi tao cac gia tri ban dau
+      course_name = course_code = ''
+      page        = !param_form[:page].nil? ? param_form[:page] : 1 ;
+      
+      #if request.method == 'POST'
+      if (!param_form[:frm].nil?)        
+        course_name = param_form[:frm][:course_name].to_s
+        course_code = param_form[:frm][:course_code].to_s
+      end
+      
+      return {
+        'course_name': course_name ,
+        'course_code': course_code,
+        'page': page
+      }
+  end
+
+  # Get list course
+  def self.get_courses(course_name, course_code)
+    courses = Learning::Course::OpCourse.select("code, name, section").order("section")
+  end
 end

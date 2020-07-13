@@ -335,6 +335,20 @@ module User
           },
 
           {
+            'path'          => adm_learning_class_path,
+            'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.class.management_class') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.class.management_class') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'sub_menu'      => []
+          },
+
+          {
+            'path'          => adm_learning_course_path,
+            'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="'<< adm_learning_course_path << '"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.course.management_course') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="'<< adm_learning_course_path << '"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.course.management_course') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            'sub_menu'      => []
+          },
+
+          {
             'path'          => adm_user_index_path,
             'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user') <<'</p></a></li>',
             'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user') <<'</p></a></li>'
@@ -380,12 +394,12 @@ module User
             'title_active'  => '<li class="nav-item"><a class="nav-link active" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.refer_friend') <<'</p></a></li>'
           },
 
-          {
-            'path'          => root_path,
-            'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
-            'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
-            'sub_menu'      => sub_menus['learning_activity']
-          }
+          #{
+          #  'path'          => root_path,
+          #  'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
+          #  'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
+           # 'sub_menu'      => sub_menus['learning_activity']
+          #}
         ]
 
         tag_html = '<ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">'
