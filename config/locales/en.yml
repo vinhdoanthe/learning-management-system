@@ -10,6 +10,10 @@ en:
     back_to_my_threads: 'Back to my threads'
     apply: "Apply"
     see: "See"
+    back_to_login: "Back to login"
+    see_project: "See product"
+    share: "Share"
+    complete: "Complete"
   select:
     all: "All"
     all_company: "All company"
@@ -214,6 +218,11 @@ en:
       discussion: "Discussion"
       homework: "Homework"
       project: "Project"
+	learning_activity_management: "Management learning activity"
+    learning_activity_management_homework: "Homework"
+    learning_activity_management_question: "Question"
+    learning_activity_management_project: "Project"
+    learning_activity_management_homework_list: "The list of homework has no answer"
   reward:
     you_were_reward: 'You were rewarded'
     star: 'TEKY Star'
