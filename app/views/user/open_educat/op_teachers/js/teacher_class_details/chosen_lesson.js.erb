@@ -1,4 +1,7 @@
 $('.attendance_lesson_info').html('');
+<% if lessons.blank? %>
+  $('.attendance_lesson_info').append('<p>Subject chưa có lesson! Bạn không thể điểm danh!</p>')
+<% end %>
 <% if lessons.length == 1 %>
     $('.attendance_lesson_info').append('<input type="radio" checked name="attendance_lesson_id" style="margin: 10px" value="<%= lessons[0].id %>"><label for="<%= lessons[0].id %>"><%= lessons[0].name.gsub(/[\n'"]/, '') %></label></br>' )
 <% else %>
