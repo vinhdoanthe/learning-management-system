@@ -51,7 +51,6 @@ $(document).ready(function(){
     $('#confirm_redeem_address_accepting_gifts').html($( "#select_redeem_company option:selected" ).text());
     $('#confirm_redeem_receiving_gifts_time').html($('#redeem_time').val());
     $('#confirm_redeem_receiving_coin').html(amount*product_price);
-    
 
   });
 

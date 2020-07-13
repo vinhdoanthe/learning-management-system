@@ -869,6 +869,9 @@ font-family: sans-serif;
 
 #confirm_redeem_modal #confirm_redeem_color{display: inline-block;width: 25px; height: 25px;}
 #confirm_redeem_modal .modal-body label{height: 35px;}
+#confirm_redeem_modal .modal-body {padding-top: 5px;}
+#confirm_redeem_modal .row-product {padding-top: 10px; padding-bottom: 10px;}
+
 
 .product_item {}
 .product_item .owl-carousel .owl-item img,  .product_item .owl-carousel-product .owl-item img {height: 100%;}

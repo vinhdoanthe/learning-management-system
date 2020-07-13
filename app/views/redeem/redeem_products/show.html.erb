@@ -141,32 +141,32 @@
             <h4 class="modal-title" style="text-transform: none;"><%= t('user.hello')%> <span class="color-5DC2A7"><%= current_user.op_student.full_name %></span>, <%= t('adm.redeem.Gift information you want to redeem')%></h4>
           </div>
           <div class="modal-body">            
-              <div class="product-name"><%= t('student_project.project_name')%>: <%= @redeem_product.name %></div>
-              <div class="product-brand"><%= t('adm.redeem.brand')%>: <span class="color-0654BA text-uppercase"><%= @redeem_product.brand %></span>
+              <div class="col-sm-12 row-product product-name"><%= t('student_project.project_name')%>: <%= @redeem_product.name %></div>
+              <div class="col-sm-12 row-product product-brand"><%= t('adm.redeem.brand')%>: <span class="color-0654BA text-uppercase"><%= @redeem_product.brand %></span>
               </div>
 
-              <div class="col-sm-4">
+              <div class="row-product col-sm-4">
                 <label><%= t('adm.redeem.redeem_color')%>: <span id="confirm_redeem_color"></span></label>                
               </div>
 
-              <div class="col-sm-4">
+              <div class="row-product col-sm-4">
                 <label><%= t('adm.redeem.redeem_quantily')%>: <span id="confirm_redeem_quantily" ></span></label>
               </div>
 
-              <div class="col-sm-4">
+              <div class="row-product col-sm-4">
                 <label><%= t('adm.redeem.redeem_available')%>: <span id="confirm_redeem_available" >xxxx</span></label>
               </div>
 
-              <div class="col-sm-12">
+              <div class="row-product col-sm-12">
                 <label><%= t('adm.redeem.address_accepting_gifts')%>: <span id="confirm_redeem_address_accepting_gifts" ></span></label>
               </div>
 
-              <div class="col-sm-12">
+              <div class="row-product col-sm-12">
                 <label><%= t('adm.redeem.receiving_gifts_time')%>: <span id="confirm_redeem_receiving_gifts_time" >receiving_gifts_time</span></label>
               </div>
 
-              <div class="col-sm-12">
-                <label>Phải trả <span class="product-coin-text" id="confirm_redeem_receiving_coin" ></span> <span class="product-coin-text"><%= t('reward.coin')%></span></label>
+              <div class="row-product col-sm-12">
+                <label><%= t('adm.redeem.Number Teky coint payable')%>: <span class="product-coin-number" id="confirm_redeem_receiving_coin" ></span></label>
               </div>
           </div>
           <div class="modal-footer fc-footer text-right">
