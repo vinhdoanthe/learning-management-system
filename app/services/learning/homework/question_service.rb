@@ -54,25 +54,34 @@ class Learning::Homework::QuestionService
 
   def mark_answer params, user
     return { state: 'danger', message: 'Chưa chấm bài' } if (params[:teacher_mark_content].blank? || params[:teacher_mark].blank?)
-    answer_mark = Learning::Homework::AnswerMark.new
+   binding.pry 
+    answer_mark = Learning::Homework::AnswerMark.where(user_answer_id: params[:user_answer_id]).first
     user_answer = find_user_answer params[:user_answer_id]
-    answer_mark.user_answer_id = user_answer.id
-    answer_mark.mark_content = params[:teacher_mark_content]
 
-    if params[:teacher_mark] == 'true'
-      user_answer.update(state: 'right')
-      answer_mark.answer_is_right = true
+    if answer_mark.present?
+      answer_mark.mark_content = params[:teacher_mark_content]
+      user_answer.state = params[:teacher_mark] == 'true' ? 'right' : 'wrong'
+      answer_mark.answer_is_right = params[:teacher_mark] == 'true' ? true : false 
     else
-      user_answer.update(state: 'wrong')
-      answer_mark.answer_is_right = false
+      answer_mark = Learning::Homework::AnswerMark.new
+      answer_mark.user_answer_id = user_answer.id
+      answer_mark.mark_content = params[:teacher_mark_content]
+
+      if params[:teacher_mark] == 'true'
+        user_answer.update(state: 'right')
+        answer_mark.answer_is_right = true
+      else
+        user_answer.update(state: 'wrong')
+        answer_mark.answer_is_right = false
+      end
     end
 
     answer_mark.mark_time = Time.now
     answer_mark.teacher_id = user.id
     if answer_mark.save
       if user_answer.state == 'right'
-        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, student.id, 'coin', 0
-        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, student.id, 'star', 0
+        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, user.id, 'coin', 0
+        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, user.id, 'star', 0
       end
       { state: 'success', message: 'Chấm bài thành công' }
     else

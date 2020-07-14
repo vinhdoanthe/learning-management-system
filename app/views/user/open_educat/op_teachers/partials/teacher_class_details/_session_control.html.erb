@@ -12,10 +12,10 @@
         </button>
       </li>
       <li>
-        <% if active_session.state == 'confirm' %>
+        <% if active_session.state == 'confirm' && active_session.check_in_time.blank? %>
           <button type="button" class="btn btn-default btn-embossed" id="teacher_checkin" data-toggle="modal" data-target="#modal_checkin" >Check-in</button>
         <% else %>
-          <button type="button" class="btn btn-default btn-embossed" id="teacher_checkin" data-toggle="modal" data-target="#modal_checkin" disabled>Check-in</button>
+          <button type="button" class="btn btn-default btn-embossed"  disabled>Check-in</button>
         <% end %>
       </li>
         <% if ['confirm', 'done'].include? active_session.state %>
