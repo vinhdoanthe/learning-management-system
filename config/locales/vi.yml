@@ -176,6 +176,7 @@ vi:
       registered_subject: "Học phần đã đăng ký"
       new: "Các bạn học sinh mới"
       leader_board: 'Top 10 Học sinh tiêu biểu'
+    hello: "Chào"
   social_community:
     new_comment_placeholder: 'Bình luận tại đây'
     home_feeds: 'Hoạt động của riêng tôi'
@@ -236,9 +237,12 @@ vi:
       redeem_available: "Kích cỡ"
       product_introduction: "Giới thiệu sản phẩm"
       product_infomation: "Thông tin sản phẩm"
-      receiving_gifts_time: "Thời gian nhận quà:"
-      address_accepting_gifts: "Cơ sở nhận quà:"
+      receiving_gifts_time: "Thời gian nhận quà"
+      address_accepting_gifts: "Cơ sở nhận quà"
       Are you sure you want to redeem?: "Bạn chắc chắn muốn đổi quà?"
+      brand: "Thương hiệu"
+      Gift information you want to redeem: "Thông tin quà bạn muốn đổi"
+      Number Teky coint payable: "Số Teky đồng phải trả"
     refer_friend: "Giới thiệu bạn bè"
     learning_activity:
       name: "Hoạt động học tập"

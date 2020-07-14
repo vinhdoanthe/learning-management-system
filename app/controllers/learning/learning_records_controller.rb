@@ -54,15 +54,32 @@ module Learning
     end
 
     def batch_user_answer_list
+      batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
+      teacher = current_user.op_faculty
+
       if params[:state].present? && params[:state] != 'undone' 
-        user_answers = current_user.op_faculty.user_answers.joins(user_question: :question).where(batch_id: params[:batch_id], state: ['right', 'wrong']).where(questions: {question_type: 'text'})
+        user_answers = teacher.user_answers.includes(user_question: { question: :op_lession, user: :op_student }).where(batch_id: params[:batch_id], state: ['right', 'wrong']).where(questions: {question_type: 'text'}).pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
       else
-        user_answers = current_user.op_faculty.user_answers.where(batch_id: params[:batch_id], state: 'waiting')
+        user_answers = teacher.user_answers.includes(user_question: { question: :op_lession, user: :op_student } ).where(batch_id: params[:batch_id], state: 'waiting').pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
+      end
+
+      user_answers.map! { |answer| { answer_id: answer[0], state: answer[1], lesson_id: answer[2], lesson_name: answer[3], student_name: answer[4] } }
+      lesson_ids = user_answers.map { |t| t[:lesson_id] }
+      session_ids = Learning::Batch::OpSession.where(batch_id: batch.id, lession_id: lesson_ids.uniq).map{ |s| { s.lession_id => s.id } }
+      session_ids = session_ids.reduce Hash.new, :merge 
+
+      user_answers.each do |answer| 
+        session = if session_ids[answer[:lesson_id]].present?
+                    { session_id: session_ids[answer[:lesson_id]] }
+                  else
+                    { session_id: '' }
+                  end
+        answer.merge!(session)
       end
 
       respond_to do |format|
         format.html
-        format.js { render 'learning/learning_records/marking_question/user_answer_filter', locals: { user_answers: user_answers}}
+        format.js { render 'learning/learning_records/marking_question/user_answer_filter', locals: { user_answers: user_answers, batch: batch}}
       end
     end
 

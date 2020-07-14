@@ -20,14 +20,13 @@ class Learning::Course::OpSubjectsController < ApplicationController
     session = Learning::Batch::OpSession.where(id: params[:session_id]).first
     session_students = session.op_session_students
     all_student = {}
+    batch = session.op_batch
+    student_courses = batch.op_student_courses.where(state: 'on')
 
-    session_students.each do |st|
-      op_student_course = st.op_student_course
-      next if op_student_course.blank?
-      student = op_student_course.op_student
+    student_courses.each do |sc|
+      student = sc.op_student
       next if student.blank?
-      status = st.present ? 'on' : 'off'
-      student_info = {student.id => {:status => status, :code => student.code || '', :name => student.full_name}}
+      student_info = {student.id => {:status => 'on', :code => student.code || '', :name => student.full_name}}
       all_student.merge!(student_info)
     end
 
