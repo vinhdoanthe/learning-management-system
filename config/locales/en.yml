@@ -6,8 +6,8 @@ en:
     update: "Update"
     cancel: "Cancel"
     back: "Back"
-    reply: 'Reply'
-    back_to_my_threads: 'Back to my threads'
+    reply: "Reply"
+    back_to_my_threads: "Back to my threads"
     apply: "Apply"
     see: "See"
     back_to_login: "Back to login"
@@ -26,14 +26,14 @@ en:
     reset_password: "RESET PASSWORD"
     reset_link: "Send reset passwork link"
     return_login: "Have account? Login"
-    username_not_found: 'Username not found'
-    reset_email_sent: 'Email sent with password reset instructions'
+    username_not_found: "Username not found"
+    reset_email_sent: "Email sent with password reset instructions"
   topbar:
     coin: "TEKY COIN"
   sidebar:
     config: "Config"
     noti: "Notification"
-    dashboard: 'Dashboard'
+    dashboard: "Dashboard"
     my_class: "My class"
     timetable: "Timetable"
     homework: "Homework"
@@ -41,12 +41,12 @@ en:
     teaching_schedule: "Teaching schedule"
     class_list: "Class list"
     marking: "Marking"
-    review_student: 'Review student'
+    review_student: "Review student"
     question_answer: "Question Answer"
-    my_projects: 'Student Projects'
-    top_achievement: 'Top Achievement'
-    redeem: 'Redeem'
-    refer_friend: 'Refer friend'
+    my_projects: "Student Projects"
+    top_achievement: "Top Achievement"
+    redeem: "Redeem"
+    refer_friend: "Refer friend"
   config:
     general_info: "General information"
     parent_info: "Parent information"
@@ -66,24 +66,24 @@ en:
   notification:
     title: "Notifications from TEKY"
     dashboard: "NOTIFICATIONS"
-    new_noti: 'new notifications'
+    new_noti: "new notifications"
     all: "All notifications"
     pending: "Pending notifications"
-    in_batch: 'in batch'
+    in_batch: "in batch"
     qa_thread:
-      create: 'posted a question'
-      reply: 'reply'
+      create: "posted a question"
+      reply: "reply"
     pt_post:
-      create: 'uploaded photos'
+      create: "uploaded photos"
     rw_post:
-      create: 'felicitated'
+      create: "felicitated"
     st_project_post:
-      create: 'published a project'
+      create: "published a project"
     student_feedback:
-      create: 'rate batch'
+      create: "rate batch"
     redeem_product_post:
-      create: 'redeemed'
-      success: 'successfuly'
+      create: "redeemed"
+      success: "successfuly"
   report:
     report: "report"
     attendance: "ATTENDANCE REPORT"
@@ -122,10 +122,10 @@ en:
       status:
         studying: "Studying"
         stop: "stop"
-        reversation: 'reversation'
-        update: 'updating'
+        reversation: "reversation"
+        update: "updating"
       op_student_course:
-        registered_subject: 'Registered %{count_registered_subjects}/%{count_total_subjects} subject'
+        registered_subject: "Registered %{count_registered_subjects}/%{count_total_subjects} subject"
     session:
       student_coming: "NEXT CLASS"
       teacher_coming: "NEXT TEACHING CLASS"
@@ -139,7 +139,7 @@ en:
     detail:
       class_info: "Class infomations"
       student_projects: "Student projects"
-      student_homeworks: 'Students Homework'
+      student_homeworks: "Students Homework"
       progress:
         name: "Study progress"
         done_html: "<span class='color-16BD56'>Done</span> lesson"
@@ -174,24 +174,24 @@ en:
       classmate: "Classmate"
       registered_subject: "Registered subject"
       new: "Newest students"
-      leader_board: "Leaders' board"
+      leader_board: "Leaders board"
   social_community:
-    new_comment_placeholder: 'Typing comment here'
+    new_comment_placeholder: "Typing comment here"
     new_feeds: "TEKY's Activities"
-    home_feeds: 'My Activities'
+    home_feeds: "My Activities"
   datetime:
-    from: 'from'
-    to: 'to'
+    from: "from"
+    to: "to"
   role:
-    student: 'Student'
-    faculty: 'Teacher'
-    parent: 'Parent'
-    admin: 'Administrator'
+    student: "Student"
+    faculty: "Teacher"
+    parent: "Parent"
+    admin: "Administrator"
   qa:
-    add_new_message: 'add your reply'
-    view_detail: 'View detail'
-    all_threads: 'All questions'
-    no_thread: 'This question was deleted!'
+    add_new_message: "add your reply"
+    view_detail: "View detail"
+    all_threads: "All questions"
+    no_thread: "This question was deleted!"
   adm:
     user: "User"
     setting:
@@ -218,44 +218,44 @@ en:
       discussion: "Discussion"
       homework: "Homework"
       project: "Project"
-	learning_activity_management: "Management learning activity"
+    learning_activity_management: "Management learning activity"
     learning_activity_management_homework: "Homework"
     learning_activity_management_question: "Question"
     learning_activity_management_project: "Project"
     learning_activity_management_homework_list: "The list of homework has no answer"
   reward:
-    you_were_reward: 'You were rewarded'
-    star: 'TEKY Star'
-    coin: 'TEKY Point'
-    my_coin_star_transaction: 'My TEKY Point and Star history'
-    at: 'at'
-    no_transactions: 'You have no TEKY Coin and Star reward.'
+    you_were_reward: "You were rewarded"
+    star: "TEKY Star"
+    coin: "TEKY Point"
+    my_coin_star_transaction: "My TEKY Point and Star history"
+    at: "at"
+    no_transactions: "You have no TEKY Coin and Star reward."
   dashboard:
     leaders:
-      title: 'Outstanding Students'
-      name: 'Student Name'
-      teky_star: 'TEKY Star'
-      teky_coin: 'TEKY Point'
-    no_leaders: 'No students'
+      title: "Outstanding Students"
+      name: "Student Name"
+      teky_star: "TEKY Star"
+      teky_coin: "TEKY Point"
+    no_leaders: "No students"
   public_profile:
-    center: 'Center'
-    achievements: 'Achievements'
-    no_achievements: 'No achievements'
-    gender: 'Gender'
-    address: 'Address'
-    batches: 'Batches'
-    badges: 'Badges'
-    achievements_certificates: 'Achievements and Certificates'
-    featured_photos: 'Featured photos'
-    products: 'Products'
-    gender_male: 'Male'
-    gender_femail: 'Female'
-    share: 'Share'
-    teky_star: 'TEKY Star'
-    teky_coin: 'TEKY Point'
-    homework: 'Homework'
-    publish_projects: 'Projects'
+    center: "Center"
+    achievements: "Achievements"
+    no_achievements: "No achievements"
+    gender: "Gender"
+    address: "Address"
+    batches: "Batches"
+    badges: "Badges"
+    achievements_certificates: "Achievements and Certificates"
+    featured_photos: "Featured photos"
+    products: "Products"
+    gender_male: "Male"
+    gender_femail: "Female"
+    share: "Share"
+    teky_star: "TEKY Star"
+    teky_coin: "TEKY Point"
+    homework: "Homework"
+    publish_projects: "Projects"
   page:
-    coming_soon: 'Page is in developing'
+    coming_soon: "Page is in developing"
   redeem:
     no_products: "Redeem products are in developing"

@@ -1,10 +1,11 @@
-<div class="modal-dialog">
+<div class="modal-dialog" style='width: 60%; font-family: "Montserrat" !important'>
 
   <!-- Modal content-->
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
       <h4 class="modal-title">Chấm bài</h4>
+      <div id="noti-response"></div>
     </div>
     <div class="modal-body">
       <div class="fc-other">
@@ -81,22 +82,70 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" id='teacher_marking_confirm' data-dismiss="modal">Chấm bài</button>
+        <div id='modal_user_answer_control'>
+          <a id='prev-answer' href="" data-remote='true'>
+            <%= image_tag('global/images/prev-question.png')%> Câu hỏi trước
+          </a> | 
+          <a id='next-answer' href='' data-remote='true'>
+            Câu hỏi sau <%= image_tag('global/images/next-question.png') %>
+          </a>
+        </div>
+        <div>
+        <% if answer_mark.blank? %>
+          <button type="button" class="btn btn-primary" id='teacher_marking_confirm' >Chấm bài</button>
+        <% else %>
+          <button type='button' class='btn btn-primary' id='teacher_marking_confirm' >Cập nhật</button>
+        <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<style>
+  #teacher_marking_confirm {
+    float: right;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-family: 'Montserrat-Bold';
+  }
+  #modal_user_answer_control{
+    text-align: center;
+  }
+  #noti-response {
+    position: fixed;
+    z-index: 100;
+    width: calc(100% - 30px);
+  }
+  .modal-dialog p {
+    font-family: "Montserrat" !important;
+  }
+  .modal-dialog label {
+    font-family: "Montserrat" !important;
+  }
+  .modal-dialog span {
+    font-family: "Montserrat" !important;
+  }
+</style>
 
 <script>
+  function response_noti(error) {
+    html = '<div class="alert alert-' + error.type + '"><a href="#" class="close" data-dismiss="alert">×</a><div id="flash_' + error.type + '">' + error.message + '</div></div>'
+    $('#noti-response').html(html);
+    setTimeout(function () {
+      $('#noti-response').html('');
+    }, 3000);
+  }
+
   $('#teacher_marking_confirm').on('click', function(){
-    user_answer_id = $('input[name="marking_text_answer"]').val()
-    teacher_mark = $('input[name="teacher_mark"]').val()
-    teacher_mark_content = $('#teacher_marking_content').val()
+    user_answer_id = $('input[name="marking_text_answer"]').val();
+    teacher_mark = $('input[name="teacher_mark"]:checked').val();
+    teacher_mark_content = $('#teacher_marking_content').val();
     $.ajax({
       method: 'POST',
       url: '/learning/mark_answer',
       data: { user_answer_id: user_answer_id, teacher_mark: teacher_mark, teacher_mark_content: teacher_mark_content},
       success: function(res){
-        display_noti(res);
+        response_noti(res);
         if (res.type == 'success'){
           $('input[name="student_answer"][value="' + user_answer_id + '"]').parent().parent().hide();
         }
