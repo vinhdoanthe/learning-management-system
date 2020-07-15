@@ -1,0 +1,11 @@
+<% course_description = get_description(@course) %>
+<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.course_name')%>:</label> <%= @course.name%></div>
+<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.course_code')%>:</label> <%= @course.code%></div>
+<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.Section')%>:</label> <%= @course.section%></div>
+<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.number_subjects')%>:</label></div>
+<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.course_description')%></label></div>
+<% if course_description.empty? %>
+  <div><%= t('adm.The content is being updated')%></div>
+<% else %>
+  <div class="custom-scroll"><%= course_description.html_safe %></div>
+<% end %>

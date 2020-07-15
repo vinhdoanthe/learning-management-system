@@ -1,6 +1,7 @@
 vi:
   admin:
     actions:
+      title: "Thao tác"
       bulk_delete:
         breadcrumb: Xóa nhiều mục
         bulk_link: Xóa những %{model_label_plural} đã chọn
