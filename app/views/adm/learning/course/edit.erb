@@ -16,31 +16,33 @@
       </li>          
     </ul>
   </div>
+  <form class="form-horizontal">
   <div class="card-body">
-    <form class="form-horizontal">
-      <div class="tab-content" id="custom-tabs-three-tabContent">
-        <div class="tab-pane fade show active" id="tab-course-description" role="tabpanel" aria-labelledby="tab-course-description">
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label class="col-sm-3 control-label"><%= t('adm.course.course_name')%>:</label> <%= @course.name%>
-            </div>
+    <div class="tab-content" id="custom-tabs-three-tabContent">
+        <div class="tab-pane fade show active" id="tab-course-description" role="tabpanel" aria-labelledby="tab-course-description">          
+          <div class="form-group row">
+            <label class="col-sm-3 control-label"><%= t('adm.course.course_name')%>:</label>
+            <div class="col-sm-9"><%= @course.name%></div>
           </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-            <label class="col-sm-3 control-label"><%= t('adm.course.course_code')%>:</label> <%= @course.code%>
+          <div class="form-group row">
+            <label class="col-sm-3 control-label"><%= t('adm.course.course_code')%>:</label>
+            <div class="col-sm-9"><%= @course.code%></div>
           </div>
-        </div>
-        </div>
 
+          <div class="form-group row">
+            <label class="col-sm-3 control-label"><%= t('adm.course.course_code')%>:</label>
+            <div class="col-sm-9"><%= @course.code%></div>
+          </div>
+          
         </div>
 
         <div class="tab-pane fade show" id="tab-course-study-program" role="tabpanel" aria-labelledby="tab-course-study-program">
         <%= render "adm/learning/course/tab_course_study_program"%>
         </div>
       </div>
-    </form>       
   </div>
+  </form>
+
   <div class="card-footer">
     <div class="float-right">
       <button class="btn btn-default btn-sm bg-olive"><i class="fas fa-save"></i> <%= t('button.save')%></button>
