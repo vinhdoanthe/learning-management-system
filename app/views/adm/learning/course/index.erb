@@ -1,45 +1,55 @@
-<div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-list mr-1"></i> <%= t('adm.course.course_list')%></h3>
-        <div class="card-tools">
-        <%= render "adm/partials/form_course"%>
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fas fa-list mr-1"></i> <%= t('adm.course.course_list')%></h3>
+    <div class="card-tools">
+    <%= render "adm/partials/form_filters_course"%>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive-1 p-0">
+          <%= render 'partials/content_loading' %>
+          <table class="table table-head-fixed table-hover table-striped table-sm">
+            <thead>
+              <tr>
+                <th style="width: 40px;"> <%= t('adm.Order')%></th>
+                <th><%= t('adm.course.name')%></th>
+                <th class="text-center" style="width:15%"><%= t('button.Status')%></th>
+                <th class="text-center" style="width:15%"><%= t('button.update')%></th>
+                <th class="text-center" style="width:90px;"><%= t('admin.actions.title')%></th>
+              </tr>
+            </thead>
+            <tbody id="list_course">
+              <%= render "adm/learning/course/list_course"%>
+            </tbody>
+          </table>
+          
         </div>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-12">
-            <div class="table-responsive p-0">
-              <table class="table table-bordered table-head-fixed table-hover table-striped table-sm  text-nowrap">
-                <thead>
-                  <tr>
-                    <th>Order</th>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Section</th>
-                    <th class="text-center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @list_course.each_with_index  do |ct, index| %>
-                  <tr>
-                    <td style="width:10px" class="text-center"><%= (index + 1)%></td>
-                    <td><%= ct[:code]%></td>
-                    <td><%= ct[:name]%></td>
-                    <td><%= ct[:section]%></td>
-                    <td>#</td>
-                  </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-footer clearfix">
-      
       </div>
     </div>
   </div>
+  <div class="card-footer clearfix">
+  
+  </div>
 </div>
+<script type="text/javascript">
+  
+  $('#content_loading').hide();
+  
+  $('.btn-search').on("click",function(e) {
+    
+    $('#content_loading').show();
+    $('#list_course').html(null);
+    $.ajax({
+      type: "POST",
+      url: '<%= adm_learning_course_filters_path%>',
+      async: false,
+      data: {keywords: $('#filters_keywords').val()},
+      success:function(data){
+        $('#content_loading').hide();
+        $('#list_course').html(data);
+      }
+    });
+  });
+</script>

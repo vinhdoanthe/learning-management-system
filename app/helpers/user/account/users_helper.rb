@@ -402,7 +402,7 @@ module User
           #}
         ]
 
-        tag_html = '<ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">'
+        tag_html = '<ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat" data-widget="treeview" role="menu" data-accordion="false">'
 
         menus.each do |menu|
 

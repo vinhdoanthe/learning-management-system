@@ -1,0 +1,50 @@
+<% course_description = get_description(@course) %>
+<div class="card">
+  <div class="card-footer">
+    <div class="float-right">
+      <button class="btn btn-default btn-sm bg-olive"><i class="fas fa-save"></i> <%= t('button.save')%></button>
+      <a href="<%= adm_learning_course_show_path(@course.id)%>" class="btn btn-default btn-sm"><i class="fas fa-ban"></i> <%= t('button.cancel')%></a>          
+    </div>        
+  </div>
+  <div class="card-header p-0 pt-1 border-bottom-0">
+    <ul class="nav nav-tabs pull-right" id="custom-tabs-three-tab" role="tablist">          
+      <li class="nav-item header">
+        <a class="nav-link active" id="tab-course-description-tab" data-toggle="pill" href="#tab-course-description" role="tab" aria-controls="tab-course-description" aria-selected="true"><%= t('adm.course.name')%>: <%= @course.name%></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="tab-course-study-program-tab" data-toggle="pill" href="#tab-course-study-program" role="tab" aria-controls="tab-course-study-program" aria-selected="false"><%= t('adm.course.Study program')%></a>
+      </li>          
+    </ul>
+  </div>
+  <div class="card-body">
+    <form class="form-horizontal">
+      <div class="tab-content" id="custom-tabs-three-tabContent">
+        <div class="tab-pane fade show active" id="tab-course-description" role="tabpanel" aria-labelledby="tab-course-description">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="col-sm-3 control-label"><%= t('adm.course.course_name')%>:</label> <%= @course.name%>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+            <label class="col-sm-3 control-label"><%= t('adm.course.course_code')%>:</label> <%= @course.code%>
+          </div>
+        </div>
+        </div>
+
+        </div>
+
+        <div class="tab-pane fade show" id="tab-course-study-program" role="tabpanel" aria-labelledby="tab-course-study-program">
+        <%= render "adm/learning/course/tab_course_study_program"%>
+        </div>
+      </div>
+    </form>       
+  </div>
+  <div class="card-footer">
+    <div class="float-right">
+      <button class="btn btn-default btn-sm bg-olive"><i class="fas fa-save"></i> <%= t('button.save')%></button>
+      <a href="<%= adm_learning_course_show_path(@course.id)%>" class="btn btn-default btn-sm"><i class="fas fa-ban"></i> <%= t('button.cancel')%></a>          
+    </div>        
+  </div>
+</div>
