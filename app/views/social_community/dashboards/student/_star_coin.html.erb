@@ -3,13 +3,13 @@
     <div class="col-sm-4">
       <div class="bs-detail">
         <%= image_tag('global/images/star.png', :alt => 'TEKY Star') %>
-        <h3 class='pnl-teky-coin-star'><%= number_with_delimiter(current_user.star, delimiter: '.') %></h3>
+        <h3 class='pnl-teky-coin-star'><%= number_with_delimiter(current_user.star.to_i, delimiter: '.') %></h3>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="bs-detail">
         <span class='pnl-teky-coin-lbl'>Teky đồng</span>
-        <h3 class='pnl-teky-coin-star'><%= number_with_delimiter(current_user.coin, delimiter: '.') %></h3>
+        <h3 class='pnl-teky-coin-star'><%= number_with_delimiter(current_user.coin.to_i, delimiter: '.') %></h3>
       </div>
     </div>
     <div class="col-sm-4">
