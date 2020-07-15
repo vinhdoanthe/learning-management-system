@@ -1,21 +1,34 @@
+.nav.nav-treeview .nav-item i.far {
+	font-size: 0.7rem;
+}
 
-.nav.nav-treeview .nav-item i.far {font-size:0.7rem;}
-#tab-course-study-program .card-title {font-weight: 500}
+#tab-course-study-program .card-title {
+	font-weight: 500
+}
 
 /*** Style description for tinymce **/
-.tab-content .tinymce .main-content .page-content .panel .panel-content ul {padding-left: 0;}
-.tab-content .tinymce ul.bsc-list {margin-top: 20px;}
-.tab-content .tinymce h2, .tab-content .tinymce .h2 {font-size: 25px;}
+
+.tab-content .tinymce .main-content .page-content .panel .panel-content ul {
+	padding-left: 0;
+}
+
+.tab-content .tinymce ul.bsc-list {
+	margin-top: 20px;
+}
+
+.tab-content .tinymce h2, .tab-content .tinymce .h2 {
+	font-size: 25px;
+}
 
 .tab-content .tinymce h1, .tab-content .tinymce h2, .tab-content .tinymce h3, .tab-content .tinymce h4, .tab-content .tinymce h5 {
-    font-family: 'Montserrat-Bold';
-    font-weight: 100;
-    margin: 0 !important;
+	font-family: 'Montserrat-Bold';
+	font-weight: 100;
+	margin: 0 !important;
 }
 
 ul.bsc-list, ul.teky-list {
-    margin-top: 20px;
-    list-style-type: none;
+	margin-top: 20px;
+	list-style-type: none;
 }
 
 ul.bsc-list li {
@@ -38,11 +51,11 @@ ul.bsc-list li:before {
 
 ul.bsc-list li:after {
 	position: absolute;
-    content: '';
-    top: 10px;
-    left: 2px;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #FCF055;
+	content: '';
+	top: 10px;
+	left: 2px;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: #FCF055;
 }
