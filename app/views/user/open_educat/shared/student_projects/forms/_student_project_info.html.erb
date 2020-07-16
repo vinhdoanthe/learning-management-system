@@ -40,7 +40,7 @@
     </div>
   </div>
   <div class='row' style='margin-top: 30px; margin-bottom: 0px; display: flex'>
-    <div class='col-md-4' style="display: flex; flex-direction: column;">
+    <div class='col-md-4 col-sm-4 col-xs-4' style="display: flex; flex-direction: column;">
       <div class='upload_layer upload_project_presentation'>
         <div class="upload_image ">
           <%= image_tag('global/images/microsoft-powerpoint.png') %>
@@ -49,23 +49,23 @@
             <%= f.hidden_field :change_presentation, id: "presentation_had_change", value: '0' %>
           <% if project.presentation.attached? %>
             <p style="font-size: 16px; font-weight: 700"><%= t('student_project.slide') %></p>
-            <p class="project_presentation_file_name" style="font-size: 15px; font-weight: 600; text-align: center"><%= project.presentation.blob.filename %></p>
-            <p style="text-align: center; width: 100%"><%= t('student_project.click_to_update') %></p>
+            <%= link_to image_tag('/global/images/downloadinvoice.png') + 'Click to download', rails_blob_path(project.presentation, disposition: "attachment"), id: "download-presentation", style: "font-size: 15px; font-weight: 600; font-family: 'Montserrat-Bold'" %>
+            <p style="text-align: center; width: 100%" class='click_to_update'><%= t('student_project.click_to_update') %></p>
           <% else %>
             <p style="font-size: 16px; font-weight: 700"><%= t('student_project.slide') %></p>
-            <p class="project_presentation_file_name" style="text-align: center"> <span class="project_presentation_state"><%= t('student_project.no_slide') %></span> </p>
+            <p class="project_presentation_file_name" style="text-align: center"> <span class="project_presentation_state"><%= t('student_project.no_presentation') %></span> </p>
           <% end %>
         </div>
       </div>
       <%= f.file_field :presentation, id: "upload_project_presentation" %>
     </div>
-    <div class='col-md-4' style="display: flex; flex-direction: column;">
+    <div class='col-md-4 col-sm-4 col-xs-4' style="display: flex; flex-direction: column;">
       <div class='upload_layer upload_project_video'>
         <% if project.introduction_video.present? %>
           <div id="project_video_name">
             <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
           </div>
-          <p><%= t('student_project.click_to_update') %></p>
+          <p class='click_to_update'><%= t('student_project.click_to_update') %></p>
         <% else %>
           <div class="upload_image">
             <%= image_tag('global/images/youtube.png') %>
@@ -78,7 +78,7 @@
       </div>
       <%= f.file_field :introduction_video, id: "upload_project_video" %>
     </div>
-    <div class='col-md-4' style="display: flex; flex-direction: column;">
+    <div class='col-md-4 col-sm-4 col-xs-4' style="display: flex; flex-direction: column;">
       <div class='upload_layer upload_project_file'>
         <% if project.project_show_video.present? %>
           <div class="upload_image">
@@ -87,7 +87,8 @@
           <div class="upload_info">
             <%= f.text_field :project_show_video, class:"present_show_video", id: "upload_project_file", readonly: true %>
             <%= f.hidden_field :change_video, id: "video_had_change", value: '0' %>
-            <p style="text-align: center"> <span class="project_presentation_state"><%= t('student_project.click_to_update') %></span> </p>
+            <p style="text-align: center; width: 100%; display: none;" class="no_link_file"> <span ><%= t('student_project.no_link') %></span> </p>
+            <p style="text-align: center; width: 100%"> <span class="project_presentation_state click_to_update"><%= t('student_project.click_to_update') %></span> </p>
           </div>
         <% else %>
           <div class="upload_image">
@@ -97,30 +98,25 @@
             <label style="width: 100%; text-align: center"><%= t('student_project.link') %></label>
             <%= f.text_field :project_show_video, id: "upload_project_file", class:"blank_show_video" %>
             <p style="text-align: center; width: 100%"> <span class="no_link_file"><%= t('student_project.no_link') %></span> </p>
-            <p style="text-align: center"> <span class="project_presentation_state"><%= t('student_project.click_to_update') %></span> </p>
+            <p style="text-align: center"> <span class="project_presentation_state click_to_update"><%= t('student_project.click_to_update') %></span> </p>
           </div>
         <% end %>
-      </div>
-      <div class="progress">
-        <!-- <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-          <span style="font-weight: 700; font-size: 14px">PROGRESS</span>
-        </div> -->
       </div>
     </div>
   </div>
   <div class='row'>
-    <div class='col-md-4'>
+    <div class='col-md-4 col-sm-4'>
       <div class="progress progress-presentation">
         <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
           PROGRESS
         </div>
       </div>
     </div>
-      <div class="progress progress-video">
-        <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-          PROGRESS
-        </div>
+    <div class="col-md-4 col-sm-4 progress progress-video" style='padding:0'>
+      <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+        PROGRESS
       </div>
+    </div>
   </div>
   <div class="project_permission row" style="margin-top: 30px">
     <div class="col-md-12">
@@ -221,47 +217,79 @@
       height: 100%;
         font-weight: 700;
     }
+#download-presentation img{
+  width: 20px;
+}
+.click_to_update {
+  font-size: 14px;
+  font-family: 'Monsterrat';
+  font-weight: 600;
+  text-decoration: underline;
+  color: #5DC2A7;
+  cursor: pointer;
+}
 </style>
   <script>
   $("#edit_video_infomation").ready(function(){
     $('.project_detail_select').append('<span class="fa fa-caret-down" style="position: absolute; right: 30px; top: 30%"></span>');
-    $('.upload_project_presentation').on('click', function(){
-      $('#upload_project_presentation').trigger('click')
+    $('.upload_project_presentation').on('click', function(e){
+      if ((e.target !== this) && ($(e.target).is($('#download-presentation'))))
+        return;
+
+      $('#upload_project_presentation').trigger('click');
       $('#upload_project_presentation').on('change', function(){
-        if($('#upload_project_presentation').get(0).files.length > 0){
-        $('#presentation_had_change').val('1');
-        $('.project_presentation_file_name').html("<span style='font-size: 16px; font-weight: 600'>" +  $('#upload_project_presentation')[0].files[0].name.substring(0, 20) + "...<span>")
-        }
-        })
+        var ext = this.value.match(/\.(.+)$/)[1];
+        if (['ppt', 'pptx', 'pdf'].includes(ext)){ 
+          if($('#upload_project_presentation').get(0).files.length > 0){
+            $('#presentation_had_change').val('1');
+            $('.project_presentation_file_name').html("<span style='font-size: 16px; font-weight: 600'>" +  $('#upload_project_presentation')[0].files[0].name.substring(0, 20) + "...<span>")
+          }
+        }else {
+          $('#upload_project_presentation').val('');
+          alert('File không phù hợp! Chỉ hỗ trợ file đuôi "ppt", "pptx", "pdf"')
+        };
+      })
     })
-    $('.upload_project_video').on('click', function(){
+    $('.upload_project_video').on('click', function(e){
       $('#upload_project_video').trigger('click');
       $('#upload_project_video').on('change', function(){
+        var ext = this.value.match(/\.(.+)$/)[1];
+        if (['m4v', 'avi','mpg','mp4', 'webm'].includes(ext)){ 
         $('#video_had_change').val('1');
-        if($('#upload_project_video').get(0).files.length > 0){
-          <% if project.introduction_video.present? %>
-        html = '<div class="upload_image"><%= image_tag("global/images/youtube-button.png") %></div><div class="upload_info"><p style="font-size: 16px; font-weight: 700">Video giới thiệu về dự án</p><p id="project_video_name" style="text-align: center"><span class="project_presentation_state" style="font-size: 16px; font-weight: 600>">' +  $('#upload_project_video')[0].files[0].name.substring(0, 20) + '...</span></p></div>'
-          $('#project_video_name').html(html)
-          <% else %>
-        $('.project_video_name_blank').html("<span style='font-size: 16px; font-weight: 600'>" +  $('#upload_project_video')[0].files[0].name.substring(0, 20) + "...<span>")
-            <% end %>
+          if($('#upload_project_video').get(0).files.length > 0){
+            <% if project.introduction_video.present? %>
+          html = '<div class="upload_image"><%= image_tag("global/images/youtube-button.png") %></div><div class="upload_info"><p style="font-size: 16px; font-weight: 700">Video giới thiệu về dự án</p><p id="project_video_name" style="text-align: center"><span class="project_presentation_state" style="font-size: 16px; font-weight: 600>">' +  $('#upload_project_video')[0].files[0].name.substring(0, 20) + '...</span></p></div>'
+            $('#project_video_name').html(html)
+            <% else %>
+          $('.project_video_name_blank').html("<span style='font-size: 16px; font-weight: 600'>" +  $('#upload_project_video')[0].files[0].name.substring(0, 20) + "...<span>")
+              <% end %>
+          }
+        }else{
+          $('#upload_project_video').val('');
+          alert('File không phù hợp! Chỉ hỗ trợ file đuôi "m4v", "avi","mpg","mp4", "webm"')
         }
       })
     })
     $('.upload_project_file').on('click', function(){
+      $('#upload_project_file').data('val', $('#upload_project_file').val());
       $('#upload_project_file').show();
       $("#upload_project_file").attr("readonly", false); 
+      $('#upload_project_file').select();
       $('#upload_project_file').focus();
       $('.no_link_file').hide();
     })
-    $(document).mouseup(function(e)  {
-      var container = $(".upload_project_file");
-
-      if (!container.is(e.target) && container.has(e.target).length === 0) {
-        if(!$('#upload_project_file').val()){
-          $('#upload_project_file').hide();
-          $('.no_link_file').show();
+    
+    $('#upload_project_file').blur(function(){
+      if($('#upload_project_file').val().length === 0){
+        if ($('#upload_project_file').data('val').length > 0){
+        $('#upload_project_file').val($('#upload_project_file').data('val'));
+        }else {
+        $('#upload_project_file').hide();
+        $('.no_link_file').show();
         }
+      }else{
+        $('#upload_project_file').show();
+        $('.no_link_file').hide();
       }
    })
   })

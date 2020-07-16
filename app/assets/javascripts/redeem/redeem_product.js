@@ -23,8 +23,9 @@ $(document).ready(function(){
     color = $('input[name="product_color"]:checked').val();
     amount = $('.product_amount').val();
     size = $('.product_size').val();
-   company = $('#select_redeem_company').val();
+    company = $('#select_redeem_company').val();
     time = $('#redeem_time').val();
+
     $.ajax({
       method: 'POST',
       url: '/redeem/redeem_transactions/create_transaction',
@@ -33,7 +34,25 @@ $(document).ready(function(){
         display_noti(res)
       }
     })
-  })
+  });
+
+  $('#btn_redeem_product_confirm').on('click', function(){
+    product_id = $('input[name="redeem_product_id"]').val();
+    color = $('input[name="product_color"]:checked').val();
+    amount = $('.product_amount').val();
+    size = $('.product_size').val();
+    company = $('#select_redeem_company').val();
+    time = $('#redeem_time').val();
+    //alert(amount);
+    /** set content for modal confirm **/
+    $('#confirm_redeem_color').attr("style", "background-color:" + color);   
+    $('#confirm_redeem_quantily').html($('.product_amount').val());
+    $('#confirm_redeem_available').html($('.product_size').val());
+    $('#confirm_redeem_address_accepting_gifts').html($( "#select_redeem_company option:selected" ).text());
+    $('#confirm_redeem_receiving_gifts_time').html($('#redeem_time').val());
+    $('#confirm_redeem_receiving_coin').html(amount*product_price);
+
+  });
 
   var galleryThumbs = new Swiper('.gallery-thumbs', {
     spaceBetween: 10,

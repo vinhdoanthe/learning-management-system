@@ -142,6 +142,7 @@ module User
       end
 
       errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: params[:faculty_id].to_i, attendance_time: Time.now, attendance_lines: lines)
+
       if errors.blank?
         render json: {type: 'success', message: 'Điểm danh thành công!'}
       else

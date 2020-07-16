@@ -1,5 +1,32 @@
 $('#modal_teacher_marking').html("<%= escape_javascript(render partial: 'learning/learning_records/marking_question/modal_marking', locals: { question: question, answer: answer, answer_mark: answer_mark } ) %>")
 
+<% current_answer = answer.id %>
+var user_answer_ids = JSON.parse($('input[name="user_answer_ids"]').val());
+var index = user_answer_ids.indexOf(<%= current_answer %>);
+var next_answer = '';
+var prev_answer = '';
+
+if (user_answer_ids.length === 1){
+  $('#prev-answer').hide();
+  $('#next-answer').hide();
+}else{
+  if (index === 0){
+    $('#prev-answer').hide();
+    next_answer = user_answer_ids[index + 1];
+    $('#next-answer').attr('href', '/learning/get_user_answer?user_answer_id=' + next_answer);
+  }else if (index === (user_answer_ids.length - 1)){
+    $('#next-answer').hide();
+    prev_answer = user_answer_ids[index - 1];
+    $('#prev-answer').attr('href', '/learning/get_user_answer?user_answer_id=' + prev_answer);
+  }else{
+    next_answer = user_answer_ids[index + 1];
+    prev_answer = user_answer_ids[index - 1];
+    $('#next-answer').show();
+    $('#prev-answer').show();
+    $('#prev-answer').attr('href', '/learning/get_user_answer?user_answer_id=' + prev_answer);
+    $('#next-answer').attr('href', '/learning/get_user_answer?user_answer_id=' + next_answer);
+  }
+}
 $(document).ready(function(){
   <% if answer_mark.present? %>
   $('#checked_answer').find('input[value="<%= answer_mark.answer_is_right.to_s %>"]').prop('checked', 'checked')
