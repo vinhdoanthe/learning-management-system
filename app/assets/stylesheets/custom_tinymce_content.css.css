@@ -13,15 +13,14 @@
     margin: 0 !important;
 }
 
-ul.bsc-list, ul.teky-list {
+ul.bsc-list {
     margin-top: 20px;
-    list-style-type: none;
 }
 
 ul.bsc-list li {
 	padding-left: 20px;
 	position: relative;
-	font-size: 15px;
+	font-size: 12px;
 	margin-bottom: 10px;
 }
 
