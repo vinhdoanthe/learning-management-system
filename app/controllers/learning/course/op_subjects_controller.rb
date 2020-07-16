@@ -31,9 +31,9 @@ class Learning::Course::OpSubjectsController < ApplicationController
     end
 
     subject = session.op_subject
-    lessons = [session.op_lession] || []
+    lessons = [session.op_lession]
 
-    lessons = subject.op_lessions if lessons.blank?
+    lessons = subject.op_lessions if lessons.compact.blank?
     lessons = [] if lessons.blank?
 
     respond_to do |format|
