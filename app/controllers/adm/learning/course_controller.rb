@@ -39,7 +39,7 @@ class Adm::Learning::CourseController < ApplicationController
 	      @subjects = @course.op_subjects.order(level: :ASC).select(:id, :name)
 
 		  @lessions = Learning::Course::OpCoursesService.get_all_lession_of_course(params[:course_id])
-	    end
+	    end	    
 	end
 
 	# Edit khoa hoc
