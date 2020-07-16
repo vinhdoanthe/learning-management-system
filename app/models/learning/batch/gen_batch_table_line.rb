@@ -5,4 +5,5 @@ class Learning::Batch::GenBatchTableLine < ApplicationRecord
   belongs_to :op_faculty, class_name: 'User::OpenEducat::OpFaculty', foreign_key: 'faculty_id'
   belongs_to :op_subject, class_name: 'Learning::Course::OpCourse', foreign_key: 'subject_id'
   belongs_to :op_classroom, class_name: 'Common::OpClassroom', foreign_key: 'classroom_id'
+  belongs_to :timing, class_name: "Learning::Batch::Timing", foreign_key: 'timing_id'
 end

@@ -15,6 +15,7 @@ module Learning
       has_many :user_questions, class_name: 'Learning::Homework::UserQuestion'
       has_many :user_answers, class_name: 'Learning::Homework::UserAnswer', foreign_key: 'batch_id'
       has_many :gen_batch_table_lines, class_name: 'Learning::Batch::GenBatchTableLine', foreign_key: 'batch_id'
+      has_many :timings, class_name: "Learning::Batch::Timing", :through => :gen_batch_table_lines
 
       has_many_attached :photos
 

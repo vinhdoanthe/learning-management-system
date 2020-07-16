@@ -119,6 +119,7 @@ en:
       center: "Center"
       timetable: "Timetable"
       classroom: "Classroom"
+      at: 'At'
       status:
         studying: "Studying"
         stop: "stop"
@@ -126,6 +127,8 @@ en:
         update: "updating"
       op_student_course:
         registered_subject: "Registered %{count_registered_subjects}/%{count_total_subjects} subject"
+      timing:
+        weekly: 'weekly'
     session:
       student_coming: "NEXT CLASS"
       teacher_coming: "NEXT TEACHING CLASS"
@@ -249,7 +252,7 @@ en:
     featured_photos: "Featured photos"
     products: "Products"
     gender_male: "Male"
-    gender_femail: "Female"
+    gender_female: "Female"
     share: "Share"
     teky_star: "TEKY Star"
     teky_coin: "TEKY Point"

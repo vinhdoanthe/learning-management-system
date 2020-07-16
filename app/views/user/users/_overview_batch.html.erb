@@ -24,22 +24,10 @@
     </div>
     <div class="scl-text">
       <div class="scl-left col-md-8">
-        <label for=""><%= batch.op_course.name %></label>
+        <label style="text-transform: uppercase;"><%= batch.op_course.name %></label>
         <p><%= t('learning.batch.code') %>: <span><%= batch.code %></span></p>
-        <% time_line = batch_timeline batch %> 
         <p>
-        <% if time_line.blank? %>
-          Hàng tuần Tại
-        <% else %>
-          <% time_line.each_with_index do |time, i| %>
-            <% if time_line.length - i != 1 %>
-              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + "; "%>
-            <% else %>
-              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + " "%>
-            <% end %>
-          <% end %>
-          hàng tuần Tại
-        <% end %>
+        <%= Learning::Batch::OpBatchDecorator.new(batch).display_weekly_timing %>
         <span><%= batch.res_company ? batch.res_company.name : "" %></span>
         </p>
       </div>

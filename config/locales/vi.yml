@@ -120,6 +120,7 @@ vi:
       center: "Trung tâm"
       timetable: "Lịch học"
       classroom: "Phòng học"
+      at: 'tại'
       status:
         studying: "đang học"
         stop: "nghỉ học"
@@ -127,6 +128,8 @@ vi:
         update: 'Đang cập nhật'
       op_student_course:
         registered_subject: 'Đăng ký %{count_registered_subjects}/%{count_total_subjects} học phần'
+      timing:
+        weekly: 'hàng tuần'
     session:
       no_session: "Không có buổi học nào"
       student_coming: "LỊCH HỌC TIẾP THEO"
@@ -280,7 +283,7 @@ vi:
     featured_photos: 'Hình ảnh'
     products: 'Sản phẩm'
     gender_male: 'Nam'
-    gender_femail: 'Nữ'
+    gender_female: 'Nữ'
     share: 'Chia sẻ'
     teky_star: 'TEKY Sao'
     teky_coin: 'TEKY Đồng'
