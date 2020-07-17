@@ -233,7 +233,6 @@ module User
               'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_activity_project_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_project') <<'</p></a></li>',
               'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_activity_project_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_project') <<'</p></a></li>',
             },              
-          ]
           ],
           'setting' => [
             {
