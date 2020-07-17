@@ -119,13 +119,17 @@ en:
       center: "Center"
       timetable: "Timetable"
       classroom: "Classroom"
+      at: 'At'
       status:
         studying: "Studying"
-        stop: "stop"
+        stop: "ended"
         reversation: "reversation"
         update: "updating"
       op_student_course:
         registered_subject: "Registered %{count_registered_subjects}/%{count_total_subjects} subject"
+      timing:
+        weekly: 'weekly'
+      come_in: "Go to class"
     session:
       student_coming: "NEXT CLASS"
       teacher_coming: "NEXT TEACHING CLASS"
@@ -135,7 +139,7 @@ en:
       at: "at"
   my_class:
     information: "information"
-    come_in: "Come in"
+    come_in: "Go to class"
     detail:
       class_info: "Class infomations"
       student_projects: "Student projects"
@@ -237,19 +241,24 @@ en:
       teky_star: "TEKY Star"
       teky_coin: "TEKY Point"
     no_leaders: "No students"
+    no_coming_soon_session: 'No sessions'
   public_profile:
     center: "Center"
-    achievements: "Achievements"
-    no_achievements: "No achievements"
     gender: "Gender"
     address: "Address"
+    achievements: "Achievements"
     batches: "Batches"
     badges: "Badges"
     achievements_certificates: "Achievements and Certificates"
     featured_photos: "Featured photos"
     products: "Products"
+    no_achievements: "No achievements"
+    no_courses: 'No courses'
+    no_badges: 'No badges'
+    no_featured_photos: 'No photos'
+    no_products: 'No products'
     gender_male: "Male"
-    gender_femail: "Female"
+    gender_female: "Female"
     share: "Share"
     teky_star: "TEKY Star"
     teky_coin: "TEKY Point"

@@ -176,21 +176,21 @@ module User
            'title' => "#{ t('sidebar.homework') }",
            'right_content' => '<span class="left-badge"></span>'
           },
-          {'path' => social_community_question_answer_my_threads_path, 
-            'icon' => 'Icon-Inbox.png',
-            'title' => "#{t('sidebar.question_answer')}", 
-            'right_content' => ''
-          },
+          # {'path' => social_community_question_answer_my_threads_path, 
+          #   'icon' => 'Icon-Inbox.png',
+          #   'title' => "#{t('sidebar.question_answer')}", 
+          #   'right_content' => ''
+          # },
           {'path' => social_community_sc_student_projects_social_student_projects_path, 
             'icon' => 'youtube.png',
             'title' => "#{t('sidebar.my_projects')}", 
             'right_content' => ''
           },
-          {'path' => social_community_leaders_path, 
-           'icon' => 'top.png',
-            'title' => "#{t('sidebar.top_achievement')}", 
-            'right_content' => ''
-          },
+          # {'path' => social_community_leaders_path, 
+          #  'icon' => 'top.png',
+          #   'title' => "#{t('sidebar.top_achievement')}", 
+          #   'right_content' => ''
+          # },
         ]
 
         tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top: 1px solid #232837; border-bottom: 1px solid #414348; margin: 0">'
@@ -236,7 +236,11 @@ module User
             'title' => "#{t('sidebar.refer_friend')}", 
             'right_content' => ''
           },             
-
+          {'path' => social_community_question_answer_my_threads_path, 
+            'icon' => 'Icon-Inbox.png',
+            'title' => "#{t('sidebar.question_answer')}", 
+            'right_content' => ''
+          }
         ]
 
         tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top:1px solid #232837; margin-top: 0">'

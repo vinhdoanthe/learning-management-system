@@ -15,24 +15,11 @@
           <%= image_tag('global/images/calendar-4.png') %>
           <p><span class="span-text"><%= t('learning.batch.batch_time') %>: </span><%= batch.start_date.strftime("%d/%m/%Y") %> đến <%= batch.end_date.present? ? batch.end_date.strftime('%d/%m/%Y') : '' %></p>
         </li>
-        <%# <li> %>
-        <%#   <%= image_tag('global/images/calendar-4.png') %1> %>
-        <%#   <p><span class="span-text">Thời gian học: </span><%= batch.start_date.strftime('%d/%m/%Y') %1> %>
-        <%# đến <%= batch.end_date.strftime('%d/%m/%Y') %1></p> %>
-        <%# </li> %>
         <li>
           <%= image_tag('global/images/clock.png') %>
-          <% time_line = batch_timeline batch %> 
-
           <p style="display: inline-block"><span class="span-text"><%= t('learning.batch.timetable') %>: </span>
-          <% time_line.each_with_index do |time, i| %>
-            <% if time_line.length - i != 1 %>
-              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + "; "%>
-            <% else %>
-              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + " "%>
-            <% end %>
-          <% end %>
-          </p> hàng tuần
+          <%= Learning::Batch::OpBatchDecorator.new(batch).display_weekly_timing_without_center %>
+          </p>
         </li>
         <li>
           <%= image_tag('global/images/professor.png') %>

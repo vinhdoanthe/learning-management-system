@@ -76,3 +76,9 @@
   text-transform: uppercase;
   font-weight: 500;
 }
+.s-coming-soon-c-name {
+  text-transform: uppercase;
+}
+.d-no-coming-soon-session {
+  line-height: 50px;
+}
