@@ -176,7 +176,25 @@ en:
     all_threads: 'All questions'
     no_thread: 'This question is deleted!'
   adm:
-    user: "User"
+    user:
+      name: "User"
+      info: "User Infomation"
+      filter: "Filter"
+      company: "Company"
+      select_company: "Select company"
+      role: "Role"
+      select_role: "Select role"
+      fullname: "Full name"
+      mobile: "Mobile"
+      login: "Login"
+      login_as_user: "Login as user" 
+      last_login_at: "Last login at"
+      last_logout_at: "Last logout at"
+      edit: "Edit"
+      show: "Show detail"
+      created_at: "Created at"
+      username: "Username"
+      all: "All"
     setting:
       name: "Setting"
       coin_star: "Coin Star"
