@@ -1,0 +1,23 @@
+<ul class="pagination pagination-sm  m-0" role="navigation" aria-label="pager" style="justify-content: center">
+  <% if page >= 1 && users.length == 25 %>
+    <li class="paginate_button page-item first" style="margin-right: 5px;">
+      <a class="page-link previous_page" data-page='<%= page - 1 %>' ><i class="fa fa-angle-double-left"></i> Prev</a>
+    </li>
+  <% end %>
+  <% if users.length == 25 %>
+    <li class="paginate_button page-item last" style="margin-left: 5px">
+      <a class="page-link next_page" data-page='<%= page + 1%>'>Next <i class="fa fa-angle-double-right"></i></a>
+    </li>
+  <% end %>
+</ul>
+
+<style>
+  .next_page {
+    color: #67dcbf !important;
+    cursor: pointer;
+  }
+   .previous_page {
+    color: #67dcbf !important;
+    cursor: pointer;
+  }
+</style>
