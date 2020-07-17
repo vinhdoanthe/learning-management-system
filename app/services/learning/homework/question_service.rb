@@ -54,7 +54,7 @@ class Learning::Homework::QuestionService
 
   def mark_answer params, user
     return { state: 'danger', message: 'Chưa chấm bài' } if (params[:teacher_mark_content].blank? || params[:teacher_mark].blank?)
-   binding.pry 
+  #  binding.pry 
     answer_mark = Learning::Homework::AnswerMark.where(user_answer_id: params[:user_answer_id]).first
     user_answer = find_user_answer params[:user_answer_id]
 

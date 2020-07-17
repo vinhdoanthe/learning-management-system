@@ -80,10 +80,9 @@
 
 /*================================= My Class ===========================*/
 .student_batch_list {
-  .spanimg{
-    img {
-      // width: 100%;
-    }
+  .scl-detail {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
   .scl-text{
     display: flex;
@@ -112,7 +111,7 @@
         }
       }
     }
-    .btn-stop-batch{
+    .btn-stop-batch {
       background-color: #505050;
       box-shadow: 0px 2px 0px #000000;
       border-radius: 5px;
@@ -120,6 +119,11 @@
     .btn-studying-batch {
       background-color: #5DC2A7;
       box-shadow: 0px 2px 0px #41A6A2;
+      border-radius: 5px;
+    }
+    .btn-save-batch {
+      background-color: #505050;
+      box-shadow: 0px 2px 0px #000000;
       border-radius: 5px;
     }
   }

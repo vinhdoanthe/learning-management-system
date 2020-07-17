@@ -123,13 +123,14 @@ vi:
       at: 'tại'
       status:
         studying: "đang học"
-        stop: "nghỉ học"
+        stop: "đã kết thúc"
         reversation: 'bảo lưu'
         update: 'Đang cập nhật'
       op_student_course:
         registered_subject: 'Đăng ký %{count_registered_subjects}/%{count_total_subjects} học phần'
       timing:
         weekly: 'hàng tuần'
+      come_in: "Vào lớp"
     session:
       no_session: "Không có buổi học nào"
       student_coming: "LỊCH HỌC TIẾP THEO"
@@ -271,17 +272,22 @@ vi:
       teky_star: 'TEKY Sao'
       teky_coin: 'TEKY Đồng'
     no_leaders: 'Không có học sinh nào'
+    no_coming_soon_session: 'Không có buổi học nào'
   public_profile:
     center: 'Học tại'
-    achievements: 'Giải thưởng'
-    no_achievements: 'Chưa có giải thưởng'
     gender: 'Giới tính'
     address: 'Địa chỉ'
     batches: 'Khóa học'
+    achievements: 'Giải thưởng'
     badges: 'Huy hiệu'
     achievements_certificates: 'Thành tích và Giải thưởng'
     featured_photos: 'Hình ảnh'
     products: 'Sản phẩm'
+    no_courses: 'Không có khóa học'
+    no_achievements: 'Không có giải thưởng'
+    no_badges: 'Không có huy hiệu'
+    no_featured_photos: 'Không có hình ảnh'
+    no_products: 'Không có sản phẩm'
     gender_male: 'Nam'
     gender_female: 'Nữ'
     share: 'Chia sẻ'
