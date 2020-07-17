@@ -322,8 +322,8 @@ module User
 
           {
             'path'          => adm_user_index_path,
-            'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user') <<'</p></a></li>',
-            'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user') <<'</p></a></li>'
+            'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user.name') <<'</p></a></li>',
+            'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user.name') <<'</p></a></li>'
           },
 
           {

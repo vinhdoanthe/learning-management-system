@@ -18,8 +18,11 @@ namespace :adm do
   namespace :user do
     get 'all_user' => 'adm_users#all_user'
     get 'index' => 'adm_users#index'
+    post 'index' => 'adm_users#index'
     get 'user_info/:id' => 'adm_users#user_info'
     get 'edit_user_info/:id' => 'adm_users#edit_user_info'
     post 'update_user_info' => 'adm_users#update_user_info'
+    post 'filter_users' => 'adm_users#filter_users'
+    get 'login_as_user/:user_id' => 'adm_users#login_as_user'
   end
 end
