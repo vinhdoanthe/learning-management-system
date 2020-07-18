@@ -8,7 +8,7 @@
     </ul>
   </div>
   <div class="panel-content">
-    <div class="box-product" >
+    <div class="box-product">
       <div class="fc-header" style='margin: 15px 0 15px 0'>
         <h3 style="margin: 0 !important">Mô tả sản phẩm</h3>
       </div>
@@ -18,57 +18,58 @@
     </div>
   </div>
   <% if project.introduction_video.present? %>
-    <div class="panel-content">
-      <div class="box-product" >
-        <div class="fc-header" style='margin: 15px 0 15px 0'>
-          <h3 style="margin: 0 !important">Giới thiệu sản phẩm</h3>
-        </div>
-        <div class="project_intro">
-          <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
-        </div>
+  <div class="panel-content">
+    <div class="box-product">
+      <div class="fc-header" style='margin: 15px 0 15px 0'>
+        <h3 style="margin: 0 !important">Giới thiệu sản phẩm</h3>
+      </div>
+      <div class="project_intro">
+        <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
       </div>
     </div>
+  </div>
   <% end %>
   <% if project.presentation.present? %>
-    <div class="panel-content">
-      <div class="box-product" >
-        <div class="fc-header" style='margin: 15px 0 15px 0'>
-          <h3 style="margin: 0 !important">Slide sản phẩm</h3>
-        </div>
-        <div class="project_intro">
-          <%= link_to image_tag('/global/images/downloadinvoice.png') + 'Click to download', rails_blob_path(project.presentation, disposition: "attachment"), style: "font-size: 15px; font-weight: 600; font-family: 'Montserrat-Bold'" %>
-        </div>
+  <div class="panel-content">
+    <div class="box-product">
+      <div class="fc-header" style='margin: 15px 0 15px 0'>
+        <h3 style="margin: 0 !important">Slide sản phẩm</h3>
+      </div>
+      <div class="project_intro">
+        <%= link_to image_tag('/global/images/downloadinvoice.png') + 'Click to download', rails_blob_path(project.presentation, disposition: "attachment"), style: "font-size: 15px; font-weight: 600; font-family: 'Quicksand-Bold'" %>
       </div>
     </div>
+  </div>
   <% end %>
   <% if project.project_show_video.present? %>
-    <div class="panel-content">
-      <div class="box-product" >
-        <div class="fc-header" style='margin: 15px 0 15px 0'>
-          <h3 style="margin: 0 !important">Chi tiết sản phẩm</h3>
-        </div>
-        <div class="project_intro">
-          <%= project.project_show_video.html_safe %>
-        </div>
+  <div class="panel-content">
+    <div class="box-product">
+      <div class="fc-header" style='margin: 15px 0 15px 0'>
+        <h3 style="margin: 0 !important">Chi tiết sản phẩm</h3>
+      </div>
+      <div class="project_intro">
+        <%= project.project_show_video.html_safe %>
       </div>
     </div>
+  </div>
   <% end %>
 </div>
-<div class="box-product" >
+<div class="box-product">
   <div id="student_project_feed">
   </div>
 </div>
 <style>
-  .student_infomation li span{
-   font-weight: 600; 
+  .student_infomation li span {
+    font-weight: 600;
   }
+
   .fc-header h3 {
     padding-bottom: 0 !important
   }
 </style>
 <script>
-  $(document).ready(function(){
-    function getReactionsAndComments(post_id){
+  $(document).ready(function() {
+    function getReactionsAndComments(post_id) {
       $.ajax({
         method: 'GET',
         url: '/social_community/feed/get_reactions_and_comments?post_id=' + post_id,
@@ -76,8 +77,8 @@
       })
     }
 
-    post_id = <%= project.sc_post.id %>
-    getReactionsAndComments(post_id);
+    post_id = < %= project.sc_post.id % >
+      getReactionsAndComments(post_id);
     addReaction('#student_project_feed');
     addComment('#student_project_feed');
   })

@@ -62,7 +62,7 @@
 
 .tab-menu li.active a {
 	color: #000000;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .tab-menu li.active a::before {
@@ -79,7 +79,7 @@
 .change-password {
 	display: inline-block;
 	font-size: 14px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	position: relative;
 	color: #0654BA;
 	margin: 23px 0 15px 0;
@@ -98,7 +98,7 @@
 	padding: 5px;
 	text-transform: uppercase;
 	font-size: 10px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .label-edit.label-primary {
@@ -127,7 +127,7 @@
 	display: inline-block;
 	text-transform: uppercase;
 	font-size: 10px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	color: #fff !important;
 	padding: 5px 10px;
 }
@@ -143,7 +143,7 @@
 .filter-box label.filter-title {
 	font-size: 15px;
 	color: #000;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	margin: 20px 0;
 	text-transform: uppercase;
 }
@@ -153,7 +153,7 @@
 .table-link tbody tr td a {
 	color: #7E858E;
 	font-size: 14px;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 	display: inline-block;
 	margin-left: 5px;
 }
@@ -163,7 +163,7 @@
 }
 
 .table-link tbody tr td p {
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 	color: #D7DFE9;
 	font-size: 14px;
 }
@@ -174,7 +174,7 @@
 	left: 20px;
 	color: #0654ba;
 	z-index: 9;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .PC-back img {
@@ -192,7 +192,7 @@
 .fc-header h3 {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .fc-header .fc-step {
@@ -209,7 +209,7 @@
 	font-size: 14px;
 	background: #f16357;
 	color: #fff;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	transform: rotate(-90deg);
 	border-radius: 10px 10px 0 0;
 	height: 100%;
@@ -248,7 +248,7 @@
 	display: inline-block;
 	font-size: 14px;
 	color: #FFC400;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .fc-other {
@@ -264,12 +264,12 @@
 
 .fc-other .fco-title label {
 	color: #000;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .fc-other .fco-title p {
 	color: #939393;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .fc-other .fco-title span {
@@ -278,7 +278,7 @@
 	right: 0;
 	font-size: 18px;
 	color: #000;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .fc-other .fco-ques {
@@ -305,7 +305,7 @@
 .fc-other .fco-ques .fcoq-tit label {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	text-align: left;
 	display: inherit;
 }
@@ -313,7 +313,7 @@
 .fc-other .fco-ques .fcoq-tit p {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 	margin-bottom: 10px;
 	text-align: left;
 }
@@ -354,7 +354,7 @@
 .fc-other .fco-answ .fcoa-tit label {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	text-align: left;
 	display: inherit;
 	padding-top: 10px
@@ -609,7 +609,7 @@
 }
 
 .fcma-tit label span {
-	font-family: 'Montserrat-Regular';
+	font-family: 'Quicksand-Regular';
 	font-size: 9px;
 }
 
@@ -667,7 +667,7 @@
 	padding: 5px 25px;
 	color: #fff;
 	text-transform: uppercase;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .scl-img span.scl-danger {
@@ -692,7 +692,7 @@
 
 .scl-left label {
 	color: #000000;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	font-size: 14px;
 }
 
@@ -700,7 +700,7 @@
 	color: #6D7278;
 	font-size: 12px;
 	line-height: 16px;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .scl-left p span {
@@ -724,7 +724,7 @@
 	border-radius: 4px;
 	padding: 10px 50px;
 	margin-bottom: 10px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	font-size: 16px;
 	text-transform: uppercase;
 	color: #000;
@@ -741,7 +741,7 @@
 	border-radius: 4px;
 	padding: 10px 77px;
 	margin-bottom: 10px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	font-size: 16px;
 	text-transform: uppercase;
 	color: #000;
@@ -776,7 +776,7 @@
 	padding: 11px 20px;
 	height: auto !important;
 	color: #fff;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 	margin: 0;
 	background: #505050
 }
@@ -803,12 +803,12 @@
 .box-progress ul li p {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .box-progress ul li p span.span-text {
 	color: #6D7278;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .box-progress ul li p a {}
@@ -826,7 +826,7 @@
 	font-family: sans-serif;
 	color: #000;
 	display: inline-block;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	text-align: center;
 	font-size: 14px;
 }
@@ -866,7 +866,7 @@
 	color: #000;
 	text-transform: uppercase;
 	font-size: 9px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	text-align: center;
 }
 
@@ -879,14 +879,14 @@
 	color: #000;
 	text-transform: uppercase;
 	font-size: 20px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .calenda-box .cb-con p {
 	color: #000;
 	text-transform: uppercase;
 	font-size: 8px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	line-height: 12px;
 	text-align: center;
 }
@@ -925,7 +925,7 @@
 	color: #fff;
 	display: inline-block;
 	background: #5DC2A7;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	border-radius: 50%;
 	width: 110px;
 	height: 110px;
@@ -962,7 +962,7 @@
 
 .ra-detail a {
 	color: #0654BA;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	display: inline-block;
 	margin-top: 14px;
 }
@@ -991,7 +991,7 @@
 
 .redem-tab .nav-tabs li.active a {
 	text-transform: uppercase;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	background: #fff !important
 }
 
@@ -1115,7 +1115,7 @@
 .rtdb-left p span {
 	font-size: 10px;
 	color: #FF0D38;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	text-transform: uppercase;
 }
 
@@ -1171,7 +1171,7 @@
 }
 
 .bl-content ul li p span.tag-time {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	display: inline-block;
 	background: #CFCFCF;
 	border: 1px solid #000;
@@ -1183,13 +1183,13 @@
 }
 
 .bl-content ul li p span.first-time {
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 	margin: 0 auto;
 	text-align: center;
 }
 
 .bl-content ul li p span.last-time {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	margin: 0 auto;
 	text-align: center;
 	line-height: 8px;
@@ -1202,7 +1202,7 @@
 .bl-content ul li p.active span {}
 
 .bl-content ul li p.active span.tag-time {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	background: #5DC2A7;
 	border-color: #5DC2A7;
 	color: #fff;
@@ -1225,12 +1225,12 @@
 }
 
 .bl-content ul li p.active span.first-time {
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 	color: #FF0D38
 }
 
 .bl-content ul li p.active span.last-time {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	color: #5DC2A7;
 	font-size: 14px;
 }
@@ -1291,7 +1291,7 @@
 }
 
 .modal-title label {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	text-transform: uppercase;
 	font-size: 16px;
 }
@@ -1433,7 +1433,7 @@
 	position: absolute;
 	background: #fff;
 	padding: 4px 0;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	color: #000
 }
 
@@ -1503,7 +1503,7 @@
 .ths-people p {
 	font-size: 12px;
 	text-align: center;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .box-profile {}
@@ -1564,7 +1564,7 @@
 
 .bp-tab .nav-tabs li.active a {
 	text-transform: uppercase;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	background: #fff !important
 }
 
@@ -1580,7 +1580,7 @@
 
 .bp-list label {
 	font-size: 18px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	text-transform: uppercase;
 	margin-bottom: 10px;
 }
@@ -1588,7 +1588,7 @@
 .bp-list ul {}
 
 .bp-list ul li {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	color: #000;
 	font-size: 14px;
 	line-height: 30px;
@@ -1596,14 +1596,14 @@
 
 .bp-list ul li span {
 	color: #6D7278;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .bp-biglist {}
 
 .bp-biglist label {
 	font-size: 18px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	text-transform: uppercase;
 	margin-bottom: 10px;
 }
@@ -1630,13 +1630,13 @@
 
 .bp-detail .bpd-text label {
 	font-size: 14px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	margin-bottom: 0;
 }
 
 .bp-detail .bpd-text p {
 	color: #6D7278;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .bp-detail .bpd-text ul {}
@@ -1648,7 +1648,7 @@
 .bp-detail .bpd-text ul li span {
 	display: inline-block;
 	font-size: 10px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	background: #D7DFE9;
 	padding: 0px 15px;
 	border-radius: 30px;
@@ -1740,7 +1740,7 @@
 	width: 100%;
 	height: 50px;
 	position: relative;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	color: #000;
 	text-align: center;
 	font-size: 12px;
@@ -1798,11 +1798,11 @@ ul.ctd-popover li {
 
 ul.ctd-popover li span {
 	color: #0052C1;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 ul.ctd-popover li strong {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 ul.ctd-popover li b {
@@ -1874,7 +1874,7 @@ ul.ctd-popover li b {
 	top: 7px;
 	color: #F16357 !important;
 	font-size: 12px;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .noti-avatar {
@@ -2221,7 +2221,7 @@ ul.bsc-list li:after {
 	font-size: 24px !important;
 	color: #5DC2A7;
 	text-transform: uppercase;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	margin-bottom: 10px !important;
 	margin-top: 25px !important;
 	;
@@ -2237,7 +2237,7 @@ ul.bsc-list li:after {
 	width: 30px;
 	height: 33px;
 	font-size: 15px;
-	font-family: 'Montserrat-Regular';
+	font-family: 'Quicksand-Regular';
 	color: #000;
 	padding: 5px 8px;
 }
@@ -2248,7 +2248,7 @@ ul.bsc-list li:after {
 }
 
 .lv-title p b {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .lv-title ul {
@@ -2380,7 +2380,7 @@ ul.bsc-list li:after {
 
 .box-imglist label {
 	font-size: 14px;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 	margin-top: 10px;
 }
 
@@ -2472,7 +2472,7 @@ a.ba-more {
 
 .btr-detail span.btd-text p {
 	color: #ffff;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .btr-detail-active.btr-detail span.btd-img2 {
@@ -2611,7 +2611,7 @@ a.ba-more {
 	padding: 10px 20px;
 	position: relative;
 	border-radius: 5px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .bpm-head p.name-cards:before {
@@ -2652,7 +2652,7 @@ a.ba-more {
 	padding: 0;
 	position: initial;
 	color: #000;
-	font-family: 'Montserrat-bold';
+	font-family: 'Quicksand-bold';
 }
 
 .bpm-content {
@@ -2685,7 +2685,7 @@ a.ba-more {
 }
 
 .box-add ul li p b {
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .bpc-detail .dpc-title {
@@ -2694,7 +2694,7 @@ a.ba-more {
 
 .dpc-title h3 {
 	font-size: 14px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	position: relative;
 	;
 	background: #fff;
@@ -2833,7 +2833,7 @@ a.ba-more {
 	color: #fff;
 	font-size: 30px;
 	padding-top: 47%;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .bndi-detail span {
@@ -2905,7 +2905,7 @@ a.ba-more {
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .bnd-other a span {
@@ -3033,7 +3033,7 @@ a.ba-more {
 	display: inline-block;
 	float: right;
 	color: #6D7278;
-	font-family: 'Montserrat-Medium'
+	font-family: 'Quicksand-Medium'
 }
 
 .bnd-title h2 span {
@@ -3096,7 +3096,7 @@ a.link-other:before {
 	margin: 0 auto;
 	top: 0;
 	text-align: center;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 	color: #ffdc64;
 	text-transform: uppercase;
 }
@@ -3113,7 +3113,7 @@ a.link-other:before {
 }
 
 .bs-detail h3 {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	font-size: 20px !important;
 }
 
@@ -3169,13 +3169,13 @@ a.link-other:before {
 
 .bnn-detail .bnn-time p {
 	color: #6D7278;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .link-all {
 	color: #0654BA;
 	position: relative;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	font-size: 14px;
 	padding-right: 45px;
 	margin: 10px 0
@@ -3354,7 +3354,7 @@ a.link-other:before {
 	padding: 0 30px 0 60px;
 	color: #fff;
 	font-size: 15px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	text-transform: uppercase;
 }
 
@@ -3466,7 +3466,7 @@ a.link-other:before {
 	text-align: left;
 	color: #EB9138;
 	font-size: 10px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 	position: relative;
 	padding-left: 16px;
 }
@@ -3504,7 +3504,7 @@ a.link-other:before {
 .fcv-big .title-video p {
 	color: #fcf055;
 	font-size: 14px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .fcv-big .title-video p span {
@@ -3553,11 +3553,11 @@ ul.fcv-small li:hover video {
 .modal-news ul {}
 
 .modal-news ul li {
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .modal-news ul li span {
-	font-family: 'Montserrat-Regular';
+	font-family: 'Quicksand-Regular';
 }
 
 .modal-news h3 {
@@ -3583,7 +3583,7 @@ ul.fcv-small li:hover video {
 
 .modal-evaluate-title p {
 	text-align: center;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .modal-evaluate-title p span {
@@ -3626,7 +3626,7 @@ ul.fcv-small li:hover video {
 .mec-detail p {
 	color: #000;
 	text-align: center;
-	font-family: 'Montserrat-Medium';
+	font-family: 'Quicksand-Medium';
 }
 
 .modal-avalist {}
@@ -3701,7 +3701,7 @@ ul.fcv-small li:hover video {
 	width: 72px;
 	height: 72px !important;
 	font-size: 11px;
-	font-family: 'Montserrat-Bold';
+	font-family: 'Quicksand-Bold';
 }
 
 .paging-class ul li a.success {

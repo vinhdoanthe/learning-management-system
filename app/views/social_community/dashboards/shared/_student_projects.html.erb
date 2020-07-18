@@ -1,15 +1,15 @@
-<div class="bnd-img" style="text-align: center">
-  <% if project.introduction_video.present? %>
-    <div class='intro_project'>
-      <%= project.introduction_video.html_safe %>
+<% content_for :stylesheet_includes do %>
+<%= stylesheet_link_tag 'user/open_educat/op_students/batches' %>
+<% end %>
+
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h3 class="color-fff text-transform">Lớp học của tôi</h3>
+      </div>
     </div>
-  <% elsif project.introduction_video.blank? && project.project_show_video.present? %>
-    <div class='show_project'>
-      <%= project.project_show_video.html_safe %>
-    </div>
-  <% elsif project.presentation.present? %>
-    <div class='presentation_project'>
-      <%= link_to image_tag('/global/images/downloadinvoice.png') + 'Click to download', rails_blob_path(project.presentation, disposition: "attachment"), style: "font-size: 15px; font-weight: 600; font-family: 'Montserrat-Bold'" %>
-    </div>
-  <% end %>
-</div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <% if @batches.empty? %>
