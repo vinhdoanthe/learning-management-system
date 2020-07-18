@@ -1,5 +1,6 @@
 @import "https://fonts.googleapis.com/css?family=Lato:300,400,700,900";
 @import "https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700";
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;515;600;700&display=swap');
 @import "../plugins/bootstrap/css/bootstrap.min.css";
 @import "../plugins/mcustom-scrollbar/mcustom_scrollbar.min.css";
 @import "../plugins/animation-css/animate.min.css";
@@ -17,6 +18,8 @@
 @import "../plugins/bootstrap-tags-input/bootstrap-tagsinput.css";
 @import "../plugins/bootstrap-editable/css/bootstrap-editable.css";
 @import "../plugins/prettify/prettify.css";
+
+/*
 @font-face {
 	font-family: 'Quicksand-Bold';
 	src: url('../fonts/Quicksand-Bold.ttf');
@@ -47,6 +50,9 @@
 	src: url('../fonts/Quicksand-Light.ttf');
 }
 
+*/
+
+/*
 .font-bold {
 	font-family: 'Quicksand-Bold';
 }
@@ -66,16 +72,71 @@
 .font-thin {
 	font-family: 'Quicksand-Thin';
 }
+*/
+
+.font-bold {
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
+}
+
+.font-semi-bold {
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 600;
+}
+
+.font-weight{
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 515;
+}
+
+.font-medium {
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+}
+
+.font-regular {
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+}
+
+.font-light  {
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 300;
+}
+
+.font-italic {
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-style: italic;
+}
+
+.font-thin {
+	font-family: 'Quicksand', sans-serif;
+}
 
 html {
 	height: 100%;
+	font-family: 'Quicksand', sans-serif;
 }
 
 body {
 	height: 100%;
 	background: #F5F5F5;
-	color: #000;
-	font-family: 'Quicksand-Regular' !important;
+	color: #000;	
+	font-family: 'Quicksand', sans-serif;
 	line-height: 1.42857143;
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-size-adjust: 100%;
@@ -89,8 +150,7 @@ body>section {
 }
 
 body p strong {
-	font-family: 'Quicksand-Bold';
-	font-weight: 600;
+	font-weight: 700;
 }
 
 body>.pace>.pace-activity {
@@ -108,12 +168,17 @@ img {
 
 b, strong {
 	color: #000 !important;
-	font-family: 'Quicksand-Bold';
+	font-family: 'Quicksand', sans-serif;
+	font-weight: 700;
 }
 
 input, select, textarea {
 	color: #636e7b;
-	font-family: 'Quicksand-Regular' !important;
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+
 }
 
 ol, ul {
@@ -147,20 +212,34 @@ a:focus, a:active {
 }
 
 h1, h2, h3, h4, h5 {
-	font-family: 'Quicksand-Bold';
-	font-weight: 100;
+	/*font-family: 'Quicksand-Bold';
+	font-weight: 100;*/
+
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
 	margin: 0 !important;
 }
 
 h1.light, h2.light, h3.light, h4.light, h5.light {
-	font-family: 'Quicksand-Bold';
-	font-weight: 100;
+	/*font-family: 'Quicksand-Bold';
+	font-weight: 100;*/
+
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
 }
 
 h1, .h1 {
 	font-size: 45px;
 	margin-top: 0;
-	font-family: 'Quicksand-Bold';
+	/*font-family: 'Quicksand-Bold';*/
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
 }
 
 div, p, span {
@@ -176,9 +255,13 @@ h3 {
 }
 
 strong, label {
-	font-family: 'Quicksand-Medium';
+	/*font-family: 'Quicksand-Medium';
+	font-weight: 600;*/
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
 	font-weight: 600;
-	;
+
 	margin: 0;
 }
 
@@ -192,7 +275,11 @@ td, th {
 }
 
 th {
-	font-family: 'Quicksand-Bold';
+	/*font-family: 'Quicksand-Bold';*/
+	font-family: 'Quicksand', sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
 }
 
 .p-0 {

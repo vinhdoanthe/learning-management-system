@@ -75,7 +75,9 @@ select.form-control {
 
 .tab-menu li.active a {
 	color: #000000;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .tab-menu li.active a::before {
@@ -92,7 +94,9 @@ select.form-control {
 .change-password {
 	display: inline-block;
 	font-size: 14px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	position: relative;
 	color: #0654BA;
 	margin: 23px 0 15px 0;
@@ -140,7 +144,9 @@ select.form-control {
 	display: inline-block;
 	text-transform: uppercase;
 	font-size: 10px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	color: #fff !important;
 	padding: 5px 10px;
 }
@@ -156,7 +162,9 @@ select.form-control {
 .filter-box label.filter-title {
 	font-size: 14px;
 	color: #000;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	margin: 20px 0;
 	text-transform: uppercase;
 }
@@ -166,7 +174,9 @@ select.form-control {
 .table-link tbody tr td a {
 	color: #7E858E;
 	font-size: 14px;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	display: inline-block;
 	margin-left: -5px;
 }
@@ -176,7 +186,9 @@ select.form-control {
 }
 
 .table-link tbody tr td p {
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	color: #D7DFE9;
 	font-size: 14px;
 }
@@ -187,7 +199,9 @@ select.form-control {
 	left: 20px;
 	color: #0654ba;
 	z-index: 9;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .PC-back img {
@@ -205,13 +219,17 @@ select.form-control {
 .fc-header h3 {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .box-product .fc-header h3 {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	padding-top: 5px;
 	padding-bottom: 15px;
 }
@@ -230,7 +248,9 @@ select.form-control {
 	font-size: 14px;
 	background: #f16357;
 	color: #fff;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	transform: rotate(-90deg);
 	border-radius: 10px 10px 0 0;
 	height: 100%;
@@ -269,7 +289,9 @@ select.form-control {
 	display: inline-block;
 	font-size: 14px;
 	color: #FFC400;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .fc-other {
@@ -285,12 +307,16 @@ select.form-control {
 
 .fc-other .fco-title label {
 	color: #000;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .fc-other .fco-title p {
 	color: #939393;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .fc-other .fco-title span {
@@ -299,7 +325,9 @@ select.form-control {
 	right: 0;
 	font-size: 18px;
 	color: #000;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .fc-other .fco-ques {
@@ -326,7 +354,9 @@ select.form-control {
 .fc-other .fco-ques .fcoq-tit label {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-align: left;
 	display: inherit;
 }
@@ -334,7 +364,9 @@ select.form-control {
 .fc-other .fco-ques .fcoq-tit p {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	margin-bottom: 10px;
 	text-align: left;
 }
@@ -375,7 +407,9 @@ select.form-control {
 .fc-other .fco-answ .fcoa-tit label {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-align: left;
 	display: inherit;
 	padding-top: 10px
@@ -630,7 +664,7 @@ select.form-control {
 }
 
 .fcma-tit label span {
-	font-family: 'Quicksand-Regular';
+	font-style: normal;font-variant: normal;font-weight: 400;
 	font-size: 9px;
 }
 
@@ -688,7 +722,9 @@ select.form-control {
 	padding: 5px 25px;
 	color: #fff;
 	text-transform: uppercase;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .scl-img span.scl-danger {
@@ -713,7 +749,9 @@ select.form-control {
 
 .scl-left label {
 	color: #000000;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	font-size: 14px;
 }
 
@@ -721,7 +759,9 @@ select.form-control {
 	color: #6D7278;
 	font-size: 12px;
 	line-height: 16px;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .scl-left p span {
@@ -745,7 +785,9 @@ select.form-control {
 	border-radius: 4px;
 	padding: 10px 50px;
 	margin-bottom: 10px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	font-size: 16px;
 	text-transform: uppercase;
 	color: #000;
@@ -762,7 +804,9 @@ select.form-control {
 	border-radius: 4px;
 	padding: 10px 77px;
 	margin-bottom: 10px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	font-size: 16px;
 	text-transform: uppercase;
 	color: #000;
@@ -797,7 +841,9 @@ select.form-control {
 	padding: 11px 20px;
 	height: auto !important;
 	color: #fff;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	margin: 0;
 	background: #505050
 }
@@ -824,12 +870,16 @@ select.form-control {
 .box-progress ul li p {
 	color: #000;
 	font-size: 14px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .box-progress ul li p span.span-text {
 	color: #6D7278;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .box-progress ul li p a {}
@@ -844,10 +894,12 @@ select.form-control {
 /*Cowndown*/
 
 #clockdiv {
-	font-family: sans-serif;
+	
 	color: #000;
 	display: inline-block;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-align: center;
 	font-size: 14px;
 }
@@ -887,7 +939,9 @@ select.form-control {
 	color: #000;
 	text-transform: uppercase;
 	font-size: 9px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-align: center;
 }
 
@@ -900,14 +954,18 @@ select.form-control {
 	color: #000;
 	text-transform: uppercase;
 	font-size: 20px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .calenda-box .cb-con p {
 	color: #000;
 	text-transform: uppercase;
 	font-size: 8px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	line-height: 12px;
 	text-align: center;
 }
@@ -946,7 +1004,9 @@ select.form-control {
 	color: #fff;
 	display: inline-block;
 	background: #5DC2A7;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	border-radius: 50%;
 	width: 110px;
 	height: 110px;
@@ -980,7 +1040,7 @@ select.form-control {
 }
 
 .ra-detail .teky-coin-text {
-	font-family: 'Quicksand-Bold'
+	font-style: normal;font-variant: normal;font-weight: 700;
 }
 
 .ra-detail .how_to_check_it {
@@ -996,7 +1056,9 @@ select.form-control {
 
 .ra-detail a {
 	color: #0654BA;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	display: inline-block;
 	margin-top: 14px;
 }
@@ -1014,7 +1076,9 @@ select.form-control {
 .rt-detail.product_infomation .rtd-text .product-name, .rt-detail.product_infomation.box-detail .product-name {
 	font-size: 26px;
 	font-weight: normal;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	text-transform: none;
 }
 
@@ -1036,7 +1100,9 @@ select.form-control {
 .rt-detail.product_infomation .product-option label {
 	font-weight: normal;
 	font-size: 14px;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	color: #313131;
 	margin-bottom: 8px;
 }
@@ -1050,14 +1116,18 @@ select.form-control {
 	font-size: 10px;
 	text-align: center;
 	color: #FF0D38;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-transform: uppercase;
 }
 
 .rt-detail.product_infomation .product-coin-number {
 	font-size: 24px;
 	text-align: center;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	text-transform: uppercase;
 }
 
@@ -1072,7 +1142,9 @@ select.form-control {
 	width: 100%;
 	height: 57px !important;
 	color: #2F2F3E;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	padding-top: 17px;
 }
 
@@ -1081,7 +1153,9 @@ select.form-control {
 	text-align: justify;
 	color: #636B71;
 	font-size: 12px;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	margin-top: 10px;
 	margin-bottom: 20px;
 }
@@ -1139,7 +1213,9 @@ select.form-control {
 
 .redem-tab .nav-tabs li.active a {
 	text-transform: uppercase;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	background: #fff !important
 }
 
@@ -1271,7 +1347,9 @@ select.form-control {
 .rtdb-left p span {
 	font-size: 10px;
 	color: #FF0D38;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-transform: uppercase;
 }
 
@@ -1327,7 +1405,9 @@ select.form-control {
 }
 
 .bl-content ul li p span.tag-time {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	display: inline-block;
 	background: #CFCFCF;
 	border: 1px solid #000;
@@ -1339,13 +1419,17 @@ select.form-control {
 }
 
 .bl-content ul li p span.first-time {
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	margin: 0 auto;
 	text-align: center;
 }
 
 .bl-content ul li p span.last-time {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	margin: 0 auto;
 	text-align: center;
 	line-height: 8px;
@@ -1358,7 +1442,9 @@ select.form-control {
 .bl-content ul li p.active span {}
 
 .bl-content ul li p.active span.tag-time {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	background: #5DC2A7;
 	border-color: #5DC2A7;
 	color: #fff;
@@ -1381,12 +1467,16 @@ select.form-control {
 }
 
 .bl-content ul li p.active span.first-time {
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	color: #FF0D38
 }
 
 .bl-content ul li p.active span.last-time {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	color: #5DC2A7;
 	font-size: 14px;
 }
@@ -1447,7 +1537,9 @@ select.form-control {
 }
 
 .modal-title label {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-transform: uppercase;
 	font-size: 16px;
 }
@@ -1589,7 +1681,9 @@ select.form-control {
 	position: absolute;
 	background: #fff;
 	padding: 4px 0;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	color: #000
 }
 
@@ -1659,7 +1753,9 @@ select.form-control {
 .ths-people p {
 	font-size: 12px;
 	text-align: center;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .box-profile {}
@@ -1720,7 +1816,9 @@ select.form-control {
 
 .bp-tab .nav-tabs li.active a {
 	text-transform: uppercase;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	background: #fff !important
 }
 
@@ -1736,7 +1834,9 @@ select.form-control {
 
 .bp-list label {
 	font-size: 18px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-transform: uppercase;
 	margin-bottom: 10px;
 }
@@ -1744,7 +1844,9 @@ select.form-control {
 .bp-list ul {}
 
 .bp-list ul li {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	color: #000;
 	font-size: 14px;
 	line-height: 30px;
@@ -1752,14 +1854,18 @@ select.form-control {
 
 .bp-list ul li span {
 	color: #6D7278;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .bp-biglist {}
 
 .bp-biglist label {
 	font-size: 18px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-transform: uppercase;
 	margin-bottom: 10px;
 }
@@ -1786,13 +1892,17 @@ select.form-control {
 
 .bp-detail .bpd-text label {
 	font-size: 14px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	margin-bottom: 0;
 }
 
 .bp-detail .bpd-text p {
 	color: #6D7278;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .bp-detail .bpd-text ul {}
@@ -1804,7 +1914,9 @@ select.form-control {
 .bp-detail .bpd-text ul li span {
 	display: inline-block;
 	font-size: 10px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	background: #D7DFE9;
 	padding: 0px 15px;
 	border-radius: 30px;
@@ -1896,7 +2008,9 @@ select.form-control {
 	width: 100%;
 	height: 50px;
 	position: relative;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	color: #000;
 	text-align: center;
 	font-size: 12px;
@@ -1954,11 +2068,15 @@ ul.ctd-popover li {
 
 ul.ctd-popover li span {
 	color: #0052C1;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 ul.ctd-popover li strong {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 ul.ctd-popover li b {
@@ -2030,7 +2148,9 @@ ul.ctd-popover li b {
 	top: 7px;
 	color: #F16357 !important;
 	font-size: 12px;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .noti-avatar {
@@ -2374,7 +2494,9 @@ ul.bsc-list li:after {
 	font-size: 24px !important;
 	color: #5DC2A7;
 	text-transform: uppercase;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	margin-bottom: 10px !important;
 	margin-top: 25px !important;
 	;
@@ -2390,7 +2512,7 @@ ul.bsc-list li:after {
 	width: 30px;
 	height: 33px;
 	font-size: 15px;
-	font-family: 'Quicksand-Regular';
+	font-style: normal;font-variant: normal;font-weight: 400;
 	color: #000;
 	padding: 5px 8px;
 }
@@ -2401,7 +2523,9 @@ ul.bsc-list li:after {
 }
 
 .lv-title p b {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .lv-title ul {
@@ -2533,7 +2657,9 @@ ul.bsc-list li:after {
 
 .box-imglist label {
 	font-size: 14px;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	margin-top: 10px;
 }
 
@@ -2625,7 +2751,9 @@ a.ba-more {
 
 .btr-detail span.btd-text p {
 	color: #ffff;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .btr-detail-active.btr-detail span.btd-img2 {
@@ -2764,7 +2892,9 @@ a.ba-more {
 	padding: 10px 20px;
 	position: relative;
 	border-radius: 5px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .bpm-head p.name-cards:before {
@@ -2805,7 +2935,9 @@ a.ba-more {
 	padding: 0;
 	position: initial;
 	color: #000;
-	font-family: 'Quicksand-bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .bpm-content {
@@ -2838,7 +2970,9 @@ a.ba-more {
 }
 
 .box-add ul li p b {
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .bpc-detail .dpc-title {
@@ -2847,7 +2981,9 @@ a.ba-more {
 
 .dpc-title h3 {
 	font-size: 14px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	position: relative;
 	;
 	background: #fff;
@@ -2986,7 +3122,9 @@ a.ba-more {
 	color: #fff;
 	font-size: 30px;
 	padding-top: 47%;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .bndi-detail span {
@@ -3058,7 +3196,9 @@ a.ba-more {
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .bnd-other a span {
@@ -3185,8 +3325,12 @@ a.ba-more {
 .bnd-title p {
 	display: inline-block;
 	float: right;
+	font-size: 12px;
 	color: #6D7278;
-	font-family: 'Quicksand-Medium'
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
+	text-transform: uppercase;
 }
 
 .bnd-title h2 span {
@@ -3249,7 +3393,9 @@ a.link-other:before {
 	margin: 0 auto;
 	top: 0;
 	text-align: center;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 	color: #ffdc64;
 	text-transform: uppercase;
 }
@@ -3266,11 +3412,35 @@ a.link-other:before {
 }
 
 .bs-detail h3 {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	font-size: 20px !important;
 }
 
 .bs-detail a {}
+
+.bs-detail h3.pnl-teky-coin-star {
+    font-size: 34px !important;
+    /*font-weight: bold;*/
+    font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
+}
+
+.bs-detail span.pnl-teky-coin-lbl {
+line-height: 17px;
+font-size: 14px;
+font-weight: bold;    
+color: #FFC850;
+}
+
+.bs-detail a.view-all-coin-star {    
+font-size: 14px;
+font-weight: bold;
+color: #0654BA;
+text-transform: uppercase;
+}
 
 .bnd-noti {
 	display: inline-block;
@@ -3322,13 +3492,17 @@ a.link-other:before {
 
 .bnn-detail .bnn-time p {
 	color: #6D7278;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .link-all {
 	color: #0654BA;
 	position: relative;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
 	font-size: 14px;
 	padding-right: 45px;
 	margin: 10px 0
@@ -3344,6 +3518,14 @@ a.link-other:before {
 	height: 26px;
 	right: 0;
 	border-bottom: 0;
+}
+
+.bnd-noti a.link-all {
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .list-modal {
@@ -3507,7 +3689,9 @@ a.link-other:before {
 	padding: 0 30px 0 60px;
 	color: #fff;
 	font-size: 15px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	text-transform: uppercase;
 }
 
@@ -3619,7 +3803,9 @@ a.link-other:before {
 	text-align: left;
 	color: #EB9138;
 	font-size: 10px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 	position: relative;
 	padding-left: 16px;
 }
@@ -3657,7 +3843,9 @@ a.link-other:before {
 .fcv-big .title-video p {
 	color: #fcf055;
 	font-size: 14px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .fcv-big .title-video p span {
@@ -3706,11 +3894,13 @@ ul.fcv-small li:hover video {
 .modal-news ul {}
 
 .modal-news ul li {
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .modal-news ul li span {
-	font-family: 'Quicksand-Regular';
+	font-style: normal;font-variant: normal;font-weight: 400;
 }
 
 .modal-news h3 {
@@ -3736,7 +3926,9 @@ ul.fcv-small li:hover video {
 
 .modal-evaluate-title p {
 	text-align: center;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .modal-evaluate-title p span {
@@ -3779,7 +3971,9 @@ ul.fcv-small li:hover video {
 .mec-detail p {
 	color: #000;
 	text-align: center;
-	font-family: 'Quicksand-Medium';
+	font-style: normal;
+font-variant: normal;
+font-weight: 500;
 }
 
 .modal-avalist {}
@@ -3854,7 +4048,9 @@ ul.fcv-small li:hover video {
 	width: 72px;
 	height: 72px !important;
 	font-size: 11px;
-	font-family: 'Quicksand-Bold';
+	font-style: normal;
+font-variant: normal;
+font-weight: 700;
 }
 
 .paging-class ul li a.success {
@@ -4035,4 +4231,13 @@ ul.header-menu.nav.navbar-nav li a#li-language span.flag {
 
 .notification_wrapper .notification_list_wrapper .notification_header_wrapper {
 	margin-bottom: 25px;
+}
+
+.filter-title {
+	font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;    
+    font-size: 14px;
+    color: #000;
 }
