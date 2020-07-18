@@ -19,14 +19,16 @@ normal:
 
 fulleditor:
   <<: *default
-  language: vi_VN
-  content_css: "/AdminLTE-3.0.5/css/custom.css"
-  plugins: 'lists advlist print preview code importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons'
+  content_css: "/AdminLTE-3.0.5/css/custom.css, /AdminLTE-3.0.5/plugins/fontawesome-free/css/all.min.css"
+  content_style: "@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;515;600;700&display=swap');body { font-family: 'Quicksand', sans-serif; } h1,h2,h3,h4,h5,h6 { font-family: 'Quicksand', sans-serif; }"
+  iconfonts_selector: '.fa, .fab, .fal, .far, .fas, .glyphicon'
+  plugins: 'iconfonts lists advlist print preview code importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons'
   mobile: {
     plugins: 'print preview importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons'
   }
   menubar: 'file edit view insert format tools table help'
-  toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor casechange removeformat | pagebreak | charmap emoticons code | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment | table'
+  toolbar: 'iconfonts undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor casechange removeformat | pagebreak | charmap emoticons code | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment | table'
+  quickbars_selection_toolbar: "bold italic | quicklink h1 h2 h3 h4 h5 h6 blockquote quickimage quicktable| fontawesome | style_formats"
   toolbar_mode: 'wrap'
   images_upload_url: '/uploader/image'
   autoresize_on_init: true
@@ -54,9 +56,13 @@ fulleditor:
   force_p_newlines : false  
   style_formats : [
       {title: 'Teky ul style'},
-      {title: 'Style 1', selector: 'ul', classes: 'bsc-list'},
-      {title: 'Style 2', selector: 'ul', classes: 'teky-list'}
-      
-      
+      {title: 'Style1', selector: 'ul', classes: 'bsc-list'},
+      {title: 'Style2', selector: 'h2', classes: 'lms-course-title'},
+      {title: 'Style3', selector: 'h3', classes: 'lms-course-title'},
+      {title: 'Style4', block: 'hr', classes: 'lms-line'}
+
   ]
   lists_indent_on_tab: true
+  extended_valid_elements: '+span[*],+i[*]'
+  verify_html: false
+

@@ -1,60 +1,186 @@
-.nav.nav-treeview .nav-item i.far {
-	font-size: 0.7rem;
+:root {
+    --font-family-sans-serif: "Quicksand", sans-serif;
+}
+
+html {
+    font-family: "Quicksand", sans-serif;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+body {
+    height: 100%;
+    color: #000;
+    font-family: 'Quicksand', sans-serif;
+    line-height: 1.42857143;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    font-size: 14px;
 }
 
 #tab-course-study-program .card-title {
-	font-weight: 500
+    font-weight: 500
 }
 
 /*** Style description for tinymce **/
 
 .tab-content .tinymce .main-content .page-content .panel .panel-content ul {
-	padding-left: 0;
+    padding-left: 0;
 }
 
-.tab-content .tinymce ul.bsc-list {
-	margin-top: 20px;
+.tab-content .tinymce ul.lms-style-list {
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 0px;
 }
 
 .tab-content .tinymce h2, .tab-content .tinymce .h2 {
-	font-size: 25px;
+    font-size: 25px;
 }
 
 .tab-content .tinymce h1, .tab-content .tinymce h2, .tab-content .tinymce h3, .tab-content .tinymce h4, .tab-content .tinymce h5 {
-	font-weight: 700;
-	margin: 0 !important;
+    font-family: 'Quicksand-Bold';
+    font-weight: 100;
+    margin: 0 !important;
 }
 
-ul.bsc-list, ul.teky-list {
-	margin-top: 20px;
-	list-style-type: none;
+ul.lms-style-list {
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 0px;
 }
 
-ul.bsc-list li {
-	padding-left: 20px;
-	position: relative;
-	font-size: 15px;
-	margin-bottom: 10px;
+ul.lms-style-list li {
+    padding-left: 20px;
+    position: relative;
+    font-size: 15px;
+    margin-bottom: 10px;
 }
 
-ul.bsc-list li:before {
-	position: absolute;
-	content: '';
-	top: 8px;
-	left: 0;
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background: #5DC2A7
+ul.lms-style-list li:before {
+    position: absolute;
+    content: '';
+    top: 8px;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #5DC2A7
 }
 
-ul.bsc-list li:after {
-	position: absolute;
-	content: '';
-	top: 10px;
-	left: 2px;
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	background: #FCF055;
+ul.lms-style-list li:after {
+    position: absolute;
+    content: '';
+    top: 10px;
+    left: 2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FCF055;
+}
+
+h2.lms-course-title {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    z-index: 3;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+/*
+h2.lms-course-title:before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    width: 52px;
+    height: 5px;
+    top: auto;
+    bottom: 0;    
+    background-image: url(../images/box-dot2.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+}*/
+
+h2.lms-course-title:after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    width: 52px;
+    height: 5px;
+    top: 30px;
+    bottom: 0;
+    background-image: url(../images/box-dot2.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+h3.lms-course-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 18px;
+    padding-left: 20px;
+    line-height: 1.3;
+    position: relative;
+    z-index: 1;
+}
+
+h3.lms-course-title:before {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: -1px;
+    font-size: 16px;
+    color: #5dc2a7;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 700;
+    content: "\f058";
+}
+
+#tinymce hr {
+    outline: none;
+    outline-offset: unset;
+}
+
+hr.lms-line {
+    height: 1px;
+    border-bottom: 1px dashed #999;
+    position: relative;
+    z-index: 1;
+    margin: 0 11px;
+}
+
+hr.lms-line:before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: -11px;
+    top: -5px;
+    width: 11px;
+    height: 11px;
+    border: 1px solid #999;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+
+hr.lms-line:after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    right: -11px;
+    top: -5px;
+    width: 11px;
+    height: 11px;
+    border: 1px solid #999;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
 }

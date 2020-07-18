@@ -32,6 +32,8 @@ vi:
     complete: "Hoàn thiện"
     text_no: "Không"
     text_ok: "Đồng ý"
+    Save: "Lưu"
+    Preview: "Xem trước"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -341,6 +343,9 @@ vi:
     The content is being updated: "Nội dung đang được cập nhật"
     Status: "Trạng thái"
     Name or Code: "Tên hoặc Mã"
+    Object does not exist: 'Đối tượng không tồn tại.'
+    The item was updated successfully: "Mục này đã được cập nhật thành công."
+    The item was updated fail: "Mục này cập nhật thất bại."
     community:
       name: "Cộng đồng"
       post: "Bài đăng"

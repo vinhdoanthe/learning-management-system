@@ -20,8 +20,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="/AdminLTE-3.0.5/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <!--<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">-->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;515;600;700&display=swap" rel="stylesheet">
   <script src="/AdminLTE-3.0.5/plugins/jquery/jquery.min.js"></script>
   <%= javascript_include_tag 'adm/application' %>
   <!-- Custom style -->
@@ -54,15 +53,15 @@
   </style>
 </head>
 <!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to to the body tag
-to get the desired effect
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
+    BODY TAG OPTIONS:
+    =================
+    Apply one or more of the following classes to to the body tag
+    to get the desired effect
+    |---------------------------------------------------------|
+    |LAYOUT OPTIONS | sidebar-collapse                        |
+    |               | sidebar-mini                            |
+    |---------------------------------------------------------|
+  -->
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -152,13 +151,15 @@ to get the desired effect
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <%= render 'partials/messages' %>
       <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12">
               <h4 class="m-0 text-dark"><%= @report_title_page %></h4>
+            </div>
+            <div class="col-sm-12">
+              <%= render 'partials/messages' %>
             </div>
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->

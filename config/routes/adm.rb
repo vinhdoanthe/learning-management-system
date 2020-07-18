@@ -13,6 +13,7 @@ namespace :adm do
     post 'course/filters' => 'course#filters', as: 'course_filters'
     get 'course/show/:course_id' => 'course#show', as: 'course_show'
     get 'course/:course_id/edit' => 'course#edit', as: 'course_edit'
+    post 'course/update' => 'course#update', as: 'course_update'
   end
 
   namespace :user do
