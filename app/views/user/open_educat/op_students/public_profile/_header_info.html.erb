@@ -1,6 +1,6 @@
 <div class="bp-header" id='publicProfileHeaderInfo'>
   <ul class="row bh-step">
-    <li class="col-md-3">
+    <li class="col-md-3 col-xs-12">
       <div class="bhs-detail">
         <span>
           <%= image_tag('global/images/star.png') %>
@@ -11,7 +11,7 @@
         </p>
       </div>
     </li>
-    <li class="col-md-3">
+    <li class="col-md-3 col-xs-12">
       <div class="bhs-detail">
         <span>
           <%= image_tag('global/images/icon-BTVN.png') %>
@@ -22,7 +22,7 @@
         </p>
       </div>
     </li>
-    <li class="col-md-3">
+    <li class="col-md-3 col-xs-12">
       <div class="bhs-detail">
         <span>
           <%= image_tag('global/images/laurel-wreath.png') %>
@@ -33,7 +33,7 @@
         </p>
       </div>
     </li>
-    <li class="col-md-3">
+    <li class="col-md-3 col-xs-12">
       <div class="bhs-detail">
         <span>
           <%= image_tag('global/images/prize.png') %>
@@ -46,3 +46,16 @@
     </li>
   </ul>
 </div>
+<style>
+  #publicProfileHeaderInfo ul {
+    display: flex;
+  }
+  #publicProfileHeaderInfo ul li{
+    display: flex;
+    display: flex;
+    flex-direction: column;
+  }
+  .bhs-detail {
+    height: 100%;
+  }
+</style>
