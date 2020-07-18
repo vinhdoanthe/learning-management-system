@@ -1,5 +1,5 @@
 module ApplicationHelper
-  
+
   include User::SessionsHelper
   include User::Account::UsersHelper
   # include Learning::Course::OpLessionHelper
@@ -69,7 +69,7 @@ module ApplicationHelper
   end
 
   def get_ui_state_user_answers state
-    
+
     if  state == 'right'
       return '<small class="badge badge-success">Right</small>'
     elsif state == 'waiting'
@@ -79,10 +79,7 @@ module ApplicationHelper
     end
   end
 
-
-
-
-
-
-  
+  def adm_controller?
+    controller.class.name.split("::").first =="Adm"
+  end
 end
