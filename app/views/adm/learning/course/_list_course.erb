@@ -1,0 +1,28 @@
+<% @list_course.each_with_index  do |ct, index| %>
+<tr>
+  <td class="text-center"><%= (index + 1)%></td>
+  <td>
+    <%= link_to(ct[:name], adm_learning_course_show_path(ct[:course_id]))%>
+    <div class="small"><label><%= t('adm.code')%></label>: <%= ct[:code]%></div>
+    <div class="small"><label><%= t('adm.Section')%></label>: <%= ct[:section]%></div>
+    <div class="small"><label><%= t('adm.course.number_subjects')%></label>: <%= ct[:number_subject]%></div>
+  </td>
+  <td class="text-center">
+    <% if ct[:active] == true %>
+      <span class="badge badge-success">Active</span>
+    <% else%>
+      <span class="badge badge-warning">Unactive</span>
+    <% end%>
+  </td>
+  <td class="text-center">                      
+    <div class="small"><%= ct[:update_at].strftime('%d-%m-%Y %H:%M:%S').to_s%></div>
+    <div class="small"><%= ct[:user_name]%></div>
+  </td>
+  <td class="text-center">
+    <div class="btn-group align-items-sm-center">
+      <a class="btn btn-default btn-xs"><i class="fa fa-eye font-weight-normal"></i></a>
+      <a class="btn btn-default btn-xs"><i class="fa fa-edit font-weight-normal"></i></a>
+    </div>                      
+  </td>
+</tr>
+<% end %>

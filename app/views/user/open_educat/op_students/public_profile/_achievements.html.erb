@@ -1,6 +1,10 @@
 <div class="bpc-achievements">
-  <div class="row">
-    <% achievements.each do |achievement| %>
-    <% end %>
-  </div>
+  <% if achievements.blank? %>
+    <p class="pb-detail-no-items"><%= t('public_profile.no_achievements') %></p>
+  <% else %>
+    <div class="row">
+      <% achievements.each do |achievement| %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

@@ -1,0 +1,11 @@
+<%
+	keywords 	= @param_form[:keywords]
+%>
+<form name="form_filters_course" id="form_filters_course" method="post" class="form-inline" onsubmit="return false">
+  	<div class="input-group input-group-sm">
+  		<input type="text" name="filters_course[keywords]" id="filters_keywords" placeholder="<%= t('adm.Name or Code')%>" class="form-control float-right" value="<%= keywords%>" />
+		<span class="input-group-append">
+			<button type="button" class="btn btn-default btn-search"><i class="fas fa-search"></i></button>
+		</span>
+	</div>
+</form>

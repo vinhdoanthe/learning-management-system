@@ -84,16 +84,16 @@ namespace :social_community do
   end
 
   desc 'Auto add reactions to posts'
-  task :add_reactions_to_posts, [:prev_hours, :offset_hours] => :environment do |t, args|
-    return if !args[:prev_hours].present? or !args[:offset_hours].present?
-    prev_hours = args[:prev_hours].to_i
-    offset_hours = args[:offset_hours].to_i
-    return if (prev_hours==0) or (offset_hours==0)
+  task :add_reactions_to_posts, [:prev_minutes, :offset_minutes] => :environment do |t, args|
+    return if !args[:prev_minutes].present? or !args[:offset_minutes].present?
+    prev_minutes = args[:prev_minutes].to_i
+    offset_minutes = args[:offset_minutes].to_i
+    return if (prev_minutes==0) or (offset_minutes==0)
     # find posts
-    puts "prev_hours #{prev_hours}"
-    puts "offset_hours #{offset_hours}"
-    e_created_at = Time.now - prev_hours.hours
-    s_created_at = e_created_at - offset_hours.hours
+    puts "prev_minutes #{prev_minutes}"
+    puts "offset_minutes #{offset_minutes}"
+    e_created_at = Time.now - prev_minutes.minutes
+    s_created_at = e_created_at - offset_minutes.minutes
     puts "s_created_at #{s_created_at}"
     puts "e_created_at #{e_created_at}"
 

@@ -1,15 +1,22 @@
 class Learning::Homework::UserAnswerService
+
+
   # Lay param form
   def self.form_paramater(param_form, request)
 
     # Khoi tao cac gia tri ban dau
-    current_date_dmy  = Time.now.strftime('%d-%m-%Y').to_s
-    from_date = to_date = current_date_dmy
-    state = 'wrong'
+    current_date_dmy  	= Time.now.strftime('%d-%m-%Y').to_s
+    from_date 			= to_date = current_date_dmy
+    state 				= 'waiting'
+    batch_name 			= ''
+    page 				= !param_form[:page].nil? ? param_form[:page] : 1 ;
 
-    if request.method == 'POST'
+    #if request.method == 'POST'
 
-      state = param_form[:frm][:state].to_s != '' ? param_form[:frm][:state].to_s : 'wrong'
+    if (!param_form[:frm].nil?)
+
+      state = param_form[:frm].nil? && param_form[:frm][:state].to_s != '' ? param_form[:frm][:state].to_s : 'waiting'
+      batch_name = param_form[:frm][:batch_name].to_s != '' ? param_form[:frm][:batch_name].to_s : 'waiting'
 
       from_date = Date.parse(param_form[:frm][:from_date].to_s).is_a?(Date) ? param_form[:frm][:from_date].to_s : current_date_dmy
       to_date   = Date.parse(param_form[:frm][:to_date].to_s).is_a?(Date) ? param_form[:frm][:to_date].to_s : current_date_dmy
@@ -20,7 +27,8 @@ class Learning::Homework::UserAnswerService
     return {
       'state': state ,
       'from_date': from_date,
-      'to_date': to_date      
+      'to_date': to_date,
+      'page': page
     }
   end
 

@@ -1,17 +1,48 @@
+<tr>
+  <th>Tên học sinh</th>
+  <th>Mã lớp học</th>
+  <th>Bài học</th>
+  <th>Trạng thái</th>
+  <th>Chấm bài</th>
+</tr>
 <% user_answers.each do |answer| %>
-  <tr>
-    <td><%= answer.user_question.user.op_student.full_name if answer.user_question.present? %></td>
-    <td>
-    <input type='hidden' name='student_answer' value="<%= answer.id %>" >
-    	<a class='teacher_marking_view' href="/learning/get_user_answer?user_answer_id=<%= answer.id%>" data-remote="true" data-toggle="modal" data-target="#modal_teacher_marking">
-	    <%= image_tag('global/images/right-arrow.png', style: 'width: 20px;margin-right: 10px') %>
-	  </a>
-	</td>
-  </tr>
+<tr>
+  <td style="font-weight: 600;"><%= answer[:student_name] %></td>
+  <td><%= link_to batch.code, teacher_class_detail_user_open_educat_op_teacher_path(batch.id) %></td>
+  <% if answer[:session_id].present? %>
+  <td><%= link_to answer[:lesson_name], teacher_class_detail_user_open_educat_op_teacher_path(batch_id: batch.id, session_id: answer[:session_id]) %></td>
+  <% else %>
+  <td><%= link_to answer[:lesson_name], teacher_class_detail_user_open_educat_op_teacher_path(batch_id: batch.id) %></td>
+  <% end %>
+  <td><%= answer[:state] == 'waiting' ? "Chưa chấm" : "Đã chấm" %></td>
+  <td align="center">
+    <input type='hidden' name='student_answer' value="<%= answer[:answer_id] %>">
+    <a class='teacher_marking_view' href="/learning/get_user_answer?user_answer_id=<%= answer[:answer_id] %>" data-remote="true" data-toggle="modal" data-target="#modal_teacher_marking">
+      <%= image_tag('global/images/icon-BTVN.png', style: 'width: 20px;margin-right: 10px') %>
+    </a>
+  </td>
+</tr>
 <% end %>
 
+<style>
+  #user_answer_list {
+    font-family: 'Quicksand';
+  }
+
+  #user_answer_list th {
+    padding-bottom: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    padding-left: 5px;
+  }
+
+  #user_answer_list td {
+    padding: 5px;
+  }
+</style>
+
 <script>
-	$('.teacher_marking_view').on('click', function(){
-		$('#teacher_marking_content').val('')
-	})
+  $('.teacher_marking_view').on('click', function() {
+    $('#teacher_marking_content').val('')
+  })
 </script>

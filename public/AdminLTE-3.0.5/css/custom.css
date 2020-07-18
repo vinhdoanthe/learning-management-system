@@ -1,0 +1,61 @@
+.nav.nav-treeview .nav-item i.far {
+	font-size: 0.7rem;
+}
+
+#tab-course-study-program .card-title {
+	font-weight: 500
+}
+
+/*** Style description for tinymce **/
+
+.tab-content .tinymce .main-content .page-content .panel .panel-content ul {
+	padding-left: 0;
+}
+
+.tab-content .tinymce ul.bsc-list {
+	margin-top: 20px;
+}
+
+.tab-content .tinymce h2, .tab-content .tinymce .h2 {
+	font-size: 25px;
+}
+
+.tab-content .tinymce h1, .tab-content .tinymce h2, .tab-content .tinymce h3, .tab-content .tinymce h4, .tab-content .tinymce h5 {
+	font-family: 'Quicksand-Bold';
+	font-weight: 100;
+	margin: 0 !important;
+}
+
+ul.bsc-list, ul.teky-list {
+	margin-top: 20px;
+	list-style-type: none;
+}
+
+ul.bsc-list li {
+	padding-left: 20px;
+	position: relative;
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+
+ul.bsc-list li:before {
+	position: absolute;
+	content: '';
+	top: 8px;
+	left: 0;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #5DC2A7
+}
+
+ul.bsc-list li:after {
+	position: absolute;
+	content: '';
+	top: 10px;
+	left: 2px;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: #FCF055;
+}

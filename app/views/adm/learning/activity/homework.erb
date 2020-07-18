@@ -2,45 +2,72 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-th mr-1 text-success"></i> <%= t('adm.learning_activity_management_homework')%></h3>
+        <h3 class="card-title"><i class="fas fa-th mr-1"></i> <%= t('adm.learning_activity_management_homework')%></h3>
       </div>
       <div class="card-body">
-        <div class="mailbox-controls"><%= render "adm/partials/form_learning_activity"%></div>
-        <div class="table-responsive p-0" style="height: 500px;">
-          <table class="table table-sm table-head-fixed text-nowrap">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Batch</th>
-                <th><i class="fas fa-calendar hidden-md hidden-sm hidden-xs"></i>Answer time</th>
-                <th>User</th>
-                <th class="text-center">State</th>
-                <th>Faculty</th>
-                <th class="text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @list_user_answers.each_with_index  do |ct, index| %>  
-              <tr>
-                <td style="width:10px" class="text-center"><%= (index + 1)%></td>
-                <td><%= ct[:batch_name]%></td>
-                <td style="width:10px" class="text-center"><%= ct[:answer_time]%></td>
-                <td><%= ct[:user_question_id]%></td>
-                <td class="text-center"><%= get_ui_state_user_answers(ct[:state]).html_safe%></td>
-                <td><%= ct[:full_name]%></td>
-                <td class="text-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-xs btn-default"><i class="fas fa-exclamation-triangle text-red"></i></button>
-                  </div>
-                </td>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
+        <div class="row">
+          <div class="col-12">
+            <div class="mailbox-controls"><%= render "adm/partials/form_learning_activity"%></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="table-responsive p-0" style="height: 500px;">
+              <table class="table table-bordered table-head-fixed  table-sm  text-nowrap">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Batch</th>
+                    <th><i class="fas fa-calendar hidden-md hidden-sm hidden-xs"></i> Answer time</th>
+                    <th class="text-center">State</th>
+                    <th>Student</th>                
+                    <th>Faculty</th>
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @list_user_answers.each_with_index  do |ct, index| %>  
+                  <tr>
+                    <td style="width:10px" class="text-center"><%= (index + 1)%></td>
+                    <td><%= ct[:batch_name]%></td>
+                    <td style="width:10px" class="text-center">
+                      <%= ct[:answer_time].strftime(t('time.formats.long_dmy')).to_s%>    
+                    </td>
+                    <td class="text-center"><%= get_ui_state_user_answers(ct[:state]).html_safe%></td>
+                    <td><%= ct[:student_full_name]%></td>
+                    <td>
+                      <%= ct[:full_name]%>
+                      <ul class="small" style="padding-left: 10px;list-style: none;">
+                        <li><i class="fa fa-envelope"></i> <%= ct[:teacher_email]%></li>
+                        <li><i class="fa fa-phone"></i> <%= ct[:teacher_mobile]!= '' ? ct[:teacher_mobile] : ''%></li>
+                      </ul>
+                    </td>
+                    <td class="text-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-xs btn-default"><i class="fas fa-exclamation-triangle text-red"></i></button>
+                        <button type="button" class="btn btn-xs btn-default dropdown-toggle dropdown-toggle-split dropdown-hover dropdown-icon" data-toggle="dropdow">
+                          <span class="sr-only">Toggle Dropdown</span>
+                          <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                          </div>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
       <div class="card-footer clearfix">
-        VVV
+      <%= paginate @list_user_answers, remote: true %>
+
       </div>
     </div>
   </div>

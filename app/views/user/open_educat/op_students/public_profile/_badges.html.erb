@@ -1,6 +1,10 @@
 <div class="bpc-huyhieu">
-  <div class="row">
-    <% badges.each do |badge| %>
-    <% end %>
-  </div>
+  <% if badges.empty? %>
+    <p class="pb-detail-no-items"><%= t('public_profile.no_badges') %></p>
+  <% else %>
+    <div class="row">
+      <% badges.each do |badge| %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

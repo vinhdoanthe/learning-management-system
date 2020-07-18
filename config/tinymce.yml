@@ -17,3 +17,46 @@ normal:
     - lists
   images_upload_url: '/uploader/image'
 
+fulleditor:
+  <<: *default
+  language: vi_VN
+  content_css: "/AdminLTE-3.0.5/css/custom.css"
+  plugins: 'lists advlist print preview code importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons'
+  mobile: {
+    plugins: 'print preview importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons'
+  }
+  menubar: 'file edit view insert format tools table help'
+  toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor casechange removeformat | pagebreak | charmap emoticons code | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment | table'
+  toolbar_mode: 'wrap'
+  images_upload_url: '/uploader/image'
+  autoresize_on_init: true
+  font_formats: 'Quicksand=Quicksand,sans-serif'
+  fullpage_default_font_family: 'Quicksand,Roboto,Helvetica,Verdana,Georgia, Serif;'
+  fontsize_formats : '8px 9px 10px 11px 12px 13px 14px 15px 16px 17px 18px 19px 20px 21px 22px 23px 24px 26px 28px 30px 32px 34px 36px'
+  table_class_list: [
+                    {title: 'None', value: ''},
+                    {title: 'Thêm kiểu dáng cơ bản', value: 'table'},
+                    {title: 'Thêm kẻ sọc vào bất kỳ hàng nào trong bảng <tbody>', value: 'table table-striped'},
+                    {title: 'Thêm đường viền trên tất cả các mặt của bảng và các ô', value: 'table table-bordered'},
+                    {title: 'Hiệu ứng khi chuột', value: 'table table-hover'},
+                    {title: 'Làm cho bảng nhỏ gọn hơn', value: 'table table-condensed'}
+                ]
+  table_default_attributes: {
+                      class: "table table-bordered"
+                    }
+  table_responsive_width: true
+  entity_encoding : 'raw'
+  height: 600,
+  code_dialog_height: 550
+  code_dialog_width: 800
+  image_advtab : true
+  force_br_newlines : true
+  force_p_newlines : false  
+  style_formats : [
+      {title: 'Teky ul style'},
+      {title: 'Style 1', selector: 'ul', classes: 'bsc-list'},
+      {title: 'Style 2', selector: 'ul', classes: 'teky-list'}
+      
+      
+  ]
+  lists_indent_on_tab: true

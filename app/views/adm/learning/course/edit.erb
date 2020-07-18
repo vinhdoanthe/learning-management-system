@@ -1,0 +1,71 @@
+<%= tinymce_assets %>
+<%= javascript_include_tag 'tinymce/langs/vi_VN.js' %>
+
+<% course_description = get_description(@course) %>
+<div class="card">
+  <div class="card-footer">
+    <h3 class="card-title"><label><%= t('adm.course.Edit course')%>:</label> <%= @course.name%></h3>
+    <div class="float-right">
+      <button class="btn btn-default btn-sm bg-olive"><i class="fas fa-save"></i> <%= t('button.save')%></button>
+      <a href="<%= adm_learning_course_show_path(@course.id)%>" class="btn btn-default btn-sm"><i class="fas fa-ban"></i> <%= t('button.cancel')%></a>          
+    </div>        
+  </div>
+  <div class="card-header p-0 pt-1 border-bottom-0">
+    <ul class="nav nav-tabs pull-right" id="custom-tabs-three-tab" role="tablist">          
+      <li class="nav-item header">
+        <a class="nav-link active" id="tab-course-description-tab" data-toggle="pill" href="#tab-course-description" role="tab" aria-controls="tab-course-description" aria-selected="true"><%= t('adm.course.name')%>: <%= @course.name%></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="tab-course-study-program-tab" data-toggle="pill" href="#tab-course-study-program" role="tab" aria-controls="tab-course-study-program" aria-selected="false"><%= t('adm.course.Study program')%></a>
+      </li>          
+    </ul>
+  </div>
+  <form class="form-horizontal">
+  <div class="card-body">
+    <div class="tab-content" id="custom-tabs-three-tabContent">
+        <div class="tab-pane fade show active" id="tab-course-description" role="tabpanel" aria-labelledby="tab-course-description">
+
+          <div class="row">
+            <label class="col-sm-3 control-label"><%= t('adm.course.course_name')%>:</label>
+            <div class="col-sm-9"><%= @course.name%></div>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-3 control-label"><%= t('adm.course.course_code')%>:</label>
+            <div class="col-sm-9"><%= @course.code%></div>
+          </div>
+
+          <div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.Section')%>:</label>
+            <div class="col-sm-9"><%= @course.section%></div>
+          </div>
+
+          <div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.number_subjects')%>:</label>
+            <div class="col-sm-9"><span class="text-danger text-bold"><%= @subjects.length%></span></div>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-3 control-label"><%= t('adm.course.course_description')%>:</label>
+            <div class="col-sm-12">
+            <%= text_area_tag :'frm_course["description"]', course_description, :id => 'frm_course_description' , :class => "tinymce"%>
+
+            </div>
+
+          </div>
+          
+        </div>
+
+        <div class="tab-pane fade show" id="tab-course-study-program" role="tabpanel" aria-labelledby="tab-course-study-program">
+        <%= render "adm/learning/course/tab_course_study_program"%>
+        </div>
+      </div>
+  </div>
+  </form>
+
+  <div class="card-footer">
+    <div class="float-right">
+      <button class="btn btn-default btn-sm bg-olive"><i class="fas fa-save"></i> <%= t('button.save')%></button>
+      <a href="<%= adm_learning_course_show_path(@course.id)%>" class="btn btn-default btn-sm"><i class="fas fa-ban"></i> <%= t('button.cancel')%></a>          
+    </div>        
+  </div>
+</div>
+<%= tinymce :fulleditor %>
