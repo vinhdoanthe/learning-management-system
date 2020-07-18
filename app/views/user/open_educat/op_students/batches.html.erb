@@ -6,7 +6,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h3 class="color-fff text-transform">Lớp học của tôi</h3>
+        <h3 class="color-fff text-transform header-title">Lớp học của tôi</h3>
       </div>
     </div>
   </div>
@@ -18,11 +18,6 @@
       <% op_student_id = current_user.op_student.id %>
       <%# <div class="batch-overview-1-3" > %>
       <div class="row">
-        <%
-=begin%>
-        <% binding.pry %>
-        <%
-=end%>
         <% @batches.each_with_index do |batch, index| %>
         <%= render :partial => "user/users/overview_batch", :locals => {batch: batch, op_student_id: op_student_id, index: index} %>
         <% end %>

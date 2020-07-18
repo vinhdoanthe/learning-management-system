@@ -1,10 +1,10 @@
 <% teacher_id = current_user.op_faculty.id if current_user.is_teacher? %>
 <% course = batch.op_course %>
 <div class="fc-header">
-  <h3><span class="color-F16357 text-uppercase"><%= t('learning.batch.name') %>:</span> <%= course.name %></h3>
+  <h3><span class="color-F16357 text-uppercase" style="padding: 5px 0 5px 0px;"><%= t('learning.batch.name') %>:</span> <%= course.name %></h3>
 </div>
-<div class="box-progress" style="border-bottom: none">
-  <div class="row">
+<div class="box-progress" style="border-bottom: 1px solid #D7DFE9; padding-bottom: 20px;">
+  <div class="row batch-detail-info">
     <div class="col-md-6">
       <ul>
         <li>
@@ -25,9 +25,9 @@
           <%= image_tag('global/images/professor.png') %>
           <p><span class="span-text"><%= t('user.teacher') %>: </span>
           <% if current_user.is_student? %>
-            <a href=""><%= faculty_names.join(', ') %></a>
+            <a href="" style="color: #0654BA"><%= faculty_names.join(', ') %></a>
           <% elsif current_user.is_teacher? %>
-            <a href=""><%= faculty.full_name %></a>
+            <a href="" style="color: #0654BA"><%= faculty.full_name %></a>
           <% end %>
           </p>
         </li>
@@ -39,19 +39,19 @@
           <%= image_tag('global/images/Combined-Shape.png') %>
           <p><span class="span-text"><%= t('learning.course') %>: </span><%= course.name %></p></li>
         <li>
-          <%= image_tag('global/images/steps.png') %>
+          <%= image_tag 'global/images/steps.png', class: 'step-img' %>
           <p id="subject_id_span">
           <span class="span-text"><%= t('learning.subject') %>: </span>
           <% if current_user.is_student? %>
             <% unless batch_subjects.blank? %>
               <% batch_subjects.each do |subject| %>
                 <% if done_subjects.include?(subject[0]) %>
-                  <span class="label-course label label-default" style="background: #5DC2A7;">
-                    <%= subject[1] %>
+                  <span class="label-course label label-default" style="background: #5DC2A7; color: white; font-size: 12px; font-weight: 600; width: 35px; height: 20px;">
+                    <%= subject[1] < 10 ? ('0' + subject[1].to_s) : subject[1]%>
                   </span>
                 <% else %>
-                  <span class="label-course label label-default">
-                    <%= subject[1] %>
+                  <span class="label-course label label-default" style="background: #6D7278; color: white; font-size: 12px; font-weight: 600; width: 35px; height: 20px;">
+                    <%= subject[1] < 10 ? ('0' + subject[1].to_s) : subject[1] %>
                   </span>
                 <% end %>
               <% end %>
@@ -81,7 +81,7 @@
         </li>
         <li>
           <% last_done_session_count = get_done_subject_count(batch) %>
-          <%= image_tag('global/images/steps.png') %>
+          <%= image_tag 'global/images/steps.png', class: 'step-img' %>
           <p><span class='span-text'><%= t('learning.lesson') %>: </span> <%= last_done_session_count %>
           </p>
         </li>
@@ -95,9 +95,9 @@
         <li>
           <%= image_tag('global/images/hotel.png') %>
           <p>
-          <span class="span-text"><%= t('learning.batch.center') %>: </span><a href=""><%= company_name %></a>
+          <span class="span-text"><%= t('learning.batch.center') %>: </span ><a href="" style="color: #0654BA"><%= company_name %></a>
           <% unless classroom_name.blank? %>
-            <span class='span-text'>| (<%= t('learning.batch.classroom') %>: </span><a href=""><%= classroom_name %> </a> <span class='span-text'>)</span>
+            <span class='span-text'>| (<%= t('learning.batch.classroom') %>: </span><a style="color: #0654BA" href=""><%= classroom_name %> </a> <span class='span-text'>)</span>
           </p>
         <% end %>
         </li>

@@ -1,35 +1,44 @@
 <div class="table-responsive">
-  <table class="table">
+  <table class="table batch_info_table">
+    <colgroup>
+<col></col>
+<col></col>
+<col></col>
+<col width='90'></col>
+<col width='200'></col>
+    </colgroup>
     <thead>
       <tr style="color: black; font-family: 'Quicksand-Boil' !important;">
         <th><%= t('user.student.code') %></th>
-        <th><%= t('user.student.classmate') %></th>
-        <th><%= t('user.student.registered_subject') %></th>
+        <th><%= t('my_class.batch.name') %></th>
+        <th><%= t('my_class.batch.subject') %></th>
+        <th></th>
         <th></th>
       </tr>
     </thead>
     <tbody class='batch_info_table_content'>
       <% op_student_courses.each do |op_student_course| %>
+      <% op_student = op_student_course.op_student %>
+      <% user = User::Account::User.where(student_id: op_student.id).first %>
       <% if current_user.is_student? and active_student_course.id == op_student_course.id %>
       <tr style="color: black;">
-        <% op_student = op_student_course.op_student %>
         <% unless op_student.nil? %>
-        <td><%= op_student.code %></td>
-        <td><%= op_student.full_name %></td>
+        <td class='active_student_code'><%= op_student.code %></td>
+        <td class='active_student'><%= op_student.full_name %></td>
         <% end %>
         <td>
           <% paid_levels = list_subject_level_of_student(op_student_course) %>
           <% unless batch_subjects.nil? %>
           <% batch_subjects.each do |subject| %>
           <% if paid_levels.include?(subject) %>
-          <span class="label-course label label-default"><%= subject[1] %></span>
+          <span class="label-course label label-default"><%= subject[1] < 10 ? ('0' + subject[1].to_s) : subject[1] %></span>
           <% else %>
-          <span class="label-course label label-default" style="background: #e0e6eb;"><%= subject[1] %></span>
+          <span class="label-course label label-default" style="background: #e0e6eb;"><%= subject[1] < 10 ? ('0' + subject[1].to_s) : subject[1] %></span>
           <% end %>
           <% end %>
           <% end %>
         </td>
-
+        <td><span class="img-star"><%= image_tag('global/images/icon-star.png') %></span> <span class="star"><%= user.star.present? ? user.star : 0 %></span></td>
         <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
         <td align="right"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
         <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
@@ -39,11 +48,9 @@
         <% else %>
         <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.update') %></span></td>
         <% end %>
-
       </tr>
       <% else %>
-      <tr style="background-color: #F5F5F5">
-        <% op_student = op_student_course.op_student %>
+      <tr style="">
         <% unless op_student.nil? %>
         <td><%= op_student.code %></td>
         <td><%= op_student.full_name %></td>
@@ -51,6 +58,7 @@
         <td>
         </td>
 
+        <td><span class="img-star"><%= image_tag('global/images/icon-star.png') %></span> <span class="star"><%= user.star.present? ? user.star : 0 %></span></td>
         <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
         <td align="right"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
         <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
