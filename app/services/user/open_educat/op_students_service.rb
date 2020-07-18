@@ -127,7 +127,7 @@ class User::OpenEducat::OpStudentsService
       name = session.op_subject.name
       start_time = time.strftime('%H:%M')
       end_time = session.end_datetime.strftime('%H:%M')
-      day = time.strftime('%Y-%m-%d')
+      day = time.strftime('%d-%m-%Y')
       company = Common::ResCompany.find(session.company_id).name
       subject = session.op_subject.name
       level = session.op_subject.level.to_s

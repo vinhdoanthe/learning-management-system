@@ -132,7 +132,7 @@ vi:
       type: "Loại lớp học"
       batch_time: "Thời gian học"
       name: "Lớp học"
-      code: "Mã lớp"
+      code: "Mã lớp học"
       center: "Trung tâm"
       timetable: "Lịch học"
       classroom: "Phòng học"
@@ -157,10 +157,14 @@ vi:
   my_class:
     information: "Xem lại"
     come_in: "Vào lớp"
+    batch:
+      name: "Họ và tên"
+      subject: "Học phần"
     detail:
       class_info: "Thông tin lớp học"
       student_projects: "Dự án của học sinh"
       student_homeworks: 'Bài tập về nhà'
+      study_progress: "Tiến độ học tập"
       progress:
         name: "Quá trình học tập"
         done_html: "Lớp học <span class='color-16BD56'>đã diễn ra</span>"

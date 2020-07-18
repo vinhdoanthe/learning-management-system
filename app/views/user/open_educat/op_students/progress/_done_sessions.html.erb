@@ -8,7 +8,7 @@
         <col>
         <col width='35%'>
       </colgroup>
-      <thead>
+      <thead style="border-bottom: 3px solid #D7DFE9;">
         <tr>
           <th colspan='3'>
             <h3><%= t('my_class.detail.progress.done_html') %></h3>
@@ -27,10 +27,10 @@
       </tbody>
     </table>
   <% else %>
-    <div class="fc-header">
+    <div class="fc-header" style="border-bottom: 3px solid #D7DFE9">
       <h3 style='padding-left: 10px'><%= t('my_class.detail.progress.done_html') %></h3>
     </div>
-    <div style='padding-left: 10px'><%= t('my_class.detail.progress.no_lesson') %></div>
+    <div style='padding-left: 10px; padding-top: 10px'><%= t('my_class.detail.progress.no_lesson') %></div>
   <% end %>
 </div>
 

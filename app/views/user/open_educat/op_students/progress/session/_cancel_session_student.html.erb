@@ -7,8 +7,8 @@
     </div>
   </td>
   <td>
-    <strong><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : 'Bài ' + lesson.lession_number.to_s %></strong><br/>
-    <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %> <br/>
+    <strong style="text-transform: uppercase; color: #6c7178"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : 'Bài ' + lesson.lession_number.to_s %></strong><br/>
+    <span  style="text-transform: uppercase; color: #6D7278"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %></span> <br/>
     <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : sanitize(truncate(lesson.note, :length => 50)) %>
   </td>
   <td align="right">
