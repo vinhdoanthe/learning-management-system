@@ -1,8 +1,8 @@
 class UserMailer < ApplicationMailer
-  default from: 'vinhdt@teky.edu.vn'
+  default from: 'lms@teky.edu.vn'
 
   def password_reset(user)
     @user = user
-    mail to: user.email, subject: "Password reset"
+    mail to: user.email_address_for_sending, subject: "Password reset"
   end
 end

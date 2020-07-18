@@ -1,26 +1,30 @@
 <div class="bpc-achievements">
-  <div class="row">
-    <% photos_size = featured_photos.size %>
-    <% if photos_size <= 4 %>
-      <% featured_photos.each do |photo| %>
+  <% if featured_photos.empty? %>
+    <p class="pb-detail-no-items"><%= t('public_profile.no_featured_photos') %></p>
+  <% else %>
+    <div class="row">
+      <% photos_size = featured_photos.size %>
+      <% if photos_size <= 4 %>
+        <% featured_photos.each do |photo| %>
+          <a href="#showPhotosModal" class="bndi-detail"  data-toggle="modal">
+            <span><%= image_tag(photo.image, :class => 'image-fit') %></span>
+          </a>
+        <% end %>
+      <% else %>
+        <% for index in 0..2 %>
+          <a href="#showPhotosModal" class="bndi-detail"  data-toggle="modal">
+            <span><%= image_tag(featured_photos[index].image, :class => 'image-fit') %></span>
+          </a>
+        <% end %> 
         <a href="#showPhotosModal" class="bndi-detail"  data-toggle="modal">
-          <span><%= image_tag(photo.image, :class => 'image-fit') %></span>
+          <span>
+            <%= image_tag(featured_photos[3].image, :class => 'image-fit') %>
+            <span class="detail-plus"><%= photos_size %> +</span>
+          </span>
         </a>
       <% end %>
-    <% else %>
-      <% for index in 0..2 %>
-        <a href="#showPhotosModal" class="bndi-detail"  data-toggle="modal">
-          <span><%= image_tag(featured_photos[index].image, :class => 'image-fit') %></span>
-        </a>
-      <% end %> 
-      <a href="#showPhotosModal" class="bndi-detail"  data-toggle="modal">
-        <span>
-          <%= image_tag(featured_photos[3].image, :class => 'image-fit') %>
-          <span class="detail-plus"><%= photos_size %> +</span>
-        </span>
-      </a>
-    <% end %>
-  </div> 
+    </div>
+  <% end %> 
 </div>
 
 <div class="modal fade" id="showPhotosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -43,15 +47,15 @@
   </div>
 </div>
 <script>
-  $('#lightbox').owlCarousel({
-    items:1,
-    loop:true,
-    margin:10,
-    nav:true,
-    autoplayHoverPause:true,
-    autoplay:true,
-    autoplayTimeout:10000,
-  });
+  //  $('#lightbox').owlCarousel({
+  //    items:1,
+  //    loop:true,
+  //    margin:10,
+  //    nav:true,
+  //    autoplayHoverPause:true,
+  //    autoplay:true,
+  //    autoplayTimeout:10000,
+  //  });
 </script>
 <style>
 .image-fit {

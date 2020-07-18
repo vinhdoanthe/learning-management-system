@@ -66,6 +66,7 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  Rails.application.routes.default_url_options[:host] = 'lms.teky.online'
   # ActionMailer
   config.action_mailer.default_url_options = { :host => 'lms.teky.online' }
   config.action_mailer.perform_deliveries = true

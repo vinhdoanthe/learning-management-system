@@ -1,0 +1,68 @@
+<% student = project.op_student %>
+<% student_name, company_name  = '', '' %>
+<% progress = get_project_progress project %>
+<% teacher_can_edit = true if teacher_can_edit.nil? %>
+<% if student.present? %>
+  <% student_name = student.full_name %>
+  <% company_name = student.res_company ? student.res_company.name : '' %>
+<% end %> 
+<div class='item'>
+  <div class="">
+    <div class="prod-detail">
+      <div class="prod-img">
+        <% if project.thumbnail.present? %>
+          <span><img src="<%= project.thumbnail %>" alt="" class="project_image"></span>
+        <% else %>
+          <span><%= image_tag('global/images/Bitmap3.png', class:"project_image")%></span>
+        <% end %>
+        <div class=''>
+          <div class='project_control'>
+            <% if current_user.is_teacher? and teacher_can_edit %>
+              <% if progress != 100 || project.state != 'publish' || project.permission != 'public' %>
+                <div class="col-md-6 control_button">
+                  <button class="edit_project" style="width: 100%; padding: 10px 0 10px 0" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail"><%= t('button.complete')%></button>
+                </div>
+              <% else %>
+                <div class="col-md-6 control_button">
+                  <button class="public_project" style="width: 100%" data-project="<%= project.id %>" ><%= t('button.share')%></button>
+                </div>
+              <% end %>
+              <div class="col-md-6 control_button">
+                <button class="show_project student_project_show" style="width: 100%" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><%= t('button.see')%></button>
+              </div>
+            <% else %>
+              <div class="project_control">
+                <button class="show_project student_project_show" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><%= t('button.see')%></button>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <ul class="pri-box">
+          <li class="pri-box-comment">
+            <b><%= count_post_comments project.sc_post %></b>
+            <%= image_tag('global/images/comment-box.png')%>
+          </li>
+          <li class="pri-box-heart">
+            <b><%= count_post_reactions project.sc_post %></b>
+            <%= image_tag('global/images/heart-box.png')%>
+          </li>
+        </ul>
+      </div>
+      <div class="project-info">
+        <ul>
+          <li style="margin-bottom: 5px;text-overflow: ellipsis;color: #0654BA"><span class="icon"><%= image_tag('global/images/icon-student-3.png')%></span><%= student_name %></li>
+          <li style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"><span class="icon"><%= image_tag('global/images/icon-university.png')%></span><%= company_name%></li>
+        </ul>
+      </div>
+      <div class="prod-text" style="height: 190px; overflow: hidden">
+        <label class="project-name"><%= project.name %></label>
+        <div class="project-description"><%= sanitize project.description %></div>
+        <input type='hidden' value='<%= project.id %>' name='student_project_id'>
+        <input type='hidden' value='<%= project.batch_id %>' name='project_batch_id' >
+        <div style="position: absolute; right: 25px; bottom: 20px; ">
+          <a class='student_project_show' href="" class="font-bold" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><%= t('button.see_project')%></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,13 +23,13 @@ class Learning::Batch::SessionStudentRewardsService
         # add transaction point, star, notification
         case reward.reward_type_id
         when 1
-          key = 'REWARD_LVN'
+          key = User::Constant::TekyCoinStarActivitySetting::REWARD_LVN
         when 2
-          key = 'REWARD_GB'
+          key = User::Constant::TekyCoinStarActivitySetting::REWARD_GB
         when 3
-          key = 'REWARD_TCPB'
+          key = User::Constant::TekyCoinStarActivitySetting::REWARD_TCPB
         when 4
-          key = 'REWARD_LBTL'
+          key = User::Constant::TekyCoinStarActivitySetting::REWARD_LBTL
         end
 
         User::Reward::CoinStarsService.new.reward_coin_star key, student.id, 'coin', user.id

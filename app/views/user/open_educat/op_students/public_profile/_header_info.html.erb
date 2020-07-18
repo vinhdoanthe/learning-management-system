@@ -5,9 +5,9 @@
         <span>
           <%= image_tag('global/images/star.png') %>
         </span>
-        <p>
-        <b>0</b> ĐIỂM<br/>
-        <b>0</b> TEKY ĐỒNG
+        <p class='t-uppercase'>
+        <b><%= number_with_delimiter(public_user.star.to_i, :delimiter => '.') %></b> <%= t('public_profile.teky_star') %><br/>
+        <b><%= number_with_delimiter(public_user.coin.to_i, :delimiter => '.') %></b> <%= t('public_profile.teky_coin') %>
         </p>
       </div>
     </li>
@@ -16,11 +16,9 @@
         <span>
           <%= image_tag('global/images/icon-BTVN.png') %>
         </span>
-        <p>
-
-        <% user = User::Account::User.where(student_id: @op_student.id).first %>
-        <b><%= count_homework user %></b> BÀI TẬP VỀ NHÀ<br/>
-        <b>0</b> DỰ ÁN ĐÃ PHÁT TRIỂN
+        <p class="t-uppercase">
+        <b><%= count_homework %></b> <%= t('public_profile.homework') %><br/>
+        <b><%= count_sc_project %></b> <%= t('public_profile.publish_projects') %>
         </p>
       </div>
     </li>
@@ -29,9 +27,9 @@
         <span>
           <%= image_tag('global/images/laurel-wreath.png') %>
         </span>
-        <p>
-        <b>0</b> CHỨNG NHẬN<br/>
-        <b>0</b> CHỨNG CHỈ
+        <p class="t-uppercase">
+        <b><%= count_achievement %></b> <%= t('public_profile.achievements') %><br/>
+        <b><%= count_badge %></b> <%= t('public_profile.badges') %>
         </p>
       </div>
     </li>
@@ -41,7 +39,7 @@
           <%= image_tag('global/images/prize.png') %>
         </span>
         <p>
-        <b>0</b> QUÀ TẶNG<br/>
+        <b><%= count_redeem %></b> QUÀ TẶNG<br/>
         <br/>
         </p>
       </div>

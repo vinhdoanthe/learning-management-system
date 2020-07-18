@@ -8,7 +8,7 @@
         <th></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class='batch_info_table_content'>
       <% op_student_courses.each do |op_student_course| %>
         <% if current_user.is_student? and active_student_course.id == op_student_course.id %>
           <tr style="color: black;">
@@ -67,3 +67,9 @@
     </tbody>
   </table>
 </div>
+<style>
+.batch_info_table_content td span {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+</style>

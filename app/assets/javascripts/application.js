@@ -6,7 +6,8 @@
 //=require custom_js/learning.js
 //=require rails_admin/custom/ckeditor_ajax.js
 //=require bootstrap
-
+//=require jquery-fileupload
+//=require custom_js/custom_ui.js
 var waitingdialog = waitingdialog || (function ($) {
   'use strict';
   var $dialog = $(
@@ -93,6 +94,8 @@ $(document).ready(function () {
     $('.notice_collapse').collapse('hide');
     $(this).closest('.notice_collapse').collapse('show');
   })
+
+  $('.fl_wrap.m-t-0').append('<span class="fa fa-caret-down" style="position: absolute; right: 20px; top: 42%"></span>');
 });
 
 window.onbeforeunload = function (e) {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_17_022156) do
+ActiveRecord::Schema.define(version: 2020_07_01_085005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -8336,6 +8336,19 @@ ActiveRecord::Schema.define(version: 2020_06_17_022156) do
     t.index ["student_id"], name: "index_redeem_transactions_on_student_id"
   end
 
+  create_table "refer_friends", force: :cascade do |t|
+    t.string "code"
+    t.string "student_name"
+    t.string "parent_name"
+    t.string "email"
+    t.string "mobile"
+    t.text "note"
+    t.string "state"
+    t.integer "refer_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "rel_badge_auth_users", id: false, comment: "RELATION BETWEEN gamification_badge AND res_users", force: :cascade do |t|
     t.integer "gamification_badge_id", null: false
     t.integer "res_users_id", null: false
@@ -9314,17 +9327,24 @@ ActiveRecord::Schema.define(version: 2020_06_17_022156) do
     t.index ["order_id", "tag_id"], name: "sale_order_tag_rel_order_id_tag_id_key", unique: true
   end
 
+  create_table "sc_pictures", force: :cascade do |t|
+    t.string "avatar"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "sc_posts", force: :cascade do |t|
     t.string "type"
     t.integer "posted_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "batch_id"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_sc_posts_on_discarded_at"
   end
 
   create_table "sc_student_projects", force: :cascade do |t|
     t.text "description"
-    t.text "presentation"
     t.text "project_show_video"
     t.text "thumbnail"
     t.integer "batch_id"
@@ -10546,6 +10566,12 @@ ActiveRecord::Schema.define(version: 2020_06_17_022156) do
     t.index ["user_question_id"], name: "index_user_answers_on_user_question_id"
   end
 
+  create_table "user_custom_post_contents", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "user_posts", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "sc_post_id"
@@ -10564,6 +10590,14 @@ ActiveRecord::Schema.define(version: 2020_06_17_022156) do
     t.index ["op_batch_id"], name: "index_user_questions_on_op_batch_id"
     t.index ["question_id"], name: "index_user_questions_on_question_id"
     t.index ["student_id"], name: "index_user_questions_on_student_id"
+  end
+
+  create_table "user_shared_photos", force: :cascade do |t|
+    t.string "image"
+    t.bigint "user_custom_post_content_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_custom_post_content_id"], name: "index_user_shared_photos_on_user_custom_post_content_id"
   end
 
   create_table "user_simulation_wizard", id: :serial, comment: "user simulation wizard", force: :cascade do |t|
@@ -10592,6 +10626,8 @@ ActiveRecord::Schema.define(version: 2020_06_17_022156) do
     t.integer "faculty_id"
     t.bigint "avatar_id"
     t.string "initial_password"
+    t.datetime "last_sign_in_at"
+    t.datetime "last_sign_out_at"
     t.index ["account_role"], name: "index_users_on_account_role"
     t.index ["avatar_id"], name: "index_users_on_avatar_id"
   end
@@ -10626,6 +10662,16 @@ ActiveRecord::Schema.define(version: 2020_06_17_022156) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   create_table "web_editor_converter_test", id: :serial, comment: "web_editor.converter.test", force: :cascade do |t|
@@ -11506,6 +11552,7 @@ ActiveRecord::Schema.define(version: 2020_06_17_022156) do
   add_foreign_key "product_template", "stock_warehouse", column: "warehouse_id", name: "product_template_warehouse_id_fkey", on_delete: :nullify
   add_foreign_key "recruitment_source", "res_users", column: "create_uid", name: "recruitment_source_create_uid_fkey", on_delete: :nullify
   add_foreign_key "recruitment_source", "res_users", column: "write_uid", name: "recruitment_source_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "refer_friends", "users", column: "refer_by"
   add_foreign_key "remove_draft_session", "op_batch", column: "batch_id", name: "remove_draft_session_batch_id_fkey", on_delete: :nullify
   add_foreign_key "remove_draft_session", "op_course", column: "course_id", name: "remove_draft_session_course_id_fkey", on_delete: :nullify
   add_foreign_key "remove_draft_session", "res_users", column: "create_uid", name: "remove_draft_session_create_uid_fkey", on_delete: :nullify

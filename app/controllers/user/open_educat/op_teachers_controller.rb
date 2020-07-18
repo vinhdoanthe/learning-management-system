@@ -64,10 +64,12 @@ class User::OpenEducat::OpTeachersController < ApplicationController
 
   def teacher_attendance
     lines = []
+    student_ids = []
     unless params[:student].blank?
       params[:student].each_value do |student_params|
         line = {}
-        student_id = User::OpenEducat::OpStudent.where(code: params['student_id']).first.id
+        student_id = User::OpenEducat::OpStudent.where(code: student_params['student_id']).first.id
+        student_ids << student_id
         line[:student_id] = student_id
         line[:is_present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
         line[:note] = student_params['note'].to_s
@@ -78,10 +80,13 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i)
     
     if errors[0]
-      unless params[:student].blank?
-        params[:student].each_value do |student_params|
-          User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'coin', 0
-          User::Reward::CoinStarsService.new.reward_coin_star 'ATTENDANCE', student_id, 'star', 0
+      unless student_ids.blank?
+        student_ids.each do |student_id|
+          user = User::Account::User.where(student_id: student_id).first
+          next if user.blank?
+
+          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'coin', 0
+          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'star', 0
         end
       end
       render json: {type: 'success', message: 'Điểm danh thành công!'}
@@ -133,17 +138,25 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def assign_homework_details
+    result = true
+    homeworks = nil
+    students = nil
+
     session = Learning::Batch::OpSession.where(id: params[:session_id]).first
-    return false if session.blank?
+    result = false if session.blank?
 
     batch = session.op_batch
     lesson = session.op_lession
-    homeworks = Learning::Material::Question.where(op_lession_id: lesson.id)
-    students = User::OpTeachersService.new.teacher_class_detail batch, session
+    result = false if lesson.blank?
+
+    if result
+      homeworks = Learning::Material::Question.where(op_lession_id: lesson.id)
+      students = User::OpTeachersService.new.teacher_class_detail batch, session
+    end
 
     respond_to do |format|
       format.html
-      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/give_homework', locals: { homeworks: homeworks, students: students}}
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/give_homework', locals: { result: result, homeworks: homeworks, students: students}}
     end
   end
 

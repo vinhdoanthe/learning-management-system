@@ -17,12 +17,17 @@
 *= require 'customized/customized_custom'
 *= require 'customized/customized_style'
 *= require 'customized/customized_style_other'
+*= require jquery.fileupload
+*= require jquery.fileupload-ui
+*= require 'customized/customized_ui.css.scss'
 */
 @import 'user/users';
 
-body{
-
+body {
+  font-weight: 600;
+  font-size: 14px;
 }
+
 span.subject_id.active{
 	background-color: #5DC2A7;
 }
@@ -249,4 +254,9 @@ font-family: sans-serif;
 
 button {
   font-weight: 600 !important;
+}
+
+.bpm-head p.name-cards{
+  vertical-align: top;
+  text-transform: uppercase;
 }

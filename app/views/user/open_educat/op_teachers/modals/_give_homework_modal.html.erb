@@ -5,6 +5,9 @@
       <div class="modal-title">
         <label>Giao bài tập về nhà</label>
       </div>
+      <% unless result %>
+        <p>Chưa có bài tập về nhà</p>
+      <% else %>
       <div class=" bo-table">
         <div class="fc-header" style="margin-bottom: 30px">
           <h3><span class="text-uppercase">Chọn học sinh:</h3>
@@ -45,9 +48,12 @@
           </div>
         </div>
       </div>
+      <% end %>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id="assign_homework_confirm" data-dismiss="modal" class="btn btn-primary">Giao bài tập</button>
+        <% if result %>
+          <button type="button" id="assign_homework_confirm" data-dismiss="modal" class="btn btn-primary">Giao bài tập</button>
+        <% end %>
       </div>
     </div>
   </div>

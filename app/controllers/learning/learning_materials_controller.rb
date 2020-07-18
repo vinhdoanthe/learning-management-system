@@ -57,8 +57,6 @@ module Learning
     end
 
     def show_video
-      # video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO).last
-      # fallback_video_id = Learning::Constant::Material::DEFAULT_VIDEO_ID
       lesson = ''
       session = ''
       name = ''
@@ -68,7 +66,6 @@ module Learning
       if params[:session_id].present?
         session = Learning::Batch::OpSession.where(id: params[:session_id]).first
         if session.blank?
-       #   @video_id = fallback_video_id
           errors = 'Không có video!'
         else
           if session.lession_id.blank?
@@ -88,7 +85,6 @@ module Learning
           end
         end
       else
-        # @video_id = fallback_video_id
         errors = 'Không có video!'
       end
 

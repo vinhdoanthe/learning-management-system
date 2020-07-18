@@ -31,9 +31,9 @@ module User
       redirect_to user_login_path
     end
 
-    def authenticate_user!
-      redirect_to user_login_path unless logged_in?
-    end
+    # def authenticate_user!
+    #   redirect_to user_login_path unless logged_in?
+    # end
 
     def new_parent_selection
       if children_account.count == 1

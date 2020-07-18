@@ -15,9 +15,9 @@
           <!--          <p style="text-align: center">Đánh giá xong con sẽ được thưởng <span style="color: red; text-transform: uppercase">150 teky đồng</span></p> -->
         </div>
         <div class="ths-list">
-          <div class="row">
+          <div class="" style='display: grid; grid-template-columns: 25% 25% 25% 25%; grid-auto-rows: 1fr;'>
             <% Common::FeelingType.order(created_at: :ASC).all.each_with_index do |type, index| %>
-              <div class="col-sm-3 ">
+              <div class="" style="margin: 10px">
                 <a class="ths-detail feeling_type <%= 'active_feeling_type' if index == 0 %>">
                   <%= image_tag(type.icon, class: 'feeling_type_icon') if type.icon.attached? %>
                   <input type='hidden' name='active_feeling_type' value='<%= type.id %>'>
@@ -39,6 +39,9 @@
 <style>
 .active_feeling_type {
   border: 2px solid #5DC2A7
+}
+.feeling_type {
+  height: 100%;
 }
 </style>
 <script>

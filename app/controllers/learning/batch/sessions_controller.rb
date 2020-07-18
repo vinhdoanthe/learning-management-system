@@ -67,4 +67,25 @@ class Learning::Batch::SessionsController < ApplicationController
       format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/session_photo_review', locals: { photos: photos } }
     end
   end
+
+  # get sessions by batch_id and faculty_id
+  # params
+  # - batch_id
+  # - faculty_id
+  #
+  def get_sessions
+    batch_id, faculty_id = get_sessions_params
+    sessions =  Learning::Batch::OpSessionsService.get_sessions(batch_id, faculty_id) 
+    respond_to do |format|
+      format.html
+      format.js {
+        render '', :locals => {sessions: sessions}
+      }
+    end
+  end
+
+  private
+  def get_sessions_params
+    [params[:batch_id], params[:faculty_id]]
+  end
 end

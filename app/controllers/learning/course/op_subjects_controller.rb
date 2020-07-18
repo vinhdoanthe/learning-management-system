@@ -18,14 +18,27 @@ class Learning::Course::OpSubjectsController < ApplicationController
 
   def subject_lesson
     session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+    session_students = session.op_session_students
+    all_student = {}
+    batch = session.op_batch
+    student_courses = batch.op_student_courses.where(state: 'on')
+
+    student_courses.each do |sc|
+      student = sc.op_student
+      next if student.blank?
+      student_info = {student.id => {:status => 'on', :code => student.code || '', :name => student.full_name}}
+      all_student.merge!(student_info)
+    end
+
     subject = session.op_subject
     lessons = [session.op_lession]
-    lessons = subject.op_lessions if lessons.blank?
-    lessons.compact!
+
+    lessons = subject.op_lessions if lessons.compact.blank?
+    lessons = [] if lessons.blank?
 
     respond_to do |format|
       format.html
-      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/chosen_lesson', locals: { lessons: lessons } }
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/chosen_lesson', locals: { lessons: lessons, all_student: all_student } }
     end
   end
 end

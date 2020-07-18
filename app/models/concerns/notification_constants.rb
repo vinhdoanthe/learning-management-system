@@ -7,6 +7,7 @@ module NotificationConstants
     SC_REDEEM_POST = 'SocialCommunity::Feed::RedeemPost'
     SC_REFER_FRIEND = 'SocialCommunity::ReferFriend'
     SC_REFER_FRIEND_POST = 'SocialCommunity::Feed::ReferFriendPost'
+    STUDENT_FEEDBACK = 'Learning::Batch::SessionStudentFeedback'
   end
   module Key
     SC_QA_THREAD_CREATE = 'qa_thread.create'
@@ -18,5 +19,6 @@ module NotificationConstants
     SC_ST_PROJECT_POST_CREATE = 'post.create'
     SC_ST_PROJECT_POST_COMMENT = 'post.comment'
     SC_REDEEM_POST_CREATE = 'post.create'
+    STUDENT_FEEDBACK_CREATE = 'feedback.create'
   end
 end

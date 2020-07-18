@@ -1,6 +1,7 @@
 module Learning
   module Batch
     class OpBatchService
+      include HomeworkConstants
 
       def self.get_batch_detail(batch_id, student_id)
         batch = Learning::Batch::OpBatch.where(id: batch_id).first
@@ -29,7 +30,7 @@ module Learning
                 if !faculty.nil?
                   faculty_names << faculty.full_name
                 end
-                
+
                 classroom = gen_batch_table_line.op_classroom
                 if !classroom.nil?
                   classroom_names << classroom.name
@@ -85,6 +86,9 @@ module Learning
           current_index = -1
         else
           current_index = sorted_lessons.index{|lesson| lesson[:id] == last_done_lesson.id}
+        end
+        if current_index.nil?
+          current_index = -1
         end
         start_index = current_index + 1
         end_index = sorted_lessons.size - 1
@@ -249,30 +253,66 @@ module Learning
         active_session
       end
 
-      # Get list batch by paramater
-      def self.find_batch_by_params(batch_name, company_id)
-        
-        
-    
-        #query = <<-SQL
-         #     SELECT id, name FROM op_batch WHERE active = '#{active}' AND TO_CHAR(start_date, 'YYYYMMDD') >='#{start_date}' AND TO_CHAR(end_date, 'YYYYMMDD') <='#{end_date}';
-          #  SQL
+      def self.get_student_homework_report batch_id, subject_id = nil , faculty_id = nil, student_ids = []
+        student_homework_report = Learning::Homework::Report::StudentHomework.new
+        if student_ids.blank? # get report for all students in batch
+          # find sessions
+          sessions = Learning::Batch::OpSessionsService.get_sessions(batch_id, subject_id, faculty_id)
+          r_sessions = sessions.map {|op_session| Learning::Homework::Report::SessionWithLesson.new(op_session.id, op_session.lession_id, (op_session.op_lession.nil? ? nil : op_session.op_lession.lession_number))}
+          student_homework_report.sessions = r_sessions
 
-        #return ActiveRecord::Base.connection.execute(query)
-
-        if batch_name != ''
-          list = Learning::Batch::OpBatch.select("id, name")
-          .where('active = true')
-          .where("name like '%#{batch_name}%'")
+          session_ids = sessions.map{|session| session.id}
+          op_student_ids = Learning::Batch::OpSessionStudent.where(session_id: session_ids).pluck(:student_id).uniq
+          user_ids = User::Account::User.where(student_id: op_student_ids).pluck(:id).uniq
+          lesson_ids = (sessions.map {|session| session.lession_id}).uniq.compact
+          questions = Learning::Material::Question.where(op_lession_id: lesson_ids).compact
+          question_ids = questions.map {|question| question.id}
+          question_ids = Learning::Material::Question.where(op_lession_id: lesson_ids).pluck(:id).compact
+          user_questions = Learning::Homework::UserQuestion.where(op_batch_id: batch_id, question_id: question_ids, student_id: user_ids).to_a
+          user_question_ids = user_questions.map {|user_question| user_question.id}
+          user_answers = Learning::Homework::UserAnswer.where(user_question_id: user_question_ids, state: [UserAnswer::ANSWER_RIGHT, UserAnswer::ANSWER_WAITING]).to_a
+          # caculate the report          
+          student_users = User::Account::User.includes(:op_student).where(id: user_ids).to_a
+          # op_students = User::OpenEducat::OpStudent.where(id: op_student_ids).to_a
+          r_data = []
+          student_users.each do |student_user|
+            r_data_row = Learning::Homework::Report::StudentHomeworkDataRow.new
+            r_data_row.student_id = student_user.op_student.id
+            r_data_row.student_name = student_user.op_student.full_name
+            count_homework_state = []
+            r_sessions.each do |r_session|
+              # count done user_question
+              # count total user_question
+              lesson_id = r_session.lesson_id
+              l_questions = questions.select {|question| question.op_lession_id == lesson_id}
+              l_question_ids = l_questions.map {|question| question.id}
+              l_user_questions = user_questions.select {|user_question| (l_question_ids.include?(user_question.question_id) and user_question.student_id == student_user.id) }
+              count_total = l_user_questions.size
+              l_user_question_ids = l_user_questions.map {|user_question| user_question.id}
+              l_done_user_answers = user_answers.select {|user_answer| l_user_question_ids.include?(user_answer.user_question_id)}    
+              count_done = l_done_user_answers.size
+              count_homework_state << [count_done, count_total]
+            end
+            r_data_row.count_homework_state = count_homework_state
+            r_data << r_data_row
+          end
+          student_homework_report.data = r_data
         else
-          list = Learning::Batch::OpBatch.select("id, name")
-          .where('active = true')
-        end
-
-        return list
-
+        end 
+        student_homework_report
       end
-
+      # Get list batch by paramater
+      def self.find_batch_by_params(params)
+        company_id  =  params[:company_id]
+        start_date  =  Date.parse(params[:start_date].to_s).strftime("%Y%m%d").to_i
+        end_date    =  Date.parse(params[:end_date].to_s).strftime("%Y%m%d").to_i
+        active      =  params[:active]
+        state       =  params[:state]
+        list = Learning::Batch::OpBatch.select("id, name")
+        .where(:active => active)
+        .where("TO_CHAR(start_date, 'YYYYMMDD') >='#{start_date}' AND TO_CHAR(end_date, 'YYYYMMDD') <='#{end_date}'")     
+        return list
+      end
     end
   end
 end

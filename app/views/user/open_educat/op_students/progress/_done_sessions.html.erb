@@ -1,17 +1,20 @@
 <div class="table-responsive bo-table m-b-20">
-  <div class="fc-header">
-    <h3><%= t('my_class.detail.progress.done_html') %></h3>
-  </div>
   <% if !done_sessions.nil? and !done_sessions.empty? %>
     <table class="table  table-link">
+      <colgroup>
+        <col width='90'>
+        <col width='140'>
+        <col class="text-center">
+        <col>
+        <col width='35%'>
+      </colgroup>
       <thead>
-      <tr>
-        <th width="90">&nbsp;</th>
-        <th width="140"></th>
-        <th></th>
-        <th class="text-center"><%= t('learning.attendance') %></th>
-        <th width="35%"></th>
-      </tr>
+        <tr>
+          <th colspan='3'>
+            <h3><%= t('my_class.detail.progress.done_html') %></h3>
+          </th>
+          <th colspan='2' ><%= t('learning.attendance') %></th>
+        </tr>
       </thead>
       <tbody>
         <% done_sessions.each do |done_session| %>
@@ -20,11 +23,14 @@
           <tr class="student_subject_level subject_level_<%= s_done.op_subject.id.to_s %>">
             <%= render 'user/open_educat/op_students/progress/session/done_session_student', {:session => s_done, :lesson => l_done} %>
           </tr>
-      <% end %>
+        <% end %>
       </tbody>
     </table>
   <% else %>
-    <div><%= t('my_class.detail.progress.no_lesson') %></div>
+    <div class="fc-header">
+      <h3 style='padding-left: 10px'><%= t('my_class.detail.progress.done_html') %></h3>
+    </div>
+    <div style='padding-left: 10px'><%= t('my_class.detail.progress.no_lesson') %></div>
   <% end %>
 </div>
 

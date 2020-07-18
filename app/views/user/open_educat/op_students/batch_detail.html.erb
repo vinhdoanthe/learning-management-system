@@ -10,7 +10,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h2 class="color-fff text-transform"><%= t('sidebar.my_class') %></h2>
+        <h3 class="color-fff text-transform"><%= t('sidebar.my_class') %></h3>
       </div>
     </div>
   </div>
@@ -53,6 +53,9 @@
     </div>
   </div>
 </div>
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag 'user/open_educat/op_students/batch_detail' %>
+<% end %>
 <script>
   $('#student_projects_li').one('click', function(){
     $('#tab2_3').html('<%= escape_javascript( render partial: "partials/loading") %>')

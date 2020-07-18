@@ -1,20 +1,40 @@
 <% if errors.blank? %>
-    $('#no_play_video').hide()
-    $('#play_video_box').show()
-    $('#play_video_box').html("<%= escape_javascript(render partial: '/learning/material/learning_materials/vimeo', locals: { video_id: video_id } ) %>");
-
-    <% if lesson.present? %>
-        $('#video_lesson_name').html('<%= lesson.name %>');
-        $('#video_description').html('<%= name %>');
-$('#video_homework_chat').html("<%= escape_javascript(render partial: '/social_community/question_answer/shared/qa_box', locals: { session: session, lesson: lesson })  %>")
-    <% end %>
-
-    <% if session.present? && (has_homework? current_user, session) %>
-        $('.do_video_homework').attr('href','/learning/view_question?session_id=<%= session.id %>')
-    <% else %>
-        $('.do_video_homework').hide()
-    <% end %>
+  $('#no_play_video').hide()
+  $('#play_video_box').show()
+  $('#play_video_box').html("<%= escape_javascript(render partial: '/learning/material/learning_materials/vimeo', locals: { video_id: video_id } ) %>");
 <% else %>
-    $('#no_play_video').show();
-    $('#play_video_box').hide()
+  $('#no_play_video').show();
+  $('#play_video_box').hide()
 <% end %>
+
+<% if lesson.present? %>
+  $('.video-lesson-name').html('<%= lesson.name %>');
+  $('#video_description').html('<%= name %>');
+  $('#video_homework_chat').html("<%= escape_javascript(render partial: '/social_community/question_answer/shared/qa_box', locals: { session: session, lesson: lesson })  %>")
+<% end %>
+
+<% if session.present? && (has_homework? current_user, session) %>
+  $('.do_video_homework').attr('href','/learning/view_question?session_id=<%= session.id %>')
+<% else %>
+  $('.do_video_homework').hide()
+<% end %>
+
+
+$('#swiper-video-list').ready(function() {
+var active_video = $('#active_video_slider').val();
+var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 5,
+      spaceBetween: 5,
+      loop: false,
+      slideActiveClass: 'active_video_slide',
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+swiper.slideTo(active_video);
+})

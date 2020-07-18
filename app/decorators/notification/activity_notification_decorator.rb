@@ -18,21 +18,23 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
       sc_refer_friend_notification_content
     when SC_REFER_FRIEND_POST
       sc_refer_friend_post_notification_content
+    when STUDENT_FEEDBACK
+      student_feedback_notification_content
     end
   end
 
   def sc_refer_friend_notification_content
-   refer = notifiable
-   #user = User::Account::User.where(id: refer.refer_by)
+    refer = notifiable
+    #user = User::Account::User.where(id: refer.refer_by)
 
-   case refer.state
-   when 'waiting'
-     "Cảm ơn con đã giới thiệu bạn #{ refer.student_name } vào học!"
-   when 'approve'
-     "Bạn #{ refer.student_name } con giới thiệu đã vào học. Con được cộng TODO TEKY đồng. Tiếp tục phát huy nhé!"
-   when 'reject'
-     "Tiếc quá! Con giới thiệu bạn chưa thành công rồi! Hãy thử lại nhé"
-   end
+    case refer.state
+    when 'waiting'
+      "Cảm ơn con đã giới thiệu bạn #{ refer.student_name } vào học!"
+    when 'approve'
+      "Bạn #{ refer.student_name } con giới thiệu đã vào học. Con được cộng TODO TEKY đồng. Tiếp tục phát huy nhé!"
+    when 'reject'
+      "Tiếc quá! Con giới thiệu bạn chưa thành công rồi! Hãy thử lại nhé"
+    end
   end
 
   def sc_refer_friend_post_notification_content
@@ -86,6 +88,12 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
       end
     when SC_QA_THREAD_REPLY
       begin
+        updated_user = User::Account::User.where(id: thread.updated_by).first
+        updated_str = (updated_user.nil? ? '' : updated_user.full_name)
+        action_str = I18n.t('notification.qa_thread.reply')
+        lesson = Learning::Course::OpLession.where(id: thread.lesson_id).first
+        target_str = (lesson.nil? ? '' : lesson.name)
+        display_html = "#{updated_str} #{action_str} #{target_str}"
       end
     end
 
@@ -181,6 +189,30 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
     when SC_ST_PROJECT_POST_COMMENT
       begin
       end
+    end
+
+    display_html
+  end
+
+  def student_feedback_notification_content
+    display_html = ''
+    case key
+    when STUDENT_FEEDBACK_CREATE
+      begin
+        feedback_str = ''
+        target_str = ''
+        feedback = Learning::Batch::SessionStudentFeedback.where(id: notifiable_id).first
+        unless feedback.nil?
+          feedback_user = feedback.user
+          feedback_str = (feedback_user.nil? ? '' : feedback_user.full_name)
+          op_session = feedback.op_session
+         unless op_session.nil?
+          op_batch = op_session.op_batch
+          target_str = (op_batch.nil? ? '' : op_batch.code)
+         end 
+        end
+        display_html = "#{feedback_str} #{I18n.t('notification.student_feedback.create')} #{target_str}"
+      end 
     end
 
     display_html

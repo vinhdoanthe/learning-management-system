@@ -58,12 +58,12 @@ module User
             tag_html = tag_html + '<li class="nav-active menu_item">'        
             tag_html = tag_html + '<a href="' + menu['path'] + '">'
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
           else
             tag_html = tag_html + '<li class="nav-active">'        
             tag_html = tag_html + '<a href="' + menu['path'] + '">'
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
           end
 
           tag_html = tag_html + '<span>' + menu['title'].concat(menu['right_content']) + '</span>'
@@ -77,56 +77,53 @@ module User
 
         # Khoi menu Dashboard
         menus = [
-          # {'path' => user_teacher_dashboard_path, 
-          #   'icon' => 'ico-Dashboard.png',
-          #   'title' => 'Dashboard', 
-          #   'right_content' => ''
-          # },
-
+          {
+            'path' =>  root_path,
+            'icon' => 'ico-Dashboard.png',
+            'title' => "#{ t('sidebar.dashboard') }",
+            'right_content' => '<span class="left-badge"></span>'
+          },
           {'path' => user_open_educat_teacher_schedule_path, 
-           'icon' => 'ico-TienDoHocTap.png',
+           'icon' => 'calendar.png',
            'title' => "#{ t('sidebar.teaching_schedule') }", 
            'right_content' => '<span class="left-badge">' << count_sessions_week('op_faculty').to_s << '</span>'
-        },
-
-        # {'path' => user_teacher_class_path, 
-        #   'icon' => 'ico-TienDoHocTap.png',
-        #   'title' => 'Danh sách lớp học', 
-        #   'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
-        # },
-
-        {'path' => user_teacher_class_path, 
-         'icon' => 'ico-TienDoHocTap.png',
-         'title' => "#{ t('sidebar.class_list') }", 
-         'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
-        },
-
-        {'path' => learning_marking_question_path, 
-         'icon' => 'ico-BaiTapOnBai.png',
-         'title' => "#{ t('sidebar.marking') }", 
-         'right_content' => '<span class="left-badge">' << count_mark_question(current_user.op_faculty) << '</span>'
-        },
-        {'path' => social_community_question_answer_my_threads_path, 
-         'icon' => 'Icon-Inbox.png',
-         'title' => "#{ t('sidebar.question_answer') }", 
-         'right_content' => '<span class="left-badge"></span>'
-        },
+          },
+          {'path' => user_teacher_class_path, 
+           'icon' => 'ico-TienDoHocTap.png',
+           'title' => "#{ t('sidebar.class_list') }", 
+           'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'
+          },
+          {'path' => learning_marking_question_path, 
+           'icon' => 'ico-BaiTapOnBai.png',
+           'title' => "#{ t('sidebar.marking') }", 
+           'right_content' => '<span class="left-badge">' << count_mark_question(current_user.op_faculty) << '</span>'
+          },
+          {'path' => coming_soon_page_path, 
+           'icon' => 'ico-BaiTapOnBai.png',
+           'title' => "#{ t('sidebar.review_student') }", 
+           'right_content' => ''
+          },
+          {'path' => social_community_question_answer_my_threads_path, 
+           'icon' => 'Icon-Inbox.png',
+           'title' => "#{ t('sidebar.question_answer') }", 
+           'right_content' => '<span class="left-badge"></span>'
+          },
         ]
 
 
-        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
+        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top: 1px solid #232837; border-bottom: 1px solid #414348; margin: 0">'
 
         menus.each do |menu|
 
           if (menu['path'] == fullpath)
             tag_html = tag_html + '<li class="nav-active menu_item">'        
             tag_html = tag_html + '<a href="' + menu['path'] + '">'
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           else
             tag_html = tag_html + '<li class="">'        
             tag_html = tag_html + '<a href="' + menu['path'] + '">'
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           end
 
@@ -135,8 +132,38 @@ module User
           tag_html = tag_html + '</a>'
           tag_html = tag_html + '</li>'
         end
-
         tag_html = tag_html + '</ul>'
+
+        # menus for community features
+        menus = [
+          {'path' => social_community_sc_student_projects_social_student_projects_path, 
+            'icon' => 'youtube.png',
+            'title' => "#{t('sidebar.my_projects')}", 
+            'right_content' => ''
+          }
+        ]
+        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top: 1px solid #232837; margin: 0">'
+        menus.each do |menu|
+
+          if (menu['path'] == fullpath)
+            tag_html = tag_html + '<li class="nav-active menu_item">'        
+            tag_html = tag_html + '<a href="' + menu['path'] + '">'
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
+          else
+            tag_html = tag_html + '<li class="">'        
+            tag_html = tag_html + '<a href="' + menu['path'] + '">'
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
+          end
+
+          tag_html = tag_html + '<span>' + menu['title'].concat(menu['right_content']) + '</span>'
+
+          tag_html = tag_html + '</a>'
+          tag_html = tag_html + '</li>'
+        end
+        tag_html = tag_html + '</ul>'
+        tag_html = tag_html + '</div>'
 
         return tag_html
 
@@ -322,8 +349,8 @@ module User
 
           {
             'path'          => adm_user_index_path,
-            'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user') <<'</p></a></li>',
-            'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user') <<'</p></a></li>'
+            'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user.name') <<'</p></a></li>',
+            'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user.name') <<'</p></a></li>'
           },
 
           {

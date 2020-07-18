@@ -12,7 +12,8 @@ class User::Account::PasswordResetsController < ApplicationController
     @user = User::Account::User.find_by(username: params[:password_reset][:username].downcase)
     if @user
       @user.create_reset_digest
-      @user.send_password_reset_email
+      SendGridMailer.new.send_email(EmailConstants::MailType::SEND_RESET_PASSWORD_EMAIL, @user)
+      # @user.send_password_reset_email
       flash[:success] = I18n.t('login.reset_email_sent')
       redirect_to root_url
     else

@@ -2,7 +2,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h2 class="color-fff text-transform">Thời khoá biểu</h2>
+        <h3 class="color-fff text-transform">Thời khoá biểu</h3>
       </div>
     </div>
   </div>
@@ -13,21 +13,20 @@
         <div class="filter-box FlowupLabels b-b-1-869fb229 m-b-20" id='formBody'>
           <div class="row">
             <div class="col-md-3">
-              <label class="filter-title">Toàn bộ <span class="color-16BD56">Lớp học</span></label>
+              <label class="filter-title td-bold">Toàn bộ <span class="color-16BD56">Lớp học</span></label>
             </div>
             <div class="col-md-3">
-              <div class="chosse-date">
+              <div class="chosse-date choose-date-next-prev">
                 <p>
-                <a class="cd-left schedule_time_previous"><i class="fa fa-caret-square-o-left"></i></a><span class="start_time">
-                  23/12/2019 </span><span>&rarr;</span> <span class="end_time">29/12/2019
-                </span><a class="cd-right schedule_time_next"><i class="fa fa-caret-square-o-right"></i></a>
+                <a class="cd-left schedule_time_previous"><i class="fa fa-caret-square-o-left"></i></a><span class="start_time td-bold">
+                  <%= Date.today().strftime('%d/%m/%Y') %> </span><span> &rarr;</span> <span class="end_time td-bold"><%= Date.today().strftime('%d/%m/%Y') %>
+                </span><a class="cd-right schedule_time_next"><i class="fa fa-caret-square-o-right i-pdr-0"></i></a>
                 </p>
               </div>
             </div>
             <div class="col-md-3">
               <div class='fl_wrap m-t-0 chosen_month'>
-                <label class='fl_label' for='rf_name'>Xem theo:</label>
-                <select class='fl_input month_teaching_schedule' id='rf_name' >
+                <select class='choose-month-dropdown fl_input month_teaching_schedule' id='rf_name'>
                   <option value=""></option>
                   <option value="1">Tháng 1</option>
                   <option value="2">Tháng 2</option>
@@ -45,10 +44,10 @@
               </div>
             </div>
             <div class="col-md-3">
-              <div class="chosse-date">
+              <div class="chosse-date choose-date-next-prev">
                 <p>
-                <a class="cd-left schedule_year_previous"><i class="fa fa-caret-square-o-left"></i></a><span><strong class="year_teaching_schedule">
-                    <%= Time.now.year %></strong></span><a class="cd-right schedule_year_next"><i class="fa fa-caret-square-o-right"></i></a>
+                <a class="cd-left schedule_year_previous"><i class="fa fa-caret-square-o-left"></i></a><span class="year_teaching_schedule td-bold">
+                  <%= Time.now.year %></span><a class="cd-right schedule_year_next"><i class="fa fa-caret-square-o-right i-pdr-0"></i></a>
                 </p>
               </div>
             </div>
@@ -57,29 +56,35 @@
         <table class="table table-bordered">
           <thead>
             <tr class='day_in_week'>
-              <th width="140" class="text-right bg-5DC2A7 color-fff" style="border: 0">Khung giờ</th>
-              <th class="text-center thu_2" width="155">Thứ 2<br/><span>23/12/2019</span></th>
-              <th class="text-center thu_3" width="155">Thứ 3<br/><span>24/12/2019</span></th>
-              <th class="text-center thu_4" width="155">Thứ 4<br/><span>25/12/2019</span></th>
-              <th class="text-center thu_5" width="155">Thứ 5<br/><span>26/12/2019</span></th>
-              <th class="text-center thu_6" width="155">Thứ 6<br/><span>27/12/2019</span></th>
-              <th class="text-center thu_7" width="155">Thứ 7<br/><span>28/12/2019</span></th>
-              <th class="text-center thu_8" width="155">Chủ nhật<br/><span>29/12/2019</span></th>
+              <th width="140" class="text-right bg-5DC2A7 color-fff td-bold" style="border: 0; text-align: center;">Khung giờ</th>
+              <th class="text-center thu_2 td-bold" width="155">Thứ 2<br/><span>23/12/2019</span></th>
+              <th class="text-center thu_3 td-bold" width="155">Thứ 3<br/><span>24/12/2019</span></th>
+              <th class="text-center thu_4 td-bold" width="155">Thứ 4<br/><span>25/12/2019</span></th>
+              <th class="text-center thu_5 td-bold" width="155">Thứ 5<br/><span>26/12/2019</span></th>
+              <th class="text-center thu_6 td-bold" width="155">Thứ 6<br/><span>27/12/2019</span></th>
+              <th class="text-center thu_7 td-bold" width="155">Thứ 7<br/><span>28/12/2019</span></th>
+              <th class="text-center thu_8 td-bold" width="155">Chủ nhật<br/><span>29/12/2019</span></th>
             </tr>
           </thead>
           <tbody id='schedule_table'>
-            <tr class='s1' style='border: none !important'>
-              <td rowspan="2" align="center" class="bg-FFC400 color-fff font-bold" style="border: 0"><span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Sáng</span></td>
+            <tr class='s1'>
+              <td rowspan="2" align="center" class="bg-FFC400 color-fff font-bold td-bold" style="border: 0">
+                <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Sáng</span>
+              </td>
             </tr>
             <tr class='s2'>
             </tr>
             <tr class='c1'>
-              <td rowspan="2" align="center" class="bg-F0B800 color-fff font-bold" style="border: 0"><span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Chiều</span></td>
+              <td rowspan="2" align="center" class="bg-F0B800 color-fff font-bold td-bold" style="border: 0">
+                <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Chiều</span>
+              </td>
             </tr>
             <tr class='c2'>
             </tr>
             <tr class='t1'>
-              <td rowspan="2" align="center" class="bg-D4A300 color-fff font-bold" style="border: 0"><span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Tối</span></td>
+              <td rowspan="2" align="center" class="bg-D4A300 color-fff font-bold td-bold" style="border: 0">
+                <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Tối</span>
+              </td>
             </tr>
             <tr class='t2'>
             </tr>
@@ -90,15 +95,15 @@
             <div class="col-sm-10">
               <div class="ct-left">
                 <ul>
-                  <li><span class="bg-5DC2A7"></span>LỚP HỌC TRỰC TUYẾN</li>
-                  <li><span class="bg-EB9138"></span>LỚP HỌC TẠI TRUNG TÂM</li>
+                  <li><span class="bg-5DC2A7 td-bold"></span>LỚP HỌC ONLINE</li>
+                  <li><span class="bg-EB9138 td-bold"></span>LỚP HỌC TẠI TRUNG TÂM</li>
                 </ul>
               </div>
             </div>
             <div class="col-sm-2 ct-right">
               <div class="ct-right">
                 <ul>
-                  <li><span><img src="/global/images/close.png" alt=""></span>Lớp bị hủy</li>
+                  <li><span class='td-bold'><img src="/global/images/close.png" alt=""></span>Lớp bị hủy</li>
                 </ul>
               </div>
             </div>
@@ -108,3 +113,64 @@
     </div>
   </div>
 </div>
+
+<style>
+.choose-date-next-prev {
+  border: 1px solid #DADAEE;
+  border-radius: 5px;
+  margin: 0;
+  padding-top: 20px;
+  padding-right: 12px;
+  padding-left: 12px;
+  padding-bottom: 12px;
+  height: 60px;
+  max-height: 60px;
+}
+.choose-month-dropdown {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  padding-right: 0px !important;
+  padding-left: 12px !important;
+}
+.td-bold {
+  font-family: 'Montserrat-Bold' !important;
+  text-transform: uppercase;
+  font-weight: lighter;
+}
+.FlowupLabels .fl_wrap {
+    width: 100%;
+    height: 60px;
+    margin: 0 auto 12px auto;
+    display: block;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #DADAEE;
+    border-radius: 5px;
+}
+.FlowupLabels .fl_input {
+  background: none;
+  border: none;
+  border-radius: 0;
+  font-size: 14px;
+  line-height: 22px;
+  padding: 20px 0 0 12px;
+  color: #5b5b5b;
+  font-family: 'Montserrat-Bold' !important;
+  font-weight: lighter;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.i-pdr-0 {
+  padding-right: 0px !important;
+}
+</style>

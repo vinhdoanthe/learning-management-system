@@ -14,13 +14,14 @@ body {
 	  font-size: 14px;
 }
 
-.nav.nav-treeview .nav-item i.far {font-size:0.7rem;}
-#tab-course-study-program .card-title {font-weight: 500}
+#tab-course-study-program .card-title {
+	font-weight: 500
+}
 
 /*** Style description for tinymce **/
 .tab-content .tinymce .main-content .page-content .panel .panel-content ul {padding-left: 0;}
 
-.tab-content .tinymce ul.lms-style-list {
+#tinymce ul.lms-style-list {
 	margin-top: 20px;
     list-style-type: none;
     padding: 0px;
@@ -34,10 +35,23 @@ body {
     margin: 0 !important;
 }
 
-ul.lms-style-list {
-    margin-top: 20px;
-    list-style-type: none;
-    padding: 0px;
+.tab-content .tinymce ul.bsc-list {
+	margin-top: 20px;
+}
+
+.tab-content .tinymce h2, .tab-content .tinymce .h2 {
+	font-size: 25px;
+}
+
+.tab-content .tinymce h1, .tab-content .tinymce h2, .tab-content .tinymce h3, .tab-content .tinymce h4, .tab-content .tinymce h5 {
+	font-family: 'Montserrat-Bold';
+	font-weight: 100;
+	margin: 0 !important;
+}
+
+ul.bsc-list, ul.teky-list {
+	margin-top: 20px;
+	list-style-type: none;
 }
 
 ul.lms-style-list li {
@@ -45,6 +59,7 @@ ul.lms-style-list li {
 	position: relative;
 	font-size: 15px;
 	margin-bottom: 10px;
+	list-style-type: none;
 }
 
 ul.lms-style-list li:before {

@@ -13,6 +13,7 @@ class User::OpenEducat::OpStudent < ApplicationRecord
 
   belongs_to :res_country, :class_name => 'Common::ResCountry', :primary_key => 'id', :foreign_key => 'nationality'
   belongs_to :res_company, :class_name => 'Common::ResCompany', :foreign_key => 'company_id'
+  belongs_to :res_partner, :class_name => 'User::ResPartner', :foreign_key => 'partner_id'
 
   def vattr_gender
     if gender == 'm'

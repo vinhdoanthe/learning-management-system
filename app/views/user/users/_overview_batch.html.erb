@@ -1,6 +1,7 @@
 <% student_batch_status = get_student_batch_status(op_student_id, batch.id)%>
-<div class="col-md-4" style='padding-top: 15px; padding-bottom: 15px'>
-  <div class="scl-detail">
+<% student_status = student_batch_status['status'] %>
+<div class="col-md-4 col-xs-12 student_batch_list">
+  <div class="scl-detail" style='height: 100%'>
     <div class="scl-img">
       <span class="spanimg">
         <% op_course = batch.op_course %>
@@ -9,38 +10,47 @@
         <% else %>
           <%= image_tag('global/images/default-course-thumbnail.png') %>
         <% end %>
-      </span>
-      <div class="scl-right"> 
-        <% student_status = student_batch_status['status'] %>
         <% if student_status == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-          <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn-edit-class"><%= t('my_class.come_in') %></a>
           <span class="scl-success"><%= student_batch_status['status_html'].html_safe %></span>
+        <% elsif student_status == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
+          <span class="scl-save"><%= student_batch_status['status_html'].html_safe %></span>
         <% else %>
-          <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn-edit-view"><%= t('my_class.information') %></a>
           <span class="scl-danger"><%= student_batch_status['status_html'].html_safe %></span>
         <% end %>
-      </div>
+      </span>
     </div>
     <div class="scl-text">
-      <div class="scl-left">
-        <label for=""><%= batch.op_course.name %></label>
+      <div class="scl-left col-md-8">
+        <label style="text-transform: uppercase;"><%= batch.op_course.name %></label>
         <p><%= t('learning.batch.code') %>: <span><%= batch.code %></span></p>
-        <% time_line = batch_timeline batch %> 
         <p>
-        <% if time_line.blank? %>
-          Hàng tuần Tại
-        <% else %>
-          <% time_line.each_with_index do |time, i| %>
-            <% if time_line.length - i != 1 %>
-              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + "; "%>
-            <% else %>
-              <%= time.strftime("%H:%M") + " " + (get_week_day time.strftime("%A")) + " "%>
-            <% end %>
-          <% end %>
-          hàng tuần Tại
-        <% end %>
+        <%= Learning::Batch::OpBatchDecorator.new(batch).display_weekly_timing %>
         <span><%= batch.res_company ? batch.res_company.name : "" %></span>
         </p>
+      </div>
+      <div class="custom_scl-right col-md-4">
+        <% if student_status == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
+          <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn btn-edit-class btn-studying-batch">
+            <div>
+              <%= image_tag ('global/images/come-in.png') %>
+              <%= t('my_class.come_in') %>
+            </div>
+          </a>
+        <% elsif student_status == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
+          <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn btn-edit-view btn-save-batch">
+            <div>
+              <%= image_tag ('global/images/come-in.png') %>
+              <%= t('my_class.information') %>
+            </div>
+          </a>
+        <% else %>
+          <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn btn-edit-view btn-stop-batch">
+            <div>
+              <%= image_tag ('global/images/come-in.png') %>
+              <%= t('my_class.information') %>
+            </div>
+          </a>
+        <% end %>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 class User::Account::UsersController < ApplicationController
 
-  before_action :authenticate_user!, only: [:my_class, :batch_detail, :update_nickname, :update_password]
-  before_action :authenticate_student!, only: [:my_class, :batch_detail, :update_nickname]
+  before_action :authenticate_user!, only: [:get_avatar, :new_avatar, :update_avatar, :update_nickname, :change_password, :update_password]
+  # before_action :authenticate_student!, only: [:my_class, :batch_detail, :update_nickname]
 
   def get_avatar
     if params[:user_id].present?

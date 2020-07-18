@@ -15,10 +15,10 @@ $('document').ready(function () {
 		// if (target.attr('class')){
 		// var baigiang_id = target.data('baigiang-id');
 		// hide all baigiang-ids content
-		console.log(target)			
+		// console.log(target)			
 		// show clicked baigiang-id content
 		// }
 
-		console.log('Clicked');
+		// console.log('Clicked');
 	})
 })

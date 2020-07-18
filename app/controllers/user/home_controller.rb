@@ -15,4 +15,7 @@ class User::HomeController < ApplicationController
       end
     end
   end
+
+  def coming_soon
+  end
 end

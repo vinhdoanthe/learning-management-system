@@ -1,4 +1,4 @@
-<% if current_user && current_user.is_admin? %>
+<% if current_user && current_user.is_admin? && adm_controller? %>
   <%= render "partials/admin_lte_application"%>
 <% else%>
   <!DOCTYPE html>
@@ -21,11 +21,11 @@
       <link href="/global/plugins/maps-amcharts/ammap/ammap.css" rel="stylesheet">
       <link href="/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
       <link href="/global/plugins/rateit/rateit.css" rel="stylesheet">
+      <%= stylesheet_link_tag 'social_community/dashboards' %>
       <link href="/global/css/owl.carousel.css" rel="stylesheet">
       <!-- END PAGE STYLE -->
       <script src="/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
       <link rel="stylesheet" href="/global/css/daterangepicker.css" />
-      <%= stylesheet_link_tag 'social_community/dashboard/dashboard' %>
       <%= yield :javascript_includes %>
       <%= yield :stylesheet_includes %>
       <% if Rails.env.production? %>
@@ -68,6 +68,8 @@
           <%= render 'partials/topnav' %>
           <%= yield %>
         </div>
+
+
         <script type="text/javascript" src="/global/plugins/jquery/jquery-3.1.0.min.js"></script>
         <script type="text/javascript" src='/global/plugins/jquery/jquery-migrate-3.0.0.min.js'></script>
         <script type="text/javascript" src='/global/plugins/jquery-ui/jquery-ui.min.js'></script>
@@ -125,6 +127,38 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 
+        <script type="text/javascript">          
+          $('.owl-carousel').owlCarousel({
+              loop:true,
+              responsiveClass:true,
+              items:1,
+              slideBy: 1,
+              dots: false,
+              dotsEach: false,
+              autoplay: false,
+              rewind: true,
+              autoWidth: false,
+              center: true
+            });
+
+          // update width image carousel for left menu
+          updateOwlCarousel = function(){
+            $(".owl-carousel").each(function() {
+              $(this).data('owl.carousel').onResize();
+            });
+          };
+
+          $(document).on('click', '.topnav', function(){
+            setTimeout(function() {updateOwlCarousel();},   321)
+          });
+
+          $(document).ready(function() {
+            updateOwlCarousel();
+          });
+
+        </script>
+
+        <%= yield :body_javascript_includes %>
         <%= debug(params) if Rails.env.development? %>
       </body>
     <% else %>
@@ -142,6 +176,9 @@
         <script src="/global/plugins/backstretch/backstretch.min.js"></script>
         <script src="/global/plugins/bootstrap-loading/lada.min.js"></script>
         <script src="/global/js/pages/login-v2.js"></script>
+
+        <%= yield :body_javascript_includes %>
+
       </body>
     <% end %>
 

@@ -36,7 +36,7 @@
           <h3 style="margin: 0 !important">Slide sản phẩm</h3>
         </div>
         <div class="project_intro">
-          <%= project.presentation %>
+          <%= link_to image_tag('/global/images/downloadinvoice.png') + 'Click to download', rails_blob_path(project.presentation, disposition: "attachment"), style: "font-size: 15px; font-weight: 600; font-family: 'Montserrat-Bold'" %>
         </div>
       </div>
     </div>
@@ -61,6 +61,9 @@
 <style>
   .student_infomation li span{
    font-weight: 600; 
+  }
+  .fc-header h3 {
+    padding-bottom: 0 !important
   }
 </style>
 <script>

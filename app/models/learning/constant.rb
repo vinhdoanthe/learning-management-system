@@ -24,6 +24,11 @@ module Learning::Constant
   end
 
   module Batch
+    module StudentSubject
+      STATE_ON = "on"
+      STATE_OFF = "off"
+      STATE_SAVE = "save"
+    end
     module Session
       STATE_DRAFT = 'draft'
       STATE_DONE = 'done'

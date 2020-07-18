@@ -2,6 +2,7 @@ class Learning::Batch::SessionStudentFeedback < ApplicationRecord
   self.table_name = 'session_student_feedbacks'
   
   belongs_to :user, class_name: 'User::Account::User', foreign_key: 'feedback_by'
+  belongs_to :op_session, class_name: 'Learning::Batch::OpSession', foreign_key: 'session_id'
 
   acts_as_notifiable :users,
     targets: ->(feedback, key) {

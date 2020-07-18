@@ -60,11 +60,6 @@ module User
       end
 
       def count_homework user
-        # questions = Learning::Homework::UserQuestion.where(student_id: user.id).pluck(:id)
-        # questions_count = questions.count
-
-        # user_answers_count = Learning::Homework::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
-        # (questions_count - user_answers_count).to_s
         student = user.op_student
         op_student_course_ids = student.op_student_courses.pluck(:id)
         op_session_students = Learning::Batch::OpSessionStudent.where(student_course_id: op_student_course_ids)
@@ -72,12 +67,12 @@ module User
 
         op_session_students.each do |st|
           session = st.op_session
-          # lesson_id << session.lession_id if session.state != 'cancel'
+          next if session.nil?
           lesson_id << session.lession_id if session.state != 'cancel'
         end
 
         lesson_id = lesson_id.compact.uniq
-        questions = Learning::Homework::UserQuestion.joins(:question).where(student_id: @student.id).where(questions: { op_lession_id: lesson_id})
+        questions = Learning::Homework::UserQuestion.joins(:question).where(student_id: student.id).where(questions: { op_lession_id: lesson_id})
 
         user_answers_count = Learning::Homework::UserAnswer.where(user_question: questions.uniq, state: ['right','waiting']).count
         (questions.count - user_answers_count).to_s
@@ -137,12 +132,12 @@ module User
             tag_html = tag_html + '<li class="nav-active menu_item activea">'
             tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="0">'
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
           else
             tag_html = tag_html + '<li class="nav-active menu_item">'        
             tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="0">'
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
           end
 
           tag_html = tag_html + '<span>' + menu['title'].concat(menu['right_content']) + '</span>'
@@ -158,75 +153,59 @@ module User
 
         # Khoi menu Dashboard
         menus = [
-          # {'path' => user_student_dashboard_path, 
-          #   'icon' => 'ico-Dashboard.png',
-          #   'title' => 'Dashboard', 
-          #   'right_content' => ''
-          # },
-
-
+          {
+            'path' =>  root_path,
+            'icon' => 'ico-Dashboard.png',
+            'title' => "#{ t('sidebar.dashboard') }",
+            'right_content' => '<span class="left-badge"></span>'
+          },
+          {'path' => user_open_educat_op_students_timetable_path,
+           'icon' => 'calendar.png',
+           'title' => "#{ t('sidebar.timetable') }", 
+           'right_content' => '<span class="left-badge">' << count_timetable_week.to_s << '</span>'
+          },
           {
             'path' =>  user_open_educat_op_students_batches_path,
-            'icon' => 'Icon-Inbox.png',
+            'icon' => 'ico-TienDoHocTap.png',
             'title' => "#{ t('sidebar.my_class') }",
             'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
           },
 
-          {'path' => user_open_educat_op_students_timetable_path,
-           'icon' => 'ico-TienDoHocTap.png',
-           'title' => "#{ t('sidebar.timetable') }", 
-           'right_content' => '<span class="left-badge">' << count_timetable_week.to_s << '</span>'
-          },
-          # {'path' => user_open_educat_op_students_student_homework_path,
-          #  'icon' => 'ico-BaiTapOnBai.png',
-          #  'title' => 'Bài tập & Ôn bài',
-          #  'right_content' => '<span class="left-badge">' << count_homework(current_user) << '</span>'
-          # }
           {'path' => user_open_educat_op_students_student_homework_path,
            'icon' => 'ico-BaiTapOnBai.png',
            'title' => "#{ t('sidebar.homework') }",
            'right_content' => '<span class="left-badge"></span>'
           },
-
-         #  {'path' => redeem_redeem_products_path, 
-         #    'icon' => 'ico-Redem.png',
-         #    'title' => "#{ t('sidebar.redeem') }", 
-         #    'right_content' => ''
-         #  },
-
-          {'path' => social_community_question_answer_my_threads_path, 
-            'icon' => 'Icon-Inbox.png',
-            'title' => "#{t('sidebar.question_answer')}", 
+          # {'path' => social_community_question_answer_my_threads_path, 
+          #   'icon' => 'Icon-Inbox.png',
+          #   'title' => "#{t('sidebar.question_answer')}", 
+          #   'right_content' => ''
+          # },
+          {'path' => social_community_sc_student_projects_social_student_projects_path, 
+            'icon' => 'youtube.png',
+            'title' => "#{t('sidebar.my_projects')}", 
             'right_content' => ''
           },
-
-          # {'path' => social_community_sc_student_projects_social_student_projects_path, 
-          #  'icon' => 'ico-SPhocsinh.png',
-          #  'title' => 'Sản phẩm của tôi', 
-          #  'right_content' => ''
-          # },
-
-          # {'path' => '#', 
-          #   'icon' => 'ico-SPhocsinh.png',
-          #   'title' => 'Top thành tích', 
+          # {'path' => social_community_leaders_path, 
+          #  'icon' => 'top.png',
+          #   'title' => "#{t('sidebar.top_achievement')}", 
           #   'right_content' => ''
-          # }
-
+          # },
         ]
 
-        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
+        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top: 1px solid #232837; border-bottom: 1px solid #414348; margin: 0">'
 
         menus.each do |menu|
 
           if (menu['path'] == fullpath)
             tag_html = tag_html + '<li class="nav-active menu_item activea">'        
             tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           else
             tag_html = tag_html + '<li class="menu_item">'        
             tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           end
 
@@ -246,33 +225,37 @@ module User
           #   'right_content' => ''
           # },
 
-          # {'path' => '#', 
-          #   'icon' => 'ico-Redem.png',
-          #   'title' => 'Giới thiệu phụ huynh', 
-          #   'right_content' => ''
-          # },
+          {'path' => redeem_redeem_products_path, 
+            'icon' => 'ico-Redem.png',
+            'title' => "#{t('sidebar.redeem')}", 
+            'right_content' => ''
+          },
 
-          # {'path' => user_student_invoice_path, 
-          #   'icon' => 'ico-Invoice.png',
-          #   'title' => 'Hóa đơn', 
-          #   'right_content' => ''
-          # },             
-
+          {'path' => social_community_refer_friends_path, 
+           'icon' => 'game.png',
+            'title' => "#{t('sidebar.refer_friend')}", 
+            'right_content' => ''
+          },             
+          {'path' => social_community_question_answer_my_threads_path, 
+            'icon' => 'Icon-Inbox.png',
+            'title' => "#{t('sidebar.question_answer')}", 
+            'right_content' => ''
+          }
         ]
 
-        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom">'
+        tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top:1px solid #232837; margin-top: 0">'
 
         menus.each do |menu|
 
           if (menu['path'] == fullpath)
             tag_html = tag_html + '<li class="nav-active menu_item activea">'        
             tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           else
             tag_html = tag_html + '<li class="menu_item">'        
             tag_html = tag_html + '<a href="' + menu['path'] + '" data-index="1">'
-            tag_html = tag_html + image_tag("global/images/no-active/" + menu['icon'] + "", class: "img-changes")
+            tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-changes")
             tag_html = tag_html + image_tag("global/images/active/" + menu['icon'] + "", class: "img-change-color")
           end
 

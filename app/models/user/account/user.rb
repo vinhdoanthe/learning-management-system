@@ -29,6 +29,18 @@ class User::Account::User < ApplicationRecord
 
   enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
 
+  def email_address_for_sending
+    if is_student?
+      op_student.parent_email
+    elsif is_parent?
+      op_parent.email
+    elsif is_teacher?
+      op_faculty.res_partner.email
+    else
+      ''
+    end    
+  end
+
   def gender
     gender = ''
     if student_id
@@ -157,7 +169,8 @@ class User::Account::User < ApplicationRecord
   end
 
   def password_reset_expired?
-    reset_sent_at < 2.days.ago
+    expire_after_hours = Settings.user.password[:expire_after_hours].to_i
+    reset_sent_at < expire_after_hours.hours.ago
   end
 
   def is_admin?

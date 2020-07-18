@@ -1,12 +1,10 @@
 <div class="bpc-huyhieu">
-  <div class="row">
-    <% badges.each do |badge| %>
-      <div class="col-sm-4">
-        <div class="bph-img">
-          <%= image_tag('global/images/huyhieu.png') %>
-          <label>MOD CREATIONS ESSENTIALS</label>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <% if badges.empty? %>
+    <p class="pb-detail-no-items"><%= t('public_profile.no_badges') %></p>
+  <% else %>
+    <div class="row">
+      <% badges.each do |badge| %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

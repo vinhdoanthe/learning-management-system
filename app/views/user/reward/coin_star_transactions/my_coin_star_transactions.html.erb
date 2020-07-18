@@ -1,0 +1,68 @@
+<!-- render my_coin_star_transaction -->
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h3 class="color-fff text-transform"><%= t('reward.my_coin_star_transaction') %></h3>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <% if @coin_star_transactions.empty? %>
+        <div class="no-transactions">
+          <p><%= t('reward.no_transactions') %></p>
+        </div>
+      <% else %>
+        <table class="table table-hover">
+          <tbody>
+            <% @coin_star_transactions.each do |coin_star_transaction| %>
+              <tr>
+                <td>
+                  <p class="coin-star-transaction">
+                  <% if coin_star_transaction.transaction_type == RewardConstants::Type::TEKY_COIN %>
+                    <span class="coin-transaction-lbl"><%= t('reward.coin') %></span>
+                  <% elsif coin_star_transaction.transaction_type == RewardConstants::Type::TEKY_STAR %>
+                    <span class="star-transaction-lbl"><%= t('reward.star') %></span>
+                  <% end %>
+                  <%= User::Reward::CoinStarTransactionDecorator.new(coin_star_transaction).display_content.html_safe %>
+                  </p>
+                </td>
+              </tr>
+            <% end %> 
+          </tbody>
+        </table>
+        <%= paginate @coin_star_transactions %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+.coin-star-transaction {
+  margin: 15px 0 15px 0;
+  font-weight: 600;
+}
+.v-border-line {
+  border-bottom: 1px solid #dcdcdc;
+}
+.coin-transaction-lbl {
+  margin: 15px 0 15px 0;
+  padding: 2px;
+  border-radius: 2px;
+  background: #5cc2a7;
+  color: #ffffff;
+}
+.star-transaction-lbl {
+  margin: 15px 0 15px 0;
+  padding: 2px;
+  border-radius: 2px;
+  background: #fddc63;
+}
+.no-transactions {
+  height: 300px;
+}
+.no-transactions p {
+  text-align: center;
+}
+</style>

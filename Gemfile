@@ -15,6 +15,13 @@ gem 'rails_admin', '~> 2.0'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'composite_primary_keys', '~> 12.0'
 gem 'tinymce-rails'
+gem 'jquery-fileupload-rails'
+# gem 'dragonfly', '~> 1.2.0'
+gem 'carrierwave', '~> 2.0'
+# gem 'fog'
+gem 'fog-aws'
+gem 'discard', '~> 1.2'
+gem 'paper_trail'
 
 # Notification
 gem 'activity_notification'
@@ -33,7 +40,7 @@ gem 'mini_magick'
 gem 'image_optim'
 gem 'image_optim_pack'
 # gem 'image_optim_rails'
-
+gem 'sendgrid-ruby'
 # For import/export
 gem 'caxlsx_rails'
 
