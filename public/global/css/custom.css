@@ -697,6 +697,7 @@ font-weight: 700;
 }
 
 .scl-img span.spanimg {
+	text-align: center;
 	display: table-cell;
 	vertical-align: middle;
 	height: 250px;

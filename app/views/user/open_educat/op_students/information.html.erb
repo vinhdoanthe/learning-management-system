@@ -22,7 +22,9 @@
     <div class="panel-content">
       <ul class="nav nav-tabs nav-primary tab-menu">
         <li class="active"><a href="#tab2_1" data-toggle="tab"><%= t('config.general_info') %></a></li>
-        <li class=""><a href="#tab2_2" data-toggle="tab"><%= t('config.parent_info') %></a></li>
+        <% if res_partner && parent %>
+          <li class=""><a href="#tab2_2" data-toggle="tab"><%= t('config.parent_info') %></a></li>
+        <% end %>
         <li class=""><a href="#tab2_3" data-toggle="tab"><%= t('config.study_progress') %></a></li>
       </ul>
       <div class="tab-content p-0 tab-all-content">
