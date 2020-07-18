@@ -2012,7 +2012,7 @@ fieldset[disabled].btn-inverse.active {
   width: 11px;
 }
 .alert {
-  font-family: 'Open Sans';
+  
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
@@ -2679,7 +2679,7 @@ ul.list-unstyled {
   z-index: 2;
 }
 .modal-image .modal-footer p {
-  font-family: 'Lato', arial;
+  
   font-weight: 100;
   font-size: 16px;
 }
@@ -3236,10 +3236,10 @@ legend {
   font-size: 12px;
 }
 .input-group-btn:last-child > .btn {
-  font-family: arial;
+  
 }
 .input-group-btn:last-child > .btn-group {
-  font-family: arial;
+  
 }
 .input-group-btn:first-child > .btn.btn-white {
   border-right: 0 !important;
@@ -3860,7 +3860,7 @@ label.ios-switch:last-of-type {
   color: #fff;
   display: block;
   float: left;
-  font-family: Trebuchet, Arial, sans-serif;
+  
   font-size: 14px;
   font-weight: 700;
   height: 30px;
@@ -3951,7 +3951,7 @@ label.ios-switch:last-of-type {
   content: "ON";
   display: block;
   float: left;
-  font-family: Trebuchet, Arial, sans-serif;
+  
   font-size: 14px;
   font-weight: 700;
   height: 24px;
@@ -3970,7 +3970,7 @@ label.ios-switch:last-of-type {
   content: "OFF";
   display: block;
   float: left;
-  font-family: Trebuchet, Arial, sans-serif;
+  
   font-size: 14px;
   font-weight: 700;
   height: 24px;
@@ -4470,7 +4470,7 @@ label.ios-switch:last-of-type {
 }
 .ui-datepicker .ui-datepicker-title {
   color: #E9E9E9;
-  font-family: 'Lato';
+  
   font-weight: 100;
   margin: 0 2.3em;
   text-align: center;
@@ -4897,12 +4897,12 @@ ul.pagination > .disabled > a:focus {
 }
 .pagination2 .fa-angle-left:before {
   content: "Prev";
-  font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, sans-serif;
+  
   line-height: 20px;
 }
 .pagination2 .fa-angle-right:before {
   content: "Next";
-  font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, sans-serif;
+  
   line-height: 20px;
 }
 .pagination2 .pagination > li > a {
@@ -5490,7 +5490,7 @@ body.DTTT_Print {
 .tabs-linetriangle .nav.nav-tabs > li > a {
   background: none;
   color: #A2A4A6;
-  font-family: 'Open Sans';
+  
   font-size: 13px;
   font-weight: 600;
   padding: 12px 22px 16px;
@@ -5674,7 +5674,7 @@ body.DTTT_Print {
   color: #838F99;
   content: "-";
   float: right;
-  font-family: 'Open Sans';
+  
   width: 24px;
   height: 24px;
   text-align: center;
@@ -5687,7 +5687,7 @@ body.DTTT_Print {
   color: #7E7E7E;
   content: "+";
   float: right;
-  font-family: 'Open Sans';
+  
   width: 24px;
   height: 24px;
   text-align: center;
@@ -7062,7 +7062,7 @@ div.dataTables_info {
   box-sizing: border-box;
   color: #cccccc;
   display: none;
-  font-family: Menlo, Monaco, monospace, sans-serif;
+  
   font-size: 14px;
   margin-bottom: 0;
   padding: 10px;
@@ -7448,7 +7448,7 @@ div.dataTables_info {
 }
 .note-dialog .note-help-dialog .note-shortcut-key {
   color: #dddd00;
-  font-family: "Courier New";
+  
   text-align: right;
 }
 .note-handle .note-control-selection {

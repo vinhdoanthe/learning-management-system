@@ -2,7 +2,7 @@
   <div class="bnd-title">
     <label class="filter-title" style="text-transform:uppercase;"><%= t('notification.dashboard') %></label>
     <% new_noti = count_notification_student(current_user)%>
-    <p><span class="color-FF0D38"><%= new_noti %></span> <%= t('notification.new_noti') %></p>
+    <p><%= t('dashboard.Have') %> <span class="color-FF0D38"><%= (new_noti > 0 && new_noti < 10)? '0' + new_noti.to_s : new_noti %></span> <%= t('notification.new_noti') %></p>
   </div>
   <div class="bnd-noti">
     <% notices.each do |noti| %>
@@ -22,11 +22,3 @@
     <a href="/notification/broadcast/broadcast_notices" class="pull-right link-all"><%= t('button.see_all') %></a>
   </div>
 </div>
-
-<style>
-.bnd-noti a.link-all {
-  font-family: 'Montserrat-Regular' !important;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-</style>

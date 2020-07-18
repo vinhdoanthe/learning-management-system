@@ -357,6 +357,7 @@ vi:
       teky_coin: 'TEKY Đồng'
     no_leaders: 'Không có học sinh nào'
     no_coming_soon_session: 'Không có buổi học nào'
+    Have: 'Có'
   public_profile:
     center: 'Học tại'
     gender: 'Giới tính'

@@ -4,7 +4,7 @@
 /*=============================== Sidebar =========================*/
 .sidebar {
   span {
-  font-family: 'Quicksand-Regular' !important;
+  font-family: 'Quicksand', sans-serif;
   font-size: 15px;
   font-weight: lighter;
 }
@@ -30,12 +30,15 @@
               margin-top: 0px;
               label {
                 font-size: 14px;
-                font-family: 'Quicksand-Bold'
+                font-family: 'Quicksand', sans-serif;
+                font-style: normal;
+                font-variant: normal;
+                font-weight: 700;
               }
               p {
                 font-size: 14px;
                 color: white;
-                font-family: 'Quicksand-Thin';
+                font-family: 'Quicksand', sans-serif;
               }
             }
           }

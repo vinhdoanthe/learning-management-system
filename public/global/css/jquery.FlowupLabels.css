@@ -47,7 +47,10 @@
   line-height: 22px;
   padding: 20px 0 0 12px;
   color: #000;
-  font-family: 'Quicksand-Bold' !important;
+  
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
   /* Don't change */
   position: absolute;
   top: 0;

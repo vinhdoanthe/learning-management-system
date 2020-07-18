@@ -213,7 +213,7 @@ a.scrollup:hover {
   text-transform: uppercase;
   color: #fff;
   font-size: 12px;
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   letter-spacing: 1.5px;
 }
@@ -659,7 +659,6 @@ a.scrollup:hover {
 
 .topbar .header-left .topnav .mmenu p {
   color: #656565;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 13px;
 }
 
@@ -695,7 +694,6 @@ a.scrollup:hover {
 
 .topbar .header-left .topnav .mmenu .title {
   border-bottom: 1px solid #efefef;
-  font-family: 'Lato', 'Open Sans';
   font-size: 14px;
   margin-top: 15px;
   padding-bottom: 10px;
@@ -703,7 +701,6 @@ a.scrollup:hover {
 }
 
 .topbar .header-left .topnav .mmenu .title strong {
-  font-family: 'Lato', 'Open Sans';
   font-weight: 900;
 }
 
@@ -985,7 +982,6 @@ a.scrollup:hover {
 .topbar .header-right .header-menu .dropdown-menu .dropdown-header {
   background: #2b2e33;
   color: #666666;
-  font-family: 'Open Sans';
   font-size: 15px;
   padding: 8px 15px;
 }
@@ -999,7 +995,6 @@ a.scrollup:hover {
 .topbar .header-right .header-menu .dropdown-menu .dropdown-header p {
   color: #E4E4E4 !important;
   color: #ffffff;
-  font-family: 'Open Sans';
   font-size: 13px;
   margin: 0;
 }
@@ -1063,7 +1058,7 @@ a.scrollup:hover {
   background: #F8F8F8;
   border-top: 1px solid #E2E2E2;
   color: #121212;
-  font-family: 'Open Sans';
+  
   font-size: 12px;
   padding: 5px;
 }
@@ -1518,7 +1513,6 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 }
 
 .sidebar .badge {
-  font-family: verdana, arial;
   font-size: 11px;
   margin-top: 4px;
 }
@@ -1546,7 +1540,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 
 .sidebar .logopanel h1 {
   color: #ffffff;
-  font-family: 'Lato', 'Open Sans', Helvetica, sans-serif;
+  
   font-weight: 900;
   font-size: 30px;
   letter-spacing: -1.5px;
@@ -1779,7 +1773,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   line-height: 24px;
   overflow: hidden;
   padding: 7px 20px 7px 49px;
-  font-family: "Open Sans", arial;
+  
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2026,7 +2020,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   border-radius: 0;
   color: #ffffff;
   display: block;
-  font-family: 'Open Sans';
+  
   font-size: 14px;
   letter-spacing: 0.6px;
   line-height: 21px;
@@ -2076,7 +2070,10 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 
 .sidebar .sidebar-inner .nav-sidebar>li>a span p span.demo-cowndown {
   color: #f16357;
-  font-family: 'Quicksand-Bold';
+  font-family: 'Quicksand', sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
 }
 
 .sidebar .sidebar-inner .nav-sidebar>li>a span:not(.badge) {
@@ -2181,7 +2178,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 .sidebar .sidebar-inner .sidebar-widgets a {
   color: #ffffff;
   display: block;
-  font-family: 'Open Sans';
+  
   font-size: 13px;
   letter-spacing: 0.4px;
   position: relative;
@@ -2257,7 +2254,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 
 .sidebar .sidebar-inner .sidebar-widgets .charts-sidebar .sidebar-charts-inner .sidebar-charts-left .sidebar-chart-number {
   color: #ffffff;
-  font-family: 'Lato';
+  
   font-size: 18px;
   margin-top: 0;
   margin-top: 9px;
@@ -2290,7 +2287,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 .sidebar .sidebar-inner .sidebar-widgets .charts-sidebar.progress-chart .sidebar-chart-title {
   color: rgba(255, 255, 255, 0.6);
   float: left;
-  font-family: 'Open Sans';
+  
   font-size: 13px;
   margin-bottom: 5px;
   margin-top: 0;
@@ -2622,7 +2619,7 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar>li.nav-parent:
 }
 
 .progress-chart .sidebar-chart-number {
-  font-family: 'Open Sans';
+  
   font-size: 13px;
   margin-bottom: 5px;
   margin-top: 0;
@@ -2960,7 +2957,7 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar>li.nav-parent:
 }
 
 .sidebar-hover .topnav .logopanel2 h1 {
-  font-family: 'Lato', 'Open Sans', Helvetica, sans-serif;
+  
   font-weight: 900;
   font-size: 30px;
   letter-spacing: -1.5px;
@@ -3986,7 +3983,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 
 #quickview-sidebar .quickview .tab-content #chat .chat-body .chat-groups .title {
   color: #526a82;
-  font-family: 'Lato', arial;
+  
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -4060,8 +4057,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 }
 
 #quickview-sidebar .quickview .tab-content .title {
-  color: #526a82;
-  font-family: 'Lato', arial, sans-serif;
+  color: #526a82; 
   font-weight: 700;
   margin-bottom: 10px;
   margin-top: 30px;
@@ -4088,7 +4084,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 #quickview-sidebar .quickview .tab-content #settings .settings-chart .chart-title {
   color: rgba(0, 0, 0, 0.6);
   float: left;
-  font-family: 'Open Sans';
+  
   font-size: 13px;
   margin-bottom: 5px;
   margin-top: 0;
@@ -4109,7 +4105,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 }
 
 #quickview-sidebar .quickview .tab-content #settings .progress-chart .settings-chart .chart-.number {
-  font-family: 'Open Sans';
+  
   font-size: 13px;
   margin-bottom: 5px;
   margin-top: 0;
@@ -4170,7 +4166,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
   color: #3F3F3F;
   display: block;
   float: none;
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 700;
   margin-right: 10px;
   padding: 10px 20px;
@@ -4286,7 +4282,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 #quickview-sidebar .quickview .tab-content #notes .detail-note #note-detail .note-write textarea {
   background-color: #fefaed !important;
   border: none;
-  font-family: 'Lato', arial !important;
+  
   font-weight: 100;
   font-size: 18px;
   height: 100%;
@@ -4340,7 +4336,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 
 #quickview-sidebar .quickview-header {
   background-color: #292C35;
-  font-family: 'Lato', arial;
+  
   font-weight: 100;
   font-size: 12px;
   height: 50px;
@@ -4360,7 +4356,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 #quickview-sidebar .quickview-header .nav>li>a {
   background: none;
   color: #909090;
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 700;
   padding: 16px 15px;
   text-transform: uppercase;
@@ -4754,7 +4750,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 }
 
 .main-content .page-content .panel .panel-content h1 {
-  font-family: 'Lato';
+  
   font-weight: 100;
   font-size: 28px;
   margin-top: 0;
@@ -4791,7 +4787,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 .main-content .page-content .panel .panel-header h2 {
   color: #5b5b5b;
   display: block;
-  font-family: 'Lato';
+  
   font-size: 24px;
   font-weight: 100;
   line-height: normal;
@@ -4802,7 +4798,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 
 .main-content .page-content .panel .panel-header h3 {
   display: block;
-  font-family: 'Lato', 'Open Sans', sans-serif;
+  
   font-size: 15px;
   font-weight: 400;
   line-height: normal;
@@ -4920,7 +4916,6 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 
 .main-content .page-content .panel .panel-title {
   display: inline-block;
-  font-family: 'Lato', 'Open Sans', Helvetica, sans-serif;
   font-size: 24px;
   font-weight: 100;
   margin: 5px;
@@ -5173,7 +5168,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 }
 
 .main-content .page-content .breadcrumb li {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
@@ -5200,7 +5195,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 
 .main-content .page-content>.header h2, .main-content .page-content>div>.header h2 {
   color: #1D2939;
-  font-family: 'Lato';
+  
   font-size: 28px;
   letter-spacing: -0.5px;
   margin: 0;
@@ -5278,7 +5273,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 }
 
 .main-content .page-content>.footer .copyright span.copyright, .main-content .page-content>div>.footer .copyright span.copyright {
-  font-family: 'Open Sans';
+  
 }
 
 .main-content .page-content>.footer.footer-absolute, .main-content .page-content>div>.footer.footer-absolute {
@@ -5323,7 +5318,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 }
 
 .main-content .footer .copyright span.copyright {
-  font-family: 'Open Sans';
+  
 }
 
 .main-content .page-content[class^='bg-'].panel h1, .main-content .page-content[class*=' bg-'].panel h1, .main-content .page-content[class^='bg-'].panel h2, .main-content .page-content[class*=' bg-'].panel h2, .main-content .page-content[class^='bg-'].panel h3, .main-content .page-content[class*=' bg-'].panel h3, .main-content .page-content .panel[class^='bg-']h2, .main-content .page-content .panel[class*=' bg-']h2, .main-content .page-content .panel[class^='bg-']h3, .main-content .page-content .panel[class*=' bg-']h3 {
@@ -5528,7 +5523,7 @@ body:not(.fixed-topbar) .main-content .page-content {
 
 .todo-list li .todo-tags {
   display: inline;
-  font-family: "Open Sans";
+  
   left: auto;
   position: absolute;
   right: 9px;
@@ -6016,7 +6011,7 @@ body:not(.fixed-topbar) .main-content .page-content {
 .widget-weather .weather .weather-location strong {
   color: #ffffff;
   display: inline-block;
-  font-family: 'Lato';
+  
   font-size: 18px;
   font-weight: 100;
   height: 21px;
@@ -6336,7 +6331,6 @@ body:not(.fixed-topbar) .main-content .page-content {
 }
 
 .widget-slider-img .slide p {
-  font-family: 'Lato', arial;
   font-weight: 100;
 }
 
@@ -6363,7 +6357,6 @@ body:not(.fixed-topbar) .main-content .page-content {
 .widget-progress-bar .title {
   color: rgba(0, 0, 0, 0.6);
   float: left;
-  font-family: 'Open Sans';
   font-size: 13px;
   margin-bottom: 5px;
   margin-top: 0;
@@ -6374,7 +6367,6 @@ body:not(.fixed-topbar) .main-content .page-content {
 .widget-progress-bar .number {
   color: rgba(0, 0, 0, 0.5);
   float: right;
-  font-family: 'Open Sans';
   font-size: 11px;
   font-size: 13px;
   margin-bottom: 5px;
@@ -6646,7 +6638,6 @@ progress {
 }
 
 .widget-small .title span {
-  font-family: 'Lato', arial, sans-serif;
   font-weight: 900;
   opacity: 0.7;
 }
@@ -6854,14 +6845,12 @@ progress {
   padding-right: 10px;
 }
 
-.widget-infobox .right .pull-left {
-  font-family: 'Lato', 'Open Sans', Arial;
+.widget-infobox .right .pull-left {  
   font-weight: 900;
   font-size: 22px;
 }
 
 .widget-infobox .right .pull-right {
-  font-family: 'Lato', 'Open Sans', Arial;
   font-weight: 100;
   font-size: 14px;
   margin-top: 7px;
@@ -6915,7 +6904,6 @@ progress {
 }
 
 .widget-info .right .number {
-  font-family: 'Lato', 'Open Sans', Arial;
   font-weight: 700;
   font-size: 20px;
   margin-bottom: 2px;
@@ -7349,7 +7337,6 @@ progress {
 }
 
 .animation_title {
-  font-family: 'Open Sans', verdana, arial;
   font-size: 6rem;
 }
 
@@ -7368,8 +7355,7 @@ progress {
   padding: 0;
 }
 
-.error-page h1 {
-  font-family: 'Open Sans';
+.error-page h1 { 
   font-size: 120px;
   font-weight: 600;
   height: 132px;
@@ -7654,7 +7640,6 @@ progress {
 
 .account #lockscreen-block h2 {
   color: #ffffff;
-  font-family: 'Lato', arial;
   font-weight: 100;
   margin-top: 0;
 }
@@ -7707,7 +7692,7 @@ progress {
 }
 
 .account2 .form-password h3 {
-  font-family: 'Lato';
+  
   font-weight: 100;
   font-size: 15px;
   margin-bottom: 20px;
@@ -7774,7 +7759,7 @@ progress {
 }
 
 .account2 .form-signin h3 {
-  font-family: 'Lato';
+  
   font-weight: 100;
   font-size: 15px;
   margin-bottom: 20px;
@@ -7784,7 +7769,6 @@ progress {
 }
 
 .account2 .form-signin h3 strong {
-  font-family: 'Lato', arial, sans-serif;
   font-weight: 900;
 }
 
@@ -7794,7 +7778,6 @@ progress {
 }
 
 .account2 .form-signup h3 {
-  font-family: 'Lato';
   font-weight: 100;
   font-size: 15px;
   margin-bottom: 20px;
@@ -7804,7 +7787,7 @@ progress {
 }
 
 .account2 .form-signup h3 strong {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
 }
 
@@ -7896,7 +7879,7 @@ progress {
 .account-copyright {
   bottom: 10px;
   color: #BDBDBD;
-  font-family: 'Open Sans';
+  
   left: 0;
   position: absolute;
   right: 0;
@@ -8024,7 +8007,7 @@ progress {
   }
   .account2 .account-info .logo {
     color: #ffffff;
-    font-family: 'Lato', arial, sans-serif;
+    
     font-weight: 900;
     font-size: 25px;
     background: url(../images/Logo-2.png) no-repeat;
@@ -8034,7 +8017,7 @@ progress {
     background-size: contain;
   }
   .account2 .account-info h3 {
-    font-family: 'Open Sans';
+    
     font-size: 17px;
     margin-top: 5px;
   }
@@ -8107,15 +8090,13 @@ progress {
 }
 
 .layouts .toggle-layout>div {
-  color: #4A4A4A;
-  font-family: 'Open Sans';
+  color: #4A4A4A;  
   font-size: 14px;
   margin-top: 5px;
   text-decoration: none !important;
 }
 
-.layouts .toggle-layout>div strong {
-  font-family: 'Open Sans';
+.layouts .toggle-layout>div strong {  
   font-weight: 600;
 }
 
@@ -8156,7 +8137,6 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 /**** Page Contact ****/
-
 .page-contact .map-contact {
   height: 330px;
   margin-left: -50px;
@@ -8171,7 +8151,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .page-contact h3 {
-  font-family: 'Lato', arial;
+  
   font-weight: 900;
   font-weight: 600;
 }
@@ -8603,7 +8583,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .form-wizard-style a, .form-wizard-style span, .form-wizard-nav a, .form-wizard-nav span {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   margin-right: 30px;
   text-transform: uppercase;
@@ -8688,7 +8668,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .page-profil .profil-header .name {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   font-size: 24px;
   padding-bottom: 8px;
@@ -8707,7 +8687,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .page-profil .profil-header .more-friends p {
-  font-family: 'Lato', arial;
+  
   font-weight: 100;
   text-align: center;
 }
@@ -8720,7 +8700,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 .page-profil .profil-header .profil-info {
   color: #A4A4A4;
   float: left;
-  font-family: 'Lato';
+  
   font-size: 16px;
   padding-right: 20px;
 }
@@ -8740,7 +8720,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .page-profil .profil-header .moments .num-moments {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   font-size: 24px;
   text-align: center;
@@ -8854,7 +8834,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .page-profil .profil-content .item .user .name {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   font-size: 18px;
   margin-bottom: 10px;
@@ -8875,7 +8855,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 .page-profil .profil-content .item .user .location {
   color: #CFCFCF;
   display: inline-block;
-  font-family: 'Open Sans', 'Lato', arial;
+  
   font-size: 15px;
   font-weight: 600;
   padding-right: 15px;
@@ -8886,7 +8866,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .page-profil .profil-content .item .comment {
-  font-family: 'Merriweather', 'Open Sans', arial, serif;
+  
   font-size: 15px;
   font-weight: 500;
   padding: 25px;
@@ -8962,13 +8942,13 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 
 .page-profil .profil-content .item .more .comments .info .date {
   color: #B4B4B4;
-  font-family: 'Lato', 'Open Sans', Arial;
+  
   font-weight: 900;
   font-size: 13px;
 }
 
 .page-profil .profil-content .item .more .comments p {
-  font-family: 'Merriweather', 'Open Sans', arial, serif;
+  
   font-size: 14px;
   margin-left: 70px;
 }
@@ -9130,7 +9110,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .page-profil .profil-content .item.item-comment .user .name {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   font-size: 16px;
   margin-bottom: 3px;
@@ -9190,7 +9170,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 .item .user .date {
   color: #CFCFCF;
   display: inline-block;
-  font-family: 'Open Sans', 'Lato', arial;
+  
   font-size: 15px;
   font-weight: 600;
 }
@@ -9377,7 +9357,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 /**** Page Shopping Cart ****/
 
 .shopping-cart h3 {
-  font-family: 'Lato', 'Open Sans', Arial;
+  
   font-weight: 900;
   font-weight: 600;
 }
@@ -9619,7 +9599,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 #timeline .timeline-block .timeline-content .article-extract {
-  font-family: 'Merriweather', 'Open Sans', arial, serif;
+  
   font-size: 18px;
 }
 
@@ -9680,8 +9660,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 #timeline .timeline-block .timeline-heading .timeline-day-number {
-  float: left;
-  font-family: arial;
+  float: left;  
   font-size: 44px;
   font-weight: 700;
   height: 40px;
@@ -9992,7 +9971,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 .page-pricing-table .context-menu .dropdown-menu .dropdown-title {
   background: #319DB5;
   color: #ffffff;
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   font-size: 12px;
   letter-spacing: 1.5px;
@@ -10254,7 +10233,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 
 .pricing-table .plan .plan-header .title {
   color: #ffffff;
-  font-family: 'Lato';
+  
   font-size: 22px;
   font-weight: 100;
   margin-bottom: 15px;
@@ -10446,7 +10425,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .page-app.mailbox strong {
-  font-family: 'Lato';
+  
   font-weight: 600;
 }
 
@@ -10570,7 +10549,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .page-app.mailbox .message-item .subject .label {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   letter-spacing: 0.7px;
   margin-right: 6px;
@@ -10766,7 +10745,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .emails-list .mailbox-page h1 {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   font-size: 32px;
 }
@@ -10797,7 +10776,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .emails-list .nav-tabs a {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   font-size: 12px;
 }
@@ -10885,7 +10864,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .email-details .email-subject h1 {
-  font-family: 'Lato';
+  
   font-weight: 100;
   font-size: 50px;
   margin-bottom: 9px;
@@ -10925,7 +10904,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .email-details .email-subject .dropdown-menu>li>a {
-  font-family: 'Lato', arial, sans-serif;
+  
   font-weight: 900;
   font-size: 12px;
   padding: 5px 8px;
@@ -10936,31 +10915,28 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 }
 
 .email-details .email-content p {
-  font-family: 'Merriweather', serif;
   font-size: 19px;
   line-height: 33px;
 }
 
 .email-details .email-content p strong {
-  font-family: 'Merriweather', serif !important;
+  font-family: 'Quicksand', sans-serif;
 }
 
 .email-details .answers {
-  display: none;
-  font-family: 'Merriweather', serif;
+  display: none;  
   font-size: 15px;
   margin-top: 20px;
   padding-right: 30px;
 }
 
 .email-details .answers .answer-title {
-  font-family: 'Merriweather', serif;
+  
   font-weight: 100;
 }
 
 .email-details .answers .answer-subject p {
-  color: #7e7e7e;
-  font-family: 'Lato', 'Open Sans', Helvetica, sans-serif;
+  color: #7e7e7e;  
   font-size: 14px;
 }
 
@@ -10979,7 +10955,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 .email-details .write-answer .answer-textarea {
   background: #ffffff;
   border: 1px solid #dfdfdf;
-  font-family: 'Merriweather', serif;
+  
   font-size: 16px;
   height: 150px;
   margin-top: 38px;
@@ -10994,7 +10970,7 @@ body:not(.rtl) .layout-options .img-sidebar-right {
 .email-details .write-answer .note-editable {
   background: #ffffff;
   border: 1px solid #dfdfdf;
-  font-family: 'Merriweather', serif;
+  
   font-size: 16px;
   height: 150px;
   padding: 20px;
@@ -11460,7 +11436,7 @@ a.message-item:hover {
 
 .coming-soon .content h1 {
   color: #ffffff;
-  font-family: 'Lato', 'Open Sans', Helvetica, sans-serif;
+  
   font-size: 63px;
   font-weight: 100;
   line-height: 70px;
@@ -11559,7 +11535,7 @@ a.message-item:hover {
 .coming-soon #countdown {
   -webkit-font-smoothing: antialiased;
   color: rgba(255, 255, 255, 0.8);
-  font-family: 'Lato', 'Open Sans', Helvetica, sans-serif;
+  
   font-weight: 100;
   font-size: 48px;
   line-height: 1.4em;
@@ -12127,8 +12103,7 @@ a.message-item:hover {
   width: 80%;
 }
 
-.morphsearch.open .morphsearch-input {
-  font-family: 'Lato', arial !important;
+.morphsearch.open .morphsearch-input {  
   font-weight: 100;
   font-size: 7em;
 }
@@ -12739,7 +12714,6 @@ a.message-item:hover {
 }
 
 .page-builder #render {
-  font-family: monospace;
   min-height: 500px;
 }
 
@@ -12873,7 +12847,7 @@ a.message-item:hover {
   }
   #hidden-small-screen-message h2 {
     display: block;
-    font-family: 'Lato', 'Open Sans', arial;
+    
     font-weight: 100;
     margin-bottom: 30px;
     margin: auto;
@@ -12914,8 +12888,7 @@ a.message-item:hover {
   padding: 20px;
 }
 
-.builder h4 {
-  font-family: 'Lato', 'Open Sans';
+.builder h4 {  
   font-size: 14px;
   font-weight: 900;
   margin-bottom: 10px;

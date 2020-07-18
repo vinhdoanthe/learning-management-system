@@ -39,12 +39,11 @@
 	border-bottom: none;
 	font-weight: 700;
 	line-height: normal;
-	font-family: 'Quicksand-Regular';
 }
 
 .cmt-user {
 	color: #0654BA;
-	font-family: 'Quicksand-Regular';
+	font-style: normal;font-variant: normal;font-weight: 400;
 }
 
 .panel-content .bnd-all-other {
