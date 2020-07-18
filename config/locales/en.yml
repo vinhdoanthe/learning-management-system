@@ -218,7 +218,7 @@ en:
       discussion: "Discussion"
       homework: "Homework"
       project: "Project"
-	learning_activity_management: "Management learning activity"
+    learning_activity_management: "Management learning activity"
     learning_activity_management_homework: "Homework"
     learning_activity_management_question: "Question"
     learning_activity_management_project: "Project"
