@@ -208,10 +208,8 @@ font-weight: 700;
 	margin-right: 5px;
 }
 
-.form-content {}
-
-.fc-header {
-	border-bottom: 2px solid #D7DFE9;
+.fc-header{
+	border-bottom: 1px solid #D7DFE9;
 	padding: 10px 0 15px;
 	position: relative;
 }
@@ -953,19 +951,19 @@ font-weight: 700;
 .calenda-box .cb-con strong {
 	color: #000;
 	text-transform: uppercase;
-	font-size: 20px;
 	font-style: normal;
-font-variant: normal;
-font-weight: 700;
+  font-variant: normal;
+  font-weight: 700;
+	font-size: 25px;
 }
 
 .calenda-box .cb-con p {
 	color: #000;
 	text-transform: uppercase;
-	font-size: 8px;
 	font-style: normal;
-font-variant: normal;
-font-weight: 700;
+  font-variant: normal;
+  font-weight: 700;
+	font-size: 9px;
 	line-height: 12px;
 	text-align: center;
 }

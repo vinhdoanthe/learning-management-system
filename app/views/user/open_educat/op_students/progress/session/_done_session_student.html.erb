@@ -9,8 +9,8 @@
   </div>
 </td>
 <td>
-  <strong><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : Learning::Course::OpLessonDecorator.new(lesson).display_lesson_with_subject %></strong><br/>
-  <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %> <br/>
+  <strong style="text-transform: uppercase; color: #6c7178"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : Learning::Course::OpLessonDecorator.new(lesson).display_lesson_with_subject %></strong><br/>
+  <span  style="text-transform: uppercase; color: #6D7278"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %></span> <br/>
   <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : sanitize(truncate(lesson.note, :length => 50)) %>
 </td>
 <td align="center" width='90'>

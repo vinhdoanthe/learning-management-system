@@ -180,13 +180,11 @@
 .PC-back img {
 	margin-right: 5px;
 }
-
-.form-content {}
-
-.fc-header {
-	border-bottom: 2px solid #D7DFE9;
-	padding: 10px 0 15px;
-	position: relative;
+.form-content{}
+.fc-header{
+	border-bottom: 1px solid #D7DFE9;
+	    padding: 10px 0 15px;
+	    position: relative;
 }
 
 .fc-header h3 {

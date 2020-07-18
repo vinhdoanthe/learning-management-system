@@ -140,13 +140,17 @@ en:
   my_class:
     information: "information"
     come_in: "Go to class"
+    batch:
+      name: "Name"
+      subject: "Subject"
     detail:
       class_info: "Class infomations"
       student_projects: "Student projects"
       student_homeworks: "Students Homework"
+      study_progress: "Study Progress"
       progress:
         name: "Study progress"
-        done_html: "<span class='color-16BD56'>Done</span> lesson"
+        done_html: "<span class='color-16BD56' style='color: #16BD56'>Done</span> lesson"
         no_lesson: "No lesson"
         cancel_html: "<span class='color-F16357'>Cancel</span> lesson"
         coming_html: "<span class='color-FFC400'>Coming</span> lesson"

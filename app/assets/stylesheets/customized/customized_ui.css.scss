@@ -82,6 +82,10 @@
 }
 
 /*================================= My Class ===========================*/
+.header-title{
+  font-size: 18px !important;
+  font-weight: 700;
+}
 .student_batch_list {
   .scl-detail {
     margin-top: 10px;
@@ -133,5 +137,79 @@
   .custom_scl-right{
     margin: 0;
     height: 100%;
+  }
+}
+
+/*--------------------------------- Batch info ----------------------*/
+.student_batch_tab {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.batch-detail-info {
+  ul {
+    padding-top: 15px;
+    li {
+      padding: 7px 0 7px 30px !important;
+    }
+  }
+}
+.batch_info_table {
+  margin-bottom: 0 !important;
+  thead {
+    tr {
+      border-bottom: 3px solid #D7DFE9;
+      th {
+        padding-top: 5px !important;
+        padding-bottom: 15px !important;
+      }
+    }
+  }
+  td {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    color: #6D7278;
+    font-weight: 500;
+  }
+
+  .active_student {
+    color: #0654BA !important;
+    font-weight: 700;
+  }
+  .active_student_code {
+    color: black;
+    font-weight: 700;
+  }
+  .label-edit {
+    font-weight: 700;
+  }
+}
+.step-img {
+  padding-top: 7px;
+}
+#course_description_panel {
+  hr {
+    border: 1px dashed #CFCFCF;
+  }
+}
+
+.batch_info_table_content {
+  .label-course {
+    width: 35px;
+    height: 20px;
+  }
+  tr {
+    td {
+      span.img-star{
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+      span.star {
+        font-size: 14px;
+        font-weight: bold;
+        color: #FFC400;
+      }
+    }
   }
 }
