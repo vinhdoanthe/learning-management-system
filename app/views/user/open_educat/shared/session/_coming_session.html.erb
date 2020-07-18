@@ -2,7 +2,6 @@
   * coming_soon_session
 -->
 <% coming_soon_lesson = get_coming_soon_lesson(coming_soon_session, current_user.student_id) %>
-
 <div class="table-responsive bo-table" style="margin-bottom: 30px !important;">
   <div class="fc-header b-0">
     <% is_online = is_online_session?(coming_soon_session) %>
@@ -25,7 +24,7 @@
       <tr>
         <td class='no-padding-left'>
           <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
-            <p><strong><%= coming_soon_lesson.nil? ? coming_soon_session.op_subject.name : coming_soon_lesson.name %></strong></p>
+            <p><strong><%= coming_soon_lesson.nil? ? coming_soon_session.op_subject.name : Learning::Course::OpLessonDecorator.new(coming_soon_lesson).display_lesson_full_name_with_subject %></strong></p>
             <% start = coming_soon_session.start_datetime %>
           <% else %>
             <div><strong><%= t('my_class.detail.progress.end') %></strong></div>
