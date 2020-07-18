@@ -291,3 +291,5 @@ en:
     coming_soon: "Page is in developing"
   redeem:
     no_products: "Redeem products are in developing"
+  attachment:
+    download: 'Download'

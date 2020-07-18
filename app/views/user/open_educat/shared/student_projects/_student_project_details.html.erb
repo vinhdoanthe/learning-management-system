@@ -36,23 +36,24 @@
         <h3 style="margin: 0 !important">Slide sản phẩm</h3>
       </div>
       <div class="project_intro">
-        <%= link_to image_tag('/global/images/downloadinvoice.png') + 'Click to download', rails_blob_path(project.presentation, disposition: "attachment"), style: "font-size: 15px; font-weight: 600; font-family: 'Quicksand-Bold'" %>
+        <%= link_to image_tag('/global/images/downloadinvoice.png') + t('attachment.download'), rails_blob_path(project.presentation, disposition: "attachment") %>
       </div>
     </div>
   </div>
-  <% end %>
-  <% if project.project_show_video.present? %>
-  <div class="panel-content">
-    <div class="box-product">
-      <div class="fc-header" style='margin: 15px 0 15px 0'>
-        <h3 style="margin: 0 !important">Chi tiết sản phẩm</h3>
-      </div>
-      <div class="project_intro">
-        <%= project.project_show_video.html_safe %>
-      </div>
+</div>
+<% end %>
+<% if project.project_show_video.present? %>
+<div class="panel-content">
+  <div class="box-product">
+    <div class="fc-header" style='margin: 15px 0 15px 0'>
+      <h3 style="margin: 0 !important">Chi tiết sản phẩm</h3>
+    </div>
+    <div class="project_intro">
+      <%= project.project_show_video.html_safe %>
     </div>
   </div>
-  <% end %>
+</div>
+<% end %>
 </div>
 <div class="box-product">
   <div id="student_project_feed">
