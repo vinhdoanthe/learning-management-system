@@ -1,21 +1,29 @@
 
+:root {--font-family-sans-serif: "Quicksand", sans-serif;}
+html {font-family: "Quicksand", sans-serif;}
+body {
+	  height: 100%;
+	  color: #000;
+	  font-family: 'Quicksand', sans-serif;
+	  line-height: 1.42857143;
+	  -webkit-font-smoothing: antialiased;
+	  -webkit-text-size-adjust: 100%;
+	  -ms-text-size-adjust: 100%;
+	  font-size: 14px;
+}
 .nav.nav-treeview .nav-item i.far {font-size:0.7rem;}
 #tab-course-study-program .card-title {font-weight: 500}
 
 /*** Style description for tinymce **/
 .tab-content .tinymce .main-content .page-content .panel .panel-content ul {padding-left: 0;}
-.tab-content .tinymce ul.bsc-list {margin-top: 20px;}
+.tab-content .tinymce ul.bsc-list {margin-top: 20px;padding: 0px;}
 .tab-content .tinymce h2, .tab-content .tinymce .h2 {font-size: 25px;}
-
 .tab-content .tinymce h1, .tab-content .tinymce h2, .tab-content .tinymce h3, .tab-content .tinymce h4, .tab-content .tinymce h5 {
-    font-family: 'Montserrat-Bold';
     font-weight: 100;
     margin: 0 !important;
 }
 
-ul.bsc-list {
-    margin-top: 20px;
-}
+ul.bsc-list {margin-top: 20px;padding: 0px;}
 
 ul.bsc-list li {
 	padding-left: 20px;

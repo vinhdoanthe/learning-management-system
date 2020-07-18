@@ -19,19 +19,21 @@ normal:
 
 fulleditor:
   <<: *default
-  language: vi_VN
-  content_css: "/AdminLTE-3.0.5/css/custom.css"
-  plugins: 'lists advlist print preview code importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons'
+  content_css: "/AdminLTE-3.0.5/css/custom.css, /AdminLTE-3.0.5/plugins/fontawesome-free/css/all.min.css"
+  content_style: "@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;515;600;700&display=swap');body { font-family: 'Quicksand', sans-serif; } h1,h2,h3,h4,h5,h6 { font-family: 'Quicksand', sans-serif; }"
+  iconfonts_selector: '.fa, .fab, .fal, .far, .fas, .glyphicon'
+  plugins: 'iconfonts lists advlist print preview code importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons'
   mobile: {
     plugins: 'print preview importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons'
   }
   menubar: 'file edit view insert format tools table help'
-  toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor casechange removeformat | pagebreak | charmap emoticons code | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment | table'
+  toolbar: 'iconfonts undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor casechange removeformat | pagebreak | charmap emoticons code | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment | table'
+  quickbars_selection_toolbar: "bold italic | quicklink h1 h2 h3 h4 h5 h6 blockquote quickimage quicktable| fontawesome | style_formats"
   toolbar_mode: 'wrap'
   images_upload_url: '/uploader/image'
   autoresize_on_init: true
-  font_formats: 'Montserrat=montserrat,sans-serif'
-  fullpage_default_font_family: 'Montserrat,Roboto,Helvetica,Verdana,Georgia, Serif;'
+  font_formats : 'Quicksand=quicksand, Roboto=roboto, Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats'
+  fullpage_default_font_family: 'Quicksand,Roboto,Helvetica,Verdana,Georgia, Serif;'
   fontsize_formats : '8px 9px 10px 11px 12px 13px 14px 15px 16px 17px 18px 19px 20px 21px 22px 23px 24px 26px 28px 30px 32px 34px 36px'
   table_class_list: [
                     {title: 'None', value: ''},
@@ -54,9 +56,13 @@ fulleditor:
   force_p_newlines : false  
   style_formats : [
       {title: 'Teky ul style'},
-      {title: 'Style 1', selector: 'ul', classes: 'bsc-list'},
-      {title: 'Style 2', selector: 'ul', classes: 'teky-list'}
-      
-      
+      {title: 'Style1', selector: 'ul', classes: 'bsc-list'},
+      {title: 'Style2', selector: 'h2', classes: 'lms-course-title'},
+      {title: 'Style3', selector: 'h3', classes: 'lms-course-title'},
+      {title: 'Style4', block: 'hr', classes: 'lms-line'}
+
   ]
   lists_indent_on_tab: true
+  extended_valid_elements: '+span[*],+i[*]'
+  verify_html: false
+
