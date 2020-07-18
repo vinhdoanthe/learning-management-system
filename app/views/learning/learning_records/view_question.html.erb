@@ -1,5 +1,5 @@
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag 'social_community/question_answer/session_qa_area.js' %>
+<%= javascript_include_tag 'social_community/question_answer/session_qa_area.js' %>
 <% end %>
 
 <div class="page-content page-thin">
@@ -17,7 +17,7 @@
       <ul class="nav nav-tabs nav-primary tab-menu">
         <li class="active"><a href="#do_question_container" data-toggle='tab'><%= t('homework.name') %></a></li>
         <!-- <li class=""><a href="#homework_tab2" data-toggle='tab'>Ôn bài</a></li> -->
-        <li class="homework_video_link" data-session="<%= @session.id %>"><a data-toggle='tooltip' title='<%= t('my_class.detail.tooltip.video') %>' ><%= t('homework.review') %></a></li> 
+        <li class="homework_video_link" data-session="<%= @session.id %>"><a data-toggle='tooltip' title='<%= t('my_class.detail.tooltip.video') %>'><%= t('homework.review') %></a></li>
       </ul>
       <div class="tab-content p-0 tab-all-content m-t-20">
         <div class="tab-pane fade active in" id="do_question_container">
@@ -44,18 +44,18 @@
                         <input type="hidden" name="questions_count" value="<%= @user_questions.count %>">
                         <% @user_questions.each_with_index do |user_quest, index| %>
 
-                          <% user_answer = user_quest.user_answers.order(created_at: :DESC).first %>
-                          <% if user_answer.present? && (user_answer.state == 'right' || user_answer.state == 'waiting') %>
-                            <li>
-                              <a href="/learning/question_content?user_question_id=<%= user_quest.id %>&index=<%= index %>" class="btn btn-embossed done_question question_select" data-remote='true'><%= index + 1 %></a>
-                              <input type="hidden" value="<%= user_quest.id %>" name="student_question_id">
-                            </li>
-                          <% else %>
-                            <li>
-                              <a href="/learning/question_content?user_question_id=<%= user_quest.id %>&index=<%= index %>" class="btn btn-embossed undone_question question_select" data-remote='true'><%= index + 1 %></a>
-                              <input type="hidden" value="<%= user_quest.id %>" name="student_question_id">
-                            </li>
-                          <% end %>
+                        <% user_answer = user_quest.user_answers.order(created_at: :DESC).first %>
+                        <% if user_answer.present? && (user_answer.state == 'right' || user_answer.state == 'waiting') %>
+                        <li>
+                          <a href="/learning/question_content?user_question_id=<%= user_quest.id %>&index=<%= index %>" class="btn btn-embossed done_question question_select" data-remote='true'><%= index + 1 %></a>
+                          <input type="hidden" value="<%= user_quest.id %>" name="student_question_id">
+                        </li>
+                        <% else %>
+                        <li>
+                          <a href="/learning/question_content?user_question_id=<%= user_quest.id %>&index=<%= index %>" class="btn btn-embossed undone_question question_select" data-remote='true'><%= index + 1 %></a>
+                          <input type="hidden" value="<%= user_quest.id %>" name="student_question_id">
+                        </li>
+                        <% end %>
                         <% end %>
                       </ul>
                     </div>
@@ -89,22 +89,26 @@
     text-transform: uppercase;
     font-weight: 600;
   }
+
   #answer_the_question {
     text-transform: uppercase;
     font-weight: 600;
   }
+
   .fco-ques span {
-    font-family: 'Montserrat' !important;
+    font-family: 'Quicksand' !important;
   }
+
   .fco-ques p {
-    font-family: 'Montserrat' !important;
+    font-family: 'Quicksand' !important;
   }
+
   .fco-ques h1 h2 h3 {
-    font-family: 'Montserrat' !important;
+    font-family: 'Quicksand' !important;
   }
 </style>
 <script>
-  $('.homework_video_link').on('click', function(){
+  $('.homework_video_link').on('click', function() {
     session_id = $(this).data('session')
     window.location.href = '/user/open_educat/op_students/student_homework?show_video=true&session_id=' + session_id
   })

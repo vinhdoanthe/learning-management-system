@@ -30,8 +30,8 @@ fulleditor:
   toolbar_mode: 'wrap'
   images_upload_url: '/uploader/image'
   autoresize_on_init: true
-  font_formats: 'Montserrat=montserrat,sans-serif'
-  fullpage_default_font_family: 'Montserrat,Roboto,Helvetica,Verdana,Georgia, Serif;'
+  font_formats: 'Quicksand=Quicksand,sans-serif'
+  fullpage_default_font_family: 'Quicksand,Roboto,Helvetica,Verdana,Georgia, Serif;'
   fontsize_formats : '8px 9px 10px 11px 12px 13px 14px 15px 16px 17px 18px 19px 20px 21px 22px 23px 24px 26px 28px 30px 32px 34px 36px'
   table_class_list: [
                     {title: 'None', value: ''},

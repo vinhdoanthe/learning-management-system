@@ -30,23 +30,24 @@
 
 .post-box {
 	margin-bottom: 20px !important;
-  border: 1px solid #D7DFE9 !important;
+	border: 1px solid #D7DFE9 !important;
 }
+
 .post-content {
 	padding-bottom: 10px;
 	margin-bottom: 10px;
 	border-bottom: none;
 	font-weight: 700;
 	line-height: normal;
-	font-family: 'Montserrat-Regular';
-
+	font-family: 'Quicksand-Regular';
 }
+
 .cmt-user {
 	color: #0654BA;
-	font-family: 'Montserrat-Regular';
+	font-family: 'Quicksand-Regular';
 }
 
-.panel-content .bnd-all-other{
+.panel-content .bnd-all-other {
 	padding: 10px 0;
 	border: 1px solid #e7e9ed;
 	border-left: 0;
@@ -57,28 +58,31 @@
 }
 
 #dashboard-content.tab-content {
-  background-color: inherit;
-  boder-top: none;
-  padding: 15px 0 15px 0;
+	background-color: inherit;
+	boder-top: none;
+	padding: 15px 0 15px 0;
 }
 
 .panel {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  border: 1px solid #D7DFE9 !important;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	border: 1px solid #D7DFE9 !important;
 }
 
 #li_homeFeeds a {
-  text-transform: uppercase;
-  font-weight: 500;
+	text-transform: uppercase;
+	font-weight: 500;
 }
+
 #li_newFeeds a {
-  text-transform: uppercase;
-  font-weight: 500;
+	text-transform: uppercase;
+	font-weight: 500;
 }
+
 .s-coming-soon-c-name {
-  text-transform: uppercase;
+	text-transform: uppercase;
 }
+
 .d-no-coming-soon-session {
-  line-height: 50px;
+	line-height: 50px;
 }
