@@ -1,12 +1,15 @@
 <div class='panel post-box'>
-  <div class='panel-content'>
-    <div class="bnd-title">
-      <h2><span style='color: black' class='post-content'> <%= message %> </span></h2>
-    </div>
+  	<div class='panel-content'>
+	    <div class="bnd-title">
+	      <h2><span style='color: black' class='post-content'> <%= message %> </span></h2>
+	    </div>
 
-    <%= render :partial => "social_community/dashboards/shared/student_projects", :locals => {project: project, post: feed.post} %>
-
+    	<%= render :partial => "social_community/dashboards/shared/student_projects", :locals => {project: project, post: feed.post} %>
+	</div>
+	
     <%= render :partial => "social_community/dashboards/shared/posts/reactions", :locals => {post: feed.post, count_like: feed.count_like, count_love: feed.count_love, count_sad: feed.count_sad} %>
+	
+	<div class="sub-panel-content">
     <%= render :partial => "social_community/dashboards/shared/posts/comments", :locals => {post: feed.post, comments: feed.comments} %>
-  </div>
+  	</div>
 </div>

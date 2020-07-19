@@ -12,13 +12,13 @@
       <% leaders.each_with_index do |leader, index| %>
         <tr>
           <% index_display = index.to_i + 1 %>
-          <td><%= index_display %></td>
+          <td class="text-left font-bold color-6D7278" style="padding-left: 0px;vertical-align: top;"><%= (index_display < 10) ? '0' + index_display.to_s  : index_display%></td>
           <td>
-            <label class="color-EB9138"><%= leader.name %></label>
-              <p><%= t('config.center') %> <span class="color-0654BA text-transform"><%= leader.center %></span></p>
+            <label class="student-name color-EB9138"><%= leader.name %></label>
+            <p class="student-center-name"><%= t('config.center') %> <span class="color-0654BA text-uppercase"><%= leader.center %></span></p>
           </td>
-          <td align="right">
-            <h2><%= number_with_delimiter(leader.star, :delimiter => '.') %></h2>
+          <td class="text-right" style="padding-right: 0px;">
+            <h2 class="student-coin"><%= number_with_delimiter(leader.star, :delimiter => '.') %></h2>
           </td>
         </tr>
       <% end %>
