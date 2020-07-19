@@ -3,6 +3,6 @@
     <span class="">
       <%= SocialCommunity::Feed::CommentDecorator.new(comment).display_comment_avatar.html_safe %>
     </span>
-    <p><b class='cmt-user'><%=comment[:user_fullname] %>:</b> <%= comment[:content] %></p>
+    <p><b class="cmt-user color-0654BA"><%=comment[:user_fullname] %></b>&nbsp;<%= comment[:content] %></p>    
   </div>
 </div>

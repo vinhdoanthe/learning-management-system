@@ -4,7 +4,7 @@
       <div class="bnd-other">
         <a class='album-like-btn' data-album-id='<%= album_id%>'> 
           <img src="/global/images/like-3.png" alt="">
-          Like
+          <%= t("social_community.Like")%>
           <span id="album_count_like_<%= album_id %>"><%= count_like.nil? ? 0 : count_like %></span>
         </a>
       </div>
@@ -13,7 +13,7 @@
       <div class="bnd-other">
         <a class='album-love-btn' data-album-id='<%= album_id%>'> 
           <img src="/global/images/love-and-romance.png" alt="">
-          Thả tim
+          <%= t("social_community.Heart")%>
           <span id='album_count_love_<%= album_id %>'><%= count_love.nil? ? 0 : count_love %></span>
         </a>
       </div>
@@ -22,7 +22,7 @@
       <div class="bnd-other">
         <a class='album-sad-btn' data-album-id='<%= album_id%>'> 
           <img src="/global/images/iconsad.png" alt="">
-          Buồn
+          <%= t("social_community.Sad")%>
           <span id="album_count_sad_<%= album_id %>"><%= count_sad.nil? ? 0 : count_sad %></span>
         </a>
       </div>

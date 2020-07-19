@@ -147,6 +147,10 @@ vi:
       timing:
         weekly: 'hàng tuần'
       come_in: "Vào lớp"
+    status:
+      Studying: "Đang học"
+      Stop: "Đã kết thúc"
+      Reversation: 'Bảo lưu'
     session:
       no_session: "Không có buổi học nào"
       student_coming: "LỊCH HỌC TIẾP THEO"
@@ -205,6 +209,9 @@ vi:
     new_comment_placeholder: 'Bình luận tại đây'
     home_feeds: 'Hoạt động của riêng tôi'
     new_feeds: 'Hoạt động chung tại TEKY'
+    Like: "Like"
+    Heart: "Thả tim"
+    Sad: "Buồn"
   datetime:
     from: 'từ'
     to: 'đến'
@@ -267,6 +274,9 @@ vi:
       brand: "Thương hiệu"
       Gift information you want to redeem: "Thông tin quà bạn muốn đổi"
       Number Teky coint payable: "Số Teky đồng phải trả"
+      Rewards: "Đổi thưởng"
+      coin_star: "Giao dịch điểm thưởng"
+      Exchange rewards: "Giao dịch đổi thưởng"
     refer_friend: "Giới thiệu bạn bè"
     learning_activity:
       name: "Hoạt động học tập"
@@ -334,11 +344,7 @@ vi:
       name: "Cộng đồng"
       post: "Bài đăng"
       album: "Bộ sưu tập"
-      photo: "Hình ảnh"
-    redeem:
-      name: "Đổi thưởng"
-      coin_star: "Giao dịch điểm thưởng"
-      redeem: "Giao dịch đổi thưởng"
+      photo: "Hình ảnh"    
     notice: "Thông báo"
     refer_friend: "Giới thiệu bạn"
     learning_activity:
@@ -362,6 +368,10 @@ vi:
     no_leaders: 'Không có học sinh nào'
     no_coming_soon_session: 'Không có buổi học nào'
     Have: 'Có'
+    Not happened: "Chưa diễn ra"
+    Concert canceled: "Buổi bị huỷ"
+    Attend school: "Có đi học"
+    Absent: "Vắng mặt"
   public_profile:
     center: 'Học tại'
     gender: 'Giới tính'

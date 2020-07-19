@@ -75,7 +75,9 @@
 
 #li_newFeeds a {
 	text-transform: uppercase;
-	font-weight: 500;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
 }
 
 .s-coming-soon-c-name {

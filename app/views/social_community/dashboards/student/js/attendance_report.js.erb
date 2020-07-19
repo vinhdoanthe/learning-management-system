@@ -5,17 +5,17 @@ $(document).ready(function(){
 <% report_objects.each_with_index do |object, index| %>
   var chartDiv = $("#barChart<%= index %>");
   <% if object[:status] == Learning::Constant::Batch::StudentSubject::STATE_ON %>
-      $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;">Lớp: <span style="color: #5DC2A7"> <%= object[:batch_code] %></span> | Học phần: <%= object[:subject_level] %> </h4> <h4 class="att-report-status"> <span class="att-report-sub-active">Đang học</span></h4>')
+      $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;"><%= t("learning.class")%>: <span style="color: #5DC2A7"> <%= object[:batch_code] %></span> | <%= t("learning.subject")%>: <%= object[:subject_level] %> </h4> <h4 class="att-report-status"> <span class="att-report-sub-active"><%= t("learning.status.Studying")%></span></h4>')
   <% elsif object[:status] == Learning::Constant::Batch::StudentSubject::STATE_OFF %>
-      $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;">Lớp: <span style="color: #5DC2A7"> <%= object[:batch_code] %></span> | Học phần: <%= object[:subject_level] %> </h4> <h4 class="att-report-status"> <span class="att-report-sub-done">Đã hoàn thành</span></h4>')
+      $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;"><%= t("learning.class")%>: <span style="color: #5DC2A7"> <%= object[:batch_code] %></span> | <%= t("learning.subject")%>: <%= object[:subject_level] %> </h4> <h4 class="att-report-status"> <span class="att-report-sub-done"><%= t("learning.status.Stop")%></span></h4>')
   <% elsif object[:status] == Learning::Constant::Batch::StudentSubject::STATE_SAVE %>
-      $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;">Lớp: <span style="color: #5DC2A7"> <%= object[:batch_code] %></span> | Học phần: <%= object[:subject_level] %> </h4> <h4 class="att-report-status"> <span class="att-report-sub-save">Bảo lưu</span></h4>')
+      $('#report_name<%= index %>').html('<h4 style="text-align: center; font-size: 14px;text-transform: uppercase; padding-top:10px;"><%= t("learning.class")%>: <span style="color: #5DC2A7"> <%= object[:batch_code] %></span> | <%= t("learning.subject")%>: <%= object[:subject_level] %> </h4> <h4 class="att-report-status"> <span class="att-report-sub-save"><%= t("learning.status.Reversation")%></span></h4>')
   <% end %>
   var sum_<%= index %> = <%= object[:count].values.sum %>
   var myChart = new Chart(chartDiv, {
     type: 'pie',
     data: {
-      labels: ["Chưa diễn ra", "Buổi bị huỷ", "Có đi học", "Vắng mặt"],
+      labels: ["<%= t("dashboard.Not happened")%>", "<%= t("dashboard.Concert canceled")%>", "<%= t("dashboard.Attend school")%>", "<%= t("dashboard.Absent")%>"],
       datasets: [
         {
           data:<%= object[:count].values %>,
@@ -48,8 +48,8 @@ $(document).ready(function(){
         align: 'start',
         labels: {
           boxWidth: 20,
-          padding: 20,
-          fontFamily: 'Quicksand-Medium'
+          padding: 10,
+          fontFamily: 'Quicksand'
         }
       },
       responsive: true,
