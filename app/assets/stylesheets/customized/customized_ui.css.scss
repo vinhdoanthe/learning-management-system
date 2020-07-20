@@ -1,6 +1,9 @@
 .fl_input {
   -webkit-appearance: none;
 }
+.public_notice_title {
+  color: black;
+}
 /*=============================== Sidebar =========================*/
 .sidebar {
   span {
@@ -137,6 +140,7 @@
   .custom_scl-right{
     margin: 0;
     height: 100%;
+    max-width: 140px;
   }
 }
 
@@ -210,6 +214,100 @@
         font-weight: bold;
         color: #FFC400;
       }
+    }
+  }
+}
+
+
+/*------------------------ Homework ------------*/
+#homework_session_table {
+  border-top: 3px solid #D7DFE9;
+  border-bottom: 0;
+  td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom: none;
+  }
+}
+#do_question_container{
+  .fc-header {
+   border-bottom: 3px solid #D7DFE9; 
+  }
+  .fc-other {
+    padding-bottom: 50px;
+    border-right: 2px solid #D7DFE9;
+  }
+}
+.student_homework_view {
+  color: #7E858E;
+  font-weight: 700;
+}
+.do_homework_state {
+  color: white;
+  .label-sucess {
+    background: #2CCA73;
+  }
+  .label-danger {
+    background: #FF0D38;
+  }
+  .label-stop {
+    background: #171F45;
+  }
+}
+
+.homework-title {
+  text-transform: uppercase;
+}
+
+.check-multi {
+  color: black;
+}
+
+.fc-other .fco-title {
+  padding: 20px 100px 20px 0px !important;
+}
+
+#homework_question_content {
+  .fco-ques {
+    border-bottom: 1px dashed #D7DFE9;
+    p {
+      font-size: 14px;
+      color: black;
+    }
+  }
+  .fco-answ {
+    margin-top: 20px;
+    margin-bottom: 0;
+  }
+}
+
+#answer_the_question{
+  font-size: 18px;
+  padding: 10px;
+  height: auto;
+  img {
+    width: 18px;
+  }
+}
+
+.answer_respnse_button {
+  text-transform: uppercase;
+}
+
+/*-------------------------- Coming soon session --------------------------------*/
+
+.coming_soon_session_name {
+  td {
+    padding-top: 30px !important;
+    padding-bottom: 20px !important;
+  }
+  td:last-child {
+    padding-top: 20px !important;
+    padding-bottom: 10px !important;
+  }
+  p {
+    strong{
+      color: #6D7278 !important;
     }
   }
 }

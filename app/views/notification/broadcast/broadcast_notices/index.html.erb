@@ -11,7 +11,7 @@
     <div class="panel-content">
       <div class="tab-content p-0 tab-all-content m-t-20" id="notice_index">
         <% @notices.each_with_index do |notice, index| %>
-          <div class="table-responsive bo-table panel" style="margin-top: 20px">
+          <div class="table-responsive bo-table panel" style="margin-top: 20px; padding-top: 20px !important; padding-bottom: 20px !important">
             <div class='broadcast_notice_content' >
               <div>
                 <div class='row' style="display: flex; justify-content: center; align-items: center;">
@@ -19,11 +19,13 @@
                     <%= image_tag('global-noti.png', style: 'width: 30px;') %>
                   </div>
                   <div class='col-md-9'>
-                    <h3><%= notice.title %></h3>
+                    <h3 class="public_notice_title"><%= notice.title %></h3>
                     <p><%= notice.user.username %> đăng lúc <%= notice.created_at.strftime('%H:%M - %d/%m/%y') %></p> 
                   </div>
                   <div class='col-md-2'>
-                    <a data-toggle="collapse" data-parent="#notice_index" href="/notification/broadcast/read_notice?notice_id=<%= notice.id %>" data-remote='true' data-target="#notice_content_<%= index.to_s %>" style='float: right; cursor: pointer' class="toggle_notice_collapse"><%= t('button.see_more') %></a>
+                    <span data-toggle="collapse" data-parent="#notice_index" class="toggle_notice_collapse"  data-target="#notice_content_<%= index.to_s %>" >
+                    <a href="/notification/broadcast/read_notice?notice_id=<%= notice.id %>" data-remote='true'style='float: right; cursor: pointer' ><%= t('button.see_more') %></a>
+                    </span>
                   </div>
                   <% if read_notice? current_user, notice %>
                     <%= image_tag('unread_notice.png', class: 'notice_state') %>
