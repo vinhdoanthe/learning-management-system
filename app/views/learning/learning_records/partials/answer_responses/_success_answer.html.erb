@@ -8,10 +8,10 @@
         <img src="/global/images/Happy.png" alt="">
         <h3 style='font-size: 22px;'>Chúc mừng</h3>
         <!--	        <p class="text-center">Con đã <b class="text-transform color-EB9138">trả lời đúng</b> và được <b class="text-transform color-EB9138">+5XP</b> vào tài khoản<br/>Cố gắng học tốt con nhé</p> -->
-        <p style='font-size: 14px' class="text-center">Con đã <b class="text-transform color-EB9138">trả lời đúng rồi!</b> Con được thưởng <b class="text-transform color-EB9138"><%= star %> star</b> và <b class="text-transform color-EB9138"><%= coin %> Teky đồng</b> vào tài khoản! <br/>Cố gắng học tốt con nhé</p>
+        <p style='font-size: 14px' class="text-center">Con đã <b class="text-transform color-EB9138">trả lời đúng rồi!</b> Con được thưởng <b class="text-transform color-EB9138"><%= star %> star</b> và <b class="text-transform color-EB9138"><%= coin %> Teky đồng</b> vào tài khoản! <br/>Cố gắng học tốt con nhé!</p>
       </div>
       <div class="modal-footer text-center">
-        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">Nhận điểm</button>
+        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7 answer_respnse_button" data-dismiss="modal">Nhận điểm</button>
       </div>
     </div>
   <% elsif state == 'wrong' %>
@@ -22,7 +22,7 @@
         <p style='font-size: 14px' class="text-center">Con đã <b class="text-transform color-EB9138">trả lời SAI mất rồi!</b><br/>Chịu khó học thêm nhé!</p>
       </div>
       <div class="modal-footer text-center">
-        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">Đóng lại</button>
+        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7 answer_respnse_button" data-dismiss="modal">Đóng lại</button>
       </div>
     </div>
   <% elsif state == 'waiting' %>
@@ -34,7 +34,7 @@
         <p style='font-size: 14px' class="text-center">Thầy/Cô sẽ xem và chấm điểm cho con sau nhé!<br/></p>
       </div>
       <div class="modal-footer text-center">
-        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">ĐÓng lại</button>
+        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7 answer_respnse_button" data-dismiss="modal">ĐÓng lại</button>
       </div>
     </div>
   <% elsif state == 'done' %>
@@ -45,7 +45,7 @@
         <p class="text-center" style='font-size: 14px'><b class="text-transform color-EB9138">Con giỏi lắm! Hãy tiếp tục phát huy nhé!</b></p>
       </div>
       <div class="modal-footer text-center">
-        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal">ĐÓng lại</button>
+        <button type="button" class="btn btn-primary btn-embossed bg-5DC2A7 answer_respnse_button" data-dismiss="modal">ĐÓng lại</button>
       </div>
     </div>
   <% end %>

@@ -90,10 +90,10 @@ $(document).ready(function () {
     $(this).parent().find($('a')).html('Đóng')
   });
 
-  $('.toggle_notice_collapse').on('click', function(){
-    $('.notice_collapse').collapse('hide');
-    $(this).closest('.notice_collapse').collapse('show');
-  })
+//  $('.toggle_notice_collapse').on('click', function(){
+//    $('.notice_collapse').collapse('hide');
+//    $(this).closest('.notice_collapse').collapse('show');
+//  })
 
   $('.fl_wrap.m-t-0').append('<span class="fa fa-caret-down" style="position: absolute; right: 20px; top: 42%"></span>');
 });

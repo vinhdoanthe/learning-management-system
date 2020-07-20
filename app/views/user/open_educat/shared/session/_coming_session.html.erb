@@ -21,7 +21,7 @@
   </div>
   <table class="table m-b-0" style='border-top: 2px solid #D7DFE9;'>
     <tbody>
-      <tr>
+      <tr class="coming_soon_session_name">
         <td class='no-padding-left'>
           <% if !coming_soon_session.nil? and !coming_soon_session.blank? %>
             <p><strong><%= coming_soon_lesson.nil? ? coming_soon_session.op_subject.name : Learning::Course::OpLessonDecorator.new(coming_soon_lesson).display_lesson_full_name_with_subject %></strong></p>
