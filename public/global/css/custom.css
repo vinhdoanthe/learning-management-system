@@ -892,13 +892,12 @@ font-weight: 500;
 
 /*Cowndown*/
 
-#clockdiv {
-	
+#clockdiv {	
 	color: #000;
 	display: inline-block;
 	font-style: normal;
-font-variant: normal;
-font-weight: 700;
+	font-variant: normal;
+	font-weight: 700;
 	text-align: center;
 	font-size: 14px;
 }
@@ -906,20 +905,35 @@ font-weight: 700;
 #clockdiv>div {
 	border-radius: 3px;
 	display: inline-block;
+	text-align: center;
 }
 
 #clockdiv div>span {
-	padding: 8px;
+	padding: 7px 13px 6px 13px;
 	border-radius: 3px;
 	background-image: -webkit-linear-gradient(top left, #5DC2A7, #FCF055);
 	background-image: -o-linear-gradient(top left, #5DC2A7, #FCF055);
 	background-image: linear-gradient(to bottom right, #5DC2A7, #FCF055);
 	display: inline-block;
+	text-align: center;
+	width: 50px;
+	height: 50px;
 }
 
 .smalltext {
 	padding-top: 5px;
 	font-size: 16px;
+}
+
+#clockdiv>div.box-datetime {width: 50px;}
+
+#clockdiv div>span.days, #clockdiv div>span.hours, #clockdiv div>span.minutes, #clockdiv div>span.seconds {font-size: 8px;font-weight: 700;}
+
+#clockdiv div>span.days .numberDay, #clockdiv div>span.hours .numberHours, #clockdiv div>span.minutes .numberMinutes, #clockdiv div>span.seconds .numberSeconds {
+	text-align: center;
+	font-size: 22px;
+	font-weight: 700;
+	padding-top: 0px;
 }
 
 /*End Cowndown*/
@@ -1056,8 +1070,8 @@ font-weight: 700;
 .ra-detail a {
 	color: #0654BA;
 	font-style: normal;
-font-variant: normal;
-font-weight: 700;
+	font-variant: normal;
+	font-weight: 700;
 	display: inline-block;
 	margin-top: 14px;
 }
@@ -3369,9 +3383,10 @@ a.link-other {
 a.link-other:before {
 	position: absolute;
 	content: '';
-	background: url(../images/right-arrow.png) no-repeat;
-	width: 24px;
-	height: 14px;
+	/*background: url(../images/right-arrow.png) no-repeat;*/
+	background: url(../images/blue-right-arrow.png) no-repeat;	
+	width: 28px;
+	height: 12px;
 	right: 0;
 	bottom: 2px;
 	background-size: contain;

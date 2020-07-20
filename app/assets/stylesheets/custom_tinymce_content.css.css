@@ -21,7 +21,6 @@
 }
 
 .tab-content .tinymce h1, .tab-content .tinymce h2, .tab-content .tinymce h3, .tab-content .tinymce h4, .tab-content .tinymce h5 {
-	font-family: 'Quicksand-Bold';
 	font-weight: 100;
 	margin: 0 !important;
 }

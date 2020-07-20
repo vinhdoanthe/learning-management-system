@@ -2076,7 +2076,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 
 .sidebar .sidebar-inner .nav-sidebar>li>a span p span.demo-cowndown {
   color: #f16357;
-  font-family: 'Quicksand-Bold';
+  font-weight: 700;
 }
 
 .sidebar .sidebar-inner .nav-sidebar>li>a span:not(.badge) {
