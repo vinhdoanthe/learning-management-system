@@ -38,20 +38,9 @@
         <%= t('learning.session.at').capitalize %>: <span class="font-bold"><%= coming_soon_session[:company_name] %></span>
       </p>
     </div>
-    <div class="bnd-clock text-uppercase" id="clockdiv">
-      <div class="box-datetime">
-        <span class="days"><p class="numberDay"></p><%= t('datetime.prompts.day')%></span>
-      </div> : 
-      <div class="box-datetime">
-        <span class="hours"><p class="numberHours"></p><%= t('datetime.prompts.hour')%></span>
-      </div> :
-      <div class="box-datetime">
-        <span class="minutes"><p class="numberMinutes"></p><%= t('datetime.prompts.minute')%></span>
-      </div> :
-      <div class="box-datetime">
-        <span class="seconds"><p class="numberSeconds"></p><%= t('datetime.prompts.second')%></span>
-      </div>
-    </div>
+    
+    <%= render 'social_community/dashboards/student/box_datetime' %>
+
     <br/>
     <%= link_to t('learning.batch.come_in').upcase, user_open_educat_op_students_batch_detail_path(coming_soon_session[:batch_id]), :class => 'link-other color-0654BA m-t-10' %>
   </div>

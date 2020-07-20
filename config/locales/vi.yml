@@ -53,6 +53,7 @@ vi:
     noti: "Thông báo"
     dashboard: 'Dashboard'
     my_class: "Lớp học của tôi"
+    you_have_no_courses_yet: "Bạn chưa có khóa học nào"
     timetable: "Thời khoá biểu"
     homework: "Bài tập và ôn bài"
     redeem: "Đổi quà"
