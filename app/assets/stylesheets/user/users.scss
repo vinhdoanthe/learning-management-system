@@ -129,10 +129,11 @@
 
 #teacher_evaluate_session{
 	margin: 10px;
-	div{
+	div.evaluate_element {
 		margin: 10px;
 	}
 	textarea {
+    margin: 10px;
 		width: 100%;
 		margin: auto;
 	}
@@ -148,12 +149,6 @@
 	label {
 		margin-top: 10px;
 		font-size: 15px;
-	}
-	button{
-		background-color: #5cc3a8;
-		color: white;
-		font-size: 18px;
-		font-weight: 600;
 	}
 }
 
