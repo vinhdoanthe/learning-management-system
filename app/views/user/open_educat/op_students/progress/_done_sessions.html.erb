@@ -20,7 +20,8 @@
         <% done_sessions.each do |done_session| %>
           <% s_done = done_session[:session] %>
           <% l_done = done_session[:lesson] %>
-          <tr class="student_subject_level subject_level_<%= s_done.op_subject.id.to_s %>">
+          <% style_display = (s_done.subject_id == active_subject) ? "" : "style=display:none;" %>
+          <tr class="student_subject_level subject_level_<%= s_done.op_subject.id.to_s %>" <%= style_display %>>
             <%= render 'user/open_educat/op_students/progress/session/done_session_student', {:session => s_done, :lesson => l_done} %>
           </tr>
         <% end %>
