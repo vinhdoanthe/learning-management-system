@@ -262,18 +262,24 @@ $(document).ready(function(){
     session_id = $('input[name="active_session"]').val();
     student_ids = $('.select_assign_student').val();
     var question_ids = new Array();
+
     $('input[name="select_homework"]').each(function(){
       if($(this).is(':checked')){
-	question_ids.push($(this).val())
+    	question_ids.push($(this).val())
       }
     })
-    $.ajax({
-      url: '/user/open_educat/op_teachers/assign_homework',
-      method: 'POST',
-      data: { student_ids: student_ids, question_ids: question_ids, session_id: session_id },
-      success: function(res){
-	display_noti(res)
-      }
-    })
+
+    if(typeof question_ids !== 'undefined' && question_ids.length > 0){
+      $.ajax({
+        url: '/user/open_educat/op_teachers/assign_homework',
+        method: 'POST',
+        data: { student_ids: student_ids, question_ids: question_ids, session_id: session_id },
+        success: function(res){
+	        display_noti(res)
+        }
+      })
+    }else{
+      alert('Bạn chưa chọn câu hỏi!')
+    }
   })
 })

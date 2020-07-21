@@ -54,7 +54,7 @@ module Learning
     end
 
     def batch_user_answer_list
-      if params[:batch_id].present? && params[:batch_id] == 'all'
+      if params[:batch_id].present? && params[:batch_id] != 'all'
         batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
         teacher = current_user.op_faculty
 
