@@ -65,10 +65,10 @@ module User
 
       def batch_progress
         if params[:batch_id].present?
-          batch, student_course, subjects, coming_soon_session, done_sessions, tobe_sessions, cancel_sessions = Learning::Batch::OpBatchService.get_student_batch_progress(params[:batch_id], @op_student.id)
+          batch, student_course, subjects, coming_soon_session, done_sessions, tobe_sessions, cancel_sessions, active_subject = Learning::Batch::OpBatchService.get_student_batch_progress(params[:batch_id], @op_student.id)
           respond_to do |format|
             format.html
-            format.js {render 'batch_progress', locals: {batch: batch, student_course: student_course, subjects: subjects, coming_soon_session: coming_soon_session, done_sessions: done_sessions, tobe_sessions: tobe_sessions, cancel_sessions: cancel_sessions}}
+            format.js {render 'batch_progress', locals: {batch: batch, student_course: student_course, subjects: subjects, coming_soon_session: coming_soon_session, done_sessions: done_sessions, tobe_sessions: tobe_sessions, cancel_sessions: cancel_sessions, active_subject: active_subject}}
           end 
         else
 

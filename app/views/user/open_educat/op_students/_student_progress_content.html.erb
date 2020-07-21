@@ -17,9 +17,8 @@
         <label class='fl_label' for='rf_name'><%= t('learning.subject') %>:</label>
         <% unless subjects.blank? %>
           <select class='fl_input student_subject_filter' id='rf_name' onchange="showSubjectSessions()">
-            <option value="all"><%= t('select.all') %></option>
             <% subjects.each do |subject| %>
-              <option value="<%= subject[0] %>"><%= subject[1] %></option>
+              <option value="<%= subject[0] %>" <%= subject[0] == active_subject ? 'selected':'' %>><%= subject[1] %></option>
             <% end %>
           </select>
         <% end %>
@@ -30,8 +29,8 @@
 
 <%= render 'user/open_educat/shared/session/coming_session', {:coming_soon_session => coming_soon_session} %>
 
-<%= render 'user/open_educat/op_students/progress/done_sessions', {:done_sessions => done_sessions} %>
+<%= render 'user/open_educat/op_students/progress/done_sessions', {:done_sessions => done_sessions, active_subject: active_subject} %>
 
-<%= render 'user/open_educat/op_students/progress/tobe_sessions', {:tobe_sessions => tobe_sessions} %>
+<%= render 'user/open_educat/op_students/progress/tobe_sessions', {:tobe_sessions => tobe_sessions, active_subject: active_subject} %>
 
-<%= render 'user/open_educat/op_students/progress/cancel_sessions', {:cancel_sessions => cancel_sessions} %>
+<%= render 'user/open_educat/op_students/progress/cancel_sessions', {:cancel_sessions => cancel_sessions, active_subject: active_subject} %>

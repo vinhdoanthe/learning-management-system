@@ -18,7 +18,8 @@
         <% cancel_sessions.each do |cancel_session| %>
           <% s_cancel = cancel_session[:session] %>
           <% l_cancel = cancel_session[:lesson] %>
-          <tr class="student_subject_level <%= 'subject_level_' + s_cancel.op_subject.id.to_s %>">
+          <% style_display = (s_cancel.subject_id == active_subject) ? "" : "style=display:none;" %>
+          <tr class="student_subject_level subject_level_<% s_cancel.op_subject.id.to_s %>" <%= style_display %>>
             <%= render 'user/open_educat/op_students/progress/session/cancel_session_student', {:session => s_cancel, :lesson => l_cancel} %>
             <tr>
             <% end %>

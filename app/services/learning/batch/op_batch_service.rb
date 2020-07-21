@@ -66,7 +66,7 @@ module Learning
       def self.get_student_batch_progress(batch_id, student_id)
         batch = Learning::Batch::OpBatch.where(id: batch_id).first
         op_student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch_id, student_id: student_id).last
-        subjects = op_student_course.op_subjects.order(level: :ASC).pluck(:id, :level).compact
+        subjects = op_student_course.op_subjects.order(level: :ASC).pluck(:id, :level).uniq.compact
         subject_ids = subjects.map{|subject| subject[0]}
         all_sessions = get_sessions(batch_id, student_id, subject_ids)
         coming_soon_session = find_coming_soon_session(all_sessions)
@@ -98,7 +98,14 @@ module Learning
         # Matching
         tobe_sessions = match_tobe_session_lessons(tobe_sessions, tobe_lessons)
         cancel_sessions = pair_session_lessons(cancel_sessions)
-        return batch, op_student_course, subjects, coming_soon_session, done_sessions, tobe_sessions, cancel_sessions
+        if !coming_soon_session.nil?
+          active_subject = coming_soon_session.subject_id
+        elsif !done_sessions.blank?
+          active_subject = done_sessions.last[:session].subject_id
+        else
+          active_subject = nil
+        end
+        return batch, op_student_course, subjects, coming_soon_session, done_sessions, tobe_sessions, cancel_sessions, active_subject
       end
 
       def self.get_sessions(batch_id, student_id, subject_ids = [], interval = {})
