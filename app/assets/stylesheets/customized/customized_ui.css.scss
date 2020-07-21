@@ -90,17 +90,44 @@
   font-weight: 700;
 }
 .student_batch_list {
+  padding-left: 25px !important;
+  padding-right: 25px !important;
   .scl-detail {
     margin-top: 10px;
     margin-bottom: 10px;
+    .spanimg {
+      max-height: 250px;
+      height: 250px;
+      .scl-danger {
+        font-size: 12px;
+        text-align: center;
+        width: 130px;
+      }
+      .scl-success {
+        font-size: 12px;
+        text-align: center;
+        width: 130px;
+      }
+      .scl-save {
+        font-size: 12px;
+        text-align: center;
+        width: 130px;
+      }
+    }
   }
   .scl-text{
     display: flex;
     height: calc(100% - 250px);
+    padding-left: 20px;
+    padding-right: 20px;
     .custom_scl-right {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: baseline;
+      justify-content: right;
+      margin-left: auto;
+    }
+    .scl-left {
+      padding-left: 0;
     }
     a {
       background-color: #5DC2A7;
@@ -109,7 +136,7 @@
       font-size: 14px;
       text-transform: uppercase;
       color: white;
-      font-weight: 600;
+      font-weight: 700;
       margin: 0;
       div {
         display: flex;
@@ -220,9 +247,15 @@
 
 
 /*------------------------ Homework ------------*/
+#homework_tab1 {
+  .table-responsive.bo-table {
+    padding-bottom: 0 !important
+  }
+}
 #homework_session_table {
   border-top: 3px solid #D7DFE9;
   border-bottom: 0;
+  margin-bottom: 0;
   td {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -294,6 +327,11 @@
   text-transform: uppercase;
 }
 
+.do_video_homework {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
 /*-------------------------- Coming soon session --------------------------------*/
 
 .coming_soon_session_name {
@@ -308,6 +346,44 @@
   p {
     strong{
       color: #6D7278 !important;
+    }
+  }
+}
+
+
+/*--------------------------------------------- Timetable ---------------------------------------------------------*/
+
+.day_in_week {
+  th {
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 700;
+    background-color: #D7DFE9;
+    span {
+      font-weight: 500;
+    }
+  }
+}
+
+.student_timetable {
+  .chosse-date {
+    p span{
+      color: black;
+      font-weight: 700;
+    }
+  }
+  .month_teaching_schedule {
+      color: black !important;
+      font-weight: 700 !important;
+  }
+  .year_teaching_schedule {
+    color: black;
+    font-weight: 700;
+  }
+  .ct-note {
+    color: black;
+    font-weight: 700;
+    .ct-right {
+      text-transform: none;
     }
   }
 }
