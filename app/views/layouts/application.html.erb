@@ -1,4 +1,4 @@
-<% if current_user && current_user.is_admin? && adm_controller %>
+<% if current_user && current_user.is_admin? && adm_controller? %>
   <%= render "partials/admin_lte_application"%>
 <% else%>
   <!DOCTYPE html>
