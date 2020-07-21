@@ -10,9 +10,10 @@
       <%= favicon_link_tag 'Logo-fav.ico' %>
       <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
       <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>      
-      <link href="/global/css/style.css" rel="stylesheet">
-      <link href="/global/css/style_other.css" rel="stylesheet">
-      <link href="/global/css/custom.css" rel="stylesheet">
+      <% version = Time.now.to_i %>
+      <link href="/global/css/style.css?v=<%=version%>" rel="stylesheet">
+      <link href="/global/css/style_other.css?v=<%=version%>" rel="stylesheet">
+      <link href="/global/css/custom.css?v=<%=version%>" rel="stylesheet">
       <link href="/global/css/jquery.FlowupLabels.css" rel="stylesheet"> 
       <link href="/global/css/theme.css" rel="stylesheet">
       <link href="/global/css/ui.css" rel="stylesheet">
@@ -86,7 +87,6 @@
         <script type="text/javascript" src='/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js'></script>
         <script type="text/javascript" src='/global/plugins/bootstrap-dropdown/bootstrap-hover-dropdown.min.js'></script>
         <script type="text/javascript" src='/global/plugins/charts-sparkline/sparkline.min.js'></script>
-<!--        <script type="text/javascript" src='/global/plugins/retina/retina.min.js'></script> -->
         <script type="text/javascript" src='/global/plugins/backstretch/backstretch.min.js'></script>
         <script type="text/javascript" src='/global/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js'></script>
         <script type="text/javascript" src='/global/js/builder.js'></script>
@@ -129,17 +129,17 @@
 
         <script type="text/javascript">          
           $('.owl-carousel').owlCarousel({
-              loop:true,
-              responsiveClass:true,
-              items:1,
-              slideBy: 1,
-              dots: false,
-              dotsEach: false,
-              autoplay: false,
-              rewind: true,
-              autoWidth: false,
-              center: true
-            });
+            loop:true,
+            responsiveClass:true,
+            items:1,
+            slideBy: 1,
+            dots: false,
+            dotsEach: false,
+            autoplay: false,
+            rewind: true,
+            autoWidth: false,
+            center: true
+          });
 
           // update width image carousel for left menu
           updateOwlCarousel = function(){
