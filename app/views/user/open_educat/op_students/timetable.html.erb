@@ -9,7 +9,7 @@
   <div class="panel m-t--70">
     <div class="panel-content">
       <%= render 'user/open_educat/shared/session/coming_session', {:coming_soon_session => @session} %>
-      <div class="table-responsive calendar-teach" style="overflow-x: initial;">
+      <div class="table-responsive calendar-teach student_timetable" style="overflow-x: initial;">
         <div class="filter-box FlowupLabels b-b-1-869fb229 m-b-20" id='formBody'>
           <div class="row">
             <div class="col-md-3">
@@ -56,7 +56,7 @@
         <table class="table table-bordered">
           <thead>
             <tr class='day_in_week'>
-              <th width="140" class="text-right bg-5DC2A7 color-fff td-bold" style="border: 0; text-align: center;">Khung giờ</th>
+              <th width="140" class="text-right bg-5DC2A7 color-fff td-bold" style="border: 0; text-align: center; text-transform: uppercase; font-size: 14px; font-weight: 700">Khung giờ</th>
               <th class="text-center thu_2 td-bold" width="155">Thứ 2<br /><span>23/12/2019</span></th>
               <th class="text-center thu_3 td-bold" width="155">Thứ 3<br /><span>24/12/2019</span></th>
               <th class="text-center thu_4 td-bold" width="155">Thứ 4<br /><span>25/12/2019</span></th>
@@ -69,21 +69,21 @@
           <tbody id='schedule_table'>
             <tr class='s1'>
               <td rowspan="2" align="center" class="bg-FFC400 color-fff font-bold td-bold" style="border: 0">
-                <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Sáng</span>
+                <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px; text-transform: uppercase; font-size: 14px; font-weight: 700">Sáng</span>
               </td>
             </tr>
             <tr class='s2'>
             </tr>
             <tr class='c1'>
               <td rowspan="2" align="center" class="bg-F0B800 color-fff font-bold td-bold" style="border: 0">
-                <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Chiều</span>
+                <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px; text-transform: uppercase; font-size: 14px; font-weight: 700">Chiều</span>
               </td>
             </tr>
             <tr class='c2'>
             </tr>
             <tr class='t1'>
               <td rowspan="2" align="center" class="bg-D4A300 color-fff font-bold td-bold" style="border: 0">
-                <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px;">Tối</span>
+                <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px; text-transform: uppercase; font-size: 14px; font-weight: 700;">Tối</span>
               </td>
             </tr>
             <tr class='t2'>
