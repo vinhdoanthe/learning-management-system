@@ -12,7 +12,8 @@ class Learning::Homework::QuestionService
         return { state: user_answer.state, user_question_id: user_question.id } if user_answer.present?
       end
     else
-      return { message: 'Đã có lỗi xảy ra! Thử lại sau!'}
+      puts "ANSWER ERROR: #{ params } - #{ student }"
+      return { state: 'fail', message: 'Đã có lỗi xảy ra! Thử lại sau!'}
     end
   end
 
@@ -141,8 +142,10 @@ class Learning::Homework::QuestionService
   end
 
   def assign_homework student_id, question_list, batch_id
-    question_list.each do |question|
-      create_user_question student_id, question.to_i, batch_id.to_i
+    unless question_list.present?
+      question_list.each do |question|
+        create_user_question student_id, question.to_i, batch_id.to_i
+      end
     end
   end
 
