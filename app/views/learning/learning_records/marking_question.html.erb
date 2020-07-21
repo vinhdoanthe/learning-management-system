@@ -25,11 +25,17 @@
                 <div class="col-md-3" style='float: right;'>
                   <div class='fl_wrap m-t-0'>
                     <label class='fl_label' for='rf_name'>Lớp học:</label>
-                    <select class='fl_input' id="batch_user_answer_list">
-                      <% @batches.each do |batch| %>
-                        <option value="<%= batch.id %>"><%= batch.name %></a></option>
-                      <% end %>
-                    </select>
+                    <% if @batches.present? %>
+                      <select class='fl_input' id="batch_user_answer_list">
+                        <% @batches.each do |batch| %>
+                          <option value="<%= batch.id %>"><%= batch.name %></a></option>
+                        <% end %>
+                      </select>
+                    <% else %>
+                      <select class='fl_input' id="batch_user_answer_list">
+                        <option values="all">Tất cả</option>
+                      </select>
+                    <% end %>
                   </div>
                 </div>
                 <div class="col-md-3" style='float: right'>
