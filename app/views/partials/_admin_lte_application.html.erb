@@ -174,115 +174,113 @@
         <!-- /.container-fluid -->
       </div>
       <!-- /.content -->
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2020 <a href="https://teky.edu.vn">Teky</a>.</strong> All rights reserved.
+      </footer>
     </div>
-    <!-- /.content-wrapper -->
+    <!-- ./wrapper -->
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+    <!-- REQUIRED SCRIPTS -->
 
-    <!-- Main Footer -->
-    <footer class="main-footer">
-      <strong>Copyright &copy; 2020 <a href="https://teky.edu.vn">Teky</a>.</strong> All rights reserved.
-    </footer>
-  </div>
-  <!-- ./wrapper -->
+    <!-- jQuery -->
+    <!-- Bootstrap -->
+    <script src="/AdminLTE-3.0.5/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- REQUIRED SCRIPTS -->
+    <script src="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.<%= locale%>.min.js"></script>
 
-  <!-- jQuery -->
-  <!-- Bootstrap -->
-  <script src="/AdminLTE-3.0.5/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="/AdminLTE-3.0.5/plugins/chart.js/Chart.min.js"></script>
+    <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-datalabels/chartjs-plugin-datalabels.min.js"></script>
+    <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-deferred/chartjs-plugin-deferred.min.js"></script>
+    <script src="/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js"></script>
+    <!-- AdminLTE -->
+    <script src="/AdminLTE-3.0.5/js/adminlte.js"></script>
+    <script src="/AdminLTE-3.0.5/js/demo.js"></script>
+    <script src="/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
+    <%= yield :javascript_includes %>
+    <script>
+      $(document).ready(
+        function() {
 
-  <script src="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-  <script src="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.<%= locale%>.min.js"></script>
+          $('#frm_report_from_date').datepicker({
+            autoclose: true,
+            format: 'dd-mm-yyyy',
+            language: '<%= locale%>'
+          });
 
-  <!-- OPTIONAL SCRIPTS -->
-  <script src="/AdminLTE-3.0.5/plugins/chart.js/Chart.min.js"></script>
-  <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-datalabels/chartjs-plugin-datalabels.min.js"></script>
-  <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-deferred/chartjs-plugin-deferred.min.js"></script>
-  <script src="/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js"></script>
-  <!-- AdminLTE -->
-  <script src="/AdminLTE-3.0.5/js/adminlte.js"></script>
-  <script src="/AdminLTE-3.0.5/js/demo.js"></script>
-  <script src="/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
-  <%= yield :javascript_includes %>
-  <script>
-    $(document).ready(
-      function() {
+          $('#frm_report_to_date').datepicker({
+            autoclose: true,
+            format: 'dd-mm-yyyy',
+            language: '<%= locale%>',
+            endDate: new Date(),
+          });
 
-        $('#frm_report_from_date').datepicker({
-          autoclose: true,
-          format: 'dd-mm-yyyy',
-          language: '<%= locale%>'
-        });
+          $('.select2').select2();
 
-        $('#frm_report_to_date').datepicker({
-          autoclose: true,
-          format: 'dd-mm-yyyy',
-          language: '<%= locale%>',
-          endDate: new Date(),
-        });
+          $('.ui_date').datepicker({
+            autoclose: true,
+            format: 'dd-mm-yyyy',
+            language: '<%= locale%>'
+          });
 
-        $('.select2').select2();
+          $('#frm_batch_name').on("input", function(e) {
 
-        $('.ui_date').datepicker({
-          autoclose: true,
-          format: 'dd-mm-yyyy',
-          language: '<%= locale%>'
-        });
+            $("#datalist_batch").empty();
 
-        $('#frm_batch_name').on("input", function(e) {
+            var batch_name = $(this).val();
 
-          $("#datalist_batch").empty();
+            if (batch_name === "" || batch_name.length < 5)
+              return false;
 
-          var batch_name = $(this).val();
-
-          if (batch_name === "" || batch_name.length < 5)
-            return false;
-
-          $.ajax({
-            type: "GET",
-            url: '<%= adm_learning_activity_get_batch_path%>',
-            async: false,
-            data: {
-              batch_name: batch_name
-            },
-            success: function(data) {
-              if (data.results.length) {
-                for (var i = 0, len = data.results.length; i < len; i++) {
-                  var opt = $("<option></option>").attr("value", data.results[i]['name']);
-                  $("#datalist_batch").append(opt);
+            $.ajax({
+              type: "GET",
+              url: '<%= adm_learning_activity_get_batch_path%>',
+              async: false,
+              data: {
+                batch_name: batch_name
+              },
+              success: function(data) {
+                if (data.results.length) {
+                  for (var i = 0, len = data.results.length; i < len; i++) {
+                    var opt = $("<option></option>").attr("value", data.results[i]['name']);
+                    $("#datalist_batch").append(opt);
+                  }
                 }
               }
-            }
+            });
           });
+
         });
+    </script>
 
-      });
-  </script>
-
-  <% if @sub_module  == 'diligent'%>
-  <% if !@frm_report[:company_id].nil? && @frm_report[:company_id] >0%>
-  <% if !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'range'%>
-  <%= render "report/diligent/diligent_company_range"%>
-  <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'week' %>
-  <%= render "report/diligent/diligent_company_week"%>
-  <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'month' %>
-  <%= render "report/diligent/diligent_company_month"%>
-  <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'year' %>
-  <%= render "report/diligent/diligent_company_year"%>
-  <% end %>
-  <% else %>
-  <%= render "report/diligent/diligent_range"%>
-  <% end %>
-  <% else%>
-  <% if !@js_data_template.nil?%>
-  <%= render @js_data_template%>
-  <% end%>
-  <% end %>
+    <% if @sub_module  == 'diligent'%>
+    <% if !@frm_report[:company_id].nil? && @frm_report[:company_id] >0%>
+    <% if !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'range'%>
+    <%= render "report/diligent/diligent_company_range"%>
+    <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'week' %>
+    <%= render "report/diligent/diligent_company_week"%>
+    <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'month' %>
+    <%= render "report/diligent/diligent_company_month"%>
+    <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'year' %>
+    <%= render "report/diligent/diligent_company_year"%>
+    <% end %>
+    <% else %>
+    <%= render "report/diligent/diligent_range"%>
+    <% end %>
+    <% else%>
+    <% if !@js_data_template.nil?%>
+    <%= render @js_data_template%>
+    <% end%>
+    <% end %>
 </body>
 
 </html>
