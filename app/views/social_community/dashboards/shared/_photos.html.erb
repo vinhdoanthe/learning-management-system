@@ -1,8 +1,55 @@
+<div class="box-photos">
+<%
+  _photos = []
+  _photos << {image:'https://i1-sohoa.vnecdn.net/2020/07/09/Noble-falcon-VNEXPRESS-DSC01285-1594280185.jpg?w=900&h=540&q=100&dpr=1&fit=crop&s=z4xAef8ZxoPQNRcnVEBpCQ'}
+  _photos << {image:'https://i1-dulich.vnecdn.net/2020/07/20/9-jpg-1595109537-5096-15951098-8066-2263-1595240761.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=diJ20biT156Yl24Bsu3LPw'}
+  _photos << {image:'https://i1-dulich.vnecdn.net/2020/07/19/1-jpg-1595109763-6238-1595109869.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=vPx0bYS2AtYFgUNnSGhNWA'}
+  _photos << {image:'https://i1-dulich.vnecdn.net/2020/07/19/1-jpg-1595109763-6238-1595109869.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=vPx0bYS2AtYFgUNnSGhNWA'}
+  _photos_size = _photos.size
+%>
+
+<%  if _photos_size <= 2 %>
+      <% _photos.each do |photo| %>
+        <a href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+          <span><%= image_tag(photo[:image], :class => 'image-fit img-fluid border-image') %></span>
+        </a>
+      <% end %>
+<% elsif _photos_size == 3 %>
+      <div class="row">
+        <a href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+          <span class="col-xs-12 col-md-12 col-lg-12"><%= image_tag(_photos[0][:image], :class => 'image-fit img-fluid border-image') %></span>
+        </a>      
+        <a class="col-xs-6 col-md-6 " style="padding-right:0px;" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+          <span><%= image_tag(_photos[1][:image], :class => 'image-fit img-fluid border-image') %></span>
+        </a>
+        <a class="col-xs-6 col-md-6 " style="padding-left:0px;" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+          <span><%= image_tag(_photos[2][:image], :class => 'image-fit border-image') %></span>
+        </a>
+      </div>
+<% elsif _photos_size == 4 %>
+      <div class="row">
+        <a href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+          <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><%= image_tag(_photos[0][:image], :class => 'image-fit img-fluid border-image') %></span>
+        </a>
+      </div>      
+      <a class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-0" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+        <span><%= image_tag(_photos[1][:image], :class => 'image-fit img-fluid border-image') %></span>
+      </a>
+      <a class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-0" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+        <span><%= image_tag(_photos[2][:image], :class => 'image-fit border-image') %></span>
+      </a>
+      <a class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-0" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+        <span><%= image_tag(_photos[3][:image], :class => 'image-fit border-image') %></span>
+      </a>      
+<% end%>
+
+</div>
+
 <div class="bnd-img">
-  <% photos_size = photos.size %>
+  <% photos_size = photos.size%>
   <% if photos_size <= 4 %>
     <% photos.each do |photo| %>
-      <a href="#showPhotoModalInDashboard<%= post.id %>" class="bndi-detail"  data-toggle="modal">
+      <a href="#showPhotoModalInDashboard<%= post.id %>" class="bndi-detail" data-toggle="modal">        
         <span><%= image_tag(photo.image, :class => 'image-fit') %></span>
       </a>
     <% end %>
@@ -21,25 +68,8 @@
   <% end %>
 
   <!-- Modal -->
-  <div class="modal fade" id="showPhotoModalInDashboard<%= post.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <ul class="owl-carousel list-lightbox" id="lightbox<%= post.id %>">
-            <% photos.each do |photo| %>
-              <li>
-                <span>
-                  <%= image_tag(photo.image) %>
-                </span>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 </div>
-
 <script>
   $('#lightbox<%= post.id %>').owlCarousel({
     items:1,

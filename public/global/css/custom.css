@@ -3373,11 +3373,12 @@ font-weight: 700;
 .bnd-time #clockdiv span{
 	padding: 16px;
 }*/
-
 a.link-other {
 	position: relative;
 	padding-right: 40px;
 	display: inline-block;
+	font-size: 14px;
+	font-weight: 700;
 }
 
 a.link-other:before {
@@ -3392,26 +3393,15 @@ a.link-other:before {
 	background-size: contain;
 }
 
-.bnd-clock {
-	margin-top: 10px;
-}
+.bnd-clock {margin-top: 10px;}
 
-.box-student table tr td {
-	border-top: 0;
-	border-bottom: 1px solid #D7DFE9;
-}
+.box-student table tr td {border-top: 0;border-bottom: 1px solid #D7DFE9;}
 
-.box-student table tr:last-child td {
-	border-bottom: 0
-}
+.box-student table tr:last-child td {border-bottom: 0}
 
 .box-star {}
 
-.bs-detail {
-	position: relative;
-	padding: 30px 0;
-	text-align: center;
-}
+.bs-detail {position: relative;padding: 30px 0;text-align: center;}
 
 .bs-detail span {
 	position: absolute;
@@ -3421,8 +3411,8 @@ a.link-other:before {
 	top: 0;
 	text-align: center;
 	font-style: normal;
-font-variant: normal;
-font-weight: 500;
+	font-variant: normal;
+	font-weight: 500;
 	color: #ffdc64;
 	text-transform: uppercase;
 }
@@ -3440,8 +3430,8 @@ font-weight: 500;
 
 .bs-detail h3 {
 	font-style: normal;
-font-variant: normal;
-font-weight: 700;
+	font-variant: normal;
+	font-weight: 700;
 	font-size: 20px !important;
 }
 
@@ -3456,17 +3446,17 @@ font-weight: 700;
 }
 
 .bs-detail span.pnl-teky-coin-lbl {
-line-height: 17px;
-font-size: 14px;
-font-weight: bold;    
-color: #FFC850;
+	line-height: 17px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFC850;
 }
 
 .bs-detail a.view-all-coin-star {    
-font-size: 14px;
-font-weight: bold;
-color: #0654BA;
-text-transform: uppercase;
+	font-size: 14px;
+	font-weight: bold;
+	color: #0654BA;
+	text-transform: uppercase;
 }
 
 .bnd-noti {
@@ -4272,4 +4262,12 @@ ul.header-menu.nav.navbar-nav li a#li-language span.flag {
     font-weight: 700;    
     font-size: 14px;
     color: #000;
+}
+
+.box-photos {width: 100%; display: inline-block;margin-top: -5px;}
+.box-photos .border-image  {border: 1px solid #D7DFE9;}
+
+.px-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
