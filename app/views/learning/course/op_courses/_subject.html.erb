@@ -1,9 +1,47 @@
-<div class="lvs-detail">
-  <span class="lvd-img"><img src="assets/global/images/Bitmap3.png" alt=""></span>
-  <p>LẬP TRÌNH SCRATCH, THỰC HÀNH VỚI TRUETRUE</p>
+<div class="lvs-detail swiper-slide">
+<a href="/course_detail?course_id=<%= course_id %>&subject_id=<%= subject[:id] %>">
+  <div class='subject-image-overlay'>
+    <input type="hidden" value="<%= course_id %>" name="course_id">
+    <input type="hidden" value="<%= subject[:info][:id] %>" name="subject_id">
+    <% if subject[:active] %>
+      <span class="lvd-img overlay-image">
+        <% if subject[:thumbnail].present? %>
+          <%= image_tag subject[:thumbnail] %>
+        <% else %>
+          <img src="assets/global/images/Bitmap3.png" alt="">
+        <% end %>
+      </span>
+      <div class='overlay-content'>
+        <div class="content">
+          <div class='col-md-6 subject-count'>
+            <span><%= count_subject %></span>
+            <p>Bài học</p>
+          </div>
+          <div class='col-md-6 subject-percentage'>
+            <span><%= subject[:info][:complete_percentage].round(2) * 100 %>%</span>
+            <p>Hoàn thành</p>
+          </div>
+        </div>
+      </div>
+      <div class='layer'>
+      </div>
+    <% else %>
+      <span class="lvd-img lock-image">
+        <% if subject[:thumbnail].present? %>
+          <%= image_tag subject[:thumbnail] %></span>
+        <% else %>
+          <img src="assets/global/images/Bitmap3.png" alt="">
+        <% end %>
+      <div class='lock-layer'>
+      </div>
+      <%= image_tag 'global/images/active/Shape.png', class: 'lock-item' %>
+    <% end %>
+  </div>
+</a>
+  <p><%= subject[:info][:name] %></p>
   <div class="lvd-footer">
     <div class="lvf-left">
-      <a class="view-course-detail" href="">Xem chi tiết</a>
+      <a class="view-course-detail" href="/course_detail?course_id=<%= course_id %>&subject_id=<%= subject[:info][:id] %>">Xem chi tiết</a>
       <ul>
         <li><span class="bg-5DC2A7"></span></li>
         <li><span class="bg-FCF055"></span></li>
@@ -11,8 +49,8 @@
       </ul>
     </div>
     <div class="lvf-right">
-      <span class="chart-line"><span class="chart-line-child" style="width: 10%"></span></span>
-      <b>10%</b>
+      <span class="chart-line"><span class="chart-line-child" style="width: <%= subject[:info][:complete_percentage].round(2) * 100 %>%"></span></span>
+      <b><%= subject[:info][:complete_percentage].round(2) * 100 %>%</b>
     </div>
   </div>
 </div>

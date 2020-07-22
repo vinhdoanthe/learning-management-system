@@ -31,3 +31,4 @@ Rails.application.config.assets.precompile += %w( user/open_educat/op_students/v
 Rails.application.config.assets.precompile += %w( user/open_educat/op_students/batch_detail.css )
 Rails.application.config.assets.precompile += %w( adm/* )
 Rails.application.config.assets.precompile += %w( user/open_educat/op_students/batches.css )
+Rails.application.config.assets.precompile += %w( learning/learning.css )
