@@ -1,4 +1,11 @@
 <!-- html code -->
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag ('swiper.min.js') %>
+<% end %>
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag ('swiper.min.css') %>
+<% end %>
+<%= stylesheet_link_tag "learning/learning" %>
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
