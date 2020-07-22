@@ -1,205 +1,204 @@
 <% if current_user && current_user.is_admin? && adm_controller %>
-  <%= render "partials/admin_lte_application"%>
+<%= render "partials/admin_lte_application"%>
 <% else%>
-  <!DOCTYPE html>
-  <html>
+<!DOCTYPE html>
+<html>
 
-    <head>
-      <title>TEKY Learning Management System</title>
-      <%= csrf_meta_tags %>
-      <%= csp_meta_tag %>
-      <%= favicon_link_tag 'Logo-fav.ico' %>
-      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-      <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>
-      <% version = Time.now.to_i %>
-      <link href="/global/css/style.css?v=<%=version%>" rel="stylesheet">
-      <link href="/global/css/style_other.css?v=<%=version%>" rel="stylesheet">
-      <link href="/global/css/custom.css?v=<%=version%>" rel="stylesheet">
-      <link href="/global/css/jquery.FlowupLabels.css?v=<%=version%>" rel="stylesheet">
-      <link href="/global/css/theme.css?v=<%=version%>" rel="stylesheet">
-      <link href="/global/css/ui.css?v=<%=version%>" rel="stylesheet">
-      <!-- BEGIN PAGE STYLE -->
-      <link href="/global/plugins/metrojs/metrojs.min.css?v=<%=version%>" rel="stylesheet">
-      <link href="/global/plugins/maps-amcharts/ammap/ammap.css?v=<%=version%>" rel="stylesheet">
-      <link href="/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css?v=<%=version%>" rel="stylesheet">
-      <link href="/global/plugins/rateit/rateit.css?v=<%=version%>" rel="stylesheet">
-      <%= stylesheet_link_tag 'social_community/dashboards' %>
-      <link href="/global/css/owl.carousel.css?v=<%=version%>" rel="stylesheet">
-      <!-- END PAGE STYLE -->
-      <script src="/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-      <link rel="stylesheet" href="/global/css/daterangepicker.css?v=<%=version%>" />
-      <%= yield :javascript_includes %>
-      <%= yield :stylesheet_includes %>
-      <% if Rails.env.production? %>
-        <!-- Google Analytics -->
-        <script>
-          (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-              (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-              m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+<head>
+  <title>TEKY Learning Management System</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= favicon_link_tag 'Logo-fav.ico' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>
+  <% version = Time.now.to_i %>
+  <link href="/global/css/style.css?v=<%=version%>" rel="stylesheet">
+  <link href="/global/css/style_other.css?v=<%=version%>" rel="stylesheet">
+  <link href="/global/css/custom.css?v=<%=version%>" rel="stylesheet">
+  <link href="/global/css/jquery.FlowupLabels.css?v=<%=version%>" rel="stylesheet">
+  <link href="/global/css/theme.css?v=<%=version%>" rel="stylesheet">
+  <link href="/global/css/ui.css?v=<%=version%>" rel="stylesheet">
+  <!-- BEGIN PAGE STYLE -->
+  <link href="/global/plugins/metrojs/metrojs.min.css?v=<%=version%>" rel="stylesheet">
+  <link href="/global/plugins/maps-amcharts/ammap/ammap.css?v=<%=version%>" rel="stylesheet">
+  <link href="/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css?v=<%=version%>" rel="stylesheet">
+  <link href="/global/plugins/rateit/rateit.css?v=<%=version%>" rel="stylesheet">
+  <%= stylesheet_link_tag 'social_community/dashboards' %>
+  <link href="/global/css/owl.carousel.css?v=<%=version%>" rel="stylesheet">
+  <!-- END PAGE STYLE -->
+  <script src="/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+  <link rel="stylesheet" href="/global/css/daterangepicker.css?v=<%=version%>" />
+  <%= yield :javascript_includes %>
+  <%= yield :stylesheet_includes %>
+  <% if Rails.env.production? %>
+  <!-- Google Analytics -->
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-          ga('create', 'UA-153405093-2', 'auto');
-          ga('send', 'pageview');
-        </script>13:23 đến 15:23 | Thứ ba, 28/7/2020
-
-
-      <% elsif Rails.env.development? %>
-        <!-- Google Analytics -->
-        <script>
-          (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-              (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-              m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-          ga('create', 'UA-153405093-3', 'auto');
-          ga('send', 'pageview');
-        </script>
-        <!-- End Google Analytics -->
-      <% end %>
-    </head>
-
-    <% if current_user && !current_user.is_parent? %>
-
-      <body class='fixed-topbar fixed-sidebar theme-sdtl color-default dashboard' style="background:#f2f2f2">
-
-        <% if current_user.is_student? %>
-          <%= render "partials/student_sidenav"%>
-        <% elsif current_user.is_teacher? %>
-          <%= render "partials/teacher_sidenav"%>
-        <% end%>
-        <div class="main-content">
-          <%= render 'partials/topnav' %>
-          <%= yield %>
-        </div>
+    ga('create', 'UA-153405093-2', 'auto');
+    ga('send', 'pageview');
+  </script>13:23 đến 15:23 | Thứ ba, 28/7/2020
 
 
-        <script type="text/javascript" src="/global/plugins/jquery/jquery-3.1.0.min.js"></script>
-        <script type="text/javascript" src='/global/plugins/jquery/jquery-migrate-3.0.0.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/jquery-ui/jquery-ui.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/gsap/main-gsap.min.js'></script>
-        <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/tether/js/tether.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/bootstrap/js/bootstrap.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/appear/jquery.appear.js'></script>
-        <script type="text/javascript" src='/global/plugins/jquery-cookies/jquery.cookies.min.js'></script>
-        <script type="text/javascript" src='/global/js/jquery.FlowupLabels.js'></script>
-        <script type="text/javascript" src='/global/js/style_other.js'></script>
-        <script type="text/javascript" src='/global/plugins/jquery-block-ui/jquery.blockUI.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/bootbox/bootbox.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/bootstrap-dropdown/bootstrap-hover-dropdown.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/charts-sparkline/sparkline.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/retina/retina.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/backstretch/backstretch.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js'></script>
-        <script type="text/javascript" src='/global/js/builder.js'></script>
-        <script type="text/javascript" src='/global/js/sidebar_hover.js'></script>
-        <script type="text/javascript" src='/global/js/application.js'></script>
-        <script type="text/javascript" src='/global/js/plugins.js'></script>
-        <script type="text/javascript" src='/global/js/widgets/notes.js'></script>
-        <script type="text/javascript" src='/global/plugins/metrojs/metrojs.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/noty/jquery.noty.packaged.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/bootstrap-editable/js/bootstrap-editable.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/bootstrap-context-menu/bootstrap-contextmenu.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/multidatepicker/multidatespicker.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/charts-chartjs/Chart.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/charts-highstock/js/highstock.js'></script>
-        <script type="text/javascript" src='/global/plugins/charts-highstock/js/modules/exporting.js'></script>
-        <script type="text/javascript" src='/global/plugins/maps-amcharts/ammap/ammap.js'></script>
-        <script type="text/javascript" src='/global/plugins/maps-amcharts/ammap/maps/js/worldLow.js'></script>
-        <script type="text/javascript" src='/global/plugins/maps-amcharts/ammap/themes/black.js'></script>
-        <script type="text/javascript" src='/global/plugins/skycons/skycons.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/simple-weather/jquery.simpleWeather.js'></script>
-        <script type="text/javascript" src='/global/js/widgets/todo_list.js'></script>
-        <script type="text/javascript" src='/global/js/widgets/widget_weather.js'></script>
-        <script type="text/javascript" src='/global/js/pages/dashboard.js'></script>
-        <script type="text/javascript" src='/global/plugins/timepicker/jquery-ui-timepicker-addon.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/multidatepicker/multidatespicker.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js'></script>
-        <script type="text/javascript" src='/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/colorpicker/spectrum.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/rateit/jquery.rateit.min.js'></script>
-        <script type="text/javascript" src='/global/js/pages/form_plugins.js'></script>
-        <script type="text/javascript" src='/global/plugins/colorpicker/spectrum.min.js'></script>
-        <script type="text/javascript" src='/global/js/pages/form_plugins.js'></script>
-        <script type="text/javascript" src='/global/js/owl.carousel.min.js'></script>
-        <script type="text/javascript" src='/global/plugins/bootstrap-loading/lada.min.js'></script>
-        <script type="text/javascript" src='/global/js/pages/login-v2.js'></script>
-        <script type="text/javascript" src="/global/js/daterangepicker/moment.min.js"></script>
-        <script type="text/javascript" src="/global/js/daterangepicker/daterangepicker.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+  <% elsif Rails.env.development? %>
+  <!-- Google Analytics -->
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-        <script type="text/javascript">
-          $('.owl-carousel').owlCarousel({
-            loop: true,
-            responsiveClass: true,
-            items: 1,
-            slideBy: 1,
-            dots: false,
-            dotsEach: false,
-            autoplay: false,
-            rewind: true,
-            autoWidth: false,
-            center: true
-          });
+    ga('create', 'UA-153405093-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+  <% end %>
+</head>
 
-          // update width image carousel for left menu
-          updateOwlCarousel = function() {
-            $(".owl-carousel").each(function() {
-              $(this).data('owl.carousel').onResize();
-            });
-          };
+<% if current_user && !current_user.is_parent? %>
 
-          $(document).on('click', '.topnav', function() {
-            setTimeout(function() {
-              updateOwlCarousel();
-            }, 321)
-          });
+<body class='fixed-topbar fixed-sidebar theme-sdtl color-default dashboard' style="background:#f2f2f2">
 
-          $(document).ready(function() {
-            updateOwlCarousel();
-          });
-        </script>
+  <% if current_user.is_student? %>
+  <%= render "partials/student_sidenav"%>
+  <% elsif current_user.is_teacher? %>
+  <%= render "partials/teacher_sidenav"%>
+  <% end%>
+  <div class="main-content">
+    <%= render 'partials/topnav' %>
+    <%= yield %>
+  </div>
 
-        <%= yield :body_javascript_includes %>
-        <%= debug(params) if Rails.env.development? %>
-      </body>
-    <% else %>
 
-      <body style="background:#f2f2f2">
-        <%= render 'partials/messages' %>
-        <%= yield %>
-        <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <script type="text/javascript" src="/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+  <script type="text/javascript" src='/global/plugins/jquery/jquery-migrate-3.0.0.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/jquery-ui/jquery-ui.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/gsap/main-gsap.min.js'></script>
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/tether/js/tether.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/bootstrap/js/bootstrap.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/appear/jquery.appear.js'></script>
+  <script type="text/javascript" src='/global/plugins/jquery-cookies/jquery.cookies.min.js'></script>
+  <script type="text/javascript" src='/global/js/jquery.FlowupLabels.js'></script>
+  <script type="text/javascript" src='/global/js/style_other.js'></script>
+  <script type="text/javascript" src='/global/plugins/jquery-block-ui/jquery.blockUI.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/bootbox/bootbox.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/bootstrap-dropdown/bootstrap-hover-dropdown.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/charts-sparkline/sparkline.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/backstretch/backstretch.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js'></script>
+  <script type="text/javascript" src='/global/js/builder.js'></script>
+  <script type="text/javascript" src='/global/js/sidebar_hover.js'></script>
+  <script type="text/javascript" src='/global/js/application.js'></script>
+  <script type="text/javascript" src='/global/js/plugins.js'></script>
+  <script type="text/javascript" src='/global/js/widgets/notes.js'></script>
+  <script type="text/javascript" src='/global/plugins/metrojs/metrojs.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/noty/jquery.noty.packaged.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/bootstrap-editable/js/bootstrap-editable.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/bootstrap-context-menu/bootstrap-contextmenu.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/multidatepicker/multidatespicker.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/charts-chartjs/Chart.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/charts-highstock/js/highstock.js'></script>
+  <script type="text/javascript" src='/global/plugins/charts-highstock/js/modules/exporting.js'></script>
+  <script type="text/javascript" src='/global/plugins/maps-amcharts/ammap/ammap.js'></script>
+  <script type="text/javascript" src='/global/plugins/maps-amcharts/ammap/maps/js/worldLow.js'></script>
+  <script type="text/javascript" src='/global/plugins/maps-amcharts/ammap/themes/black.js'></script>
+  <script type="text/javascript" src='/global/plugins/skycons/skycons.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/simple-weather/jquery.simpleWeather.js'></script>
+  <script type="text/javascript" src='/global/js/widgets/todo_list.js'></script>
+  <script type="text/javascript" src='/global/js/widgets/widget_weather.js'></script>
+  <script type="text/javascript" src='/global/js/pages/dashboard.js'></script>
+  <script type="text/javascript" src='/global/plugins/timepicker/jquery-ui-timepicker-addon.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/multidatepicker/multidatespicker.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js'></script>
+  <script type="text/javascript" src='/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/colorpicker/spectrum.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/rateit/jquery.rateit.min.js'></script>
+  <script type="text/javascript" src='/global/js/pages/form_plugins.js'></script>
+  <script type="text/javascript" src='/global/plugins/colorpicker/spectrum.min.js'></script>
+  <script type="text/javascript" src='/global/js/pages/form_plugins.js'></script>
+  <script type="text/javascript" src='/global/js/owl.carousel.min.js'></script>
+  <script type="text/javascript" src='/global/plugins/bootstrap-loading/lada.min.js'></script>
+  <script type="text/javascript" src='/global/js/pages/login-v2.js'></script>
+  <script type="text/javascript" src="/global/js/daterangepicker/moment.min.js"></script>
+  <script type="text/javascript" src="/global/js/daterangepicker/daterangepicker.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 
-        <%= debug(params) if Rails.env.development? %>
-        <script src="/global/plugins/jquery/jquery-3.1.0.min.js"></script>
-        <script src="/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
-        <script src="/global/plugins/gsap/main-gsap.min.js"></script>
-        <script src="/global/plugins/tether/js/tether.min.js"></script>
-        <script src="/global/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <script src="/global/plugins/backstretch/backstretch.min.js"></script>
-        <script src="/global/plugins/bootstrap-loading/lada.min.js"></script>
-        <script src="/global/js/pages/login-v2.js"></script>
+  <script type="text/javascript">
+    $('.owl-carousel').owlCarousel({
+      loop: true,
+      responsiveClass: true,
+      items: 1,
+      slideBy: 1,
+      dots: false,
+      dotsEach: false,
+      autoplay: false,
+      rewind: true,
+      autoWidth: false,
+      center: true
+    });
 
-        <%= yield :body_javascript_includes %>
+    // update width image carousel for left menu
+    updateOwlCarousel = function() {
+      $(".owl-carousel").each(function() {
+        $(this).data('owl.carousel').onResize();
+      });
+    };
 
-      </body>
-    <% end %>
+    $(document).on('click', '.topnav', function() {
+      setTimeout(function() {
+        updateOwlCarousel();
+      }, 321)
+    });
 
-  </html>
+    $(document).ready(function() {
+      updateOwlCarousel();
+    });
+  </script>
+
+  <%= yield :body_javascript_includes %>
+  <%= debug(params) if Rails.env.development? %>
+</body>
+<% else %>
+
+<body style="background:#f2f2f2">
+  <%= render 'partials/messages' %>
+  <%= yield %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <%= debug(params) if Rails.env.development? %>
+  <script src="/global/plugins/jquery/jquery-3.1.0.min.js"></script>
+  <script src="/global/plugins/jquery/jquery-migrate-3.0.0.min.js"></script>
+  <script src="/global/plugins/gsap/main-gsap.min.js"></script>
+  <script src="/global/plugins/tether/js/tether.min.js"></script>
+  <script src="/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/global/plugins/backstretch/backstretch.min.js"></script>
+  <script src="/global/plugins/bootstrap-loading/lada.min.js"></script>
+  <script src="/global/js/pages/login-v2.js"></script>
+
+  <%= yield :body_javascript_includes %>
+
+</body>
+<% end %>
+
+</html>
 <% end %>
