@@ -41,9 +41,12 @@ class Learning::Course::OpCoursesController < ApplicationController
   end
 
   def public_courses
-    @courses = Learning::Course::OpCourse.order(:create_date)
-      .limit(5)
-      .to_a
+    student_id = current_user.student_id
+    unless student_id.nil?
+      @courses = Learning::Course::OpCoursesService.get_public_courses(student_id)
+    else
+      @courses = []
+    end
   end
 
   private

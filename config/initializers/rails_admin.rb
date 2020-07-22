@@ -30,7 +30,8 @@ RailsAdmin.config do |config|
                               User::Account::User User::OpenEducat::OpStudent User::OpenEducat::OpFaculty User::Account::Avatar
                               Learning::Homework::UserQuestion
                               Notification::BroadcastNoti
-                              User::Reward::TekyCoinStarActivitySetting)
+                              User::Reward::TekyCoinStarActivitySetting
+                              Utility::PublicCourse)
 
 
   config.model 'Learning::Course::OpCourse' do
@@ -329,7 +330,8 @@ RailsAdmin.config do |config|
               Learning::Course::CourseDescription 
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice
               Notification::BroadcastNoti
-              User::Account::Avatar)
+              User::Account::Avatar
+              Utility::PublicCourse)
     end
     show
     show_in_app do
@@ -340,11 +342,13 @@ RailsAdmin.config do |config|
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, 
               Learning::Course::OpLession Learning::Course::OpCourse Learning::Course::CourseDescription 
               Notification::BroadcastNoti
-              User::Reward::TekyCoinStarActivitySetting)
+              User::Reward::TekyCoinStarActivitySetting
+              Utility::PublicCourse)
     end
     delete do
       only %w(Common::RewardType Common::FeelingType
-              Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice)
+              Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice
+              Utility::PublicCourse)
     end
 
     export do

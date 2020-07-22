@@ -310,15 +310,36 @@ module Learning
       end
       # Get list batch by paramater
       def self.find_batch_by_params(params)
-        company_id  =  params[:company_id]
+        # company_id  =  params[:company_id]
         start_date  =  Date.parse(params[:start_date].to_s).strftime("%Y%m%d").to_i
         end_date    =  Date.parse(params[:end_date].to_s).strftime("%Y%m%d").to_i
         active      =  params[:active]
-        state       =  params[:state]
+        # state       =  params[:state]
         list = Learning::Batch::OpBatch.select("id, name")
         .where(:active => active)
         .where("TO_CHAR(start_date, 'YYYYMMDD') >='#{start_date}' AND TO_CHAR(end_date, 'YYYYMMDD') <='#{end_date}'")     
         return list
+      end
+
+      def self.caculate_complete_percentage student_id, course_id, subject_id
+        #find batch
+        op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id,
+                                                                   course_id: course_id).first
+        active = false
+        percentage = 0
+        unless op_student_course.nil?
+          registered_subjects = op_student_course.op_subjects.pluck(:id).uniq.compact
+          if registered_subjects.includes?(subject_id)
+            #count done sessions
+            count_done = Learning::Batch::OpSession.where(batch_id: op_student_course.batch_id,
+                                                         subject_id: subject_id,
+                                                         state: Learning::Constant::Batch::Session::STATE_DONE).count
+            percentage = count_done.to_f/total_session.to_f
+            active = true
+          end
+        end
+        #caculate and return value
+        [active, percentage]
       end
     end
   end
