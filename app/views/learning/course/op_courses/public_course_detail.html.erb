@@ -1,0 +1,27 @@
+<!-- html code -->
+<!-- variables: course_subject_detail --> 
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+        <div class="ph-text">
+          <h2 class="color-fff text-transform">Khóa học</h2>
+        </div>
+    </div>
+  </div>
+  <div class="panel m-t--70 bg-f5f5f5">
+    <div class="panel-content bg-fff">
+      <a href="<%= courses_path %>" class="PC-back"><img src="assets/global/images/quaylai.svg" alt="">Quay lại toàn bộ khoá học</a>
+      <div class="box-technology">
+        <div class="bt-title">
+          <h3><%=course_subject_detail[:course_name] %></h3>
+        </div>
+        <div class="bt-content">
+          <div class="row">
+            <%= render :partial => "course_description", :locals => {:name => course_subject_detail[:course_name], :description => course_subject_detail[:course_description], :thumbnail => course_subject_detail[:course_thumbnai]} %>
+            <%= render :partial => "lessons", :locals => {:lessons => course_subject_detail[:lessons]} %>
+          </div>
+        </div>
+      </div>                        
+    </div>
+  </div>
+</div>

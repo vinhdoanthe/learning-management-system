@@ -68,4 +68,5 @@ Rails.application.routes.draw do
 
   delete 'sign_out', :to => 'user/sessions#destroy', as: 'logout'
   get 'courses' => 'learning/course/op_courses#public_courses', as: 'courses'
+  get 'course_detail' => 'learning/course/op_courses#public_course_detail', as: 'course_detail'
 end

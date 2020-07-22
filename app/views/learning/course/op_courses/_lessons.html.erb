@@ -1,0 +1,17 @@
+<div class="col-sm-8">
+  <div class="bt-right">
+    <ul>
+      <% lessons.each do |lesson| %>
+        <li>
+          <a href="" class="btr-detail btr-detail-active">
+            <span class="btd-img1"><img src="assets/global/images/Bitmap-img1.png" alt=""></span>
+            <% if !lesson[:active] %>
+              <span class="btd-img2"><img src="assets/global/images/lock1.png" alt=""></span>
+            <% end %>
+            <span class="btd-text"><p><%= lesson[:info][:name] %></p></span>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

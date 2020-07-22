@@ -1,5 +1,5 @@
 class Learning::Course::OpCoursesController < ApplicationController
-  before_action :authenticate_admin!, except: [:public_courses]
+  before_action :authenticate_admin!, except: [:public_courses, :public_course_detail]
   before_action :set_course, only: [:show]
 
   def index
@@ -49,11 +49,44 @@ class Learning::Course::OpCoursesController < ApplicationController
     end
   end
 
+  def public_course_detail
+    course_id, subject_id = set_course_and_subject
+    student_id = current_user.student_id
+    unless course_id.nil? || student_id.nil?
+      course_subject_detail = Learning::Course::OpCoursesService.get_public_course_detail(course_id, subject_id, student_id)
+      # binding.pry
+      respond_to do |format|
+        format.html {
+          render 'public_course_detail', :locals => {:course_subject_detail => course_subject_detail}
+        }
+        format.js {
+          render '', :locals => {:course_subject_detail => course_subject_detail}
+        }
+      end
+    else
+      redirect_to root_path
+    end
+  end
+
   private
 
   def set_course
     if params[:course_id].present?
       @course = Learning::Course::OpCourse.find(params[:course_id])
     end
+  end
+
+  def set_course_and_subject
+    if params[:course_id].present?
+      course_id = Learning::Course::OpCourse.where(id: params[:course_id]).pluck(:id).first
+    else
+      course_id = nil
+    end
+    if params[:subject_id].present?
+      subject_id = Learning::Course::OpSubject.where(id: params[:subject_id]).pluck(:id).first
+    else
+      subject_id = nil
+    end
+    [course_id, subject_id]
   end
 end
