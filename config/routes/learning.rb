@@ -9,10 +9,8 @@ namespace :learning do
   get 'op_session/session_photo' => 'batch/sessions#session_photo'
   get 'op_session/session_reward' => 'batch/sessions#session_reward'
   get 'op_session/session_photo_review' => 'batch/sessions#session_photo_review'
-
   post 'add_vimeo' => 'learning_materials#add_vimeo'
   put 'update_vimeo' => 'learning_materials#update_vimeo'
-
   post 'reward_student' => 'batch/session_student_rewards#reward_student'
   post 'student_feeback' => 'batch/session_student_feedbacks#student_feedback'
 end

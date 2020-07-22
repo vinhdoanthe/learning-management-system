@@ -67,4 +67,5 @@ Rails.application.routes.draw do
   post 'add_photo_attachment' => 'learning/batch/sessions#add_photo_attachment'
 
   delete 'sign_out', :to => 'user/sessions#destroy', as: 'logout'
+  get 'courses' => 'learning/course/op_courses#public_courses', as: 'courses'
 end

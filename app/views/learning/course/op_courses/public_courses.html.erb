@@ -1,0 +1,26 @@
+<!-- html code -->
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h2 class="color-fff text-transform">Khóa học</h2>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <% @courses.each do |course| %>
+        <%= render :partial => "course", :locals => {course: course} %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+a.view-course-detail {
+  color: #0654BA;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 10px;
+}
+</style>
