@@ -101,4 +101,61 @@ class Learning::Course::OpCoursesService
     end
     public_courses
   end
+
+  def self.get_public_course_detail course_id = nil, subject_id = nil, student_id = nil
+    return nil if course_id.nil? || student_id.nil?
+    course = Learning::Course::OpCourse.where(id: course_id).first
+    
+    return nil if course.nil?
+    if subject_id.nil?
+      subject = course.op_subjects.first 
+    else
+      subject = Learning::Course::OpSubject.where(id: subject_id).first
+    end
+    if course.nil? or subject.nil?
+      return nil
+    end
+
+    if course.thumbnail.attached?
+      thumbnail = course.thumbnail
+    else
+      thumbnail = nil
+    end
+    r_lessons = []
+    lessons = Learning::Course::OpLession.where(subject_id: subject_id).select(:id, :name).uniq.compact
+
+    lesson_ids = lessons.map {|lesson| lesson.id}
+    videos = Learning::Material::LearningMaterial.where(op_lession_id: lesson_ids,
+                                                        material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO,
+                                                        learning_type: Learning::Constant::Material::MATERIAL_TYPE_REVIEW).to_a
+    lessons.each do |lesson|
+      video = videos.find{|video| video.op_lession_id == lesson.id}
+      thumbnail = nil
+      if !video.nil? && video.thumbnail_image.attached?
+        thumbnail = video.thumbnail_image
+      end
+      active, session_id = Learning::Batch::OpBatchService.get_session_and_active_state(course_id, subject_id, student_id, lesson.id)
+      r_lesson = {
+        :info => {
+          :video_id => video.id,
+          :thumbnail => thumbnail, 
+          :name => lesson.name
+        },
+        :active => active,
+        :session_id => session_id
+      }
+      r_lessons << r_lesson
+    end
+
+    course_description = course.course_description.first
+    course_subject_detail = {
+      :course_name => course.name,
+      :subject_name => subject.name,
+      :course_description => (course_description.nil? ? '' : course_description.description),
+      :course_thumbnail => thumbnail,
+      :active_subject => subject.id,
+      :lessons => r_lessons
+    } 
+    course_subject_detail
+  end
 end
