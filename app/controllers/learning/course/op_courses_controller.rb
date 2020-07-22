@@ -1,5 +1,5 @@
 class Learning::Course::OpCoursesController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, except: [:public_courses]
   before_action :set_course, only: [:show]
 
   def index
@@ -38,6 +38,12 @@ class Learning::Course::OpCoursesController < ApplicationController
     @lessons.each do |lesson|
       @lesson_count[lesson.subject_id] += 1
     end
+  end
+
+  def public_courses
+    @courses = Learning::Course::OpCourse.order(:create_date)
+      .limit(5)
+      .to_a
   end
 
   private

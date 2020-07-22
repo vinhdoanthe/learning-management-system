@@ -1,0 +1,66 @@
+<!-- variables: course -->
+<div class="lession-video">
+  <div class="lv-title">
+    <h3>Mầm non công nghệ<span class="lvt-tag">12</span></h3>
+    <p>
+    Xây dựng đam mê, tạo nền tảng kiến thức Công nghệ; Sử dụng giáo trình xuất sắc tại Mỹ với 50 triệu học sinh & 60,000 trường học trên toàn cầu<br/>
+    <b>7 - 10 tuổi   |  288 giờ học (3 học kỳ ~ 3 năm)</b>
+    </p>
+    <!-- list of course images -->
+    <% images = [] %>
+    <ul>
+      <% images.each do |image| %>
+        <li><span class="lvt-img"><img src="assets/global/images/logo1.png" alt=""></span></li>
+        <li><span class="lvt-img"><img src="assets/global/images/logo2.png" alt=""></span></li>
+        <li><span class="lvt-img"><img src="assets/global/images/logo3.png" alt=""></span></li>
+        <li><span class="lvt-img"><img src="assets/global/images/logo4.png" alt=""></span></li>
+        <li><span class="lvt-img"><img src="assets/global/images/logo5.png" alt=""></span></li>
+        <li><span class="lvt-img"><img src="assets/global/images/logo6.png" alt=""></span></li>
+        <li><span class="lvt-img"><img src="assets/global/images/logo7.png" alt=""></span></li>
+        <li><span class="lvt-img"><img src="assets/global/images/logo8.png" alt=""></span></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="lv-slide course-owl-carousel" id="owl-carousel1">
+    <% subjects = 1..10 %>
+    <% subjects.each do |subject| %>
+      <%= render "subject" %>
+    <% end %>
+  </div>
+  <div class="lv-btn">
+    <a href="" class="btn btn-primary btn-embossed bg-5DC2A7 text-transform">
+      <span class="lvb-text">Xem toàn bộ</span><br/>12 Học phần
+    </a>
+  </div>
+</div>
+<script type="text/javascript">
+  $('.course-owl-carousel').owlCarousel({
+    loop: true,
+    responsiveClass: true,
+    items: 3,
+    slideBy: 1,
+    dots: false,
+    dotsEach: false,
+    autoplay: false,
+    rewind: true,
+    autoWidth: false,
+    center: true
+  });
+
+  // update width image carousel for left menu
+  updateOwlCarousel = function() {
+    $(".course-owl-carousel").each(function() {
+      $(this).data('owl.carousel').onResize();
+    });
+  };
+
+  $(document).on('click', '.topnav', function() {
+    setTimeout(function() {
+      updateOwlCarousel();
+    }, 321)
+  });
+
+  $(document).ready(function() {
+    updateOwlCarousel();
+  });
+</script>

@@ -130,8 +130,8 @@ class SocialCommunity::PhotoService
       image_optim.optimize_image!(processed_image.path)
       processed_image
     rescue Exception => e
-      logger.error e.message
-      e.backtrace.each { |line| logger.error line }
+      logger.fatal e.message
+      e.backtrace.each { |line| logger.fatal line }
     end
   end
 end
