@@ -11,6 +11,7 @@
   <% if coming_soon_session.nil? %>
   <p class="d-no-coming-soon-session" %><%= t('dashboard.no_coming_soon_session') %></p>
   <% else %>
+
   <% start = coming_soon_session[:session].start_datetime %>
   <div class="bnd-time text-center">
     <div class="bnd-text">
@@ -32,10 +33,13 @@
         ,
         <% start_datetime_display = start.day.to_s + '/' + start.month.to_s + '/' + start.year.to_s %>
         <%= start_datetime_display %>
-      </p>
-      <p class="text-center">
+      </p>      
+      <div class="text-center"  style="margin-top: 6px;margin-bottom:8px;">
+        <div class="f12 font-bold color-0654BA text-center">
+        <%= !coming_soon_session[:session].op_lession.nil? ? coming_soon_session[:session].op_lession.name : '' %>
+        </div>
         <%= t('learning.session.at').capitalize %>: <span class="font-bold"><%= coming_soon_session[:company_name] %></span>
-      </p>
+      </div>
     </div>
     
     <%= render 'social_community/dashboards/student/box_datetime' %>
