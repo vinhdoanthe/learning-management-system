@@ -5,7 +5,7 @@
   <%  if photos_size <= 2 %>
     <% photos.each do |photo| %>
       <a href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
-        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12 border-white"><%= image_tag(photos[0].image,:class => 'image-fit border-image') %></span>
+        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12 border-white"><%= image_tag(photo.image,:class => 'image-fit border-image') %></span>
       </a>
     <% end %>
   <% elsif photos_size == 3 %>
