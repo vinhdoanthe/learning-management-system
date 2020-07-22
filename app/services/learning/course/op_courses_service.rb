@@ -122,7 +122,7 @@ class Learning::Course::OpCoursesService
       thumbnail = nil
     end
     r_lessons = []
-    lessons = Learning::Course::OpLession.where(subject_id: subject_id).select(:id, :name).uniq.compact
+    lessons = Learning::Course::OpLession.where(subject_id: subject.id).order(:lession_number => :ASC).select(:id, :name).uniq.compact
 
     lesson_ids = lessons.map {|lesson| lesson.id}
     videos = Learning::Material::LearningMaterial.where(op_lession_id: lesson_ids,
@@ -137,7 +137,7 @@ class Learning::Course::OpCoursesService
       active, session_id = Learning::Batch::OpBatchService.get_session_and_active_state(course_id, subject_id, student_id, lesson.id)
       r_lesson = {
         :info => {
-          :video_id => video.id,
+          :video_id => video.nil? ? '' : video.ziggeo_file_id,
           :thumbnail => thumbnail, 
           :name => lesson.name
         },

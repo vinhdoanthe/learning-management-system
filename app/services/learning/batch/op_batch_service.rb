@@ -349,9 +349,9 @@ module Learning
         active = false
         session_id = nil
         unless op_student_course.nil?
-          session = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_id, lession_id: lesson_id, state: Learning::Constant::Batch::Session::STATE_DONE).first
+          session = Learning::Batch::OpSession.where(batch_id: op_student_course.batch_id, subject_id: subject_id, lession_id: lesson_id, state: Learning::Constant::Batch::Session::STATE_DONE).first
           unless session.nil?
-            session_id = session_id
+            session_id = session.id
             active = true
           end
         end

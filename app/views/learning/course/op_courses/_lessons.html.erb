@@ -4,9 +4,17 @@
       <% lessons.each do |lesson| %>
         <li>
           <a href="" class="btr-detail btr-detail-active">
-            <span class="btd-img1"><img src="assets/global/images/Bitmap-img1.png" alt=""></span>
+            <span class="btd-img1">
+              <% if !lesson.nil? && !lesson[:info][:thumbnail].nil? %>
+                <%= image_tag(lesson[:info][:thumbnail]) %>
+              <% else %>
+                <%= image_tag('global/images/default-lesson-thumbnail.png') %>
+              <% end %>
+            </span>
             <% if !lesson[:active] %>
-              <span class="btd-img2"><img src="assets/global/images/lock1.png" alt=""></span>
+              <span class="btd-img2">
+                <img src="assets/global/images/lock1.png" alt="">
+              </span>
             <% end %>
             <span class="btd-text"><p><%= lesson[:info][:name] %></p></span>
           </a>
