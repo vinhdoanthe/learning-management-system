@@ -25,41 +25,20 @@
   <div class="swiper-custom-button-next"><%= image_tag 'global/images/arrow-next.png' %></div>
   <div class="swiper-custom-button-prev"><%= image_tag 'global/images/arrow-prev.png' %></div>
   <div class="lv-btn show_course_all">
+    <% active = course[:subjects].map {|t| t[:active]}.include? true %>
+    <% if active %>
     <a href="/course_detail?course_id=<%= course[:id] %>" class="btn btn-primary btn-embossed bg-5DC2A7 text-transform">
-      <span class="lvb-text">Xem toàn bộ</span><br/>12 Học phần
+      <span class="lvb-text">Xem toàn bộ</span><br/><%= count_subject %>  Học phần
     </a>
+    <% else %>
+    <a disabled class="btn btn-primary btn-embossed bg-5DC2A7 text-transform">
+      <span class="lvb-text">Xem toàn bộ</span><br/><%= count_subject %>  Học phần
+    </a>
+    <% end %>
   </div>
 </div>
 <script type="text/javascript">
 
-  // update width image carousel for left menu
-//  updateOwlCarousel = function() {
-//    $(".course-owl-carousel").each(function() {
-//      $(this).data('owl.carousel').onResize();
-//    });
-//  };
-//
-//  $(document).on('click', '.topnav', function() {
-//    setTimeout(function() {
-//      updateOwlCarousel();
-//    }, 321)
-//  });
-//
-//  $(document).ready(function() {
-//  $('.course-owl-carousel').owlCarousel({
-//    loop: true,
-//    responsiveClass: true,
-//    items: 3,
-//    slideBy: 1,
-//    dots: false,
-//    dotsEach: false,
-//    autoplay: false,
-//    rewind: true,
-//    autoWidth: false,
-//    center: true
-//  });
-//    updateOwlCarousel();
-//  });
 $(document).ready(function(){
   var swiper = new Swiper('.swiper-container', {
       slidesPerView: 3,

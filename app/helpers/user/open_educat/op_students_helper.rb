@@ -170,6 +170,12 @@ module User
             'title' => "#{ t('sidebar.my_class') }",
             'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
           },
+          {
+            'path' =>  courses_path,
+            'icon' => 'ico-SPhocsinh.png',
+            'title' => "#{ t('sidebar.courses') }",
+            'right_content' => '<span class="left-badge"></span>'
+          },
 
           {'path' => user_open_educat_op_students_student_homework_path,
            'icon' => 'ico-BaiTapOnBai.png',

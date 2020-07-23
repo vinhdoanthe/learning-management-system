@@ -1,5 +1,6 @@
 <!-- html code -->
 <!-- variables: course_subject_detail --> 
+<%= stylesheet_link_tag "learning/learning" %>
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
@@ -9,19 +10,54 @@
     </div>
   </div>
   <div class="panel m-t--70 bg-f5f5f5">
-    <div class="panel-content bg-fff">
+    <div class="panel-content bg-fff course_detail_content">
       <a href="<%= courses_path %>" class="PC-back"><img src="assets/global/images/quaylai.svg" alt="">Quay lại toàn bộ khoá học</a>
       <div class="box-technology">
         <div class="bt-title">
-          <h3><%=course_subject_detail[:course_name] %></h3>
+          <div class='course_description_header'>
+            <div class='col-md-6'>
+              <h3><%=course_subject_detail[:course_name] %></h3>
+              <input type='hidden' value="<%= course.id %>" name="course_id">
+            </div>
+            <div class='col-md-6'>
+              <div class="form-group">
+                <select class="form-control form-control-lg" id="subject_course_select">
+                  <% subjects.each do |subject| %>
+                    <% if subject[0] == course_subject_detail[:active_subject] %>
+                      <option selected value="<%= subject[0] %>"><%= subject[1] %></option>
+                    <% else %>
+                      <option value="<%= subject[0] %>"><%= subject[1] %></option>
+                    <% end %>
+                  <% end %>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="bt-content">
           <div class="row">
-            <%= render :partial => "course_description", :locals => {:name => course_subject_detail[:course_name], :description => course_subject_detail[:course_description], :thumbnail => course_subject_detail[:course_thumbnai]} %>
-            <%= render :partial => "lessons", :locals => {:lessons => course_subject_detail[:lessons]} %>
+            <%= render :partial => "course_description", :locals => {:subject_name => course_subject_detail[:subject_name], :name => course_subject_detail[:course_name], :description => course_subject_detail[:course_description], :thumbnail => course_subject_detail[:course_thumbnai], course_subject_detail: course_subject_detail} %>
+            <div id="subject-lesson-list">
+              <%= render :partial => "lessons", :locals => {:lessons => course_subject_detail[:lessons]} %>
+            </div>
           </div>
         </div>
       </div>                        
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    course_id = $('input[name="course_id"]').val();
+    $('#subject_course_select').on('change', function(){
+      subject_id = $(this).val();
+
+      $.ajax({
+        url: '/course_detail?course_id=' + course_id + '&subject_id=' + subject_id,
+        method: 'GET',
+        dataType: 'script'
+      })
+    })
+  })
+</script>

@@ -38,10 +38,10 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
   end
 
   def sc_refer_friend_post_notification_content
-    post = notifiable
-    activity_post = SocialCommunity::Feed::PostActivity.where(sc_post_id: post.id).first
-    refer = activity_post.activitiable
-    "Bạn #{ refer.student_name } con giới thiệu đã vào học. Con được cộng TODO TEKY đồng. Tiếp tục phát huy nhé!"
+    # post = notifiable
+    # activity_post = SocialCommunity::Feed::PostActivity.where(sc_post_id: post.id).first
+    # refer = activity_post.activitiable
+    "Bạn con giới thiệu đã vào học. Con được cộng TODO TEKY đồng. Tiếp tục phát huy nhé!"
   end
 
   def sc_redeem_product_notification_content

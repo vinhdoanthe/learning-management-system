@@ -1,6 +1,6 @@
 <h3 style='padding: 0' class="dis-inlineblock"><%= course.name %></h3><br/>
 <p class="dis-inlineblock">Học phần <%= subject.level %> - <span id='video_lesson_name' class='video-lesson-name'><%= lesson.name if lesson.present? %> </span></p>
-<ul class="lv-btn">
+<ul class="lv-btn" style="padding-top: 0">
   <% has_lesson_homework = false %>
   <% has_lesson_homework = Learning::Material::Question.joins(:user_questions).where(user_questions: { student_id: current_user.id }).where(op_lession_id: lesson.id).first if lesson.present? %>
   <% if has_lesson_homework.present? %>

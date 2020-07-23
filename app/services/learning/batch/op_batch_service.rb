@@ -326,6 +326,11 @@ module Learning
         op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id,
                                                                    course_id: course_id).first
         active = false
+        percentage = 0
+        count_subject_lesson = 0
+        subject = Learning::Course::OpSubject.where(id: subject_id).first
+        count_subject_lesson = subject.op_lessions.count if subject.present? 
+
         unless op_student_course.nil?
           registered_subjects = op_student_course.op_subjects.pluck(:id).uniq.compact
           if registered_subjects.include?(subject_id)
@@ -337,24 +342,7 @@ module Learning
           end
         end
         #caculate and return value
-        [active, count_done]
-      end
-
-      def self.get_session_and_active_state course_id, subject_id, student_id, lesson_id
-        #find batch
-        op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id,
-                                                                   course_id: course_id).first
-        active = false
-        session_id = nil
-        unless op_student_course.nil?
-          session = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_id, lession_id: lesson_id, state: Learning::Constant::Batch::Session::STATE_DONE).first
-          unless session.nil?
-            session_id = session_id
-            active = true
-          end
-        end
-
-        [active, session_id]
+        [active, count_done, count_subject_lesson]
       end
 
       def self.get_session_and_active_state course_id, subject_id, student_id, lesson_ids
