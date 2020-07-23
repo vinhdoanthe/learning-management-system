@@ -1,10 +1,5 @@
 namespace :social_community do
-  resources :pictures, :only => [:index, :new, :create, :destroy]
-  resources :user_shared_photos, :only => [:index, :create, :destroy]
-
-  namespace :photos do
-
-  end
+  resources :user_custom_post_contents, :only => [:create]
 
   namespace :albums do
     post 'add_reaction', action: 'add_reaction', as: 'add_reaction'
@@ -16,12 +11,6 @@ namespace :social_community do
       post 'add_reaction', action: 'add_reaction', as: 'add_reaction'
       post 'add_comment', action: 'add_comment', as: 'add_comment'
     end
-  end
-
-  namespace :comments do
-  end
-
-  namespace :reactions do
   end
 
   namespace :feed do
