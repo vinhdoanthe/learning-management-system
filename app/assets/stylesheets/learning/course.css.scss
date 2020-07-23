@@ -1,0 +1,146 @@
+.subject-image-overlay {
+  position: relative;
+  .overlay-image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    img {
+      max-width: none !important;
+      max-height: none !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+  .overlay-content {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 11;
+    width: 70%;
+    .subject-count {
+      background-color: #FCF055;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      padding: 0;
+      padding-top: 10px;
+      color: black;
+      p {
+        font-weight: 500;
+        font-size: 12px;
+        margin-top: 0;
+        padding-top: 0;
+        text-align: center;
+        text-transform: uppercase;
+      }
+    }
+    
+    .subject-percentage {
+      background-color: white;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      padding: 0;
+      padding-top: 10px;
+      color: black;
+      p {
+        font-weight: 500;
+        font-size: 12px;
+        margin-top: 0;
+        padding-top: 0;
+        text-align: center;
+        text-transform: uppercase;
+      }
+    }
+      }
+  .layer {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .lock-layer {
+    opacity: 0.5;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: #2D2D2D;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .lock-item {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+  }
+}
+
+.subject-image-overlay:hover .overlay-image {
+  opacity: 0.3;
+}
+
+.subject-image-overlay:hover .overlay-content {
+  opacity: 1;
+}
+
+.subject-image-overlay:hover .layer {
+  opacity: 1;
+  background-color: #5DC2A7;
+  z-index: 10;
+}
+
+.course-swiper {
+  padding: 0 85px;
+}
+
+.lession-video {
+  position: relative;
+  .lv-title {
+    margin-top: 50px;
+  }
+}
+
+.swiper-custom-button-next{
+  position: absolute;
+  font-size: 30px;
+  right: 0;
+  top: 50%;
+}
+
+.swiper-custom-button-prev{
+  position: absolute;
+  font-size: 30px;
+  left: 0;
+  top: 50%;
+  img {
+    transform: rotate(180deg);
+  }
+}
+
+.swiper-custom-button-next:focus {
+  outline: none;
+}
+
+.swiper-custom-button-prev:focus {
+  outline: none;
+}
+.show_course_all {
+  float: none;
+  display: block;
+}

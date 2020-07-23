@@ -72,26 +72,37 @@ class Learning::Course::OpCoursesService
     # hard code course ids
     course_ids = Utility::PublicCourse.pluck(:course_id).uniq.compact
     courses = Learning::Course::OpCourse.where(id: course_ids, active: true).select(:id, :name, :short_description, :suitable_age, :duration)
-    subjects = Learning::Course::OpSubject.where(course_id: course_ids, active: true).select(:name, :level, :total_session)
+    subjects = Learning::Course::OpSubject.where(course_id: course_ids, active: true).order(level: :ASC).select(:name, :level, :total_session, :course_id, :id)
     public_courses = []
+
     courses.each do |course| 
-      subjects = []
+      result_subjects = []
       course_subjects = subjects.filter {|subject| subject.course_id == course.id}
       course_subjects.each do |course_subject|
-        active, percentage = Learning::Batch::OpBatchService.caculate_complete_percentage(student_id, course.id, course_subject.id)
+        active, count_done = Learning::Batch::OpBatchService.caculate_complete_percentage(student_id, course.id, course_subject.id)
         subject = {
           :info => {
+            :id => course_subject.id,
             :name => course_subject.name,
             :thumbnail => nil,
-            :complete_percentage => percentage 
+            :complete_percentage => if course_subject.total_session.to_i != 0
+                                      if count_done.to_f / course_subject.total_session.to_f > 1
+                                        1
+                                      else
+                                        count_done.to_f / course_subject.total_session.to_f
+                                      end
+                                    else
+                                      0
+                                    end
           },
           :active => active
         }
-        subjects << subject
+        result_subjects << subject
       end
       public_course = {
+        :id => course.id,
         :name => course.name,
-        :subjects => subjects,
+        :subjects => result_subjects,
         :short_description => course.short_description,
         :suitable_age => course.suitable_age,
         :duration => course.duration,

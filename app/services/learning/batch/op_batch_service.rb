@@ -329,17 +329,33 @@ module Learning
         percentage = 0
         unless op_student_course.nil?
           registered_subjects = op_student_course.op_subjects.pluck(:id).uniq.compact
-          if registered_subjects.includes?(subject_id)
+          if registered_subjects.include?(subject_id)
             #count done sessions
             count_done = Learning::Batch::OpSession.where(batch_id: op_student_course.batch_id,
                                                           subject_id: subject_id,
                                                           state: Learning::Constant::Batch::Session::STATE_DONE).count
-            percentage = count_done.to_f/total_session.to_f
             active = true
           end
         end
         #caculate and return value
-        [active, percentage]
+        [active, count_done]
+      end
+
+      def self.get_session_and_active_state course_id, subject_id, student_id, lesson_id
+        #find batch
+        op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id,
+                                                                   course_id: course_id).first
+        active = false
+        session_id = nil
+        unless op_student_course.nil?
+          session = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_id, lession_id: lesson_id, state: Learning::Constant::Batch::Session::STATE_DONE).first
+          unless session.nil?
+            session_id = session_id
+            active = true
+          end
+        end
+
+        [active, session_id]
       end
 
       def self.get_session_and_active_state course_id, subject_id, student_id, lesson_id
