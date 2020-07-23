@@ -68,28 +68,26 @@ class User::Account::UsersController < ApplicationController
   end
 
   def update_nickname
-    unless params[:user][:username].nil?
-      new_username = params[:user][:username]
-      new_username.gsub!(/\s+/, ' ')
-      if new_username.empty?
-        flash.now[:danger] = 'Nickname không được phép để trống'
-      else
-        user = User::Account::User.find_by(username: new_username)
-        if user.nil?
-          current_user.username = new_username
-          current_user.save
-          if current_user.errors.full_messages.any?
-            flash.now[:danger] = current_user.errors.full_messages.to_s
-          else
-            flash[:success] = 'Cập nhật nickname thành công'
-          end
+    new_username = params[:user][:username]
+
+    if new_username =~ /\A[a-z0-9_]{4,16}\z/
+      user = User::Account::User.find_by(username: new_username)
+      if user.nil?
+        current_user.username = new_username
+        current_user.save
+        if current_user.errors.full_messages.any?
+          flash[:danger] = current_user.errors.full_messages.to_s
         else
-          flash.now[:danger] = 'Nickname đã tồn tại'
+          flash[:success] = 'Cập nhật nickname thành công'
         end
+      else
+        flash[:danger] = 'Nickname đã tồn tại'
       end
-      redirect_to user_open_educat_op_students_information_path
-      # end
+    else
+      flash[:danger] = 'Nickname không phù hợp! Nick name chỉ chứa các ký tự chữ, số và dấu gạch dưới(_)'
     end
+
+    redirect_to user_open_educat_op_students_information_path
   end
 
   def change_password

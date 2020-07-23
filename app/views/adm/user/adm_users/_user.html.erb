@@ -22,13 +22,13 @@
         <td><%= user[:company] %></td>
         <td><%= user[:mobile] %></td>
         <td>
-          <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
+          <span class='tooltip-span' title="<%= t("adm.user.show") %>">
           <a href="/adm/user/user_info/<%= user[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
           </span>
-          <span class='tooltip-span'  data-toggle="tooltip" title="<%= t("adm.user.edit") %>">
+          <span class='tooltip-span' title="<%= t("adm.user.edit") %>">
           <a href="/adm/user/edit_user_info/<%= user[:id] %>"><i class="fas fa-user-edit"></i></a>
           </span>
-          <span  class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.login") %>">
+          <span  class='tooltip-span' title="<%= t("adm.user.login") %>">
           <a href="/adm/user/login_as_user/<%= user[:id] %>" target="_blank"><i class="fas fa-user-check"></i></a>
           </span>
         </td>
@@ -55,7 +55,6 @@
 </style>
 <script>
   $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
     $('#adm_all_user').DataTable({
       "scrollX": true,
       "bLengthChange": false,

@@ -25,24 +25,28 @@
           </div>
           <div class="">
             <% homeworks.each_with_index do |question, index| %>
-              <% if question.question_type == 'text' %>
-                <label class='homework'>Bài tập <%= index + 1 %> <%= question.question_type %>:
-                  <p> <%= question.question.html_safe %></p>
-                  <input type="checkbox" value="<%= question.id %>" name="select_homework" checked="checked">
-                  <span class="homework_checkmark"></span>
-                </label>
+              <% if question.question.present? %>
+                <% if question.question_type == 'text' %>
+                  <label class='homework'>Bài tập <%= index + 1 %> <%= question.question_type %>:
+                    <p> <%= question.question.html_safe %></p>
+                    <input type="checkbox" value="<%= question.id %>" name="select_homework" checked="checked">
+                    <span class="homework_checkmark"></span>
+                  </label>
+                <% else %>
+                  <label class='homework'>Bài tập <%= index + 1 %>(<%= question.question_type %> choice):
+                    <p><%= question.question.html_safe %></p>
+                    <div class='question_choice'>
+                      <% question.question_choices.each do |choice| %>
+                        <p style="width: auto"><%= choice.choice_content.present? ? choice.choice_content : "''" %>
+                        </p>
+                      <% end %>
+                    </div>
+                    <input type="checkbox" value="<%= question.id %>"  name="select_homework" checked="checked">
+                    <span class="homework_checkmark"></span>
+                  </label>
+                <% end %>
               <% else %>
-                <label class='homework'>Bài tập <%= index + 1 %>(<%= question.question_type %> choice):
-                  <p><%= question.question.html_safe %></p>
-                  <div class='question_choice'>
-                    <% question.question_choices.each do |choice| %>
-                      <p style="width: auto"><%= choice.choice_content.present? ? choice.choice_content : "''" %>
-                      </p>
-                    <% end %>
-                  </div>
-                  <input type="checkbox" value="<%= question.id %>"  name="select_homework" checked="checked">
-                  <span class="homework_checkmark"></span>
-                </label>
+                <% next %>
               <% end %>
             <% end %>
           </div>
