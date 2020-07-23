@@ -381,6 +381,7 @@ vi:
     Concert canceled: "Buổi bị huỷ"
     Attend school: "Có đi học"
     Absent: "Vắng mặt"
+    what_are_you_thinking: 'Bạn đang nghĩ gì?'
   public_profile:
     center: 'Học tại'
     gender: 'Giới tính'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_22_023458) do
+ActiveRecord::Schema.define(version: 2020_07_23_065420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -11178,14 +11178,6 @@ ActiveRecord::Schema.define(version: 2020_07_22_023458) do
     t.index ["op_batch_id"], name: "index_user_questions_on_op_batch_id"
     t.index ["question_id"], name: "index_user_questions_on_question_id"
     t.index ["student_id"], name: "index_user_questions_on_student_id"
-  end
-
-  create_table "user_shared_photos", force: :cascade do |t|
-    t.string "image"
-    t.bigint "user_custom_post_content_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_custom_post_content_id"], name: "index_user_shared_photos_on_user_custom_post_content_id"
   end
 
   create_table "user_simulation_wizard", id: :serial, comment: "user simulation wizard", force: :cascade do |t|
