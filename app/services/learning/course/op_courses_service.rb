@@ -80,20 +80,23 @@ class Learning::Course::OpCoursesService
       course_subjects = subjects.filter {|subject| subject.course_id == course.id}
       course_subjects.each do |course_subject|
         active, count_done = Learning::Batch::OpBatchService.caculate_complete_percentage(student_id, course.id, course_subject.id)
+        complete_percentage = 0.0
+        if course_subject.total_session.to_i != 0
+          if count_done.to_f / course_subject.total_session.to_f > 1
+            complete_percentage = 1.0
+          else
+            complete_percentage = count_done.to_f / course_subject.total_session.to_f
+          end
+        else
+          complete_percentage = 0
+        end
+
         subject = {
           :info => {
             :id => course_subject.id,
             :name => course_subject.name,
             :thumbnail => nil,
-            :complete_percentage => if course_subject.total_session.to_i != 0
-                                      if count_done.to_f / course_subject.total_session.to_f > 1
-                                        1
-                                      else
-                                        count_done.to_f / course_subject.total_session.to_f
-                                      end
-                                    else
-                                      0
-                                    end
+            :complete_percentage => complete_percentage
           },
           :active => active
         }
@@ -116,7 +119,7 @@ class Learning::Course::OpCoursesService
   def self.get_public_course_detail course_id = nil, subject_id = nil, student_id = nil
     return nil if course_id.nil? || student_id.nil?
     course = Learning::Course::OpCourse.where(id: course_id).first
-    
+
     return nil if course.nil?
     if subject_id.nil?
       subject = course.op_subjects.first 
@@ -139,13 +142,21 @@ class Learning::Course::OpCoursesService
     videos = Learning::Material::LearningMaterial.where(op_lession_id: lesson_ids,
                                                         material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO,
                                                         learning_type: Learning::Constant::Material::MATERIAL_TYPE_REVIEW).to_a
+    list_active_session_ids = Learning::Batch::OpBatchService.get_session_and_active_state(course_id, subject_id, student_id, lesson_ids)
     lessons.each do |lesson|
       video = videos.find{|video| video.op_lession_id == lesson.id}
       thumbnail = nil
       if !video.nil? && video.thumbnail_image.attached?
         thumbnail = video.thumbnail_image
       end
-      active, session_id = Learning::Batch::OpBatchService.get_session_and_active_state(course_id, subject_id, student_id, lesson.id)
+      active_session_id = list_active_session_ids.find{|item| item[:lesson_id] == lesson.id}
+      if active_session_id.nil?
+        active = false
+        session_id = nil
+      else
+        active = active_session_id[:active]
+        session_id = active_session_id[:session_id]
+      end
       r_lesson = {
         :info => {
           :video_id => video.nil? ? '' : video.ziggeo_file_id,
@@ -162,6 +173,9 @@ class Learning::Course::OpCoursesService
     course_subject_detail = {
       :course_name => course.name,
       :subject_name => subject.name,
+      :short_description => course.short_description,
+      :suitable_age => course.suitable_age,
+      :duration => course.duration,
       :course_description => (course_description.nil? ? '' : course_description.description),
       :course_thumbnail => thumbnail,
       :active_subject => subject.id,
