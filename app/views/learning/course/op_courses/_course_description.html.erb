@@ -5,9 +5,88 @@
         <img src="assets/global/images/Bitmap3.png" alt="">
       </span>
     </div>
-    <div class="box-about">
-      <%= description.html_safe %>
-      <a href="" class="ba-more">Xem toàn bộ</a>
+    <div class="subject_description">
+      <h3 id='active_subject_name'><%= subject_name %></h3>
+      <ul>
+        <li>
+          <p>
+            <span class='circle-span'></span>
+            <b>Tên khoá học</b>: <%= name %>
+          </p>
+        </li>
+        <li>
+          <p>
+            <span class='circle-span'></span>
+            <b>Tuổi</b>: <%= course_subject_detail[:suitable_age] %>
+          </p>
+        </li>
+        <li>
+          <p>
+            <span class='circle-span'></span>
+            <b>Thời lượng</b>: <%= course_subject_detail[:duration] %>
+          </p>
+        </li>
+      </ul>
     </div>
+    <hr>
+    <div class="box-about box-about-html">
+      <div class='description_html'>
+        <%= description.html_safe %>
+      </div>
+      <a data-toggle="modal" class='open_modal' data-target="#course_description_modal" class="ba-more">Xem toàn bộ</a>
+    </div>
+  </div>
+</div>
+<div id="course_description_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 60%">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><%= name %></h4>
+      </div>
+      <div class="modal-body">
+        <div class="bt-left">
+          <div class="box-imglist">
+            <span>
+              <img src="assets/global/images/Bitmap3.png" alt="">
+            </span>
+          </div>
+          <div class="subject_description">
+            <h3><%= subject_name %></h3>
+            <ul>
+              <li>
+                <p>
+                  <span><i class="far fa-circle"></i></span>
+                  <b>Tên khoá học</b>: <%= name %>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <span><i class="far fa-circle"></i></span>
+                  <b>Tuổi</b>: <%= name %>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <span><i class="far fa-circle"></i></span>
+                  <b>Thời lượng</b>: <%= name %>
+                </p>
+              </li>
+            </ul>
+          </div>
+          <hr>
+          <div class="box-about">
+            <div class=''>
+              <%= description.html_safe %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" style="background-color: #5DC2A7;" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+
   </div>
 </div>

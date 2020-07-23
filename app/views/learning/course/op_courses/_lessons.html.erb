@@ -1,25 +1,36 @@
 <div class="col-sm-8">
   <div class="bt-right">
-    <ul>
+    <div class='subject_lesson_video_list'>
       <% lessons.each do |lesson| %>
-        <li>
-          <a href="" class="btr-detail btr-detail-active">
-            <span class="btd-img1">
-              <% if !lesson.nil? && !lesson[:info][:thumbnail].nil? %>
-                <%= image_tag(lesson[:info][:thumbnail]) %>
-              <% else %>
-                <%= image_tag('global/images/default-lesson-thumbnail.png') %>
-              <% end %>
-            </span>
-            <% if !lesson[:active] %>
-              <span class="btd-img2">
-                <img src="assets/global/images/lock1.png" alt="">
-              </span>
+        <div class='lesson_video_item col-md-4'>
+          <div class='subject-lesson-content'>
+            <% if lesson[:active] %>
+              <a href="/user/open_educat/op_students/student_homework?show_video=true&session=<%= lesson[:session_id] %>" class="btr-detail btr-detail-active">
+            <% else %>
+              <a disabled class="btr-detail btr-detail-active">
             <% end %>
-            <span class="btd-text"><p><%= lesson[:info][:name] %></p></span>
-          </a>
-        </li>
+              <div>
+                <% if !lesson.nil? && !lesson[:info][:thumbnail].nil? %>
+                  <%= image_tag(lesson[:info][:thumbnail]) %>
+                <% else %>
+                  <%= image_tag('global/images/default-lesson-thumbnail.png') %>
+                <% end %>
+              </div>
+              <% if !lesson[:active] %>
+                <div class='lock-lesson'>
+                  <div>
+                  <%= image_tag 'global/images/active/Shape.png', class: 'lock-item' %> 
+                  </div>
+                </div>
+              <% end %>
+              <span class="btd-text"><p><%= lesson[:info][:name] %></p></span>
+            </a>
+          </div>
+        </div>
       <% end %>
-    </ul>
+    </div>
   </div>
 </div>
+
+<style>
+</style>

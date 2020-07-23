@@ -79,24 +79,22 @@ class Learning::Course::OpCoursesService
       result_subjects = []
       course_subjects = subjects.filter {|subject| subject.course_id == course.id}
       course_subjects.each do |course_subject|
-        active, count_done = Learning::Batch::OpBatchService.caculate_complete_percentage(student_id, course.id, course_subject.id)
-        complete_percentage = 0.0
-        if course_subject.total_session.to_i != 0
-          if count_done.to_f / course_subject.total_session.to_f > 1
-            complete_percentage = 1.0
-          else
-            complete_percentage = count_done.to_f / course_subject.total_session.to_f
-          end
-        else
-          complete_percentage = 0
-        end
-
+        active, count_done, count_lesson  = Learning::Batch::OpBatchService.caculate_complete_percentage(student_id, course.id, course_subject.id)
         subject = {
           :info => {
             :id => course_subject.id,
             :name => course_subject.name,
             :thumbnail => nil,
-            :complete_percentage => complete_percentage
+            :count_lesson => count_lesson,
+            :complete_percentage => if course_subject.total_session.to_i != 0
+                                      if count_done.to_f / course_subject.total_session.to_f > 1
+                                        1
+                                      else
+                                        count_done.to_f / course_subject.total_session.to_f
+                                      end
+                                    else
+                                      0
+                                    end
           },
           :active => active
         }
