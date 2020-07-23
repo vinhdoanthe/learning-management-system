@@ -14,7 +14,7 @@
       <div class='overlay-content'>
         <div class="content">
           <div class='col-md-6 subject-count'>
-            <span><%= count_subject %></span>
+            <span><%= subject[:info][:count_lesson] %></span>
             <p>Bài học</p>
           </div>
           <div class='col-md-6 subject-percentage'>
@@ -41,7 +41,11 @@
   <p><%= subject[:info][:name] %></p>
   <div class="lvd-footer">
     <div class="lvf-left">
+      <% if subject[:active] %>
       <a class="view-course-detail" href="/course_detail?course_id=<%= course_id %>&subject_id=<%= subject[:info][:id] %>">Xem chi tiết</a>
+      <% else %>
+      <a class="view-course-detail" disabled>Xem chi tiết</a>
+      <% end %>
       <ul>
         <li><span class="bg-5DC2A7"></span></li>
         <li><span class="bg-FCF055"></span></li>

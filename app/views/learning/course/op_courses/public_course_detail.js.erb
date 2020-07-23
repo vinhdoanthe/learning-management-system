@@ -1,0 +1,2 @@
+$('#subject-lesson-list').html('<%= escape_javascript( render partial: 'learning/course/op_courses/lessons', locals: {:lessons => course_subject_detail[:lessons]} ) %>') 
+$('#active_subject_name').html('<%= active_subject.name %>')
