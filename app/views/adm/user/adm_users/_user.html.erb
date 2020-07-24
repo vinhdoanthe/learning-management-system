@@ -13,26 +13,26 @@
   </thead>
   <tbody>
     <% users.each do |user| %>
-      <tr>
-        <td><%= user[:id] %></td>
-        <td><%= user[:username] %></td>
-        <td><%= user[:email] %></td>
-        <td><%= user[:account_role] %></td>
-        <td><%= user[:full_name] %></td>
-        <td><%= user[:company] %></td>
-        <td><%= user[:mobile] %></td>
-        <td>
-          <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
+    <tr>
+      <td><%= user[:id] %></td>
+      <td><%= user[:username] %></td>
+      <td><%= user[:email] %></td>
+      <td><%= user[:account_role] %></td>
+      <td><%= user[:full_name] %></td>
+      <td><%= user[:company] %></td>
+      <td><%= user[:mobile] %></td>
+      <td>
+        <span>
           <a href="/adm/user/user_info/<%= user[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
-          </span>
-          <span class='tooltip-span'  data-toggle="tooltip" title="<%= t("adm.user.edit") %>">
+        </span>
+        <span>
           <a href="/adm/user/edit_user_info/<%= user[:id] %>"><i class="fas fa-user-edit"></i></a>
-          </span>
-          <span  class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.login") %>">
+        </span>
+        <span>
           <a href="/adm/user/login_as_user/<%= user[:id] %>" target="_blank"><i class="fas fa-user-check"></i></a>
-          </span>
-        </td>
-      </tr>
+        </span>
+      </td>
+    </tr>
     <% end %>
   </tbody>
   <tfoot>
@@ -54,8 +54,7 @@
   }
 </style>
 <script>
-  $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
+  $(document).ready(function() {
     $('#adm_all_user').DataTable({
       "scrollX": true,
       "bLengthChange": false,

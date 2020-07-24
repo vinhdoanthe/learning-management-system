@@ -1,0 +1,166 @@
+<div class="box-mt-detail">
+  <div class="bmd-title">
+    <h3>Báo cáo học sinh</h3>
+  </div>
+  <div class="bmd-repost bmd-content">
+    <div class="bmr-detail">
+      <div class="bmrd-title">
+        <span>
+          <%= image_tag('global/images/icon-programmer.png') %>
+        </span>
+        <h3>kiến thức</h3>
+      </div>
+      <ul class="bmrd-content">
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_finish']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_finish']['content'][op_att_line.category_finish] %>
+          </p>
+        </li>
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_old_ideas']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_old_ideas']['content'][op_att_line.category_old_ideas] %>
+          </p>
+        </li>
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_skill']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_skill']['content'][op_att_line.category_skill] %>
+          </p>
+        </li>
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_creation']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_creation']['content'][op_att_line.category_creation] %>
+          </p>
+        </li>
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_complete']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_complete']['content'][op_att_line.category_complete] %>
+          </p>
+        </li>
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_complete_project']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_complete_project']['content'][op_att_line.category_complete_project] %>
+          </p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="bmr-detail">
+      <div class="bmrd-title">
+        <span>
+          <%= image_tag('global/images/icon-rating.png') %>
+        </span>
+        <h3>Thái độ</h3>
+      </div>
+      <ul class="bmrd-content">
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_awareness']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_awareness']['content'][op_att_line.category_awareness] %>
+          </p>
+        </li>
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_stated']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_stated']['content'][op_att_line.category_stated] %>
+          </p>
+        </li>
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_take_initiative']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_take_initiative']['content'][op_att_line.category_take_initiative] %>
+          </p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="bmr-detail">
+      <div class="bmrd-title">
+        <span>
+          <%= image_tag('global/images/icon-ui.png') %>
+        </span>
+        <h3>Kỹ năng</h3>
+      </div>
+      <ul class="bmrd-content">
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_presentation']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_presentation']['content'][op_att_line.category_presentation] %>
+          </p>
+        </li>
+        <li>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_working_group']['label'] %>
+          </p>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= User::Constant::SessionEvaluation::CATEGORY_EVALUATE['category_working_group']['content'][op_att_line.category_working_group] %>
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div class="bmr-detail">
+      <div class="bmrd-title">
+        <span>
+          <%= image_tag('global/images/files-and-folders-2.png') %>
+        </span>
+        <h3>nhận xét khác</h3>
+      </div>
+      <ul class="bmrd-content">
+        <li>
+
+          <label>Giảng viên nhận xét</label>
+          <p>
+          <%= op_att_line.note_2.html_safe if !op_att_line.note_2.nil? %>
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

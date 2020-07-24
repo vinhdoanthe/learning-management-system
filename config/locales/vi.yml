@@ -57,6 +57,7 @@ vi:
     noti: "Thông báo"
     dashboard: 'Dashboard'
     my_class: "Lớp học của tôi"
+    courses: "Khoá học"
     you_have_no_courses_yet: "Bạn chưa có khóa học nào"
     timetable: "Thời khoá biểu"
     homework: "Bài tập và ôn bài"
@@ -383,6 +384,7 @@ vi:
     Concert canceled: "Buổi bị huỷ"
     Attend school: "Có đi học"
     Absent: "Vắng mặt"
+    what_are_you_thinking: 'Bạn đang nghĩ gì?'
   public_profile:
     center: 'Học tại'
     gender: 'Giới tính'

@@ -327,6 +327,10 @@ module Learning
                                                                    course_id: course_id).first
         active = false
         percentage = 0
+        count_subject_lesson = 0
+        subject = Learning::Course::OpSubject.where(id: subject_id).first
+        count_subject_lesson = subject.op_lessions.count if subject.present? 
+
         unless op_student_course.nil?
           registered_subjects = op_student_course.op_subjects.pluck(:id).uniq.compact
           if registered_subjects.include?(subject_id)
@@ -338,41 +342,63 @@ module Learning
           end
         end
         #caculate and return value
-        [active, count_done]
+        [active, count_done, count_subject_lesson]
       end
 
-      def self.get_session_and_active_state course_id, subject_id, student_id, lesson_id
+      def self.get_session_and_active_state course_id, subject_id, student_id, lesson_ids
+        result_lists = []
         #find batch
         op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id,
                                                                    course_id: course_id).first
-        active = false
-        session_id = nil
-        unless op_student_course.nil?
-          session = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_id, lession_id: lesson_id, state: Learning::Constant::Batch::Session::STATE_DONE).first
-          unless session.nil?
-            session_id = session_id
-            active = true
+        if !op_student_course.nil?
+          registered_subjects = op_student_course.op_subjects.pluck(:id).uniq.compact
+          batch_id = op_student_course.batch_id
+        else
+          registered_subjects = []
+          batch_id = nil
+        end
+        if registered_subjects.empty? || batch_id.nil?
+          lesson_ids.each do |lesson_id|
+            result_item = {
+              :lesson_id => lesson_id,
+              :active => false,
+              :session_id => nil
+            }
+            result_lists << result_item
+          end
+        else
+          if registered_subjects.include?(subject_id)
+            done_sessions = Learning::Batch::OpSession.where(batch_id: batch_id, subject_id: subject_id, lession_id: lesson_ids, state: Learning::Constant::Batch::Session::STATE_DONE).select(:id, :lession_id)
+            lesson_ids.each do |lesson_id|
+              done_session = done_sessions.find{|session| session.lession_id == lesson_id}
+              if !done_session.nil?
+                result_item = {
+                  :lesson_id => lesson_id,
+                  :active => true,
+                  :session_id => done_session.id
+                }
+              else
+                result_item = {
+                  :lesson_id => lesson_id,
+                  :active => false,
+                  :session_id => nil
+                }
+              end
+
+              result_lists << result_item
+            end
+          else
+            lesson_ids.each do |lesson_id|
+              result_item = {
+                :lesson_id => lesson_id,
+                :active => false,
+                :session_id => nil
+              }
+              result_lists << result_item
+            end
           end
         end
-
-        [active, session_id]
-      end
-
-      def self.get_session_and_active_state course_id, subject_id, student_id, lesson_id
-        #find batch
-        op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id,
-                                                                   course_id: course_id).first
-        active = false
-        session_id = nil
-        unless op_student_course.nil?
-          session = Learning::Batch::OpSession.where(batch_id: op_student_course.batch_id, subject_id: subject_id, lession_id: lesson_id, state: Learning::Constant::Batch::Session::STATE_DONE).first
-          unless session.nil?
-            session_id = session.id
-            active = true
-          end
-        end
-
-        [active, session_id]
+        result_lists
       end
     end
   end

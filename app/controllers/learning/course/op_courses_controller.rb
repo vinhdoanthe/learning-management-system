@@ -52,15 +52,19 @@ class Learning::Course::OpCoursesController < ApplicationController
   def public_course_detail
     course_id, subject_id = set_course_and_subject
     student_id = current_user.student_id
+
     unless course_id.nil? || student_id.nil?
       course_subject_detail = Learning::Course::OpCoursesService.get_public_course_detail(course_id, subject_id, student_id)
+      course = Learning::Course::OpCourse.where(id: course_id).first
+      subjects = course.op_subjects.pluck(:id, :name)
+      active_subject = Learning::Course::OpSubject.where(id: course_subject_detail[:active_subject]).first
       # binding.pry
       respond_to do |format|
         format.html {
-          render 'public_course_detail', :locals => {:course_subject_detail => course_subject_detail}
+          render 'public_course_detail', :locals => {:course_subject_detail => course_subject_detail, subjects: subjects, course: course}
         }
         format.js {
-          render '', :locals => {:course_subject_detail => course_subject_detail}
+          render 'learning/course/op_courses/public_course_detail', :locals => {:course_subject_detail => course_subject_detail, subjects: subjects, active_subject: active_subject}
         }
       end
     else

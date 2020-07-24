@@ -1,4 +1,5 @@
-  <div class="modal-dialog batch_student_evaluate">
+<%= tinymce_assets %>
+  <div class="modal-dialog batch_student_evaluate" style='width: 60%'>
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -9,12 +10,12 @@
         <form action="" id='teacher_evaluate_session'>
           <input type="hidden" name='session_id' value='<%= session.id %>'>
           <% User::Constant::Evaluate::EVALUATE.each do |e| %>
-            <div>
+            <div class='evaluate_element'>
               <h2><%= e[0] %></h2>
               <% e[1].keys.each do |k| %>
                 <label><%= e[1][k]['label'] %>:</label>
                 <br>
-                <select name="<%= k %>" id="">
+                <select name="<%= k %>">
                   <option value=''></option>
                 <% e[1][k]['content'].each do  |content| %>
                     <% if attendance.present? && attendance.send(k) == content[0]%>
@@ -30,7 +31,8 @@
           <div>
             <label>Nhận xét khác:</label>
             <br>
-            ​<textarea name="teacher_note" rows="5"><%= attendance.present? ? attendance.note_1 : '' %></textarea>
+            <textarea class='tinymce' name="teacher_note" rows="6"><%= attendance.present? ? attendance.note_1 : '' %></textarea>
+            <%= tinymce :simple %>
           </div>
       </form>
       </div>

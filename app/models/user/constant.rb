@@ -191,6 +191,11 @@ module User::Constant::Evaluate
 end
 
 module User::Constant::SessionEvaluation
+  module StateEvaluate
+    SESSION = '1' # end of session
+    SUBJECT = '2' # end ob subject
+  end
+
   EVALUATION = {
     'KNOWLEDGE' => {
       'knowledge1' => { 

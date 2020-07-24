@@ -147,7 +147,7 @@ $(document).ready(function(){
   })
 
   $('#session_control').on('click', '#teacher_attendance_new', function(){
-    session_id = $('input[name="active_session"]').val();
+    session_id = $('input[name="active_session_id"]').val();
     $.ajax({
       url: '/learning/subject_lesson?session_id=' + session_id,
       method: 'get',
@@ -205,7 +205,7 @@ $(document).ready(function(){
 
   $('#session_control').on('click', '#reward_student', function(){
     waitingdialog.show();
-    session_id = $('input[name="active_session"]').val();
+    session_id = $('input[name="active_session_id"]').val();
     $.ajax({
       method: "GET",
       url: "/learning/op_session/session_reward?session_id=" + session_id,
@@ -249,7 +249,7 @@ $(document).ready(function(){
   })
 
   $('#session_control').on('click', '#give_homework', function(){
-    session_id = $('input[name="active_session"]').val();
+    session_id = $('input[name="active_session_id"]').val();
     $.ajax({
       url: '/user/open_educat/op_teachers/assign_homework_details',
       method: 'GET',
@@ -259,7 +259,7 @@ $(document).ready(function(){
   })
 
   $('#session_control').on('click', '#assign_homework_confirm', function(){
-    session_id = $('input[name="active_session"]').val();
+    session_id = $('input[name="active_session_id"]').val();
     student_ids = $('.select_assign_student').val();
     var question_ids = new Array();
 
