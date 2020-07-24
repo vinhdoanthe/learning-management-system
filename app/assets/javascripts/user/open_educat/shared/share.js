@@ -32,11 +32,7 @@ function fill_table(save_date) {
       var a = new Date(save_date.getTime());
       a.getDay() == 0 ? a.setDate(a.getDate() + i - 6) : a.setDate(a.getDate() - a.getDay() + i + 1);
       day = get_date_month(a);
-      if (i != 6) {
-        $('.thu_' + (i + 2).toString()).html('Thứ ' + (i + 2).toString() + '<br/><span>' + day + '</span>')
-      } else {
-        $('.thu_' + (i + 2).toString()).html('Chủ nhật<br/><span>' + day + '</span>')
-      }
+      $('.thu_' + (i + 2).toString()).html(DAY_IN_WEEK[i] + '<div class="text-center f12 font-medium">' + day + '</div>');
     }
   }
 
@@ -52,23 +48,23 @@ function fill_table(save_date) {
             if (schedule[i.toString()]) {
               info = schedule[i.toString()]
               if (info.status == 'cancel'){
-                html = '<td class="bg-eaeaea schedule_info close_class">'
+                html = '<td class="bg-7E858E schedule_info close_class">'
               }else{
-                html = '<td class="bg-eaeaea schedule_info">'
+                html = '<td class="schedule_info">'
               }
               if (info.batch_class_online){
-                html += '<a href="' + info.href +'" data-placement="top" class="ct-detail ctd-cs3 online_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul><li><h3>HỌC TRỰC TUYẾN</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Giáo viên: ' + info.faculty +'</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
-              }else{
-                html += '<a href="' + info.href +'" data-placement="top" class="ct-detail ctd-cs3 offline_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul><li><h3>HỌC TẠI TRUNG TÂM</h3></li><li><span><b>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</b></span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Giáo viên: ' + info.faculty + '</li><li>Phòng học: ' + info.classroom + '</li></ul>"><span>'
+                html += '<a href="' + info.href +'" data-placement="top" class="ct-detail ctd-cs3 online_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul class=\'data-content-line-height\'><li><h3>'+ LEARNING_IN_ONLINE +'</h3></li><li><span style=\'color-0052C1 font-bold\'>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Giáo viên: ' + info.faculty +'</li><li>Phòng học: ' + info.classroom + '</li></ul>">'
+              } else {
+                html += '<a href="' + info.href +'" data-placement="top" class="ct-detail ctd-cs3 offline_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul class=\'data-content-line-height\'><li><h3>' + LEARNING_IN_CENTER + '</h3></li><li><span class=\'color-0052C1 font-bold\'>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Giáo viên: ' + info.faculty + '</li><li>Phòng học: ' + info.classroom + '</li></ul>">'
               }
 
               if (info.status == 'cancel') {
-                html += '<img src="/global/images/close.png" alt=""></span><b style="color: #5DC2A7 !important">' + info.start_time + '-' + info.end_time + '</b></br>' + info.name + ' </a></td>'
+                html += '<div class="box-circle bg-F16357"></div><div class="box-info-schedule"><b style="color: #5DC2A7 !important">' + info.start_time + '-' + info.end_time + '</b></br>' + info.name + '</div></a></td>'
               } else {
-                html += '</span><b style="color: #5DC2A7 !important">' + info.start_time + '-' + info.end_time + '</b></br>' + info.name + ' </a></td>'
+                html += '<div class="box-circle bg-EB9138"></div><div class="box-info-schedule"><b style="color: #5DC2A7 !important">' + info.start_time + '-' + info.end_time + '</b></br>' + info.name + '</div></a></td>'
               }
             } else {
-              html = '<td class="bg-fff schedule_info"></td>'
+              html = '<td class="schedule_info"></td>'
             }
 
             $('.' + key).append(html);

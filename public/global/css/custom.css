@@ -1970,78 +1970,6 @@ background: #FCF055 !important
   padding: 0;
 }
 
-.ct-note {}
-
-.ct-left {}
-
-.ct-left ul {}
-
-.ct-left ul li {
-  display: inline-block;
-  margin-right: 20px;
-  text-transform: uppercase;
-  padding-left: 35px;
-  position: relative;
-}
-
-.ct-left ul li span {
-  display: inherit;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-right: 5px;
-  position: absolute;
-  left: 0;
-  top: -3px;
-}
-
-.ct-right {}
-
-.ct-right ul {}
-
-.ct-right ul li {
-  display: inline-block;
-  width: 100%;
-  text-transform: uppercase;
-}
-
-.ct-right ul li span {
-  display: inherit;
-  width: 18px;
-  height: 18px;
-  margin-right: 5px;
-}
-
-.ct-right ul li span img {
-  width: 100%
-}
-
-.ct-detail {
-  display: inline-block;
-  width: 100%;
-  height: 50px;
-  position: relative;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  color: #000;
-  text-align: center;
-  font-size: 12px;
-  padding: 8px 15px;
-}
-
-.ct-detail span {
-  position: absolute;
-  width: 18px;
-  top: 27px;
-  left: 8px;
-  display: inherit;
-}
-
-.ct-detail span img {
-  width: 100%;
-}
-
 .ct-detail.ctd-cs1:before {
   position: absolute;
   content: '';
@@ -3585,6 +3513,14 @@ ul.bsc-list li:after {
   text-align: center;
 }
 
+.table-bordered {
+    border: 1px solid #D7DFE9 !important;
+}
+
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+	border: 1px solid #D7DFE9;
+}
+
 .table-list {
   margin-top: 20px
 }
@@ -3606,17 +3542,19 @@ ul.bsc-list li:after {
   text-transform: uppercase;
   padding-left: 35px;
   position: relative;
+  line-height: 26px;
 }
 
 .ct-left ul li span {
   display: inherit;
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   margin-right: 5px;
   position: absolute;
   left: 0;
-  top: -3px;
+  vertical-align: middle;
+  /*top: -3px;*/
 }
 
 .ct-right {}
@@ -3627,18 +3565,47 @@ ul.bsc-list li:after {
   display: inline-block;
   width: 100%;
   text-transform: uppercase;
+  text-align: right;
 }
 
-.ct-right ul li span {
-  display: inherit;
+.ct-right ul li span, .box-circle {
+  /*display: inherit;
   width: 18px;
   height: 18px;
-  margin-right: 5px;
+  margin-right: 5px;*/
+  display: inherit;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 5px;  
+  vertical-align:middle;
 }
+
+.box-circle {float: left}
 
 .ct-right ul li span img {
   width: 100%
 }
+
+table #schedule_table tr td {padding-right: 2px; padding-left: 2px;}
+
+table #schedule_table .ct-detail {
+    display: inline-block;
+    width: 100%;
+    height: 50px;
+    position: relative;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    font-size: 12px;
+    padding: 8px 5px;
+}
+
+.box-info-schedule {padding-left: 25px;}
+
+ul.data-content-line-height li {line-height: 20px;}
 
 .ct-detail {
   display: inline-block;
@@ -7050,6 +7017,7 @@ ul.fcv-small li:hover video {
   left: 7px;
 }
 
+/** Custom style for table Schedule **/
 .btn-box-shadow {
   -webkit-box-shadow: inset 0 -2px 0 #5DC2A7;
   box-shadow: inset 0 -2px 0 #5DC2A7;
@@ -7080,29 +7048,43 @@ ul.fcv-small li:hover video {
 }
 .box-height-60 {height: 60px; vertical-align: middle;}
 .box-line-height-60 {height: 60px; line-height: 65px; vertical-align: middle;}
+.box-line-height-66 {line-height: 65px; vertical-align: middle;}
 
 .text-date-time {display: inline-block;vertical-align: super;padding-right: 20px;font-size: 12px; font-weight: 500}
-
 .coming_soon_session_name {font-size: 14px; font-weight: 700}
 .text-coming-soon-left {
+	position: absolute;
+    top: 130px;
+    left: 30px;
 	transform-origin: 0 0;
-	transform: rotate(270deg);
+    transform: rotate(270deg);    
+}
+.btn.btn-join-class {
+	height: 50px !important;
+    margin-top: 10px !important;
+    float: right !important;
+    margin-left: 50px !important;
+    padding-top:15px !important;
 }
 
-.no-padding-left {
-  padding-left: 0px !important;
-}
+.day_in_week th {color: #6D7278;font-weight: 700;}
+.day_in_week th span {font-size: 12px;}
+.day_in_week .table-bordered thead th {background-color: #D7DFE9;}
 
-.bfx-title {
-  margin-bottom: 100px;
-}
+.border-r-0 {border-right: 0px !important;}
+.border-l-0 {border-left: 0px !important;}
+.border-r-l-0 {border-right: 0px !important;border-left: 0px !important;}
+.border-r-b-0 {border-right: 0px !important;border-bottom: 0px !important;}
+.border-l-b-0 {border-left: 0px !important;border-bottom: 0px !important;}
+.border-r-l-b-0 {border-right: 0px !important;border-left: 0px !important;border-bottom: 0px !important}
 
-.bfx-title h2 {
-  font-size: 26px !important;
-}
+.no-padding-left {padding-left: 0px !important;}
+.bfx-title {margin-bottom: 100px;}
+.bfx-title h2 {font-size: 26px !important;}
+
+.student_timetable .ct-note {margin-top:23px; margin-bottom: 22px;}
 
 .paging-class {}
-
 .paging-class ul {}
 
 .paging-class ul li {}
@@ -7346,4 +7328,11 @@ ul.header-menu.nav.navbar-nav li a#li-language span.flag {
   width:100%; 
   height:100%; 
   object-fit:cover;
+}
+
+
+/** END **/
+
+.line-D7DFE9{
+	border-bottom: 1px solid #D7DFE9 !important;
 }

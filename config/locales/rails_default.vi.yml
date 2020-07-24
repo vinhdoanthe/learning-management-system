@@ -37,6 +37,14 @@ vi:
     - Thứ năm
     - Thứ sáu
     - Thứ bảy
+    day_in_week:    
+    - Thứ 2
+    - Thứ 3
+    - Thứ 4
+    - Thứ 5
+    - Thứ 6
+    - Thứ 7
+    - Chủ nhật
     formats:
       default: "%d-%m-%Y"
       long: "%d %B, %Y"
@@ -104,6 +112,8 @@ vi:
       year: Năm
       week: Tuần
       date_from_to: "Quãng thời gian"
+      range_time: "Khung giờ"
+      range_time: "Thứ"
   errors:
     format: "%{attribute} %{message}"
     messages:

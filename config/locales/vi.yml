@@ -36,6 +36,7 @@ vi:
     text_ok: "Đồng ý"
     Save: "Lưu"
     Preview: "Xem trước"
+    Join class now: "Vào học ngay"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -133,7 +134,12 @@ vi:
     lesson: "Bài học"    
     course: "Khoá học"
     attendance: "Điểm danh"
-    no_lesson: "Chưa có buổi học nào"    
+    no_lesson: "Chưa có buổi học nào"
+    Class Online: "Lớp học Online"
+    Class in center: "Lớp học tại trung tâm"
+    Class cancel: "Lớp bị hủy"
+    Learning in center: "Học tại trung tâm"
+    Learning in online: "Học Online"
     batch:
       type: "Loại lớp học"
       batch_time: "Thời gian học"
