@@ -3,7 +3,6 @@
 <% else%>
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>TEKY Learning Management System</title>
   <%= csrf_meta_tags %>
@@ -69,6 +68,11 @@
     ga('send', 'pageview');
   </script>
   <!-- End Google Analytics -->
+  <script type="text/javascript">
+  var  LEARNING_IN_CENTER = "<%= t('learning.Learning in center')%>";
+  var  LEARNING_IN_ONLINE = "<%= t('learning.Learning in online')%>";
+  var  DAY_IN_WEEK        = <%= text_day_in_week%>;
+  </script>
   <% end %>
 </head>
 
