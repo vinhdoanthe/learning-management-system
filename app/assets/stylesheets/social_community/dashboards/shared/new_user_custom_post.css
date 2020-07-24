@@ -1,4 +1,5 @@
 .direct-upload {
+  width: -webkit-fill-available;
   display: inline-block;
   position: relative;
   padding: 2px 4px;
@@ -30,6 +31,30 @@
 
 .direct-upload--error {
   border-color: red;
+}
+
+input.user-custom-post-images {
+  display: none;
+}
+.bc-edit textarea {
+  width: calc(100% - 60px);
+  border-radius: 30px;
+  float: right;
+  border: 1px solid #D7DFE9;
+  box-shadow: none;
+  padding: 14px 10px 14px 20px;
+}
+.bc-edit div.p-btn-group {
+  width: auto !important;
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  top: 24px;
+  right: 21px;
+}
+img.preview {
+  max-width: 200px !important;
+  max-height: 200px !important;
 }
 
 input[type=file][data-direct-upload-url][disabled] {

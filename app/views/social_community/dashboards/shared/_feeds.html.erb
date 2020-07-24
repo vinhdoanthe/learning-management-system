@@ -16,6 +16,9 @@
     <% elsif feed.post.is_a?(SocialCommunity::Feed::ReferFriendPost) %>
       <% message, refer = refer_friend_feed(feed) %>
       <%= render :partial => 'social_community/feed/refer_friend_posts/refer_friend_post', :locals => {feed: feed, message: message.html_safe, refer: refer} %>
+    <% elsif feed.post.is_a?(SocialCommunity::Feed::UserCustomPost) %>
+      <% content, photos = user_custom_feed(feed) %>
+      <%= render :partial => 'social_community/feed/user_custom_posts/user_custom_post', :locals => {:feed => feed, :content => content, :photos => photos} %>
     <% end %>
   <% end %>
 <% end %>

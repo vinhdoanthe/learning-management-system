@@ -1,52 +1,10 @@
 <% content_for :stylesheet_includes do %>
-  <%= stylesheet_link_tag 'social_community/dashboards/shared/direct_upload' %>
+  <%= stylesheet_link_tag 'social_community/dashboards/shared/new_user_custom_post' %>
 <% end %>
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag 'social_community/dashboards/shared/direct_upload' %>
+  <%= javascript_include_tag 'social_community/dashboards/shared/new_user_custom_post' %>
 <% end %>
 <div id='newUserCustomPost'>
-  <div class='panel post-box'>
-    <div class='panel-content'>
-      <div class="bnd-comment">
-        <div class="bc-edit">
-          <span>
-            <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
-          </span>
-          <%= form_with(url: social_community_user_custom_post_contents_path, local: true) do |form| %>
-            <%= form.text_area(:content, :placeholder => t('dashboard.what_are_you_thinking'), row: '1', wrap:'hard') %>
-            <%= form.file_field :photos, multiple: true, direct_upload: true, :class => 'user-custom-post-images', :id => 'user-custom-post-images' %>
-            <div class='p-btn-group'>
-              <label for="user-custom-post-images">
-                <%= image_tag('global/images/new-post-add-photo-btn.png', :class => 'user-custom-post-add-photo-btn', :alt => 'Add photos', :style => "padding-right: 10px;") %>
-              </label>
-              <button>
-                <img class='user-custom-post-btn' src="/global/images/send.png" alt="">
-              </button>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
+  <%= render "social_community/feed/user_custom_posts/form" %>
   </div>
 </div>
-<style>
-input.user-custom-post-images {
-  display: none;
-}
-.bc-edit textarea {
-  width: calc(100% - 60px);
-  border-radius: 30px;
-  float: right;
-  border: 1px solid #D7DFE9;
-  box-shadow: none;
-  padding: 14px 10px 14px 20px;
-}
-.bc-edit div.p-btn-group {
-  width: auto !important;
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  top: 24px;
-  right: 21px;
-}
-</style>

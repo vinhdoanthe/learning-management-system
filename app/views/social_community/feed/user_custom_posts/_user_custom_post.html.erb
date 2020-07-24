@@ -1,0 +1,20 @@
+<div class='panel post-box'>
+  <div class="user-custom-post-content bnd-comment">
+    <div class="bc-ansew">
+      <div class="bca-parent">
+        <div class="bpe-detail bpe-parent">
+          <span class="">
+          </span>
+          <p><b class="cmt-user color-0654BA"><%= 'Ten hoc sinh' %></b>&nbsp;<%= content %></p>    
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='panel-content'>
+    <%= render :partial => "social_community/dashboards/shared/user_photos", :locals => {photos: photos, post: feed.post} %>
+  </div>
+  <%= render :partial => "social_community/dashboards/shared/posts/reactions", :locals => {post: feed.post, count_like: feed.count_like, count_love: feed.count_love, count_sad: feed.count_sad} %>
+  <div class="sub-panel-content">
+    <%= render :partial => "social_community/dashboards/shared/posts/comments", :locals => {post: feed.post, comments: feed.comments} %>    	
+  </div>
+</div>

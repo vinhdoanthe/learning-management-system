@@ -40,6 +40,14 @@ module SocialCommunity::DashboardsHelper
     [message, refer]
   end
 
+  def user_custom_feed feed
+    post_activity = SocialCommunity::Feed::PostActivity.where(sc_post_id: feed.post.id).first
+    user_post_content = post_activity.activitiable
+    photos = user_post_content.photos
+    content = user_post_content.content
+    [content, photos]
+  end
+
   def blank_post_noti_content noti
     if noti.notifiable_type == "SocialCommunity::Feed::PhotoPost"
       "Giáo viên vừa đăng ảnh trong lớp học của con"

@@ -1,0 +1,13 @@
+// code go here
+// prepend post to feed
+<% content, photos = user_custom_feed(feed) %>
+  let newFeed = $('#tab_newFeeds')
+let homeFeed = $('#tab_homeFeeds')
+if (newFeed.hasClass('active')) {
+    newFeed.prepend("<%= escape_javascript(render :partial => 'social_community/feed/user_custom_posts/user_custom_post', :locals => {feed: feed, content: content, photos: photos}) %>")
+} else if (homeFeed.hasClass('active')) {
+  homeFeed.prepend("<%= j(render :partial => 'social_community/feed/user_custom_posts/user_custom_post', :locals => {feed: feed, content: content, photos: photos}) %>")
+
+}
+// re-render new post form 
+$('#newUserCustomPost').html("<%= escape_javascript(render 'social_community/feed/user_custom_posts/form') %>")

@@ -1,0 +1,85 @@
+<%
+  photos_size = photos.size
+%>
+<div class="box-photos">
+  <%  if photos_size <= 2 %>
+    <% photos.each do |photo| %>
+      <a href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12 border-white"><%= image_tag(photos[0],:class => 'image-fit border-image') %></span>
+      </a>
+    <% end %>
+  <% elsif photos_size == 3 %>
+    <div class="row">
+      <a href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+        <span class="col-xs-12 col-md-12 col-lg-12 border-white"><%= image_tag(photos[0], :class => 'image-fit border-image') %></span>
+      </a>      
+      <a class="col-xs-6 col-md-6 border-white" style="padding-right:0px;" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+        <%= image_tag(photos[1],:class => 'image-fit border-image photo-height-200') %>
+      </a>
+      <a class="col-xs-6 col-md-6 border-white" style="padding-left:0px;" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+        <%= image_tag(photos[2],:class => 'image-fit border-image photo-height-200') %>
+      </a>
+    </div>
+  <% elsif photos_size == 4 %>
+    <div class="row">
+      <a href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12 border-white"><%= image_tag(photos[0],:class => 'image-fit border-image') %></span>
+      </a>
+    </div>      
+    <a class="col-xs-4 col-sm-4 col-md-4 col-lg-4  px-0 border-white" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+      <%= image_tag(photos[1],:class => 'image-fit border-image photo-height-162') %>
+    </a>
+    <a class="col-xs-4 col-sm-4 col-md-4 col-lg-4  px-0 border-white" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+      <%= image_tag(photos[2],:class => 'image-fit border-image photo-height-162') %>
+    </a>
+    <a class="col-xs-4 col-sm-4 col-md-4 col-lg-4  px-0 border-white" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+      <%= image_tag(photos[3],:class => 'image-fit border-image photo-height-162') %>
+    </a>
+<%else%>
+    <div class="row">
+      <a href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12 border-white"><%= image_tag(photos[0],:class => 'image-fit border-image') %></span>
+      </a>
+    </div>
+
+    <a class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-0 border-white" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+      <%= image_tag(photos[1], :class => 'image-fit border-image photo-height-162') %>
+    </a>
+    <a class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-0 border-white" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+      <%= image_tag(photos[2], :class => 'image-fit border-image photo-height-162') %>
+    </a>
+    <a class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-0 border-white" href="#showPhotoModalInDashboard<%= post.id %>" data-toggle="modal">        
+      <%= image_tag(photos[3], :class => 'image-fit photo-height-162') %>
+      <span class="detail-plus box-photo-over border-image"><span class="more-number-photo">+<%= photos_size %></span></span>      
+    </a>
+<% end%>
+  <div class="modal fade" id="showPhotoModalInDashboard<%= post.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <ul class="owl-carousel list-lightbox" id="lightbox<%= post.id %>">
+            <% photos.each do |photo| %>
+              <li>
+                <span>
+                  <%= image_tag(photo) %>
+                </span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#lightbox<%= post.id %>').owlCarousel({
+    items:1,
+    lazyLoad:true,
+    loop:true,
+    margin:10,
+    nav:true,
+    autoplayHoverPause:true,
+    autoplay:true,
+    autoplayTimeout:10000,
+  });
+</script>

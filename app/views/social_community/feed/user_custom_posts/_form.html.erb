@@ -1,0 +1,24 @@
+<div class='panel post-box'>
+  <div class='panel-content'>
+    <div class="bnd-comment">
+      <div class="bc-edit">
+        <span>
+          <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
+        </span>
+        <%= form_with(url: social_community_user_custom_post_contents_path, id: 'new-user-custom-post-form') do |form| %>
+          <%= form.text_area:content, :id => 'new-user-custom-post-content', :placeholder => t('dashboard.what_are_you_thinking', :row => 1, :wrap => 'hard') %>
+          <%= form.file_field :photos, :accept => 'image/*', multiple: true, direct_upload: true, :class => 'user-custom-post-images', :id => 'user-custom-post-images' %>
+          <div class='p-btn-group'>
+            <label for="user-custom-post-images">
+              <%= image_tag('global/images/new-post-add-photo-btn.png', :class => 'user-custom-post-add-photo-btn', :alt => 'Add photos', :style => "padding-right: 10px;") %>
+            </label>
+            <button>
+              <img class='user-custom-post-btn' src="/global/images/send.png" alt="">
+            </button>
+          </div>
+        <% end %>
+      </div>
+      <div id='files-preview'>
+      </div>
+    </div>
+  </div>
