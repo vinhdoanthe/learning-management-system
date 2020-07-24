@@ -4,6 +4,8 @@ module User::Constant
   TEACHER = 'Teacher'
   PARENT = 'Parent'
   STUDENT = 'Student'
+  CONTENT_ADMIN = 'Content Admin'
+  OPERATION_ADMIN = 'Operation Admin'
 
   # User status
   ACTIVE = true

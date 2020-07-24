@@ -21,13 +21,14 @@ class User::Account::User < ApplicationRecord
   has_many :users, class_name: 'User::Account::User', foreign_key: 'parent_account_id'
   has_many :user_posts, class_name: 'SocialCommunity::Feed::UserPost'
   has_many :sc_posts, :through => :user_posts, class_name: 'SocialCommunity::Feed::Post'
-  has_one :res_user, class_name: 'Common::ResUser', foreign_key: 'login', primary_key: 'email'
+  has_many :user_companies, class_name: 'Common::UserCompany', foreign_key: 'user_id'
+  has_many :res_companies, :through => :user_companies, class_name: 'Common::ResCompany'
 
   belongs_to :avatar, required: false
 
   acts_as_target # User as target for Activity Notification 
 
-  enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT]
+  enumerize :account_role, in: [Constant::ADMIN, Constant::TEACHER, Constant::PARENT, Constant::STUDENT, Constant::CONTENT_ADMIN, Constant::OPERATION_ADMIN]
 
   def email_address_for_sending
     if is_student?
@@ -219,6 +220,14 @@ class User::Account::User < ApplicationRecord
         false
       end
     end
+  end
+
+  def is_content_admin?
+    account_role == Constant::CONTENT_ADMIN
+  end
+
+  def is_operation_admin?
+    account_role == Constant::OPERATION_ADMIN
   end
 
   def get_avatar 

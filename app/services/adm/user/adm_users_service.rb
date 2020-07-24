@@ -1,5 +1,5 @@
 class Adm::User::AdmUsersService
-  def user_index params
+  def user_index params, user
     offset = 0
     offset = ( params[:page].to_i ) * 25 if params[:page].present?
     student_query = "(users.username ilike '%#{ params[:search] }%' OR users.email ilike '%#{ params[:search] }%' OR op_student.full_name ilike '%#{ params[:search] }%' OR partner.mobile ilike '%#{ params[:search] }%')"
@@ -8,8 +8,11 @@ class Adm::User::AdmUsersService
     admin_query = "(users.username ilike '%#{ params[:search] }%' OR users.email ilike '%#{ params[:search] }%' OR partner.name ilike '%#{ params[:search] }%' OR partner.mobile ilike '%#{ params[:search] }%')"
     query = ''
 
+    allow_companies = get_allow_user_companies user
     if params[:company].present? && (params[:company].include? 'all') == false
-      query = " AND partner.company_id IN (#{ params[:company].join(',')})"
+      query = " AND company.id IN (#{ params[:company].join(',') })"
+    elsif allow_companies.present?
+      query = " AND company.id IN  (#{ allow_companies.join(',') })"
     end
     
     if params[:had_login].to_i == 0
@@ -24,17 +27,17 @@ class Adm::User::AdmUsersService
     admin_query += query
 
     if params[:is_active].to_boolean
-      student_sub_query = "LEFT OUTER JOIN op_student_course as sc ON (sc.student_id = users.student_id AND sc.id IS NOT NULL)"
+      student_sub_query = "LEFT OUTER JOIN op_student_course as sc ON (sc.student_id = users.student_id AND sc.id IS NOT NULL) LEFT OUTER JOIN res_company as company ON company.id = sc.company_id"
     else
-      student_sub_query = "LEFT OUTER JOIN op_student_course as sc ON (sc.student_id = users.student_id AND sc.id IS NULL)"
+      student_sub_query = "LEFT OUTER JOIN op_student_course as sc ON (sc.student_id = users.student_id AND sc.id IS NULL) LEFT OUTER JOIN res_company as company ON company.id = sc.company_id"
     end
 
     if params[:role].present?
       sql = "("
-      sql += (get_student student_query, student_sub_query) + ") UNION (" if params[:role].include? "Student"
-      sql += (get_teacher teacher_query) + ") UNION (" if params[:role].include? "Teacher"
-      sql += (get_parent parent_query) + ") UNION (" if params[:role].include? "Parent"
-      sql += (get_admin admin_query) + ") UNION ("  if params[:role].include? "Admin"
+      sql += ((get_student student_query, student_sub_query) + ") UNION (") if params[:role].include? "Student"
+      sql += ((get_teacher teacher_query) + ") UNION (") if params[:role].include? "Teacher"
+      sql += ((get_parent parent_query) + ") UNION (") if params[:role].include? "Parent"
+      sql += ((get_admin admin_query, params[:role]) + ") UNION (")  if (params[:role] & ["Admin", "Content Admin", "Operation Admin"]).present?
       sql = sql[0..-9]
 
     else
@@ -47,13 +50,12 @@ class Adm::User::AdmUsersService
             ( #{ get_parent parent_query }
             )
             UNION
-            ( #{ get_admin admin_query }
+            ( #{ get_admin admin_query, ['Admin', 'Operation Admin', 'Content Admin'] }
             )"
     end
 
     limit = " ORDER BY user_created_at DESC  LIMIT 25 OFFSET #{ offset }"
     sql += limit
-
     query_users = ActiveRecord::Base.connection.execute(sql)
     users = query_users.values
     all_user = []
@@ -135,7 +137,6 @@ class Adm::User::AdmUsersService
      "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, op_student.full_name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, company.name as company_name, company.id as company_id, partner.mobile as mobile
      FROM users
      INNER JOIN op_student ON (op_student.id = users.student_id AND users.account_role = 'Student')
-     LEFT OUTER JOIN res_company as company ON company.id = op_student.company_id
      LEFT OUTER JOIN res_partner as partner ON partner.id = op_student.partner_id
      #{ sub_query }
      WHERE #{ query }"
@@ -159,11 +160,19 @@ class Adm::User::AdmUsersService
     WHERE #{ query }"
   end
 
-  def get_admin query
+  def get_admin query, role
     "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, partner.name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, company.name as company_name, company.id as company_id, partner.mobile as mobile
     FROM users
-    INNER JOIN res_partner as partner ON (partner.email = users.email AND users.account_role = 'Admin')
+    INNER JOIN res_partner as partner ON (partner.email = users.email AND users.account_role IN ('#{ role.join(',') }'))
     LEFT OUTER JOIN res_company as company ON company.id = partner.company_id
     WHERE #{ query }"
+  end
+
+  def get_allow_user_companies user
+    if user.account_role == Constant::OPERATION_ADMIN
+      user.user_companies.pluck(:company_id)
+    else
+      []
+    end
   end
 end
