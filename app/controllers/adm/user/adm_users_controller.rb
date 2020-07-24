@@ -3,11 +3,16 @@ class Adm::User::AdmUsersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
+    @allow_companies =  if current_user.is_operation_admin?
+                        current_user.res_companies
+                      else
+                        Common::ResCompany.all
+                      end
   end
 
   def filter_users
     service = Adm::User::AdmUsersService.new
-    users = service.user_index params
+    users = service.user_index params, current_user
     page = params[:page].to_i
 
     respond_to do |format|
@@ -77,7 +82,8 @@ class Adm::User::AdmUsersController < ApplicationController
   private
 
   def check_role
-    if current_user.account_role != 'Admin'
+    allow_roles = [Constant::ADMIN, Constant::OPERATION_ADMIN]
+    unless allow_roles.include? current_user.account_role
       if request.method != 'POST'
         flash[:danger] = "Bạn không có quyền truy cập đến tài nguyên này"
         redirect_to root_path   

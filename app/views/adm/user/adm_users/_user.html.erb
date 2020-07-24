@@ -6,7 +6,6 @@
       <th>Email</th>
       <th><%= t("adm.user.role") %></th>
       <th><%= t("adm.user.fullname") %></th>
-      <th><%= t("adm.user.company") %></th>
       <th><%= t("adm.user.mobile") %></th>
       <th>Action</th>
     </tr>
@@ -19,10 +18,9 @@
       <td><%= user[:email] %></td>
       <td><%= user[:account_role] %></td>
       <td><%= user[:full_name] %></td>
-      <td><%= user[:company] %></td>
       <td><%= user[:mobile] %></td>
       <td>
-        <span>
+        <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
           <a href="/adm/user/user_info/<%= user[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
         </span>
         <span>
@@ -42,7 +40,6 @@
       <th>Email</th>
       <th><%= t("adm.user.role") %></th>
       <th><%= t("adm.user.fullname") %></th>
-      <th><%= t("adm.user.company") %></th>
       <th><%= t("adm.user.mobile") %></th>
       <th>Action</th>
     </tr>
