@@ -42,4 +42,12 @@ module Learning::Constant
       CHECKIN_STATE_BAD = 'bad'
     end
   end
+
+  module Homework
+    module AnswerState
+      STATE_DONE = 'right'
+      STATE_WAITING = 'waiting'
+      STATE_WRONG = 'wrong'
+    end
+  end
 end
