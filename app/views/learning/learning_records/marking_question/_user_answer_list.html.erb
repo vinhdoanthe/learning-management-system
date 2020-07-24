@@ -8,7 +8,7 @@
 <% user_answers.each do |answer| %>
 <tr>
   <td style="font-weight: 600;"><%= answer[:student_name] %></td>
-  <td><%= link_to batch.code, teacher_class_detail_user_open_educat_op_teacher_path(batch.id) %></td>
+  <td><%= link_to batch.code, teacher_class_detail_user_open_educat_op_teacher_path(batch_id: batch.id) %></td>
   <% if answer[:session_id].present? %>
   <td><%= link_to answer[:lesson_name], teacher_class_detail_user_open_educat_op_teacher_path(batch_id: batch.id, session_id: answer[:session_id]) %></td>
   <% else %>
