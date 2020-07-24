@@ -49,7 +49,7 @@ module Learning
 
     def marking_question
       @batches = current_user.op_faculty.op_batches.uniq
-      @batches.select!{|batch| batch.user_answers.present?}
+      @batches.select!{|batch| batch.user_answers.where(state: Learning::Constant::Homework::AnswerState::STATE_WAITING).present?}
       @sessions = @batches.last.op_sessions if @batches.present?
     end
 
