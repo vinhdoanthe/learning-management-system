@@ -317,6 +317,9 @@ vi:
     setting:
       name: "Cài đặt"
       coin_star: "Điểm thưởng"
+      Guide setting: "Hướng dẫn cài đặt"
+      Guide setting application: "Hướng dẫn cài đặt ứng dụng"
+      Guide setting and learn online on PC: "Hướng dẫn cài đặt ứng dụng và học trực tuyến trên máy tính"
     class:
       management_class: "Quản lý lớp học"
     course:

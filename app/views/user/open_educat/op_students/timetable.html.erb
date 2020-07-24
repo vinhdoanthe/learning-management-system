@@ -2,13 +2,22 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h3 class="color-fff text-transform">Thời khoá biểu</h3>
+        <h3 class="color-fff text-transform"><%= t('sidebar.timetable')%></h3>
       </div>
     </div>
   </div>
   <div class="panel m-t--70">
     <div class="panel-content">
+      <%= render 'user/open_educat/shared/session/top_schedule', {:coming_soon_session => @session} %>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-content">
       <%= render 'user/open_educat/shared/session/coming_session', {:coming_soon_session => @session} %>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-content">
       <div class="table-responsive calendar-teach student_timetable" style="overflow-x: initial;">
         <div class="filter-box FlowupLabels b-b-1-869fb229 m-b-20" id='formBody'>
           <div class="row">

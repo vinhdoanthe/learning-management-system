@@ -922,14 +922,9 @@ background: #FCF055 !important
   height: 50px;
 }
 
-.smalltext {
-  padding-top: 5px;
-  font-size: 16px;
-}
+.smalltext {padding-top: 5px;font-size: 16px;}
 
-#clockdiv>div.box-datetime {
-  width: 50px;
-}
+#clockdiv>div.box-datetime {width: 50px;}
 
 #clockdiv div>span.days, #clockdiv div>span.hours, #clockdiv div>span.minutes, #clockdiv div>span.seconds {
   font-size: 8px;
@@ -943,17 +938,13 @@ background: #FCF055 !important
   padding-top: 0px;
 }
 
+#clockdiv .char-dots {line-height: 50px;display: inline;vertical-align:top;}
+
 /*End Cowndown*/
 
-.calenda-box {
-  width: 70px;
-  border: 1px solid #D7DFE9;
-  border-radius: 5px;
-}
+.calenda-box {width: 70px;border: 1px solid #D7DFE9;border-radius: 5px;}
 
-.calenda-box .cb-tit {
-  background: #D7DFE9
-}
+.calenda-box .cb-tit {background: #D7DFE9}
 
 .calenda-box .cb-tit p {
   color: #000;
@@ -7048,15 +7039,58 @@ ul.fcv-small li:hover video {
 .btn-fix {
   background: #fff !important;
   color: #000 !important;
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #5DC2A7 !important;
   position: relative;
-  padding-left: 35px !important;
+  /*padding-left: 35px !important;*/
 }
 
 .btn-fix img {
   position: absolute;
   top: 14px;
   left: 7px;
+}
+
+.btn-box-shadow {
+  -webkit-box-shadow: inset 0 -2px 0 #5DC2A7;
+  box-shadow: inset 0 -2px 0 #5DC2A7;
+}
+
+.btn-box-help {
+  font-weight: 700;
+  font-size: 12px;
+  font-family: 'Quicksand', sans-serif;
+  background: #fff !important;
+  color: #000 !important;
+  border: 1px solid #5DC2A7 !important;
+  position: relative;
+  -webkit-box-shadow: inset 0 -4px 0 #5DC2A7;
+  box-shadow: inset 0 -4px 0 #5DC2A7;
+  padding-top: 11px !important;
+  padding-right: auto !important;
+  padding-bottom: 11px !important;
+  padding-left: 10px !important;
+  margin-right: 0px !important;
+  border-radius:6px !important;
+}
+
+.table-border-radius {
+  border: 1px solid #D7DFE9 !important;
+  padding: 10px 15px !important;
+  border-radius: 5px;
+}
+.box-height-60 {height: 60px; vertical-align: middle;}
+.box-line-height-60 {height: 60px; line-height: 65px; vertical-align: middle;}
+
+.text-date-time {display: inline-block;vertical-align: super;padding-right: 20px;font-size: 12px; font-weight: 500}
+
+.coming_soon_session_name {font-size: 14px; font-weight: 700}
+.text-coming-soon-left {
+	transform-origin: 0 0;
+	transform: rotate(270deg);
+}
+
+.no-padding-left {
+  padding-left: 0px !important;
 }
 
 .bfx-title {
