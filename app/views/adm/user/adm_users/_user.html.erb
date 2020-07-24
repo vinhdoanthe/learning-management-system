@@ -12,15 +12,15 @@
   </thead>
   <tbody>
     <% users.each do |user| %>
-    <tr>
-      <td><%= user[:id] %></td>
-      <td><%= user[:username] %></td>
-      <td><%= user[:email] %></td>
-      <td><%= user[:account_role] %></td>
-      <td><%= user[:full_name] %></td>
-      <td><%= user[:mobile] %></td>
-      <td>
-        <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
+      <tr>
+        <td><%= user[:id] %></td>
+        <td><%= user[:username] %></td>
+        <td><%= user[:email] %></td>
+        <td><%= user[:account_role] %></td>
+        <td><%= user[:full_name] %></td>
+        <td><%= user[:mobile] %></td>
+        <td>
+          <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
           <a href="/adm/user/user_info/<%= user[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
         </span>
         <span>
