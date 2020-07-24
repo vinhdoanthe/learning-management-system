@@ -10,7 +10,7 @@
       <div class="form-group">
         <label for='filter-company'><%= t("adm.user.company") %></label>
         <select class='select2 select2-hidden-accessible' id='filter-company' data-placeholder="<%= t("adm.user.select_company") %>" name="company[]" multiple="multiple" style="width: 100%;">
-          <% Common::ResCompany.all.each do |company| %>
+          <% @allow_companies.all.each do |company| %>
           <option value='<%= company.id %>'><%= company.name %></option>
           <% end %>
         </select>
