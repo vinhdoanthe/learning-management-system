@@ -1,3 +1,10 @@
+<% text_day_in_week = t('date.day_in_week').to_s.html_safe%>
+<script type="text/javascript">
+  var  LEARNING_IN_CENTER = "<%= t('learning.Learning in center')%>";
+  var  LEARNING_IN_ONLINE = "<%= t('learning.Learning in online')%>";
+  var  DAY_IN_WEEK        = <%= text_day_in_week%>;
+</script>
+
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
@@ -11,15 +18,11 @@
       <%= render 'user/open_educat/shared/session/top_schedule', {:coming_soon_session => @session} %>
     </div>
   </div>
-  <div class="panel">
-    <div class="panel-content">
-      <%= render 'user/open_educat/shared/session/coming_session', {:coming_soon_session => @session} %>
-    </div>
-  </div>
+
   <div class="panel">
     <div class="panel-content">
       <div class="table-responsive calendar-teach student_timetable" style="overflow-x: initial;">
-        <div class="filter-box FlowupLabels b-b-1-869fb229 m-b-20" id='formBody'>
+        <div class="filter-box FlowupLabels line-D7DFE9 m-b-20" id='formBody'>
           <div class="row">
             <div class="col-md-3">
               <label class="filter-title td-bold">Toàn bộ <span class="color-16BD56">Lớp học</span></label>
@@ -35,44 +38,45 @@
             </div>
             <div class="col-md-2 col-md-push-1">
               <div class='fl_wrap m-t-0 chosen_month'>
-                <select class='choose-month-dropdown fl_input month_teaching_schedule' id='rf_name'>
-                  <option value=""></option>
-                  <option value="1">Tháng 1</option>
-                  <option value="2">Tháng 2</option>
-                  <option value="3">Tháng 3</option>
-                  <option value="4">Tháng 4</option>
-                  <option value="5">Tháng 5</option>
-                  <option value="6">Tháng 6</option>
-                  <option value="7">Tháng 7</option>
-                  <option value="8">Tháng 8</option>
-                  <option value="9">Tháng 9</option>
-                  <option value="10">Tháng 10</option>
-                  <option value="11">Tháng 11</option>
-                  <option value="12">Tháng 12</option>
+                <select class='choose-month-dropdown fl_input month_teaching_schedule' id='rf_name'>                  
+                  <option value="1"><%= t('datetime.prompts.month')%> 1</option>
+                  <option value="2"><%= t('datetime.prompts.month')%> 2</option>
+                  <option value="3"><%= t('datetime.prompts.month')%> 3</option>
+                  <option value="4"><%= t('datetime.prompts.month')%> 4</option>
+                  <option value="5"><%= t('datetime.prompts.month')%> 5</option>
+                  <option value="6"><%= t('datetime.prompts.month')%> 6</option>
+                  <option value="7"><%= t('datetime.prompts.month')%> 7</option>
+                  <option value="8"><%= t('datetime.prompts.month')%> 8</option>
+                  <option value="9"><%= t('datetime.prompts.month')%> 9</option>
+                  <option value="10"><%= t('datetime.prompts.month')%> 10</option>
+                  <option value="11"><%= t('datetime.prompts.month')%> 11</option>
+                  <option value="12"><%= t('datetime.prompts.month')%> 12</option>
                 </select>
               </div>
             </div>
             <div class="col-md-2 col-md-push-1">
               <div class="chosse-date choose-date-next-prev">
                 <p>
-                  <a class="cd-left schedule_year_previous"><i class="fa fa-caret-square-o-left"></i></a><span class="year_teaching_schedule td-bold">
-                    <%= Time.now.year %></span><a class="cd-right schedule_year_next"><i class="fa fa-caret-square-o-right i-pdr-0"></i></a>
+                  <a class="cd-left schedule_year_previous"><i class="fa fa-caret-square-o-left"></i></a>
+                  <span class="year_teaching_schedule td-bold"><%= Time.now.year %></span>
+                  <a class="cd-right schedule_year_next"><i class="fa fa-caret-square-o-right i-pdr-0"></i></a>
                 </p>
               </div>
             </div>
           </div>
         </div>
+
         <table class="table table-bordered">
           <thead>
             <tr class='day_in_week'>
-              <th width="140" class="text-right bg-5DC2A7 color-fff td-bold" style="border: 0; text-align: center; text-transform: uppercase; font-size: 14px; font-weight: 700">Khung giờ</th>
-              <th class="text-center thu_2 td-bold" width="155">Thứ 2<br /><span>23/12/2019</span></th>
-              <th class="text-center thu_3 td-bold" width="155">Thứ 3<br /><span>24/12/2019</span></th>
-              <th class="text-center thu_4 td-bold" width="155">Thứ 4<br /><span>25/12/2019</span></th>
-              <th class="text-center thu_5 td-bold" width="155">Thứ 5<br /><span>26/12/2019</span></th>
-              <th class="text-center thu_6 td-bold" width="155">Thứ 6<br /><span>27/12/2019</span></th>
-              <th class="text-center thu_7 td-bold" width="155">Thứ 7<br /><span>28/12/2019</span></th>
-              <th class="text-center thu_8 td-bold" width="155">Chủ nhật<br /><span>29/12/2019</span></th>
+              <th width="140" class="text-right bg-5DC2A7 color-fff td-bold font-bold" style="border: 0; text-align: center; text-transform: uppercase;"><%= t('datetime.prompts.range_time')%></th>
+              <th class="text-center thu_2 td-bold border-r-b-0" width="155">Thứ 2<br /><span class="schedule-date-text">23/12/2019</span></th>
+              <th class="text-center thu_3 td-bold border-r-l-b-0" width="155">Thứ 3<br /><span>24/12/2019</span></th>
+              <th class="text-center thu_4 td-bold border-r-l-b-0" width="155">Thứ 4<br /><span>25/12/2019</span></th>
+              <th class="text-center thu_5 td-bold border-r-l-b-0" width="155">Thứ 5<br /><span>26/12/2019</span></th>
+              <th class="text-center thu_6 td-bold border-r-l-b-0" width="155">Thứ 6<br /><span>27/12/2019</span></th>
+              <th class="text-center thu_7 td-bold border-r-l-b-0" width="155">Thứ 7<br /><span>28/12/2019</span></th>
+              <th class="text-center thu_8 td-bold border-l-b-0" width="155">Chủ nhật<br /><span>29/12/2019</span></th>
             </tr>
           </thead>
           <tbody id='schedule_table'>
@@ -83,19 +87,19 @@
             </tr>
             <tr class='s2'>
             </tr>
-            <tr class='c1'>
+            <tr class='c1 bg-f6f6f6'>
               <td rowspan="2" align="center" class="bg-F0B800 color-fff font-bold td-bold" style="border: 0">
                 <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px; text-transform: uppercase; font-size: 14px; font-weight: 700">Chiều</span>
               </td>
             </tr>
-            <tr class='c2'>
+            <tr class='c2 bg-f6f6f6'>
             </tr>
-            <tr class='t1'>
+            <tr class='t1 bg-eaeaea'>
               <td rowspan="2" align="center" class="bg-D4A300 color-fff font-bold td-bold" style="border: 0">
                 <span class="transfor_rotate_-90" style="display: inline-block;padding: 15px 0;letter-spacing: 2px; text-transform: uppercase; font-size: 14px; font-weight: 700;">Tối</span>
               </td>
             </tr>
-            <tr class='t2'>
+            <tr class='t2 bg-eaeaea'>
             </tr>
           </tbody>
         </table>
@@ -104,15 +108,15 @@
             <div class="col-sm-10">
               <div class="ct-left">
                 <ul>
-                  <li><span class="bg-5DC2A7 td-bold"></span>LỚP HỌC ONLINE</li>
-                  <li><span class="bg-EB9138 td-bold"></span>LỚP HỌC TẠI TRUNG TÂM</li>
+                  <li><span class="bg-5DC2A7 td-bold text-uppercase font-bold"></span><%= t('learning.Class Online')%></li>
+                  <li><span class="bg-EB9138 td-bold text-uppercase font-bold"></span><%= t('learning.Class in center')%></li>
                 </ul>
               </div>
             </div>
             <div class="col-sm-2 ct-right">
               <div class="ct-right">
                 <ul>
-                  <li><span class='td-bold'><img src="/global/images/close.png" alt=""></span>Lớp bị hủy</li>
+                  <li style="text-transform:unset;padding-right: 1px;"><span class='td-bold bg-F16357'></span><%= t('learning.Class cancel')%></li>
                 </ul>
               </div>
             </div>

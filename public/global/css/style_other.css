@@ -73,54 +73,53 @@
 	font-family: 'Quicksand-Thin';
 }
 */
-
 .font-bold {
 	font-family: 'Quicksand', sans-serif;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 700;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: 700 !important;
 }
 
 .font-semi-bold {
 	font-family: 'Quicksand', sans-serif;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 600;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: 600 !important;
 }
 
 .font-weight{
 	font-family: 'Quicksand', sans-serif;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 515;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: 515 !important;
 }
 
 .font-medium {
 	font-family: 'Quicksand', sans-serif;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 500;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: 500 !important;
 }
 
 .font-regular {
 	font-family: 'Quicksand', sans-serif;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: 400 !important;
 }
 
 .font-light  {
 	font-family: 'Quicksand', sans-serif;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 300;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: 300 !important;
 }
 
 .font-italic {
 	font-family: 'Quicksand', sans-serif;
-	font-style: normal;
-	font-variant: normal;
-	font-style: italic;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-style: italic !important;
 }
 
 .font-thin {
@@ -538,6 +537,10 @@ th {
 	color: #6D7278 !important;
 }
 
+.color-0052C1 {
+	color: #0052C1 !important;
+}
+
 .bg-cfcfcf {
 	background: #cfcfcf !important;
 }
@@ -665,6 +668,11 @@ th {
 .bg-D7DFE9 {
 	background: #D7DFE9 !important;
 }
+
+.bg-7E858E {
+	background: #7E858E !important;
+}
+
 
 .text-transform {
 	text-transform: uppercase !important;
