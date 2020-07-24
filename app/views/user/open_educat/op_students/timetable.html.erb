@@ -1,10 +1,3 @@
-<% text_day_in_week = t('date.day_in_week').to_s.html_safe%>
-<script type="text/javascript">
-  var  LEARNING_IN_CENTER = "<%= t('learning.Learning in center')%>";
-  var  LEARNING_IN_ONLINE = "<%= t('learning.Learning in online')%>";
-  var  DAY_IN_WEEK        = <%= text_day_in_week%>;
-</script>
-
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
@@ -18,7 +11,6 @@
       <%= render 'user/open_educat/shared/session/top_schedule', {:coming_soon_session => @session} %>
     </div>
   </div>
-
   <div class="panel">
     <div class="panel-content">
       <div class="table-responsive calendar-teach student_timetable" style="overflow-x: initial;">
@@ -38,7 +30,7 @@
             </div>
             <div class="col-md-2 col-md-push-1">
               <div class='fl_wrap m-t-0 chosen_month'>
-                <select class='choose-month-dropdown fl_input month_teaching_schedule' id='rf_name'>                  
+                <select class='choose-month-dropdown fl_input month_teaching_schedule' id='rf_name'>
                   <option value="1"><%= t('datetime.prompts.month')%> 1</option>
                   <option value="2"><%= t('datetime.prompts.month')%> 2</option>
                   <option value="3"><%= t('datetime.prompts.month')%> 3</option>
