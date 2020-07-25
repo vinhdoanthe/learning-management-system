@@ -151,53 +151,96 @@ module User
 
         tag_html = tag_html + '</div>'
 
-        # Khoi menu Dashboard
-        menus = [
-          {
-            'path' =>  root_path,
-            'icon' => 'ico-Dashboard.png',
-            'title' => "#{ t('sidebar.dashboard') }",
-            'right_content' => '<span class="left-badge"></span>'
-          },
-          {'path' => user_open_educat_op_students_timetable_path,
-           'icon' => 'calendar.png',
-           'title' => "#{ t('sidebar.timetable') }", 
-           'right_content' => '<span class="left-badge">' << count_timetable_week.to_s << '</span>'
-          },
-          {
-            'path' =>  user_open_educat_op_students_batches_path,
-            'icon' => 'ico-TienDoHocTap.png',
-            'title' => "#{ t('sidebar.my_class') }",
-            'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
-          },
-          {
-            'path' =>  courses_path,
-            'icon' => 'ico-SPhocsinh.png',
-            'title' => "#{ t('sidebar.courses') }",
-            'right_content' => '<span class="left-badge"></span>'
-          },
+        if !Rails.env.production?
+          # Khoi menu Dashboard
+          menus = [
+            {
+              'path' =>  root_path,
+              'icon' => 'ico-Dashboard.png',
+              'title' => "#{ t('sidebar.dashboard') }",
+              'right_content' => '<span class="left-badge"></span>'
+            },
+            {'path' => user_open_educat_op_students_timetable_path,
+             'icon' => 'calendar.png',
+             'title' => "#{ t('sidebar.timetable') }", 
+             'right_content' => '<span class="left-badge">' << count_timetable_week.to_s << '</span>'
+            },
+            {
+              'path' =>  user_open_educat_op_students_batches_path,
+              'icon' => 'ico-TienDoHocTap.png',
+              'title' => "#{ t('sidebar.my_class') }",
+              'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
+            },
+            {
+              'path' =>  courses_path,
+              'icon' => 'ico-SPhocsinh.png',
+              'title' => "#{ t('sidebar.courses') }",
+              'right_content' => '<span class="left-badge"></span>'
+            },
 
-          {'path' => user_open_educat_op_students_student_homework_path,
-           'icon' => 'ico-BaiTapOnBai.png',
-           'title' => "#{ t('sidebar.homework') }",
-           'right_content' => '<span class="left-badge"></span>'
-          },
-          # {'path' => social_community_question_answer_my_threads_path, 
-          #   'icon' => 'Icon-Inbox.png',
-          #   'title' => "#{t('sidebar.question_answer')}", 
-          #   'right_content' => ''
-          # },
-          {'path' => social_community_sc_student_projects_social_student_projects_path, 
-            'icon' => 'youtube.png',
-            'title' => "#{t('sidebar.my_projects')}", 
-            'right_content' => ''
-          },
-          # {'path' => social_community_leaders_path, 
-          #  'icon' => 'top.png',
-          #   'title' => "#{t('sidebar.top_achievement')}", 
-          #   'right_content' => ''
-          # },
-        ]
+            {'path' => user_open_educat_op_students_student_homework_path,
+             'icon' => 'ico-BaiTapOnBai.png',
+             'title' => "#{ t('sidebar.homework') }",
+             'right_content' => '<span class="left-badge"></span>'
+            },
+            # {'path' => social_community_question_answer_my_threads_path, 
+            #   'icon' => 'Icon-Inbox.png',
+            #   'title' => "#{t('sidebar.question_answer')}", 
+            #   'right_content' => ''
+            # },
+            {'path' => social_community_sc_student_projects_social_student_projects_path, 
+              'icon' => 'youtube.png',
+              'title' => "#{t('sidebar.my_projects')}", 
+              'right_content' => ''
+            },
+            # {'path' => social_community_leaders_path, 
+            #  'icon' => 'top.png',
+            #   'title' => "#{t('sidebar.top_achievement')}", 
+            #   'right_content' => ''
+            # },
+          ]
+        else
+          # Khoi menu Dashboard
+          menus = [
+            {
+              'path' =>  root_path,
+              'icon' => 'ico-Dashboard.png',
+              'title' => "#{ t('sidebar.dashboard') }",
+              'right_content' => '<span class="left-badge"></span>'
+            },
+            {'path' => user_open_educat_op_students_timetable_path,
+             'icon' => 'calendar.png',
+             'title' => "#{ t('sidebar.timetable') }", 
+             'right_content' => '<span class="left-badge">' << count_timetable_week.to_s << '</span>'
+            },
+            {
+              'path' =>  user_open_educat_op_students_batches_path,
+              'icon' => 'ico-TienDoHocTap.png',
+              'title' => "#{ t('sidebar.my_class') }",
+              'right_content' => '<span class="left-badge">' << current_user.op_student.op_batches.count.to_s << '</span>'
+            },
+            {'path' => user_open_educat_op_students_student_homework_path,
+             'icon' => 'ico-BaiTapOnBai.png',
+             'title' => "#{ t('sidebar.homework') }",
+             'right_content' => '<span class="left-badge"></span>'
+            },
+            # {'path' => social_community_question_answer_my_threads_path, 
+            #   'icon' => 'Icon-Inbox.png',
+            #   'title' => "#{t('sidebar.question_answer')}", 
+            #   'right_content' => ''
+            # },
+            {'path' => social_community_sc_student_projects_social_student_projects_path, 
+              'icon' => 'youtube.png',
+              'title' => "#{t('sidebar.my_projects')}", 
+              'right_content' => ''
+            },
+            # {'path' => social_community_leaders_path, 
+            #  'icon' => 'top.png',
+            #   'title' => "#{t('sidebar.top_achievement')}", 
+            #   'right_content' => ''
+            # },
+          ]
+        end
 
         tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top: 1px solid #232837; border-bottom: 1px solid #414348; margin: 0">'
 
