@@ -52,7 +52,13 @@ function fill_table(save_date) {
               }else{
                 html = '<td class="schedule_info">'
               }
-              if (info.batch_class_online){
+
+              var bg_circle_status = 'bg-EB9138';// 
+
+              if (info.batch_class_online) {
+                
+                bg_circle_status = 'bg-5DC2A7';
+
                 html += '<a href="' + info.href +'" data-placement="top" class="ct-detail ctd-cs3 online_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul class=\'data-content-line-height\'><li><h3>'+ LEARNING_IN_ONLINE +'</h3></li><li><span style=\'color-0052C1 font-bold\'>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Giáo viên: ' + info.faculty +'</li><li>Phòng học: ' + info.classroom + '</li></ul>">'
               } else {
                 html += '<a href="' + info.href +'" data-placement="top" class="ct-detail ctd-cs3 offline_class schedule_link" tabindex="0" role="button" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<ul class=\'data-content-line-height\'><li><h3>' + LEARNING_IN_CENTER + '</h3></li><li><span class=\'color-0052C1 font-bold\'>' + info.start_time + ' - ' + info.end_time + ' | ' + info.day + '</span></li><li><strong>Học viện: </strong>' + info.company + '</li><li><strong>Môn học: </strong>' + info.course + ' </li><li><strong>Mã lớp: </strong> ' + info.batch + '</li><li><strong>Buổi học: </strong> ' + info.lesson + '</li><li><strong>Giáo viên: ' + info.faculty + '</li><li>Phòng học: ' + info.classroom + '</li></ul>">'
@@ -61,7 +67,7 @@ function fill_table(save_date) {
               if (info.status == 'cancel') {
                 html += '<div class="box-circle bg-F16357"></div><div class="box-info-schedule"><b style="color: #5DC2A7 !important">' + info.start_time + '-' + info.end_time + '</b></br>' + info.name + '</div></a></td>'
               } else {
-                html += '<div class="box-circle bg-EB9138"></div><div class="box-info-schedule"><b style="color: #5DC2A7 !important">' + info.start_time + '-' + info.end_time + '</b></br>' + info.name + '</div></a></td>'
+                html += '<div class="box-circle ' + bg_circle_status +' "></div><div class="box-info-schedule"><b style="color: #5DC2A7 !important">' + info.start_time + '-' + info.end_time + '</b></br>' + info.name + '</div></a></td>'
               }
             } else {
               html = '<td class="schedule_info"></td>'

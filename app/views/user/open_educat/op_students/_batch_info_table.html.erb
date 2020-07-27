@@ -1,15 +1,15 @@
 <div class="table-responsive">
   <table class="table batch_info_table">
     <colgroup>
-<col></col>
-<col></col>
-<col></col>
-<col width='90'></col>
-<col width='200'></col>
+      <col></col>
+      <col></col>
+      <col></col>
+      <col width='90'></col>
+      <col width='200'></col>
     </colgroup>
     <thead>
       <tr style="color: black;font-weight: 700;">
-        <th><%= t('user.student.code') %></th>
+        <th class="p-l-0"><%= t('user.student.code') %></th>
         <th><%= t('my_class.batch.name') %></th>
         <th><%= t('my_class.batch.subject') %></th>
         <th></th>
@@ -23,7 +23,7 @@
       <% if current_user.is_student? and active_student_course.id == op_student_course.id %>
       <tr style="color: black;">
         <% unless op_student.nil? %>
-        <td class='active_student_code'><%= op_student.code %></td>
+        <td class='active_student_code p-l-0'><%= op_student.code %></td>
         <td class='active_student'><%= op_student.full_name %></td>
         <% end %>
         <td>
@@ -40,19 +40,19 @@
         </td>
         <td><span class="img-star"><%= image_tag('global/images/icon-star.png') %></span> <span class="star"><%= user.star.present? ? user.star : 0 %></span></td>
         <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-        <td align="right"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
+        <td align="right" class="p-r-0"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
         <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
-        <td align="right"><span class="label-edit label label-danger"><%= t('learning.batch.status.stop') %></span></td>
+        <td align="right" class="p-r-0"><span class="label-edit label label-danger"><%= t('learning.batch.status.stop') %></span></td>
         <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
-        <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.reversation') %></span></td>
+        <td align="right" class="p-r-0"><span class="label-edit label label-stop"><%= t('learning.batch.status.reversation') %></span></td>
         <% else %>
-        <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.update') %></span></td>
+        <td align="right" class="p-r-0"><span class="label-edit label label-stop"><%= t('learning.batch.status.update') %></span></td>
         <% end %>
       </tr>
       <% else %>
       <tr style="">
         <% unless op_student.nil? %>
-        <td><%= op_student.code %></td>
+        <td class="p-l-0"><%= op_student.code %></td>
         <td><%= op_student.full_name %></td>
         <% end %>
         <td>
@@ -60,13 +60,13 @@
 
         <td><span class="img-star"><%= image_tag('global/images/icon-star.png') %></span> <span class="star"><%= user.star.present? ? user.star : 0 %></span></td>
         <% if op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_ON %>
-        <td align="right"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
+        <td align="right" class="p-r-0"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
         <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_OFF %>
-        <td align="right"><span class="label-edit label label-danger"><%= t('learning.batch.status.stop') %></span></td>
+        <td align="right" class="p-r-0"><span class="label-edit label label-danger"><%= t('learning.batch.status.stop') %></span></td>
         <% elsif op_student_course.state == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
-        <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.reversation') %></span></td>
+        <td align="right" class="p-r-0"><span class="label-edit label label-stop"><%= t('learning.batch.status.reversation') %></span></td>
         <% else %>
-        <td align="right"><span class="label-edit label label-stop"><%= t('learning.batch.status.update') %></span></td>
+        <td align="right" class="p-r-0"><span class="label-edit label label-stop"><%= t('learning.batch.status.update') %></span></td>
         <% end %>
 
       </tr>
