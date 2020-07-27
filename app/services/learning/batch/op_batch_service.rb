@@ -26,12 +26,12 @@ module Learning
               faculty_names = []
               classroom_names = []
               gen_batch_table_lines.each do |gen_batch_table_line|
-                faculty = gen_batch_table_line.op_faculty
+                faculty = gen_batch_table_line.op_faculty.uniq
                 if !faculty.nil?
                   faculty_names << faculty.full_name
                 end
 
-                classroom = gen_batch_table_line.op_classroom
+                classroom = gen_batch_table_line.op_classroom.uniq
                 if !classroom.nil?
                   classroom_names << classroom.name
                 end
