@@ -70,8 +70,15 @@ class Learning::Course::OpCoursesService
 
   def self.get_public_courses student_id
     # hard code course ids
-    course_ids = Utility::PublicCourse.pluck(:course_id).uniq.compact
-    courses = Learning::Course::OpCourse.where(id: course_ids, active: true).select(:id, :name, :short_description, :suitable_age, :duration)
+    p_course_ids = Utility::PublicCourse.order(:order_in_list => :ASC).pluck(:order_in_list, :course_id).uniq.compact
+    values = []
+    p_course_ids.each do |p_course_id|
+      values << "(#{p_course_id[0]}, #{p_course_id[1]})"
+    end
+    courses_relation = Learning::Course::OpCourse.joins("JOIN (VALUES #{values.join(",")}) as x (order_in_list, course_id) on #{Learning::Course::OpCourse.table_name}.id = x.course_id")
+    courses_relation = courses_relation.order('x.order_in_list')
+    courses = courses_relation.select(:id, :name, :short_description, :suitable_age, :duration)
+    course_ids = courses.map{|course| course.id}
     subjects = Learning::Course::OpSubject.where(course_id: course_ids, active: true).order(level: :ASC).select(:name, :level, :total_session, :course_id, :id)
     public_courses = []
 
