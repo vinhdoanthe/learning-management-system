@@ -65,6 +65,7 @@ module Api
 
     def self.evaluate(session_id:, faculty_id:, attendance_time:, attendance_lines:)
       uid, models = odoo_xml_authenticate()
+
       begin
         id = models.execute_kw(@@odoo_db, uid, @@odoo_password, 'op.attendance.sheet', 'evaluate_lms', [{
           session_id: session_id,

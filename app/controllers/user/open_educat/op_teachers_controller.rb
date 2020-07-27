@@ -151,7 +151,8 @@ class User::OpenEducat::OpTeachersController < ApplicationController
 
     if result
       homeworks = Learning::Material::Question.where(op_lession_id: lesson.id)
-      students = User::OpTeachersService.new.teacher_class_detail batch, session
+binding.pry
+      students = User::OpenEducat::OpTeachersService.new.teacher_class_detail batch, session
     end
 
     respond_to do |format|
