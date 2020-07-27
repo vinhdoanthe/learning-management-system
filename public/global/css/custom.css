@@ -3511,20 +3511,20 @@ background: #FCF055 !important
   line-height: 26px;
 }
 
-  .ct-right ul li span, .box-circle {
-    /*display: inherit;
-    width: 18px;
-    height: 18px;
-    margin-right: 5px;*/
+.ct-right ul li {
+  display: inline-block;
+  width: 100%;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.ct-right ul li span, .box-circle {
   display: inherit;
-  width: 26px;
-  height: 26px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   margin-right: 5px;
-  position: absolute;
-  left: 0;
-  vertical-align: middle;
-  /*top: -3px;*/
+  vertical-align:middle;
 }
 
 .box-circle {float: left}
