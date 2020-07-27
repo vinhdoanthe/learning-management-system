@@ -26,35 +26,35 @@
         </td>
         <% if student[:attendance] == false %>
           <td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""> </td>
-        <% elsif student[:attendance] == true %>
-          <td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""></td>
-        <% else %>
-          <td></td>
-        <% end %>
-        <% if student[:status] == 'off' %>
           <td style="text-align: center; opacity: 0.3;">
-            <a>
+            <a data-code="<%= student[:code] %>">
               <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px">
             </a>
           </td>
-          <td align="right">
-            <span class="label-edit label label-danger">Nghỉ học</span>
-          </td>
-        <% elsif student[:status] == 'on' %>
+        <% elsif student[:attendance] == true %>
+          <td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""></td>
           <td style="text-align: center">
             <a class="student_evaluate" data-value="" data-code="<%= student[:code] %>" data-toggle="modal" data-target="#modal_evaluate">
               <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px; cursor: pointer;">
             </a>
           </td>
+        <% else %>
+          <td></td>
+          <td style="text-align: center; opacity: 0.3;">
+            <a data-code="<%= student[:code] %>">
+              <img src="/global/images/add-comment-button.png" style="min-width: 20px; width: 20px; margin-right: 10px">
+            </a>
+          </td>
+        <% end %>
+        <% if student[:status] == 'off' %>
+          <td align="right">
+            <span class="label-edit label label-danger">Nghỉ học</span>
+          </td>
+        <% elsif student[:status] == 'on' %>
           <td align="right">
             <span class="label-edit label label-primary">Đang học</span>
           </td>
         <% elsif student[:status] == 'save' %>
-          <td style="text-align: center; opacity: 0.3;">
-            <a>
-              <img src="/global/images/add-comment-button.png" style="min-width: 20px; width: 20px; margin-right: 10px">
-            </a>
-          </td>
           <td align="right">
             <span class="label-edit label label-stop">Bảo lưu</span>
           </td>
