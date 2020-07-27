@@ -32,3 +32,8 @@
 <%= render 'user/open_educat/op_students/progress/tobe_sessions', {:tobe_sessions => tobe_sessions, active_subject: active_subject} %>
 
 <%= render 'user/open_educat/op_students/progress/cancel_sessions', {:cancel_sessions => cancel_sessions, active_subject: active_subject} %>
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
