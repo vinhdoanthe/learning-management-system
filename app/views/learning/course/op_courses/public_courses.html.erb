@@ -16,8 +16,8 @@
   </div>
   <div class="panel m-t--70">
     <div class="panel-content">
-      <% @courses.each do |course| %>
-        <%= render :partial => "course", :locals => {course: course} %>
+      <% @courses.each_with_index do |course, index| %>
+        <%= render :partial => "course", :locals => {course: course, index: index} %>
       <% end %>
     </div>
   </div>
