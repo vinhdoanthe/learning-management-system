@@ -33,8 +33,10 @@
       <div class='description_html'>
         <%= description.html_safe %>
       </div>
-      <a data-toggle="modal" class='open_modal' data-target="#course_description_modal" class="ba-more">Xem toàn bộ</a>
     </div>
+    <div class='opacity-div'>
+    </div>
+    <%= link_to image_tag("global/images/expand.png") + "Xem toàn bộ",'', { :class => 'open_course_description open_modal', 'data-toggle' => 'modal', 'data-target' => '#course_description_modal' } %>
   </div>
 </div>
 <div id="course_description_modal" class="modal fade" role="dialog">

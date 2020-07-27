@@ -13,7 +13,7 @@
     </ul>
   </div>
   <div class="lv-slide course-swiper" >
-    <div class='swiper-container'>
+    <div class='swiper-container course_swiper_<%= index %>'>
       <div class="swiper-wrapper">
         <% count_subject = course[:subjects].count %>
         <% course[:subjects].each do |subject| %>
@@ -22,8 +22,8 @@
       </div>
     </div>
   </div>
-  <div class="swiper-custom-button-next"><%= image_tag 'global/images/arrow-next.png' %></div>
-  <div class="swiper-custom-button-prev"><%= image_tag 'global/images/arrow-prev.png' %></div>
+  <div class="swiper-custom-button-next swiper-custom-button-next-<%= index %>"><%= image_tag 'global/images/arrow-next.png' %></div>
+  <div class="swiper-custom-button-prev swiper-custom-button-prev-<%= index %>"><%= image_tag 'global/images/arrow-prev.png' %></div>
   <div class="lv-btn show_course_all">
     <% active = course[:subjects].map {|t| t[:active]}.include? true %>
     <% if active %>
@@ -40,7 +40,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-  var swiper = new Swiper('.swiper-container', {
+  var swiper = new Swiper('.course_swiper_<%= index %>', {
       slidesPerView: 3,
       spaceBetween: 60,
       slidesPerGroup: 1,
@@ -54,8 +54,8 @@ $(document).ready(function(){
         clickable: true,
       },
       navigation: {
-        nextEl: '.swiper-custom-button-next',
-        prevEl: '.swiper-custom-button-prev',
+        nextEl: '.swiper-custom-button-next-<%= index %>',
+        prevEl: '.swiper-custom-button-prev-<%= index %>',
       },
     });
 
