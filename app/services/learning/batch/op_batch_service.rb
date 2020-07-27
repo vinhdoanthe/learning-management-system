@@ -21,21 +21,15 @@ module Learning
             faculty_names = []
             classroom_name = '' 
           else
-            gen_batch_table_lines = batch.gen_batch_table_lines
+            gen_batch_table_lines = batch.gen_batch_table_lines.to_a
             if !gen_batch_table_lines.empty?
               faculty_names = []
               classroom_names = []
-              gen_batch_table_lines.each do |gen_batch_table_line|
-                faculty = gen_batch_table_line.op_faculty
-                if !faculty.nil?
-                  faculty_names << faculty.full_name
-                end
+              faculty_ids = gen_batch_table_lines.map {|line| line.faculty_id}
+              classroom_ids = gen_batch_table_lines.map {|line| line.classroom_id}
 
-                classroom = gen_batch_table_line.op_classroom
-                if !classroom.nil?
-                  classroom_names << classroom.name
-                end
-              end
+              faculty_names = User::OpenEducat::OpFaculty.where(id: faculty_ids.uniq).pluck(:full_name)
+              classroom_names = Common::OpClassroom.where(id: classroom_ids.uniq).pluck(:name)
               classroom_name = classroom_names.join(', ') if !classroom_names.empty?
             else
               # Get faculty and classroom by pinned session
@@ -326,7 +320,6 @@ module Learning
         op_student_course = Learning::Batch::OpStudentCourse.where(student_id: student_id,
                                                                    course_id: course_id).first
         active = false
-        percentage = 0
         count_subject_lesson = 0
         subject = Learning::Course::OpSubject.where(id: subject_id).first
         count_subject_lesson = subject.op_lessions.count if subject.present? 
