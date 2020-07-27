@@ -8,7 +8,7 @@
         <% if subject[:thumbnail].present? %>
           <%= image_tag subject[:thumbnail] %>
         <% else %>
-          <img src="assets/global/images/Bitmap3.png" alt="">
+          <%= image_tag('global/images/Bitmap3.png', :alt => '') %>
         <% end %>
       </span>
       <div class='overlay-content'>
@@ -18,7 +18,8 @@
             <p>Bài học</p>
           </div>
           <div class='col-md-6 subject-percentage'>
-            <span><%= subject[:info][:complete_percentage].round(2) * 100 %>%</span>
+            <% display_percentage = subject[:info][:complete_percentage].round(2) * 100 %>
+            <span><%= display_percentage %>%</span>
             <p>Hoàn thành</p>
           </div>
         </div>
@@ -30,7 +31,7 @@
         <% if subject[:thumbnail].present? %>
           <%= image_tag subject[:thumbnail] %></span>
         <% else %>
-          <img src="assets/global/images/Bitmap3.png" alt="">
+          <%= image_tag('global/images/Bitmap3.png', :alt => '') %>
         <% end %>
       <div class='lock-layer'>
       </div>
@@ -53,8 +54,9 @@
       </ul>
     </div>
     <div class="lvf-right">
-      <span class="chart-line"><span class="chart-line-child" style="border-radius: 10px; width: <%= subject[:info][:complete_percentage].round(2) * 100 %>%"></span></span>
-      <b><%= subject[:info][:complete_percentage].round(2) * 100 %>%</b>
+      <% display_percentage = subject[:info][:complete_percentage].round(2) * 100 %>
+      <span class="chart-line"><span class="chart-line-child" style="width: <%= display_percentage %>%"></span></span>
+      <b><%= display_percentage %>%</b>
     </div>
   </div>
 </div>
