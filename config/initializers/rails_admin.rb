@@ -54,11 +54,17 @@ RailsAdmin.config do |config|
         end
       end
       field :name
+      field :short_description
+      field :suitable_age
+      field :duration
       field :course_description
       field :thumbnail
     end
 
     edit do
+      field :short_description
+      field :suitable_age
+      field :duration
       field :course_description
       field :thumbnail
     end
