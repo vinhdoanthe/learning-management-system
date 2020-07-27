@@ -3,6 +3,9 @@ $('#modal_evaluate').html("<%= escape_javascript(render partial: 'user/open_educ
 
 $('#teacher_evaluate_confirm').on('click', function () {
   info = $('#teacher_evaluate_session').serializeArray();
+  teacher_note = tinyMCE.activeEditor.getContent();
+  info.push({name: 'teacher_note', value: teacher_note})
+
   $.ajax({
     url: '/user/teacher_evaluate',
     method: 'POST',

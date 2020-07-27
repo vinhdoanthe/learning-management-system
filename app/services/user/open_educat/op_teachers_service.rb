@@ -1,5 +1,53 @@
 class User::OpenEducat::OpTeachersService
 
+  def teacher_class_detail batch, session
+    students = {}
+    all_students = {}
+
+    student_courses = batch.op_student_courses
+
+    student_courses.each do |sst|
+      student = sst.op_student
+      student_avatar = get_student_avatar student
+      student_info = {student.id => {:note => '', :status => sst.state, :attendance => '', :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
+      all_students.merge!(student_info)
+    end
+
+    if session.state == Learning::Constant::Batch::Session::STATE_CONFIRM
+      session_students = session.op_session_students
+      session_students.each do |st|
+        op_student_course = st.op_student_course
+        next if op_student_course.blank?
+        student = op_student_course.op_student
+        next if student.blank?
+        student_avatar = get_student_avatar student
+#        status = st.present ? 'on' : 'off'
+
+        student_info = {student.id => {:note => st.note || '', :attendance => '', :code => student.code || '', :name => student.full_name, :avatar_src => student_avatar}}
+        students.merge!(student_info)
+      end
+    elsif session.state == Learning::Constant::Batch::Session::STATE_DONE
+      session_students = session.op_attendance_lines
+
+      session_students.each do |st|
+        note = st.note_1
+        note = st.note_2 unless note.blank?
+        student = st.op_student
+        student_avatar = get_student_avatar student
+#        status = st.present ? 'on' : 'off'
+
+        student_info = {student.id => {:note => note || '', :attendance => st.present, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
+        students.merge!(student_info)
+      end
+    end
+
+    all_students.each do |k, _|
+      all_students[k] = students[k] if students[k].present?
+    end
+
+    all_students
+  end
+
   def self.teaching_schedule session_list, params
     if params[:date].present?
       if session_list.kind_of?(Array)
@@ -107,5 +155,23 @@ class User::OpenEducat::OpTeachersService
 
     report
 
+  end
+
+  def get_student_avatar student
+    student_avatar = ActionController::Base.helpers.asset_path('global/images/icon-student.png')
+    #Temporary comment. TODO: in version 1.1
+    user = User::Account::User.where(student_id: student.id).first
+
+    if user.present?
+      if student.gender == 'm'
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/Group-3.png')
+      elsif student.gender == 'f'
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/Group-5.png')
+      else
+        student_avatar = ActionController::Base.helpers.asset_path('global/images/icon-student.png')
+      end
+    end
+
+    student_avatar
   end
 end
