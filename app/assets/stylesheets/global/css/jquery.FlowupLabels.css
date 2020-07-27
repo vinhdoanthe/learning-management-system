@@ -69,7 +69,8 @@
 
 .no-js .FlowupLabels .fl_label {
   /* Can change */
-  top: 3px;
+  top: 12px;
+  left: 20px;
   font-size: 12px;
   color: #555;
 }

@@ -1,4 +1,4 @@
-<div class="table-responsive bo-table m-b-20">
+<div class="table-responsive bo-table m-b-20 m-t-20 p-l-20 p-r-20">
   <% if !done_sessions.nil? and !done_sessions.empty? %>
     <table class="table  table-link" style="margin-bottom: 0">
       <colgroup>
@@ -8,9 +8,9 @@
         <col>
         <col width='35%'>
       </colgroup>
-      <thead style="border-bottom: 3px solid #D7DFE9;">
+      <thead class="border-bottom-line-2">
         <tr>
-          <th colspan='3'>
+          <th colspan='3' class="p-l-0">
             <h3><%= t('my_class.detail.progress.done_html') %></h3>
           </th>
           <th colspan='2' ><%= t('learning.attendance') %></th>
@@ -28,10 +28,10 @@
       </tbody>
     </table>
   <% else %>
-    <div class="fc-header" style="border-bottom: 3px solid #D7DFE9">
-      <h3 style='padding-left: 10px'><%= t('my_class.detail.progress.done_html') %></h3>
+    <div class="fc-header border-bottom-line-2">
+      <h3 class="p-l-0"><%= t('my_class.detail.progress.done_html') %></h3>
     </div>
-    <div style='padding-left: 10px; padding-top: 10px'><%= t('my_class.detail.progress.no_lesson') %></div>
+    <div class="p-l-0 p-t-10"><%= t('my_class.detail.progress.no_lesson') %></div>
   <% end %>
 </div>
 

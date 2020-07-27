@@ -14,9 +14,9 @@ module Learning
       end
       def thumbnail_tag lesson
         if !lesson.nil? && lesson.thumbnail.attached? 
-          image_tag(lesson.thumbnail.variant(resize_to_limit: [130, 82])) 
+          image_tag(lesson.thumbnail.variant(resize_to_limit: [130, 80])) 
         else 
-          image_tag('global/images/default-lesson-thumbnail.png', size: "130x82")
+          image_tag('global/images/default-lesson-thumbnail.png', size: "130x80")
         end
       end
 

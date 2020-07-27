@@ -1,5 +1,5 @@
   <%= render 'user/open_educat/shared/session_calendar_box', {:session => session} %>
-  <td>
+  <td class="td-photo-box">
     <div class="photo-box">
         <span>
           <%= thumbnail_tag  lesson%>
@@ -7,9 +7,9 @@
     </div>
   </td>
   <td>
-    <strong style="text-transform: uppercase; color: #6c7178"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : 'Bài ' + lesson.lession_number.to_s %></strong><br/>
-    <span  style="text-transform: uppercase; color: #6D7278"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %></span> <br/>
-    <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : sanitize(truncate(lesson.note, :length => 50)) %>
+    <div class="font-bold color-6D7278 text-uppercase"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : t('adm.course.lesson number') + " " + lesson.lession_number.to_s %></div>
+    <div class="font-medium color-6D7278 text-uppercase"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %></div>
+    <span class="font-medium color-6D7278"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : sanitize(truncate(lesson.note, :length => 50)) %></span>
   </td>
   <td align="right">
   </td>

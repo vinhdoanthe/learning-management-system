@@ -150,6 +150,7 @@ vi:
     select:
       prompt: Vui lòng chọn
       select: Chọn
+      Select month: Chọn tháng
     submit:
       create: Tạo %{model}
       submit: Lưu %{model}

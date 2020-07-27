@@ -12,22 +12,20 @@
         <p class="fl_input"><%= batch.code %></p>
       </div>
     </div>
-    <div class="col-md-2">
-      <div class='fl_wrap m-t-0 populated filter_subject'>
-        <label class='fl_label' for='rf_name'><%= t('learning.subject') %>:</label>
+    <div class="col-md-2">      
+      <label class="custom-select-label"><%= t('learning.subject')%></label>
+      <select class="custom-select form-control-filters student_subject_filter" id="rf_name" onchange="showSubjectSessions()">
         <% unless subjects.blank? %>
-          <select class='fl_input student_subject_filter' id='rf_name' onchange="showSubjectSessions()">
-            <% subjects.each do |subject| %>
-              <option value="<%= subject[0] %>" <%= subject[0] == active_subject ? 'selected':'' %>><%= subject[1] %></option>
-            <% end %>
-          </select>
+        <% subjects.each do |subject| %>
+          <option value="<%= subject[0] %>" <%= subject[0] == active_subject ? 'selected':'' %>><%= subject[1] %></option>
         <% end %>
-      </div>
+        <% end %>
+      </select>
     </div>
   </div>
 </div>
 
-<%= render 'user/open_educat/shared/session/coming_session', {:coming_soon_session => coming_soon_session} %>
+<%= render 'user/open_educat/shared/session/top_schedule', {:coming_soon_session => coming_soon_session} %>
 
 <%= render 'user/open_educat/op_students/progress/done_sessions', {:done_sessions => done_sessions, active_subject: active_subject} %>
 

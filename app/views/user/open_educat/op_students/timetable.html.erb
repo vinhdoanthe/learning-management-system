@@ -30,7 +30,7 @@
             </div>
             <div class="col-md-2 col-md-push-1">
               <div class='fl_wrap m-t-0 chosen_month'>
-                <select class='choose-month-dropdown fl_input month_teaching_schedule' id='rf_name'>                  
+                <select class='choose-month-dropdown fl_input month_teaching_schedule' id='rf_name'>
                   <option value="1"><%= t('datetime.prompts.month')%> 1</option>
                   <option value="2"><%= t('datetime.prompts.month')%> 2</option>
                   <option value="3"><%= t('datetime.prompts.month')%> 3</option>
@@ -57,6 +57,29 @@
             </div>
           </div>
         </div>
+
+        <!-- BOX filters -->
+        <div style="margin-bottom: 15px;">
+          <div class="row">
+            <div class="col-md-3">
+              <label class="custom-select-label"><%= t('helpers.select.Select month')%></label>
+              <select class="custom-select form-control-filters">
+                  <option value="1"><%= t('datetime.prompts.month')%> 1</option>
+                  <option value="2"><%= t('datetime.prompts.month')%> 2</option>
+                  <option value="3"><%= t('datetime.prompts.month')%> 3</option>
+                  <option value="4"><%= t('datetime.prompts.month')%> 4</option>
+                  <option value="5"><%= t('datetime.prompts.month')%> 5</option>
+                  <option value="6"><%= t('datetime.prompts.month')%> 6</option>
+                  <option value="7"><%= t('datetime.prompts.month')%> 7</option>
+                  <option value="8"><%= t('datetime.prompts.month')%> 8</option>
+                  <option value="9"><%= t('datetime.prompts.month')%> 9</option>
+                  <option value="10"><%= t('datetime.prompts.month')%> 10</option>
+                  <option value="11"><%= t('datetime.prompts.month')%> 11</option>
+                  <option value="12"><%= t('datetime.prompts.month')%> 12</option>
+              </select>
+            </div>
+          </div>
+        </div><!-- END: BOX filters -->
 
         <table class="table table-bordered">
           <thead>

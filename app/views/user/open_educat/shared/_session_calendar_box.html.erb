@@ -1,10 +1,10 @@
-<td>
+<td class="td-calenda-box">
   <div class="calenda-box">
     <div class="cb-tit">
       <p><%= session.start_datetime.strftime('%b %Y') %></p>
     </div>
     <div class="cb-con">
-      <strong><%= session.start_datetime.strftime('%e') %></strong>
+      <strong><%= session.start_datetime.strftime('%d') %></strong>
       <p><%= session.start_datetime.strftime('%H:%M') %> - <%= session.end_datetime.strftime('%H:%M') %>
         <br/><%= session.start_datetime.strftime('%a') %></p>
     </div>

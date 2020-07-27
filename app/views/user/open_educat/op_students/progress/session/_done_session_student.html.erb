@@ -1,7 +1,7 @@
 <%= render 'user/open_educat/shared/session_calendar_box', {:session => session} %>
 
 <%# <% lesson = get_lesson_of_session(session) %1> %>
-<td>
+<td class="td-photo-box">
   <div class="photo-box">
     <span>
       <%= thumbnail_tag lesson %>
@@ -9,9 +9,10 @@
   </div>
 </td>
 <td>
-  <strong style="text-transform: uppercase; color: #6c7178"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : Learning::Course::OpLessonDecorator.new(lesson).display_lesson_with_subject %></strong><br/>
-  <span  style="text-transform: uppercase; color: #6D7278"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %></span> <br/>
-  <%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : sanitize(truncate(lesson.note, :length => 50)) %>
+  <div class="font-bold color-6D7278 text-uppercase"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : Learning::Course::OpLessonDecorator.new(lesson).display_lesson_with_subject %></div>
+
+  <div class="font-medium color-6D7278 text-uppercase"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : lesson.name %></div>
+  <span class="font-medium color-6D7278"><%= lesson.nil? ? "#{ t('learning.batch.status.update') }" : sanitize(truncate(lesson.note, :length => 50)) %></span>
 </td>
 <td align="center" width='90'>
   <% attendance_line = attendance_line(session.id, current_user.op_student.id) %>
@@ -25,7 +26,7 @@
     </span>
   <% end %>
 </td>
-<td align="right">
+<td class="text-right p-r-0">
   <% if !attendance_line.nil? and attendance_line.present %>
     <span data-toggle="modal" data-target="#session_student_feedback" style='margin-right: 10px;'> 
       <a class='student_feedback_modal' data-session='<%= session.id %>' data-toggle="tooltip" title='<%= t('my_class.detail.tooltip.feedback') %>'>
@@ -83,7 +84,7 @@
   <span data-toggle="modal" data-target="#session_photo">
     <a href='/learning/op_session/session_photo?session_id=<%= session.id %>' data-remote='true' data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.picture') %>">
       <span>
-        <%= image_tag('global/images/icon-image.png', style: 'width: 32px;margin-right: 10px') %>
+        <%= image_tag('global/images/icon-image.png', style: 'width: 32px;') %>
       </span>
     </a>
   </span>
