@@ -158,7 +158,7 @@ module User
       def session_student
         session = Learning::Batch::OpSession.find(params[:session_id])
         batch = session.op_batch
-        all_students = User::OpTeachersService.new.teacher_class_detail batch, session
+        all_students = User::OpenEducat::OpTeachersService.new.teacher_class_detail batch, session
 
         respond_to do |format|
           format.html

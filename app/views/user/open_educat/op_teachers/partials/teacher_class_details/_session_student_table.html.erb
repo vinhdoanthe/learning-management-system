@@ -24,12 +24,12 @@
           </span>
           <span class="table-name"><%= student[:name] %></span>
         </td>
-        <% if student[:attendance] == '' %>
-          <td></td>
+        <% if student[:attendance] == false %>
+          <td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""> </td>
         <% elsif student[:attendance] == true %>
           <td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""></td>
         <% else %>
-          <td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""> </td>
+          <td></td>
         <% end %>
         <% if student[:status] == 'off' %>
           <td style="text-align: center; opacity: 0.3;">
