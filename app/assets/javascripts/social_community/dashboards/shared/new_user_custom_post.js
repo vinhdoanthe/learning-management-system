@@ -1,25 +1,9 @@
 $(document).ready(function(){
   $('#user-custom-post-images').change(function(){
     if (window.File && window.FileList && window.FileReader) {
-      const preview = $('#files-preview')
       const files = $('#user-custom-post-images')[0].files
-      fl = files.length
-      if (fl > 0) {
-        for (let i=0; i<fl; i++) {
-          var file = files[i];
-          //Only pics
-          if (!file.type.match('image')) continue;
-          var picReader = new FileReader();
-          picReader.addEventListener("load", function (event) {
-            var picFile = event.target;
-            var div = document.createElement("div");
-            div.setAttribute("id", "new_user_cutom_post_image_"+i)
-            div.innerHTML = "<img class='thumbnail rounded float-left preview' src='" + picFile.result + "'" + "title='" + picFile.name + "'/>";
-            preview.append(div, null);
-          });
-          //Read the image
-          picReader.readAsDataURL(file);
-        }
+      if (validateFileTypes(files)) {
+        processFiles(files);
       }
     } else {
       alert("Your browser does not support File API");
@@ -36,7 +20,7 @@ addEventListener("direct-upload:initialize", event => {
     <div id="direct-upload-${id}" class="direct-upload direct-upload--pending">
       <div id="direct-upload-progress-${id}" class="direct-upload__progress" style="width: 0%"></div>
       <span class="direct-upload__filename"></span>
-    </div>
+    </Gdiv>
   `)
 })
 
@@ -65,3 +49,39 @@ addEventListener("direct-upload:end", event => {
   const element = document.getElementById(`direct-upload-${id}`)
   element.classList.add("direct-upload--complete")
 })
+
+const validateFileTypes = files => {
+  if (files.length == 0) {
+    return false;
+  }
+  const allowedFileTypes = ['image/png', 'image/jpeg', 'image/webp', 'image/gif']
+  for (let i = 0; i<files.length; i++) {
+    if (files[i].size >= 4000000 || !(allowedFileTypes.includes(files[i].type))) {
+      alert("Hệ thống chỉ cho phép đăng ảnh định dạng: png, jpg, jpeg, gif, webp với dung lượng nhỏ hơn 4MB!");
+      return false;
+    }
+  }
+  return true;
+}
+
+const processFiles = files => {
+  fl = files.length
+  if (fl > 0) {
+    const preview = $('#files-preview')
+    for (let i=0; i<fl; i++) {
+      var file = files[i];
+      //Only pics
+      if (!file.type.match('image')) continue;
+      var picReader = new FileReader();
+      picReader.addEventListener("load", function (event) {
+        var picFile = event.target;
+        var div = document.createElement("div");
+        div.setAttribute("id", "new_user_cutom_post_image_"+i)
+        div.innerHTML = "<img class='thumbnail rounded float-left preview' src='" + picFile.result + "'" + "title='" + picFile.name + "'/>";
+        preview.append(div, null);
+      });
+      //Read the image
+      picReader.readAsDataURL(file);
+    }
+  }
+}

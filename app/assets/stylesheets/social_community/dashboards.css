@@ -93,3 +93,18 @@ div.user-custom-post-content {
   padding-right: 20px;
   padding-left: 20px;
 }
+
+p.ucp--content {
+  background: #ffffff;
+}
+
+label.add-new-cp-photos {
+  display: inline;
+}
+
+button.add-new-post {
+  display: inline;
+  color: transparent;
+  border-color: transparent;
+  background: transparent;
+}
