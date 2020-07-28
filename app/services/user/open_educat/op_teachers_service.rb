@@ -42,7 +42,7 @@ class User::OpenEducat::OpTeachersService
     end
 
     all_students.each do |k, _|
-      all_students[k] = students[k] if students[k].present?
+      all_students[k].merge!( students[k]) if students[k].present?
     end
 
     all_students

@@ -1,0 +1,5 @@
+<% data.each do |code| %>
+  tag = $('a[data-code="<%= code %>"]')
+  tag.parent().css("opacity", "1");
+  tag.html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/attendance_link', locals: { code: code } ) %>")
+<% end %>

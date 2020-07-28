@@ -89,9 +89,16 @@ class User::OpenEducat::OpTeachersController < ApplicationController
           User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'star', 0
         end
       end
-      render json: {type: 'success', message: 'Điểm danh thành công!'}
+
+      student_codes = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:code)
+      result = { result: {type: 'success', message: 'Điểm danh thành công!'}, data: student_codes}
     else
-      render json: {type: 'danger', message: errors[1]}
+      result = { result: {type: 'danger', message: errors[1]} }
+    end
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/attendance_response', locals: result }
     end
 
   rescue StandardError => e

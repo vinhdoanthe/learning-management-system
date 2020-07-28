@@ -192,9 +192,10 @@ $(document).ready(function(){
       method: 'post',
       url: '/user/open_educat/teacher_attendance',
       data: data,
-      success: function (res) {
-	display_noti(res)
-      }
+      dataType: 'script'
+     // success: function (res) {
+	   //   display_noti(res[:result])
+     // }
     })
   })
 
