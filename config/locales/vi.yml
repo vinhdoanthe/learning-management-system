@@ -38,6 +38,7 @@ vi:
     Preview: "Xem trước"
     Join class now: "Vào học ngay"
     filter: 'Lọc'
+    View detail: 'Xem chi tiết'
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"

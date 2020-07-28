@@ -1,0 +1,37 @@
+<div class="box-course-item-info swiper-slide">
+<input type="hidden" value="<%= course_id %>" name="course_id">
+<input type="hidden" value="<%= subject[:info][:id] %>" name="subject_id">
+  <div class="c-course-item">
+    <div class="c-course-item-thumb">
+      <% if subject[:thumbnail].present? %>
+        <%= image_tag subject[:thumbnail] %>
+      <% else %>
+        <img src="assets/global/images/Bitmap3.png" alt="">
+      <% end %>
+    </div>
+    <div class="c-course-item-content">
+      <div class="c-course-item-row">      
+        <div class="c-course-item-subject-name">
+          <%= subject[:info][:name] %>        
+        </div>
+        <div class="c-course-item-subject-icon-lock"><img src="/global/images/padlock@2x.png" alt=""></div>
+      </div>
+      <div class="c-course-item-is-footer">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+            <a class="view-course-detail" disabled><%= t('button.View detail')%></a>
+            <ul class="c-course-item-circle">
+              <li><span class="bg-5DC2A7"></span></li>
+              <li><span class="bg-FCF055"></span></li>
+              <li><span class="bg-EB9138"></span></li>
+            </ul>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+            <span class="chart-line"></span>
+            <span class="c-course-item-number-process"><%= subject[:info][:complete_percentage].round(2) * 100 %>%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
