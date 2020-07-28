@@ -159,6 +159,10 @@ vi:
       timing:
         weekly: 'hàng tuần'
       come_in: "Vào lớp"
+      feedback:
+        session_time: 'Buổi học ngày'
+        feeling: 'Đánh giá'
+        content: "Ghi chú"
     status:
       Studying: "Đang học"
       Stop: "Đã kết thúc"
@@ -420,3 +424,5 @@ vi:
     no_products: 'Kho quà đang trong quá trình xây dựng'
   attachment:
     download: 'Tải về'
+  flash_notice:
+    :no_permissions: 'Bạn không có quyền truy cập tài nguyên này!'

@@ -131,6 +131,10 @@ en:
       timing:
         weekly: 'weekly'
       come_in: "Go to class"
+      feedback:
+        session_time: 'Session datetime'
+        feeling: 'Feeling Type'
+        content: "Student's note"
     session:
       student_coming: "NEXT CLASS"
       teacher_coming: "NEXT TEACHING CLASS"
@@ -295,3 +299,5 @@ en:
     no_products: "Redeem products are in developing"
   attachment:
     download: 'Download'
+  flash_notice:
+    :no_permissions: 'You have not enough permission to take this action!'

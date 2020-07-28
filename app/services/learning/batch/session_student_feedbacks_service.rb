@@ -25,4 +25,19 @@ class Learning::Batch::SessionStudentFeedbacksService
     return [] if session.blank?
     User::Account::User.where(faculty_id: session.faculty_id).all
   end
+
+  def self.can_authorize?(feedback, user)
+    result = false
+    unless user.nil? or feedback.nil?
+      if user.is_admin? || user.is_operation_admin?
+        result = true
+      elsif user.is_student?
+        result = true if user.id == feedback.feedback_by
+      elsif user.is_teacher?
+        op_session = feedback.op_session
+        result = true if (!op_session.nil? && op_session.faculty_id == user.faculty_id)
+      end
+    end
+    result
+  end
 end

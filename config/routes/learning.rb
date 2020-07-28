@@ -13,4 +13,5 @@ namespace :learning do
   put 'update_vimeo' => 'learning_materials#update_vimeo'
   post 'reward_student' => 'batch/session_student_rewards#reward_student'
   post 'student_feeback' => 'batch/session_student_feedbacks#student_feedback'
+  get 'feedback/:id' => 'batch/session_student_feedbacks#show', as: 'feedback'
 end
