@@ -1,0 +1,52 @@
+<div class="page-content page-thin">  
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h4 class="color-fff text-transform"><%= t('my_class.detail.tooltip.feedback') %></h4>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <table class="table table-borderless table-condensed table-hover">
+        <tbody>
+          <tr>
+            <th scope="row"><%= t('learning.batch.code') %></th>
+            <td><%= @feedback.op_session.op_batch.code %></td>
+          </tr>
+          <tr>
+            <th scope="row"><%= t('learning.batch.feedback.session_time') %></th>
+            <td><%= @feedback.op_session.start_datetime.strftime('%d-%m-%Y %H:%M') %></td>
+          </tr>
+          <tr>
+            <th scope="row"><%= t('user.student.name') %></th>
+            <td><%= @feedback.user.full_name %></td>
+          </tr>
+          <tr>
+            <th scope="row"><%= t('learning.batch.feedback.feeling') %></th>
+            <td>
+              <div>
+                <a class="ths-detail feeling_type">
+                  <%= image_tag(@feedback.feeling_type.icon, class: 'feeling_type_icon') if @feedback.feeling_type.icon.attached? %>
+                  <label style="text-align: center"><%= @feedback.feeling_type.name %></label>
+                </a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row"><%= t('learning.batch.feedback.content') %></th>
+            <td><%= @feedback.content %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<style>
+.table-borderless tr td,
+.table-borderless tr th {
+  border-top: 0 !important;
+  border-width: 0;
+  border: 0;
+}
+</style>
