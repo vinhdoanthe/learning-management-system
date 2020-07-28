@@ -111,4 +111,12 @@ namespace :social_community do
     puts "Total todo posts is #{size}"
     Utility::TrackingAutoGenerateReactionToPostService.create_new todo_posts
   end
+
+  desc 'Create blank post'
+  task :create_blank_post, [] => :environment do |t, args|
+    blank_post = SocialCommunity::Feed::BlankPost.new
+    admin_user = User::Account::User.where(account_role: Constant::ADMIN).first
+    blank_post.posted_by = admin_user.id
+    blank_post.save
+  end
 end

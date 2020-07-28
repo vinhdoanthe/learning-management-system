@@ -15,10 +15,16 @@ class Notification::User::UserNotificationsController < ActivityNotification::No
       super
     else
       notifiable_type = @notification.notifiable_type
-      if notifiable_type == SC_PT_POST or notifiable_type == SC_RW_POST or notifiable_type == SC_ST_PROJECT_POST or notifiable_type == SC_REDEEM_POST
-        redirect_to social_community_feed_post_path(@notification.notifiable_id) 
-      elsif notifiable_type == SC_QA_THREAD
+      if notifiable_type == SC_QA_THREAD
         redirect_to social_community_question_answer_thread_path(@notification.notifiable_id)
+      else #other post types
+        # @notification.notifiable = SocialCommunity::Feed::BlankPost.last
+        # @notification.opened_at = Time.now
+        # if @notification.save
+        redirect_to social_community_feed_post_path(@notification.notifiable_id) 
+        # else
+        #   redirect_to root_path
+        # end
       end
     end
   end
