@@ -65,21 +65,28 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   def teacher_attendance
     lines = []
     student_ids = []
+    errs = []
+    erros = [true]
+
     unless params[:student].blank?
       params[:student].each_value do |student_params|
-        line = {}
         student_id = User::OpenEducat::OpStudent.where(code: student_params['student_id']).first.id
         student_ids << student_id
-        line[:student_id] = student_id
-        line[:is_present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
-        line[:note] = student_params['note'].to_s
-        lines.append line
+        if validate_attendance student_id, params[:session_id]
+          line = {}
+          line[:student_id] = student_id
+          line[:present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
+          line[:note_1] = student_params['note'].to_s
+          lines.append line
+        else
+          errs << Api::Odoo.evaluate(session_id: params[:session_id].to_s, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: [{ present: ActiveModel::Type::Boolean.new.cast(student_params['check']), student_id: student_id }])
+        end
       end
     end
 
-    errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i)
-    
-    if errors[0]
+    errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i) if lines.present?
+
+    if errors.present? && ( (errors[0] == true) || (errors.is_a? Integer) )
       unless student_ids.blank?
         student_ids.each do |student_id|
           user = User::Account::User.where(student_id: student_id).first
@@ -91,9 +98,12 @@ class User::OpenEducat::OpTeachersController < ApplicationController
       end
 
       student_codes = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:code)
-      result = { result: {type: 'success', message: 'Điểm danh thành công!'}, data: student_codes}
+      result = { noti: {type: 'success', message: 'Điểm danh thành công!'}, data: student_codes}
     else
-      result = { result: {type: 'danger', message: errors[1]} }
+      message = errors[1] if errors[1].present?
+      message = 'Đã có lỗi xảy ra! Thử lại sau' if message.blank?
+
+      result = { noti: {type: 'danger', message: message} }
     end
 
     respond_to do |format|
@@ -181,10 +191,22 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     end
   end
 
+  def teacher_evaluate
+    result = User::OpenEducat::OpTeachersService.teacher_evaluate params, @teacher
+
+    render json: result
+  rescue StandardError => e
+    redirect_error_site(e)
+  end
+
   private
 
   def find_teacher
     @teacher = current_user.op_faculty
     return if @teacher.blank?
+  end
+
+  def validate_attendance student_id, session_id
+    Learning::Batch::OpAttendanceLine.where(student_id: student_id, session_id: session_id).first.present?
   end
 end

@@ -96,21 +96,4 @@ class User::OpTeachersService
     schedule_hash
   end
 
-  def self.teacher_evaluate params, teacher
-    faculty_id = teacher.id
-    session_id = params[:session_id]
-    evaluate_content = {}
-    params[:info].each{|k,v| evaluate_content.merge!({v['name'] => v['value']})}
-    evaluate_content.delete('session_id')
-    evaluate_content.merge!({ "student_id" => params[:student_id].to_i })
-
-    errors = Api::Odoo.evaluate(session_id: session_id.to_i, faculty_id: faculty_id, attendance_lines: [evaluate_content], attendance_time: Time.now)
-
-    if errors == true
-      { type: 'success', message: 'Đánh giá thành công' }
-    else
-      { type: 'danger', message: errors[1] }
-    end
-  end
-
 end

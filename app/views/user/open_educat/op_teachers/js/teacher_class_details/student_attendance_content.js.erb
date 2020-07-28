@@ -7,7 +7,7 @@ $('#teacher_evaluate_confirm').on('click', function () {
   info.push({name: 'teacher_note', value: teacher_note})
 
   $.ajax({
-    url: '/user/teacher_evaluate',
+    url: '/user/open_educat/op_teachers/teacher_evaluate',
     method: 'POST',
     data: {info: info, session_id: <%= session_id %>, student_id: <%= student.id %>},
     success: function (res) {
