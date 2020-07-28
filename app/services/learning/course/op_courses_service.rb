@@ -147,7 +147,7 @@ class Learning::Course::OpCoursesService
     videos = Learning::Material::LearningMaterial.where(op_lession_id: lesson_ids,
                                                         material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO,
                                                         learning_type: Learning::Constant::Material::MATERIAL_TYPE_REVIEW).to_a
-    list_active_session_ids = Learning::Batch::OpBatchService.get_session_and_active_state(course_id, subject_id, student_id, lesson_ids)
+    list_active_session_ids = Learning::Batch::OpBatchService.get_session_and_active_state(course_id, subject.id, student_id, lesson_ids)
     lessons.each do |lesson|
       video = videos.find{|video| video.op_lession_id == lesson.id}
       thumbnail = nil
