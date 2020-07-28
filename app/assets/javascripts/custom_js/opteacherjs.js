@@ -399,7 +399,7 @@ $(document).ready(function () {
         info = $('#teacher_evaluate_session').serializeArray();
         info.push({name: 'student_id', value: student_id})
         $.ajax({
-            url: '/user/teacher_evaluate',
+            url: '/user/open_educat/op_teachers/teacher_evaluate',
             method: 'POST',
             data: info,
             success: function (res) {

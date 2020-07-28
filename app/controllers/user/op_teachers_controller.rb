@@ -153,14 +153,6 @@ module User
       redirect_error_site(e)      
     end
 
-    def teacher_evaluate
-      result = OpTeachersService.teacher_evaluate params, @teacher
-      render json: result
-    
-    rescue StandardError => e
-      redirect_error_site(e)      
-    end
-
     def teacher_evaluate_content
       e = Learning::Batch::OpAttendanceLine.where(student_id: params[:student_id], session_id: params[:session_id]).first
       if e.blank?

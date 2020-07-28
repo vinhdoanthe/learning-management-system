@@ -31,7 +31,7 @@
           <div>
             <label>Nhận xét khác:</label>
             <br>
-            <textarea class='tinymce' id="teacher_note" name="teacher_note" rows="6"><%= attendance.present? ? attendance.note_1.html_safe : '' %></textarea>
+            <textarea class='tinymce' id="teacher_note" name="teacher_note" rows="6"><%= (attendance.present? && attendance.note_1.present?) ? attendance.note_1.html_safe : '' %></textarea>
             <%= tinymce :simple %>
           </div>
       </form>
