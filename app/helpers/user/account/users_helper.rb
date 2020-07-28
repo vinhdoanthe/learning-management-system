@@ -241,6 +241,18 @@ module User
                 'title_active'  => '<li class="nav-item"><a class="nav-link active" href="#"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.setting.coin_star') <<'</p></a></li>',
               } 
             ],
+            'batch' => [
+              {
+                'path'          => adm_learning_operation_attendance_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_operation_attendance_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_operation_attendance') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_operation_attendance_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_operation_attendance') <<'</p></a></li>',
+              },              
+              {
+                'path'          => adm_learning_attendance_line_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_attendance_line_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_attendance_line') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_attendance_line_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_attendance_line') <<'</p></a></li>',
+              },              
+            ],
             'course' => [
               {
                 'path'          => '#',
@@ -327,7 +339,7 @@ module User
             },
 
             {
-              'path'          => root_path,
+              'path'          => adm_learning_activity_path,
               'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
               'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
               'sub_menu'      => sub_menus['learning_activity_management']
@@ -337,7 +349,7 @@ module User
               'path'          => adm_learning_class_path,
               'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.class.management_class') <<'</p><i class="right fas fa-angle-left"></i></a>',
               'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.class.management_class') <<'</p><i class="right fas fa-angle-left"></i></a>',
-              'sub_menu'      => []
+              'sub_menu'      => sub_menus['batch']
             },
 
             {
@@ -453,6 +465,18 @@ module User
                 'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_activity_project_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_activity_management_project') <<'</p></a></li>',
               },              
             ],
+            'batch' => [
+              {
+                'path'          => adm_learning_operation_attendance_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_operation_attendance_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_operation_attendance') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_operation_attendance_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_operation_attendance') <<'</p></a></li>',
+              },              
+              {
+                'path'          => adm_learning_attendance_line_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_attendance_line_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_attendance_line') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_attendance_line_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_attendance_line') <<'</p></a></li>',
+              },              
+            ],
             'community' => [
               {
                 'path'          => '#',
@@ -513,7 +537,7 @@ module User
               'path'          => adm_learning_class_path,
               'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.class.management_class') <<'</p><i class="right fas fa-angle-left"></i></a>',
               'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.class.management_class') <<'</p><i class="right fas fa-angle-left"></i></a>',
-              'sub_menu'      => []
+              'sub_menu'      => sub_menus['batch']
             },
             {
               'path'          => adm_user_index_path,
