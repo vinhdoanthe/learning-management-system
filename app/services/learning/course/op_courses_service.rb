@@ -73,7 +73,7 @@ class Learning::Course::OpCoursesService
     p_course_ids = Utility::PublicCourse.order(:order_in_list => :ASC).pluck(:order_in_list, :course_id).uniq.compact
     values = []
     p_course_ids.each do |p_course_id|
-      values << "(#{p_course_id[0]}, #{p_course_id[1]})"
+      values << "(#{p_course_id[0].to_i}, #{p_course_id[1]})"
     end
     courses_relation = Learning::Course::OpCourse.joins("JOIN (VALUES #{values.join(",")}) as x (order_in_list, course_id) on #{Learning::Course::OpCourse.table_name}.id = x.course_id")
     courses_relation = courses_relation.order('x.order_in_list')

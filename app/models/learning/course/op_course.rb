@@ -16,6 +16,7 @@ module Learning
       accepts_nested_attributes_for :course_description, allow_destroy: true
 
       has_one_attached :thumbnail
+      has_many_attached :equipment_logos
       
       def link
         learning_show_course_path(self.id)
