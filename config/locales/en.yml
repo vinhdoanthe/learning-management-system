@@ -28,6 +28,7 @@ en:
     return_login: "Have account? Login"
     username_not_found: "Username not found"
     reset_email_sent: "Email sent with password reset instructions"
+    logout: 'Logout'
   topbar:
     coin: "TEKY COIN"
   sidebar:

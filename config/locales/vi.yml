@@ -51,6 +51,7 @@ vi:
     return_login: "Đã có tài khoản? Đăng nhập"
     username_not_found: 'Không tìm thấy tài khoản trên hệ thống'
     reset_email_sent: 'Hướng dẫn reset mật khẩu đã được gửi đến email'
+    logout: 'Đăng xuất'
   topbar:
     coin: "TEKY ĐỒNG"
   sidebar:

@@ -526,12 +526,12 @@ module User
           }
 
           menus = [
-            {
-              'path'          => root_path,
-              'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
-              'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
-              'sub_menu'      => sub_menus['learning_activity_management']
-            },
+            # {
+            #   'path'          => root_path,
+            #   'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            #   'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.learning_activity_management') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            #   'sub_menu'      => sub_menus['learning_activity_management']
+            # },
 
             {
               'path'          => adm_learning_class_path,
@@ -544,24 +544,24 @@ module User
               'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user.name') <<'</p></a></li>',
               'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user.name') <<'</p></a></li>'
             },
-            {
-              'path'          => root_path,
-              'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.community.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
-              'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.community.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
-              'sub_menu'      => sub_menus['community']
-            },
-            {
-              'path'          => root_path,
-              'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.redeem.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
-              'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.redeem.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
-              'sub_menu'      => sub_menus['redeem']
-            },
+            # {
+            #   'path'          => root_path,
+            #   'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.community.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            #   'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.community.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            #   'sub_menu'      => sub_menus['community']
+            # },
+            # {
+            #   'path'          => root_path,
+            #   'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.redeem.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            #   'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="#"><i class="nav-icon fas fa-th"></i><p>'<< t('adm.redeem.name') <<'</p><i class="right fas fa-angle-left"></i></a>',
+            #   'sub_menu'      => sub_menus['redeem']
+            # },
 
-            {
-              'path'          => root_path,
-              'title'         => '<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.refer_friend') <<'</p></a></li>',
-              'title_active'  => '<li class="nav-item"><a class="nav-link active" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.refer_friend') <<'</p></a></li>'
-            },
+            # {
+            #   'path'          => root_path,
+            #   'title'         => '<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.refer_friend') <<'</p></a></li>',
+            #   'title_active'  => '<li class="nav-item"><a class="nav-link active" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.refer_friend') <<'</p></a></li>'
+            # },
           ]
 
           tag_html = '<ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat" data-widget="treeview" role="menu" data-accordion="false">'

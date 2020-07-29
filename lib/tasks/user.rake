@@ -53,4 +53,27 @@ namespace :user do
       end
     end
   end
+  
+  desc 'Create Operation Account'
+  task :create_operation_accounts, [] => :environment do |t, args|
+    companies = Common::ResCompany.all.to_a
+    puts "Total #{companies.count}"
+    companies.each_with_index do |company, index|
+      next if company.code.nil?
+      puts "Processing #{index + 1}"
+      user = User::Account::User.new
+      user.account_role = Constant::OPERATION_ADMIN
+      user.email = company.email
+      user.username = "vh#{company.code.downcase}"
+      user.password = user.username
+      if user.save
+        puts "Company: #{company.name}"
+        puts "Username: #{user.username}"
+        user_company = Common::UserCompany.new
+        user_company.user_id 
+        user_company.company_id = company.id
+        user_company.save
+      end
+    end 
+  end
 end
