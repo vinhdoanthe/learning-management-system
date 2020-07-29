@@ -113,6 +113,7 @@ en:
     course: "Course"
     attendance: "Attendance"
     no_lesson: "No lesson yet"
+    no_video_lesson: "No video yet"
     batch:
       type: "Batch type"
       batch_time: "Batch time"

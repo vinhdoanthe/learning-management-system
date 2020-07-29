@@ -43,15 +43,6 @@ function get_homework(data, url){
 
 $('document').ready(function () {
 
-  var swiper = new Swiper('.swiper-container', {
-    slidesPerView: 5,
-    spaceBetween: 5,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-  }).swiper;
-
   active_batch = $('input[name="active_batch"]').val();
   active_subject = $('input[name="active_subject"]').val();
 

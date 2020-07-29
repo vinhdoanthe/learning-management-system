@@ -19,14 +19,16 @@ module Learning
       end 
 
       def get_video_thumbnail op_session
+        url = ''
         session_video = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_VIDEO, :op_lession_id => op_session.lession_id).order(created_at: :DESC).first if session.present?
         if session_video.present?
           if session_video.thumbnail_image.attached?
             url = url_for(session_video.thumbnail_image)
           end
-        else
-          url = image_path 'video-camera-icon-1.png'
         end
+
+        url = image_path 'video-camera-icon-1.png' if url.blank?
+
         url
       end
 
@@ -40,6 +42,21 @@ module Learning
           end
         end
         result 
+      end
+
+      def get_session_has_video sessions
+        list_sessions = sessions.select{|s| s.lession_id != nil}
+        return [] if list_sessions.blank?
+
+        sessions_has_video = []
+
+        list_sessions.each do |session|
+          lesson = session.op_lession
+          has_video = Learning::Material::LearningMaterial.where(material_type: 'video', op_lession_id: lesson.id).first.present?
+          sessions_has_video << session if has_video
+        end
+
+        sessions_has_video
       end
     end
   end
