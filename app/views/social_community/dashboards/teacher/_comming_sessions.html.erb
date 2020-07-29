@@ -13,36 +13,35 @@
           <span class="color-939393">đến</span> 
           <span style="color: #F16357;"> <%= coming_soon_session.end_datetime.strftime('%H:%M') %> </span>|  
           <span class="font-regular"><%= (get_week_day start.strftime('%A'))%></span>, <%= start.day.to_s %>/<%= start.month.to_s %>/<%= start.year.to_s %> 
-        </p>
-        <% company = Common::ResCompany.where(id: coming_soon_session.company_id).first %>
-        <% if company.present? %>
-          <p class="text-center">
-          tại cơ sở: <span class="font-bold"><%= company.name %></span>
           </p>
-        <% end %>
+          <% company = Common::ResCompany.where(id: coming_soon_session.company_id).first %>
+          <% if company.present? %>
+            <p class="text-center">
+            tại cơ sở: <span class="font-bold"><%= company.name %></span>
+            </p>
+          <% end %>
         </div>
-        <div class="bnd-clock clockdiv" id="clockdiv<%= index %>">
-          <div>
-            <span class="days"></span>
-          </div>
-          <div>
-            <span class="hours"></span>
-          </div>
-          <div>
-            <span class="minutes"></span>
-          </div>
-          <div>
-            <span class="seconds"></span>
+        <div class="bnd-clock clockdiv text-uppercase" id="clockdiv<%= index %>">
+          <div class="box-datetime">
+            <span class="days"><p class="numberDay"></p><%= t('datetime.prompts.day')%></span>
+          </div><span class="char-dots"> : </span>
+          <div class="box-datetime">
+            <span class="hours"><p class="numberHours"></p><%= t('datetime.prompts.hour')%></span>
+          </div><span class="char-dots"> : </span>
+          <div class="box-datetime">
+            <span class="minutes"><p class="numberMinutes"></p><%= t('datetime.prompts.minute')%></span>
+          </div><span class="char-dots"> : </span>
+          <div class="box-datetime">
+            <span class="seconds"><p class="numberSeconds"></p><%= t('datetime.prompts.second')%></span>
           </div>
         </div>
         <br/>
-        <a href='/user/open_educat/op_teacher/teacher_class_detail?batch_id=<%= coming_soon_session.batch_id %>' class='link-other color-5DC2A7 m-t-10'>Vào lớp</a>
-        <!-- <%#= link_to 'Vào lớp', user_open_educat_op_students_batch_detail_path(coming_soon_session[:batch_id]), :class => 'link-other color-5DC2A7 m-t-10' %> -->
+        <%= link_to t('learning.batch.come_in').upcase, "/user/open_educat/op_teacher/teacher_class_detail?batch_id=#{coming_soon_session.batch_id}", :class => 'link-other color-0654BA m-t-10' %>
       </div>
       <%= javascript_tag "initializeClock('clockdiv#{ index }', #{start.to_json.html_safe} );", "data-turbolinks-track" => true %>
     <% end %>
-        <div class="bnd-noti">
-          <a href="/user/open_educat/teacher_schedule" class="pull-right link-all">Xem tất cả</a>
-        </div>
+    <div class="bnd-noti">
+      <a href="/user/open_educat/teacher_schedule" class="pull-right link-all">Xem tất cả</a>
+    </div>
   <% end %>
 </div>

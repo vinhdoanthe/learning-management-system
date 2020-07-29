@@ -201,9 +201,11 @@ ul.header-menu.nav.navbar-nav li span {
 }
 
 .clockdiv{
-font-family: sans-serif;
     color: #000;
     display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
     text-align: center;
     font-size: 14px;
 }
@@ -211,17 +213,36 @@ font-family: sans-serif;
 .clockdiv > div{
     border-radius: 3px;
     display: inline-block;
+    text-align: center;
 }
 
 .clockdiv div > span{
-	padding: 8px;
+    padding: 7px 13px 6px 13px;
     border-radius: 3px;
-	background-image: -webkit-linear-gradient(top left, #5DC2A7, #FCF055);
-	background-image: -o-linear-gradient(top left, #5DC2A7, #FCF055);
-	background-image: linear-gradient(to bottom right, #5DC2A7, #FCF055);
+    background-image: -webkit-linear-gradient(top left, #5DC2A7, #FCF055);
+    background-image: -o-linear-gradient(top left, #5DC2A7, #FCF055);
+    background-image: linear-gradient(to bottom right, #5DC2A7, #FCF055);
     display: inline-block;
+    text-align: center;
+    width: 50px;
+    height: 50px;
 }
 
+div.box-datetime {width: 50px;}
+
+  div>span.days, div>span.hours, div>span.minutes, div>span.seconds {
+    font-size: 8px;
+    font-weight: 700;
+  }
+
+  div>span.days .numberDay, div>span.hours .numberHours, div>span.minutes .numberMinutes, div>span.seconds .numberSeconds {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    padding-top: 0px;
+  }
+
+span .char-dots {line-height: 50px;display: inline;vertical-align:top;}
 .smalltext{
 	padding-top: 5px;
 	font-size: 16px;
