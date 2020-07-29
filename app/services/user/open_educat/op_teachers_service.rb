@@ -164,7 +164,6 @@ class User::OpenEducat::OpTeachersService
     params[:info].each{|k,v| evaluate_content.merge!({v['name'] => v['value']})}
     evaluate_content.delete('session_id')
     evaluate_content.merge!({ "student_id" => params[:student_id].to_i })
-    evaluate_content['note_1'] = evaluate_content['teacher_note']
 
     errors = Api::Odoo.evaluate(session_id: session_id.to_i, faculty_id: faculty_id, attendance_lines: [evaluate_content], attendance_time: Time.now)
 

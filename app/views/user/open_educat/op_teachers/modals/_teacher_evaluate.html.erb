@@ -1,40 +1,21 @@
-<%= tinymce_assets %>
   <div class="modal-dialog batch_student_evaluate" style='width: 60%'>
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Đánh giá học sinh</h4>
+        <h2 class="modal-title">Đánh giá học sinh</h2>
       </div>
       <div class="modal-body teacher_evaluate_content">
+        <div class="form-group" style="margin: 0 20px 20px">
+          <label for='select_evaluate_type' class='label-select'>Kiểu đánh giá</label>
+          <select class="form-control" id='select_evaluate_type'>
+            <option selected value="<%= User::Constant::SessionEvaluation::StateEvaluate::SESSION %>">Đánh giá cuối buổi</option>
+            <option value="<%= User::Constant::SessionEvaluation::StateEvaluate::SUBJECT %>">Đánh giá cuối khoá</option>
+          </select>
+        </div>
         <form action="" id='teacher_evaluate_session'>
-          <input type="hidden" name='session_id' value='<%= session.id %>'>
-          <% User::Constant::Evaluate::EVALUATE.each do |e| %>
-            <div class='evaluate_element'>
-              <h2><%= e[0] %></h2>
-              <% e[1].keys.each do |k| %>
-                <label><%= e[1][k]['label'] %>:</label>
-                <br>
-                <select name="<%= k %>">
-                  <option value=''></option>
-                <% e[1][k]['content'].each do  |content| %>
-                    <% if attendance.present? && attendance.send(k) == content[0]%>
-                      <option value="<%= content[0] %>" selected><%= content[1]%></option>
-                    <% else %>
-                      <option value="<%= content[0] %>"><%= content[1] %></option>
-                    <% end %>
-                  <% end %>
-                </select>
-              <% end %>
-            </div>
-          <% end %>
-          <div>
-            <label>Nhận xét khác:</label>
-            <br>
-            <textarea class='tinymce' id="teacher_note" name="teacher_note" rows="6"><%= (attendance.present? && attendance.note_1.present?) ? attendance.note_1.html_safe : '' %></textarea>
-            <%= tinymce :simple %>
-          </div>
-      </form>
+          <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/evaluation/evaluate_session', { attendance: attendance } %>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="teacher_evaluate_confirm" data-dismiss="modal">Gửi đánh giá</button>
@@ -42,3 +23,25 @@
     </div>
 
   </div>
+
+<style>
+  .label-select {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+  #select_evaluate_type {
+    width: 70%;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .label-note {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+</style>
