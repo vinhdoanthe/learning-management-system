@@ -136,6 +136,7 @@ vi:
     course: "Khoá học"
     attendance: "Điểm danh"
     no_lesson: "Chưa có buổi học nào"
+    no_video_lesson: "Chưa có video ôn bài"
     Class Online: "Lớp học Online"
     Class in center: "Lớp học tại trung tâm"
     Class cancel: "Lớp bị hủy"

@@ -21,20 +21,24 @@
 
 
 $('#swiper-video-list').ready(function() {
-var active_video = $('#active_video_slider').val();
-var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 5,
-      spaceBetween: 5,
-      loop: false,
-      slideActiveClass: 'active_video_slide',
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
-swiper.slideTo(active_video);
+  var active_video = $('#active_video_slider').val();
+  if ($(".swiper-slide")[0]) {
+  var swiper = new Swiper('.homework_video_swiper', {
+        slidesPerView: 5,
+        spaceBetween: 5,
+        loop: false,
+        slideActiveClass: 'active_video_slide',
+        observer: true,
+        observeParents: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+  swiper.slideTo(active_video);
+  }
 })
