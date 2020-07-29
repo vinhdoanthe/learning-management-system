@@ -1,0 +1,27 @@
+<%= tinymce_assets %>
+<input type="hidden" name='session_id' value='<%= session.id %>'>
+<% User::Constant::Evaluate::EVALUATE.each do |e| %>
+  <div class='evaluate_element'>
+    <h2><%= e[0] %></h2>
+    <% e[1].keys.each do |k| %>
+      <label><%= e[1][k]['label'] %>:</label>
+      <br>
+      <select name="<%= k %>">
+        <option value=''></option>
+      <% e[1][k]['content'].each do  |content| %>
+          <% if attendance.present? && attendance.send(k) == content[0]%>
+            <option value="<%= content[0] %>" selected><%= content[1]%></option>
+          <% else %>
+            <option value="<%= content[0] %>"><%= content[1] %></option>
+          <% end %>
+        <% end %>
+      </select>
+    <% end %>
+  </div>
+<% end %>
+<div style='margin: 0 10px'>
+  <label class='label-note'>Nhận xét khác:</label>
+  <br>
+  <textarea class='tinymce' id="teacher_note" name="teacher_note" rows="6"><%= (attendance.present? && attendance.note_1.present?) ? attendance.note_1.html_safe : '' %></textarea>
+  <%= tinymce :simple %>
+</div>

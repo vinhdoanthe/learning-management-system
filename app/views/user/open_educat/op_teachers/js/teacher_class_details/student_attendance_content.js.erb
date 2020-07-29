@@ -1,10 +1,30 @@
 
 $('#modal_evaluate').html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/modals/teacher_evaluate', locals: { attendance: attendance } ) %>" );
 
+$('#select_evaluate_type').on('change', function(){
+  type = $(this).val();
+  if (type === '<%= User::Constant::SessionEvaluation::StateEvaluate::SESSION %>'){
+    $('#teacher_evaluate_session').html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/evaluation/evaluate_session', locals: { attendance: attendance }) %>")
+  }
+  else {
+    $('#teacher_evaluate_session').html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/evaluation/evaluate_subject', locals: { attendance: attendance }) %>")
+  }
+  tinymce.remove();
+  tinymce.init({
+  selector: 'textarea'
+  })})
+
 $('#teacher_evaluate_confirm').on('click', function () {
   info = $('#teacher_evaluate_session').serializeArray();
   teacher_note = tinyMCE.activeEditor.getContent();
-  info.push({name: 'teacher_note', value: teacher_note})
+  type = $('#select_evaluate_type').val();
+  info.push({ name: 'state_evaluate', value: type })
+
+  if (type === '<%= User::Constant::SessionEvaluation::StateEvaluate::SESSION %>'){
+    info.push({name: 'note_1', value: teacher_note})
+  }else{
+    info.push({name: 'note_2', value: teacher_note})
+  }
 
   $.ajax({
     url: '/user/open_educat/op_teachers/teacher_evaluate',
