@@ -4,7 +4,7 @@ namespace :adm do
     get 'activity_get_batch' => 'activity#list_batch'
     get 'activity_question' => 'activity#question'
     get 'activity_project'  => 'activity#project'
-
+    get 'activity' => 'activity#list_batch'
     #Quan ly lop hoc
     get 'class'  => 'batch#list'
 
