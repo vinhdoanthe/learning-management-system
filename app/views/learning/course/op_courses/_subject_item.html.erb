@@ -1,14 +1,40 @@
 <div class="box-course-item-info swiper-slide">
+<a href="/course_detail?course_id=<%= course_id %>&subject_id=<%= subject[:id] %>">
 <input type="hidden" value="<%= course_id %>" name="course_id">
 <input type="hidden" value="<%= subject[:info][:id] %>" name="subject_id">
-  <div class="c-course-item">
+  <div class="c-course-item">    
     <div class="c-course-item-thumb">
-      <% if subject[:thumbnail].present? %>
-        <%= image_tag subject[:thumbnail] %>
+      <% if subject[:active] %>        
+        <% if subject[:thumbnail].present? %>
+          <%= image_tag subject[:thumbnail] %>
+        <% else %>
+          <img src="assets/global/images/Bitmap3.png" alt="">
+        <% end %>
+        <div class='overlay-content'>
+          <div class="content">
+            <div class='col-md-6 subject-count'>
+              <span><%= subject[:info][:count_lesson] %></span>
+              <p><%= t('learning.lesson')%></p>
+            </div>
+            <div class='col-md-6 subject-percentage'>
+              <% display_percentage = subject[:info][:complete_percentage].round(2) * 100 %>
+              <span><%= display_percentage %>%</span>
+              <p><%= t('button.Completed')%></p>
+            </div>
+          </div>
+        </div>
+        <div class='layer'></div>
       <% else %>
-        <img src="assets/global/images/Bitmap3.png" alt="">
+        <% if subject[:thumbnail].present? %>
+          <%= image_tag subject[:thumbnail] %>
+        <% else %>
+          <img src="assets/global/images/Bitmap3.png" alt="">
+        <% end %>
+        <div class="lock-layer"></div>
+        <span class="lock-item"></span>
       <% end %>
     </div>
+
     <div class="c-course-item-content">
       <div class="c-course-item-row">      
         <div class="c-course-item-subject-name">
@@ -27,11 +53,14 @@
             </ul>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
-            <span class="chart-line"></span>
+            <span class="chart-line">
+              <span class="chart-line-child" style="width: <%= display_percentage %>%"></span>
+            </span>
             <span class="c-course-item-number-process"><%= subject[:info][:complete_percentage].round(2) * 100 %>%</span>
           </div>
         </div>
       </div>
     </div>
   </div>
+</a>
 </div>

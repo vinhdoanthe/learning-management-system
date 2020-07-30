@@ -15,16 +15,17 @@
     </div>
   </div>
   <div class="panel m-t--70">
-
     <div class="panel-content">
       <%
       class_css = ''
       @courses.each_with_index  do |course, index| %>
         <% if index == 0
-            class_css = 'p-t-0'
-            end
+            class_css = ''
+          else
+            class_css = 'margin-box-course-top'
+          end
         %>
-        <%= render :partial => "course_item", :locals => {course: course, class_css: class_css} %>
+        <%= render :partial => "course_item", :locals => {course: course, class_css: class_css, index: index} %>
       <% end %>
     </div>
   </div>

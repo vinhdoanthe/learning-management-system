@@ -39,6 +39,8 @@ vi:
     Join class now: "Vào học ngay"
     filter: 'Lọc'
     View detail: 'Xem chi tiết'
+    See all: "Xem toàn bộ"
+    Completed: "Hoàn thành"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"

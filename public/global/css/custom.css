@@ -4097,7 +4097,7 @@ ul.bsc-list li:after {
 
 .lv-title h3 span.lvt-tag {
   position: absolute;
-  right: -30px;
+  right: -40px;
   top: -25px;
   background: url(../images/tag.png) no-repeat;
   width: 30px;
@@ -7470,6 +7470,7 @@ label.custom-select-label {
 /** Style for Course **/
 
 .box-course {position: relative;}
+.margin-box-course-top {margin-top: 50.5px}
 
 .box-course-item-info {
   -webkit-tap-highlight-color: transparent;
@@ -7521,7 +7522,7 @@ label.custom-select-label {
     line-height: initial;
 }
 
-.c-course-item-thumb {overflow: hidden;}
+.c-course-item-thumb {overflow: hidden;position: relative;}
 
 .c-course-item .c-course-item-thumb img {
     display: block;
@@ -7576,7 +7577,7 @@ label.custom-select-label {
 
 .c-course-item span.c-course-item-number-process {font-size: 10px; font-weight: 700; float: right;width: 24px;}
 
-.lvf-right span.chart-line span.chart-line-child {
+.c-course-item span.chart-line span.chart-line-child {
   position: absolute;
   top: 0px;
   height: 8px;
@@ -7596,6 +7597,148 @@ label.custom-select-label {
 
 .show_course_all {
     float: none;
-    display: block;
+    display: block;    
     margin-top: 30px;
 }
+
+.c-course-item .lock-layer {
+    opacity: 0.8;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: #2D2D2D;
+    z-index: 10;
+  }
+
+  .c-course-item .lock-item {
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    background-image: url(../images/prilock.png);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    width: 36px;
+    height: 48px;
+}
+
+/******************************************************************************************************************/
+/* line 3, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .overlay-image {
+  opacity: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+/* line 10, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .overlay-image img {
+  max-width: none !important;
+  max-height: none !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+/* line 17, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .overlay-content {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 11;
+  width: 70%;
+}
+/* line 28, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .overlay-content .subject-count {
+  background-color: #FCF055;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 0;
+  padding-top: 10px;
+  color: black;
+}
+/* line 36, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .overlay-content .subject-count p {
+  font-weight: 500;
+  font-size: 12px;
+  margin-top: 0;
+  padding-top: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+/* line 46, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .overlay-content .subject-percentage {
+  background-color: #fff;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 0;
+  padding-top: 10px;
+  color: black;
+}
+/* line 54, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .overlay-content .subject-percentage p {
+  font-weight: 500;
+  font-size: 12px;
+  margin-top: 0;
+  padding-top: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+/* line 64, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .layer {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+/* line 74, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .lock-layer {
+  opacity: 0.5;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  background-color: #2D2D2D;
+}
+
+/* line 93, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb .lock-image img:first-child {
+  max-width: none !important;
+  max-height: none !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* line 102, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb:hover .overlay-image {
+  opacity: 0.3;
+}
+
+/* line 106, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb:hover .overlay-content {
+  opacity: 1;
+}
+
+/* line 110, D:/data/ruby/Dev_UI_V01/app/assets/stylesheets/learning/course.scss */
+.c-course-item-thumb:hover .layer {
+  opacity: 1;
+  background-color: #5DC2A7;
+  z-index: 10;
+}
+
+.c-course-item-line {}
