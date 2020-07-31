@@ -256,7 +256,6 @@ vi:
     click_to_update: "Click để cập nhật sản phẩm"
     public_html: "<b style='text-transform:uppercase; font-size: 15px;'>Công khai</b>(phụ huynh, học sinh sẽ xem được thông tin dự án)"
   adm:
-    user: "Người dùng"
     setting:
       name: "Cài đặt"
       coin_star: "Điểm thưởng"
@@ -308,7 +307,18 @@ vi:
     learning_activity_management_homework_list: "Danh sách bài tập về nhà chưa có câu trả lời"
     learning_operation_attendance: 'Vận hành điểm danh'
     learning_attendance_line: 'Điểm danh và nhận xét của GV'
+    learning_management_session: "Quản lý lớp học"
     answer_time: "Thời gian trả lời"
+    learning:
+      session:
+        name: 'Buổi học'
+        academy: "Học viện"
+        state: "Trạng thái"
+        time: "Thời gian"
+        select_batch: "Chọn lớp học"
+        select_state: "Chọn trạng thái"
+        select_academy: "Chọn học viện"
+        select_time: "Chọn thời gian"
     user:
       name: "Người dùng"
       info: "Thông tin người dùng"
