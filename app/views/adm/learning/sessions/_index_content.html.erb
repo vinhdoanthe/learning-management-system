@@ -1,0 +1,92 @@
+<table id="adm_session_list" class="display nowrap" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th><%= t("learning.batch.code") %></th>
+      <th><%= t("adm.learning.session.session_count") %></th>
+      <th><%= t("adm.learning.session.lesson_name") %></th>
+      <th><%= t("adm.learning.session.academy") %></th>
+      <th><%= t("adm.learning.session.start_datetime") %></th>
+      <th><%= t("adm.learning.session.end_datetime") %></th>
+      <th><%= t("adm.learning.session.state") %></th>
+      <th><%= t("adm.learning.session.information") %></th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% sessions.each do |session| %>
+      <tr>
+        <td><%= session[:id] %></td>
+        <td><%= session[:batch_code] %></td>
+        <td><%= session[:session_count] %></td>
+        <td><%= session[:lesson_name] %></td>
+        <td><%= session[:company_name] %></td>
+        <td><%= session[:start_datetime] %></td>
+        <td><%= session[:end_datetime] %></td>
+        <td><%= session[:state] %></td>
+        <td>
+          <% if SocialCommunity::Photo.where(session_id: session[:id]).first.present? %>
+          <span class="session_info">
+            <a class="session_photo_modal" data-toggle="modal" data-target="#modal_adm_session_photo" data-session="<%= session[:id] %>">
+              <%= image_tag "global/images/new-post-add-photo-btn.png" %>
+            </a>
+          </span> 
+          <% else %>
+          <span class="session_info">
+            <a class="session_photo_modal" style='opacity: 0.3' disabled>
+              <%= image_tag "global/images/new-post-add-photo-btn.png" %>
+            </a>
+          </span> 
+          <% end %>
+          <span class="session_info">
+            <a class="session_attendance_modal" data-toggle="modal" data-target="#modal_adm_session_attendance" data-session="<% session[:id] %>">
+              <%= image_tag "global/images/icon-BTVN.png" %>
+            </a>
+          </span> 
+          <span class="session_info">
+            <a class="session_video_modal" data-toggle="modal" data-target="#modal_adm_session_video" data-session="<% session[:id] %>">
+              <%= image_tag "global/images/youtube-button.png" %>
+            </a>
+          </span> 
+        </td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>ID</th>
+      <th><%= t("learning.batch.code") %></th>
+      <th><%= t("adm.learning.session.session_count") %></th>
+      <th><%= t("adm.learning.session.lesson_name") %></th>
+      <th><%= t("adm.learning.session.academy") %></th>
+      <th><%= t("adm.learning.session.start_datetime") %></th>
+      <th><%= t("adm.learning.session.end_datetime") %></th>
+      <th><%= t("adm.learning.session.state") %></th>
+      <th><%= t("adm.learning.session.information") %></th>
+      <th>Action</th>
+    </tr>
+  </tfoot>
+</table>
+<style>
+  .session_info img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .session_info {
+    margin-right: 7px;
+  }
+</style>
+<script>
+  $(document).ready(function() {
+    $('#adm_session_list').DataTable({
+      "scrollX": true,
+      "bLengthChange": false,
+      "bFilter": true,
+      "searching": false,
+      "bInfo": false,
+      "bPaginate": false
+    });
+  })
+</script>

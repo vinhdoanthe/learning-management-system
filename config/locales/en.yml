@@ -257,7 +257,18 @@ en:
     learning_activity_management_project: "Project"
     learning_activity_management_homework_list: "The list of homework has no answer"
     learning_operation_attendance: 'Operation Attendance'
+    learning_management_session: "Management Sessions"
     learning_attendance_line: 'Attendance Line'
+    learning:
+      session:
+        name: 'Sessions'
+        academy: "Academy"
+        state: "State"
+        time: "Time"
+        select_batch: "Select batch"
+        select_state: "Select state"
+        select_academy: "Select Academy"
+        select_time: "Select time"
   reward:
     you_were_reward: "You were rewarded"
     star: "TEKY Star"
