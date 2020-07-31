@@ -24,6 +24,12 @@ module Learning::Constant
   end
 
   module Batch
+    STATE_DRAFT = 'draft'
+    STATE_CANCEL = 'cancel'
+    STATE_CONFIRM = 'confirm'
+    STATE_REJECT = 'reject'
+    STATE_APPROVE = 'approve'
+
     module StudentSubject
       STATE_ON = "on"
       STATE_OFF = "off"
