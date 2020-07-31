@@ -476,6 +476,11 @@ module User
                 'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_attendance_line_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_attendance_line') <<'</p></a></li>',
                 'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_attendance_line_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_attendance_line') <<'</p></a></li>',
               },              
+              {
+                'path'          => adm_learning_sessions_index_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_learning_sessions_index_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_management_session') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_learning_attendance_line_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.learning_management_session') <<'</p></a></li>',
+              },
             ],
             'community' => [
               {

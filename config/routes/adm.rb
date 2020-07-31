@@ -7,6 +7,10 @@ namespace :adm do
     get 'activity' => 'activity#list_batch'
     #Quan ly lop hoc
     get 'class'  => 'batch#list'
+    get 'sessions/index' => 'sessions#index'
+    post 'sessions/filter_sessions' => 'sessions#filter_sessions'
+    get 'sessions/session_photos' => 'sessions#session_photos'
+    get 'sessions/session_attendances' => 'sessions#session_attendances'
 
     #Quan ly khoa hoc
     get 'course' => 'course#index'

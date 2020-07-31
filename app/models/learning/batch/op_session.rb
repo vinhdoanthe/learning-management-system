@@ -14,6 +14,7 @@ module Learning
       belongs_to :op_subject, :class_name => 'Learning::Course::OpSubject', foreign_key: 'subject_id'
       belongs_to :op_lession, :class_name => 'Learning::Course::OpLession', foreign_key: 'lession_id', required: false
       belongs_to :op_classroom, :class_name => 'Common::OpClassroom', foreign_key: 'classroom_id', required: false
+      belongs_to :res_company, class_name: 'Common::ResCompany', foreign_key: 'company_id', required: false
 
       has_many :op_session_students, :class_name => 'Learning::Batch::OpSessionStudent', foreign_key: 'session_id'
       has_many :op_attendance_sheets, :class_name => 'Learning::Batch::OpAttendanceSheet', foreign_key: 'session_id'
