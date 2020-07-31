@@ -63,25 +63,28 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teacher_attendance
+    # binding.pry
     lines = []
     student_ids = []
     errs = []
-    erros = [true]
+    errors = [true]
 
     unless params[:student].blank?
       params[:student].each_value do |student_params|
         student_id = User::OpenEducat::OpStudent.where(code: student_params['student_id']).first.id
         student_ids << student_id
-        if validate_attendance student_id, params[:session_id]
+        if !validate_attendance student_id, params[:session_id]
           line = {}
           line[:student_id] = student_id
           line[:present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
           line[:note_1] = student_params['note'].to_s
           lines.append line
         else
+          # puts "not exist"
           errs << Api::Odoo.evaluate(session_id: params[:session_id].to_s, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: [{ present: ActiveModel::Type::Boolean.new.cast(student_params['check']), student_id: student_id }])
         end
       end
+      # binding.pry
     end
 
     errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i) if lines.present?
@@ -92,8 +95,8 @@ class User::OpenEducat::OpTeachersController < ApplicationController
           user = User::Account::User.where(student_id: student_id).first
           next if user.blank?
 
-          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'coin', 0
-          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'star', 0
+          # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'coin', 0
+          # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'star', 0
         end
       end
 
