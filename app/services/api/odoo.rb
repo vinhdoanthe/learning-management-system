@@ -31,15 +31,15 @@ module Api
     end
 
     def self.checkin(session_id:, faculty_id:, check_in_time:)
-        uid, models = odoo_xml_authenticate()
-        begin
-            success, mes = models.execute_kw(@@odoo_db, uid, @@odoo_password,
-                    'op.session', 'check_in_lms',
-                    [session_id], {})
-            return success, mes
-        rescue XMLRPC::FaultException => exception
-            return false, exception
-        end
+      uid, models = odoo_xml_authenticate()
+      begin
+        success, mes = models.execute_kw(@@odoo_db, uid, @@odoo_password,
+                                         'op.session', 'check_in_lms',
+                                         [session_id], {})
+        return success, mes
+      rescue XMLRPC::FaultException => exception
+        return false, exception
+      end
     end
 
     def self.test()
@@ -49,18 +49,18 @@ module Api
 
     #attendance_lines = [{student_id: 14413, state_evaluate: '1', knowledge1: '1'}]
     def self.attendance(session_id:, faculty_id:, lession_id:, attendance_time:, attendance_lines:)
-        uid, models = odoo_xml_authenticate()
-        begin        
-            id = models.execute_kw(@@odoo_db, uid, @@odoo_password, 'op.attendance.sheet', 'create', [{
-                session_id: session_id,
-                faculty_id: faculty_id,
-                lession_id: lession_id,
-                attendance_line: attendance_lines.map{|x| [0,0,x]}
-            }])        
-            return id
-        rescue XMLRPC::FaultException => exception            
-            return false, get_error(exception)
-        end
+      uid, models = odoo_xml_authenticate()
+      begin        
+        id = models.execute_kw(@@odoo_db, uid, @@odoo_password, 'op.attendance.sheet', 'create', [{
+          session_id: session_id,
+          faculty_id: faculty_id,
+          lession_id: lession_id,
+          attendance_line: attendance_lines.map{|x| [0,0,x]}
+        }])
+        return id
+      rescue XMLRPC::FaultException => exception            
+        return false, get_error(exception)
+      end
     end
 
     def self.evaluate(session_id:, faculty_id:, attendance_time:, attendance_lines:)
