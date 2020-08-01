@@ -25,21 +25,21 @@
           <span class="table-name"><%= student[:name] %></span>
         </td>
         <% if student[:attendance] == false %>
-          <td align="center"><img src="/global/images/remove.png" style="width: 20px" alt=""> </td>
+          <td align="center" data-code="<%= student[:code] %>"><img src="/global/images/remove.png" style="width: 20px" alt=""> </td>
           <td style="text-align: center; opacity: 0.3;">
             <a data-code="<%= student[:code] %>">
               <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px">
             </a>
           </td>
         <% elsif student[:attendance] == true %>
-          <td align="center"><img src="/global/images/check.png" style="width: 20px" alt=""></td>
+          <td align="center" data-code="<%= student[:code] %>"><img src="/global/images/check.png" style="width: 20px" alt=""></td>
           <td style="text-align: center">
             <a class="student_evaluate" data-value="" data-code="<%= student[:code] %>" data-toggle="modal" data-target="#modal_evaluate">
               <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px; cursor: pointer;">
             </a>
           </td>
         <% else %>
-          <td></td>
+          <td align="center" data-code="<%= student[:code] %>"></td>
           <td style="text-align: center; opacity: 0.3;">
             <a data-code="<%= student[:code] %>">
               <img src="/global/images/add-comment-button.png" style="min-width: 20px; width: 20px; margin-right: 10px">

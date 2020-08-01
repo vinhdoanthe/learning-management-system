@@ -1,7 +1,7 @@
 class User::OpenEducat::OpTeachersController < ApplicationController
   before_action :find_teacher
   skip_before_action :verify_authenticity_token
-  
+
   def teacher_class_detail
     if params[:session_id].present?
       @active_session = Learning::Batch::OpSession.where(id: params[:session_id]).first
@@ -23,7 +23,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
       else
         @thumbnail = ActionController::Base.helpers.asset_path('global/images/default-lesson-thumbnail.png')
       end
-      
+
     else
       @batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
       @course = @batch.op_course
@@ -63,9 +63,9 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teacher_attendance
-    # binding.pry
     lines = []
     student_ids = []
+    checkin_values = []
     errs = []
     errors = [true]
 
@@ -73,9 +73,11 @@ class User::OpenEducat::OpTeachersController < ApplicationController
       params[:student].each_value do |student_params|
         student_id = User::OpenEducat::OpStudent.where(code: student_params['student_id']).first.id
         student_ids << student_id
+        checkin_values << ActiveModel::Type::Boolean.new.cast(student_params['check'])
         if !validate_attendance student_id, params[:session_id]
           line = {}
           line[:student_id] = student_id
+          line[:session_id] = params[:session_id].to_i
           line[:present] = ActiveModel::Type::Boolean.new.cast(student_params['check'])
           line[:note_1] = student_params['note'].to_s
           lines.append line
@@ -84,10 +86,12 @@ class User::OpenEducat::OpTeachersController < ApplicationController
           errs << Api::Odoo.evaluate(session_id: params[:session_id].to_s, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: [{ present: ActiveModel::Type::Boolean.new.cast(student_params['check']), student_id: student_id }])
         end
       end
-      # binding.pry
     end
+    lesson = Learning::Course::OpLession.where(id: params[:lesson_id].to_i).first
+    lesson_name = (lesson.nil? ? '' : lesson.name)
+    errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i, name: lesson_name) if lines.present?
 
-    errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i) if lines.present?
+    binding.pry
 
     if errors.present? && ( (errors[0] == true) || (errors.is_a? Integer) )
       unless student_ids.blank?
@@ -101,7 +105,15 @@ class User::OpenEducat::OpTeachersController < ApplicationController
       end
 
       student_codes = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:code)
-      result = { noti: {type: 'success', message: 'Điểm danh thành công!'}, data: student_codes}
+      response_values = []
+      student_codes.each_with_index do |code, index|
+        response_values << {
+          :student_code => code,
+          :checkin_value => checkin_values[index]
+        }
+      end
+
+      result = { noti: {type: 'success', message: 'Điểm danh thành công!'}, data: response_values}
     else
       message = errors[1] if errors[1].present?
       message = 'Đã có lỗi xảy ra! Thử lại sau' if message.blank?
@@ -124,7 +136,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   def teaching_schedule_content
     @sessions = @teacher.op_sessions
     schedules = User::OpenEducat::OpTeachersService.teaching_schedule(@sessions, params)
-    
+
     render json: {schedules: schedules}
   end
 
@@ -139,7 +151,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
 
   def attendance_report
     report = User::OpenEducat::OpTeachersService.attendance_report @teacher
-    
+
     respond_to do |format|
       format.html
       format.js { render 'social_community/dashboards/teacher/js/attendance_report', locals: { report: report } }
@@ -187,7 +199,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     else
       batch_id = session.batch_id
       params[:student_ids].each do |student_id|
-      Learning::Homework::QuestionService.new.assign_homework student_id, params[:question_ids], batch_id
+        Learning::Homework::QuestionService.new.assign_homework student_id, params[:question_ids], batch_id
       end
 
       render json: { type: 'success', message: 'Giao bài tập về nhà thành công' }

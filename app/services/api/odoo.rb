@@ -48,14 +48,15 @@ module Api
     end
 
     #attendance_lines = [{student_id: 14413, state_evaluate: '1', knowledge1: '1'}]
-    def self.attendance(session_id:, faculty_id:, lession_id:, attendance_time:, attendance_lines:)
+    def self.attendance(session_id:, faculty_id:, lession_id:, attendance_time:, attendance_lines:, name:)
       uid, models = odoo_xml_authenticate()
-      begin        
+      begin 
         id = models.execute_kw(@@odoo_db, uid, @@odoo_password, 'op.attendance.sheet', 'create', [{
           session_id: session_id,
           faculty_id: faculty_id,
           lession_id: lession_id,
-          attendance_line: attendance_lines.map{|x| [0,0,x]}
+          attendance_line: attendance_lines.map{|x| [0,0,x]},
+          name: name
         }])
         return id
       rescue XMLRPC::FaultException => exception            
