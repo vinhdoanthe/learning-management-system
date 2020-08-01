@@ -8,17 +8,19 @@
   </thead>
   <tbody>
     <% all_student.each do |student| %>
-      <% if student[1][:status] == 'on' %>
         <tr class="attendance_student">
           <td><%= student[1][:name] %></td>
           <td>
-            <input type='checkbox' checked name='attendance' value='<%= student[1][:code] %>'>
+            <% if student[1][:status] == 'on' %>
+              <input type='checkbox' checked name='attendance' value='<%= student[1][:code] %>'>
+            <% else %>
+              <input type='checkbox' name='attendance' value='<%= student[1][:code] %>'>
+            <% end %>
           </td>
           <td>
             <input style='width: 100%' type='text' name='teacher_note' placeholder='Ghi chú của giảng viên'> 
           </td>
         </tr>
-      <% end %>
     <% end %>
   </tbody>
 </table>

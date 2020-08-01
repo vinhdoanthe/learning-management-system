@@ -18,7 +18,6 @@ class Learning::Course::OpSubjectsController < ApplicationController
 
   def subject_lesson
     session = Learning::Batch::OpSession.where(id: params[:session_id]).first
-    session_students = session.op_session_students
     all_student = {}
     batch = session.op_batch
     student_courses = batch.op_student_courses.where(state: 'on')
@@ -28,6 +27,17 @@ class Learning::Course::OpSubjectsController < ApplicationController
       next if student.blank?
       student_info = {student.id => {:status => 'on', :code => student.code || '', :name => student.full_name}}
       all_student.merge!(student_info)
+    end
+
+    if session.state == 'done'
+      attendance = session.op_attendance_lines.order(create_date: :ASC)
+
+      attendance.each do |att|
+        student = att.op_student
+        next if student.blank?
+        student_info = { student.id => { status: (att.present ? 'on' : 'off'), code: student.code || '', name: student.full_name } }
+        all_student.merge!(student_info)
+      end
     end
 
     subject = session.op_subject

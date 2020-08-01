@@ -71,9 +71,13 @@ class User::OpenEducat::OpTeachersController < ApplicationController
 
     unless params[:student].blank?
       params[:student].each_value do |student_params|
-        student_id = User::OpenEducat::OpStudent.where(code: student_params['student_id']).first.id
+        student = User::OpenEducat::OpStudent.where(code: student_params['student_id']).first
+        next if student.blank?
+
+        student_id = student.id
         student_ids << student_id
         checkin_values << ActiveModel::Type::Boolean.new.cast(student_params['check'])
+
         if !validate_attendance student_id, params[:session_id]
           line = {}
           line[:student_id] = student_id
@@ -83,15 +87,21 @@ class User::OpenEducat::OpTeachersController < ApplicationController
           lines.append line
         else
           # puts "not exist"
-          errs << Api::Odoo.evaluate(session_id: params[:session_id].to_s, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: [{ present: ActiveModel::Type::Boolean.new.cast(student_params['check']), student_id: student_id }])
+          begin
+            errs << Api::Odoo.evaluate(session_id: params[:session_id].to_s, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: [{ present: ActiveModel::Type::Boolean.new.cast(student_params['check']), student_id: student_id }])
+          rescue StandardError => e
+            result = { noti: {type: 'danger', message: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"} }
+          end
         end
       end
     end
     lesson = Learning::Course::OpLession.where(id: params[:lesson_id].to_i).first
     lesson_name = (lesson.nil? ? '' : lesson.name)
-    errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i, name: lesson_name) if lines.present?
-
-    binding.pry
+    begin
+      errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i, name: lesson_name) if lines.present?
+    rescue StandardError => e
+      result = { noti: {type: 'danger', message: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"} }
+    end
 
     if errors.present? && ( (errors[0] == true) || (errors.is_a? Integer) )
       unless student_ids.blank?
