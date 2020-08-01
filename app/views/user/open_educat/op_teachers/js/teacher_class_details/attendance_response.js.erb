@@ -1,9 +1,10 @@
-<% binding.pry %>
 <% if noti[:type] == 'success' %>
   <% data.each do |code| %>
-    tag = $('a[data-code="<%= code %>"]')
-    tag.parent().css("opacity", "1");
-    tag.html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/attendance_link', locals: { code: code } ) %>")
+    tag = $('a[data-code="<%= code[:student_code] %>"]').parent();
+    tag.css("opacity", "1");
+    tag.html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/attendance_link', locals: { code: code[:student_code] } ) %>")
+    state = $('.attendance_state[data-code="<%= code[:student_code] %>"]')
+    state.html("<%= escape_javascript( render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/attendance_state', locals: { state: code[:checkin_value] } ) %>")
   <% end %>
 <% end %>
 
