@@ -59,9 +59,9 @@ module Learning
         teacher = current_user.op_faculty
 
         if params[:state].present? && params[:state] != 'undone'
-          user_answers = teacher.user_answers.includes(user_question: { question: :op_lession, user: :op_student }).where(batch_id: params[:batch_id], state: ['right', 'wrong']).where(questions: {question_type: 'text'}).pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
+          user_answers = Learning::Homework::UserAnswer.includes(user_question: { question: :op_lession, user: :op_student }).where(batch_id: params[:batch_id], state: ['right', 'wrong']).where(questions: {question_type: 'text'}).pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
         else
-          user_answers = teacher.user_answers.includes(user_question: { question: :op_lession, user: :op_student } ).where(batch_id: params[:batch_id], state: 'waiting').pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
+          user_answers = Learning::Homework::UserAnswer.includes(user_question: { question: :op_lession, user: :op_student } ).where(batch_id: params[:batch_id], state: 'waiting').pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
         end
 
         user_answers.map! { |answer| { answer_id: answer[0], state: answer[1], lesson_id: answer[2], lesson_name: answer[3], student_name: answer[4] } }
