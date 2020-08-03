@@ -29,7 +29,8 @@ module User
       end
 
       def count_mark_question teacher
-        teacher.user_answers.where(state: 'waiting').count.to_s
+        batch_ids = teacher.op_batches.pluck(:id).uniq
+        Learning::Homework::UserAnswer.where(state: 'waiting', batch_id: batch_ids).count.to_s
       end
 
       # get Menu for User is Teacher
