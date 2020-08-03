@@ -11,7 +11,9 @@ $('#select_evaluate_type').on('change', function(){
   }
   tinymce.remove();
   tinymce.init({
-  selector: 'textarea'
+    menubar: false,
+    toolbar: [ 'undo', 'bold', 'italic', 'redo' ],
+    selector: 'textarea'
   })})
 
 $('#teacher_evaluate_confirm').on('click', function () {
