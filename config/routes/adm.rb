@@ -34,4 +34,12 @@ namespace :adm do
     post 'filter_users' => 'adm_users#filter_users'
     get 'login_as_user/:user_id' => 'adm_users#login_as_user'
   end
+
+  namespace :faqs do
+    get 'index', action: 'index', as: 'index'
+    get 'show/:question_id', action: 'show', as: 'show'
+    post 'update_question', action: 'update_question', as: 'update_question'
+    post 'delete_faq', action: 'delete_faq', as: 'delete_faq'
+    get 'new', action: 'new', as: 'new'
+  end
 end
