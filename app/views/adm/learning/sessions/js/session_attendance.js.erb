@@ -1,1 +1,1 @@
-$('#modal_adm_session_attendance').html("<%= j (render 'adm/learning/sessions/modals/session_attendance', locals: { attendances: attendances } ) %>")
+$('#modal_adm_session_attendance').html("<%= escape_javascript (render partial: 'adm/learning/sessions/modals/session_attendance', locals: { batch: batch, session: session, students: students, course: course, company: company, class_room: class_room } ) %>")

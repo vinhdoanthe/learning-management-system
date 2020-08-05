@@ -11,6 +11,8 @@ namespace :adm do
     post 'sessions/filter_sessions' => 'sessions#filter_sessions'
     get 'sessions/session_photos' => 'sessions#session_photos'
     get 'sessions/session_attendances' => 'sessions#session_attendances'
+    get 'sessions/session_info' => 'sessions#session_info'
+    get 'sessions/student_attendance_detail' => 'sessions#student_attendance_detail'
 
     #Quan ly khoa hoc
     get 'course' => 'course#index'
