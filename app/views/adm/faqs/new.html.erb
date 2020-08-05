@@ -1,0 +1,10 @@
+<% question = Common::Question.new %>
+<% answer = Common::Answer.new  %>
+<div>
+  <div class='title'>
+    <h3>Thêm hỏi đáp mới</h3>
+  </div>
+  <div>
+    <%= render 'adm/faqs/question_content', { question: question, answer: answer } %>
+  </div>
+<div>
