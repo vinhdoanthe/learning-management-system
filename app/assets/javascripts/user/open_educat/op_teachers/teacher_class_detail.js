@@ -118,7 +118,7 @@ $(document).ready(function(){
       students.push($(this).parent().find($('input[name="active_reward_student"]')).val())
     })
 
-    reward_type = $('.active_reward_type').parent().find($('input[name="active_reward_type"]')).val()
+    reward_type = $('.plus-add').parent().find($('input[name="active_reward_type"]')).val()
     $('#reward_student_modal').modal('hide')
 
     $.ajax({
