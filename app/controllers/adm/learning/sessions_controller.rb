@@ -1,6 +1,6 @@
 class Adm::Learning::SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :find_session, only: [:session_photos, :session_attendances, :session_videos]
+  before_action :find_session, only: [:session_photos, :session_attendances, :session_videos, :session_info, :student_attendance_detail]
 
   def index
     @allow_companies =  if current_user.is_operation_admin?
@@ -32,17 +32,35 @@ class Adm::Learning::SessionsController < ApplicationController
     end
   end
 
-  def session_attendances
-    attendances = @session.op_attendance_lines
+  def session_videos
+
+  end
+
+  def session_info
+    batch = @session.op_batch
+    course = Learning::Course::OpCourse.where(id: @session.course_id).first
+    company = @session.res_company
+    class_room = @session.op_classroom
+
+    if batch.present?
+      students = Adm::Learning::SessionsService.new.session_students @session, batch
+    end
 
     respond_to do |format|
       format.html
-      format.js { render 'adm/learning/sessions/js/session_attendance', locals: { attendances: attendances } }
+      format.js { render 'adm/learning/sessions/js/session_attendance', locals: { batch: batch, session: @session, course: course, students: students, company: company, class_room: class_room } }
     end
   end
 
-  def session_videos
+  def student_attendance_detail
+    att = Learning::Batch::OpAttendanceLine.where(id: params[:attendance_id]).first
+    student = att.op_student
+    teacher = @session.op_faculty
 
+    respond_to do |format|
+      format.html
+      format.js { render 'adm/learning/sessions/js/student_attendance_detail', locals: { session: @session, attendance: att, student: student, teacher: teacher } }
+    end
   end
 
   private

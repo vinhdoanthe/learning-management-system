@@ -7,7 +7,6 @@
       <th><%= t("adm.learning.session.lesson_name") %></th>
       <th><%= t("adm.learning.session.academy") %></th>
       <th><%= t("adm.learning.session.start_datetime") %></th>
-      <th><%= t("adm.learning.session.end_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
       <th>Action</th>
@@ -21,9 +20,16 @@
         <td><%= session[:session_count] %></td>
         <td><%= session[:lesson_name] %></td>
         <td><%= session[:company_name] %></td>
-        <td><%= session[:start_datetime] %></td>
-        <td><%= session[:end_datetime] %></td>
-        <td><%= session[:state] %></td>
+        <td><%= session[:start_datetime].strftime('%d-%m-%Y') %></td>
+        <% if session[:state] == Learning::Constant::Batch::Session::STATE_DRAFT %>
+          <td class="bg-warning text-center"><%= session[:state] %></td>
+        <% elsif session[:state] == Learning::Constant::Batch::Session::STATE_CONFIRM %>
+          <td class="bg-primary text-center"><%= session[:state] %></td>
+        <% elsif session[:state] == Learning::Constant::Batch::Session::STATE_DONE %>
+          <td class="bg-success text-center"><%= session[:state] %></td>
+        <% elsif session[:state] == Learning::Constant::Batch::Session::STATE_CANCEL %>
+          <td class="bg-secondary text-center"><%= session[:state] %></td>
+        <% end %>
         <td>
           <% if SocialCommunity::Photo.where(session_id: session[:id]).first.present? %>
           <span class="session_info">
@@ -39,12 +45,12 @@
           </span> 
           <% end %>
           <span class="session_info">
-            <a class="session_attendance_modal" data-toggle="modal" data-target="#modal_adm_session_attendance" data-session="<% session[:id] %>">
+            <a class="session_attendance_modal" data-toggle="modal" data-target="#modal_adm_session_attendance" data-session="<%= session[:id] %>">
               <%= image_tag "global/images/icon-BTVN.png" %>
             </a>
           </span> 
           <span class="session_info">
-            <a class="session_video_modal" data-toggle="modal" data-target="#modal_adm_session_video" data-session="<% session[:id] %>">
+            <a class="session_video_modal" data-toggle="modal" data-target="#modal_adm_session_video" data-session="<%= session[:id] %>">
               <%= image_tag "global/images/youtube-button.png" %>
             </a>
           </span> 
@@ -61,7 +67,6 @@
       <th><%= t("adm.learning.session.lesson_name") %></th>
       <th><%= t("adm.learning.session.academy") %></th>
       <th><%= t("adm.learning.session.start_datetime") %></th>
-      <th><%= t("adm.learning.session.end_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
       <th>Action</th>

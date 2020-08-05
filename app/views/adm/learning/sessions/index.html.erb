@@ -69,13 +69,12 @@
 <div class="modal fade" id="modal_adm_session_photo">
   <div class="modal-dialog" style='max-width: 100%; margin: 0'>
     <div class="modal-content" id="modal_adm_session_photo_content">
-    <div>
     </div>
   </div>
 </div>
-<div class="modal fade" id="modal_adm_session_attendance" role="dialog">
+<div class="modal" id="modal_adm_session_attendance">
 </div>
-<div class="modal fade" id="modal_adm_session_video" role="dialog">
+<div class="modal fade" id="modal_adm_session_video">
 </div>
 
 <style>
@@ -108,9 +107,10 @@
   $(document).ready(function(){
     $('#filter-time').daterangepicker({
       timePicker: true,
+      autoUpdateInput: false,
       timePickerIncrement: 30,
       locale: {
-        format: 'MM/DD/YYYY hh:mm A'
+        format: 'DD/MM/YYYY hh:mm A'
       }
     })
   })
