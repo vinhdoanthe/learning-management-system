@@ -325,7 +325,7 @@ module Report
       @sub_module         = 'teaching_checkin'
       @report_title_page  = t('report.report') + " " + t('report.report_teaching_checkin_title')
 
-      param_form = Report::ReportService.form_paramater(params, request)
+      param_form = Report::ReportService.form_parameter(params, request)
 
       string_date_format_dmy  = param_form['string_date_format_dmy']
       string_date_format_ymd  = param_form['string_date_format_ymd']

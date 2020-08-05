@@ -17,7 +17,7 @@ class Learning::Course::OpCoursesService
   end
 
   # Lay param form
-  def self.form_paramater(param_form, request)
+  def self.form_parameter(param_form, request)
 
     # Khoi tao cac gia tri ban dau
     keywords = ''

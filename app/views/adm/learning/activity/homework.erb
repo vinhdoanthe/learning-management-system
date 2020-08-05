@@ -12,52 +12,56 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <div class="table-responsive p-0" style="height: 500px;">
-              <table class="table table-bordered table-head-fixed  table-sm  text-nowrap">
+            <div class="table-responsive p-0">
+              <table class="table table-bordered table-sm">
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Batch</th>
-                    <th><i class="fas fa-calendar hidden-md hidden-sm hidden-xs"></i> Answer time</th>
-                    <th class="text-center">State</th>
-                    <th>Student</th>                
-                    <th>Faculty</th>
-                    <th class="text-center">Actions</th>
+                    <th>#</th>
+                    <th><%= t('adm.homework_list.batch_code') %></th>
+                    <th>Course</th>
+                    <th>Subject</th>
+                    <th>Lesson</th>
+                    <th><i class="fas fa-calendar hidden-md hidden-sm hidden-xs"></i> <%= t('adm.learning_activity.answer_time') %></th>
+                    <th class="text-center"><%= t('adm.homework_list.state') %></th>
+                    <th><%= t('adm.homework_list.student') %></th>  
+                    <th><%= t('adm.homework_list.faculty') %></th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <% @list_user_answers.each_with_index  do |ct, index| %>  
-                  <tr>
-                    <td style="width:10px" class="text-center"><%= (index + 1)%></td>
-                    <td><%= ct[:batch_name]%></td>
-                    <td style="width:10px" class="text-center">
-                      <%= ct[:answer_time].strftime(t('time.formats.long_dmy')).to_s%>    
-                    </td>
-                    <td class="text-center"><%= get_ui_state_user_answers(ct[:state]).html_safe%></td>
-                    <td><%= ct[:student_full_name]%></td>
-                    <td>
-                      <%= ct[:full_name]%>
-                      <ul class="small" style="padding-left: 10px;list-style: none;">
-                        <li><i class="fa fa-envelope"></i> <%= ct[:teacher_email]%></li>
-                        <li><i class="fa fa-phone"></i> <%= ct[:teacher_mobile]!= '' ? ct[:teacher_mobile] : ''%></li>
-                      </ul>
-                    </td>
-                    <td class="text-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-xs btn-default"><i class="fas fa-exclamation-triangle text-red"></i></button>
-                        <button type="button" class="btn btn-xs btn-default dropdown-toggle dropdown-toggle-split dropdown-hover dropdown-icon" data-toggle="dropdow">
-                          <span class="sr-only">Toggle Dropdown</span>
-                          <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                          </div>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                    <tr id="user_answer_<%=ct[:id]%>">
+                      <td style="width:10px" class="text-center"><%= ct[:id] %></td>
+                      <td><%= ct[:batch_name]%></td>
+                      <th></td>
+                      <th></td>
+                      <th></td>
+                      <td style="width:10px" class="text-center">
+                        <%= ct[:answer_time].strftime(t('time.formats.long_dmy')).to_s%>    
+                      </td>
+                      <td class="text-center"><%= get_ui_state_user_answers(ct[:state]).html_safe%></td>
+                      <td><%= ct[:student_full_name]%></td>
+                      <td>
+                        <%= ct[:full_name]%>
+                        <ul class="small" style="display: none; padding-left: 10px;list-style: none;">
+                          <li><i class="fa fa-envelope"></i> <%= ct[:teacher_email]%></li>
+                          <li><i class="fa fa-phone"></i> <%= ct[:teacher_mobile]!= '' ? ct[:teacher_mobile] : ''%></li>
+                        </ul>
+                      </td>
+                      <td class="text-center">
+                        <div class="btn-group">
+                          <span>
+                            <a href="#" class='teacher_marking_view' data-answer-id="<%=ct[:id]%>"><i class="f-size-24 fas fa-external-link-square-alt"></i></a>
+                          </span>
+                          <span>
+                            <a href="#" class='teacher_marking_mark' data-answer-id="<%=ct[:id]%>"><i class="f-size-24 fas fa-marker"></i></a>
+                          </span>
+                          <span>
+                            <a href="#"><i class="f-size-24 fas fa-exchange-alt"></i></a>
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
                   <% end %>
                 </tbody>
               </table>
@@ -66,9 +70,51 @@
         </div>
       </div>
       <div class="card-footer clearfix">
-      <%= paginate @list_user_answers, remote: true %>
-
+        <%= paginate @list_user_answers, remote: true %>
       </div>
     </div>
   </div>
 </div>
+<div id="markingModal" class="modal" tabindex="-1" role="dialog">
+  <%= render "mark_question" %>
+</div>
+<style>
+.btn-group >span {
+  padding: 5px;
+}
+.f-size-24 {
+  font-size: 24px;
+}
+</style>
+<script>
+  $(document).ready(() => {
+    $(".teacher_marking_mark").click((event) => {
+      event.preventDefault();
+
+
+      $.ajax({
+        method: 'GET',
+        url: '/learning/get_user_answer.json',
+        data: {
+          user_answer_id : $(event.currentTarget).data('answer-id'),
+        },
+        dataType: 'json',
+        success: (response) => {
+          // var response_data = $.parseJSON(response)
+          // console.log('success' + response.user_answer.state)
+          // process data
+          $('#questionContent').html(response.question.question)
+          $('#answerContent').html(response.user_answer.answer_content)
+          $('#answerId').val(response.user_answer.id)
+          // show information
+          $('#markingModal').modal('show'); 
+          $('#teacher_marking_content').val('')
+          // console.log('go to here')
+          $('input[name="teacher_mark"]').prop('checked', false);
+        },
+        failure: () => {
+        }
+      })
+    })
+  })
+</script>

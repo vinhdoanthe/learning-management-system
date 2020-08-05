@@ -1,0 +1,133 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+<div class="modal-dialog" style='min-width: 80%; font-family: inherit !important'>
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div id="noti-response"></div>
+    </div>
+    <div class="modal-body">
+      <div class="fc-other">
+        <div id='marking_question_content'>
+          <div class="fco-ques">
+            <div class="fcoq-tit">
+              <label for="">NỘI DUNG BÀI TẬP:</label>
+              <p id="questionContent"></p>
+            </div>
+          </div>
+          <div class="fco-answ">
+            <div class="fcoa-tit">
+              <label for="">Trả lời</label>
+            </div>
+            <div class="fcoa-con">
+              <textarea rows="4" style="width:100%" readonly placeholder="Nhập nội dung câu trả lời" id='answerContent' disabled></textarea>
+              <input id="answerId" type="hidden" name="marking_text_answer">
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="fco-answ">
+          <div class="fcoa-tit">
+            <label for="">Nhận xét câu trả lời</label>
+          </div>
+          <div class="fcoa-con">
+            <textarea rows="4" style="width:100%" placeholder="Nhận xét về câu trả lời" id='teacher_marking_content'></textarea>
+          </div>
+          <div class="fcoa-tit">
+            <label for="">Đánh giá câu trả lời</label>
+          </div>
+          <div class="fcoa-con">
+            <input type="radio" name="teacher_mark" value='false'>
+            <span class="checkmark">Đạt</span>
+            <input type="radio" name="teacher_mark" value='false'>
+            <span class="checkmark">Không đạt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+        <button type="button" class="btn btn-success" id='teacher_marking_confirm'>Chấm bài</button>
+        <button type='button' class='btn btn-danger' id='teacher_marking_cancel' data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #teacher_marking_confirm {
+    float: right;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  #teacher_marking_cancel {
+    float: right;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  #modal_user_answer_control {
+    text-align: center;
+  }
+
+  #noti-response {
+    position: fixed;
+    z-index: 100;
+    width: calc(100% - 30px);
+  }
+
+  .modal-dialog p {
+    font-family: "Quicksand" !important;
+  }
+
+  .modal-dialog label {
+    font-family: "Quicksand" !important;
+  }
+
+  .modal-dialog span {
+    font-family: "Quicksand" !important;
+  }
+</style>
+
+<script>
+  function show_notification(response) {
+    if (response.type == 'success'){
+      toastr.success(response.message)
+    } else {// response.type == 'fail'
+      toastr.error(response.message)
+    }
+  }
+
+  $('#teacher_marking_confirm').on('click', function() {
+    user_answer_id = $('#answerId').val();
+    teacher_mark = $('input[name="teacher_mark"]:checked').val();
+    teacher_mark_content = $('#teacher_marking_content').val();
+    $.ajax({
+      method: 'POST',
+      url: '/learning/mark_answer',
+      data: {
+        user_answer_id: user_answer_id,
+        teacher_mark: teacher_mark,
+        teacher_mark_content: teacher_mark_content
+      },
+      success: function(res) {
+        // debugger
+        show_notification(res);
+        if (res.type == 'success') {
+          // console.log(user_answer_id)
+          const user_answer_id_element =  "#user_answer_" + user_answer_id
+          //  debugger
+          $('#markingModal').modal('hide'); 
+          // $('input[name="student_answer"][value="' + user_answer_id + '"]').parent().parent().hide();
+          $(user_answer_id_element).remove();
+          //$('input[name="teacher_mark"]').val(false)
+        }
+      }
+    })
+  })
+</script>

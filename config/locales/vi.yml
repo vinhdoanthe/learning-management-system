@@ -37,6 +37,7 @@ vi:
     Save: "Lưu"
     Preview: "Xem trước"
     Join class now: "Vào học ngay"
+    filter: 'Lọc'
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -301,6 +302,13 @@ vi:
       discussion: "Thảo luận"
       homework: "Bài tập về nhà"
       project: "Sản phẩm học sinh"
+    homework_list:
+      batch_code: 'Mã batch'
+      answer_time: 'Thời gian trả lời'
+      state: 'Trạng thái'
+      all_states: 'Tất cả trạng thái'
+      student: 'Học sinh'
+      faculty: 'Giảng viên'
     learning_activity_management: "Q/lý hoạt động học tập"
     learning_activity_management_homework: "Bài tập về nhà"
     learning_activity_management_question: "Thảo luận"

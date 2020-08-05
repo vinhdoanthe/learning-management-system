@@ -1,7 +1,7 @@
 class Report::ReportService
   
   # Lay param form
-  def self.form_paramater(param_form, request)
+  def self.form_parameter(param_form, request)
     
     # Khoi tao cac gia tri ban dau
     current_date_dmy  = Time.now.strftime('%d-%m-%Y').to_s
@@ -78,7 +78,7 @@ class Report::ReportService
   end
   
   # Ham thong ke giao vien check-in; not check in theo company_id va quang thoi gian
-  def self.statistic_teaching_checkin_range (company_id, sql_date_format_ymd, sql_date_format_dmy,sql_from_date, sql_to_date)
+  def self.statistic_teaching_checkin_range(company_id, sql_date_format_ymd, sql_date_format_dmy,sql_from_date, sql_to_date)
     if company_id <= 0
     return Common::ResCompany
           .joins("left join op_batch as bat ON res_company.id = bat.company_id")
@@ -105,7 +105,7 @@ class Report::ReportService
   end
 
   # Ham thong ke giao vien check-in; not check in theo company_id va quang thoi gian
-  def self.statistic_teaching_checkin_year_or_month (company_id, sql_date_format_ymd,sql_date_format_dmy, sql_from_date, sql_to_date)
+  def self.statistic_teaching_checkin_year_or_month(company_id, sql_date_format_ymd,sql_date_format_dmy, sql_from_date, sql_to_date)
     
     if company_id <= 0      
       data_chart = Common::ResCompany

@@ -19,7 +19,7 @@ class Adm::Learning::CourseController < ApplicationController
 
     @report_title_page = t('adm.course.management_course')
 
-    @param_form = Learning::Course::OpCoursesService.form_paramater(params, request)
+    @param_form = Learning::Course::OpCoursesService.form_parameter(params, request)
 
     keywords = @param_form[:keywords]
 

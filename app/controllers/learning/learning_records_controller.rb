@@ -96,6 +96,13 @@ module Learning
       respond_to do |format|
         format.html
         format.js { render 'learning/learning_records/marking_question/user_answer', locals: { question: question, answer: user_answer, answer_mark: answer_mark}}
+        format.json {
+          render json: {
+            user_answer: user_answer,
+            question: question,
+            answer_mark: answer_mark
+          }
+        }
       end
     end
 

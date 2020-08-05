@@ -28,7 +28,7 @@ class Learning::Homework::QuestionService
     if session.present?
       user_answer.batch_id = session.batch_id
       user_answer.faculty_id = session.faculty_id.to_i
-      
+
       if question.question_type == Learning::Constant::Material::QUESTION_TEXT_RESPONSE
         user_answer.state = 'waiting'
       else
@@ -55,7 +55,7 @@ class Learning::Homework::QuestionService
 
   def mark_answer params, user
     return { state: 'danger', message: 'Chưa chấm bài' } if (params[:teacher_mark_content].blank? || params[:teacher_mark].blank?)
-  #  binding.pry 
+    #  binding.pry 
     answer_mark = Learning::Homework::AnswerMark.where(user_answer_id: params[:user_answer_id]).first
     user_answer = find_user_answer params[:user_answer_id]
 
@@ -81,8 +81,13 @@ class Learning::Homework::QuestionService
     answer_mark.teacher_id = user.id
     if answer_mark.save
       if user_answer.state == 'right'
-        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, user.id, 'coin', 0
-        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, user.id, 'star', 0
+        begin
+          give_to = user_answer.user_question.user.id
+        rescue NoMethodError
+          give_to = nil
+        end
+        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, give_to, 'coin', 0
+        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, give_to, 'star', 0
       end
       { state: 'success', message: 'Chấm bài thành công' }
     else
@@ -132,7 +137,7 @@ class Learning::Homework::QuestionService
     questions.each do |question|
       existed_user_question = Learning::Homework::UserQuestion.where(student_id: user.id, question_id: question.id, op_batch_id: batch_id).first
       next if existed_user_question.present?
-      
+
       user_question = Learning::Homework::UserQuestion.new
       user_question.op_batch_id = batch_id
       user_question.student_id = User::Account::User.where(student_id: student_id).first.id
@@ -171,5 +176,5 @@ class Learning::Homework::QuestionService
   # 	Learning::Material::QuestionChoice.find(question_choice_id)
   # end
 
-  
+
 end

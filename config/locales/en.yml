@@ -14,6 +14,7 @@ en:
     see_project: "See product"
     share: "Share"
     complete: "Complete"
+    filter: 'Filter'
   select:
     all: "All"
     all_company: "All company"
@@ -252,6 +253,13 @@ en:
       discussion: "Discussion"
       homework: "Homework"
       project: "Project"
+    homework_list:
+      batch_code: 'Batch code'
+      answer_time: 'Answer time'
+      state: 'State'
+      all_states: 'All states'
+      student: 'Student'
+      faculty: 'Teacher'
     learning_activity_management: "Management learning activity"
     learning_activity_management_homework: "Homework"
     learning_activity_management_question: "Question"
