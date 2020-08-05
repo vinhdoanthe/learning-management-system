@@ -1,7 +1,179 @@
-<div class="modal-dialog">
+<div class="modal-dialog" style="min-width: 60%">
+  <!-- Modal content-->
   <div class="modal-content">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <% photos.each do |photo| %>
-      <% end %>
+    <div class="modal-header">
+      <h4 class="modal-title">Thông tin buổi học</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+      <div class='session_information bo-table'>
+        <div class="fc-header">
+          <h3><span class="color-F16357 text-uppercase" style="padding: 5px 0 5px 0px;"><%= t('learning.batch.name') %>:</span> <%= course.name %></h3>
+        </div>
+        <div class="box-progress" style="border-bottom: 1px solid #D7DFE9; padding-bottom: 20px;">
+          <div class="row batch-detail-info">
+            <div class="col-md-6">
+              <ul>
+                <li>
+                  <p><span class="span-text"><%= t('learning.batch.code') %>: </span><%= batch.code %></p>
+                </li>
+                <li>
+                  <p><span class="span-text"><%= t('learning.batch.batch_time') %>: </span><%= batch.start_date.strftime("%d/%m/%Y") %> đến <%= batch.end_date.present? ? batch.end_date.strftime('%d/%m/%Y') : '' %></p>
+                </li>
+                <li>
+                  <p style="display: inline-block"><span class="span-text"><%= t('learning.batch.timetable') %>: </span>
+                  <%= Learning::Batch::OpBatchDecorator.new(batch).display_weekly_timing_without_center %>
+                  </p>
+                </li>
+                <li>
+                  <p><span class="span-text"><%= t('user.teacher') %>: </span>
+                  <a href="" style="color: #0654BA"><%= session.op_faculty.full_name %></a>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul>
+                <li>
+                  <p><span class="span-text"><%= t('learning.course') %>: </span><%= course.name %></p></li>
+                <li>
+                  <p id="subject_id_span">
+                  <span class="span-text"><%= t('learning.subject') %>: </span>
+                  </p>
+                </li>
+                <li>
+                  <p><span class='span-text'><%= t('learning.lesson') %>: </span> <%= session.count %>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                  <% batch_type = get_batch_type(batch) %>
+                  <span class="span-text"><%= t('learning.batch.type') %>: </span><%= batch_type %>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                  <span class="span-text"><%= t('learning.batch.center') %>: </span ><a href="" style="color: #0654BA"><%= company.present? ? company.name : '' %></a>
+                  <span class='span-text'>| (<%= t('learning.batch.classroom') %>: </span><a style="color: #0654BA" href=""><%= class_room.present? ? class_room.name : '' %> </a> <span class='span-text'>)</span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='checkin_information bo-table'>
+        <div class="fc-header">
+          <h3><span class="color-F16357 text-uppercase" style="padding: 5px 0 5px 0px;">Thông tin checkin</span></h3>
+        </div>
+        <div>
+          <p><b>Thời gian:</b> <%= session.check_in_time %></p>
+          <p><b> Trạng thái:</b>
+          <% if session.check_in_state == 'good' %>
+            <span class='bg-success text-uppercase' style="padding: 4px; font-weight: 700">Hợp lệ</span>
+          <% elsif session.check_in_state == 'late' %>
+            <span class='bg-waring text-uppercase' style="padding: 4px; font-weight: 700">Muộn</span>
+          <% elsif session.check_in_state == 'late' %>
+            <span class='bg-danger text-uppercase' style="padding: 4px; font-weight: 700">Không checkin</span>
+          <% end %>
+          </p>
+        </div>
+      </div>
+      <div class="attendance_information bo-table">
+        <div class="fc-header">
+          <h3><span class="color-F16357 text-uppercase" style="padding: 5px 0 5px 0px;">Đánh giá học sinh</span></h3>
+        </div>
+        <div>
+          <table class='session_state_table table-striped table-bordered'>
+            <colgroup>
+              <col></col>
+              <col style="vertical-align:center; text-align: center"></col>
+              <col style="vertical-align:center; text-align: center"></col>
+              <col></col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Học sinh</th>
+                <th>GVĐD</th>
+                <th>VHĐD</th>
+                <th>Chi tiết</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.values.each do |student| %>
+                <tr>
+                  <td><%= student[:student_name] %></td>
+                  <td>
+                    <% if student[:attendance_state] == false %>
+                      <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
+                    <% elsif student[:attendance_state] == true %>
+                      <%= image_tag('global/images/check.png', style: 'width: 20px') %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% ops_state = student[:session_student_state] %>
+                    <% if ops_state == false %>
+                      <%= image_tag('global/images/remove.png', style: 'width: 20px') %>
+                    <% elsif ops_state == true %>
+                      <%= image_tag('global/images/check.png', style: 'width: 20px') %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if student[:attendance_state].present? %>
+                      <span class="view_attendance_detail" data-attendance="<%= student[:attendance_id] %>" data-session="<%= session.id %>"><i class="far fa-eye"></i><span>
+                        <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
   </div>
 </div>
+<style>
+.session_state_table {
+  width: 100%
+}
+  .session_state_table td{
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .session_state_table th{
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .batch-detail-info p {
+    font-weight: 700;
+  }
+  #modal_adm_session_attendance h3{
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .checkin_information {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #D7DFE9;
+  }
+  .attendance_information {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #D7DFE9;
+  }
+  .fc-header {
+    display: inline-block;
+    border-bottom: 2px solid #D7DFE9;
+    margin-bottom: 20px;
+  }
+  .view_attendance_detail {
+    cursor: pointer;
+  }
+</style>

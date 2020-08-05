@@ -1,7 +1,6 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "adm/learning/session.js" %>
 <% end %>
-<% page = 0 %>
 <h3><%= t("adm.user.info") %></h3>
 <hr>
 <div class='filter_form'>
@@ -69,6 +68,7 @@
 <div class="modal fade" id="modal_adm_session_photo">
   <div class="modal-dialog" style='max-width: 100%; margin: 0'>
     <div class="modal-content" id="modal_adm_session_photo_content">
+<<<<<<< HEAD
     <div>
     </div>
   </div>
@@ -76,6 +76,14 @@
 <div class="modal fade" id="modal_adm_session_attendance" role="dialog">
 </div>
 <div class="modal fade" id="modal_adm_session_video" role="dialog">
+=======
+    </div>
+  </div>
+</div>
+<div class="modal" id="modal_adm_session_attendance">
+</div>
+<div class="modal fade" id="modal_adm_session_video">
+>>>>>>> 42891fda3c02038f2e6fb0861edb3328c89610e5
 </div>
 
 <style>
@@ -108,9 +116,10 @@
   $(document).ready(function(){
     $('#filter-time').daterangepicker({
       timePicker: true,
+      autoUpdateInput: false,
       timePickerIncrement: 30,
       locale: {
-        format: 'MM/DD/YYYY hh:mm A'
+        format: 'DD/MM/YYYY hh:mm A'
       }
     })
   })

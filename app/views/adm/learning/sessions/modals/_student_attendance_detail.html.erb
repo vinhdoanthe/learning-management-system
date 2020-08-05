@@ -1,0 +1,111 @@
+<div class="modal-dialog" style="min-width: 60%">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div >
+        <h4 class="modal-title">Phiếu nhận xét học sinh <%= student.full_name %></h4>
+        <div style='display: inline-block;'>
+          <span class='evaluate_type'><%= attendance.state_evaluate == User::Constant::SessionEvaluation::StateEvaluate::SESSION ? 'Đánh giá cuối buổi' : 'Đánh giá cuối khoá' %></span>
+        </div>
+        <p><a class='back_to_session_info'><i class="fa fa-long-arrow-alt-left"></i>Quay lai</a></p>
+      </div>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <input type='hidden' value='<%= attendance.session_id %>' name='active_session'>
+    </div>
+    <div class="modal-body">
+      <div>
+        <table class="table-attendance-detail table-bordered">
+          <% if attendance.state_evaluate == User::Constant::SessionEvaluation::StateEvaluate::SESSION %>
+            <% User::Constant::Evaluate::EVALUATE.each do |e| %>
+              <tr>
+                <td colspan='2' class='attendance-title'>
+                  <h3><%= e[0] %></h3>
+                </td>
+              </tr>
+                <% e[1].keys.each do |k| %>
+                  <tr>
+                    <td><label><%= e[1][k]['label'] %>:</label></td>
+                      <% e[1][k]['content'].each do  |content| %>
+                        <% if attendance.send(k) == content[0]%>
+                          <td><%= content[1]%></td>
+                        <% end %>
+                      <% end %>
+                  </tr>
+                <% end %>
+            <% end %>
+            <tr>
+              <td colspan='2' class='attendance-title'><h3>Nhận xét khác</h3> </td>
+            </tr>
+            <tr>
+              <td colspan='2'><%= attendance.note_1.present? ? attendance.note_1.html_safe : '' %></td>
+            </tr>
+          <% else %>
+            <% User::Constant::Evaluate::CATEGORY_EVALUATE.each do |e| %>
+              <tr>
+                <td><label><%= e[1]['label'] %>:</label></td>
+                <td><%= e[1]['content'][attendance.send(e[0])] %></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td colspan='2' class='attendance-title'><h3>Nhận xét khác</h3></td>
+            </tr>
+            <tr>
+              <td colspan='2'><%= attendance.note_2.present? ? attendance.note_2.html_safe : '' %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+<style>
+  .table-attendance-detail {
+    width: 100%
+  }
+  .table-attendance-detail td{
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .attendance-title{
+    background-color: #f9f9f9;
+  }
+  .table-attendance-detail  h3{
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .label-note {
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .evaluate_type {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: red;
+    padding: 3px 9px;
+    color: white;
+    margin-left: 10px;
+    top: 10px;
+    position: absolute;
+  }
+  .modal-title {
+    display: inline-block;
+  }
+  .back_to_session_info {
+    font-size: 14px;
+    text-decoration: underline !important;
+    color: #007bff !important;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .back_to_session_info i{
+    font-size: 20px;
+    margin-right: 10px;
+  }
+</style>
