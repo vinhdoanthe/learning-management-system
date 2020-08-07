@@ -3,11 +3,12 @@ class Learning::Batch::SessionStudentRewardsService
     errors = ''
     ActiveRecord::Base.transaction do
       params[:students].each do |student|
+        student = User::Account::User.where(student_id: student).first
+        next if student.blank?
+        next unless check_exist_reward params[:session_id], student.id
         reward = Learning::Batch::SessionStudentReward.new
         reward.session_id = params[:session_id]
         reward.rewarded_by = user.id    
-        student = User::Account::User.where(student_id: student).first
-        next if user.blank?
 
         reward.rewarded_to = student.id    
         reward.reward_type_id = params[:reward_type]
@@ -41,5 +42,9 @@ class Learning::Batch::SessionStudentRewardsService
   rescue StandardError => e    
     puts e
     'Đã có lỗi xảy ra! Thử lại sau!'
+  end
+
+  def check_exist_reward session_id, student_id
+    Learning::Batch::SessionStudentReward.where(session_id: session_id, rewarded_to: student_id).first.present?
   end
 end
