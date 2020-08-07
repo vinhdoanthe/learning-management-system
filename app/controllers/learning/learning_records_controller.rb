@@ -59,9 +59,9 @@ module Learning
         teacher = current_user.op_faculty
 
         if params[:state].present? && params[:state] != 'undone'
-          user_answers = Learning::Homework::UserAnswer.includes(user_question: { question: :op_lession, user: :op_student }).where(batch_id: params[:batch_id], state: ['right', 'wrong']).where(questions: {question_type: 'text'}).pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
+          user_answers = Learning::Homework::UserAnswer.includes(user_question: { question: :op_lession, user: :op_student }).where(batch_id: params[:batch_id], state: ['right', 'wrong']).where(questions: {question_type: 'text'}).where.not(user_questions: { question_id: nil }).pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
         else
-          user_answers = Learning::Homework::UserAnswer.includes(user_question: { question: :op_lession, user: :op_student } ).where(batch_id: params[:batch_id], state: 'waiting').pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
+          user_answers = Learning::Homework::UserAnswer.includes(user_question: { question: :op_lession, user: :op_student } ).where(batch_id: params[:batch_id], state: 'waiting').where.not(user_questions: { question_id: nil }).pluck(:id, :state, 'op_lession.id', 'op_lession.name', 'op_student.full_name')
         end
 
         user_answers.map! { |answer| { answer_id: answer[0], state: answer[1], lesson_id: answer[2], lesson_name: answer[3], student_name: answer[4] } }
@@ -106,16 +106,6 @@ module Learning
       end
     end
 
-    def maping_student_user_question student_course_id
-      student_course = Learning::Batch::OpStudentCourse.where(id: student_course_id).first
-      student_user_question = Homework::QuestionService.new.create_user_question student_course
-      if student_user_question.blank?
-        puts 'done'
-      else
-        student_user_question.each{|error| puts error}
-      end	
-    end
-
     private
 
     def authorize_access_question!
@@ -127,9 +117,14 @@ module Learning
         end
 
         @lesson = @session.op_lession
-        question_ids = @lesson.questions.pluck(:id) if @lesson.present?
 
-#        @user_questions = Homework::UserQuestion.where("student_id = #{current_user.id.to_s} AND question_id IN (#{question_ids.join(', ')})")
+        if @lesson.blank?
+          flash[:danger] = "Câu hỏi này không có trên hệ thống"
+          redirect_to root_path
+        end
+
+        question_ids = @lesson.questions.pluck(:id)
+
         @user_questions = Homework::UserQuestion.where(student_id: current_user.id, question_id: question_ids)
         
         if @user_questions.present?
