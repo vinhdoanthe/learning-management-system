@@ -1,0 +1,57 @@
+<%= tinymce_assets %>
+<%= javascript_include_tag 'tinymce/langs/vi_VN.js' %>
+<%= javascript_include_tag 'adm/faq.js' %>
+<div class="faq_form">
+  <input type='hidden' name='active_question' value="<%= question.id %>">
+  <input type='hidden' name='active_answer' value="<%= answer.id %>">
+  <div class="question">
+      <label for="question_content">Câu hỏi:<span class='required'>*</span></label>
+      <textarea class='tinymce' name='question_content' id='question_content'><%= question.content.present? ? question.content.html_safe : '' %></textarea>
+  </div>
+  <div class="question_state">
+      <label >Trạng thái:<span class='required'>*</span></label>
+      <select id='question_state'>
+        <option value='true'>Active</option>
+        <option value='false'>Deactive</option>
+      </select>
+  </div>
+  <div class="answer">
+      <label for="answer_content">Câu trả lời:<span class='required'>*</span></label>
+      <textarea class='tinymce' name='answer_content' id='answer_content'><%= (answer.present? && answer.content.present?) ? answer.content.html_safe : '' %></textarea>
+    </div>
+  <div style='height: 50px'>
+    <button id='update_faq_question' class='btn btn-primary'><%= question.present? ? 'Cập nhật' : 'Thêm mới' %></button>
+  </div>
+</div>
+<%= tinymce :simple %>
+<style>
+  .faq_form {
+    width: 90%;
+    margin: auto;
+  }
+  .faq_form label {
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .required {
+    color: red;
+  }
+  .question_state, .question, .answer {
+    margin-bottom: 20px;
+  }
+  .question_state select {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 30px;
+    padding: 5px;
+  }
+  #update_faq_question {
+    float: right;
+    margin-right: 40px;
+    padding: 5px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase; 
+  }
+</style>

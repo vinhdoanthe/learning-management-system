@@ -1,0 +1,40 @@
+<div>
+  <div class='title'>
+    <div class='row'>
+      <div class='col-md-8'>
+        <h3>Các câu hỏi thường gặp</h3>
+      </div>
+      <div class='col-md-4'>
+        <a class='btn btn-success' href='/adm/faqs/new'>Thêm câu hỏi</a>
+      </div>
+    </div>
+  </div>
+  <div class='question_list'>
+  <section class="content">
+      <div class="container-fluid">
+        <% @questions.each do |question| %>
+        <div class="row">
+          <div class="col-12">
+            <!-- Default box -->
+            <div class="card collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title"><%= question.content.present? ? question.content.html_safe : '' %></h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-plus"></i></button>
+                  <a href="/adm/faqs/show/<%= question.id %>" type="button" class="btn btn-tool edit-faq-question" >
+                    <i class="far fa-edit"></i></a>
+                </div>
+              </div>
+              <% answer = question.answer %>
+              <div class="card-body">
+                <%= (answer.present? && answer.content.present?) ? answer.content.html_safe : '' %>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </section>
+</div>
