@@ -3,31 +3,35 @@ class SocialCommunity::ScStudentProjectsService
   def update_student_project params
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
 
-    if params[:introduction_video].present? && params[:change_video] == '1'
-      title = params[:name] || project.name
-      description ||= params[:description] || project.description
-      video_detail = upload_video_youtube title, params[:introduction_video], description, params[:batch_id]
-      params.merge! ({ introduction_video: video_detail[0], thumbnail: video_detail[1] })
-      video_id = project.introduction_video
+    begin
+      if params[:introduction_video].present? && params[:change_video] == '1'
+        title = params[:name] || project.name
+        description ||= params[:description] || project.description
+        video_detail = upload_video_youtube title, params[:introduction_video], description, params[:batch_id]
+        params.merge! ({ introduction_video: video_detail[0], thumbnail: video_detail[1] })
+        video_id = project.introduction_video
 
-      if video_id.present?
-        delete_video_youtube video_id
+        if video_id.present?
+          delete_video_youtube video_id
+        end
       end
-    end
 
-    if params[:student_id].present? && params[:student_id] != project.student_id
-      user = User::Account::User.where(student_id: params[:student_id]).first
-      params.merge! ({ user_id: user.id })
-    end
+      if params[:student_id].present? && params[:student_id] != project.student_id
+        user = User::Account::User.where(student_id: params[:student_id]).first
+        params.merge! ({ user_id: user.id })
+      end
 
-    update_attribute = [:introduction_video, :thumbnail, :presentation, :name, :description, :subject_id, :student_id, :user_id, :state, :permission, :project_show_video]
-    update_params = {}
-    update_attribute.each{ |att| update_params.merge! ({ att => params[att]}) if params[att].present? }
+      update_attribute = [:introduction_video, :thumbnail, :presentation, :name, :description, :subject_id, :student_id, :user_id, :state, :permission, :project_show_video]
+      update_params = {}
+      update_attribute.each{ |att| update_params.merge! ({ att => params[att]}) if params[att].present? }
 
-    if project.update!(update_params)
-      { type: 'success', 'message': 'Update thành công' }
-    else
-      { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
+      if project.update!(update_params)
+        { type: 'success', 'message': 'Update thành công' }
+      else
+        { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
+      end
+    rescue StandardError => e
+      return { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
     end
   end
 

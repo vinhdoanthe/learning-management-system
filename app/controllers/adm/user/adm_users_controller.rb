@@ -62,7 +62,7 @@ class Adm::User::AdmUsersController < ApplicationController
       render json: { type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau!' }
     else
       exist_user = User::Account::User.where(username: params[:username]).first
-      if exist_user.present?
+      if exist_user.present? && params[:username] != exist_user.username
         render json: { type: 'danger', message: 'Tên đăng nhập đã tồn tại! Thử lại tên khác' }
       else
         user.username = params[:username]

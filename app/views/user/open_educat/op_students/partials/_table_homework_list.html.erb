@@ -13,17 +13,17 @@
         <% homework_state = done_homework? current_user, session %> 
         <% if homework_state[:state] == 'done'%>
           <td align="right">
-            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" ><span class="label-edit label label-success" style="padding:6px"><%= t('homework.done') %><%= homework_state[:progress] %></span>
+            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" ><span class="label-edit label label-success" style="padding:6px; font-size: 10px; text-transform: uppercase; line-height: 10px; font-weight: 700;"><%= t('homework.done') %><%= homework_state[:progress] %></span>
             </a>
           </td>
         <% elsif homework_state == 'undone' %>
           <td align="right">
-            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" ><span class="label-edit label label-danger" style="padding:6px"><%= t('homework.undone') %><%= homework_state[:progress] %></span>
+            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" ><span class="label-edit label label-danger" style="padding:6px; font-size: 10px; text-transform: uppercase; line-height: 10px; font-weight: 700;"><%= t('homework.undone') %><%= homework_state[:progress] %></span>
             </a>
           </td>
         <% else %>
           <td align="right">
-            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state"><span class="label-edit label label-primary" style="padding:6px"><%= t('homework.doing') %> <%= homework_state[:progress] %></span>
+            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state"><span class="label-edit label label-primary" style="padding:6px; font-size: 10px; text-transform: uppercase; line-height: 10px; font-weight: 700;"><%= t('homework.doing') %> <%= homework_state[:progress] %></span>
             </a>
           </td>
         <% end %>
@@ -32,7 +32,7 @@
           <a style='opacity: 0.5'><%= lesson_name %></a>
           <input name='session_homework_name' value="<%= session.id %>" type="hidden">
         </td>
-        <td align="right"><span class="label-edit label label-stop" class="do_homework_state" ><%= t('homework.no_homework') %></span></td>
+        <td align="right"><span class="label-edit label label-stop do_homework_state" style="font-size: 10px; text-transform: uppercase; line-height: 10px; font-weight: 700; padding: 6px" ><%= t('homework.no_homework') %></span></td>
       <% end %>
       <td align="right" style='padding-right: 0'>
         <% if has_homework %>
