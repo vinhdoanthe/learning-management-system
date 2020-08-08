@@ -285,11 +285,11 @@ module User
             'title' => "#{t('sidebar.refer_friend')}", 
             'right_content' => ''
           },             
-          {'path' => social_community_question_answer_my_threads_path, 
-            'icon' => 'Icon-Inbox.png',
-            'title' => "#{t('sidebar.question_answer')}", 
-            'right_content' => ''
-          }
+          #{'path' => social_community_question_answer_my_threads_path, 
+          #  'icon' => 'Icon-Inbox.png',
+          #  'title' => "#{t('sidebar.question_answer')}", 
+          #  'right_content' => ''
+          #}
         ]
 
         tag_html = tag_html + '<ul class="nav nav-sidebar nav-sidebar-edit nav-sidebar-bottom" style="border-top:1px solid #232837; margin-top: 0">'
