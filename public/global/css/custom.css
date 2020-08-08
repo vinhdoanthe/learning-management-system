@@ -4256,7 +4256,7 @@ ul.bsc-list li:after {
 .box-about {
   margin-top: 20px;
   position: relative;
-  border-bottom: 1px dashed #dcdcdc;
+  /*border-bottom: 1px dashed #dcdcdc;*/
   padding-bottom: 20px;
 }
 
@@ -5612,7 +5612,7 @@ padding: 16px;
   .box-about {
     margin-top: 20px;
     position: relative;
-    border-bottom: 1px dashed #dcdcdc;
+    /*border-bottom: 1px dashed #dcdcdc;*/
     padding-bottom: 20px;
   }
 
@@ -5679,8 +5679,13 @@ padding: 16px;
     position: absolute;
     bottom: 0;
     left: 0;
-    padding: 13px 16px;
+    /*padding: 13px 16px;*/
+    padding-top: 0px;
+    padding-left: 10px;
+    margin-bottom: 8px;
     z-index: 9;
+    height: 43px;
+    overflow-y: hidden;
   }
 
   .btr-detail span.btd-text p {
@@ -7470,6 +7475,21 @@ label.custom-select-label {
 /** Style for Course **/
 
 .box-course {position: relative;}
+
+.box-cours .swiper-custom-button-next {
+    position: absolute;
+    font-size: 30px;
+    right: 0;
+    top: 45%;
+}
+
+.box-cours .swiper-custom-button-prev {
+    position: absolute;
+    font-size: 30px;
+    left: 0;
+    top: 45%;
+}
+
 .margin-box-course-top {margin-top: 50.5px}
 
 .box-course-item-info {
@@ -7741,4 +7761,182 @@ label.custom-select-label {
   z-index: 10;
 }
 
-.c-course-item-line {}
+.box-course .lv-title {margin-right: 65px;margin-left: 65px;text-align: center;}
+.box-course .lv-title .course-short-description, .box-course .lv-title .course-short-description-sub {text-align: center;}
+
+.c-course-item-line {margin-top:65px;border-bottom:1px dashed #939393;margin-right: 65px;margin-left: 65px;}
+
+.c-course-description-line {border:1px dashed #CFCFCF;width: 100%}
+
+
+.bt-content .c-course-description-line {margin-top: 25.5px;margin-bottom: 29.5px}
+
+/** Chi tiet khoa hoc **/
+.box-course-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subject_description .subject_description_content {
+      margin: 0;
+      color: $color-time;
+      line-height: 1.3;
+    }
+
+[class*="icon24"]{
+  width:24px;
+  height:24px;
+  display:inline-block;
+  vertical-align:middle;
+  float: left;
+  margin: 0 0 0 -30px;
+}
+
+.subject_description .list-content {
+    padding-left: 30px;
+}
+
+.subject_description .list-content-description-content {}
+
+.icon24-newspaper {
+  background-image: url("../images/icons/icon24-newspaper.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.icon24-age{
+  background-image: url("../images/icons/icon24-age.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.icon24-books{
+  background-image: url("../images/icons/icon24-books.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.icon24-rewind-time{
+  background-image: url("../images/icons/icon24-rewind-time.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.icon24-student{
+  background-image: url("../images/icons/icon24-student.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.icon24-warning{
+  background-image: url("../images/icons/icon24-warning.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.icon24-manual{
+  background-image: url("../images/icons/icon24-manual.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.icon24-telemarketer{
+  background-image: url("../images/icons/icon24-telemarketer.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.icon24-smartphone{
+  background-image: url("../images/icons/icon24-smartphone.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.icon24-video-play{
+  background-image: url("../images/icons/icon24-video-play.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.bt-content .opacity-div {
+  width: 100%;
+  height: 181px;
+  position: absolute;
+  bottom: 70px;
+}
+
+
+.bt-content .subject-description-overlay
+ {
+  width: 100%;
+  height: 181px;
+  position: absolute;
+  bottom: 0px;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1), #fff);
+}
+
+.open_course_description {
+  margin-bottom: 29.5px;
+  padding-right: 15px;
+}
+
+
+h2.lms-course-title {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    z-index: 3;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+h2.lms-course-title:after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    width: 52px;
+    height: 5px;
+    top: 30px;
+    bottom: 0;    
+    background-image: url(../images/box-dot2.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+h3.lms-course-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 18px;
+    padding-left: 20px;
+    line-height: 1.3;
+    position: relative;
+    z-index: 1;
+}
+
+h3.lms-course-title:before {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: -1px;
+    font-size: 16px;
+    color: #5dc2a7;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 700;
+    content: "\f058";
+}
+
+.subject_lesson_video_list .lesson_video_item {padding-right: 0px; padding-left: 20px;}
+
+.subject-lesson-content .lock-lesson {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  opacity: 0.8;
+  background: #000;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

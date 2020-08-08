@@ -1,10 +1,8 @@
 <div class="box-course <%= class_css%>">
   <div class="lv-title">
     <h3><%= course[:name] %><span class="lvt-tag"><%= course[:subjects].count %></span></h3>
-    <p><%= course[:short_description] %>
-      <br/>
-      <b><%= course[:suitable_age] %>  |  <%= course[:duration] %></b>
-    </p>    
+    <div class="course-short-description font-regular"><%= course[:short_description] %></div>
+    <div class="course-short-description-sub font-bold"><%= course[:suitable_age] %>  |  <%= course[:duration] %></div>        
     <ul>
       <% course[:images].each do |image| %>
         <li><span class="lvt-img"><%= image_tag image %></span></li>
@@ -21,26 +19,18 @@
       </div>
     </div>
     <div class="show_course_all  text-center">
-      <% active = course[:subjects].map {|t| t[:active]}.include? true %>
-      <% if active %>
       <a href="/course_detail?course_id=<%= course[:id] %>" class="btn btn-primary btn-embossed bg-5DC2A7 btn-box-shadow btn-box-show-all">
         <div class="lvb-text font-bold text-transform" style="font-size: 14px;"><%= t('button.See all')%></div>
         <span class="font-medium" style="font-size: 10px;"><%= count_subject %> <%= t('learning.subject')%></span>
       </a>
-      <% else %>
-      <a class="btn btn-primary btn-embossed bg-5DC2A7 btn-box-shadow btn-box-show-all">
-        <div class="lvb-text font-bold text-transform" style="font-size: 14px;"><%= t('button.See all')%></div>
-        <span class="font-medium" style="font-size: 10px;"><%= count_subject %> <%= t('learning.subject')%></span>
-      </a>
-      <% end %>
     </div>    
   </div>
   <div class="swiper-custom-button-next swiper-custom-button-next-<%= index %>"><%= image_tag 'global/images/arrow-next.png' %></div>
-  <div class="swiper-custom-button-prev swiper-custom-button-prev-<%= index %>"><%= image_tag 'global/images/arrow-prev.png' %></div>
-  <% if index < @courses.count - 1%>
-    <div style="margin-top:65px;border-bottom:1px dashed #939393;margin-right: 65px;margin-left: 65px;"> </div>
-  <% end %> 
+  <div class="swiper-custom-button-prev swiper-custom-button-prev-<%= index %>"><%= image_tag 'global/images/arrow-prev.png' %></div>   
 </div>
+<% if index < @courses.count - 1%>
+    <div class="c-course-item-line"> </div>
+<% end %>
 <script type="text/javascript">
 
 $(document).ready(function(){

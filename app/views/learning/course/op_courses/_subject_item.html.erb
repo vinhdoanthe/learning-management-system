@@ -38,14 +38,20 @@
     <div class="c-course-item-content">
       <div class="c-course-item-row">      
         <div class="c-course-item-subject-name">
-          <%= subject[:info][:name] %>        
+          <%= subject[:info][:name] %>
         </div>
+        <% if !subject[:active] %>
         <div class="c-course-item-subject-icon-lock"><img src="/global/images/padlock@2x.png" alt=""></div>
+        <% end%>
       </div>
       <div class="c-course-item-is-footer">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+            <% if subject[:active] %>
+            <a class="view-course-detail" href="/course_detail?course_id=<%= course_id %>&subject_id=<%= subject[:info][:id] %>"><%= t('button.View detail')%></a>
+            <% else%>
             <a class="view-course-detail" disabled><%= t('button.View detail')%></a>
+            <% end%>
             <ul class="c-course-item-circle">
               <li><span class="bg-5DC2A7"></span></li>
               <li><span class="bg-FCF055"></span></li>

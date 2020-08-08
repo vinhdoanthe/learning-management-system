@@ -21,6 +21,7 @@ vi:
     return: "Quay lại"
     update: "Cập nhật"
     cancel: "Huỷ"
+    Close: "Đóng"
     back: "Quay lại"
     reply: 'Trả lời'
     back_to_my_threads: 'Quay lại danh sách câu hỏi'
@@ -41,6 +42,7 @@ vi:
     View detail: 'Xem chi tiết'
     See all: "Xem toàn bộ"
     Completed: "Hoàn thành"
+    Back to courses: "Quay lại toàn bộ khoá học"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -136,6 +138,7 @@ vi:
   learning:
     class: "Lớp"
     subject: "Học phần"
+    Select subject: "Chọn học phần"
     lesson: "Bài học"    
     course: "Khoá học"
     attendance: "Điểm danh"
@@ -377,6 +380,12 @@ vi:
       Section: "Section"
       Edit course: "Sửa khóa học"
       lesson number: "Bài"
+      Content: "Nội dung"
+      Ages: "Độ tuổi"
+      Duration: "Thời lượng"
+      Tools: "Công cụ"
+      Conditions learning: "Điều kiện để học"
+      What do students learn?: "Học sinh học được gì"
     Note: "Ghi chú"
     Order: "STT"
     Code: "Mã"

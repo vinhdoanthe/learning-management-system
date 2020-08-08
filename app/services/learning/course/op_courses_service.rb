@@ -181,10 +181,13 @@ class Learning::Course::OpCoursesService
       :short_description => course.short_description,
       :suitable_age => course.suitable_age,
       :duration => course.duration,
+      :equipments => course.equipments,
+      :competences => course.competences,
       :course_description => (course_description.nil? ? '' : course_description.description),
       :course_thumbnail => thumbnail,
       :active_subject => subject.id,
       :lessons => r_lessons
+
     } 
     course_subject_detail
   end

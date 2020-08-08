@@ -4,7 +4,7 @@
       <div class="box-product" >
         <div class="fc-header" style='margin: 15px 0'>
           <% subject = Learning::Course::OpCourse.where(id: subject_id).first %>
-        <h3><span class="color-F16357"><%= subject.name %></h3>
+        <h3><span class="color-F16357"><%= subject.name %></span></h3>
         </div>
         <div class='row'>
           <%= render 'user/open_educat/op_students/partials/student_projects', { products: projects } %>

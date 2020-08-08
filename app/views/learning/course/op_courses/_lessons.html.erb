@@ -19,11 +19,13 @@
               <% if !lesson[:active] %>
                 <div class='lock-lesson'>
                   <div>
-                  <%= image_tag 'global/images/active/Shape.png', class: 'lock-item' %> 
+                  <%= image_tag '/global/images/prilock.png', class: 'lock-item' %>
                   </div>
                 </div>
               <% end %>
-              <span class="btd-text"><p><%= lesson[:info][:name] %></p></span>
+              <span class="btd-text text-justify">
+                <p title="<%= lesson[:info][:name]%>"><%= truncate(lesson[:info][:name],:length => 50) %></p>
+              </span>
             </a>
           </div>
         </div>
@@ -31,6 +33,3 @@
     </div>
   </div>
 </div>
-
-<style>
-</style>

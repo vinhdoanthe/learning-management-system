@@ -4,36 +4,32 @@
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
-        <div class="ph-text">
-          <h2 class="color-fff text-transform">Khóa học</h2>
-        </div>
+        <div class="ph-text"><h2 class="color-fff text-transform"><%= t('learning.course')%></h2></div>
     </div>
   </div>
   <div class="panel m-t--70 bg-f5f5f5">
     <div class="panel-content bg-fff course_detail_content">
-      <a href="<%= courses_path %>" class="PC-back">
-        <%= image_tag("global/images/quaylai.svg", :alt => "") %>
-        Quay lại toàn bộ khoá học
+      <a href="<%= courses_path %>" class="PC-back text-uppercase">
+        <%= image_tag("global/images/quaylai.svg", :alt => "") %> <%= t('button.Back to courses')%>
       </a>
       <div class="box-technology">
         <div class="bt-title">
-          <div class='course_description_header'>
-            <div class='col-md-6'>
-              <h3><%=course_subject_detail[:course_name] %></h3>
+          <div class='box-course-header'>
+            <div class="col-md-6">
+              <h3><%= truncate(course_subject_detail[:course_name],:length => 100) %></h3>
               <input type='hidden' value="<%= course.id %>" name="course_id">
             </div>
-            <div class='col-md-6'>
-              <div class="form-group">
-                <select class="form-control form-control-lg" id="subject_course_select">
-                  <% subjects.each do |subject| %>
-                    <% if subject[0] == course_subject_detail[:active_subject] %>
-                      <option selected value="<%= subject[0] %>"><%= subject[1] %></option>
-                    <% else %>
-                      <option value="<%= subject[0] %>"><%= subject[1] %></option>
-                    <% end %>
+            <div class="col-md-6 p-r-0">              
+              <label class="custom-select-label"><%= t('learning.Select subject')%></label>
+              <select class="custom-select form-control-filters student_subject_filter" id="subject_course_select">
+                <% subjects.each do |subject| %>
+                  <% if subject[0] == course_subject_detail[:active_subject] %>
+                    <option selected value="<%= subject[0] %>"><%= subject[1] %></option>
+                  <% else %>
+                    <option value="<%= subject[0] %>"><%= subject[1] %></option>
                   <% end %>
-                </select>
-              </div>
+                <% end %>
+              </select>              
             </div>
           </div>
         </div>
@@ -50,12 +46,58 @@
   </div>
 </div>
 
+<div id="item_course_description_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title color-5DC2A7"><%= course_subject_detail[:course_name]%></h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="box-imglist text-center">
+            <span>
+              <% if !course_subject_detail.nil? && !course_subject_detail[:thumbnail].nil? %>
+                <%= image_tag(course_subject_detail[:thumbnail]) %>
+              <% else %>
+                <img src="assets/global/images/Bitmap3.png" alt="">
+              <% end %>
+            </span>
+          </div>
+          <div class="subject_description">
+            
+          </div>
+
+          <hr class="c-course-description-line">
+          <div class="box-about box-about-html">
+            <h2 class="lms-course-title" style="font-size: 16px;"><%= t('adm.course.course_description')%></h2>
+            <div class="p-t-30">
+              <%= course_subject_detail[:course_description].to_s.html_safe %>
+            </div>
+          </div>
+          <hr  class="c-course-description-line">
+          <div class="box-about box-about-html">
+            <h2 class="lms-course-title" style="font-size: 16px;"><%= t('adm.course.What do students learn?')%></h2>
+            <div class="p-t-30">
+              <%= course_subject_detail[:competences].to_s.html_safe %>
+            </div>
+          </div>
+          <hr  class="c-course-description-line">
+        </div>
+      </div>
+      <div class="modal-footer bg-D7DFE9">        
+        <button  type="button" class="btn btn-primary btn-embossed bg-5DC2A7 text-uppercase" data-dismiss="modal">
+            <%= t('button.Close')%></button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $(document).ready(function(){
     course_id = $('input[name="course_id"]').val();
     $('#subject_course_select').on('change', function(){
       subject_id = $(this).val();
-
       $.ajax({
         url: '/course_detail?course_id=' + course_id + '&subject_id=' + subject_id,
         method: 'GET',
