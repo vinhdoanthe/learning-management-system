@@ -125,7 +125,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   end
 
   def validate_youtube_upload_params params
-    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present?)
+    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present? || params[:project_show_video].present? )
   end
 
   def batch_student_info batch_id
