@@ -106,7 +106,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
 
   def course_student_projects
     @course = Learning::Course::OpCourse.where(id: params[:course_id]).first
-    @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id], permission: 'public', state: 'publish').page params[:page]
+    @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id], state: 'publish').page params[:page]
   end
 
   private

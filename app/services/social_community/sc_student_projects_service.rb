@@ -138,7 +138,7 @@ class SocialCommunity::ScStudentProjectsService
     course_ids = SocialCommunity::ScStudentProject.all.pluck(:course_id).uniq
     course_projects = []
     course_ids.each do |course_id|
-      projects = SocialCommunity::ScStudentProject.where(course_id: course_id, state: 'publish', permission: 'public').where.not(user_id: user.id).limit(4)
+      projects = SocialCommunity::ScStudentProject.where(course_id: course_id, permission: 'public').where.not(user_id: user.id).limit(4)
       course_projects << (get_course_projects_hash projects)
     end
 
