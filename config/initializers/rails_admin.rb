@@ -31,7 +31,9 @@ RailsAdmin.config do |config|
                               Learning::Homework::UserQuestion
                               Notification::BroadcastNoti
                               User::Reward::TekyCoinStarActivitySetting
-                              Utility::PublicCourse)
+                              Utility::PublicCourse
+                              SocialCommunity::ScStudentProject
+                              )
 
 
   config.model 'Learning::Course::OpCourse' do
@@ -327,6 +329,58 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'SocialCommunity::ScStudentProject' do 
+    list do
+      include_fields :op_course, :op_batch, :op_subject, :op_student, :name, :state, :permission, :introduction_video, :presentation, :project_show_video, :created_at, :updated_at
+      # field :op_course
+      # field :op_batch
+      # field :op_subject
+      # field :op_student
+      # field :name
+      # field :state
+      # field :permission
+      # field :description
+      # field :introduction_video
+      # field :presentation
+      # field :project_show_video
+      # field :created_at
+      # field :updated_at
+    end
+
+    show do
+      field :op_course
+      field :op_batch
+      field :op_subject
+      field :op_student
+      field :name
+      field :state
+      field :permission
+      field :description do
+        pretty_value do
+          value.html_safe
+        end
+      end
+      field :introduction_video
+      field :presentation
+      field :project_show_video
+      field :created_at
+      field :updated_at
+    end
+
+    edit do
+      field :op_course
+      field :op_batch
+      field :op_subject
+      field :op_student
+      field :name
+      field :state
+      field :permission
+      field :introduction_video
+      field :presentation
+      field :project_show_video
+    end
+  end
+
   config.actions do
 
     dashboard
@@ -349,7 +403,8 @@ RailsAdmin.config do |config|
               Learning::Course::OpLession Learning::Course::OpCourse Learning::Course::CourseDescription 
               Notification::BroadcastNoti
               User::Reward::TekyCoinStarActivitySetting
-              Utility::PublicCourse)
+              Utility::PublicCourse
+              SocialCommunity::ScStudentProject)
     end
     delete do
       only %w(Common::RewardType Common::FeelingType

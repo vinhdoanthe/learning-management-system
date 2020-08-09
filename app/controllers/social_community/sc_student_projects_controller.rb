@@ -16,8 +16,8 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
       end
 
       sc_student_service.create_student_project @params, embed_link, current_user, thumbnail_video
-      User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'coin', current_user.id
-      User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'star', current_user.id
+      # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'coin', current_user.id
+      # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'star', current_user.id
       result = {type: 'success', message: 'Upload thành công'}
     else
       result = {type: 'danger', message: 'Thiếu thông tin sản phẩm! Vui lòng kiểm tra lại!'}

@@ -52,7 +52,7 @@ class SocialCommunity::ScStudentProjectsService
     file = file.try(:tempfile).try(:to_path)
 
     begin 
-      new_video = account.upload_video file, title: title, privacy_status: 'private'
+      new_video = account.upload_video file, title: title, privacy_status: 'unlisted'
       video_id = new_video.id
       video = Yt::Video.new id: video_id, auth: account
       embed_link = video_id
