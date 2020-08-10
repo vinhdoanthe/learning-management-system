@@ -948,7 +948,7 @@ background: #FCF055 !important
  
 .student_subject_level td {padding-top:9.5px; padding-bottom: 10.5px}
 
-.border-bottom-line-2 {border-bottom:2px solid #D7DFE9;}
+.border-bottom-line-2 {border-bottom: 3px solid #D7DFE9;}
 
 .calenda-box {width: 70px;border: 1px solid #D7DFE9;border-radius: 5px;}
 
@@ -7042,15 +7042,15 @@ padding: 16px;
 }
 .box-height-60 {height: 60px; vertical-align: middle;}
 .box-line-height-60 {height: 60px; line-height: 65px; vertical-align: middle;}
-.box-line-height-66 {line-height: 65px; vertical-align: middle;}
+.box-line-height-66 {line-height: 65px; vertical-align: middle; font-weight: 700;}
 
 .text-date-time {display: inline-block;vertical-align: super;padding-right: 20px;font-size: 12px; font-weight: 500}
 .coming_soon_session_name {font-size: 14px; font-weight: 700}
 .text-coming-soon-left {
 	position: absolute;
-    top: 130px;
-    left: 30px;
-	transform-origin: 0 0;
+    top: 110px;
+    left: -30px;
+	  transform-origin: 0 0;
     transform: rotate(270deg);    
 }
 .btn.btn-join-class {

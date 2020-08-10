@@ -32,8 +32,26 @@
 <%= render 'user/open_educat/op_students/progress/tobe_sessions', {:tobe_sessions => tobe_sessions, active_subject: active_subject} %>
 
 <%= render 'user/open_educat/op_students/progress/cancel_sessions', {:cancel_sessions => cancel_sessions, active_subject: active_subject} %>
+<style>
+  .tooltip > .tooltip-inner {
+    background-color: #D7DFE9;
+    padding: 9px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 12px;
+    border-radius: none;
+    white-space: nowrap;
+  }
+  .tooltip.top > .tooltip-arrow {
+    border-top: 5px solid #D7DFE9;
+  }
+</style>
 <script>
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
+      $("[data-placement=right]").hover(function(){
+    $('.tooltip').css('top',parseInt($('.tooltip').css('top')) + 8 + 'px')
+});
     });
 </script>

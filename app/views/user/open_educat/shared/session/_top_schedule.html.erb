@@ -1,7 +1,7 @@
 <% coming_soon_lesson = get_coming_soon_lesson(coming_soon_session, current_user.student_id) %>
 <% is_online = is_online_session?(coming_soon_session) %>
 <div class="table table-border-radius" style="padding: 0px!important;margin: 0px!important">
-  <div class="table-border-radius" style="margin-bottom: 0px;border-bottom: 0px!important; border-top: 0px!important;border-right: 0px!important;border-left: 35px solid #F16357 !important;">
+  <div class="table-border-radius" style="margin-bottom: 0px;border-bottom: 0px!important; border-top: 0px!important;border-right: 0px!important;border-left: 35px solid #F16357 !important; position: relative">
     <div class="row">
       <div class="color-fff text-uppercase font-bold text-coming-soon-left">comming</div>
     </div>
@@ -15,7 +15,7 @@
           </button>
         <% end %>      
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div style="border-bottom: 1px solid #DDD"></div></div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div style="border-bottom: 2px solid #D7DFE9"></div></div>
     </div>
     <div class="row">
       <div class="col-xs-4 col-sm-4 col-md-4 " style="padding-top: 25px;">
