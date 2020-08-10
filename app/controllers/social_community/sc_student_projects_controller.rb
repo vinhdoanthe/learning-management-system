@@ -3,8 +3,10 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   before_action :handling_params, only: [:create_student_project, :update_student_project]
 
   def create_student_project
+    result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
     sc_student_service = SocialCommunity::ScStudentProjectsService.new
     user = User::Account::User.where(student_id: @params[:student_id]).first
+
     if validate_youtube_upload_params @params
       if @params[:introduction_video].present? && @params[:name].present?
         video_detail = sc_student_service.upload_video_youtube @params[:name], @params[:introduction_video], @params[:description], @params[:batch_id]
@@ -15,10 +17,14 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
         thumbnail_video = ''
       end
 
-      sc_student_service.create_student_project @params, embed_link, current_user, thumbnail_video
+      begin
+        sc_student_service.create_student_project @params, embed_link, current_user, thumbnail_video
+        result = {type: 'success', message: 'Upload thành công'}
+      rescue StandardError => e
+        result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+      end
       # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'coin', current_user.id
       # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'star', current_user.id
-      result = {type: 'success', message: 'Upload thành công'}
     else
       result = {type: 'danger', message: 'Thiếu thông tin sản phẩm! Vui lòng kiểm tra lại!'}
     end
@@ -73,6 +79,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     result = SocialCommunity::ScStudentProjectsService.new.update_student_project @params
 
     respond_to do |format|
+binding.pry
       format.html
       format.js { render 'user/open_educat/shared/student_projects/forms/ajax_response', locals: { result: result } }
     end
@@ -118,8 +125,15 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     @params.merge! ({ project_id: params[:project_id]}) if params[:project_id].present?
 
     if @params['permission'] == '1'
-      @params['permission'] = 'public'
+      @params['permission'] = SocialCommunity::Constant::ScStudentProject::Permission::PUBLIC
     end
+
+    @params['state'] = if @params['state'] == '1'
+                              SocialCommunity::Constant::ScStudentProject::State::PUBLISH
+                            else
+                              SocialCommunity::Constant::ScStudentProject::State::DRAFT
+                            end
+
     @params.select! { |k, v| v.present? }
     @params.symbolize_keys!
   end

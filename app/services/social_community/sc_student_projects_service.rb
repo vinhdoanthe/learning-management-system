@@ -16,7 +16,7 @@ class SocialCommunity::ScStudentProjectsService
         end
       end
 
-      if params[:student_id].present? && params[:student_id] != project.student_id
+      if params[:student_id].present? && params[:student_id] != project.student_id.to_i
         user = User::Account::User.where(student_id: params[:student_id]).first
         params.merge! ({ user_id: user.id })
       end

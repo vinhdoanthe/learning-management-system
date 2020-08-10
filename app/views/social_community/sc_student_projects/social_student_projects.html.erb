@@ -57,7 +57,7 @@
           </div>
           <div class='row' style="padding-top: 17px;">
             <% projects.each do |project| %>
-            <div class='col-md-3' style="margin-bottom: 30px;">
+            <div class=' col-lg-4 col-md-3 col-sm-6' style="margin-bottom: 30px;">
               <%= render 'user/open_educat/shared/student_projects/student_project_community_item', { project: project, teacher_can_edit: false } %>
             </div>
             <% end %>
@@ -180,7 +180,15 @@
   .prod-text .project-description {
     text-align: justify;
     font-size: 14px;
-    font-weight: normal;
+    font-weight: 515;
+    height: 130px;
+    overflow: hidden;
+  }
+
+  .prod-detail .prod-text label {
+    font-weight: 700;
+    text-transform: uppercase;
+
   }
 
   .fc-header h3 {

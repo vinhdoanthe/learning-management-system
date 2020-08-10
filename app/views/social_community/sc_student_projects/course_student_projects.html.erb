@@ -21,7 +21,7 @@
             <p class='no-projects'>Chưa có sản phẩm nào</p>
           <% else %>
             <% @course_projects.each do |project| %>
-              <div class='col-md-4 col-lg-3' style='margin-bottom: 30px'>
+              <div class='col-md-4 col-lg-3 col-sm-6' style='margin-bottom: 30px'>
                 <%= render 'user/open_educat/shared/student_projects/student_project_community_item', { project: project } %>
               </div>
             <% end %>

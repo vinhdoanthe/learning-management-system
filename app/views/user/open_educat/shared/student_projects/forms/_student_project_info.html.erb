@@ -1,5 +1,5 @@
 <%= tinymce_assets %>
-<%= form_with model: project, url: url, method: :post, locals: true,  html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
+<%= form_with model: project, url: url, locals: false, format: :js, method: :post, html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
 <%= f.hidden_field :batch_id, value: batch_id %>
 <div class='row' id="edit_student_project_upload">
   <div class='col-md-3'>
@@ -121,8 +121,12 @@
 <div class="project_permission row" style="margin-top: 30px">
   <div class="col-md-12">
     <div style='float: right'>
+    <div style="text-align: left">
       <%= f.check_box :permission, checked: true, value: 'public' %>
       <label for="permission"><%= t('student_project.public_html') %></label><br>
+      <%= f.check_box :state, value: 'publish' %>
+      <label for="state"><%= t('student_project.state_html') %></label><br>
+    </div>
     </div>
   </div>
 </div>
