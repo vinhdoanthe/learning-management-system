@@ -54,13 +54,13 @@
           <li style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"><span class="icon"><%= image_tag('global/images/icon-university.png')%></span><%= company_name%></li>
         </ul>
       </div>
-      <div class="prod-text" style="height: 190px; overflow: hidden">
+      <div class="prod-text" style="height: 210px; overflow: hidden">
         <label class="project-name"><%= project.name %></label>
         <div class="project-description"><%= sanitize project.description %></div>
         <input type='hidden' value='<%= project.id %>' name='student_project_id'>
         <input type='hidden' value='<%= project.batch_id %>' name='project_batch_id' >
-        <div style="position: absolute; right: 25px; bottom: 20px; ">
-          <a class='student_project_show' href="" class="font-bold" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><%= t('button.see_project')%></a>
+        <div style="position: absolute; right: 25px; bottom: 20px; display: flex; align-items: center;">
+          <a class='student_project_show' href="" data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><%= t('button.see_project')%></a>
         </div>
       </div>
     </div>

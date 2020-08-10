@@ -8,7 +8,7 @@ module SocialCommunity::Constant
     module ScStudentProject
       module State
         PUBLISH = 'publish'
-        DRAFT = 'draf'
+        DRAFT = 'draft'
       end
 
       module Permission
