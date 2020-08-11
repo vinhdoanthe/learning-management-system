@@ -5,7 +5,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   def create_student_project
     result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
     sc_student_service = SocialCommunity::ScStudentProjectsService.new
-    user = User::Account::User.where(student_id: @params[:student_id]).first
+    # user = User::Account::User.where(student_id: @params[:student_id]).first
 
     if validate_youtube_upload_params @params
       if @params[:introduction_video].present? && @params[:name].present?
@@ -20,7 +20,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
       begin
         sc_student_service.create_student_project @params, embed_link, current_user, thumbnail_video
         result = {type: 'success', message: 'Upload thành công'}
-      rescue StandardError => e
+      rescue StandardError
         result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
       end
       # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'coin', current_user.id
@@ -112,8 +112,9 @@ binding.pry
   end
 
   def course_student_projects
+    binding.pry
     @course = Learning::Course::OpCourse.where(id: params[:course_id]).first
-    @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id], state: 'publish').page params[:page]
+    @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id], permission: 'public').page params[:page]
   end
 
   private
