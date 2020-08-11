@@ -11,40 +11,7 @@
     </div>
 
     <div class="subject_description">
-      <ul>
-        <li class="list-content">
-          <span class="icon24-newspaper"></span><label class="font-bold color-000"><%= t('adm.course.Content')%></label>
-          <div class="list-content-description-content">
-            <%= course_subject_detail[:short_description]%>
-          </div>
-        </li>
-        <li class="list-content">
-          <span class="icon24-age"></span><label class="font-bold color-000"><%= t('adm.course.Ages')%></label>
-          <div class="list-content-description-content">
-          <%= course_subject_detail[:suitable_age]%>
-          </div>
-        </li>
-        <li class="list-content">
-          <span class="icon24-rewind-time"></span><label class="font-bold color-000"><%= t('adm.course.Duration')%></label>
-          <div class="list-content-description-content">
-          <%= course_subject_detail[:duration]%>
-          </div>
-        </li>
-
-        <li class="list-content">
-          <span class="icon24-student"></span><label class="font-bold color-000"><%= t('adm.course.Tools')%></label>
-          <div class="list-content-description-content">
-          <%= course_subject_detail[:equipments] %>
-          </div>
-        </li>
-
-        <li class="list-content">
-          <span class="icon24-books"></span><label class="font-bold color-000"><%= t('adm.course.Conditions learning')%></label>
-          <div class="list-content-description-content">          
-          <%= course_subject_detail[:prerequisites] %>
-          </div>
-        </li>
-      </ul>
+      <%= render :partial => "subject_description", :locals => {:course_subject_detail => course_subject_detail} %>
     </div>
     <hr class="c-course-description-line">
     <div class="box-about box-about-html">

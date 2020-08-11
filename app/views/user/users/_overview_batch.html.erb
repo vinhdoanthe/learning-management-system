@@ -1,6 +1,6 @@
 <% student_batch_status = get_student_batch_status(op_student_id, batch.id)%>
 <% student_status = student_batch_status['status'] %>
-<div class="col-md-4 col-xs-12 student_batch_list">
+<div class="col-xs-12 col-md-6 student_batch_list">
   <div class="scl-detail" style='height: 100%'>
     <div class="scl-img">
       <span class="spanimg">
@@ -33,21 +33,21 @@
           <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn btn-edit-class btn-studying-batch">
             <div>
               <%= image_tag ('global/images/come-in.png') %>
-              <%= t('my_class.come_in') %>
+              <span><%= t('my_class.come_in') %></span>
             </div>
           </a>
         <% elsif student_status == Learning::Constant::STUDENT_BATCH_STATUS_SAVE %>
           <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn btn-edit-view btn-save-batch">
             <div>
               <%= image_tag ('global/images/come-in.png') %>
-              <%= t('my_class.information') %>
+              <span><%= t('my_class.information') %></span>
             </div>
           </a>
         <% else %>
           <a href="<%= user_open_educat_op_students_batch_detail_path(batch.id) %>" class="btn btn-edit-view btn-stop-batch">
             <div>
               <%= image_tag ('global/images/come-in.png') %>
-              <%= t('my_class.information') %>
+              <span><%= t('my_class.information') %></span>
             </div>
           </a>
         <% end %>

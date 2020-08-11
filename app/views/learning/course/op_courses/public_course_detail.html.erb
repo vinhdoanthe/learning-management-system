@@ -48,26 +48,23 @@
 
 <div id="item_course_description_modal" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title color-5DC2A7"><%= course_subject_detail[:course_name]%></h4>
-      </div>
-      <div class="modal-body">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <div class="box-imglist text-center">
-            <span>
-              <% if !course_subject_detail.nil? && !course_subject_detail[:thumbnail].nil? %>
-                <%= image_tag(course_subject_detail[:thumbnail]) %>
-              <% else %>
-                <img src="assets/global/images/Bitmap3.png" alt="">
-              <% end %>
-            </span>
+    <div class="modal-content p-l-20 p-r-20">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title color-5DC2A7"><%= course_subject_detail[:course_name]%></h4>
+        </div>
+        <div class="modal-body">          
+          <div class="text-center">            
+            <% if !course_subject_detail.nil? && !course_subject_detail[:thumbnail].nil? %>
+              <%= image_tag(course_subject_detail[:thumbnail]) %>
+            <% else %>
+              <img src="assets/global/images/Bitmap3.png" alt="">
+            <% end %>            
           </div>
+          <hr class="c-course-description-line">
           <div class="subject_description">
-            
+            <%= render :partial => "subject_description", :locals => {:course_subject_detail => course_subject_detail} %>
           </div>
-
           <hr class="c-course-description-line">
           <div class="box-about box-about-html">
             <h2 class="lms-course-title" style="font-size: 16px;"><%= t('adm.course.course_description')%></h2>
@@ -75,7 +72,8 @@
               <%= course_subject_detail[:course_description].to_s.html_safe %>
             </div>
           </div>
-          <hr  class="c-course-description-line">
+
+          <hr class="c-course-description-line">
           <div class="box-about box-about-html">
             <h2 class="lms-course-title" style="font-size: 16px;"><%= t('adm.course.What do students learn?')%></h2>
             <div class="p-t-30">
@@ -84,11 +82,10 @@
           </div>
           <hr  class="c-course-description-line">
         </div>
-      </div>
-      <div class="modal-footer bg-D7DFE9">        
-        <button  type="button" class="btn btn-primary btn-embossed bg-5DC2A7 text-uppercase" data-dismiss="modal">
+        <div class="modal-footer bg-D7DFE9">        
+          <button  type="button" class="btn btn-primary btn-embossed bg-5DC2A7 text-uppercase" data-dismiss="modal">
             <%= t('button.Close')%></button>
-      </div>
+        </div>
     </div>
   </div>
 </div>

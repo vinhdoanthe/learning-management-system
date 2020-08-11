@@ -155,6 +155,7 @@ select.form-control {
   border: 1px solid #D7DFE9 !important;
   padding: 10px 15px !important;
   border-radius: 10px;
+  border-radius: 5px;
 }
 
 .filter-box {}
@@ -685,32 +686,39 @@ background: #FCF055 !important
   .scl-detail {
     box-shadow: 0px 0px 8px -5px;
     display: block;
-    border-radius: 10px;
+    border-radius: 5px;
     overflow: hidden;
     position: relative;
   }
 
   .scl-img {
-    position: relative;
-    width: 100%;
-    display: table;
+    position: relative;    
+    display: grid;
     vertical-align: middle;
-    height: 250px;
+
+    /*width: 100%;
+    height: 250px;*/
   }
 
   .scl-img span.spanimg {
     text-align: center;
     display: table-cell;
-    vertical-align: middle;
-    height: 250px;
+    vertical-align: top;
     position: initial;
-    width: 100%;
+    height: 250px;    
+    width: 650px;
     padding: 0;
   }
 
   .scl-img span img {
-    max-width: 100%;
+    /*max-width: 650px;
     max-height: 100%;
+    */
+    width: 650px;
+    max-height: 100%;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+    object-fit: contain;
   }
 
   .scl-img span {
@@ -719,8 +727,8 @@ background: #FCF055 !important
     top: 10px;
     right: 10px;
     border: 1px solid #fff;
-    border-radius: 20px;
-    padding: 5px 25px;
+    border-radius: 12.5px;
+    padding: 3px 25px;
     color: #fff;
     text-transform: uppercase;
     font-style: normal;
@@ -7940,3 +7948,40 @@ h3.lms-course-title:before {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+
+/** Khoa hoc cua toi**/
+.student_batch_list .custom_scl-right {
+  width: 146px !important;
+  max-width:146px !important;
+  height: 50px;
+}
+
+.student_batch_list .scl-text {
+  /*margin-bottom: 10px;*/
+}
+
+.student_batch_list .scl-text a {
+  background-color: #5DC2A7;
+  width: 100%;
+  height: auto !important;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 700;
+  margin: 0;
+  padding-top: 13px !important;
+  padding-bottom: 13px !important;
+  padding-left:31px !important;
+  padding-right: auto!important;
+}
+
+.student_batch_list .scl-text a div {
+  height: 24px;
+}
+
+.student_batch_list .scl-text a div img {
+  width: 18px !important;
+  margin-right: 10px !important;
+}
+
