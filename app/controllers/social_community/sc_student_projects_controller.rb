@@ -79,7 +79,6 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     result = SocialCommunity::ScStudentProjectsService.new.update_student_project @params
 
     respond_to do |format|
-binding.pry
       format.html
       format.js { render 'user/open_educat/shared/student_projects/forms/ajax_response', locals: { result: result } }
     end
@@ -112,7 +111,6 @@ binding.pry
   end
 
   def course_student_projects
-    binding.pry
     @course = Learning::Course::OpCourse.where(id: params[:course_id]).first
     @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id], permission: 'public').page params[:page]
   end

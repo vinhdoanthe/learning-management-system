@@ -1,10 +1,4 @@
-<% student = project.op_student %>
-<% student_name, company_name  = '', '' %>
 <% progress = get_project_progress project %>
-<% if student.present? %>
-  <% student_name = student.full_name %>
-  <% company_name = student.res_company ? student.res_company.name : '' %>
-<% end %> 
 <div class='item' style='height: 100%'>
   <div class="" style='height: 100%'>
     <div class="prod-detail" style='height: 100%; margin-bottom: 0'>
@@ -59,7 +53,7 @@
       <% end %>
       </div>
       <div class="prod-text" style="height: 190px; overflow: hidden">
-        <label class="project-name"><%= project.name %></label>
+        <label class="project-name color-000"><%= project.name %></label>
         <div class="project-description"><%= sanitize  project.description %></div>
         <input type='hidden' value='<%= project.id %>' name='student_project_id'>
         <input type='hidden' value='<%= project.batch_id %>' name='project_batch_id' >
