@@ -50,12 +50,12 @@
       </div>
       <div class="project-info">
         <ul>
-          <li style="margin-bottom: 5px;text-overflow: ellipsis;color: #0654BA"><span class="icon"><%= image_tag('global/images/icon-student-3.png')%></span><%= student_name %></li>
-          <li style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"><span class="icon"><%= image_tag('global/images/icon-university.png')%></span><%= company_name%></li>
+          <li style="margin-bottom: 5px;text-overflow: ellipsis;color: #0654BA"><span class="icon"><%= image_tag('icons/student-3.png')%></span><%= student_name %></li>
+          <li style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"><span class="icon"><%= image_tag('icons/university.png')%></span><%= company_name%></li>
         </ul>
       </div>
       <div class="prod-text" style="height: 210px; overflow: hidden">
-        <label class="project-name"><%= project.name %></label>
+        <label class="project-name color-000"><%= project.name %></label>
         <div class="project-description"><%= sanitize project.description %></div>
         <input type='hidden' value='<%= project.id %>' name='student_project_id'>
         <input type='hidden' value='<%= project.batch_id %>' name='project_batch_id' >
