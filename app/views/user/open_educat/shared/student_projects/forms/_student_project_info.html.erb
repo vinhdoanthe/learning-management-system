@@ -54,6 +54,7 @@
         <% else %>
         <p style="font-size: 16px; font-weight: 700"><%= t('student_project.slide') %></p>
         <p class="project_presentation_file_name" style="text-align: center"> <span class="project_presentation_state"><%= t('student_project.no_presentation') %></span> </p>
+        <p class='click_to_update'><%= t('student_project.click_to_update') %></p>
         <% end %>
       </div>
     </div>
@@ -68,11 +69,12 @@
       <p class='click_to_update'><%= t('student_project.click_to_update') %></p>
       <% else %>
       <div class="upload_image">
-        <%= image_tag('global/images/youtube.png') %>
+        <%= image_tag('global/images/button-youtube.png', style: 'width: 40px') %>
       </div>
       <div class="upload_info">
         <p style="font-size: 16px; font-weight: 700;"><%= t('student_project.video') %></p>
         <p class="project_video_name_blank" style="text-align: center"> <span class="project_presentation_state"><%= t('student_project.no_video') %></span> </p>
+        <p class='click_to_update'><%= t('student_project.click_to_update') %></p>
       </div>
       <% end %>
     </div>
@@ -289,7 +291,7 @@
           $('#video_had_change').val('1');
           if ($('#upload_project_video').get(0).files.length > 0) {
             <% if project.introduction_video.present? %>
-              html = '<div class="upload_image"><%= image_tag("global/images/youtube-button.png") %></div><div class="upload_info"><p style="font-size: 16px; font-weight: 700">Video giới thiệu về dự án</p><p id="project_video_name" style="text-align: center"><span class="project_presentation_state" style="font-size: 16px; font-weight: 600>">' + $('#upload_project_video')[0].files[0].name.substring(0, 20) + '...</span></p></div>'
+              html = '<div class="upload_image"><%= image_tag("global/images/button-youtube.png") %></div><div class="upload_info"><p style="font-size: 16px; font-weight: 700">Video giới thiệu về dự án</p><p id="project_video_name" style="text-align: center"><span class="project_presentation_state" style="font-size: 16px; font-weight: 600>">' + $('#upload_project_video')[0].files[0].name.substring(0, 20) + '...</span></p></div>'
             $('#project_video_name').html(html) 
             <% else %>
                 $('.project_video_name_blank').html("<span style='font-size: 16px; font-weight: 600'>" + $('#upload_project_video')[0].files[0].name.substring(0, 20) + "...<span>") 

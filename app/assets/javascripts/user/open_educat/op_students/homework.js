@@ -59,6 +59,8 @@ $('document').ready(function () {
   $('#homework_tab2_new').on('click', '.swiper-slide', function(){
     $('.swiper-slide').css("background", "#dcdcdc");
     $(this).css('background', '#ffffff');
+    $('.thumbnail_layer').show();
+    $($(this).find('.thumbnail_layer')).hide();
     session_id = $(this).find($('input[name="change_video"]')).val()
     $('input[name="active_session"]').val(session_id);
     get_video(active_batch, active_subject)

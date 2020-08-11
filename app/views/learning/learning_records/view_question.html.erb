@@ -110,7 +110,7 @@
 <script>
   $('.homework_video_link').on('click', function() {
     session_id = $(this).data('session')
-    window.location.href = '/user/open_educat/op_students/student_homework?show_video=true&session_id=' + session_id
+    window.location.href = '/user/open_educat/op_students/student_homework?show_video=true&session=' + session_id
   })
   $('#qa_area').ready(function() {
     data = {

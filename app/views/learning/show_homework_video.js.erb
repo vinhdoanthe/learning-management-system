@@ -15,8 +15,10 @@
 
 <% if session.present? && (has_homework? current_user, session) %>
   $('.do_video_homework').attr('href','/learning/view_question?session_id=<%= session.id %>')
+  $('.do_video_homework').css("opacity", "1");
 <% else %>
-  $('.do_video_homework').hide()
+  $('.do_video_homework').removeAttr("href")
+  $('.do_video_homework').css("opacity", "0.5");
 <% end %>
 
 
@@ -24,7 +26,7 @@ $('#swiper-video-list').ready(function() {
   var active_video = $('#active_video_slider').val();
   if ($(".swiper-slide")[0]) {
   var swiper = new Swiper('.homework_video_swiper', {
-        slidesPerView: 5,
+        slidesPerView: 8,
         spaceBetween: 5,
         loop: false,
         slideActiveClass: 'active_video_slide',
@@ -38,6 +40,23 @@ $('#swiper-video-list').ready(function() {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+            slidesPerView: 2,
+          },
+          // when window width is >= 480px
+          768: {
+            slidesPerView: 4,
+          },
+          // when window width is >= 640px
+          960: {
+            slidesPerView: 5,
+          },
+          1200: {
+            slidesPerView: 8,
+          }
+        }
       });
   swiper.slideTo(active_video);
   }

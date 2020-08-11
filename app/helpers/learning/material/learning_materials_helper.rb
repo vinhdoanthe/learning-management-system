@@ -17,19 +17,19 @@ module Learning
 
         questions = session.op_lession.questions.pluck(:id)
         user_questions = Learning::Homework::UserQuestion.where(student_id: user.id, question_id: questions).pluck(:id)
-        done_user_answers = Learning::Homework::UserAnswer.where(user_question_id: user_questions, state: [HomeworkConstants::UserAnswer::ANSWER_RIGHT, HomeworkConstants::UserAnswer::ANSWER_WAITING]).count
+        done_user_answers = Learning::Homework::UserAnswer.where(user_question_id: user_questions, state: [HomeworkConstants::UserAnswer::ANSWER_RIGHT, HomeworkConstants::UserAnswer::ANSWER_WAITING]).order(created_at: :DESC).pluck(:created_at)
 
-        progress = done_user_answers.to_s + '/' + user_questions.count.to_s
+        progress = done_user_answers.count.to_s + '/' + user_questions.count.to_s
 
-        if done_user_answers == user_questions.count
+        if done_user_answers.count == user_questions.count
           state = 'done'
-        elsif done_user_answers == 0
+        elsif done_user_answers.count == 0
           state = 'undone'
         else
           state = 'inprogress'
         end
 
-        return { state: state, progress: progress }
+        return { state: state, progress: progress, last_done: done_user_answers[0] }
       end
 
       def get_student_evaluate user, session
