@@ -2,6 +2,10 @@
 <%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
 <%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
 
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag 'social_community/sc_student_project' %>
+<% end %>
+
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">

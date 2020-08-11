@@ -1,7 +1,9 @@
 <%= javascript_include_tag 'social_community/sc_student_projects/sc_student_project.js' %>
 <%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
 <%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
-
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag 'social_community/sc_student_project' %>
+<% end %>
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
@@ -74,126 +76,3 @@
 </div>
 <div id="editStudentProjectDetail" class="modal fade" role="dialog">
 </div>
-<style>
-  .color-000 {
-    color: #000 !important;
-  }
-
-  .show_course_projects {
-    float: right;
-    font-size: 14px;
-    font-weight: 600;
-    margin-right: 20px;
-    color: #0654BA;
-    text-transform: uppercase;
-  }
-
-  .no-projects {
-    text-align: center;
-  }
-  .project_progress {
-    height: 20px;
-    margin-top: 20px;
-  }
-
-  .student_project_show {
-    font-weight: 600;
-    font-size: 12px;
-    text-transform: uppercase;
-  }
-
-  .project_image {
-    opacity: 1;
-    display: block;
-    width: 100%;
-    height: auto;
-    height: 175px;
-    transition: .5s ease;
-    backface-visibility: hidden;
-  }
-
-  .project_control {
-    width: 100%;
-    transition: .5s ease;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-  }
-
-  .prod-img:hover .project_image {
-    opacity: 0.3;
-  }
-
-  .prod-img:hover .project_control {
-    opacity: 1;
-  }
-
-  .project_control button {
-    border: none;
-    border-radius: 4px;
-    padding: 10px 30px;
-  }
-
-  .edit_project {
-    background: #fcf055;
-  }
-
-  button.edit_project {
-    padding: 10px !important;
-  }
-
-  .public_project {
-    background: #9966ff;
-  }
-
-  button.public_project {
-    padding: 10px !important;
-  }
-
-  .show_project {
-    background: #5cd2a7;
-  }
-
-  .prod-detail .icon {
-    width: 22px;
-    text-align: center;
-    display: inline-block;
-    margin-right: 5px;
-  }
-
-  .project-info {
-    background-color: #D7DFE9
-  }
-
-  .prod-text .project-name {
-    text-align: justify;
-    font-size: 14px;
-    font-weight: normal;
-    text-transform: uppercase;
-  }
-
-  .prod-text .project-description {
-    text-align: justify;
-    font-size: 14px;
-    font-weight: 515;
-    height: 130px;
-    overflow: hidden;
-  }
-
-  .prod-detail .prod-text label {
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .prod-detail .prod-text a {
-    font-weight: bold;
-  }
-
-  .fc-header h3 {
-    padding-bottom: 0 !important;
-  }
-</style>
