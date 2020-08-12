@@ -5,55 +5,55 @@
   <%= javascript_include_tag 'social_community/dashboards/shared/posts/comments' %>
   <%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions' %>
 <% end %>
-<div class="page-content page-thin">
-  <div class="panel panel-edits bg-232837">
-    <div class="panel-heading">
-      <div class="ph-text">
-        <h3 class="color-fff text-transform header-title"><%= t('my_class.detail.study_progress') %></h3>
+  <div class="page-content page-thin">
+    <div class="panel panel-edits bg-232837">
+      <div class="panel-heading">
+        <div class="ph-text">
+          <h3 class="color-fff text-transform header-title"><%= t('my_class.detail.study_progress') %></h3>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="panel m-t--70">
-    <div class="panel-content" style="padding-bottom: 33px;">
-      <a href="<%= user_open_educat_op_students_batches_path %>" class="PC-back">
-        <%= image_tag('global/images/quaylai.svg') %>
-        <%= t('button.return') %>
-      </a>
-      <ul class="nav nav-tabs nav-primary tab-menu">
-        <li class="active student_batch_tab" id="student_batch_info_li"><a href="#tab2_1" data-toggle="tab"><%= t('my_class.detail.class_info') %></a></li>
-        <li class="student_batch_tab" id='student_batch_progress_li' data-batch-id='<%= batch.id %>'><a href="#tab2_2" data-toggle="tab"><%= t('my_class.detail.progress.name') %></a></li>
-        <% if Rails.env.development? %>
-          <li class="student_batch_tab" id='student_projects_li' data-batch-id='<%= batch.id %>'><a href="#tab2_3" data-toggle="tab"><%= t('my_class.detail.student_projects') %></a></li>
-        <% end %>
-      </ul>
-      <div class="tab-content p-0 tab-all-content m-t-20">
-        <div class="tab-pane fade active in" id="tab2_1">
-          <div class="bo-table p-l-20 p-r-20 p-b-0">
-            <div class="form-content">
-              <%= render 'user/open_educat/shared/batch_info', {batch: batch, course_name: course_name, faculty_names: faculty_names, batch_subjects: batch_subjects, done_subjects: done_subjects, session_count: session_count, company_name: company_name, classroom_name: classroom_name} %>
-              <%= render 'batch_info_table', {:batch => batch, batch_subjects: batch_subjects, op_student_courses: op_student_courses, active_student_course: active_student_course} %>
+    <div class="panel m-t--70">
+        <div class="panel-content" style="padding-bottom: 33px;">
+          <a href="<%= user_open_educat_op_students_batches_path %>" class="PC-back">
+            <%= image_tag('global/images/quaylai.svg') %>
+            <%= t('button.return') %>
+          </a>
+          <ul class="nav nav-tabs nav-primary tab-menu">
+            <li class="active student_batch_tab" id="student_batch_info_li"><a href="#tab2_1" data-toggle="tab"><%= t('my_class.detail.class_info') %></a></li>
+            <li class="student_batch_tab" id='student_batch_progress_li' data-batch-id='<%= batch.id %>'><a href="#tab2_2" data-toggle="tab"><%= t('my_class.detail.progress.name') %></a></li>
+            <% if Rails.env.development? %>
+              <li class="student_batch_tab" id='student_projects_li' data-batch-id='<%= batch.id %>'><a href="#tab2_3" data-toggle="tab"><%= t('my_class.detail.student_projects') %></a></li>
+            <% end %>
+          </ul>
+          <div class="tab-content p-0 tab-all-content m-t-20">
+            <div class="tab-pane fade active in" id="tab2_1">
+              <div class="bo-table p-l-20 p-r-20 p-b-0">
+                <div class="form-content">
+                <%= render 'user/open_educat/shared/batch_info', {batch: batch, course_name: course_name, faculty_names: faculty_names, batch_subjects: batch_subjects, done_subjects: done_subjects, session_count: session_count, company_name: company_name, classroom_name: classroom_name} %>
+                <%= render 'batch_info_table', {:batch => batch, batch_subjects: batch_subjects, op_student_courses: op_student_courses, active_student_course: active_student_course} %>
+                </div>
+              </div>
+            </div>
+            <%= render 'batch_student_progress', {:batch => batch} %>
+            <div class="tab-pane fade" id="tab2_3" >
             </div>
           </div>
         </div>
-        <%= render 'batch_student_progress', {:batch => batch} %>
-        <div class="tab-pane fade" id="tab2_3" >
-        </div>
-      </div>
     </div>
-  </div>
-  <%
-  op_course = batch.op_course
-  text_course_description = ''
-  text_course_competences = ''
-  %>
+    <%
+      op_course = batch.op_course
+      text_course_description = ''
+      text_course_competences = ''
+    %>
 
-  <% unless op_course.nil? %>
-    <% course_description = op_course.course_description.first %>
-    <% unless course_description.nil? %>
-      <% text_course_description = raw(course_description.description) %>
-      <% text_course_competences = raw(course_description.competences) %>
+    <% unless op_course.nil? %>
+      <% course_description = op_course.course_description.first %>
+      <% unless course_description.nil? %>
+        <% text_course_description = raw(course_description.description) %>
+        <% text_course_competences = raw(op_course.competences) %>
+      <% end %>
     <% end %>
-  <% end %>
 
   <div class="panel m-t-20" id='course_description_panel'>
     <div class="panel-content">      
@@ -62,11 +62,12 @@
           <div class="m-t-10" id='course_description'>
             <h2 class="lms-course-title" style="font-size: 16px;"><%= t('adm.course.course_description')%></h2>
             <div class='p-t-20'>
-              <%= raw(text_course_competences) %>
+              <%= raw(text_course_description) %>
             </div>            
             <hr class="c-course-description-line">            
             <h2 class="lms-course-title" style="font-size: 16px;"><%= t('adm.course.What do students learn?')%></h2>
             <div class='p-t-20'><%= raw(text_course_competences) %></div>
+            <hr class="c-course-description-line">
           </div>
         </div>
       </div>

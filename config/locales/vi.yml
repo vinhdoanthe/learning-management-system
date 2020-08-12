@@ -43,6 +43,7 @@ vi:
     See all: "Xem toàn bộ"
     Completed: "Hoàn thành"
     Back to courses: "Quay lại toàn bộ khoá học"
+    Send review: "GỬI ĐÁNH GIÁ"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -112,6 +113,7 @@ vi:
       create: 'hoàn thành dự án cuối khóa'
     student_feedback:
       create: 'đánh giá lớp học'
+      How do you feel about the class?: "Cảm nhận của con về buổi học như thế nào?"
     redeem_product_post:
       create: 'đổi quà'
       success: 'thành công'
@@ -149,6 +151,7 @@ vi:
     Class cancel: "Lớp bị hủy"
     Learning in center: "Học tại trung tâm"
     Learning in online: "Học Online"
+    Your other feelings: "Cảm nhận khác của con"
     batch:
       type: "Loại lớp học"
       batch_time: "Thời gian học"
@@ -334,6 +337,7 @@ vi:
         select_state: "Chọn trạng thái"
         select_academy: "Chọn học viện"
         select_time: "Chọn thời gian"
+    No homework: "Chưa có bài tập về nhà"
     user:
       name: "Người dùng"
       info: "Thông tin người dùng"

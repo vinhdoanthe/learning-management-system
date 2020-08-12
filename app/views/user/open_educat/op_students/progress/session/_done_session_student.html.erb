@@ -17,16 +17,29 @@
 <td align="center" width='90'>
   <% attendance_line = attendance_line(session.id, current_user.op_student.id) %>
   <% if !attendance_line.nil? and attendance_line.present %>
-    <span data-toggle='tooltip' title="Có đi học">
+    <span data-toggle='tooltip' title="<%= t('dashboard.Attend school')%>">
       <%= image_tag('global/images/check.png', style: 'width: 16px') %>
     </span>
   <% else %>
-    <span data-toggle="tooltip" title="Nghỉ học" >
+    <span data-toggle="tooltip" title="<%= t('dashboard.Absent')%>" >
       <%= image_tag('global/images/remove.png', style: 'width: 16px') %>
     </span>
   <% end %>
 </td>
-<td class="text-right p-r-0" style="white-space: nowrap">
+<td class="text-right p-r-0">
+  <% if !attendance_line.nil? and attendance_line.present %>
+    <span data-toggle="modal" data-target="#session_student_feedback" style='margin-right: 10px;'> 
+      <a class='student_feedback_modal' data-session='<%= session.id %>' data-toggle="tooltip" title='<%= t('my_class.detail.tooltip.feedback') %>'>
+        <span>
+          <%= image_tag('icon-heart.png', style: 'width: 37px;height: auto;cursor: pointer') %>
+        </span>
+      </a>
+    </span>
+  <% else %>
+    <span data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.feedback') %>" style="opacity: 0.2; margin-right: 10px">
+      <%= image_tag('icon-heart.png', style: 'width: 37px;height: auto;') %>
+    </span>
+  <% end %>
   <% if has_homework? current_user, session %>
     <a class='' href="/learning/view_question?session_id=<%= session.id %>" data-toggle="tooltip" data-session="<%= session.id %>" title='<%= t('my_class.detail.tooltip.homework') %>'>
       <span>
@@ -34,7 +47,7 @@
       </span>
     </a>
   <% else %>
-    <a data-toggle="tooltip" title='Chưa có bài tập về nhà' style="opacity:0.2">
+    <a data-toggle="tooltip" title='<%= t('adm.redeem.No homework')%>' style="opacity:0.2">
       <span>
         <%= image_tag('global/images/icon-BTVN.png', style: 'width: 32px;margin-right: 10px') %>
       </span>
@@ -78,14 +91,21 @@
   <% if session.lession_id.present? %>
     <a class='' href="/user/open_educat/op_students/student_homework?show_video=true&session=<%= session.id %>" data-toggle="tooltip" title='<%= t('my_class.detail.tooltip.video') %>' data-session="<%= session.id %>" >
       <span>
-        <%= image_tag('global/images/youtube-button.png', style: 'width: 32px') %>
+        <%= image_tag('global/images/32x32-icon-play-button.png', style: 'width: 32px;margin-right: 10px') %>
       </span>
     </a>
   <% else %>
-    <a class='' data-toggle="tooltip" title='<%= t('my_class.detail.tooltip.video') %>' style='opacity: 0.5'>
+    <a class='' data-toggle="tooltip" title='<%= t('my_class.detail.tooltip.video') %>' style='opacity: 0.2'>
       <span>
-        <%= image_tag('global/images/youtube-button.png', style: 'width: 32px') %>
+        <%= image_tag('global/images/32x32-icon-play-button.png', style: 'width: 32px;margin-right: 10px') %>
       </span>
     </a>
   <% end %>
+  <span data-toggle="modal" data-target="#session_photo">
+    <a href='/learning/op_session/session_photo?session_id=<%= session.id %>' data-remote='true' data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.picture') %>">
+      <span>
+        <%= image_tag('global/images/icon-image.png', style: 'width: 32px;') %>
+      </span>
+    </a>
+  </span>
 </td>
