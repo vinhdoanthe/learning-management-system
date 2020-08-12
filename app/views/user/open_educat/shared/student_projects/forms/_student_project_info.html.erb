@@ -1,5 +1,5 @@
 <%= tinymce_assets %>
-<%= form_with model: project, url: url, locals: false, format: :js, method: :post, html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
+<%= form_with model: project, url: url, remote: true, format: :js, method: :post, html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
 <%= f.hidden_field :batch_id, value: batch_id %>
 <div class='row' id="edit_student_project_upload">
   <div class='col-md-3'>
@@ -21,7 +21,7 @@
     <label>Học phần <span style="color: red">*</span></label>
   </div>
   <div class="col-md-8 project_detail_select">
-    <%= f.select :subject_id, options_for_select(subjects, project.subject_id), {} , { class: 'project_detail' }  %>
+    <%= f.select :subject_id, options_for_select(subjects, project.subject_id), {} , { class: 'project_detail', id: 'student_project_subject' }  %>
   </div>
 </div>
 <div class="project_name row">
@@ -264,6 +264,8 @@
 </style>
 <script>
   $("#edit_video_infomation").ready(function() {
+    subject_id = $('input[name="active_subject_project"]').val();
+    $('#student_project_subject').val(subject_id);
     $('.project_detail_select').append('<span class="fa fa-caret-down" style="position: absolute; right: 30px; top: 30%"></span>');
     $('.upload_project_presentation').on('click', function(e) {
       if ((e.target !== this) && ($(e.target).is($('#download-presentation'))))
