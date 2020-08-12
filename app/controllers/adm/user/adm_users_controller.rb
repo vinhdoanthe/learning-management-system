@@ -2,6 +2,8 @@ class Adm::User::AdmUsersController < ApplicationController
   before_action :check_role
   skip_before_action :verify_authenticity_token
 
+  @@filter_params = {}
+
   def index
     @allow_companies =  if current_user.is_operation_admin?
                         current_user.res_companies
@@ -12,12 +14,15 @@ class Adm::User::AdmUsersController < ApplicationController
 
   def filter_users
     service = Adm::User::AdmUsersService.new
-    users = service.user_index params, current_user
+    users = service.user_index params, current_user, @@filter_params
+
+    @@filter_params = params if (@@filter_params.reject{ |k, _| (k == 'page' || k == 'count') } != params.reject{ |k, _| k == 'page' })
+    @@filter_params['count'] = users[:count] if users[:count].present?
     page = params[:page].to_i
 
     respond_to do |format|
       format.html
-      format.js { render "/adm/user/adm_users/index", locals: { users: users, page: page }}
+      format.js { render "/adm/user/adm_users/index", locals: { users: users[:all_user], count: @@filter_params[:count], page: page }}
     end
   end
 

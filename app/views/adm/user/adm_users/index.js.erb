@@ -1,2 +1,2 @@
-$("#user_data_table").html("<%= j render('adm/user/adm_users/user', { users: users }) %>");
+$("#user_data_table").html("<%= j render('adm/user/adm_users/user', { users: users, page: page, count: count }) %>");
 $("#paginator").html("<%= j render('adm/user/adm_users/paginator', { page: page, users: users } ) %>");
