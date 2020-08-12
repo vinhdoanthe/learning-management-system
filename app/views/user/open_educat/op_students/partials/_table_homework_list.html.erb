@@ -6,39 +6,43 @@
       <% lesson_name = session.op_lession ? session.op_lession.name : session.op_subject.name %>
       <% evaluate = get_student_evaluate current_user, session %>
       <% if has_homework %>
-        <td width="60%">
+        <td>
           <a href="/learning/view_question?session_id=<%= session.id %>" class='student_homework_view'><%= lesson_name %></a>
           <input name='session_homework_name' value="<%= session.id %>" type="hidden">
         </td>
         <% homework_state = done_homework? current_user, session %> 
         <% if homework_state[:state] == 'done'%>
+          <td align='right' style="font-size: 10px; color: black;"><%= homework_state[:last_done].strftime("%H:%M %d/%m/%Y") %></td>
           <td align="right">
-            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" ><span class="label-edit label label-success" style="padding:6px; font-size: 10px; text-transform: uppercase; line-height: 10px; font-weight: 700;"><%= t('homework.done') %> <%= homework_state[:progress] %></span>
+            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" ><span class="label-edit label label-success" style="padding:6px; font-size: 11px; text-transform: initial; line-height: 7px; font-weight: 500;"><%= t('homework.done') %><%= homework_state[:progress] %></span>
             </a>
           </td>
         <% elsif homework_state == 'undone' %>
+          <td></td>
           <td align="right">
-            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" ><span class="label-edit label label-danger" style="padding:6px; font-size: 10px; text-transform: uppercase; line-height: 10px; font-weight: 700;"><%= t('homework.undone') %> <%= homework_state[:progress] %></span>
+            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" ><span class="label-edit label label-danger" style="padding:6px; font-size: 11px; text-transform: initial; line-height: 7px; font-weight: 500;"><%= t('homework.undone') %><%= homework_state[:progress] %></span>
             </a>
           </td>
         <% else %>
+          <td align='right' style="font-size: 10px; color: black;"><%= homework_state[:last_done].strftime("%H:%M %d/%m/%Y") if homework_state[:last_done].present? %></td>
           <td align="right">
-            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state"><span class="label-edit label label-primary" style="padding:6px; font-size: 10px; text-transform: uppercase; line-height: 10px; font-weight: 700;"><%= t('homework.doing') %> <%= homework_state[:progress] %></span>
+            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state"><span class="label-edit label label-primary" style="padding:6px; font-size: 11px; text-transform: initial; line-height: 7px; font-weight: 500;"><%= t('homework.doing') %> <%= homework_state[:progress] %></span>
             </a>
           </td>
         <% end %>
       <% else %>
-        <td width="60%">
-          <a style='opacity: 0.5'><%= lesson_name %></a>
+        <td>
+          <a style='color: #D7DFE9'><%= lesson_name %></a>
           <input name='session_homework_name' value="<%= session.id %>" type="hidden">
         </td>
-        <td align="right"><span class="label-edit label label-stop do_homework_state" style="font-size: 10px; text-transform: uppercase; line-height: 10px; font-weight: 700; padding: 6px" ><%= t('homework.no_homework') %></span></td>
+        <td></td>
+        <td align="right"><span class="label-edit label label-stop do_homework_state" style="font-size: 11px; text-transform: initial; line-height: 7px; font-weight: 500; padding: 6px" ><%= t('homework.no_homework') %></span></td>
       <% end %>
       <td align="right" style='padding-right: 0'>
         <% if has_homework %>
           <% if session.start_datetime >= Time.now %>
             <span title='Tạm khoá: Buổi học chưa diễn ra' data-toggle="tooltip">
-              <a style='opacity: 0.5' >
+              <a style='opacity: 0.1' >
                 <span>
                   <%= image_tag('global/images/icon-BTVN.png', style: 'width: 32px;margin-right: 10px') %>
                 </span>
@@ -55,7 +59,7 @@
           <% end %>
         <% else %>
           <span title="<%= t('my_class.detail.tooltip.homework') %>" data-toggle="tooltip">
-            <a style='opacity: 0.5'>
+            <a style='opacity: 0.1'>
               <span>
                 <%= image_tag('global/images/icon-BTVN.png', style: 'width: 32px;margin-right: 10px') %>
               </span>
@@ -74,7 +78,7 @@
           </span>
         <% else %>
           <span  title="<%= t('my_class.detail.tooltip.evaluation') %>" data-toggle="tooltip">
-            <a class='student_evaluate_view' style='opacity: 0.5' >
+            <a class='student_evaluate_view' style='opacity: 0.1' >
               <span>
                 <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px;margin-right: 10px') %>
               </span>
@@ -91,7 +95,7 @@
           <span>
         <% else %>
           <span data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.video') %>">
-            <a class='' style='opacity: 0.5'>
+            <a class='' style='opacity: 0.1'>
               <span>
                 <%= image_tag('global/images/youtube-button.png', style: 'width: 32px;') %>
               </span>
@@ -102,3 +106,10 @@
     </tr>
   <% end %>
 </tbody>
+
+<style>
+.student_homework_view {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+</style>

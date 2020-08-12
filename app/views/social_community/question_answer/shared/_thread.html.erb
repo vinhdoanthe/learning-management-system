@@ -2,11 +2,13 @@
   * thread
   * load_messages
 -->
+<% user = User::Account::User.where(id: thread.created_by).first %>
+<% student_name = user.op_student.present? ? user.op_student.full_name : 'Hỏi' %>
 <div class='fcc-anw qa-thread' >
   <!-- subject -->
   <div class="fcca-head">
-    <label>Hỏi:</label>
-    <p><%= thread.subject %> </p>
+    <label style="font-size: 12px; font-weight: 700; color: #0654BA"><%= student_name %></label>:
+    <p style='display: inline'><%= thread.subject %> </p>
   </div>
 
   <div class="fcca-main c-qa-thread-id" data-thread-id='<%= thread._id %>' id='thread_<%= thread._id %>'>
