@@ -119,3 +119,12 @@ button.public_project {
 .fc-header h3 {
   padding-bottom: 0 !important;
 }
+
+.course_project_list.fc-header {
+  border-bottom: none !important;
+  padding-bottom: 0px;
+}
+
+.course_project_list.fc-header h4{
+  text-transform: uppercase;
+}
