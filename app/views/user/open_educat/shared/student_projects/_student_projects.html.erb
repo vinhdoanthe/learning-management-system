@@ -11,6 +11,7 @@
   </div>
 <% else %>
   <% subjects.each do |id, level| %>
+    <input type='hidden' name='active_subject_project' value=''>
     <div class="box-product" >
       <% projects = subject_student_projects[id] %>
       <% if projects.blank? %>
@@ -71,3 +72,10 @@
     grid-auto-rows: 1fr;
   }
 </style>
+<script>
+  $('.upload_project').on('click', function(){
+    subject_id = $(this).data('subject');
+    $('input[name="active_subject_project"]').val(subject_id);
+  })
+</script>
+

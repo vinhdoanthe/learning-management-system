@@ -1,5 +1,6 @@
 //=require jquery
 //=require jquery_ujs
+//= require jquery.remotipart
 //=require layout.js
 //=require custom_js/opstudent.js
 //=require custom_js/learning.js
