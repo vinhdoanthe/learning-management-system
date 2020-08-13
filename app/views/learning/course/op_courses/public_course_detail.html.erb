@@ -58,7 +58,7 @@
             <% if !course_subject_detail.nil? && !course_subject_detail[:thumbnail].nil? %>
               <%= image_tag(course_subject_detail[:thumbnail]) %>
             <% else %>
-              <img src="assets/global/images/Bitmap3.png" alt="">
+              <%= image_tag('global/images/Bitmap3.png') %>
             <% end %>            
           </div>
           <hr class="c-course-description-line">

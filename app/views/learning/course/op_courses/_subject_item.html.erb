@@ -8,7 +8,7 @@
         <% if subject[:thumbnail].present? %>
           <%= image_tag subject[:thumbnail] %>
         <% else %>
-          <img src="assets/global/images/Bitmap3.png" alt="">
+          <%= image_tag('global/images/Bitmap3.png') %>
         <% end %>
         <div class='overlay-content'>
           <div class="content">
@@ -28,7 +28,7 @@
         <% if subject[:thumbnail].present? %>
           <%= image_tag subject[:thumbnail] %>
         <% else %>
-          <img src="assets/global/images/Bitmap3.png" alt="">
+          <%= image_tag('global/images/Bitmap3.png') %>
         <% end %>
         <div class="lock-layer"></div>
         <span class="lock-item"></span>
