@@ -1,4 +1,9 @@
-<%= render :partial => 'user/open_educat/op_students/modal/session_evaluation' %>
+<colgroup>
+  <col>
+  <col width="200">
+  <col width="110">
+  <col width="200px">
+</colgroup>
 <tbody>
   <% sessions.each do |session| %>
     <tr>
@@ -92,20 +97,21 @@
                 <%= image_tag('global/images/youtube-button.png', style: 'width: 32px;') %>
               </span>
             </a>
-          <span>
-        <% else %>
-          <span data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.video') %>">
-            <a class='' style='opacity: 0.1'>
-              <span>
-                <%= image_tag('global/images/youtube-button.png', style: 'width: 32px;') %>
+            <span>
+            <% else %>
+              <span data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.video') %>">
+                <a class='' style='opacity: 0.1'>
+                  <span>
+                    <%= image_tag('global/images/youtube-button.png', style: 'width: 32px;') %>
+                  </span>
+                </a>
               </span>
-            </a>
-          </span>
-        <% end %>
+            <% end %>
       </td>
     </tr>
   <% end %>
 </tbody>
+<%= render :partial => 'user/open_educat/op_students/modal/session_evaluation' %>
 
 <style>
 .student_homework_view {
