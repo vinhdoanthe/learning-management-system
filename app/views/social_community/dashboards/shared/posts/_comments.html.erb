@@ -1,7 +1,7 @@
 <div class="bnd-comment">
   <div class="bc-edit">
     <span>
-      <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
+      <%= User::Account::UserDecorator.new(current_user).display_avatar("100%").html_safe %>
     </span>
     <input placeholder="<%= t('social_community.new_comment_placeholder')%>" id="post_comment_input_<%= post.id %>" type="text" class="post-comment-input" data-post-id="<%= post.id %>" />
     <a href="#"><img class='post-comment-btn' data-post-id='<%= post.id %>' src="/global/images/send.png" alt=""></a>

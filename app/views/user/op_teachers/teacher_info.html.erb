@@ -14,7 +14,7 @@
         <div class="bp-photo">
           <span>
             <%#= image_tag(get_avatar) %>
-            <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
+            <%= User::Account::UserDecorator.new(current_user).display_avatar("100%").html_safe %>
           </span>
           <p>Giảng viên Fultime</p>
           <label><%= teacher.full_name if teacher.present? %></label>
