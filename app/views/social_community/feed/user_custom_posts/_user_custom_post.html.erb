@@ -4,7 +4,7 @@
       <div class="bca-parent">
         <div class="bpe-detail bpe-parent">
           <span class="">
-            <%= User::Account::UserDecorator.new(feed.created_user).display_avatar.html_safe %>
+            <%= User::Account::UserDecorator.new(feed.created_user).display_avatar("100%").html_safe %>
           </span>
           <p class="ucp--content"><b class="cmt-user color-0654BA"><%= feed.created_user.full_name %></b>&nbsp;<%= content %></p>
         </div>

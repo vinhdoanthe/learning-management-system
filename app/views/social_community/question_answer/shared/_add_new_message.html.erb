@@ -1,7 +1,7 @@
 <ul>
   <%= form_with(url: social_community_question_answer_messages_path, method: :post) do |f| %>
     <%= f.hidden_field :thread_id, :value => thread_id %>
-    <li><%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %></li>
+    <li><%= User::Account::UserDecorator.new(current_user).display_avatar("100%").html_safe %></li>
     <li>
       <%= f.text_field :content, class: 'new-reply', :placeholder => t('qa.add_new_message'), :id => "add_new_reply_#{thread_id}" %>
     </li>
