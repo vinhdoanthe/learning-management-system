@@ -4827,8 +4827,6 @@ a.ba-more {
   background: #f7f7f7;
 }
 
-.bc-edit span img {}
-
 .bc-edit input {
   width: calc(100% - 60px);
   border-radius: 30px;
@@ -6188,8 +6186,6 @@ padding: 16px;
     background: #f7f7f7;
   }
 
-  .bc-edit span img {}
-
   .bc-edit input {
     width: calc(100% - 60px);
     border-radius: 30px;
@@ -6224,15 +6220,15 @@ padding: 16px;
     background: #f7f7f7;
   }
 
-  .bpe-detail.bce-child span {
+.bpe-detail.bce-child span {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     overflow: hidden;
     background: #f7f7f7;
-  }
+}
 
-  .bpe-detail span img {}
+.bpe-detail span img, .bc-edit span img {object-position: center center;object-fit: contain;}
 
   .bpe-detail p {
     float: right;
@@ -7992,3 +7988,7 @@ h3.lms-course-title:before {
 
 .feeling-item-1 { margin-left: 5px;}
 .feeling-item-4 { margin-right: 5px;}
+
+*:focus {
+    outline: none;
+}
