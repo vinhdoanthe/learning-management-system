@@ -28,6 +28,9 @@
                   <%= User::Reward::CoinStarTransactionDecorator.new(coin_star_transaction).display_content.html_safe %>
                   </p>
                 </td>
+                <td align="right">
+                  <%= coin_star_transaction.created_at.strftime('%H:%M %d/%m%Y') %>
+                </td>
               </tr>
             <% end %> 
           </tbody>

@@ -280,11 +280,21 @@ en:
         select_time: "Select time"
   reward:
     you_were_reward: "You were rewarded"
+    you_were_redeem: "You were redeem"
+    had_minus: "had minus"
     star: "TEKY Star"
     coin: "TEKY Point"
     my_coin_star_transaction: "My TEKY Point and Star history"
     at: "at"
     no_transactions: "You have no TEKY Coin and Star reward."
+    because: 'because'
+    do_homework: 'done homework'
+    course: 'course'
+    attendance: 'intime attendance'
+    reward: 'reward'
+    complete_project: 'complete project'
+    feedback: 'feedback for session'
+    redeem: 'redeem'
   dashboard:
     leaders:
       title: "Outstanding Students"
