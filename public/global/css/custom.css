@@ -6212,6 +6212,18 @@ padding: 16px;
 
 .bpe-detail span img, .bc-edit span img {object-position: center center;object-fit: contain;}
 
+.bpe-detail.bpe-parent div.box-user-content {
+    width: calc(100% - 60px);
+    word-wrap: break-word;
+    float: right;
+    background: #D7DFE9;
+    border-radius: 6px;
+    color: #6D7278;
+    padding: 10px 20px 26px 20px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
   .bpe-detail p {
     float: right;
     background: #D7DFE9;
@@ -6224,6 +6236,7 @@ padding: 16px;
 
   .bpe-detail.bpe-parent p {
     width: calc(100% - 60px);
+    word-wrap: break-word;
   }
 
   .bpe-detail.bce-child p {
