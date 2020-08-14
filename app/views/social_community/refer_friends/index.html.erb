@@ -2,7 +2,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h3 class="color-fff text-transform">Giới thiệu bạn học</h3>
+        <h3 class="color-fff text-transform"><%= t('adm.learning.Introduce classmates')%></h3>
       </div>
     </div>
   </div>
@@ -13,40 +13,43 @@
           <div class="col-sm-4">
             <div class="step-detail">
               <span>1</span><br/>
-              <label>Bước 1</label>
-              <p>Click button giới thiệu</p>
+              <label class="text-uppercase font-bold"><%= t('adm.learning.Step')%> 1</label>
+              <p><%= t("adm.learning.Click the button SEND ADVICE")%></p>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="step-detail">
               <span>2</span><br/>
-              <label>Bước 2</label>
-              <p>Nhập thông tin vào form</p>
+              <label class="text-uppercase font-bold"><%= t('adm.learning.Step')%> 2</label>
+              <p><%= t("adm.learning.Enter information into the form")%></p>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="step-detail">
               <span>3</span><br/>
-              <label>Bước 3</label>
-              <p>Chờ đợi nhân quà</p>
+              <label class="text-uppercase font-bold"><%= t('adm.learning.Step')%> 3</label>
+              <p><%= t("adm.learning.Waiting to receive gifts")%></p>
             </div>
           </div>
-          <div class="col-sm-12 text-center m-t-20">
+          <div class="col-sm-12 text-center m-t-20 m-b-20">
             <!-- <p class="text-center m-b-20">Mời bạn bè của bạn tham gia học tại TEKY, chúng tôi sẽ cung cấp cho bạn 100 T-Coin và đồng thời bạn sẽ được giảm 20% cho lần đóng tiền học tiếp theo</p> -->
-            <button type="button" data-toggle="modal" data-target="#refer_friend_modal" data-backdrop="false" class="btn btn-primary btn-embossed bg-5DC2A7 text-transform" id="refer_friend_modal_button">Gửi lời mời</button>
+            <button type="button" style="height: 50px;" data-toggle="modal" data-target="#refer_friend_modal" data-backdrop="false" class="btn btn-primary btn-embossed bg-5DC2A7 text-transform" id="refer_friend_modal_button">Gửi lời mời</button>
           </div>
         </div>
       </div>
 
       <div class="table-responsive bo-table">
-        <table class="table table-hover">
+        <div class="fc-header">
+          <h3 class="p-l-0"><%= t("adm.List")%> <span class="color-16BD56"><%= t("adm.Presentee")%></span></h3>
+        </div>
+        <table class="table table-hover table-list-refer">
           <thead>
             <tr>
-              <th>Mã giới thiệu</th>
-              <th>Họ và tên phụ huynh</th>
-              <th>Điện thoại</th>
-              <th>Học sinh</th>
-              <th>Ngày giới thiệu</th>
+              <th><%= t("adm.Referral code")%></th>
+              <th><%= t("adm.Parent's name")%></th>
+              <th><%= t("adm.Phone")%></th>
+              <th><%= t("adm.student")%></th>
+              <th><%= t("adm.Refer date")%></th>
               <th></th>
             </tr>
           </thead>
