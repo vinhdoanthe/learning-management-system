@@ -30,7 +30,7 @@
         <% elsif session[:state] == Learning::Constant::Batch::Session::STATE_CANCEL %>
           <td class="bg-secondary text-center"><%= session[:state] %></td>
         <% end %>
-        <td>
+        <td align="center">
           <% if SocialCommunity::Photo.where(session_id: session[:id]).first.present? %>
           <span class="session_info">
             <a class="session_photo_modal" data-toggle="modal" data-target="#modal_adm_session_photo" data-session="<%= session[:id] %>">
@@ -45,15 +45,21 @@
           </span> 
           <% end %>
           <span class="session_info">
-            <a class="session_attendance_modal" data-toggle="modal" data-target="#modal_adm_session_attendance" data-session="<%= session[:id] %>">
-              <%= image_tag "global/images/icon-BTVN.png" %>
-            </a>
+            <% if session[:state] != 'done' %>
+              <a class="" style="opacity: 0.3" disabled>
+                <%= image_tag "global/images/icon-BTVN.png" %>
+              </a>
+            <% else %>
+              <a class="session_attendance_modal" data-toggle="modal" data-target="#modal_adm_session_attendance" data-session="<%= session[:id] %>">
+                <%= image_tag "global/images/icon-BTVN.png" %>
+              </a>
+            <% end %>
           </span> 
-          <span class="session_info">
+          <!--<span class="session_info">
             <a class="session_video_modal" data-toggle="modal" data-target="#modal_adm_session_video" data-session="<%= session[:id] %>">
-              <%= image_tag "global/images/youtube-button.png" %>
+              <%#= image_tag "global/images/youtube-button.png" %>
             </a>
-          </span> 
+          </span> -->
         </td>
         <td></td>
       </tr>
