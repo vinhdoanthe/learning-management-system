@@ -48,12 +48,12 @@
 
 <div id="item_course_description_modal" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content p-l-20 p-r-20">
-        <div class="modal-header">
+    <div class="modal-content">
+        <div class="modal-header p-l-20 p-r-20">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title color-5DC2A7"><%= course_subject_detail[:course_name]%></h4>
         </div>
-        <div class="modal-body">          
+        <div class="modal-body p-l-20 p-r-20">          
           <div class="text-center">            
             <% if !course_subject_detail.nil? && !course_subject_detail[:thumbnail].nil? %>
               <%= image_tag(course_subject_detail[:thumbnail]) %>
