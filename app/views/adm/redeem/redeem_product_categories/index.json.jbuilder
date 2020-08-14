@@ -1,0 +1,1 @@
+json.array! @adm_redeem_redeem_product_categories, partial: "adm_redeem_redeem_product_categories/adm_redeem_redeem_product_category", as: :adm_redeem_redeem_product_category

@@ -1,0 +1,1 @@
+json.partial! "adm_redeem_redeem_product_categories/adm_redeem_redeem_product_category", adm_redeem_redeem_product_category: @adm_redeem_redeem_product_category

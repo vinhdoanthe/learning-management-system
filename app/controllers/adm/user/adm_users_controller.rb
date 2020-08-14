@@ -28,7 +28,6 @@ class Adm::User::AdmUsersController < ApplicationController
 
   def search_users
     all_user = Adm::User::AdmUsersService.new.all_user
-
   end
 
   def login_as_user

@@ -42,4 +42,12 @@ namespace :adm do
     post 'delete_faq', action: 'delete_faq', as: 'delete_faq'
     get 'new', action: 'new', as: 'new'
   end
+  namespace :redeem do
+    resources :redeem_products
+    resources :redeem_product_items
+    resources :redeem_product_brands
+    resources :redeem_product_categories
+    resources :redeem_product_sizes
+    resources :redeem_product_colors
+  end
 end

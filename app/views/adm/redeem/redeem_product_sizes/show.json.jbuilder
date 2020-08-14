@@ -1,0 +1,1 @@
+json.partial! "adm_redeem_redeem_product_sizes/adm_redeem_redeem_product_size", adm_redeem_redeem_product_size: @adm_redeem_redeem_product_size

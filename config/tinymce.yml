@@ -65,4 +65,3 @@ fulleditor:
   lists_indent_on_tab: true
   extended_valid_elements: '+span[*],+i[*]'
   verify_html: false
-

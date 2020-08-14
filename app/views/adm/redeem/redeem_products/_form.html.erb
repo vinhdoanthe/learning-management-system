@@ -1,0 +1,17 @@
+<%= form_with(model: adm_redeem_redeem_product, local: true) do |form| %>
+<% if adm_redeem_redeem_product.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(adm_redeem_redeem_product.errors.count, "error") %> prohibited this adm_redeem_redeem_product from being saved:</h2>
+
+  <ul>
+    <% adm_redeem_redeem_product.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="actions">
+  <%= form.submit %>
+</div>
+<% end %>

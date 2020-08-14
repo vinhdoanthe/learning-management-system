@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_28_021704) do
+ActiveRecord::Schema.define(version: 2020_08_14_103444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -220,7 +220,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "project_id", comment: "Project"
     t.integer "employee_id", comment: "Employee"
     t.integer "department_id", comment: "Department"
-    t.integer "holiday_id", comment: "Leave Request"
     t.string "timesheet_invoice_type", comment: "Billable Type"
     t.integer "timesheet_invoice_id", comment: "Invoice"
     t.decimal "timesheet_revenue", comment: "Revenue"
@@ -794,7 +793,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "payment_tx_id", comment: "Last Transaction"
     t.integer "payment_acquirer_id", comment: "Payment Acquirer"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.integer "incoterms_id", comment: "Incoterms"
     t.index ["date_due"], name: "account_invoice_date_due_index"
     t.index ["date_invoice"], name: "account_invoice_date_invoice_index"
     t.index ["move_id"], name: "account_invoice_move_id_index"
@@ -1014,7 +1012,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "stock_move_id", comment: "Stock Move"
     t.index ["date"], name: "account_move_date_index"
   end
 
@@ -1646,6 +1643,14 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.string "users", comment: "Users"
+    t.string "fingers", comment: "Fingers"
+    t.string "records", comment: "Records"
+    t.string "firmware_version", comment: "Firmware Version"
+    t.string "state", comment: "State"
+    t.boolean "loss_connect", comment: "Loss connect"
+    t.string "last_mes", comment: "Last Message"
+    t.integer "error_count", comment: "Errors"
   end
 
   create_table "attendance_device_zk_line", id: :serial, comment: "attendance.device.zk.line", force: :cascade do |t|
@@ -2355,6 +2360,17 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "cert_cert", id: :serial, comment: "cert.cert", force: :cascade do |t|
+    t.string "name", comment: "Course Name"
+    t.integer "sequence", comment: "Sequence"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.index ["name"], name: "cert_cert_cert_unique", unique: true
+    t.index ["sequence"], name: "cert_cert_seq_uniq", unique: true
+  end
+
   create_table "change_password_user", id: :serial, comment: "Change Password Wizard User", force: :cascade do |t|
     t.integer "wizard_id", null: false, comment: "Wizard"
     t.integer "user_id", null: false, comment: "User"
@@ -2505,8 +2521,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "to_company_id", comment: "To Center"
     t.integer "to_course_id", comment: "To Course"
     t.integer "to_batch_id", comment: "To Batch"
-    t.string "code", null: false
-    t.index ["code"], name: "crm_claim_crm_claim_unique_code", unique: true
     t.index ["date"], name: "crm_claim_date_index"
     t.index ["team_id"], name: "crm_claim_team_id_index"
   end
@@ -2777,7 +2791,9 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "answersec", comment: "Time to Answer"
     t.string "sip_hangup_disposition", comment: "Sip Hangup Disposition"
     t.string "call_record", comment: "Record"
-    t.float "duration"
+    t.float "duration_moved1"
+    t.float "duration_moved2", comment: "Total Duration"
+    t.integer "duration", comment: "Total Duration"
     t.index ["team_id"], name: "crm_phonecall_team_id_index"
     t.index ["uuid"], name: "crm_phonecall_uuid_unique", unique: true
   end
@@ -2989,12 +3005,64 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.index ["res_partner_id"], name: "email_template_preview_res_partner_rel_res_partner_id_idx"
   end
 
+  create_table "emp_nontech_skills", id: :serial, comment: "emp.nontech.skills", force: :cascade do |t|
+    t.integer "applicant_id", comment: "Applicant"
+    t.integer "employee_id", comment: "Employee"
+    t.integer "nontech_id", comment: "Non-Technical Skills"
+    t.string "levels", comment: "Levels"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "emp_tech_skills", id: :serial, comment: "emp.tech.skills", force: :cascade do |t|
+    t.integer "applicant_id", comment: "applicant"
+    t.integer "employee_id", comment: "Employee"
+    t.integer "tech_id", comment: "Technical Skills"
+    t.string "levels", comment: "Levels"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
   create_table "employee_category_rel", id: false, comment: "RELATION BETWEEN hr_employee_category AND hr_employee", force: :cascade do |t|
     t.integer "category_id", null: false
     t.integer "emp_id", null: false
     t.index ["category_id", "emp_id"], name: "employee_category_rel_category_id_emp_id_key", unique: true
     t.index ["category_id"], name: "employee_category_rel_category_id_idx"
     t.index ["emp_id"], name: "employee_category_rel_emp_id_idx"
+  end
+
+  create_table "employee_certification", id: :serial, comment: "employee.certification", force: :cascade do |t|
+    t.integer "applicant_id", comment: "applicant"
+    t.integer "employee_id", comment: "Employee"
+    t.integer "course_id", comment: "Course Name"
+    t.string "name", comment: "Tên chứng chỉ"
+    t.string "levels", comment: "Cấp độ"
+    t.date "year", comment: "Năm hoàn thành"
+    t.binary "doc", comment: "Certificates"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "employee_education", id: :serial, comment: "employee.education", force: :cascade do |t|
+    t.integer "applicant_id", comment: "applicant"
+    t.integer "employee_id", comment: "Employee"
+    t.integer "type_id", comment: "Trình độ"
+    t.integer "institute_id", comment: "Trường đào tạo"
+    t.string "specialized", comment: "Chuyên nghành"
+    t.string "type_of_education", comment: "Loại hình đào tạo"
+    t.string "score", comment: "Xếp loại"
+    t.date "qualified_year", comment: "Năm tốt nghiệp"
+    t.binary "doc", comment: "Transcripts"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "employee_orientation", id: :serial, comment: "Employee Orientation", force: :cascade do |t|
@@ -3012,6 +3080,21 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.index ["state"], name: "employee_orientation_state_index"
+  end
+
+  create_table "employee_profession", id: :serial, comment: "employee.profession", force: :cascade do |t|
+    t.integer "applicant_id", comment: "applicant"
+    t.integer "employee_id", comment: "Employee"
+    t.string "name", comment: "Chức danh"
+    t.integer "job_id", comment: "Job Title"
+    t.string "location", comment: "Làm việc tại"
+    t.date "from_date", comment: "Ngày bắt đầu"
+    t.date "to_date", comment: "Ngày kết thúc"
+    t.binary "doc", comment: "Experience Certificates"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "employee_training", id: :serial, comment: "Employee Training", force: :cascade do |t|
@@ -3175,6 +3258,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.text "note", comment: "Note"
     t.integer "user_id", comment: "User"
     t.integer "event_type_id", comment: "Category"
+    t.string "student_name", comment: "Student Name"
     t.index ["name"], name: "event_registration_name_index"
   end
 
@@ -3340,6 +3424,23 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.string "employee_type", comment: "Employee Type"
   end
 
+  create_table "faq_answers", force: :cascade do |t|
+    t.string "content"
+    t.integer "created_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "faq_questions_id"
+    t.index ["faq_questions_id"], name: "index_faq_answers_on_faq_questions_id"
+  end
+
+  create_table "faq_questions", force: :cascade do |t|
+    t.string "content"
+    t.integer "created_by"
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "feeling_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -3414,7 +3515,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "create_uid", comment: "Creator"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "employee_id", comment: "Employee"
     t.index ["badge_id"], name: "gamification_badge_user_badge_id_index"
     t.index ["user_id"], name: "gamification_badge_user_user_id_index"
   end
@@ -3427,7 +3527,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "employee_id", null: false, comment: "Employee"
   end
 
   create_table "gamification_challenge", id: :serial, comment: "Gamification challenge", force: :cascade do |t|
@@ -3672,6 +3771,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "source_applicant_id", comment: "Source Applicant"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.integer "incomming_email_id", comment: "Incomming email"
+    t.datetime "metting_datetime_deadline", comment: "Meeting datetime deadline"
     t.index ["create_date"], name: "hr_applicant_create_date_index"
     t.index ["date_closed"], name: "hr_applicant_date_closed_index"
     t.index ["date_last_stage_update"], name: "hr_applicant_date_last_stage_update_index"
@@ -3724,6 +3824,12 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.float "total_work", comment: "Work Total"
     t.float "hours_ctv", comment: "Working Hours"
     t.integer "holiday_hours", comment: "Holiday Hours"
+    t.string "dayofweek", comment: "Day of Week"
+    t.float "worked_over_hours", comment: "Worked Over Hours"
+    t.float "worked_leave_hours", comment: "Worked Leave Hours"
+    t.date "date", comment: "Date"
+    t.integer "addition_id", comment: "Addition"
+    t.integer "task", comment: "Task"
     t.index ["employee_id"], name: "hr_attendance_employee_id_index"
   end
 
@@ -3733,7 +3839,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "checkin", comment: "Checkin"
     t.datetime "checkout", comment: "Checkout"
     t.integer "department_id", comment: "Department"
-    t.string "note", comment: "Note"
+    t.text "note", comment: "Note"
     t.integer "type", comment: "Type"
     t.string "state", comment: "State"
     t.date "date", comment: "Date"
@@ -3741,6 +3847,21 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.integer "type_id", comment: "Type"
+    t.integer "user_id", comment: "User"
+    t.integer "manager_id", comment: "Manager"
+    t.integer "bd_id", comment: "CEO"
+    t.integer "company_id", comment: "Company"
+    t.integer "confirm_uid", comment: "Confirm by"
+    t.integer "approved_uid", comment: "Approved by"
+    t.integer "stage_id", comment: "Stage"
+    t.float "available_leave_total", comment: "Leave days less"
+    t.float "employee_available_leave", comment: "Available Leave days"
+    t.integer "resource_calendar_id", comment: "Working Hours"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.string "name", comment: "Reason"
+    t.datetime "check_in", comment: "Checkin"
+    t.datetime "check_out", comment: "Checkout"
   end
 
   create_table "hr_attendance_addition_stage", id: :serial, comment: "attendance addition stages", force: :cascade do |t|
@@ -3858,6 +3979,16 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.index ["parent_id"], name: "hr_department_parent_id_index"
   end
 
+  create_table "hr_emergency_contact", id: :serial, comment: "HR Emergency Contact", force: :cascade do |t|
+    t.string "number", comment: "Number"
+    t.string "relation", comment: "Contact"
+    t.integer "employee_obj", comment: "Employee Obj"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
   create_table "hr_employee", id: :serial, comment: "Employee", force: :cascade do |t|
     t.datetime "message_last_post", comment: "Last Message Date"
     t.string "name", comment: "Name"
@@ -3921,6 +4052,28 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.string "contract_state", comment: "Status"
     t.decimal "timesheet_cost", comment: "Timesheet Cost"
     t.string "employee_code", comment: "Employee Code"
+    t.string "device_privilege", comment: "Device Privilege"
+    t.integer "total_fingers", comment: "Fingers"
+    t.string "work_state", comment: "Work State"
+    t.float "available_leave_total", comment: "Available Leave days"
+    t.date "joining_date", comment: "Joining date"
+    t.boolean "use_fingerprint", comment: "Use Fingerprint"
+    t.date "official_joining_date", comment: "Official joining date"
+    t.string "nation", comment: "Dân tộc"
+    t.string "tax_code", comment: "Mã số thuế TNCN"
+    t.string "current_address", comment: "Địa chỉ hiện nay"
+    t.string "bank_account_code", comment: "Số tài khoản"
+    t.string "bank_account_name", comment: "Ngân hàng"
+    t.string "personal_mobile", comment: "Mobile"
+    t.date "id_expiry_date", comment: "Expiry Date"
+    t.date "passport_expiry_date", comment: "Expiry Date"
+    t.string "insurance_state", comment: "Tình trạng giam gia BH"
+    t.string "insurance_code", comment: "Số sổ BHXH"
+    t.float "insurance_amount", comment: "Mức đóng"
+    t.string "insurance_month", comment: "Tháng tăng mới"
+    t.string "health_insurance_code", comment: "Số Thẻ BHYT"
+    t.string "health_insurance_place", comment: "Nơi khám chữa bệnh ban đầu"
+    t.integer "task", comment: "Task"
     t.index ["barcode"], name: "hr_employee_barcode_uniq", unique: true
     t.index ["company_id"], name: "hr_employee_company_id_index"
     t.index ["resource_id"], name: "hr_employee_resource_id_index"
@@ -3934,6 +4087,21 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.index ["name"], name: "hr_employee_category_name_uniq", unique: true
+  end
+
+  create_table "hr_employee_family", id: :serial, comment: "HR Employee Family", force: :cascade do |t|
+    t.string "member_name", comment: "Họ & Tên"
+    t.integer "employee_ref", comment: "Is Employee"
+    t.integer "employee_id", comment: "Employee"
+    t.string "relation", comment: "Quan hệ"
+    t.string "member_contact", comment: "Thông tin liên hệ"
+    t.integer "year_of_birth", comment: "Năm sinh"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.string "job", comment: "Nghề nghiệp"
+    t.integer "address", comment: "Nơi ở"
   end
 
   create_table "hr_employee_finger", id: :serial, comment: "Employee finger", force: :cascade do |t|
@@ -3964,6 +4132,29 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "hr_employee_task", id: :serial, comment: "hr.employee.task", force: :cascade do |t|
+    t.integer "employee_id", comment: "Employee"
+    t.string "task", comment: "Task"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "hr_employee_workday_standard", id: :serial, comment: "hr.employee.workday_standard", force: :cascade do |t|
+    t.string "month", comment: "Month"
+    t.integer "year", comment: "Year"
+    t.integer "work_day_standard", comment: "Công ngày trong tháng"
+    t.integer "work_shift_standard", comment: "Công ca trong tháng"
+    t.text "note", comment: "Note"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.index ["month", "year"], name: "hr_employee_workday_standard_month_year_uniq", unique: true
+  end
+
   create_table "hr_expense", id: :serial, comment: "Expense", force: :cascade do |t|
     t.string "name", null: false, comment: "Expense Description"
     t.date "date", comment: "Expense Date"
@@ -3992,6 +4183,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "sale_order_id", comment: "Sale Order"
     t.integer "manager_id", comment: "Manager"
     t.integer "claim_id", comment: "Claim"
+    t.integer "admission_claim_id", comment: "Claim"
     t.index ["state"], name: "hr_expense_state_index"
   end
 
@@ -4105,10 +4297,9 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "timesheet_generate", comment: "Generate Timesheet"
-    t.integer "timesheet_project_id", comment: "Internal Project"
-    t.integer "timesheet_task_id", comment: "Internal Task for timesheet"
     t.string "status", comment: "Status Type"
+    t.string "code", comment: "Leave Code"
+    t.text "note", comment: "Note"
   end
 
   create_table "hr_holidays_summary_dept", id: :serial, comment: "HR Leaves Summary Report By Department", force: :cascade do |t|
@@ -4123,6 +4314,16 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   create_table "hr_holidays_summary_employee", id: :serial, comment: "HR Leaves Summary Report By Employee", force: :cascade do |t|
     t.date "date_from", null: false, comment: "From"
     t.string "holiday_type", null: false, comment: "Select Leave Type"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "hr_institute", id: :serial, comment: "hr.institute", force: :cascade do |t|
+    t.string "name", comment: "Tên Trường"
+    t.integer "country_id", comment: "Country"
+    t.integer "state_id", comment: "State"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -4423,6 +4624,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.float "available_leave_total", comment: "Leave days less"
     t.float "employee_available_leave", comment: "Available Leave days"
     t.integer "resource_calendar_id", comment: "Working Hours"
+    t.integer "works_shift_total", comment: "Work total days"
+    t.integer "work_shift_standard", comment: "Công chuẩn trong tháng"
   end
 
   create_table "hr_work_schedule_line", id: :serial, comment: "hr.work.schedule.line", force: :cascade do |t|
@@ -4443,6 +4646,20 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.string "day", comment: "Day"
     t.string "state", comment: "State"
     t.integer "attendance_id", comment: "Attendance"
+    t.integer "manager_id", comment: "User"
+    t.integer "company_id", comment: "Company"
+    t.integer "total_work", comment: "Total work shift"
+    t.integer "total_leave", comment: "Total leave shift"
+  end
+
+  create_table "hr_work_schedule_report", id: :serial, comment: "Attendance Report Analytics", force: :cascade do |t|
+    t.date "start_date", null: false, comment: "Start Date"
+    t.date "end_date", null: false, comment: "End Date"
+    t.integer "company_id", comment: "Company"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "hr_work_schedule_stage", id: :serial, comment: "work schedule stages", force: :cascade do |t|
@@ -4472,6 +4689,14 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "id_attachment_rel", id: false, comment: "RELATION BETWEEN hr_employee AND ir_attachment", force: :cascade do |t|
+    t.integer "id_ref", null: false
+    t.integer "attach_ref", null: false
+    t.index ["attach_ref"], name: "id_attachment_rel_attach_ref_idx"
+    t.index ["id_ref", "attach_ref"], name: "id_attachment_rel_id_ref_attach_ref_key", unique: true
+    t.index ["id_ref"], name: "id_attachment_rel_id_ref_idx"
   end
 
   create_table "im_livechat_channel", id: :serial, comment: "Livechat Channel", force: :cascade do |t|
@@ -4804,7 +5029,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   end
 
   create_table "ir_exports", id: :serial, comment: "ir.exports", force: :cascade do |t|
-    t.string "name", null: false, comment: "Export Name"
+    t.string "name", comment: "Export Name"
     t.string "resource", comment: "Resource"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
@@ -6328,6 +6553,17 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.index ["wizard_id"], name: "muk_web_client_notification_user_rel_wizard_id_idx"
   end
 
+  create_table "nontech_nontech", id: :serial, comment: "nontech.nontech", force: :cascade do |t|
+    t.string "name", comment: "Name"
+    t.integer "sequence", comment: "Sequence"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.index ["name"], name: "nontech_nontech_nontech_unique", unique: true
+    t.index ["sequence"], name: "nontech_nontech_seq_uniq", unique: true
+  end
+
   create_table "note_note", id: :serial, comment: "Note", force: :cascade do |t|
     t.text "name", comment: "Note Summary"
     t.integer "user_id", comment: "Owner"
@@ -6406,7 +6642,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   create_table "op_admission", id: :serial, comment: "Admission", force: :cascade do |t|
     t.string "name", null: false, comment: "First Name"
     t.string "middle_name", limit: 128, comment: "Middle Name"
-    t.string "last_name", limit: 128, comment: "Last Name"
+    t.string "last_name", comment: "Last Name"
     t.integer "title", comment: "Title"
     t.string "application_number", limit: 16, null: false, comment: "Application Number"
     t.date "admission_date", comment: "Admission Date"
@@ -6418,7 +6654,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.string "street2", limit: 256, comment: "Street2"
     t.string "phone", limit: 16, comment: "Phone"
     t.string "mobile", limit: 16, comment: "Mobile"
-    t.string "email", limit: 256, comment: "Email"
+    t.string "email", comment: "Email"
     t.string "city", limit: 64, comment: "City"
     t.string "zip", limit: 8, comment: "Zip"
     t.integer "state_id", comment: "States"
@@ -6457,10 +6693,11 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.string "admission_mode", comment: "Mode"
     t.boolean "last_subject", comment: "Last Subject Sessions Created?"
     t.boolean "last_subject_sessions_created", comment: "Last Subject Sessions Created?"
-    t.integer "claim_id", comment: "Claim"
     t.integer "start_session_number", comment: "Start session"
     t.integer "parrent_partner_id", comment: "Customer"
+    t.integer "claim_id", comment: "Claim"
     t.integer "start_subject_id", comment: "Start subject"
+    t.integer "admission_claim_id", comment: "Claim"
   end
 
   create_table "op_admission_claim", id: :serial, comment: "Admission Claim", force: :cascade do |t|
@@ -6809,7 +7046,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "company_id", comment: "Company"
     t.integer "type_id", comment: "Type"
     t.string "level", comment: "Level"
-    t.integer "total", comment: "Total Students"
     t.datetime "message_last_post", comment: "Last Message Date"
     t.date "activity_date_deadline", comment: "Next Activity Deadline"
     t.string "select_place", comment: "Select Place"
@@ -6827,11 +7063,18 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "start_subject_id", comment: "Start Subject"
     t.string "timetable_display", comment: "Time table"
     t.date "expected_end_date", comment: "Expected End Date"
+    t.integer "total", comment: "Total Students"
+    t.integer "admission_in_batch", comment: "Admissions"
+    t.integer "student_on_count", comment: "Số HS đang học"
+    t.integer "student_off_count", comment: "Số HS nghỉ học"
+    t.integer "student_save_count", comment: "Số HS bảo lưu"
+    t.integer "session_offset_session_total"
+    t.integer "session_total"
+    t.integer "session_offset_total"
     t.index ["code"], name: "op_batch_unique_batch_code", unique: true
   end
 
-  create_table "op_batch_email_log", id: false, comment: "op.batch.email.log", force: :cascade do |t|
-    t.serial "id", null: false
+  create_table "op_batch_email_log", id: :serial, comment: "op.batch.email.log", force: :cascade do |t|
     t.integer "batch_id", comment: "Batch"
     t.integer "subject_id", comment: "Subject"
     t.integer "event_id", comment: "Event"
@@ -6839,6 +7082,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.index ["batch_id", "subject_id"], name: "op_batch_email_log_number_subject_batch", unique: true
   end
 
   create_table "op_batch_gen", id: :serial, comment: "op.batch.gen", force: :cascade do |t|
@@ -6852,6 +7096,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "write_date", comment: "Last Updated on"
     t.date "start_date", comment: "Start Date"
     t.boolean "skip_cancel", comment: "Skip cancel session"
+    t.integer "start_lession_id", comment: "Start lession"
+    t.integer "start_lesson_id", comment: "Start lesson"
   end
 
   create_table "op_batch_type", id: :serial, comment: "op.batch.type", force: :cascade do |t|
@@ -6930,6 +7176,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.string "equipments"
     t.string "prerequisites"
     t.text "competences"
+    t.integer "product_temp_id", comment: "Product"
+    t.integer "product_tmpl_id", comment: "Product"
     t.index ["code"], name: "op_course_unique_course_code", unique: true
   end
 
@@ -7559,11 +7807,11 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "faculty_id", null: false, comment: "Faculty"
     t.integer "classroom_id", comment: "Classroom"
     t.text "note", comment: "Note"
-    t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.datetime "message_last_post", comment: "Last Message Date"
   end
 
   create_table "op_session_offset_day", id: false, comment: "RELATION BETWEEN op_session_offset AND generate_student_test_room_day", force: :cascade do |t|
@@ -7615,7 +7863,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "is_present", comment: "Presend"
     t.boolean "present", comment: "Present"
     t.integer "batch_id", comment: "Batch"
     t.datetime "start_datetime", comment: "Start Time"
@@ -7664,6 +7911,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.string "birth_mm", comment: "Birth Month"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.string "parent_email", comment: "Parent email"
+    t.boolean "sended_email_lms", comment: "Sended email LMS"
+    t.boolean "verdify_email_lms", comment: "Verdify LMS"
   end
 
   create_table "op_student_attendance_report", id: :serial, comment: "student report", force: :cascade do |t|
@@ -7803,7 +8052,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   end
 
   create_table "op_timing", id: :serial, comment: "Period", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
     t.string "hour", null: false, comment: "Hours"
     t.string "minute", null: false, comment: "Minute"
     t.float "duration", comment: "Duration"
@@ -7814,6 +8062,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.boolean "active", comment: "Active"
+    t.string "name", limit: 128, comment: "Name"
   end
 
   create_table "orientation_checklist", id: :serial, comment: "Checklist", force: :cascade do |t|
@@ -7862,6 +8111,14 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.index ["state"], name: "orientation_request_state_index"
+  end
+
+  create_table "passport_attachment_rel", id: false, comment: "RELATION BETWEEN hr_employee AND ir_attachment", force: :cascade do |t|
+    t.integer "passport_ref", null: false
+    t.integer "attach_ref1", null: false
+    t.index ["attach_ref1"], name: "passport_attachment_rel_attach_ref1_idx"
+    t.index ["passport_ref", "attach_ref1"], name: "passport_attachment_rel_passport_ref_attach_ref1_key", unique: true
+    t.index ["passport_ref"], name: "passport_attachment_rel_passport_ref_idx"
   end
 
   create_table "payment_acquirer", id: :serial, comment: "Payment Acquirer", force: :cascade do |t|
@@ -8224,42 +8481,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.index ["sc_post_id"], name: "index_post_activities_on_sc_post_id"
   end
 
-  create_table "procurement_group", id: :serial, comment: "Procurement Requisition", force: :cascade do |t|
-    t.integer "partner_id", comment: "Partner"
-    t.string "name", null: false, comment: "Reference"
-    t.string "move_type", null: false, comment: "Delivery Type"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.integer "sale_id", comment: "Sale Order"
-  end
-
-  create_table "procurement_rule", id: :serial, comment: "Procurement Rule", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.boolean "active", comment: "Active"
-    t.string "group_propagation_option", comment: "Propagation of Procurement Group"
-    t.integer "group_id", comment: "Fixed Procurement Group"
-    t.string "action", null: false, comment: "Action"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "company_id", comment: "Company"
-    t.integer "location_id", comment: "Procurement Location"
-    t.integer "location_src_id", comment: "Source Location"
-    t.integer "route_id", null: false, comment: "Route"
-    t.string "procure_method", null: false, comment: "Move Supply Method"
-    t.integer "route_sequence", comment: "Route Sequence"
-    t.integer "picking_type_id", null: false, comment: "Operation Type"
-    t.integer "delay", comment: "Number of Days"
-    t.integer "partner_address_id", comment: "Partner Address"
-    t.boolean "propagate", comment: "Propagate cancel and split"
-    t.integer "warehouse_id", comment: "Served Warehouse"
-    t.integer "propagate_warehouse_id", comment: "Warehouse to Propagate"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
   create_table "product_attribute", id: :serial, comment: "Product Attribute", force: :cascade do |t|
     t.string "name", null: false, comment: "Name"
     t.integer "sequence", comment: "Sequence"
@@ -8305,6 +8526,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.integer "company_id", comment: "Company"
     t.index ["name", "attribute_id"], name: "product_attribute_value_value_company_uniq", unique: true
   end
 
@@ -8326,7 +8548,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
-    t.integer "removal_strategy_id", comment: "Force Removal Strategy"
     t.index ["name"], name: "product_category_name_index"
     t.index ["parent_id"], name: "product_category_parent_id_index"
     t.index ["parent_left"], name: "product_category_parent_left_index"
@@ -8342,6 +8563,18 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
     t.index ["invoice_state"], name: "product_margin_invoice_state_index"
+  end
+
+  create_table "product_order_attribute_line", id: :serial, comment: "product.order.attribute.line", force: :cascade do |t|
+    t.integer "order_line_id", null: false, comment: "Order Line"
+    t.integer "product_tmpl_id", null: false, comment: "Product Template"
+    t.integer "attribute_id", null: false, comment: "Attribute"
+    t.integer "value_id", null: false, comment: "Attribute Value"
+    t.integer "company_id", comment: "Company"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "product_packaging", id: :serial, comment: "Packaging", force: :cascade do |t|
@@ -8442,23 +8675,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.index ["product_tmpl_id"], name: "product_product_product_tmpl_id_index"
   end
 
-  create_table "product_putaway", id: :serial, comment: "Put Away Strategy", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "product_removal", id: :serial, comment: "Removal Strategy", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.string "method", null: false, comment: "Method"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
   create_table "product_supplier_taxes_rel", id: false, comment: "RELATION BETWEEN product_template AND account_tax", force: :cascade do |t|
     t.integer "prod_id", null: false
     t.integer "tax_id", null: false
@@ -8541,14 +8757,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.integer "pos_categ_id", comment: "Point of Sale Category"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.string "service_tracking", comment: "Service Tracking"
-    t.integer "responsible_id", null: false, comment: "Responsible"
-    t.float "sale_delay", comment: "Customer Lead Time"
-    t.string "tracking", null: false, comment: "Tracking"
-    t.text "description_picking", comment: "Description on Picking"
-    t.text "description_pickingout", comment: "Description on Delivery Orders"
-    t.text "description_pickingin", comment: "Description on Receptions"
-    t.integer "location_id", comment: "Location"
-    t.integer "warehouse_id", comment: "Warehouse"
     t.index ["company_id"], name: "product_template_company_id_index"
     t.index ["name"], name: "product_template_name_index"
   end
@@ -8807,7 +9015,45 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
   end
 
+  create_table "redeem_product_brands", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "redeem_product_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "redeem_product_colors", force: :cascade do |t|
+    t.string "name"
+    t.string "color_code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "redeem_product_items", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "company_id"
+    t.integer "size_id"
+    t.integer "color_id"
+    t.integer "transaction_id"
+    t.string "item_code"
+    t.string "state"
+    t.datetime "input_date"
+    t.datetime "release_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["color_id"], name: "index_redeem_product_items_on_color_id"
+    t.index ["company_id"], name: "index_redeem_product_items_on_company_id"
+    t.index ["product_id"], name: "index_redeem_product_items_on_product_id"
+    t.index ["size_id"], name: "index_redeem_product_items_on_size_id"
+    t.index ["transaction_id"], name: "index_redeem_product_items_on_transaction_id"
+  end
+
+  create_table "redeem_product_sizes", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -8816,31 +9062,30 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   create_table "redeem_products", force: :cascade do |t|
     t.string "name", limit: 255, null: false
     t.decimal "price", precision: 10, scale: 2
-    t.integer "category", null: false
-    t.string "available_color", limit: 255
-    t.string "available_size", limit: 255
-    t.string "brand", limit: 255
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
-    t.index ["category"], name: "index_redeem_products_on_category"
+    t.integer "category_id"
+    t.integer "brand_id"
     t.index ["name"], name: "index_redeem_products_on_name"
   end
 
   create_table "redeem_transactions", force: :cascade do |t|
     t.bigint "student_id", null: false
-    t.bigint "redeem_product_id", null: false
-    t.string "color", limit: 255, null: false
-    t.integer "size"
+    t.bigint "product_id", null: false
     t.decimal "amount", precision: 10, scale: 2
     t.decimal "total_paid", precision: 10, scale: 2
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "admin_note"
-    t.integer "company_id"
-    t.datetime "expected_time"
-    t.index ["redeem_product_id"], name: "index_redeem_transactions_on_redeem_product_id"
+    t.integer "delivery_company_id"
+    t.datetime "student_delivery_date"
+    t.integer "color_id"
+    t.integer "size_id"
+    t.datetime "operator_delivery_date"
+    t.datetime "actual_delivery_date"
+    t.index ["product_id"], name: "index_redeem_transactions_on_product_id"
     t.index ["student_id"], name: "index_redeem_transactions_on_student_id"
   end
 
@@ -9016,15 +9261,10 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.string "verify_date", comment: "Verify Date"
     t.string "openeducat_instance_hash_msg", comment: "Instance Hash Key Message"
     t.integer "project_time_mode_id", comment: "Project Time Unit"
-    t.integer "leave_timesheet_project_id", comment: "Internal Project"
-    t.integer "leave_timesheet_task_id", comment: "Leave Task"
     t.string "pad_key", comment: "Pad Api Key"
     t.text "cc", comment: "Mail CC"
     t.string "code", comment: "Code"
     t.string "kanban_state", comment: "Kanban color"
-    t.integer "propagation_minimum_delta", comment: "Minimum Delta for Propagation of a Date Change on moves linked together"
-    t.integer "internal_transit_location_id", comment: "Internal Transit Location"
-    t.float "security_lead", null: false, comment: "Sales Safety Days"
     t.index ["name"], name: "res_company_name_uniq", unique: true
     t.index ["parent_id"], name: "res_company_parent_id_index"
   end
@@ -9197,24 +9437,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.boolean "module_cmis_write", comment: "Store attachments in an external DMS instead of the Odoo Filestore"
     t.integer "student_test_survey_id", comment: "Student Test Survey"
     t.integer "default_survey_id", comment: "Default Survey"
-    t.integer "module_procurement_jit", comment: "Reservation"
-    t.boolean "module_product_expiry", comment: "Expiration Dates"
-    t.boolean "group_stock_production_lot", comment: "Lots & Serial Numbers"
-    t.boolean "group_stock_tracking_lot", comment: "Delivery Packages"
-    t.boolean "group_stock_tracking_owner", comment: "Consignment"
-    t.boolean "group_stock_adv_location", comment: "Multi-Step Routes"
-    t.boolean "group_warning_stock", comment: "Warnings"
-    t.boolean "use_propagation_minimum_delta", comment: "No Rescheduling Propagation"
-    t.boolean "module_stock_picking_batch", comment: "Batch Pickings"
-    t.boolean "module_stock_barcode", comment: "Barcode Scanner"
-    t.boolean "group_stock_multi_locations", comment: "Storage Locations"
-    t.boolean "group_stock_multi_warehouses", comment: "Multi-Warehouses"
-    t.boolean "module_stock_landed_costs", comment: "Landed Costs"
-    t.boolean "group_route_so_lines", comment: "Order-Specific Routes"
-    t.boolean "module_sale_order_dates", comment: "Delivery Date"
-    t.boolean "group_display_incoterm", comment: "Incoterms"
-    t.boolean "use_security_lead", comment: "Security Lead Time for Sales"
-    t.string "default_picking_policy", null: false, comment: "Shipping Management"
+    t.float "last_sync_time", comment: "Last Sync Time"
+    t.integer "max_shift_month", comment: "Giới hạn số ca trong tháng"
   end
 
   create_table "res_country", id: :serial, comment: "Country", force: :cascade do |t|
@@ -9427,7 +9651,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "last_time_entries_checked", comment: "Latest Invoices & Payments Matching Date"
     t.string "invoice_warn", null: false, comment: "Invoice"
     t.text "invoice_warn_msg", comment: "Message for Invoice"
-    t.string "sale_warn", comment: "Sales Order"
+    t.string "sale_warn", null: false, comment: "Sales Order"
     t.text "sale_warn_msg", comment: "Message for Sales Order"
     t.text "website_description", comment: "Website Partner Full Description"
     t.text "website_short_description", comment: "Website Partner Short Description"
@@ -9443,9 +9667,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.float "email_score"
     t.boolean "email_bounced", comment: "Email Bounced"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.string "picking_warn", null: false, comment: "Stock Picking"
-    t.text "picking_warn_msg", comment: "Message for Stock Picking"
     t.integer "phonecall_count", comment: "Phonecalls"
+    t.integer "claim_count", comment: "# Claims"
     t.index ["commercial_partner_id"], name: "res_partner_commercial_partner_id_index"
     t.index ["company_id"], name: "res_partner_company_id_index"
     t.index ["date"], name: "res_partner_date_index"
@@ -9580,6 +9803,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.boolean "voip_enable", comment: "Enable VoIP Phone"
     t.string "voip_user", comment: "Account"
     t.string "voip_pw", comment: "Password"
+    t.string "fb_id", comment: "fb ID"
+    t.index ["fb_id"], name: "res_users_fb_id_uniq", unique: true
     t.index ["login"], name: "res_users_login_key", unique: true
     t.index ["oauth_provider_id", "oauth_uid"], name: "res_users_uniq_users_oauth_provider_oauth_uid", unique: true
     t.index ["voip_user"], name: "res_users_voip_user_index"
@@ -9642,6 +9867,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.boolean "shift_doing", comment: "Do shift"
   end
 
   create_table "resource_calendar_attendance", id: :serial, comment: "Work Detail", force: :cascade do |t|
@@ -9792,13 +10018,9 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.string "order_mode", comment: "Order Mode"
     t.float "probability", comment: "Probability"
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.string "sale_order_type", comment: "Sale Type"
     t.string "business_model", comment: "Type"
+    t.string "sale_order_type", comment: "Sale Type"
     t.string "student_names", comment: "Students"
-    t.integer "incoterm", comment: "Incoterms"
-    t.string "picking_policy", null: false, comment: "Shipping Policy"
-    t.integer "warehouse_id", null: false, comment: "Warehouse"
-    t.integer "procurement_group_id", comment: "Procurement Group"
     t.index ["confirmation_date"], name: "sale_order_confirmation_date_index"
     t.index ["create_date"], name: "sale_order_create_date_index"
     t.index ["date_order"], name: "sale_order_date_order_index"
@@ -9821,7 +10043,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.decimal "price_reduce_taxinc", comment: "Price Reduce Tax inc"
     t.decimal "price_reduce_taxexcl", comment: "Price Reduce Tax excl"
     t.decimal "discount", comment: "Discount (%)"
-    t.integer "product_id", null: false, comment: "Product"
+    t.integer "product_id", comment: "Product"
     t.decimal "product_uom_qty", null: false, comment: "Quantity"
     t.integer "product_uom", null: false, comment: "Unit of Measure"
     t.decimal "qty_delivered", comment: "Delivered"
@@ -9856,8 +10078,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.boolean "is_service", comment: "Is a Service"
     t.string "gender", comment: "Gender"
     t.integer "start_session_number", comment: "Start session"
-    t.integer "product_packaging", comment: "Package"
-    t.integer "route_id", comment: "Route"
+    t.integer "product_tmpl_id", comment: "Product"
     t.index ["order_id"], name: "sale_order_line_order_id_index"
     t.index ["task_id"], name: "sale_order_line_task_id_index"
   end
@@ -9918,6 +10139,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.bigint "sc_post_id"
     t.string "state"
     t.string "permission"
+    t.integer "created_by"
     t.index ["sc_post_id"], name: "index_sc_student_projects_on_sc_post_id"
   end
 
@@ -9968,7 +10190,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.bigint "session_id"
     t.bigint "rewarded_by"
     t.bigint "rewarded_to"
-    t.integer "reward_type_id", limit: 2
+    t.integer "reward_type_id", limit: 2, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "sc_post_id"
@@ -10098,583 +10320,19 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
-  create_table "stock_backorder_confirmation", id: :serial, comment: "Backorder Confirmation", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_change_product_qty", id: :serial, comment: "Change Product Quantity", force: :cascade do |t|
-    t.integer "product_id", null: false, comment: "Product"
-    t.integer "product_tmpl_id", null: false, comment: "Template"
-    t.decimal "new_quantity", null: false, comment: "New Quantity on Hand"
-    t.integer "lot_id", comment: "Lot/Serial Number"
-    t.integer "location_id", null: false, comment: "Location"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_change_standard_price", id: :serial, comment: "Change Standard Price", force: :cascade do |t|
-    t.decimal "new_price", null: false, comment: "Price"
-    t.integer "counterpart_account_id", comment: "Counter-Part Account"
-    t.boolean "counterpart_account_id_required", comment: "Counter-Part Account Required"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_fixed_putaway_strat", id: :serial, comment: "stock.fixed.putaway.strat", force: :cascade do |t|
-    t.integer "putaway_id", null: false, comment: "Put Away Method"
-    t.integer "category_id", null: false, comment: "Product Category"
-    t.integer "fixed_location_id", null: false, comment: "Location"
-    t.integer "sequence", comment: "Priority"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_immediate_transfer", id: :serial, comment: "Immediate Transfer", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_incoterms", id: :serial, comment: "Incoterms", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.string "code", limit: 3, null: false, comment: "Code"
-    t.boolean "active", comment: "Active"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_inventory", id: :serial, comment: "Inventory", force: :cascade do |t|
-    t.string "name", null: false, comment: "Inventory Reference"
-    t.datetime "date", null: false, comment: "Inventory Date"
-    t.string "state", comment: "Status"
-    t.integer "company_id", null: false, comment: "Company"
-    t.integer "location_id", null: false, comment: "Inventoried Location"
-    t.integer "product_id", comment: "Inventoried Product"
-    t.integer "package_id", comment: "Inventoried Pack"
-    t.integer "partner_id", comment: "Inventoried Owner"
-    t.integer "lot_id", comment: "Inventoried Lot/Serial Number"
-    t.string "filter", null: false, comment: "Inventory of"
-    t.integer "category_id", comment: "Inventoried Category"
-    t.boolean "exhausted", comment: "Include Exhausted Products"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.date "accounting_date", comment: "Force Accounting Date"
-    t.index ["company_id"], name: "stock_inventory_company_id_index"
-    t.index ["state"], name: "stock_inventory_state_index"
-  end
-
-  create_table "stock_inventory_line", id: :serial, comment: "Inventory Line", force: :cascade do |t|
-    t.integer "inventory_id", comment: "Inventory"
-    t.integer "partner_id", comment: "Owner"
-    t.integer "product_id", null: false, comment: "Product"
-    t.string "product_name", comment: "Product Name"
-    t.string "product_code", comment: "Product Code"
-    t.integer "product_uom_id", null: false, comment: "Product Unit of Measure"
-    t.decimal "product_qty", comment: "Checked Quantity"
-    t.integer "location_id", null: false, comment: "Location"
-    t.string "location_name", comment: "Location Name"
-    t.integer "package_id", comment: "Pack"
-    t.integer "prod_lot_id", comment: "Lot/Serial Number"
-    t.string "prodlot_name", comment: "Serial Number Name"
-    t.integer "company_id", comment: "Company"
-    t.decimal "theoretical_qty", comment: "Theoretical Quantity"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["company_id"], name: "stock_inventory_line_company_id_index"
-    t.index ["inventory_id"], name: "stock_inventory_line_inventory_id_index"
-    t.index ["location_id"], name: "stock_inventory_line_location_id_index"
-    t.index ["package_id"], name: "stock_inventory_line_package_id_index"
-    t.index ["product_id"], name: "stock_inventory_line_product_id_index"
-  end
-
-  create_table "stock_location", id: :serial, comment: "Inventory Locations", force: :cascade do |t|
-    t.integer "parent_left"
-    t.integer "parent_right"
-    t.string "name", null: false, comment: "Location Name"
-    t.string "complete_name", comment: "Full Location Name"
-    t.boolean "active", comment: "Active"
-    t.string "usage", null: false, comment: "Location Type"
-    t.integer "location_id", comment: "Parent Location"
-    t.integer "partner_id", comment: "Owner"
-    t.text "comment", comment: "Additional Information"
-    t.integer "posx", comment: "Corridor (X)"
-    t.integer "posy", comment: "Shelves (Y)"
-    t.integer "posz", comment: "Height (Z)"
-    t.integer "company_id", comment: "Company"
-    t.boolean "scrap_location", comment: "Is a Scrap Location?"
-    t.boolean "return_location", comment: "Is a Return Location?"
-    t.integer "removal_strategy_id", comment: "Removal Strategy"
-    t.integer "putaway_strategy_id", comment: "Put Away Strategy"
-    t.string "barcode", comment: "Barcode"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.integer "valuation_in_account_id", comment: "Stock Valuation Account (Incoming)"
-    t.integer "valuation_out_account_id", comment: "Stock Valuation Account (Outgoing)"
-    t.index ["barcode", "company_id"], name: "stock_location_barcode_company_uniq", unique: true
-    t.index ["company_id"], name: "stock_location_company_id_index"
-    t.index ["location_id"], name: "stock_location_location_id_index"
-    t.index ["parent_left"], name: "stock_location_parent_left_index"
-    t.index ["parent_right"], name: "stock_location_parent_right_index"
-    t.index ["usage"], name: "stock_location_usage_index"
-  end
-
-  create_table "stock_location_path", id: :serial, comment: "Pushed Flow", force: :cascade do |t|
-    t.string "name", null: false, comment: "Operation Name"
-    t.integer "company_id", comment: "Company"
-    t.integer "route_id", null: false, comment: "Route"
-    t.integer "location_from_id", null: false, comment: "Source Location"
-    t.integer "location_dest_id", null: false, comment: "Destination Location"
-    t.integer "delay", comment: "Delay (days)"
-    t.integer "picking_type_id", null: false, comment: "Operation Type"
-    t.string "auto", null: false, comment: "Automatic Move"
-    t.boolean "propagate", comment: "Propagate cancel and split"
-    t.boolean "active", comment: "Active"
-    t.integer "warehouse_id", comment: "Warehouse"
-    t.integer "route_sequence", comment: "Route Sequence"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["auto"], name: "stock_location_path_auto_index"
-    t.index ["company_id"], name: "stock_location_path_company_id_index"
-    t.index ["location_dest_id"], name: "stock_location_path_location_dest_id_index"
-    t.index ["location_from_id"], name: "stock_location_path_location_from_id_index"
-  end
-
-  create_table "stock_location_route", id: :serial, comment: "Inventory Routes", force: :cascade do |t|
-    t.string "name", null: false, comment: "Route Name"
-    t.boolean "active", comment: "Active"
-    t.integer "sequence", comment: "Sequence"
-    t.boolean "product_selectable", comment: "Applicable on Product"
-    t.boolean "product_categ_selectable", comment: "Applicable on Product Category"
-    t.boolean "warehouse_selectable", comment: "Applicable on Warehouse"
-    t.integer "supplied_wh_id", comment: "Supplied Warehouse"
-    t.integer "supplier_wh_id", comment: "Supplying Warehouse"
-    t.integer "company_id", comment: "Company"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "sale_selectable", comment: "Selectable on Sales Order Line"
-    t.index ["company_id"], name: "stock_location_route_company_id_index"
-  end
-
-  create_table "stock_location_route_categ", id: false, comment: "RELATION BETWEEN stock_location_route AND product_category", force: :cascade do |t|
-    t.integer "route_id", null: false
-    t.integer "categ_id", null: false
-    t.index ["categ_id"], name: "stock_location_route_categ_categ_id_idx"
-    t.index ["route_id", "categ_id"], name: "stock_location_route_categ_route_id_categ_id_key", unique: true
-    t.index ["route_id"], name: "stock_location_route_categ_route_id_idx"
-  end
-
-  create_table "stock_location_route_move", id: false, comment: "RELATION BETWEEN stock_move AND stock_location_route", force: :cascade do |t|
-    t.integer "move_id", null: false
-    t.integer "route_id", null: false
-    t.index ["move_id", "route_id"], name: "stock_location_route_move_move_id_route_id_key", unique: true
-    t.index ["move_id"], name: "stock_location_route_move_move_id_idx"
-    t.index ["route_id"], name: "stock_location_route_move_route_id_idx"
-  end
-
-  create_table "stock_move", id: :serial, comment: "Stock Move", force: :cascade do |t|
-    t.string "name", null: false, comment: "Description"
-    t.integer "sequence", comment: "Sequence"
-    t.string "priority", comment: "Priority"
-    t.datetime "create_date", comment: "Creation Date"
-    t.datetime "date", null: false, comment: "Date"
-    t.integer "company_id", null: false, comment: "Company"
-    t.datetime "date_expected", null: false, comment: "Expected Date"
-    t.integer "product_id", null: false, comment: "Product"
-    t.decimal "ordered_qty", comment: "Ordered Quantity"
-    t.decimal "product_qty", comment: "Real Quantity"
-    t.decimal "product_uom_qty", null: false, comment: "Initial Demand"
-    t.integer "product_uom", null: false, comment: "Unit of Measure"
-    t.integer "product_packaging", comment: "Preferred Packaging"
-    t.integer "location_id", null: false, comment: "Source Location"
-    t.integer "location_dest_id", null: false, comment: "Destination Location"
-    t.integer "partner_id", comment: "Destination Address "
-    t.integer "picking_id", comment: "Transfer Reference"
-    t.text "note", comment: "Notes"
-    t.string "state", comment: "Status"
-    t.float "price_unit", comment: "Unit Price"
-    t.string "origin", comment: "Source Document"
-    t.string "procure_method", null: false, comment: "Supply Method"
-    t.boolean "scrapped", comment: "Scrapped"
-    t.integer "group_id", comment: "Procurement Group"
-    t.integer "rule_id", comment: "Procurement Rule"
-    t.integer "push_rule_id", comment: "Push Rule"
-    t.boolean "propagate", comment: "Propagate cancel and split"
-    t.integer "picking_type_id", comment: "Operation Type"
-    t.integer "inventory_id", comment: "Inventory"
-    t.integer "origin_returned_move_id", comment: "Origin return move"
-    t.integer "restrict_partner_id", comment: "Owner "
-    t.integer "warehouse_id", comment: "Warehouse"
-    t.boolean "additional", comment: "Whether the move was added after the picking's confirmation"
-    t.string "reference", comment: "Reference"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "to_refund", comment: "To Refund (update SO/PO)"
-    t.float "value", comment: "Value"
-    t.float "remaining_qty", comment: "Remaining Qty"
-    t.float "remaining_value", comment: "Remaining Value"
-    t.integer "sale_line_id", comment: "Sale Line"
-    t.index ["company_id"], name: "stock_move_company_id_index"
-    t.index ["create_date"], name: "stock_move_create_date_index"
-    t.index ["date"], name: "stock_move_date_index"
-    t.index ["date_expected"], name: "stock_move_date_expected_index"
-    t.index ["location_dest_id"], name: "stock_move_location_dest_id_index"
-    t.index ["location_id"], name: "stock_move_location_id_index"
-    t.index ["name"], name: "stock_move_name_index"
-    t.index ["picking_id"], name: "stock_move_picking_id_index"
-    t.index ["product_id", "location_id", "location_dest_id", "company_id", "state"], name: "stock_move_product_location_index"
-    t.index ["product_id"], name: "stock_move_product_id_index"
-    t.index ["state"], name: "stock_move_state_index"
-  end
-
-  create_table "stock_move_line", id: :serial, comment: "Packing Operation", force: :cascade do |t|
-    t.integer "picking_id", comment: "Stock Picking"
-    t.integer "move_id", comment: "Stock Move"
-    t.integer "product_id", comment: "Product"
-    t.integer "product_uom_id", null: false, comment: "Unit of Measure"
-    t.decimal "product_qty", comment: "Real Reserved Quantity"
-    t.decimal "product_uom_qty", null: false, comment: "Reserved"
-    t.decimal "ordered_qty", comment: "Ordered Quantity"
-    t.decimal "qty_done", comment: "Done"
-    t.integer "package_id", comment: "Source Package"
-    t.integer "lot_id", comment: "Lot"
-    t.string "lot_name", comment: "Lot/Serial Number"
-    t.integer "result_package_id", comment: "Destination Package"
-    t.datetime "date", null: false, comment: "Date"
-    t.integer "owner_id", comment: "Owner"
-    t.integer "location_id", null: false, comment: "From"
-    t.integer "location_dest_id", null: false, comment: "To"
-    t.string "state", comment: "Status"
-    t.string "reference", comment: "Reference"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_move_line_consume_rel", id: false, comment: "RELATION BETWEEN stock_move_line AND stock_move_line", force: :cascade do |t|
-    t.integer "consume_line_id", null: false
-    t.integer "produce_line_id", null: false
-    t.index ["consume_line_id", "produce_line_id"], name: "stock_move_line_consume_rel_consume_line_id_produce_line_id_key", unique: true
-    t.index ["consume_line_id"], name: "stock_move_line_consume_rel_consume_line_id_idx"
-    t.index ["produce_line_id"], name: "stock_move_line_consume_rel_produce_line_id_idx"
-  end
-
-  create_table "stock_move_move_rel", id: false, comment: "RELATION BETWEEN stock_move AND stock_move", force: :cascade do |t|
-    t.integer "move_orig_id", null: false
-    t.integer "move_dest_id", null: false
-    t.index ["move_dest_id"], name: "stock_move_move_rel_move_dest_id_idx"
-    t.index ["move_orig_id", "move_dest_id"], name: "stock_move_move_rel_move_orig_id_move_dest_id_key", unique: true
-    t.index ["move_orig_id"], name: "stock_move_move_rel_move_orig_id_idx"
-  end
-
-  create_table "stock_overprocessed_transfer", id: :serial, comment: "stock.overprocessed.transfer", force: :cascade do |t|
-    t.integer "picking_id", comment: "Picking"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_picking", id: :serial, comment: "Transfer", force: :cascade do |t|
-    t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.string "name", comment: "Reference"
-    t.string "origin", comment: "Source Document"
-    t.text "note", comment: "Notes"
-    t.integer "backorder_id", comment: "Back Order of"
-    t.string "move_type", null: false, comment: "Shipping Policy"
-    t.string "state", comment: "Status"
-    t.integer "group_id", comment: "Procurement Group"
-    t.string "priority", comment: "Priority"
-    t.datetime "scheduled_date", comment: "Scheduled Date"
-    t.datetime "date", comment: "Creation Date"
-    t.datetime "date_done", comment: "Date of Transfer"
-    t.integer "location_id", null: false, comment: "Source Location"
-    t.integer "location_dest_id", null: false, comment: "Destination Location"
-    t.integer "picking_type_id", null: false, comment: "Operation Type"
-    t.integer "partner_id", comment: "Partner"
-    t.integer "company_id", null: false, comment: "Company"
-    t.integer "owner_id", comment: "Owner"
-    t.boolean "printed", comment: "Printed"
-    t.boolean "is_locked", comment: "Is Locked"
-    t.date "activity_date_deadline", comment: "Next Activity Deadline"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.integer "sale_id", comment: "Sales Order"
-    t.index ["backorder_id"], name: "stock_picking_backorder_id_index"
-    t.index ["company_id"], name: "stock_picking_company_id_index"
-    t.index ["date"], name: "stock_picking_date_index"
-    t.index ["name", "company_id"], name: "stock_picking_name_uniq", unique: true
-    t.index ["name"], name: "stock_picking_name_index"
-    t.index ["origin"], name: "stock_picking_origin_index"
-    t.index ["priority"], name: "stock_picking_priority_index"
-    t.index ["scheduled_date"], name: "stock_picking_scheduled_date_index"
-    t.index ["state"], name: "stock_picking_state_index"
-  end
-
-  create_table "stock_picking_backorder_rel", id: false, comment: "RELATION BETWEEN stock_backorder_confirmation AND stock_picking", force: :cascade do |t|
-    t.integer "stock_backorder_confirmation_id", null: false
-    t.integer "stock_picking_id", null: false
-    t.index ["stock_backorder_confirmation_id", "stock_picking_id"], name: "stock_picking_backorder_rel_stock_backorder_confirmation_id_key", unique: true
-    t.index ["stock_backorder_confirmation_id"], name: "stock_picking_backorder_rel_stock_backorder_confirmation_id_idx"
-    t.index ["stock_picking_id"], name: "stock_picking_backorder_rel_stock_picking_id_idx"
-  end
-
-  create_table "stock_picking_transfer_rel", id: false, comment: "RELATION BETWEEN stock_immediate_transfer AND stock_picking", force: :cascade do |t|
-    t.integer "stock_immediate_transfer_id", null: false
-    t.integer "stock_picking_id", null: false
-    t.index ["stock_immediate_transfer_id", "stock_picking_id"], name: "stock_picking_transfer_rel_stock_immediate_transfer_id_stoc_key", unique: true
-    t.index ["stock_immediate_transfer_id"], name: "stock_picking_transfer_rel_stock_immediate_transfer_id_idx"
-    t.index ["stock_picking_id"], name: "stock_picking_transfer_rel_stock_picking_id_idx"
-  end
-
-  create_table "stock_picking_type", id: :serial, comment: "The operation type determines the picking view", force: :cascade do |t|
-    t.string "name", null: false, comment: "Operation Types Name"
-    t.integer "color", comment: "Color"
-    t.integer "sequence", comment: "Sequence"
-    t.integer "sequence_id", null: false, comment: "Reference Sequence"
-    t.integer "default_location_src_id", comment: "Default Source Location"
-    t.integer "default_location_dest_id", comment: "Default Destination Location"
-    t.string "code", null: false, comment: "Type of Operation"
-    t.integer "return_picking_type_id", comment: "Operation Type for Returns"
-    t.boolean "show_entire_packs", comment: "Allow moving packs"
-    t.integer "warehouse_id", comment: "Warehouse"
-    t.boolean "active", comment: "Active"
-    t.boolean "use_create_lots", comment: "Create New Lots/Serial Numbers"
-    t.boolean "use_existing_lots", comment: "Use Existing Lots/Serial Numbers"
-    t.boolean "show_operations", comment: "Show Detailed Operations"
-    t.boolean "show_reserved", comment: "Show Reserved"
-    t.integer "barcode_nomenclature_id", comment: "Barcode Nomenclature"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_production_lot", id: :serial, comment: "Lot/Serial", force: :cascade do |t|
-    t.datetime "message_last_post", comment: "Last Message Date"
-    t.string "name", null: false, comment: "Lot/Serial Number"
-    t.string "ref", comment: "Internal Reference"
-    t.integer "product_id", null: false, comment: "Product"
-    t.integer "product_uom_id", comment: "Unit of Measure"
-    t.datetime "create_date", comment: "Creation Date"
-    t.integer "create_uid", comment: "Created by"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name", "product_id"], name: "stock_production_lot_name_ref_uniq", unique: true
-  end
-
-  create_table "stock_quant", id: :serial, comment: "Quants", force: :cascade do |t|
-    t.integer "product_id", null: false, comment: "Product"
-    t.integer "company_id", comment: "Company"
-    t.integer "location_id", null: false, comment: "Location"
-    t.integer "lot_id", comment: "Lot/Serial Number"
-    t.integer "package_id", comment: "Package"
-    t.integer "owner_id", comment: "Owner"
-    t.float "quantity", null: false, comment: "Quantity"
-    t.float "reserved_quantity", null: false, comment: "Reserved Quantity"
-    t.datetime "in_date", comment: "Incoming Date"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_quant_package", id: :serial, comment: "Physical Packages", force: :cascade do |t|
-    t.string "name", comment: "Package Reference"
-    t.integer "packaging_id", comment: "Package Type"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["name"], name: "stock_quant_package_name_index"
-    t.index ["packaging_id"], name: "stock_quant_package_packaging_id_index"
-  end
-
-  create_table "stock_quantity_history", id: :serial, comment: "Stock Quantity History", force: :cascade do |t|
-    t.integer "compute_at_date", comment: "Compute"
-    t.datetime "date", comment: "Inventory at Date"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_return_picking", id: :serial, comment: "Return Picking", force: :cascade do |t|
-    t.integer "picking_id", comment: "Picking"
-    t.boolean "move_dest_exists", comment: "Chained Move Exists"
-    t.integer "original_location_id", comment: "Original Location"
-    t.integer "parent_location_id", comment: "Parent Location"
-    t.integer "location_id", comment: "Return Location"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_return_picking_line", id: :serial, comment: "stock.return.picking.line", force: :cascade do |t|
-    t.integer "product_id", null: false, comment: "Product"
-    t.decimal "quantity", null: false, comment: "Quantity"
-    t.integer "wizard_id", comment: "Wizard"
-    t.integer "move_id", comment: "Move"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.boolean "to_refund", comment: "To Refund (update SO/PO)"
-  end
-
-  create_table "stock_route_product", id: false, comment: "RELATION BETWEEN stock_location_route AND product_template", force: :cascade do |t|
-    t.integer "route_id", null: false
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "stock_route_product_product_id_idx"
-    t.index ["route_id", "product_id"], name: "stock_route_product_route_id_product_id_key", unique: true
-    t.index ["route_id"], name: "stock_route_product_route_id_idx"
-  end
-
-  create_table "stock_route_warehouse", id: false, comment: "RELATION BETWEEN stock_location_route AND stock_warehouse", force: :cascade do |t|
-    t.integer "route_id", null: false
-    t.integer "warehouse_id", null: false
-    t.index ["route_id", "warehouse_id"], name: "stock_route_warehouse_route_id_warehouse_id_key", unique: true
-    t.index ["route_id"], name: "stock_route_warehouse_route_id_idx"
-    t.index ["warehouse_id"], name: "stock_route_warehouse_warehouse_id_idx"
-  end
-
-  create_table "stock_scheduler_compute", id: :serial, comment: "Run Scheduler Manually", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_scrap", id: :serial, comment: "stock.scrap", force: :cascade do |t|
-    t.string "name", null: false, comment: "Reference"
-    t.string "origin", comment: "Source Document"
-    t.integer "product_id", null: false, comment: "Product"
-    t.integer "product_uom_id", null: false, comment: "Unit of Measure"
-    t.integer "lot_id", comment: "Lot"
-    t.integer "package_id", comment: "Package"
-    t.integer "owner_id", comment: "Owner"
-    t.integer "move_id", comment: "Scrap Move"
-    t.integer "picking_id", comment: "Picking"
-    t.integer "location_id", null: false, comment: "Location"
-    t.integer "scrap_location_id", null: false, comment: "Scrap Location"
-    t.float "scrap_qty", null: false, comment: "Quantity"
-    t.string "state", comment: "Status"
-    t.datetime "date_expected", comment: "Expected Date"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_traceability_report", id: :serial, comment: "stock.traceability.report", force: :cascade do |t|
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_warehouse", id: :serial, comment: "Warehouse", force: :cascade do |t|
-    t.string "name", null: false, comment: "Warehouse Name"
-    t.boolean "active", comment: "Active"
-    t.integer "company_id", null: false, comment: "Company"
-    t.integer "partner_id", comment: "Address"
-    t.integer "view_location_id", null: false, comment: "View Location"
-    t.integer "lot_stock_id", null: false, comment: "Location Stock"
-    t.string "code", limit: 5, null: false, comment: "Short Name"
-    t.string "reception_steps", null: false, comment: "Incoming Shipments"
-    t.string "delivery_steps", null: false, comment: "Outgoing Shippings"
-    t.integer "wh_input_stock_loc_id", comment: "Input Location"
-    t.integer "wh_qc_stock_loc_id", comment: "Quality Control Location"
-    t.integer "wh_output_stock_loc_id", comment: "Output Location"
-    t.integer "wh_pack_stock_loc_id", comment: "Packing Location"
-    t.integer "mto_pull_id", comment: "MTO rule"
-    t.integer "pick_type_id", comment: "Pick Type"
-    t.integer "pack_type_id", comment: "Pack Type"
-    t.integer "out_type_id", comment: "Out Type"
-    t.integer "in_type_id", comment: "In Type"
-    t.integer "int_type_id", comment: "Internal Type"
-    t.integer "crossdock_route_id", comment: "Crossdock Route"
-    t.integer "reception_route_id", comment: "Receipt Route"
-    t.integer "delivery_route_id", comment: "Delivery Route"
-    t.integer "default_resupply_wh_id", comment: "Default Resupply Warehouse"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-    t.index ["code", "company_id"], name: "stock_warehouse_warehouse_code_uniq", unique: true
-    t.index ["company_id"], name: "stock_warehouse_company_id_index"
-    t.index ["name", "company_id"], name: "stock_warehouse_warehouse_name_uniq", unique: true
-    t.index ["name"], name: "stock_warehouse_name_index"
-  end
-
-  create_table "stock_warehouse_orderpoint", id: :serial, comment: "Minimum Inventory Rule", force: :cascade do |t|
-    t.string "name", null: false, comment: "Name"
-    t.boolean "active", comment: "Active"
-    t.integer "warehouse_id", null: false, comment: "Warehouse"
-    t.integer "location_id", null: false, comment: "Location"
-    t.integer "product_id", null: false, comment: "Product"
-    t.decimal "product_min_qty", null: false, comment: "Minimum Quantity"
-    t.decimal "product_max_qty", null: false, comment: "Maximum Quantity"
-    t.decimal "qty_multiple", null: false, comment: "Qty Multiple"
-    t.integer "group_id", comment: "Procurement Group"
-    t.integer "company_id", null: false, comment: "Company"
-    t.integer "lead_days", comment: "Lead Time"
-    t.string "lead_type", null: false, comment: "Lead Type"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_warn_insufficient_qty_scrap", id: :serial, comment: "stock.warn.insufficient.qty.scrap", force: :cascade do |t|
-    t.integer "scrap_id", comment: "Scrap"
-    t.integer "product_id", null: false, comment: "Product"
-    t.integer "location_id", null: false, comment: "Location"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
-  end
-
-  create_table "stock_wh_resupply_table", id: false, comment: "RELATION BETWEEN stock_warehouse AND stock_warehouse", force: :cascade do |t|
-    t.integer "supplied_wh_id", null: false
-    t.integer "supplier_wh_id", null: false
-    t.index ["supplied_wh_id", "supplier_wh_id"], name: "stock_wh_resupply_table_supplied_wh_id_supplier_wh_id_key", unique: true
-    t.index ["supplied_wh_id"], name: "stock_wh_resupply_table_supplied_wh_id_idx"
-    t.index ["supplier_wh_id"], name: "stock_wh_resupply_table_supplier_wh_id_idx"
-  end
-
   create_table "student_attendance", id: :serial, comment: "student.attendance", force: :cascade do |t|
     t.date "from_date", null: false, comment: "From Date"
     t.date "to_date", null: false, comment: "To Date"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "student_convert_lead", id: :serial, comment: "student.convert.lead", force: :cascade do |t|
+    t.integer "team_id", comment: "Sales Channel"
+    t.integer "user_id", comment: "Sales Person"
+    t.integer "stage_id", comment: "Stage"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -10843,6 +10501,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.boolean "active", comment: "active"
   end
 
   create_table "student_test_wizard", id: :serial, comment: "student.test.wizard", force: :cascade do |t|
@@ -11086,6 +10745,17 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.index ["user_id"], name: "team_favorite_user_rel_user_id_idx"
   end
 
+  create_table "tech_tech", id: :serial, comment: "tech.tech", force: :cascade do |t|
+    t.string "name", comment: "Name"
+    t.integer "sequence", comment: "Sequence"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+    t.index ["name"], name: "tech_tech_tech_unique", unique: true
+    t.index ["sequence"], name: "tech_tech_seq_uniq", unique: true
+  end
+
   create_table "teky_qldc", id: :serial, comment: "Quản lý đổi ca", force: :cascade do |t|
     t.integer "employee_id", comment: "Employee"
     t.datetime "create_date", comment: "Create Date"
@@ -11191,14 +10861,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
     t.index ["op_batch_id"], name: "index_user_questions_on_op_batch_id"
     t.index ["question_id"], name: "index_user_questions_on_question_id"
     t.index ["student_id"], name: "index_user_questions_on_student_id"
-  end
-
-  create_table "user_simulation_wizard", id: :serial, comment: "user simulation wizard", force: :cascade do |t|
-    t.integer "user_id", comment: "User"
-    t.integer "create_uid", comment: "Created by"
-    t.datetime "create_date", comment: "Created on"
-    t.integer "write_uid", comment: "Last Updated by"
-    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "users", force: :cascade do |t|
@@ -11531,7 +11193,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "account_analytic_line", "account_move_line", column: "move_id", name: "account_analytic_line_move_id_fkey", on_delete: :cascade
   add_foreign_key "account_analytic_line", "hr_department", column: "department_id", name: "account_analytic_line_department_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "hr_employee", column: "employee_id", name: "account_analytic_line_employee_id_fkey", on_delete: :nullify
-  add_foreign_key "account_analytic_line", "hr_holidays", column: "holiday_id", name: "account_analytic_line_holiday_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "product_product", column: "product_id", name: "account_analytic_line_product_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "product_uom", name: "account_analytic_line_product_uom_id_fkey", on_delete: :nullify
   add_foreign_key "account_analytic_line", "project_project", column: "project_id", name: "account_analytic_line_project_id_fkey", on_delete: :nullify
@@ -11720,7 +11381,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "account_invoice", "res_users", column: "create_uid", name: "account_invoice_create_uid_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "res_users", column: "user_id", name: "account_invoice_user_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "res_users", column: "write_uid", name: "account_invoice_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "account_invoice", "stock_incoterms", column: "incoterms_id", name: "account_invoice_incoterms_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "utm_campaign", column: "campaign_id", name: "account_invoice_campaign_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "utm_medium", column: "medium_id", name: "account_invoice_medium_id_fkey", on_delete: :nullify
   add_foreign_key "account_invoice", "utm_source", column: "source_id", name: "account_invoice_source_id_fkey", on_delete: :nullify
@@ -11788,7 +11448,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "account_move", "res_partner", column: "partner_id", name: "account_move_partner_id_fkey", on_delete: :nullify
   add_foreign_key "account_move", "res_users", column: "create_uid", name: "account_move_create_uid_fkey", on_delete: :nullify
   add_foreign_key "account_move", "res_users", column: "write_uid", name: "account_move_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "account_move", "stock_move", name: "account_move_stock_move_id_fkey", on_delete: :nullify
   add_foreign_key "account_move_line", "account_account", column: "account_id", name: "account_move_line_account_id_fkey", on_delete: :cascade
   add_foreign_key "account_move_line", "account_account_type", column: "user_type_id", name: "account_move_line_user_type_id_fkey", on_delete: :nullify
   add_foreign_key "account_move_line", "account_analytic_account", column: "analytic_account_id", name: "account_move_line_analytic_account_id_fkey", on_delete: :nullify
@@ -12133,6 +11792,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "cash_box_in", "res_users", column: "write_uid", name: "cash_box_in_write_uid_fkey", on_delete: :nullify
   add_foreign_key "cash_box_out", "res_users", column: "create_uid", name: "cash_box_out_create_uid_fkey", on_delete: :nullify
   add_foreign_key "cash_box_out", "res_users", column: "write_uid", name: "cash_box_out_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "cert_cert", "res_users", column: "create_uid", name: "cert_cert_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "cert_cert", "res_users", column: "write_uid", name: "cert_cert_write_uid_fkey", on_delete: :nullify
   add_foreign_key "change_password_user", "change_password_wizard", column: "wizard_id", name: "change_password_user_wizard_id_fkey", on_delete: :nullify
   add_foreign_key "change_password_user", "res_users", column: "create_uid", name: "change_password_user_create_uid_fkey", on_delete: :nullify
   add_foreign_key "change_password_user", "res_users", column: "user_id", name: "change_password_user_user_id_fkey", on_delete: :cascade
@@ -12145,6 +11806,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "checklist_line_rel", "checklist_line", name: "checklist_line_rel_checklist_line_id_fkey", on_delete: :cascade
   add_foreign_key "checklist_line_rel", "orientation_checklist", name: "checklist_line_rel_orientation_checklist_id_fkey", on_delete: :cascade
   add_foreign_key "claim_available_subject_rel", "op_admission_claim", column: "claim_id", name: "claim_available_subject_rel_claim_id_fkey", on_delete: :cascade
+  add_foreign_key "claim_available_subject_rel", "op_subject", column: "subject_id", name: "claim_available_subject_rel_subject_id_fkey", on_delete: :cascade
+  add_foreign_key "claim_from_admission", "op_admission", column: "admission_id", name: "claim_from_admission_admission_id_fkey", on_delete: :cascade
   add_foreign_key "claim_from_admission", "op_admission_claim", column: "claim_id", name: "claim_from_admission_claim_id_fkey", on_delete: :cascade
   add_foreign_key "comments", "users", column: "commented_by"
   add_foreign_key "conversations", "op_batch", column: "batch_id"
@@ -12203,9 +11866,15 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "crm_lead2opportunity_partner_mass", "res_users", column: "create_uid", name: "crm_lead2opportunity_partner_mass_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead2opportunity_partner_mass", "res_users", column: "user_id", name: "crm_lead2opportunity_partner_mass_user_id_fkey", on_delete: :nullify
   add_foreign_key "crm_lead2opportunity_partner_mass", "res_users", column: "write_uid", name: "crm_lead2opportunity_partner_mass_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead2opportunity_partner_mass_res_users_rel", "crm_lead2opportunity_partner_mass", name: "crm_lead2opportunity_partner__crm_lead2opportunity_partner_fkey", on_delete: :cascade
   add_foreign_key "crm_lead2opportunity_partner_mass_res_users_rel", "res_users", column: "res_users_id", name: "crm_lead2opportunity_partner_mass_res_users_r_res_users_id_fkey", on_delete: :cascade
   add_foreign_key "crm_lead_crm_lead2opportunity_partner_mass_rel", "crm_lead", name: "crm_lead_crm_lead2opportunity_partner_mass_rel_crm_lead_id_fkey", on_delete: :cascade
   add_foreign_key "crm_lead_crm_lead2opportunity_partner_mass_rel", "crm_lead2opportunity_partner_mass", name: "crm_lead_crm_lead2opportunit_crm_lead2opportunity_partner_fkey1", on_delete: :cascade
+  add_foreign_key "crm_lead_crm_lead2opportunity_partner_rel", "crm_lead", name: "crm_lead_crm_lead2opportunity_partner_rel_crm_lead_id_fkey", on_delete: :cascade
+  add_foreign_key "crm_lead_crm_lead2opportunity_partner_rel", "crm_lead2opportunity_partner", name: "crm_lead_crm_lead2opportunity_crm_lead2opportunity_partner_fkey", on_delete: :cascade
+  add_foreign_key "crm_lead_lost", "crm_lost_reason", column: "lost_reason_id", name: "crm_lead_lost_lost_reason_id_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_lost", "res_users", column: "create_uid", name: "crm_lead_lost_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "crm_lead_lost", "res_users", column: "write_uid", name: "crm_lead_lost_write_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead_tag", "res_users", column: "create_uid", name: "crm_lead_tag_create_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead_tag", "res_users", column: "write_uid", name: "crm_lead_tag_write_uid_fkey", on_delete: :nullify
   add_foreign_key "crm_lead_tag_rel", "crm_lead", column: "lead_id", name: "crm_lead_tag_rel_lead_id_fkey", on_delete: :cascade
@@ -12282,14 +11951,40 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "email_template_preview", "res_users", column: "write_uid", name: "email_template_preview_write_uid_fkey", on_delete: :nullify
   add_foreign_key "email_template_preview_res_partner_rel", "email_template_preview", name: "email_template_preview_res_partn_email_template_preview_id_fkey", on_delete: :cascade
   add_foreign_key "email_template_preview_res_partner_rel", "res_partner", name: "email_template_preview_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "emp_nontech_skills", "hr_applicant", column: "applicant_id", name: "emp_nontech_skills_applicant_id_fkey", on_delete: :nullify
+  add_foreign_key "emp_nontech_skills", "hr_employee", column: "employee_id", name: "emp_nontech_skills_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "emp_nontech_skills", "nontech_nontech", column: "nontech_id", name: "emp_nontech_skills_nontech_id_fkey", on_delete: :cascade
+  add_foreign_key "emp_nontech_skills", "res_users", column: "create_uid", name: "emp_nontech_skills_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "emp_nontech_skills", "res_users", column: "write_uid", name: "emp_nontech_skills_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "emp_tech_skills", "hr_applicant", column: "applicant_id", name: "emp_tech_skills_applicant_id_fkey", on_delete: :nullify
+  add_foreign_key "emp_tech_skills", "hr_employee", column: "employee_id", name: "emp_tech_skills_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "emp_tech_skills", "res_users", column: "create_uid", name: "emp_tech_skills_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "emp_tech_skills", "res_users", column: "write_uid", name: "emp_tech_skills_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "emp_tech_skills", "tech_tech", column: "tech_id", name: "emp_tech_skills_tech_id_fkey", on_delete: :cascade
   add_foreign_key "employee_category_rel", "hr_employee", column: "emp_id", name: "employee_category_rel_emp_id_fkey", on_delete: :cascade
   add_foreign_key "employee_category_rel", "hr_employee_category", column: "category_id", name: "employee_category_rel_category_id_fkey", on_delete: :cascade
+  add_foreign_key "employee_certification", "cert_cert", column: "course_id", name: "employee_certification_course_id_fkey", on_delete: :cascade
+  add_foreign_key "employee_certification", "hr_applicant", column: "applicant_id", name: "employee_certification_applicant_id_fkey", on_delete: :nullify
+  add_foreign_key "employee_certification", "hr_employee", column: "employee_id", name: "employee_certification_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "employee_certification", "res_users", column: "create_uid", name: "employee_certification_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "employee_certification", "res_users", column: "write_uid", name: "employee_certification_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "employee_education", "hr_applicant", column: "applicant_id", name: "employee_education_applicant_id_fkey", on_delete: :nullify
+  add_foreign_key "employee_education", "hr_employee", column: "employee_id", name: "employee_education_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "employee_education", "hr_institute", column: "institute_id", name: "employee_education_institute_id_fkey", on_delete: :cascade
+  add_foreign_key "employee_education", "hr_recruitment_degree", column: "type_id", name: "employee_education_type_id_fkey", on_delete: :cascade
+  add_foreign_key "employee_education", "res_users", column: "create_uid", name: "employee_education_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "employee_education", "res_users", column: "write_uid", name: "employee_education_write_uid_fkey", on_delete: :nullify
   add_foreign_key "employee_orientation", "hr_employee", column: "employee_name", name: "employee_orientation_employee_name_fkey", on_delete: :nullify
   add_foreign_key "employee_orientation", "orientation_checklist", column: "orientation_id", name: "employee_orientation_orientation_id_fkey", on_delete: :nullify
   add_foreign_key "employee_orientation", "res_company", column: "employee_company", name: "employee_orientation_employee_company_fkey", on_delete: :nullify
   add_foreign_key "employee_orientation", "res_users", column: "create_uid", name: "employee_orientation_create_uid_fkey", on_delete: :nullify
   add_foreign_key "employee_orientation", "res_users", column: "responsible_user", name: "employee_orientation_responsible_user_fkey", on_delete: :nullify
   add_foreign_key "employee_orientation", "res_users", column: "write_uid", name: "employee_orientation_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "employee_profession", "hr_applicant", column: "applicant_id", name: "employee_profession_applicant_id_fkey", on_delete: :nullify
+  add_foreign_key "employee_profession", "hr_employee", column: "employee_id", name: "employee_profession_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "employee_profession", "hr_job", column: "job_id", name: "employee_profession_job_id_fkey", on_delete: :nullify
+  add_foreign_key "employee_profession", "res_users", column: "create_uid", name: "employee_profession_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "employee_profession", "res_users", column: "write_uid", name: "employee_profession_write_uid_fkey", on_delete: :nullify
   add_foreign_key "employee_training", "hr_department", column: "program_department", name: "employee_training_program_department_fkey", on_delete: :nullify
   add_foreign_key "employee_training", "res_company", column: "company_id", name: "employee_training_company_id_fkey", on_delete: :nullify
   add_foreign_key "employee_training", "res_users", column: "create_uid", name: "employee_training_create_uid_fkey", on_delete: :nullify
@@ -12376,6 +12071,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "export_attendance", "hr_year", column: "year_id", name: "export_attendance_year_id_fkey", on_delete: :nullify
   add_foreign_key "export_attendance", "res_users", column: "create_uid", name: "export_attendance_create_uid_fkey", on_delete: :nullify
   add_foreign_key "export_attendance", "res_users", column: "write_uid", name: "export_attendance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "faq_answers", "faq_questions", column: "faq_questions_id"
   add_foreign_key "fees_detail_report_wizard", "op_course", column: "course_id", name: "fees_detail_report_wizard_course_id_fkey", on_delete: :nullify
   add_foreign_key "fees_detail_report_wizard", "op_student", column: "student_id", name: "fees_detail_report_wizard_student_id_fkey", on_delete: :nullify
   add_foreign_key "fees_detail_report_wizard", "res_users", column: "create_uid", name: "fees_detail_report_wizard_create_uid_fkey", on_delete: :nullify
@@ -12390,13 +12086,11 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "gamification_badge_rule_badge_rel", "gamification_badge", column: "badge2_id", name: "gamification_badge_rule_badge_rel_badge2_id_fkey", on_delete: :cascade
   add_foreign_key "gamification_badge_user", "gamification_badge", column: "badge_id", name: "gamification_badge_user_badge_id_fkey", on_delete: :cascade
   add_foreign_key "gamification_badge_user", "gamification_challenge", column: "challenge_id", name: "gamification_badge_user_challenge_id_fkey", on_delete: :nullify
-  add_foreign_key "gamification_badge_user", "hr_employee", column: "employee_id", name: "gamification_badge_user_employee_id_fkey", on_delete: :nullify
   add_foreign_key "gamification_badge_user", "res_users", column: "create_uid", name: "gamification_badge_user_create_uid_fkey", on_delete: :nullify
   add_foreign_key "gamification_badge_user", "res_users", column: "sender_id", name: "gamification_badge_user_sender_id_fkey", on_delete: :nullify
   add_foreign_key "gamification_badge_user", "res_users", column: "user_id", name: "gamification_badge_user_user_id_fkey", on_delete: :cascade
   add_foreign_key "gamification_badge_user", "res_users", column: "write_uid", name: "gamification_badge_user_write_uid_fkey", on_delete: :nullify
   add_foreign_key "gamification_badge_user_wizard", "gamification_badge", column: "badge_id", name: "gamification_badge_user_wizard_badge_id_fkey", on_delete: :nullify
-  add_foreign_key "gamification_badge_user_wizard", "hr_employee", column: "employee_id", name: "gamification_badge_user_wizard_employee_id_fkey", on_delete: :nullify
   add_foreign_key "gamification_badge_user_wizard", "res_users", column: "create_uid", name: "gamification_badge_user_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "gamification_badge_user_wizard", "res_users", column: "user_id", name: "gamification_badge_user_wizard_user_id_fkey", on_delete: :nullify
   add_foreign_key "gamification_badge_user_wizard", "res_users", column: "write_uid", name: "gamification_badge_user_wizard_write_uid_fkey", on_delete: :nullify
@@ -12488,16 +12182,27 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "hr_applicant_category", "res_users", column: "write_uid", name: "hr_applicant_category_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_applicant_hr_applicant_category_rel", "hr_applicant", name: "hr_applicant_hr_applicant_category_rel_hr_applicant_id_fkey", on_delete: :cascade
   add_foreign_key "hr_applicant_hr_applicant_category_rel", "hr_applicant_category", name: "hr_applicant_hr_applicant_categor_hr_applicant_category_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_attendance", "hr_attendance_addition", column: "addition_id", name: "hr_attendance_addition_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance", "hr_employee", column: "employee_id", name: "hr_attendance_employee_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_attendance", "hr_employee_task", column: "task", name: "hr_attendance_task_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance", "hr_holidays", column: "holiday_id", name: "hr_attendance_holiday_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance", "res_company", column: "company_id", name: "hr_attendance_company_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance", "res_users", column: "create_uid", name: "hr_attendance_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance", "res_users", column: "write_uid", name: "hr_attendance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "hr_attendance_addition_stage", column: "stage_id", name: "hr_attendance_addition_stage_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "hr_attendance_addition_type", column: "type_id", name: "hr_attendance_addition_type_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_addition", "hr_department", column: "department_id", name: "hr_attendance_addition_department_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_addition", "hr_employee", column: "employee_id", name: "hr_attendance_addition_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_addition", "hr_holidays_status", column: "type", name: "hr_attendance_addition_type_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "res_company", column: "company_id", name: "hr_attendance_addition_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "res_users", column: "approved_uid", name: "hr_attendance_addition_approved_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "res_users", column: "bd_id", name: "hr_attendance_addition_bd_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "res_users", column: "confirm_uid", name: "hr_attendance_addition_confirm_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_addition", "res_users", column: "create_uid", name: "hr_attendance_addition_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "res_users", column: "manager_id", name: "hr_attendance_addition_manager_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "res_users", column: "user_id", name: "hr_attendance_addition_user_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_addition", "res_users", column: "write_uid", name: "hr_attendance_addition_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_attendance_addition", "resource_calendar", name: "hr_attendance_addition_resource_calendar_id_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_addition_stage", "res_users", column: "create_uid", name: "hr_attendance_addition_stage_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_addition_stage", "res_users", column: "write_uid", name: "hr_attendance_addition_stage_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_attendance_addition_type", "res_users", column: "create_uid", name: "hr_attendance_addition_type_create_uid_fkey", on_delete: :nullify
@@ -12530,11 +12235,15 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "hr_department", "res_company", column: "company_id", name: "hr_department_company_id_fkey", on_delete: :nullify
   add_foreign_key "hr_department", "res_users", column: "create_uid", name: "hr_department_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_department", "res_users", column: "write_uid", name: "hr_department_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_emergency_contact", "hr_employee", column: "employee_obj", name: "hr_emergency_contact_employee_obj_fkey", on_delete: :nullify
+  add_foreign_key "hr_emergency_contact", "res_users", column: "create_uid", name: "hr_emergency_contact_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_emergency_contact", "res_users", column: "write_uid", name: "hr_emergency_contact_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "hr_contract", column: "contract_id", name: "hr_employee_contract_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "hr_department", column: "department_id", name: "hr_employee_department_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "hr_employee", column: "coach_id", name: "hr_employee_coach_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "hr_employee", column: "parent_id", name: "hr_employee_parent_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "hr_employee", column: "presenter_employee", name: "hr_employee_presenter_employee_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee", "hr_employee_task", column: "task", name: "hr_employee_task_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "hr_job", column: "job_id", name: "hr_employee_job_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "res_company", column: "company_id", name: "hr_employee_company_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee", "res_country", column: "country_id", name: "hr_employee_country_id_fkey", on_delete: :nullify
@@ -12546,6 +12255,11 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "hr_employee", "resource_resource", column: "resource_id", name: "hr_employee_resource_id_fkey", on_delete: :restrict
   add_foreign_key "hr_employee_category", "res_users", column: "create_uid", name: "hr_employee_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_category", "res_users", column: "write_uid", name: "hr_employee_category_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_family", "hr_employee", column: "employee_id", name: "hr_employee_family_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_family", "hr_employee", column: "employee_ref", name: "hr_employee_family_employee_ref_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_family", "res_users", column: "create_uid", name: "hr_employee_family_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_family", "res_users", column: "write_uid", name: "hr_employee_family_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_finger", "hr_employee", column: "employee_id", name: "hr_employee_finger_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_finger", "res_users", column: "create_uid", name: "hr_employee_finger_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_finger", "res_users", column: "write_uid", name: "hr_employee_finger_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_group_rel", "hr_employee", column: "employee_id", name: "hr_employee_group_rel_employee_id_fkey", on_delete: :cascade
@@ -12553,12 +12267,18 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "hr_employee_leave", "hr_employee", column: "employee_id", name: "hr_employee_leave_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_leave", "res_users", column: "create_uid", name: "hr_employee_leave_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_leave", "res_users", column: "write_uid", name: "hr_employee_leave_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_task", "hr_employee", column: "employee_id", name: "hr_employee_task_employee_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_task", "res_users", column: "create_uid", name: "hr_employee_task_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_task", "res_users", column: "write_uid", name: "hr_employee_task_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_workday_standard", "res_users", column: "create_uid", name: "hr_employee_workday_standard_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_workday_standard", "res_users", column: "write_uid", name: "hr_employee_workday_standard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "account_account", column: "account_id", name: "hr_expense_account_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "account_analytic_account", column: "analytic_account_id", name: "hr_expense_analytic_account_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "crm_claim", column: "claim_id", name: "hr_expense_claim_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "hr_employee", column: "employee_id", name: "hr_expense_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "hr_employee", column: "manager_id", name: "hr_expense_manager_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "hr_expense_sheet", column: "sheet_id", name: "hr_expense_sheet_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_expense", "op_admission_claim", column: "admission_claim_id", name: "hr_expense_admission_claim_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "product_product", column: "product_id", name: "hr_expense_product_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "product_uom", name: "hr_expense_product_uom_id_fkey", on_delete: :nullify
   add_foreign_key "hr_expense", "res_company", column: "company_id", name: "hr_expense_company_id_fkey", on_delete: :nullify
@@ -12602,8 +12322,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "hr_holidays", "res_users", column: "user_id", name: "hr_holidays_user_id_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays", "res_users", column: "write_uid", name: "hr_holidays_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "calendar_event_type", column: "categ_id", name: "hr_holidays_status_categ_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_holidays_status", "project_project", column: "timesheet_project_id", name: "hr_holidays_status_timesheet_project_id_fkey", on_delete: :nullify
-  add_foreign_key "hr_holidays_status", "project_task", column: "timesheet_task_id", name: "hr_holidays_status_timesheet_task_id_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "res_company", column: "company_id", name: "hr_holidays_status_company_id_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "res_users", column: "create_uid", name: "hr_holidays_status_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_status", "res_users", column: "write_uid", name: "hr_holidays_status_write_uid_fkey", on_delete: :nullify
@@ -12611,6 +12329,10 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "hr_holidays_summary_dept", "res_users", column: "write_uid", name: "hr_holidays_summary_dept_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_summary_employee", "res_users", column: "create_uid", name: "hr_holidays_summary_employee_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_holidays_summary_employee", "res_users", column: "write_uid", name: "hr_holidays_summary_employee_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_institute", "res_country", column: "country_id", name: "hr_institute_country_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_institute", "res_country_state", column: "state_id", name: "hr_institute_state_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_institute", "res_users", column: "create_uid", name: "hr_institute_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_institute", "res_users", column: "write_uid", name: "hr_institute_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "hr_department", column: "department_id", name: "hr_job_department_id_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "hr_employee", column: "manager_id", name: "hr_job_manager_id_fkey", on_delete: :nullify
   add_foreign_key "hr_job", "mail_alias", column: "alias_id", name: "hr_job_alias_id_fkey", on_delete: :restrict
@@ -12685,12 +12407,29 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "hr_salary_rule_category", "res_users", column: "write_uid", name: "hr_salary_rule_category_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_structure_salary_rule_rel", "hr_payroll_structure", column: "struct_id", name: "hr_structure_salary_rule_rel_struct_id_fkey", on_delete: :cascade
   add_foreign_key "hr_structure_salary_rule_rel", "hr_salary_rule", column: "rule_id", name: "hr_structure_salary_rule_rel_rule_id_fkey", on_delete: :cascade
+  add_foreign_key "hr_work_schedule", "hr_employee", column: "employee_id", name: "hr_work_schedule_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_work_schedule", "hr_work_schedule_stage", column: "stage_id", name: "hr_work_schedule_stage_id_fkey", on_delete: :nullify
   add_foreign_key "hr_work_schedule", "res_company", column: "company_id", name: "hr_work_schedule_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule", "res_users", column: "approved_uid", name: "hr_work_schedule_approved_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule", "res_users", column: "bd_id", name: "hr_work_schedule_bd_id_fkey", on_delete: :nullify
   add_foreign_key "hr_work_schedule", "res_users", column: "confirm_uid", name: "hr_work_schedule_confirm_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule", "res_users", column: "create_uid", name: "hr_work_schedule_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule", "res_users", column: "manager_id", name: "hr_work_schedule_manager_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule", "res_users", column: "user_id", name: "hr_work_schedule_user_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule", "res_users", column: "write_uid", name: "hr_work_schedule_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule", "resource_calendar", name: "hr_work_schedule_resource_calendar_id_fkey", on_delete: :nullify
   add_foreign_key "hr_work_schedule_line", "hr_attendance", column: "attendance_id", name: "hr_work_schedule_line_attendance_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule_line", "hr_employee", column: "employee_id", name: "hr_work_schedule_line_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_work_schedule_line", "hr_work_schedule", column: "schedule_id", name: "hr_work_schedule_line_schedule_id_fkey", on_delete: :nullify
   add_foreign_key "hr_work_schedule_line", "hr_work_schedule_line", column: "overwite_id", name: "hr_work_schedule_line_overwite_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule_line", "res_company", column: "company_id", name: "hr_work_schedule_line_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule_line", "res_users", column: "create_uid", name: "hr_work_schedule_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule_line", "res_users", column: "manager_id", name: "hr_work_schedule_line_manager_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule_line", "res_users", column: "user_id", name: "hr_work_schedule_line_user_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule_line", "res_users", column: "write_uid", name: "hr_work_schedule_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule_report", "res_company", column: "company_id", name: "hr_work_schedule_report_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule_report", "res_users", column: "create_uid", name: "hr_work_schedule_report_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_work_schedule_report", "res_users", column: "write_uid", name: "hr_work_schedule_report_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_work_schedule_stage", "res_users", column: "create_uid", name: "hr_work_schedule_stage_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_work_schedule_stage", "res_users", column: "write_uid", name: "hr_work_schedule_stage_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_year", "res_users", column: "create_uid", name: "hr_year_create_uid_fkey", on_delete: :nullify
@@ -12698,6 +12437,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "iap_account", "res_company", column: "company_id", name: "iap_account_company_id_fkey", on_delete: :nullify
   add_foreign_key "iap_account", "res_users", column: "create_uid", name: "iap_account_create_uid_fkey", on_delete: :nullify
   add_foreign_key "iap_account", "res_users", column: "write_uid", name: "iap_account_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "id_attachment_rel", "hr_employee", column: "id_ref", name: "id_attachment_rel_id_ref_fkey", on_delete: :cascade
+  add_foreign_key "id_attachment_rel", "ir_attachment", column: "attach_ref", name: "id_attachment_rel_attach_ref_fkey", on_delete: :cascade
   add_foreign_key "im_livechat_channel", "res_users", column: "create_uid", name: "im_livechat_channel_create_uid_fkey", on_delete: :nullify
   add_foreign_key "im_livechat_channel", "res_users", column: "write_uid", name: "im_livechat_channel_write_uid_fkey", on_delete: :nullify
   add_foreign_key "im_livechat_channel_country_rel", "im_livechat_channel_rule", column: "channel_id", name: "im_livechat_channel_country_rel_channel_id_fkey", on_delete: :cascade
@@ -12851,6 +12592,10 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "ir_ui_view", "res_users", column: "write_uid", name: "ir_ui_view_write_uid_fkey", on_delete: :nullify
   add_foreign_key "ir_ui_view", "website", name: "ir_ui_view_website_id_fkey", on_delete: :cascade
   add_foreign_key "ir_ui_view_custom", "ir_ui_view", column: "ref_id", name: "ir_ui_view_custom_ref_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_ui_view_custom", "res_users", column: "create_uid", name: "ir_ui_view_custom_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_ui_view_custom", "res_users", column: "user_id", name: "ir_ui_view_custom_user_id_fkey", on_delete: :cascade
+  add_foreign_key "ir_ui_view_custom", "res_users", column: "write_uid", name: "ir_ui_view_custom_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "ir_ui_view_group_rel", "ir_ui_view", column: "view_id", name: "ir_ui_view_group_rel_view_id_fkey", on_delete: :cascade
   add_foreign_key "ir_ui_view_group_rel", "res_groups", column: "group_id", name: "ir_ui_view_group_rel_group_id_fkey", on_delete: :cascade
   add_foreign_key "issue_media", "op_faculty", column: "faculty_id", name: "issue_media_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "issue_media", "op_library_card", column: "library_card_id", name: "issue_media_library_card_id_fkey", on_delete: :nullify
@@ -12924,16 +12669,25 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "mail_compose_message", "mail_message", column: "parent_id", name: "mail_compose_message_parent_id_fkey", on_delete: :nullify
   add_foreign_key "mail_compose_message", "mail_message_subtype", column: "subtype_id", name: "mail_compose_message_subtype_id_fkey", on_delete: :nullify
   add_foreign_key "mail_compose_message", "mail_template", column: "template_id", name: "mail_compose_message_template_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "res_partner", column: "author_id", name: "mail_compose_message_author_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "res_users", column: "create_uid", name: "mail_compose_message_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message", "res_users", column: "write_uid", name: "mail_compose_message_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_compose_message_ir_attachments_rel", "ir_attachment", column: "attachment_id", name: "mail_compose_message_ir_attachments_rel_attachment_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message_ir_attachments_rel", "mail_compose_message", column: "wizard_id", name: "mail_compose_message_ir_attachments_rel_wizard_id_fkey", on_delete: :cascade
   add_foreign_key "mail_compose_message_mail_mass_mailing_list_rel", "mail_compose_message", name: "mail_compose_message_mail_mass_mai_mail_compose_message_id_fkey", on_delete: :cascade
   add_foreign_key "mail_compose_message_mail_mass_mailing_list_rel", "mail_mass_mailing_list", name: "mail_compose_message_mail_mass_m_mail_mass_mailing_list_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message_res_partner_rel", "mail_compose_message", column: "wizard_id", name: "mail_compose_message_res_partner_rel_wizard_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_compose_message_res_partner_rel", "res_partner", column: "partner_id", name: "mail_compose_message_res_partner_rel_partner_id_fkey", on_delete: :cascade
   add_foreign_key "mail_followers", "mail_channel", column: "channel_id", name: "mail_followers_channel_id_fkey", on_delete: :cascade
   add_foreign_key "mail_followers", "res_partner", column: "partner_id", name: "mail_followers_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_followers_mail_message_subtype_rel", "mail_followers", column: "mail_followers_id", name: "mail_followers_mail_message_subtype_rel_mail_followers_id_fkey", on_delete: :cascade
   add_foreign_key "mail_followers_mail_message_subtype_rel", "mail_message_subtype", name: "mail_followers_mail_message_subtyp_mail_message_subtype_id_fkey", on_delete: :cascade
   add_foreign_key "mail_mail", "fetchmail_server", name: "mail_mail_fetchmail_server_id_fkey", on_delete: :nullify
   add_foreign_key "mail_mail", "mail_mass_mailing", column: "mailing_id", name: "mail_mail_mailing_id_fkey", on_delete: :nullify
   add_foreign_key "mail_mail", "mail_message", name: "mail_mail_mail_message_id_fkey", on_delete: :cascade
   add_foreign_key "mail_mail", "res_users", column: "create_uid", name: "mail_mail_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_mail", "res_users", column: "write_uid", name: "mail_mail_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_mail_res_partner_rel", "mail_mail", name: "mail_mail_res_partner_rel_mail_mail_id_fkey", on_delete: :cascade
   add_foreign_key "mail_mail_res_partner_rel", "res_partner", name: "mail_mail_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
   add_foreign_key "mail_mail_statistics", "mail_mail", name: "mail_mail_statistics_mail_mail_id_fkey", on_delete: :nullify
   add_foreign_key "mail_mail_statistics", "mail_mass_mailing", column: "mass_mailing_id", name: "mail_mail_statistics_mass_mailing_id_fkey", on_delete: :nullify
@@ -12988,6 +12742,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "mail_message_mail_channel_rel", "mail_message", name: "mail_message_mail_channel_rel_mail_message_id_fkey", on_delete: :cascade
   add_foreign_key "mail_message_res_partner_needaction_rel", "mail_message", name: "mail_message_res_partner_needaction_rel_mail_message_id_fkey", on_delete: :cascade
   add_foreign_key "mail_message_res_partner_needaction_rel", "res_partner", name: "mail_message_res_partner_needaction_rel_res_partner_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_message_res_partner_rel", "mail_message", name: "mail_message_res_partner_rel_mail_message_id_fkey", on_delete: :cascade
   add_foreign_key "mail_message_res_partner_rel", "res_partner", name: "mail_message_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
   add_foreign_key "mail_message_res_partner_starred_rel", "mail_message", name: "mail_message_res_partner_starred_rel_mail_message_id_fkey", on_delete: :cascade
   add_foreign_key "mail_message_res_partner_starred_rel", "res_partner", name: "mail_message_res_partner_starred_rel_res_partner_id_fkey", on_delete: :cascade
@@ -13010,6 +12765,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "mail_test", "res_users", column: "write_uid", name: "mail_test_write_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_test_simple", "res_users", column: "create_uid", name: "mail_test_simple_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_test_simple", "res_users", column: "write_uid", name: "mail_test_simple_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_email", "mail_mail", column: "mail_id", name: "mail_tracking_email_mail_id_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_email", "mail_message", name: "mail_tracking_email_mail_message_id_fkey", on_delete: :nullify
   add_foreign_key "mail_tracking_email", "res_partner", column: "partner_id", name: "mail_tracking_email_partner_id_fkey", on_delete: :nullify
   add_foreign_key "mail_tracking_email", "res_users", column: "create_uid", name: "mail_tracking_email_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_tracking_email", "res_users", column: "write_uid", name: "mail_tracking_email_write_uid_fkey", on_delete: :nullify
@@ -13017,9 +12774,13 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "mail_tracking_event", "res_country", column: "user_country_id", name: "mail_tracking_event_user_country_id_fkey", on_delete: :nullify
   add_foreign_key "mail_tracking_event", "res_users", column: "create_uid", name: "mail_tracking_event_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_tracking_event", "res_users", column: "write_uid", name: "mail_tracking_event_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_tracking_value", "mail_message", name: "mail_tracking_value_mail_message_id_fkey", on_delete: :cascade
   add_foreign_key "mail_tracking_value", "res_users", column: "create_uid", name: "mail_tracking_value_create_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_tracking_value", "res_users", column: "write_uid", name: "mail_tracking_value_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_wizard_invite", "res_users", column: "create_uid", name: "mail_wizard_invite_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "mail_wizard_invite", "res_users", column: "write_uid", name: "mail_wizard_invite_write_uid_fkey", on_delete: :nullify
   add_foreign_key "mail_wizard_invite_res_partner_rel", "mail_wizard_invite", name: "mail_wizard_invite_res_partner_rel_mail_wizard_invite_id_fkey", on_delete: :cascade
+  add_foreign_key "mail_wizard_invite_res_partner_rel", "res_partner", name: "mail_wizard_invite_res_partner_rel_res_partner_id_fkey", on_delete: :cascade
   add_foreign_key "maintenance_equipment", "hr_department", column: "department_id", name: "maintenance_equipment_department_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "hr_employee", column: "employee_id", name: "maintenance_equipment_employee_id_fkey", on_delete: :nullify
   add_foreign_key "maintenance_equipment", "maintenance_equipment_category", column: "category_id", name: "maintenance_equipment_category_id_fkey", on_delete: :nullify
@@ -13088,6 +12849,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "merge_opportunity_rel", "crm_lead", column: "opportunity_id", name: "merge_opportunity_rel_opportunity_id_fkey", on_delete: :cascade
   add_foreign_key "merge_opportunity_rel", "crm_merge_opportunity", column: "merge_id", name: "merge_opportunity_rel_merge_id_fkey", on_delete: :cascade
   add_foreign_key "message_attachment_rel", "ir_attachment", column: "attachment_id", name: "message_attachment_rel_attachment_id_fkey", on_delete: :cascade
+  add_foreign_key "message_attachment_rel", "mail_message", column: "message_id", name: "message_attachment_rel_message_id_fkey", on_delete: :cascade
   add_foreign_key "messages", "users", column: "sent_by"
   add_foreign_key "muk_autovacuum_rules", "res_users", column: "create_uid", name: "muk_autovacuum_rules_create_uid_fkey", on_delete: :nullify
   add_foreign_key "muk_autovacuum_rules", "res_users", column: "write_uid", name: "muk_autovacuum_rules_write_uid_fkey", on_delete: :nullify
@@ -13095,6 +12857,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "muk_web_client_notification_send_notifications", "res_users", column: "write_uid", name: "muk_web_client_notification_send_notifications_write_uid_fkey", on_delete: :nullify
   add_foreign_key "muk_web_client_notification_user_rel", "muk_web_client_notification_send_notifications", column: "wizard_id", name: "muk_web_client_notification_user_rel_wizard_id_fkey", on_delete: :cascade
   add_foreign_key "muk_web_client_notification_user_rel", "res_users", column: "user_id", name: "muk_web_client_notification_user_rel_user_id_fkey", on_delete: :cascade
+  add_foreign_key "nontech_nontech", "res_users", column: "create_uid", name: "nontech_nontech_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "nontech_nontech", "res_users", column: "write_uid", name: "nontech_nontech_write_uid_fkey", on_delete: :nullify
   add_foreign_key "note_note", "res_users", column: "create_uid", name: "note_note_create_uid_fkey", on_delete: :nullify
   add_foreign_key "note_note", "res_users", column: "user_id", name: "note_note_user_id_fkey", on_delete: :nullify
   add_foreign_key "note_note", "res_users", column: "write_uid", name: "note_note_write_uid_fkey", on_delete: :nullify
@@ -13115,6 +12879,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "op_activity_type", "res_users", column: "create_uid", name: "op_activity_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_activity_type", "res_users", column: "write_uid", name: "op_activity_type_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_admission", "crm_claim", column: "claim_id", name: "op_admission_claim_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission", "op_admission_claim", column: "admission_claim_id", name: "op_admission_admission_claim_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission", "op_admission_register", column: "register_id", name: "op_admission_register_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission", "op_batch", column: "batch_id", name: "op_admission_batch_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission", "op_course", column: "course_id", name: "op_admission_course_id_fkey", on_delete: :nullify
@@ -13135,14 +12900,30 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "op_admission", "sale_order_line", name: "op_admission_sale_order_line_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim", "op_admission_claim_category", column: "categ_id", name: "op_admission_claim_categ_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim", "op_admission_claim_stage", column: "stage_id", name: "op_admission_claim_stage_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "op_batch", column: "from_batch_id", name: "op_admission_claim_from_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "op_batch", column: "to_batch_id", name: "op_admission_claim_to_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "op_course", column: "from_course_id", name: "op_admission_claim_from_course_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "op_course", column: "to_course_id", name: "op_admission_claim_to_course_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "op_student", column: "student_id", name: "op_admission_claim_student_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim", "op_subject", column: "current_subject_id", name: "op_admission_claim_current_subject_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "op_subject", column: "to_current_subject_id", name: "op_admission_claim_to_current_subject_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "op_subject", column: "to_subject_id", name: "op_admission_claim_to_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim", "res_company", column: "company_id", name: "op_admission_claim_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim", "res_company", column: "from_company_id", name: "op_admission_claim_from_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim", "res_company", column: "to_company_id", name: "op_admission_claim_to_company_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "res_partner", column: "partner_id", name: "op_admission_claim_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "res_users", column: "approved_user_id", name: "op_admission_claim_approved_user_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "res_users", column: "create_uid", name: "op_admission_claim_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "res_users", column: "open_claim_user_id", name: "op_admission_claim_open_claim_user_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "res_users", column: "receive_id", name: "op_admission_claim_receive_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "res_users", column: "user_id", name: "op_admission_claim_user_id_fkey", on_delete: :nullify
+  add_foreign_key "op_admission_claim", "res_users", column: "write_uid", name: "op_admission_claim_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim_category", "res_users", column: "create_uid", name: "op_admission_claim_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim_category", "res_users", column: "write_uid", name: "op_admission_claim_category_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim_op_subject_rel", "op_admission_claim", name: "op_admission_claim_op_subject_rel_op_admission_claim_id_fkey", on_delete: :cascade
+  add_foreign_key "op_admission_claim_op_subject_rel", "op_subject", name: "op_admission_claim_op_subject_rel_op_subject_id_fkey", on_delete: :cascade
   add_foreign_key "op_admission_claim_sale_order_rel", "op_admission_claim", name: "op_admission_claim_sale_order_rel_op_admission_claim_id_fkey", on_delete: :cascade
+  add_foreign_key "op_admission_claim_sale_order_rel", "sale_order", name: "op_admission_claim_sale_order_rel_sale_order_id_fkey", on_delete: :cascade
   add_foreign_key "op_admission_claim_stage", "res_users", column: "create_uid", name: "op_admission_claim_stage_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_admission_claim_stage", "res_users", column: "write_uid", name: "op_admission_claim_stage_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_admission_register", "op_batch", column: "batch_id", name: "op_admission_register_batch_id_fkey", on_delete: :nullify
@@ -13227,7 +13008,14 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "op_batch", "res_company", column: "company_id", name: "op_batch_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "res_users", column: "create_uid", name: "op_batch_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "res_users", column: "write_uid", name: "op_batch_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_email_log", "event_event", column: "event_id", name: "op_batch_email_log_event_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_email_log", "op_batch", column: "batch_id", name: "op_batch_email_log_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_email_log", "op_subject", column: "subject_id", name: "op_batch_email_log_subject_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_email_log", "res_users", column: "create_uid", name: "op_batch_email_log_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_email_log", "res_users", column: "write_uid", name: "op_batch_email_log_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch_gen", "op_batch", column: "batch_id", name: "op_batch_gen_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_gen", "op_lession", column: "start_lession_id", name: "op_batch_gen_start_lession_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_gen", "op_lession", column: "start_lesson_id", name: "op_batch_gen_start_lesson_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch_gen", "op_subject", column: "subject_id", name: "op_batch_gen_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch_gen", "res_users", column: "create_uid", name: "op_batch_gen_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch_gen", "res_users", column: "write_uid", name: "op_batch_gen_write_uid_fkey", on_delete: :nullify
@@ -13250,6 +13038,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "op_course", "course_categ", column: "categ_id", name: "op_course_categ_id_fkey", on_delete: :nullify
   add_foreign_key "op_course", "op_course", column: "parent_id", name: "op_course_parent_id_fkey", on_delete: :nullify
   add_foreign_key "op_course", "op_fees_terms", column: "fees_term_id", name: "op_course_fees_term_id_fkey", on_delete: :nullify
+  add_foreign_key "op_course", "product_template", column: "product_temp_id", name: "op_course_product_temp_id_fkey", on_delete: :nullify
+  add_foreign_key "op_course", "product_template", column: "product_tmpl_id", name: "op_course_product_tmpl_id_fkey", on_delete: :nullify
   add_foreign_key "op_course", "res_company", column: "company_id", name: "op_course_company_id_fkey", on_delete: :nullify
   add_foreign_key "op_course", "res_users", column: "create_uid", name: "op_course_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_course", "res_users", column: "write_uid", name: "op_course_write_uid_fkey", on_delete: :nullify
@@ -13532,6 +13322,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "orientation_request", "res_users", column: "partner_id", name: "orientation_request_partner_id_fkey", on_delete: :nullify
   add_foreign_key "orientation_request", "res_users", column: "user_id", name: "orientation_request_user_id_fkey", on_delete: :nullify
   add_foreign_key "orientation_request", "res_users", column: "write_uid", name: "orientation_request_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "passport_attachment_rel", "hr_employee", column: "passport_ref", name: "passport_attachment_rel_passport_ref_fkey", on_delete: :cascade
+  add_foreign_key "passport_attachment_rel", "ir_attachment", column: "attach_ref1", name: "passport_attachment_rel_attach_ref1_fkey", on_delete: :cascade
   add_foreign_key "payment_acquirer", "account_journal", column: "journal_id", name: "payment_acquirer_journal_id_fkey", on_delete: :nullify
   add_foreign_key "payment_acquirer", "ir_module_module", column: "module_id", name: "payment_acquirer_module_id_fkey", on_delete: :nullify
   add_foreign_key "payment_acquirer", "ir_ui_view", column: "registration_view_template_id", name: "payment_acquirer_registration_view_template_id_fkey", on_delete: :nullify
@@ -13631,21 +13423,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "pos_session", "res_users", column: "create_uid", name: "pos_session_create_uid_fkey", on_delete: :nullify
   add_foreign_key "pos_session", "res_users", column: "user_id", name: "pos_session_user_id_fkey", on_delete: :nullify
   add_foreign_key "pos_session", "res_users", column: "write_uid", name: "pos_session_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "procurement_group", "res_partner", column: "partner_id", name: "procurement_group_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "procurement_group", "res_users", column: "create_uid", name: "procurement_group_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "procurement_group", "res_users", column: "write_uid", name: "procurement_group_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "procurement_group", "sale_order", column: "sale_id", name: "procurement_group_sale_id_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "procurement_group", column: "group_id", name: "procurement_rule_group_id_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "res_company", column: "company_id", name: "procurement_rule_company_id_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "res_partner", column: "partner_address_id", name: "procurement_rule_partner_address_id_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "res_users", column: "create_uid", name: "procurement_rule_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "res_users", column: "write_uid", name: "procurement_rule_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "stock_location", column: "location_id", name: "procurement_rule_location_id_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "stock_location", column: "location_src_id", name: "procurement_rule_location_src_id_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "stock_location_route", column: "route_id", name: "procurement_rule_route_id_fkey", on_delete: :cascade
-  add_foreign_key "procurement_rule", "stock_picking_type", column: "picking_type_id", name: "procurement_rule_picking_type_id_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "stock_warehouse", column: "propagate_warehouse_id", name: "procurement_rule_propagate_warehouse_id_fkey", on_delete: :nullify
-  add_foreign_key "procurement_rule", "stock_warehouse", column: "warehouse_id", name: "procurement_rule_warehouse_id_fkey", on_delete: :nullify
   add_foreign_key "product_attribute", "res_users", column: "create_uid", name: "product_attribute_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_attribute", "res_users", column: "write_uid", name: "product_attribute_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_attribute_line", "product_attribute", column: "attribute_id", name: "product_attribute_line_attribute_id_fkey", on_delete: :restrict
@@ -13659,16 +13436,23 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "product_attribute_price", "res_users", column: "create_uid", name: "product_attribute_price_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_attribute_price", "res_users", column: "write_uid", name: "product_attribute_price_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_attribute_value", "product_attribute", column: "attribute_id", name: "product_attribute_value_attribute_id_fkey", on_delete: :cascade
+  add_foreign_key "product_attribute_value", "res_company", column: "company_id", name: "product_attribute_value_company_id_fkey", on_delete: :nullify
   add_foreign_key "product_attribute_value", "res_users", column: "create_uid", name: "product_attribute_value_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_attribute_value", "res_users", column: "write_uid", name: "product_attribute_value_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_attribute_value_product_product_rel", "product_attribute_value", name: "product_attribute_value_product_product_attribute_value_id_fkey", on_delete: :cascade
   add_foreign_key "product_attribute_value_product_product_rel", "product_product", name: "product_attribute_value_product_product_product_product_id_fkey", on_delete: :cascade
   add_foreign_key "product_category", "product_category", column: "parent_id", name: "product_category_parent_id_fkey", on_delete: :cascade
-  add_foreign_key "product_category", "product_removal", column: "removal_strategy_id", name: "product_category_removal_strategy_id_fkey", on_delete: :nullify
   add_foreign_key "product_category", "res_users", column: "create_uid", name: "product_category_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_category", "res_users", column: "write_uid", name: "product_category_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_margin", "res_users", column: "create_uid", name: "product_margin_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_margin", "res_users", column: "write_uid", name: "product_margin_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_order_attribute_line", "product_attribute", column: "attribute_id", name: "product_order_attribute_line_attribute_id_fkey", on_delete: :restrict
+  add_foreign_key "product_order_attribute_line", "product_attribute_value", column: "value_id", name: "product_order_attribute_line_value_id_fkey", on_delete: :nullify
+  add_foreign_key "product_order_attribute_line", "product_template", column: "product_tmpl_id", name: "product_order_attribute_line_product_tmpl_id_fkey", on_delete: :cascade
+  add_foreign_key "product_order_attribute_line", "res_company", column: "company_id", name: "product_order_attribute_line_company_id_fkey", on_delete: :nullify
+  add_foreign_key "product_order_attribute_line", "res_users", column: "create_uid", name: "product_order_attribute_line_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_order_attribute_line", "res_users", column: "write_uid", name: "product_order_attribute_line_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "product_order_attribute_line", "sale_order_line", column: "order_line_id", name: "product_order_attribute_line_order_line_id_fkey", on_delete: :nullify
   add_foreign_key "product_packaging", "product_product", column: "product_id", name: "product_packaging_product_id_fkey", on_delete: :nullify
   add_foreign_key "product_packaging", "res_users", column: "create_uid", name: "product_packaging_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_packaging", "res_users", column: "write_uid", name: "product_packaging_write_uid_fkey", on_delete: :nullify
@@ -13695,10 +13479,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "product_product", "product_template", column: "product_tmpl_id", name: "product_product_product_tmpl_id_fkey", on_delete: :cascade
   add_foreign_key "product_product", "res_users", column: "create_uid", name: "product_product_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_product", "res_users", column: "write_uid", name: "product_product_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "product_putaway", "res_users", column: "create_uid", name: "product_putaway_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "product_putaway", "res_users", column: "write_uid", name: "product_putaway_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "product_removal", "res_users", column: "create_uid", name: "product_removal_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "product_removal", "res_users", column: "write_uid", name: "product_removal_write_uid_fkey", on_delete: :nullify
   add_foreign_key "product_supplier_taxes_rel", "account_tax", column: "tax_id", name: "product_supplier_taxes_rel_tax_id_fkey", on_delete: :cascade
   add_foreign_key "product_supplier_taxes_rel", "product_template", column: "prod_id", name: "product_supplier_taxes_rel_prod_id_fkey", on_delete: :cascade
   add_foreign_key "product_supplierinfo", "product_product", column: "product_id", name: "product_supplierinfo_product_id_fkey", on_delete: :nullify
@@ -13717,10 +13497,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "product_template", "product_uom", column: "uom_po_id", name: "product_template_uom_po_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "res_company", column: "company_id", name: "product_template_company_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "res_users", column: "create_uid", name: "product_template_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "product_template", "res_users", column: "responsible_id", name: "product_template_responsible_id_fkey", on_delete: :nullify
   add_foreign_key "product_template", "res_users", column: "write_uid", name: "product_template_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "product_template", "stock_location", column: "location_id", name: "product_template_location_id_fkey", on_delete: :nullify
-  add_foreign_key "product_template", "stock_warehouse", column: "warehouse_id", name: "product_template_warehouse_id_fkey", on_delete: :nullify
   add_foreign_key "product_uom", "product_uom_categ", column: "category_id", name: "product_uom_category_id_fkey", on_delete: :cascade
   add_foreign_key "product_uom", "res_users", column: "create_uid", name: "product_uom_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_uom", "res_users", column: "write_uid", name: "product_uom_write_uid_fkey", on_delete: :nullify
@@ -13775,6 +13552,15 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "reactions", "users", column: "reacted_by"
   add_foreign_key "recruitment_source", "res_users", column: "create_uid", name: "recruitment_source_create_uid_fkey", on_delete: :nullify
   add_foreign_key "recruitment_source", "res_users", column: "write_uid", name: "recruitment_source_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "redeem_product_items", "redeem_product_colors", column: "color_id"
+  add_foreign_key "redeem_product_items", "redeem_product_sizes", column: "size_id"
+  add_foreign_key "redeem_product_items", "redeem_products", column: "product_id"
+  add_foreign_key "redeem_product_items", "redeem_transactions", column: "transaction_id"
+  add_foreign_key "redeem_product_items", "res_company", column: "company_id"
+  add_foreign_key "redeem_products", "redeem_product_brands", column: "brand_id"
+  add_foreign_key "redeem_products", "redeem_product_categories", column: "category_id"
+  add_foreign_key "redeem_transactions", "redeem_product_colors", column: "color_id"
+  add_foreign_key "redeem_transactions", "redeem_product_sizes", column: "size_id"
   add_foreign_key "refer_friends", "users", column: "refer_by"
   add_foreign_key "rel_badge_auth_users", "gamification_badge", name: "rel_badge_auth_users_gamification_badge_id_fkey", on_delete: :cascade
   add_foreign_key "rel_badge_auth_users", "res_users", column: "res_users_id", name: "rel_badge_auth_users_res_users_id_fkey", on_delete: :cascade
@@ -13807,8 +13593,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "res_company", "account_journal", column: "tax_cash_basis_journal_id", name: "res_company_tax_cash_basis_journal_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "account_move", column: "account_opening_move_id", name: "res_company_account_opening_move_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "product_uom", column: "project_time_mode_id", name: "res_company_project_time_mode_id_fkey", on_delete: :nullify
-  add_foreign_key "res_company", "project_project", column: "leave_timesheet_project_id", name: "res_company_leave_timesheet_project_id_fkey", on_delete: :nullify
-  add_foreign_key "res_company", "project_task", column: "leave_timesheet_task_id", name: "res_company_leave_timesheet_task_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "report_paperformat", column: "paperformat_id", name: "res_company_paperformat_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "res_company", column: "parent_id", name: "res_company_parent_id_fkey", on_delete: :nullify
   add_foreign_key "res_company", "res_currency", column: "currency_id", name: "res_company_currency_id_fkey", on_delete: :nullify
@@ -13816,7 +13600,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "res_company", "res_users", column: "create_uid", name: "res_company_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_company", "res_users", column: "write_uid", name: "res_company_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_company", "resource_calendar", name: "res_company_resource_calendar_id_fkey", on_delete: :restrict
-  add_foreign_key "res_company", "stock_location", column: "internal_transit_location_id", name: "res_company_internal_transit_location_id_fkey", on_delete: :nullify
   add_foreign_key "res_company_users_rel", "res_company", column: "cid", name: "res_company_users_rel_cid_fkey", on_delete: :cascade
   add_foreign_key "res_company_users_rel", "res_users", column: "user_id", name: "res_company_users_rel_user_id_fkey", on_delete: :cascade
   add_foreign_key "res_config", "res_users", column: "create_uid", name: "res_config_create_uid_fkey", on_delete: :nullify
@@ -13929,6 +13712,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "resource_calendar", "res_users", column: "write_uid", name: "resource_calendar_write_uid_fkey", on_delete: :nullify
   add_foreign_key "resource_calendar_attendance", "res_users", column: "create_uid", name: "resource_calendar_attendance_create_uid_fkey", on_delete: :nullify
   add_foreign_key "resource_calendar_attendance", "res_users", column: "write_uid", name: "resource_calendar_attendance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "resource_calendar_attendance", "resource_calendar", column: "calendar_id", name: "resource_calendar_attendance_calendar_id_fkey", on_delete: :cascade
   add_foreign_key "resource_calendar_leaves", "hr_holidays", column: "holiday_id", name: "resource_calendar_leaves_holiday_id_fkey", on_delete: :nullify
   add_foreign_key "resource_calendar_leaves", "res_company", column: "company_id", name: "resource_calendar_leaves_company_id_fkey", on_delete: :nullify
   add_foreign_key "resource_calendar_leaves", "res_users", column: "create_uid", name: "resource_calendar_leaves_create_uid_fkey", on_delete: :nullify
@@ -13964,7 +13748,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "sale_order", "crm_team", column: "team_id", name: "sale_order_team_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "payment_acquirer", name: "sale_order_payment_acquirer_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "payment_transaction", column: "payment_tx_id", name: "sale_order_payment_tx_id_fkey", on_delete: :nullify
-  add_foreign_key "sale_order", "procurement_group", name: "sale_order_procurement_group_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "product_pricelist", column: "pricelist_id", name: "sale_order_pricelist_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "res_company", column: "admission_company_id", name: "sale_order_admission_company_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "res_company", column: "company_id", name: "sale_order_company_id_fkey", on_delete: :nullify
@@ -13975,8 +13758,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "sale_order", "res_users", column: "user_id", name: "sale_order_user_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "res_users", column: "write_uid", name: "sale_order_write_uid_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "sale_order", column: "main_order", name: "sale_order_main_order_fkey", on_delete: :nullify
-  add_foreign_key "sale_order", "stock_incoterms", column: "incoterm", name: "sale_order_incoterm_fkey", on_delete: :nullify
-  add_foreign_key "sale_order", "stock_warehouse", column: "warehouse_id", name: "sale_order_warehouse_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "utm_campaign", column: "campaign_id", name: "sale_order_campaign_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "utm_medium", column: "medium_id", name: "sale_order_medium_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order", "utm_source", column: "source_id", name: "sale_order_source_id_fkey", on_delete: :nullify
@@ -13984,8 +13765,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "sale_order_line", "op_course", column: "course_id", name: "sale_order_line_course_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "op_faculty", column: "faculty_id", name: "sale_order_line_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "op_student", column: "student_id", name: "sale_order_line_student_id_fkey", on_delete: :nullify
-  add_foreign_key "sale_order_line", "product_packaging", column: "product_packaging", name: "sale_order_line_product_packaging_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "product_product", column: "product_id", name: "sale_order_line_product_id_fkey", on_delete: :restrict
+  add_foreign_key "sale_order_line", "product_template", column: "product_tmpl_id", name: "sale_order_line_product_tmpl_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "product_uom", column: "product_uom", name: "sale_order_line_product_uom_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "project_task", column: "task_id", name: "sale_order_line_task_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "res_company", column: "company_id", name: "sale_order_line_company_id_fkey", on_delete: :nullify
@@ -13996,7 +13777,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "sale_order_line", "res_users", column: "write_uid", name: "sale_order_line_write_uid_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "sale_layout_category", column: "layout_category_id", name: "sale_order_line_layout_category_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line", "sale_order", column: "order_id", name: "sale_order_line_order_id_fkey", on_delete: :cascade
-  add_foreign_key "sale_order_line", "stock_location_route", column: "route_id", name: "sale_order_line_route_id_fkey", on_delete: :restrict
   add_foreign_key "sale_order_line", "student_test", name: "sale_order_line_student_test_id_fkey", on_delete: :nullify
   add_foreign_key "sale_order_line_invoice_rel", "account_invoice_line", column: "invoice_line_id", name: "sale_order_line_invoice_rel_invoice_line_id_fkey", on_delete: :cascade
   add_foreign_key "sale_order_line_invoice_rel", "sale_order_line", column: "order_line_id", name: "sale_order_line_invoice_rel_order_line_id_fkey", on_delete: :cascade
@@ -14009,6 +13789,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "sc_student_projects", "sc_posts"
   add_foreign_key "session_change_tutors_id", "op_faculty", column: "faculty_id", name: "session_change_tutors_id_faculty_id_fkey", on_delete: :cascade
   add_foreign_key "session_change_tutors_id", "op_session_change_faculty", column: "change_id", name: "session_change_tutors_id_change_id_fkey", on_delete: :cascade
+  add_foreign_key "session_confirmation", "res_users", column: "create_uid", name: "session_confirmation_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "session_confirmation", "res_users", column: "write_uid", name: "session_confirmation_write_uid_fkey", on_delete: :nullify
   add_foreign_key "session_fa_rel", "op_faculty", column: "partner_id", name: "session_fa_rel_partner_id_fkey", on_delete: :cascade
   add_foreign_key "session_fa_rel", "op_session", column: "name", name: "session_fa_rel_name_fkey", on_delete: :cascade
   add_foreign_key "session_offset_faculty_rel", "op_faculty", column: "partner_id", name: "session_offset_faculty_rel_partner_id_fkey", on_delete: :cascade
@@ -14043,215 +13825,13 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "sms_send_sms", "res_users", column: "write_uid", name: "sms_send_sms_write_uid_fkey", on_delete: :nullify
   add_foreign_key "sparse_fields_test", "res_users", column: "create_uid", name: "sparse_fields_test_create_uid_fkey", on_delete: :nullify
   add_foreign_key "sparse_fields_test", "res_users", column: "write_uid", name: "sparse_fields_test_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_backorder_confirmation", "res_users", column: "create_uid", name: "stock_backorder_confirmation_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_backorder_confirmation", "res_users", column: "write_uid", name: "stock_backorder_confirmation_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_change_product_qty", "product_product", column: "product_id", name: "stock_change_product_qty_product_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_change_product_qty", "product_template", column: "product_tmpl_id", name: "stock_change_product_qty_product_tmpl_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_change_product_qty", "res_users", column: "create_uid", name: "stock_change_product_qty_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_change_product_qty", "res_users", column: "write_uid", name: "stock_change_product_qty_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_change_product_qty", "stock_location", column: "location_id", name: "stock_change_product_qty_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_change_product_qty", "stock_production_lot", column: "lot_id", name: "stock_change_product_qty_lot_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_change_standard_price", "account_account", column: "counterpart_account_id", name: "stock_change_standard_price_counterpart_account_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_change_standard_price", "res_users", column: "create_uid", name: "stock_change_standard_price_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_change_standard_price", "res_users", column: "write_uid", name: "stock_change_standard_price_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_fixed_putaway_strat", "product_category", column: "category_id", name: "stock_fixed_putaway_strat_category_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_fixed_putaway_strat", "product_putaway", column: "putaway_id", name: "stock_fixed_putaway_strat_putaway_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_fixed_putaway_strat", "res_users", column: "create_uid", name: "stock_fixed_putaway_strat_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_fixed_putaway_strat", "res_users", column: "write_uid", name: "stock_fixed_putaway_strat_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_fixed_putaway_strat", "stock_location", column: "fixed_location_id", name: "stock_fixed_putaway_strat_fixed_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_immediate_transfer", "res_users", column: "create_uid", name: "stock_immediate_transfer_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_immediate_transfer", "res_users", column: "write_uid", name: "stock_immediate_transfer_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_incoterms", "res_users", column: "create_uid", name: "stock_incoterms_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_incoterms", "res_users", column: "write_uid", name: "stock_incoterms_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory", "product_category", column: "category_id", name: "stock_inventory_category_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory", "product_product", column: "product_id", name: "stock_inventory_product_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory", "res_company", column: "company_id", name: "stock_inventory_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory", "res_partner", column: "partner_id", name: "stock_inventory_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory", "res_users", column: "create_uid", name: "stock_inventory_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory", "res_users", column: "write_uid", name: "stock_inventory_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory", "stock_location", column: "location_id", name: "stock_inventory_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory", "stock_production_lot", column: "lot_id", name: "stock_inventory_lot_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory", "stock_quant_package", column: "package_id", name: "stock_inventory_package_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory_line", "product_product", column: "product_id", name: "stock_inventory_line_product_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory_line", "product_uom", name: "stock_inventory_line_product_uom_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory_line", "res_company", column: "company_id", name: "stock_inventory_line_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory_line", "res_partner", column: "partner_id", name: "stock_inventory_line_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory_line", "res_users", column: "create_uid", name: "stock_inventory_line_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory_line", "res_users", column: "write_uid", name: "stock_inventory_line_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory_line", "stock_inventory", column: "inventory_id", name: "stock_inventory_line_inventory_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_inventory_line", "stock_location", column: "location_id", name: "stock_inventory_line_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory_line", "stock_production_lot", column: "prod_lot_id", name: "stock_inventory_line_prod_lot_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_inventory_line", "stock_quant_package", column: "package_id", name: "stock_inventory_line_package_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location", "account_account", column: "valuation_in_account_id", name: "stock_location_valuation_in_account_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location", "account_account", column: "valuation_out_account_id", name: "stock_location_valuation_out_account_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location", "product_putaway", column: "putaway_strategy_id", name: "stock_location_putaway_strategy_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location", "product_removal", column: "removal_strategy_id", name: "stock_location_removal_strategy_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location", "res_company", column: "company_id", name: "stock_location_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location", "res_partner", column: "partner_id", name: "stock_location_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location", "res_users", column: "create_uid", name: "stock_location_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_location", "res_users", column: "write_uid", name: "stock_location_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_location", "stock_location", column: "location_id", name: "stock_location_location_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_location_path", "res_company", column: "company_id", name: "stock_location_path_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_path", "res_users", column: "create_uid", name: "stock_location_path_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_path", "res_users", column: "write_uid", name: "stock_location_path_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_path", "stock_location", column: "location_dest_id", name: "stock_location_path_location_dest_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_location_path", "stock_location", column: "location_from_id", name: "stock_location_path_location_from_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_location_path", "stock_location_route", column: "route_id", name: "stock_location_path_route_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_location_path", "stock_picking_type", column: "picking_type_id", name: "stock_location_path_picking_type_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_path", "stock_warehouse", column: "warehouse_id", name: "stock_location_path_warehouse_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_route", "res_company", column: "company_id", name: "stock_location_route_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_route", "res_users", column: "create_uid", name: "stock_location_route_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_route", "res_users", column: "write_uid", name: "stock_location_route_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_route", "stock_warehouse", column: "supplied_wh_id", name: "stock_location_route_supplied_wh_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_route", "stock_warehouse", column: "supplier_wh_id", name: "stock_location_route_supplier_wh_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_location_route_categ", "product_category", column: "categ_id", name: "stock_location_route_categ_categ_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_location_route_categ", "stock_location_route", column: "route_id", name: "stock_location_route_categ_route_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_location_route_move", "stock_location_route", column: "route_id", name: "stock_location_route_move_route_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_location_route_move", "stock_move", column: "move_id", name: "stock_location_route_move_move_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_move", "procurement_group", column: "group_id", name: "stock_move_group_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "procurement_rule", column: "rule_id", name: "stock_move_rule_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_move", "product_packaging", column: "product_packaging", name: "stock_move_product_packaging_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "product_product", column: "product_id", name: "stock_move_product_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "product_uom", column: "product_uom", name: "stock_move_product_uom_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "res_company", column: "company_id", name: "stock_move_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "res_partner", column: "partner_id", name: "stock_move_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "res_partner", column: "restrict_partner_id", name: "stock_move_restrict_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "res_users", column: "create_uid", name: "stock_move_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "res_users", column: "write_uid", name: "stock_move_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "sale_order_line", column: "sale_line_id", name: "stock_move_sale_line_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "stock_inventory", column: "inventory_id", name: "stock_move_inventory_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "stock_location", column: "location_dest_id", name: "stock_move_location_dest_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "stock_location", column: "location_id", name: "stock_move_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "stock_location_path", column: "push_rule_id", name: "stock_move_push_rule_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_move", "stock_move", column: "origin_returned_move_id", name: "stock_move_origin_returned_move_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "stock_picking", column: "picking_id", name: "stock_move_picking_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "stock_picking_type", column: "picking_type_id", name: "stock_move_picking_type_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move", "stock_warehouse", column: "warehouse_id", name: "stock_move_warehouse_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "product_product", column: "product_id", name: "stock_move_line_product_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_move_line", "product_uom", name: "stock_move_line_product_uom_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "res_partner", column: "owner_id", name: "stock_move_line_owner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "res_users", column: "create_uid", name: "stock_move_line_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "res_users", column: "write_uid", name: "stock_move_line_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "stock_location", column: "location_dest_id", name: "stock_move_line_location_dest_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "stock_location", column: "location_id", name: "stock_move_line_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "stock_move", column: "move_id", name: "stock_move_line_move_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "stock_picking", column: "picking_id", name: "stock_move_line_picking_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "stock_production_lot", column: "lot_id", name: "stock_move_line_lot_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_move_line", "stock_quant_package", column: "package_id", name: "stock_move_line_package_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_move_line", "stock_quant_package", column: "result_package_id", name: "stock_move_line_result_package_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_move_line_consume_rel", "stock_move_line", column: "consume_line_id", name: "stock_move_line_consume_rel_consume_line_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_move_line_consume_rel", "stock_move_line", column: "produce_line_id", name: "stock_move_line_consume_rel_produce_line_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_move_move_rel", "stock_move", column: "move_dest_id", name: "stock_move_move_rel_move_dest_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_move_move_rel", "stock_move", column: "move_orig_id", name: "stock_move_move_rel_move_orig_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_overprocessed_transfer", "res_users", column: "create_uid", name: "stock_overprocessed_transfer_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_overprocessed_transfer", "res_users", column: "write_uid", name: "stock_overprocessed_transfer_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_overprocessed_transfer", "stock_picking", column: "picking_id", name: "stock_overprocessed_transfer_picking_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "procurement_group", column: "group_id", name: "stock_picking_group_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "res_company", column: "company_id", name: "stock_picking_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "res_partner", column: "owner_id", name: "stock_picking_owner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "res_partner", column: "partner_id", name: "stock_picking_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "res_users", column: "create_uid", name: "stock_picking_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "res_users", column: "write_uid", name: "stock_picking_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "sale_order", column: "sale_id", name: "stock_picking_sale_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "stock_location", column: "location_dest_id", name: "stock_picking_location_dest_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "stock_location", column: "location_id", name: "stock_picking_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "stock_picking", column: "backorder_id", name: "stock_picking_backorder_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking", "stock_picking_type", column: "picking_type_id", name: "stock_picking_picking_type_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking_backorder_rel", "stock_backorder_confirmation", name: "stock_picking_backorder_rel_stock_backorder_confirmation_i_fkey", on_delete: :cascade
-  add_foreign_key "stock_picking_backorder_rel", "stock_picking", name: "stock_picking_backorder_rel_stock_picking_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_picking_transfer_rel", "stock_immediate_transfer", name: "stock_picking_transfer_rel_stock_immediate_transfer_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_picking_transfer_rel", "stock_picking", name: "stock_picking_transfer_rel_stock_picking_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_picking_type", "barcode_nomenclature", name: "stock_picking_type_barcode_nomenclature_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking_type", "ir_sequence", column: "sequence_id", name: "stock_picking_type_sequence_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking_type", "res_users", column: "create_uid", name: "stock_picking_type_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking_type", "res_users", column: "write_uid", name: "stock_picking_type_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking_type", "stock_location", column: "default_location_dest_id", name: "stock_picking_type_default_location_dest_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking_type", "stock_location", column: "default_location_src_id", name: "stock_picking_type_default_location_src_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking_type", "stock_picking_type", column: "return_picking_type_id", name: "stock_picking_type_return_picking_type_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_picking_type", "stock_warehouse", column: "warehouse_id", name: "stock_picking_type_warehouse_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_production_lot", "product_product", column: "product_id", name: "stock_production_lot_product_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_production_lot", "product_uom", name: "stock_production_lot_product_uom_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_production_lot", "res_users", column: "create_uid", name: "stock_production_lot_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_production_lot", "res_users", column: "write_uid", name: "stock_production_lot_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_quant", "product_product", column: "product_id", name: "stock_quant_product_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_quant", "res_company", column: "company_id", name: "stock_quant_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_quant", "res_partner", column: "owner_id", name: "stock_quant_owner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_quant", "res_users", column: "create_uid", name: "stock_quant_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_quant", "res_users", column: "write_uid", name: "stock_quant_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_quant", "stock_location", column: "location_id", name: "stock_quant_location_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_quant", "stock_production_lot", column: "lot_id", name: "stock_quant_lot_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_quant", "stock_quant_package", column: "package_id", name: "stock_quant_package_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_quant_package", "product_packaging", column: "packaging_id", name: "stock_quant_package_packaging_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_quant_package", "res_users", column: "create_uid", name: "stock_quant_package_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_quant_package", "res_users", column: "write_uid", name: "stock_quant_package_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_quantity_history", "res_users", column: "create_uid", name: "stock_quantity_history_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_quantity_history", "res_users", column: "write_uid", name: "stock_quantity_history_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking", "res_users", column: "create_uid", name: "stock_return_picking_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking", "res_users", column: "write_uid", name: "stock_return_picking_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking", "stock_location", column: "location_id", name: "stock_return_picking_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking", "stock_location", column: "original_location_id", name: "stock_return_picking_original_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking", "stock_location", column: "parent_location_id", name: "stock_return_picking_parent_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking", "stock_picking", column: "picking_id", name: "stock_return_picking_picking_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking_line", "product_product", column: "product_id", name: "stock_return_picking_line_product_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking_line", "res_users", column: "create_uid", name: "stock_return_picking_line_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking_line", "res_users", column: "write_uid", name: "stock_return_picking_line_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking_line", "stock_move", column: "move_id", name: "stock_return_picking_line_move_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_return_picking_line", "stock_return_picking", column: "wizard_id", name: "stock_return_picking_line_wizard_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_route_product", "product_template", column: "product_id", name: "stock_route_product_product_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_route_product", "stock_location_route", column: "route_id", name: "stock_route_product_route_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_route_warehouse", "stock_location_route", column: "route_id", name: "stock_route_warehouse_route_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_route_warehouse", "stock_warehouse", column: "warehouse_id", name: "stock_route_warehouse_warehouse_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_scheduler_compute", "res_users", column: "create_uid", name: "stock_scheduler_compute_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_scheduler_compute", "res_users", column: "write_uid", name: "stock_scheduler_compute_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "product_product", column: "product_id", name: "stock_scrap_product_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "product_uom", name: "stock_scrap_product_uom_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "res_partner", column: "owner_id", name: "stock_scrap_owner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "res_users", column: "create_uid", name: "stock_scrap_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "res_users", column: "write_uid", name: "stock_scrap_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "stock_location", column: "location_id", name: "stock_scrap_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "stock_location", column: "scrap_location_id", name: "stock_scrap_scrap_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "stock_move", column: "move_id", name: "stock_scrap_move_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "stock_picking", column: "picking_id", name: "stock_scrap_picking_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "stock_production_lot", column: "lot_id", name: "stock_scrap_lot_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_scrap", "stock_quant_package", column: "package_id", name: "stock_scrap_package_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_traceability_report", "res_users", column: "create_uid", name: "stock_traceability_report_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_traceability_report", "res_users", column: "write_uid", name: "stock_traceability_report_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "procurement_rule", column: "mto_pull_id", name: "stock_warehouse_mto_pull_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "res_company", column: "company_id", name: "stock_warehouse_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "res_partner", column: "partner_id", name: "stock_warehouse_partner_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "res_users", column: "create_uid", name: "stock_warehouse_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "res_users", column: "write_uid", name: "stock_warehouse_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_location", column: "lot_stock_id", name: "stock_warehouse_lot_stock_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_location", column: "view_location_id", name: "stock_warehouse_view_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_location", column: "wh_input_stock_loc_id", name: "stock_warehouse_wh_input_stock_loc_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_location", column: "wh_output_stock_loc_id", name: "stock_warehouse_wh_output_stock_loc_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_location", column: "wh_pack_stock_loc_id", name: "stock_warehouse_wh_pack_stock_loc_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_location", column: "wh_qc_stock_loc_id", name: "stock_warehouse_wh_qc_stock_loc_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_location_route", column: "crossdock_route_id", name: "stock_warehouse_crossdock_route_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_warehouse", "stock_location_route", column: "delivery_route_id", name: "stock_warehouse_delivery_route_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_warehouse", "stock_location_route", column: "reception_route_id", name: "stock_warehouse_reception_route_id_fkey", on_delete: :restrict
-  add_foreign_key "stock_warehouse", "stock_picking_type", column: "in_type_id", name: "stock_warehouse_in_type_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_picking_type", column: "int_type_id", name: "stock_warehouse_int_type_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_picking_type", column: "out_type_id", name: "stock_warehouse_out_type_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_picking_type", column: "pack_type_id", name: "stock_warehouse_pack_type_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_picking_type", column: "pick_type_id", name: "stock_warehouse_pick_type_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse", "stock_warehouse", column: "default_resupply_wh_id", name: "stock_warehouse_default_resupply_wh_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse_orderpoint", "procurement_group", column: "group_id", name: "stock_warehouse_orderpoint_group_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse_orderpoint", "product_product", column: "product_id", name: "stock_warehouse_orderpoint_product_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_warehouse_orderpoint", "res_company", column: "company_id", name: "stock_warehouse_orderpoint_company_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse_orderpoint", "res_users", column: "create_uid", name: "stock_warehouse_orderpoint_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse_orderpoint", "res_users", column: "write_uid", name: "stock_warehouse_orderpoint_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_warehouse_orderpoint", "stock_location", column: "location_id", name: "stock_warehouse_orderpoint_location_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_warehouse_orderpoint", "stock_warehouse", column: "warehouse_id", name: "stock_warehouse_orderpoint_warehouse_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_warn_insufficient_qty_scrap", "product_product", column: "product_id", name: "stock_warn_insufficient_qty_scrap_product_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warn_insufficient_qty_scrap", "res_users", column: "create_uid", name: "stock_warn_insufficient_qty_scrap_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_warn_insufficient_qty_scrap", "res_users", column: "write_uid", name: "stock_warn_insufficient_qty_scrap_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "stock_warn_insufficient_qty_scrap", "stock_location", column: "location_id", name: "stock_warn_insufficient_qty_scrap_location_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_warn_insufficient_qty_scrap", "stock_scrap", column: "scrap_id", name: "stock_warn_insufficient_qty_scrap_scrap_id_fkey", on_delete: :nullify
-  add_foreign_key "stock_wh_resupply_table", "stock_warehouse", column: "supplied_wh_id", name: "stock_wh_resupply_table_supplied_wh_id_fkey", on_delete: :cascade
-  add_foreign_key "stock_wh_resupply_table", "stock_warehouse", column: "supplier_wh_id", name: "stock_wh_resupply_table_supplier_wh_id_fkey", on_delete: :cascade
   add_foreign_key "student_attendance", "res_users", column: "create_uid", name: "student_attendance_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_attendance", "res_users", column: "write_uid", name: "student_attendance_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_convert_lead", "crm_stage", column: "stage_id", name: "student_convert_lead_stage_id_fkey", on_delete: :nullify
+  add_foreign_key "student_convert_lead", "crm_team", column: "team_id", name: "student_convert_lead_team_id_fkey", on_delete: :nullify
+  add_foreign_key "student_convert_lead", "res_users", column: "create_uid", name: "student_convert_lead_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_convert_lead", "res_users", column: "user_id", name: "student_convert_lead_user_id_fkey", on_delete: :nullify
+  add_foreign_key "student_convert_lead", "res_users", column: "write_uid", name: "student_convert_lead_write_uid_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "op_admission", column: "admission_id", name: "student_course_admission_admission_id_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "op_batch", column: "batch_id", name: "student_course_admission_batch_id_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "op_student", column: "student_id", name: "student_course_admission_student_id_fkey", on_delete: :nullify
@@ -14260,6 +13840,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "student_course_admission", "res_company", column: "company_id", name: "student_course_admission_company_id_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "res_users", column: "create_uid", name: "student_course_admission_create_uid_fkey", on_delete: :nullify
   add_foreign_key "student_course_admission", "res_users", column: "write_uid", name: "student_course_admission_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "student_gen_test_room_day", "generate_student_test_room", column: "day_id", name: "student_gen_test_room_day_day_id_fkey", on_delete: :cascade
   add_foreign_key "student_gen_test_room_day", "generate_student_test_room_day", column: "gen_room_id", name: "student_gen_test_room_day_gen_room_id_fkey", on_delete: :cascade
   add_foreign_key "student_hall_ticket", "op_exam_session", column: "exam_session_id", name: "student_hall_ticket_exam_session_id_fkey", on_delete: :nullify
   add_foreign_key "student_hall_ticket", "res_users", column: "create_uid", name: "student_hall_ticket_create_uid_fkey", on_delete: :nullify
@@ -14357,6 +13938,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "survey_user_input_line", "survey_label", column: "value_suggested_row", name: "survey_user_input_line_value_suggested_row_fkey", on_delete: :nullify
   add_foreign_key "survey_user_input_line", "survey_question", column: "question_id", name: "survey_user_input_line_question_id_fkey", on_delete: :restrict
   add_foreign_key "survey_user_input_line", "survey_survey", column: "survey_id", name: "survey_user_input_line_survey_id_fkey", on_delete: :nullify
+  add_foreign_key "survey_user_input_line", "survey_user_input", column: "user_input_id", name: "survey_user_input_line_user_input_id_fkey", on_delete: :cascade
   add_foreign_key "tax_adjustments_wizard", "account_account", column: "credit_account_id", name: "tax_adjustments_wizard_credit_account_id_fkey", on_delete: :nullify
   add_foreign_key "tax_adjustments_wizard", "account_account", column: "debit_account_id", name: "tax_adjustments_wizard_debit_account_id_fkey", on_delete: :nullify
   add_foreign_key "tax_adjustments_wizard", "account_journal", column: "journal_id", name: "tax_adjustments_wizard_journal_id_fkey", on_delete: :nullify
@@ -14366,6 +13948,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "tax_adjustments_wizard", "res_users", column: "write_uid", name: "tax_adjustments_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "team_favorite_user_rel", "crm_team", column: "team_id", name: "team_favorite_user_rel_team_id_fkey", on_delete: :cascade
   add_foreign_key "team_favorite_user_rel", "res_users", column: "user_id", name: "team_favorite_user_rel_user_id_fkey", on_delete: :cascade
+  add_foreign_key "tech_tech", "res_users", column: "create_uid", name: "tech_tech_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "tech_tech", "res_users", column: "write_uid", name: "tech_tech_write_uid_fkey", on_delete: :nullify
   add_foreign_key "teky_qldc", "hr_department", column: "department_id", name: "teky_qldc_department_id_fkey", on_delete: :nullify
   add_foreign_key "teky_qldc", "hr_employee", column: "employee_id", name: "teky_qldc_employee_id_fkey", on_delete: :nullify
   add_foreign_key "teky_qldc", "hr_employee", column: "parent_id", name: "teky_qldc_parent_id_fkey", on_delete: :nullify
@@ -14380,6 +13964,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "time_table_report", "op_faculty", column: "faculty_id", name: "time_table_report_faculty_id_fkey", on_delete: :nullify
   add_foreign_key "time_table_report", "res_users", column: "create_uid", name: "time_table_report_create_uid_fkey", on_delete: :nullify
   add_foreign_key "time_table_report", "res_users", column: "write_uid", name: "time_table_report_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "timetable_batch_line_faculty_rel", "gen_batch_table_line", column: "timetable_batch_line_id", name: "timetable_batch_line_faculty_rel_timetable_batch_line_id_fkey", on_delete: :cascade
+  add_foreign_key "timetable_batch_line_faculty_rel", "op_faculty", column: "faculty_id", name: "timetable_batch_line_faculty_rel_faculty_id_fkey", on_delete: :cascade
   add_foreign_key "timetable_line_faculty_rel", "gen_time_table_line", column: "timetable_line_id", name: "timetable_line_faculty_rel_timetable_line_id_fkey", on_delete: :cascade
   add_foreign_key "timetable_line_faculty_rel", "op_faculty", column: "faculty_id", name: "timetable_line_faculty_rel_faculty_id_fkey", on_delete: :cascade
   add_foreign_key "user_answers", "op_faculty", column: "faculty_id"
@@ -14387,9 +13973,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_021704) do
   add_foreign_key "user_answers", "user_questions"
   add_foreign_key "user_questions", "op_batch"
   add_foreign_key "user_questions", "questions"
-  add_foreign_key "user_simulation_wizard", "res_users", column: "create_uid", name: "user_simulation_wizard_create_uid_fkey", on_delete: :nullify
-  add_foreign_key "user_simulation_wizard", "res_users", column: "user_id", name: "user_simulation_wizard_user_id_fkey", on_delete: :nullify
-  add_foreign_key "user_simulation_wizard", "res_users", column: "write_uid", name: "user_simulation_wizard_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "user_questions", "users", column: "student_id"
   add_foreign_key "utm_campaign", "res_users", column: "create_uid", name: "utm_campaign_create_uid_fkey", on_delete: :nullify
   add_foreign_key "utm_campaign", "res_users", column: "write_uid", name: "utm_campaign_write_uid_fkey", on_delete: :nullify
   add_foreign_key "utm_medium", "res_users", column: "create_uid", name: "utm_medium_create_uid_fkey", on_delete: :nullify
