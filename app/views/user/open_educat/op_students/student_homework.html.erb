@@ -25,52 +25,65 @@
           <div class="tab-pane fade active in" id='homework_tab1'>
 
             <div class="table-responsive bo-table">
-              <div class="filter-box FlowupLabels" id='formBody'>
-                <div class="row">
-                  <div class="col-md-4">
+              <div class="filter-box FlowupLabels p-b-10" id='formBody'>
+                <div class="row" style="margin-left: -5px; margin-right: -5px;">
+                  <div class="col-md-4  p-r-5 p-l-5">
                     <label class="filter-title student_course_title"><%= @course.name %></label>
                   </div>
-                  <div class="col-md-3">
-                    <div class='fl_wrap m-t-0'>
-                      <label class='fl_label' for='rf_name'><%= t('learning.course') %>:</label>
-                      <select class='fl_input' id='homework_course_selection'>
-                        <% @courses.each do |course| %>
+                  <div class="col-md-3  p-r-5 p-l-5">
+                    <% unless @courses.blank? %>
+                    <label class="custom-select-label"><%= t('learning.course')%></label>
+                    <select class="custom-select form-control-filters student_subject_filter" id="homework_course_selection">
+                      <% @courses.each do |course| %>
                           <% if course.id == @course.id %>
                             <option value="<%= course.id %>" selected><%= course.name %></option>
                           <% else %>
                             <option value="<%= course.id %>"><%= course.name %></option>
                           <% end %>
-                        <% end %>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class='fl_wrap m-t-0 populated'>
+                        <% end %>       
+                    </select>
+
+                    <% else %>
+                    <div class='fl_wrap m-t-0 batch-populated populated'>
                       <label class='fl_label' for='rf_name'><%= t('learning.batch.name') %>:</label>
-                      <select class='fl_input' id="homework_batch_selection">
-                        <% @batches.each do |batch| %>
+                      <p class="fl_input"></p>
+                    </div>
+                    <% end %>
+                  </div>
+                  <div class="col-md-3  p-r-5 p-l-5">
+                    <% unless @batches.blank? %>
+                    <label class="custom-select-label"><%= t('learning.batch.name')%></label>
+                    <select class="custom-select form-control-filters student_subject_filter" id="homework_batch_selection">
+                      <% @batches.each do |batch| %>
                           <% if @batch.id == batch.id %>
                             <option value="<%= batch.id %>" selected><%= batch.name %></option>
                           <% else %>
                             <option value="<%= batch.id %>"><%= batch.name %></option>
                           <% end %>
-                        <% end %>
-                      </select>
+                      <% end %>        
+                    </select>
+
+                    <% else %>
+                    <div class='fl_wrap m-t-0 batch-populated populated'>
+                      <label class='fl_label' for='rf_name'><%= t('learning.batch.name') %>:</label>
+                      <p class="fl_input"></p>
                     </div>
+                    <% end %>
                   </div>
-                  <div class="col-md-2">
-                    <div class='fl_wrap m-t-0 populated'>
-                      <label class='fl_label' for='rf_name'><%= t('learning.subject') %>:</label>
-                      <select class='fl_input' id="homework_subject_selection">
-                        <% @subjects.each do |subject| %>
-                          <% if @subject.id == subject.id %>
-                            <option value="<%= subject.id %>" selected>Học phần <%= subject.level %></option>
-                          <% else %>
-                            <option value="<%= subject.id %>">Học phần <%= subject.level %></option>
-                          <% end %>
-                        <% end %>
-                      </select>
+                  <div class="col-md-2  p-r-5 p-l-5">                    
+                    <% unless @subjects.blank? %>
+                    <label class="custom-select-label"><%= t('learning.subject')%></label>
+                    <select class="custom-select form-control-filters student_subject_filter" id="homework_subject_selection">
+                      <% @subjects.each do |subject| %>
+                      <option value="<%= subject.id %>" <%= subject.id == @subject.id ? 'selected':'' %>><%= subject.level %></option>
+                      <% end %>        
+                    </select>
+                    <% else %>
+                    <div class='fl_wrap m-t-0 batch-populated populated'>
+                      <label class='fl_label' for='rf_name'><%= t('learning.subject') %></label>
+                      <p class="fl_input"></p>
                     </div>
+                    <% end %>
                   </div>
                 </div>
               </div>
@@ -99,4 +112,11 @@
     $('.no_homework_div').show();
     $('#homework_session_table').hide();
   <% end %>
+
+$(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+      $("[data-placement=right]").hover(function(){
+      $('.tooltip').css('top',parseInt($('.tooltip').css('top')) + 8 + 'px')
+    });
+});
 </script>

@@ -1,18 +1,18 @@
 <div class="filter-box FlowupLabels" id='formBody'>
-  <div class="row">
-    <div class="col-md-offset-1 col-md-4">
+  <div class="row" style="margin-left: -5px; margin-right: -5px;">
+    <div class="col-md-4  p-r-5 p-l-5">
       <div class='fl_wrap m-t-0 course-populated populated'>
         <label class='fl_label' for='rf_name'><%= t('learning.course') %>: </label>
         <p class="fl_input"><%= batch.op_course.name %></p>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 p-r-5 p-l-5">
       <div class='fl_wrap m-t-0 batch-populated populated'>
         <label class='fl_label' for='rf_name'><%= t('learning.batch.name') %>: </label>
         <p class="fl_input"><%= batch.code %></p>
       </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-4  p-r-5 p-l-5">
       <% unless subjects.blank? %>
       <label class="custom-select-label"><%= t('learning.subject')%></label>
       <select class="custom-select form-control-filters student_subject_filter" id="rf_name" onchange="showSubjectSessions()">
@@ -33,26 +33,12 @@
 <%= render 'user/open_educat/op_students/progress/done_sessions', {:done_sessions => done_sessions, active_subject: active_subject} %>
 <%= render 'user/open_educat/op_students/progress/tobe_sessions', {:tobe_sessions => tobe_sessions, active_subject: active_subject} %>
 <%= render 'user/open_educat/op_students/progress/cancel_sessions', {:cancel_sessions => cancel_sessions, active_subject: active_subject} %>
-<style>
-  .tooltip > .tooltip-inner {
-    background-color: #D7DFE9;
-    padding: 9px;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: rgba(0, 0, 0, 0.85);
-    font-size: 12px;
-    border-radius: none;
-    white-space: nowrap;
-  }
-  .tooltip.top > .tooltip-arrow {
-    border-top: 5px solid #D7DFE9;
-  }
-</style>
+
 <script>
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
       $("[data-placement=right]").hover(function(){
-    $('.tooltip').css('top',parseInt($('.tooltip').css('top')) + 8 + 'px')
-});
+      $('.tooltip').css('top',parseInt($('.tooltip').css('top')) + 8 + 'px')
     });
+});
 </script>
