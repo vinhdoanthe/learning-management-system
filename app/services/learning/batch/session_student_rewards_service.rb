@@ -5,7 +5,7 @@ class Learning::Batch::SessionStudentRewardsService
       params[:students].each do |student|
         student = User::Account::User.where(student_id: student).first
         next if student.blank?
-        next unless check_exist_reward params[:session_id], student.id
+        #next if check_exist_reward params[:session_id], student.id
         reward = Learning::Batch::SessionStudentReward.new
         reward.session_id = params[:session_id]
         reward.rewarded_by = user.id    
@@ -18,23 +18,9 @@ class Learning::Batch::SessionStudentRewardsService
         reward.save
 
         SocialCommunity::Feed::UserPostsService.create_multiple post.id, [ student.id]
-        # SocialCommunity::Feed::RewardPostsService.new.create_noti
         post.create_notifications
 
-        # add transaction point, star, notification
-        case reward.reward_type_id
-        when 1
-          key = User::Constant::TekyCoinStarActivitySetting::REWARD_LVN
-        when 2
-          key = User::Constant::TekyCoinStarActivitySetting::REWARD_GB
-        when 3
-          key = User::Constant::TekyCoinStarActivitySetting::REWARD_TCPB
-        when 4
-          key = User::Constant::TekyCoinStarActivitySetting::REWARD_LBTL
-        end
-
-        User::Reward::CoinStarsService.new.reward_coin_star key, student.id, 'coin', user.id
-        User::Reward::CoinStarsService.new.reward_coin_star key, student.id, 'star', user.id
+        User::Reward::CoinStarsService.new.reward_coin_star reward, student.id, user.id
       end
     end
 

@@ -43,8 +43,7 @@ class Learning::Homework::QuestionService
 
       if user_answer.save
         if user_answer.state == 'right'
-          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_CHOICE, student.id, 'coin', 0
-          User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_CHOICE, student.id, 'star', 0
+          User::Reward::CoinStarsService.new.reward_coin_star user_answer, student.id, 0
         end
 
         return user_answer
@@ -86,8 +85,8 @@ class Learning::Homework::QuestionService
         rescue NoMethodError
           give_to = nil
         end
-        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, give_to, 'coin', 0
-        User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::HOMEWORK_TEXT, give_to, 'star', 0
+
+        User::Reward::CoinStarsService.new.reward_coin_star user_answer, give_to, 0
       end
       { state: 'success', message: 'Chấm bài thành công' }
     else

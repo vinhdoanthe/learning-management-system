@@ -26,6 +26,7 @@ module User::Constant::TekyCoinStarActivitySetting
   HOMEWORK_TEXT = 'HOMEWORK_TEXT'
   ATTENDANCE_YES = 'ATTENDANCE_YES'
   UPLOAD_SPCK = 'UPLOAD_SPCK'
+  FEED_BACK = 'FEED_BACK'
 end
 
 module User::Constant::Evaluate

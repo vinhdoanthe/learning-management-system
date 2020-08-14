@@ -108,9 +108,8 @@ class User::OpenEducat::OpTeachersController < ApplicationController
         student_ids.each do |student_id|
           user = User::Account::User.where(student_id: student_id).first
           next if user.blank?
-
-          # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'coin', 0
-          # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::ATTENDANCE_YES, user.id, 'star', 0
+          attendance_line = Learning::Batch::OpAttendanceLine.where(session_id: params[:session_id], student_id: student_id).first
+          User::Reward::CoinStarsService.new.reward_coin_star attendance_line, user.id, 0
         end
       end
 

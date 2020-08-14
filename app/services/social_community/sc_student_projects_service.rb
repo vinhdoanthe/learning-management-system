@@ -95,7 +95,6 @@ class SocialCommunity::ScStudentProjectsService
   end
 
   def create_student_project params, video_link, teacher, thumbnail_url
-    ActiveRecord::Base.transaction do
       project = SocialCommunity::ScStudentProject.new
       project.description = params[:description]
       project.name = params[:name]
@@ -114,6 +113,7 @@ class SocialCommunity::ScStudentProjectsService
       project.course_id = course.id
       project.user_id = user.id 
 
+    ActiveRecord::Base.transaction do
       post = create_project_post teacher, params[:batch_id]
       subscribed_users = SocialCommunity::Feed::StudentProjectPostsService.subscribed_users batch.id
       SocialCommunity::Feed::UserPostsService.create_multiple post.id, subscribed_users
@@ -124,6 +124,8 @@ class SocialCommunity::ScStudentProjectsService
       project.save!
       post.create_notifications
     end
+
+    project
   end
 
   def create_project_post teacher, batch_id
