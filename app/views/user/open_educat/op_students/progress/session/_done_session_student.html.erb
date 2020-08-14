@@ -68,26 +68,6 @@
       </span>
     </a>
   <% end %>
-  <span data-toggle="modal" data-target="#session_photo" style="margin-right: 10px">
-    <a href='/learning/op_session/session_photo?session_id=<%= session.id %>' data-remote='true' data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.picture') %>">
-      <span>
-        <%= image_tag('global/images/icon-image.png', style: 'width: 32px;') %>
-      </span>
-    </a>
-  </span>
-  <% if !attendance_line.nil? and attendance_line.present %>
-    <span data-toggle="modal" data-target="#session_student_feedback" style='margin-right: 10px;'> 
-      <a class='student_feedback_modal' data-session='<%= session.id %>' data-toggle="tooltip" title='<%= t('my_class.detail.tooltip.feedback') %>'>
-        <span>
-          <%= image_tag('icon-heart.png', style: 'width: 32px; cursor: pointer') %>
-        </span>
-      </a>
-    </span>
-  <% else %>
-    <span data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.feedback') %>" style="opacity: 0.5; margin-right: 10px">
-      <%= image_tag('icon-heart.png', style: 'width: 32px') %>
-    </span>
-  <% end %>
   <% if session.lession_id.present? %>
     <a class='' href="/user/open_educat/op_students/student_homework?show_video=true&session=<%= session.id %>" data-toggle="tooltip" title='<%= t('my_class.detail.tooltip.video') %>' data-session="<%= session.id %>" >
       <span>

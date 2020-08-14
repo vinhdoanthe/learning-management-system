@@ -14,7 +14,8 @@
         <% if homework_state[:state] == 'done'%>
           <td align='right' style="font-size: 10px; color: black;"><%= homework_state[:last_done].strftime("%H:%M %d/%m/%Y") %></td>
           <td align="right">
-            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" ><span class="label-edit label label-success" style="padding:6px; font-size: 11px; text-transform: initial; line-height: 7px; font-weight: 500;"><%= t('homework.done') %><%= homework_state[:progress] %></span>
+            <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state" >
+              <span class="label-edit label label-success" style="padding:6px; font-size: 11px; text-transform: initial; line-height: 7px; font-weight: 500;"><%= t('homework.done') %> <%= homework_state[:progress] %></span>
             </a>
           </td>
         <% elsif homework_state == 'undone' %>
@@ -24,7 +25,7 @@
             </a>
           </td>
         <% else %>
-          <td align='right' style="font-size: 10px; color: black;"><%= homework_state[:last_done].strftime("%H:%M %d/%m/%Y") if homework_state[:last_done].present? %></td>
+          <td align='right' style="font-size: 10px; color: #000;" class="font-medium"><%= homework_state[:last_done].strftime("%H:%M %d/%m/%Y") if homework_state[:last_done].present? %></td>
           <td align="right">
             <a style='width: 100%' href='/learning/view_question?session_id=<%= session.id %>' class="do_homework_state"><span class="label-edit label label-primary" style="padding:6px; font-size: 11px; text-transform: initial; line-height: 7px; font-weight: 500;"><%= t('homework.doing') %> <%= homework_state[:progress] %></span>
             </a>
@@ -41,8 +42,8 @@
       <td align="right" style='padding-right: 0'>
         <% if has_homework %>
           <% if session.start_datetime >= Time.now %>
-            <span title='Tạm khoá: Buổi học chưa diễn ra' data-toggle="tooltip">
-              <a style='opacity: 0.1' >
+            <span title="<%= t('adm.learning.session.Temporary session The lesson has not taken place yet')%>" data-toggle="tooltip">
+              <a style='opacity: 0.2' >
                 <span>
                   <%= image_tag('global/images/icon-BTVN.png', style: 'width: 32px;margin-right: 10px') %>
                 </span>
@@ -59,7 +60,7 @@
           <% end %>
         <% else %>
           <span title="<%= t('my_class.detail.tooltip.homework') %>" data-toggle="tooltip">
-            <a style='opacity: 0.1'>
+            <a style='opacity: 0.2'>
               <span>
                 <%= image_tag('global/images/icon-BTVN.png', style: 'width: 32px;margin-right: 10px') %>
               </span>
@@ -78,7 +79,7 @@
           </span>
         <% else %>
           <span  title="<%= t('my_class.detail.tooltip.evaluation') %>" data-toggle="tooltip">
-            <a class='student_evaluate_view' style='opacity: 0.1' >
+            <a class='student_evaluate_view' style='opacity: 0.2' >
               <span>
                 <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px;margin-right: 10px') %>
               </span>
@@ -89,15 +90,15 @@
           <span data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.video') %>" >
             <a class='student_homework_watch_videos'data-session="<%= session.id %>" style='cursor: pointer;'>
               <span>
-                <%= image_tag('global/images/youtube-button.png', style: 'width: 32px;') %>
+                <%= image_tag('global/images/32x32-icon-play-button.png', style: 'width: 32px;') %>
               </span>
             </a>
           <span>
         <% else %>
           <span data-toggle="tooltip" title="<%= t('my_class.detail.tooltip.video') %>">
-            <a class='' style='opacity: 0.1'>
+            <a style='opacity: 0.2'>
               <span>
-                <%= image_tag('global/images/youtube-button.png', style: 'width: 32px;') %>
+                <%= image_tag('global/images/32x32-icon-play-button.png', style: 'width: 32px;') %>
               </span>
             </a>
           </span>
