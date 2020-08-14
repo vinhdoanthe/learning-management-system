@@ -6,7 +6,10 @@ class User::Reward::CoinStarsService
   end
 
   def redeem_coin_transaction coinstarable, student_user_id, amount
-    create_coin_star_transaction coinstarable, student_user_id, 0, amount, 'coin'
+    ActiveRecord::Base.transaction do
+      create_coin_star_transaction coinstarable, student_user_id, 0, amount, 'coin'
+      update_coin_star_user student_user_id, amount, 'coin'
+    end
   end
 
   def reward_coin_star coinstarable, student_user_id, give_by
