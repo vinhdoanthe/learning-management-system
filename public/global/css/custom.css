@@ -4775,33 +4775,6 @@ a.ba-more {
   width: 100%;
 }
 
-.bnd-other {
-  text-align: center;
-}
-
-.bnd-other a {
-  color: #6D7278;
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.bnd-other a span {
-  position: absolute;
-  font-size: 14px;
-  top: -7px;
-  /*right: -9px;*/
-  color: #FF0D38;
-}
-
-.bnd-other a img {}
-
-.bnd-comment {}
-
 .bc-edit {
   position: relative;
   display: inline-block;
@@ -6134,11 +6107,16 @@ padding: 16px;
     width: 100%;
   }
 
+  .bc-edit #new-user-custom-post-content {overflow:hidden; max-height: 200px;padding-right:95px;}
+  .bc-edit textarea {
+    padding-right: 25px;
+}
+
   .bnd-other {
     text-align: center;
   }
 
-  .bnd-other a {
+  .bnd-other a, .bnd-other a .post-like-text {
     color: #6D7278;
     position: relative;
     display: inline-block;
@@ -6149,7 +6127,11 @@ padding: 16px;
     text-transform: uppercase;
   }
 
-  .bnd-other a span {
+  .bnd-other a .post-like-text {
+    vertical-align:bottom;
+  }
+
+  .bnd-other a span.number-text {
     position: absolute;
     font-size: 14px;
     top: -7px;
@@ -7992,3 +7974,5 @@ h3.lms-course-title:before {
 *:focus {
     outline: none;
 }
+
+.post-like-text {}

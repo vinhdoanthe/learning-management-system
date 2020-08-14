@@ -48,3 +48,15 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  var post_textarea = document.getElementById("new-user-custom-post-content");
+  post_textarea.addEventListener('keydown', tk_autosize);
+               
+  function tk_autosize(){
+    var el = this;
+    setTimeout(function(){
+      el.style.cssText = 'height:auto;';
+      el.style.cssText = 'height:' + el.scrollHeight + 'px';
+    },0);
+  }
+</script>
