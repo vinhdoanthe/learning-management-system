@@ -1,0 +1,81 @@
+<div class="modal-dialog" style="width: 60%">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">            
+      <div class='row' style='display: flex'>
+        <div class='col-md-6'>
+          <% if product.images.present? %>
+            <div><%= image_tag(img)  %></div>
+          <% else %>
+            <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
+          <% end %>
+        </div>
+        <div class='col-md-6'>
+          <div class="rt-detail product_infomation box-detail" style="height: 100%; position: relative">
+            <div class="product-brand text-uppercase"><%= t('adm.redeem.brand')%>: <%= brand_name %></div>
+            <h3 class="product-name"><%= product.name %></h3>
+            <hr class="product-line">
+            <div class="rtd-center clearfix redeem_info">
+              <div>
+                <table style="width: 100%" id="table_redeem_product_info">
+                  <colgroup>
+                    <col width='30%'>
+                    <col style='padding-top: 5px; padding-bottom: 5px;'>
+                  </colgroup>
+                  <tr>
+                    <td><label><%= t('student_project.description')%></label></td>
+                    <td align='left' >
+                      <% if !product.description.nil? && product.description.length > 0 %>
+                        <div style="max-height:300px; overflow-y: scroll;"><%= product.description %></div>
+                      <% end %>                
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label><%= t('adm.redeem.redeem_color')%></label></td>
+                    <td align='left' ><span id="confirm_redeem_color"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label><%= t('adm.redeem.redeem_quantily')%></label></td>
+                    <td id="confirm_redeem_quantily" align='left' ></td>
+                  </tr>
+                  <tr>
+                    <td><label><%= t('adm.redeem.redeem_available')%></label></td>
+                    <td id="confirm_redeem_available" align='left' ></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div style="position: absolute; bottom: 0; width: 100%">
+              <div class="rtd-btn clearfix" style="margin-top: 20px">
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="product-box">
+                      <p class="product-coin-text"><%= t('reward.coin')%></p>
+                      <p class="product-coin-number" id="confirm_redeem_receiving_coin"></p>
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <input type='hidden' name="redeem_product_id" value='<%= product.id %>'>
+                    <button data-dismiss='modal' id="redeem_product_confirm" style="max-width: 200px;" class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('adm.redeem.redeem_button')%></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  #table_redeem_product_info td{
+    padding: 5px;
+  }
+  #table_redeem_product_info label{
+    padding: 5px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+</style>

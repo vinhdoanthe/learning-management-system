@@ -1,0 +1,30 @@
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+$('#confirm_redeem_modal').html('<%= escape_javascript( render partial: 'redeem/redeem_products/modals/redeem_product', locals: { product: product, brand_name: brand_name } ) %>');
+
+$('#confirm_redeem_modal').ready(function(){
+  product_id = <%= product.id %>;
+  color = $('#active_product_color').val();
+  amount = $('#active_product_amount').val();
+  size = $('#active_product_size').val();
+  product_price = <%= product.price %>
+
+  $('#confirm_redeem_color').attr("style", "background-color:" + color);   
+  $('#confirm_redeem_quantily').html($('.product_amount').val());
+  $('#confirm_redeem_available').html($('.product_size').val());
+  $('#confirm_redeem_receiving_coin').html(numberWithCommas(amount*product_price));
+
+
+  $('#redeem_product_confirm').on('click', function(){
+
+    $.ajax({
+      method: 'POST',
+      url: '/redeem/redeem_transactions/create_transaction',
+      data: {product_id: product_id, product_color: color, product_size: size, product_amount: amount },
+      success: function(res){
+        display_noti(res)
+      }
+    })
+  });
+})

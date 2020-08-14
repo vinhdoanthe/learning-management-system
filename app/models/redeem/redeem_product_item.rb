@@ -2,8 +2,9 @@ module Redeem
   class RedeemProductItem < ApplicationRecord
     self.table_name = 'redeem_product_items'
     
+    #state: 'waiting', 'sold', 'ready'
     belongs_to :redeem_product, class_name: 'Redeem::RedeemProduct', foreign_key: 'product_id'
-    belongs_to :redeem_transaction, class_name: 'Redeem::RedeemTransaction', foreign_key: 'transaction_id'
+    belongs_to :redeem_transaction, class_name: 'Redeem::RedeemTransaction', foreign_key: 'transaction_id', required: false
     belongs_to :redeen_product_size, class_name: 'Redeem::RedeemProductSize', foreign_key: 'size_id'
     belongs_to :redeem_product_color, class_name: 'Redeem::RedeemProductColor', foreign_key: 'color_id'
     belongs_to :company, class_name: 'Common::ResCompany', foreign_key: 'company_id', required: false

@@ -1,18 +1,26 @@
 class Redeem::RedeemTransactionService
   def create_transaction params, user
+    size = Redeem::RedeemProductSize.where(name: params[:product_size]).first
+    color = Redeem::RedeemProductColor.where(color_code: params[:product_color]).first
     result = { type: "danger", message: "Đã có lỗi xảy ra! Vui lòng thử lại" }
+    return result if size.blank? || color.blank?
+
     post = ''
     transaction = Redeem::RedeemTransaction.new
     transaction.student_id = user.id
     product = Redeem::RedeemProduct.where(id: params[:product_id]).first
     return { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại' } if product.blank?
 
-    transaction.redeem_product_id = product.id
-    transaction.color = params[:product_color]
-    transaction.size = params[:product_size]
+    product_items = check_product_item product, size, color, params[:product_amount].to_i
+
+    if product_items.blank?
+      return { type: 'danger', message: 'Sản phẩm đã hết hàng! Vui lòng quay lại sau' }
+    end
+
+    transaction.product_id = product.id
+    transaction.color_id = color.id
+    transaction.size_id = size.id
     transaction.status = 'new'
-    transaction.company_id = params[:product_company]
-    transaction.expected_time = params[:product_time]
     transaction.amount = params[:product_amount]
     transaction.total_paid = params[:product_amount].to_i * product.price
     return { type: 'danger', message: 'Không đủ Teky đồng để đổi sản phẩm' } if transaction.total_paid > user.coin
@@ -23,8 +31,12 @@ class Redeem::RedeemTransactionService
       type = -1
       update_coin transaction, type
       result = { type: 'success', message: 'Yêu cầu đồi quà thành công!' }
+    rescue => e
+      puts e
+      return { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
     end
     
+    product_items.update_all ({ transaction_id: transaction.id, state: 'waiting' })
     post.create_notifications
     result
 
@@ -53,6 +65,18 @@ class Redeem::RedeemTransactionService
       end
     end
     true
+  end
+
+  def check_product_item product, size, color, amount
+    return nil if size.blank? || color.blank?
+
+    product_items = product.redeem_product_items.where(size_id: size.id, color_id: color.id, state: 'ready')
+
+    if product_items.count >= amount
+      product_items.limit(amount)
+    else
+      return nil
+    end
   end
 
   private

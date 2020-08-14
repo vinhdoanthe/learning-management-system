@@ -17,14 +17,6 @@ class Redeem::RedeemTransactionsController < ApplicationController
   end
 
   def update_transaction
-   # result = false
-   # if current_user.is_admin?
-   #   result = Redeem::RedeemTransactionService.new.update_transaction @transaction.id, params[:status]
-   # end
-
-   # if result
-
-   # end
      result = Redeem::RedeemTransactionService.new.update_transaction @transaction.id, params[:status]
 
      if result
@@ -47,7 +39,7 @@ class Redeem::RedeemTransactionsController < ApplicationController
   end
 
   def validate_params
-    attributes = ['product_color', 'product_size', 'product_company', 'product_time', 'product_amount']
+    attributes = ['product_color', 'product_size', 'product_amount']
     result = true
     attributes.each{ |att| result = false if params[att].blank? }
     
