@@ -5,7 +5,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   def create_student_project
     result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
     sc_student_service = SocialCommunity::ScStudentProjectsService.new
-    # user = User::Account::User.where(student_id: @params[:student_id]).first
+    user = User::Account::User.where(student_id: @params[:student_id]).first
 
     if validate_youtube_upload_params @params
       if @params[:introduction_video].present? && @params[:name].present?
@@ -18,13 +18,13 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
       end
 
       begin
-        sc_student_service.create_student_project @params, embed_link, current_user, thumbnail_video
+        project = sc_student_service.create_student_project @params, embed_link, current_user, thumbnail_video
         result = {type: 'success', message: 'Upload thành công'}
       rescue StandardError
         result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
       end
-      # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'coin', current_user.id
-      # User::Reward::CoinStarsService.new.reward_coin_star User::Constant::TekyCoinStarActivitySetting::UPLOAD_SPCK, user.id, 'star', current_user.id
+
+     User::Reward::CoinStarsService.new.reward_coin_star project, user.id, current_user.id if user.present?
     else
       result = {type: 'danger', message: 'Thiếu thông tin sản phẩm! Vui lòng kiểm tra lại!'}
     end

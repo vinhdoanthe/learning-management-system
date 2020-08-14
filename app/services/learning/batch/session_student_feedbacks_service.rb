@@ -3,15 +3,16 @@ class Learning::Batch::SessionStudentFeedbacksService
     feedback = Learning::Batch::SessionStudentFeedback.where(session_id: params[:session_id], feedback_by: user.id).first
     return { type: 'danger', message: 'Con đã nhận xét rồi!' } if feedback.present?
 
+    feedback = Learning::Batch::SessionStudentFeedback.new
+    feedback.session_id = params[:session_id]
+    feedback.content = params[:content]
+    feedback.feeling_type_id = params[:type]
+    feedback.feedback_by = user.id
+
     ActiveRecord::Base.transaction do
-      feedback = Learning::Batch::SessionStudentFeedback.new
-      feedback.session_id = params[:session_id]
-      feedback.content = params[:content]
-      feedback.feeling_type_id = params[:type]
-      feedback.feedback_by = user.id
       feedback.save
-      # create noti
       feedback.create_notifications
+      User::Reward::CoinStarsService.new.reward_coin_star feedback, user.id, 0
 
       { type: 'success', message: 'Cảm ơn con đã nhận xét về buổi học nhé!' }
     end

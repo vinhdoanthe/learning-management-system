@@ -416,11 +416,21 @@ vi:
       project: "Sản phẩm cuối khoá" 
   reward:
     you_were_reward: 'Bạn được tặng thưởng'
+    you_were_redeem: "Bạn vừa đồi quà"
+    had_minus: "bị trừ"
     star: 'TEKY Sao'
     coin: 'TEKY Đồng'
     my_coin_star_transaction: 'Lịch sử thưởng điểm của tôi'
     at: 'lúc'
     no_transactions: 'Bạn chưa có lịch sử thưởng TEKY Sao và TEKY Đồng.'
+    because: 'vì'
+    do_homework: 'Làm bài tập về nhà'
+    course: 'môn'
+    attendance: 'đi học đúng giờ'
+    reward: 'được khen thưởng'
+    complete_project: 'hoàn thành sản phẩm cuối khoá'
+    feedback: 'đánh giá buôỉ học'
+    redeem: 'đồi quà'
   dashboard:
     leaders:
       title: 'Học sinh tiêu biểu'
