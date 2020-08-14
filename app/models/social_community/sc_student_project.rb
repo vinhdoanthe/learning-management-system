@@ -12,7 +12,13 @@ class SocialCommunity::ScStudentProject < ApplicationRecord
   belongs_to :op_course, class_name: 'Learning::Course::OpCourse', foreign_key: 'course_id'
   belongs_to :op_subject, class_name: 'Learning::Course::OpSubject', foreign_key: 'subject_id'
   belongs_to :sc_post, class_name: 'SocialCommunity::Feed::StudentProjectPost', foreign_key: 'sc_post_id'
-  belongs_to :user, class_name: 'User::Account::User', foreign_key: 'created_by'
+  belongs_to :created_user, class_name: 'User::Account::User', foreign_key: 'created_by', optional: true
   
   has_one_attached :presentation
+
+
+  def student_name
+    '' if op_student.nil?
+    op_student.full_name
+  end
 end

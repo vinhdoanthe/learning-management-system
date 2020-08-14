@@ -49,6 +49,7 @@ yarn-debug.log*
 /config/newrelic.yml
 /config/appsignal.yml
 
+/documentation/*
 /data_import/*
 /data_export/*
 /public/uploads

@@ -331,18 +331,19 @@ RailsAdmin.config do |config|
 
   config.model 'SocialCommunity::ScStudentProject' do 
     list do
-      include_fields :op_course, :op_batch, :op_subject, :op_student, :name, :state, :permission, :introduction_video, :presentation, :project_show_video, :created_at, :updated_at
+      # include_fields :op_course, :op_batch, :op_subject, :op_student, :name, :state, :permission, :introduction_video, :presentation, :project_show_video, :created_at, :updated_at
       # field :op_course
-      # field :op_batch
+      field :op_batch
       # field :op_subject
       # field :op_student
-      # field :name
+      field :student_name
+      field :name
       # field :state
       # field :permission
       # field :description
-      # field :introduction_video
-      # field :presentation
-      # field :project_show_video
+      field :introduction_video
+      field :presentation
+      field :project_show_video
       # field :created_at
       # field :updated_at
     end
