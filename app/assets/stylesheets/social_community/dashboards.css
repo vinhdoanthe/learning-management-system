@@ -108,3 +108,12 @@ button.add-new-post {
   border-color: transparent;
   background: transparent;
 }
+
+.intro_project iframe {
+    width: 100%;
+    height: -webkit-fill-available;
+}
+.show_project iframe {
+    width: 100%;
+    height: -webkit-fill-available;
+}

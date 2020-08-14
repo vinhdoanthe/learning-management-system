@@ -1,7 +1,7 @@
 <div class="bnd-img" style="text-align: center">
   <% if project.introduction_video.present? %>
     <div class='intro_project'>
-      <%= project.introduction_video.html_safe %>
+      <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
     </div>
   <% elsif project.introduction_video.blank? && project.project_show_video.present? %>
     <div class='show_project'>
