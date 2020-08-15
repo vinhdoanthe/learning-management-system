@@ -35,15 +35,38 @@ class Adm::Learning::CourseController < ApplicationController
 
     if params[:course_id].present?
       @course   = Learning::Course::OpCourse.find(params[:course_id])
+      
       # Chuong trinh hoc
       @subjects = @course.op_subjects.order(level: :ASC).select(:id, :name)
 
+      #@subjects = Learning::Course::OpSubject.where(course_id: params[:course_id]).order(level: :ASC).select(:id, :name)
+
       #@lessions = Learning::Course::OpCoursesService.get_all_lession_of_course(params[:course_id])
 
-      @lessions = []
+      
     else
       flash[:warning] = t("adm.Object does not exist")
     end	    
+  end
+
+  # get lesson by session_id
+  def get_lesson_by_session
+    
+    subject_id =params[:subject_id].to_i
+    @lessions = []
+
+    if subject_id > 0
+      #@course   = Learning::Course::OpCourse.find(params[:course_id])
+      # Chuong trinh hoc
+      #@lessions = Learning::Course::OpCoursesService.get_all_lession_of_course(params[:subject_id].to_i)
+
+      @lessions = Learning::Course::OpLession.where(subject_id: subject_id).order(lession_number: :ASC).select(:id, :name, :code, :note, :write_date)
+    else
+      flash[:warning] = t("adm.Object does not exist")
+    end
+
+    render partial: 'adm/learning/course/list_lesson'
+
   end
 
   # Edit khoa hoc

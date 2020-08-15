@@ -37,3 +37,27 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+
+  $('.btn-subject-click').on("click",function(e) {
+
+    var subject_id = $(this).data("id");    
+    
+    alert(subject_id);
+
+    if (subject_id) {
+      //$('.table-responsive').html(null);
+      $.ajax({
+        type: "GET",
+        url: '<%= adm_learning_get_lesson_by_session_path%>',
+        async: false,
+        data: {subject_id: $(this).data("id")},
+        success:function(data){
+          $('#table-subject-' + subject_id).html(data);
+        }
+      });
+    }
+  });
+
+</script>

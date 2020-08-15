@@ -1,44 +1,21 @@
 <% @subjects.each_with_index  do |subject, index| %>
 <div class="card collapsed-card">
   <div class="card-header admin-subject-header-title">
-    <img src="http://localhost:3000/AdminLTE-3.0.5/images/logo-teky-30.png" class="admin-subject-img-thumbnail" />
+    <% if subject.thumbnail.attached? %>
+      <%= image_tag subject.thumbnail ,  class: 'admin-subject-img-thumbnail'%>
+    <% else%>
+      <div class="admin-subject-img-thumbnail bg-cfcfcf">No image</div>
+    <% end%>
+
     <h3 class="card-title" title="<%= subject[:name]%>"><%= subject[:name].to_s.truncate(150)%></h3>
     <div class="card-tools">
-      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+      <button type="button" data-id="<%= subject[:id]%>" class="btn btn-tool btn-subject-click" data-card-widget="collapse"><i class="fas fa-plus"></i>
       </button>
     </div>
   </div>
   <div class="card-body p-0">
-    <div class="table-responsive">
-      <table class="table table-hover">
-        <thead>
-        <tr>
-          <th style="width: 40%"><%= t('adm.course.lesson')%></th>
-          <th><%= t('adm.Note')%></th>
-          <th class="text-center" style="width:15%"><%= t('button.update')%></th>
-        </tr>
-        </thead>
-        <tbody>
-        <% @lessions.each_with_index  do |lession, index| %>
-        <% if lession[:subject_id] == subject[:id]%>
-        <tr>
-          <td>
-            <a href="#"><%= lession[:name]%></a>            
-            <div class="small"><label><%= t('adm.Code')%></label>: <%= lession[:code]%></div>
-            <div class="small"><label><%= t('adm.Homework')%></label>: <%= count_question(lession.id).to_s%></div>
-            <div class="small"><label><%= t('adm.Video')%></label>: <i class="fas fa-file-video-o"></i><%= count_videos(lession.id).to_s%></div>
-            <div class="small"><label><%= t('adm.Slide')%></label>: <%= count_slides(lession.id).to_s%></div>
-          </td>
-          <td><%= lession[:note]%></td>
-          <td class="text-center">
-            <div class="small"><%= lession[:update_at].strftime('%d-%m-%Y %H:%M:%S').to_s%></div>
-          </td>
-        </tr>
-        <% end %>
-        <% end %>
-
-        </tbody>
-      </table>
+    <div class="table-responsive" id="table-subject-<%= subject[:id]%>">
+      
     </div>
   </div>
 </div>
