@@ -64,9 +64,9 @@
                       <select class='fl_input' id="homework_subject_selection">
                         <% @subjects.each do |subject| %>
                           <% if @subject.id == subject.id %>
-                            <option value="<%= subject.id %>" selected>Học phần <%= subject.level %></option>
+                            <option value="<%= subject.id %>" selected><%= I18n.t('learning.subject') %> <%= subject.level %></option>
                           <% else %>
-                            <option value="<%= subject.id %>">Học phần <%= subject.level %></option>
+                            <option value="<%= subject.id %>"><%= I18n.t('learning.subject') %> <%= subject.level %></option>
                           <% end %>
                         <% end %>
                       </select>

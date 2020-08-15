@@ -122,8 +122,7 @@ $('document').ready(function () {
   function filter_learning_params(){
     $('#homework_course_selection').on('change', function(){
       course = $('#homework_course_selection').val()
-      get_homework({course: course})
-    })
+      get_homework({course: course}) })
 
     $('#homework_batch_selection').on('change', function(){
       course = $('#homework_course_selection').val()
@@ -154,7 +153,7 @@ $('document').ready(function () {
         })
 
         var questions_count = $('input[name="questions_count"').val();
-        $('#question_id_span').html('1/' + questions_count + ' BÀI')
+        $('#question_id_span').html('1/' + questions_count + ' ' + QUESTIONS)
         $('.question_select').first().addClass('active_question');
         // $('.question_select').first().removeClass('bg-CFCFCF');
         $('.question_select').click(function(){

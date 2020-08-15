@@ -8,7 +8,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h3 class="color-fff text-transform">Sản phẩm cộng đồng</h3>
+        <h3 class="color-fff text-transform"><%= t('social_community.social_student_project') %></h3>
       </div>
     </div>
   </div>
@@ -17,11 +17,11 @@
       <div class="panel-content">
         <div class="box-product">
           <div class="fc-header">
-            <h3><span class="color-000">Sản phẩm <span style="color:#16BD56;text-transform: uppercase;font-weight: normal;">của tôi</span></h3>
+            <h3><%= t('social_community.my_project_html') %></h3>
           </div>
           <div class='row' style="padding-top: 17px;">
             <% unless (check_projects @student_projects) %>
-              <p class='no-projects'>Bạn chưa có sản phẩm nào</p>
+              <p class='no-projects'><%= t('social_community.no_project_yet') %></p>
             <% else %>
               <% @student_projects.each do |course, projects| %>
                 <% projects.each do |project| %>
@@ -39,11 +39,11 @@
     <div class="panel-content">
       <div class="box-product">
         <div class="fc-header">
-          <h3><span class="color-000">Sản phẩm <span style="color:#16BD56;text-transform: uppercase;font-weight: normal;">cộng đồng</span></h3>
+            <h3><%= t('social_community.social_project_html') %></h3>
         </div>
         <div class=''>
           <% if @course_projects.blank? %>
-            <p class='no-projects'>Khoá học chưa có sản phẩm nào</p>
+            <p class='no-projects'><%= t('social_community.course_no_project_yet') %></p>
           <% else %>
             <% @course_projects.each do |course_project| %>
               <% course_project.each do |course, projects| %>

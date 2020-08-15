@@ -70,11 +70,18 @@
         </script>
         <!-- End Google Analytics -->
       <% end %>
-      <% text_day_in_week = t('date.day_in_week').to_s.html_safe%>
+      <% text_day_in_week = t('datetime.day_in_week').to_s.html_safe%>
       <script type="text/javascript">
-        var  LEARNING_IN_CENTER = "<%= t('learning.Learning in center')%>";
-        var  LEARNING_IN_ONLINE = "<%= t('learning.Learning in online')%>";
-        var  DAY_IN_WEEK        = <%= text_day_in_week%>;
+        var  LEARNING_IN_CENTER = "<%= t('learning.learning_center')%>";
+        var  LEARNING_IN_ONLINE = "<%= t('learning.learning_online')%>";
+        var  ACADEMY = "<%= t('social_community.detail.company') %>";
+        var  BATCH_CODE = "<%= t('learning.batch.code') %>";
+        var  COURSE = "<%= t('learning.course') %>";
+        var  LESSON = "<%= t('learning.lesson') %>";
+        var  ROOM = "<%= t('learning.batch.classroom') %>"
+        var  FACULTY = "<%= t('role.faculty') %>"
+        var  QUESTIONS = "<%= t('homework.span_name') %>"
+        var  DAY_IN_WEEK        = <%= text_day_in_week %>;
       </script>
 
     </head>

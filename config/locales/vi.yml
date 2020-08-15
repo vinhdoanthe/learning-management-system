@@ -146,12 +146,12 @@ vi:
     attendance: "Điểm danh"
     no_lesson: "Chưa có buổi học nào"
     no_video_lesson: "Chưa có video ôn bài"
-    Class Online: "Lớp học Online"
-    Class in center: "Lớp học tại trung tâm"
-    Class cancel: "Lớp bị hủy"
-    Learning in center: "Học tại trung tâm"
-    Learning in online: "Học Online"
-    Your other feelings: "Cảm nhận khác của con"
+    class_online: "Lớp học Online"
+    class_in_center: "Lớp học tại trung tâm"
+    class_cancel: "Lớp bị hủy"
+    learning_center: "Học tại trung tâm"
+    learning_online: "Học Online"
+    your_other_feelings: "Cảm nhận khác của con"
     batch:
       type: "Loại lớp học"
       batch_time: "Thời gian học"
@@ -206,12 +206,15 @@ vi:
         coming_soon_html: "Buổi học <span class='color-F16357'>Sắp diễn ra</span>"
         end: "Đã kết thúc"
       tooltip:
+        attend_school: 'Có đi học'
+        absent: 'Vắng mặt'
         feedback: "Đánh giá buổi học"
         homework: "Làm bài tập về nhà"
         evaluation: "Nhận xét của giảng viên"
         video: "Ôn bài qua video"
         picture: "Hình ảnh lớp học"
   homework:
+    span_name: 'Bài'
     name: "Bài tập về nhà"
     review: "Ôn bài"
     no_homework: "Chưa có bài tập"
@@ -240,9 +243,35 @@ vi:
     Like: "Like"
     Heart: "Thả tim"
     Sad: "Buồn"
+    social_student_project: 'Sản phẩm cộng đồng'
+    project: 'Sản phẩm'
+    no_project_yet: 'Bạn chưa có sản phẩm nào'
+    course_no_project_yet: 'Khoá học chưa có sản phẩm nào!'
+    my_project_html: '<span class="color-000">Sản phẩm </span> <span style="color:#16BD56;text-transform: uppercase;font-weight: normal;">của tôi</span>'
+    social_project_html: '<span class="color-000">Sản phẩm </span><span style="color:#16BD56;text-transform: uppercase;font-weight: normal;">cộng đồng</span>'
+    detail:
+      name: 'Chi tiết dự án'
+      full_name: 'Họ và tên'
+      course: 'Khoá học'
+      batch: 'Lớp học'
+      company: 'Cơ sở'
+      description: 'Mô tả sản phẩm'
+      intro: 'Giới thiệu sản phẩm'
+      slide: 'Slide sản phẩm'
   datetime:
     from: 'từ'
     to: 'đến'
+    day_in_week:
+      - Thứ 2
+      - Thứ 3
+      - Thứ 4
+      - Thứ 5
+      - Thứ 6
+      - Thứ 7
+      - Chủ nhật
+    morning: "Buổi sáng"
+    afternoon: "Buổi chiều"
+    night: "Buổi tối"
   role:
     student: 'Học sinh'
     faculty: 'Giáo viên'
