@@ -98,6 +98,7 @@
                 <th>GVĐD</th>
                 <th>VHĐD</th>
                 <th>Chi tiết</th>
+                <th>Trạng thái</th>
               </tr>
             </thead>
             <tbody>
@@ -123,6 +124,15 @@
                     <% if student[:attendance_state].present? %>
                       <span class="view_attendance_detail" data-attendance="<%= student[:attendance_id] %>" data-session="<%= session.id %>"><i class="far fa-eye"></i><span>
                         <% end %>
+                  </td>
+                  <td>
+                    <% if student[:student_course_state] == 'on' %>
+                      <span class='student_state bg-success'>Đang học</span>
+                    <% elsif student[:student_course_state] == 'off' %>
+                      <span class='student_state bg-danger'>Nghỉ học</span>
+                    <% elsif student[:student_course_state] == 'off' %>
+                      <span class='student_state bg-secondary'>Bảo lưu</span>
+                    <% end %>
                   </td>
                 </tr>
               <% end %>
@@ -183,5 +193,8 @@
   }
   .view_attendance_detail {
     cursor: pointer;
+  }
+  .student_state {
+    padding: 5px 10px;
   }
 </style>

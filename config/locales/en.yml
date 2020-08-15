@@ -318,6 +318,7 @@ en:
         select_state: "Select state"
         select_academy: "Select Academy"
         select_time: "Select time"
+        lesson_number: "Lesson Number"
   reward:
     you_were_reward: "You were rewarded"
     you_were_redeem: "You were redeem"

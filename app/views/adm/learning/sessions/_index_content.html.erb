@@ -4,12 +4,12 @@
       <th>ID</th>
       <th><%= t("learning.batch.code") %></th>
       <th><%= t("adm.learning.session.session_count") %></th>
-      <th><%= t("adm.learning.session.lesson_name") %></th>
-      <th><%= t("adm.learning.session.academy") %></th>
+      <th><%= t("adm.learning.session.lesson_number") %></th>
       <th><%= t("adm.learning.session.start_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
       <th>Action</th>
+      <th><%= t("adm.learning.session.academy") %></th>
     </tr>
   </thead>
   <tbody>
@@ -17,10 +17,9 @@
       <tr>
         <td><%= session[:id] %></td>
         <td><%= session[:batch_code] %></td>
-        <td><%= session[:session_count] %></td>
-        <td><%= session[:lesson_name] %></td>
-        <td><%= session[:company_name] %></td>
-        <td><%= session[:start_datetime].strftime('%d-%m-%Y') %></td>
+        <td align='center'><%= session[:session_count] %></td>
+        <td align='center'><%= session[:lesson_number] %></td>
+        <td align='center'><%= session[:start_datetime].strftime('%d-%m-%Y') %></td>
         <% if session[:state] == Learning::Constant::Batch::Session::STATE_DRAFT %>
           <td class="bg-warning text-center"><%= session[:state] %></td>
         <% elsif session[:state] == Learning::Constant::Batch::Session::STATE_CONFIRM %>
@@ -62,6 +61,7 @@
           </span> -->
         </td>
         <td></td>
+        <td><%= session[:company_name] %></td>
       </tr>
     <% end %>
   </tbody>
@@ -70,12 +70,12 @@
       <th>ID</th>
       <th><%= t("learning.batch.code") %></th>
       <th><%= t("adm.learning.session.session_count") %></th>
-      <th><%= t("adm.learning.session.lesson_name") %></th>
-      <th><%= t("adm.learning.session.academy") %></th>
+      <th><%= t("adm.learning.session.lesson_number") %></th>
       <th><%= t("adm.learning.session.start_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
       <th>Action</th>
+      <th><%= t("adm.learning.session.academy") %></th>
     </tr>
   </tfoot>
 </table>
@@ -88,11 +88,18 @@
   .session_info {
     margin-right: 7px;
   }
+  .dataTables_scrollBody {
+    transform:rotateX(180deg);
+}
+  .dataTables_scrollBody table {
+    transform:rotateX(180deg);
+  }
 </style>
 <script>
   $(document).ready(function() {
     $('#adm_session_list').DataTable({
       "scrollX": true,
+      "responsive": true,
       "bLengthChange": false,
       "bFilter": true,
       "searching": false,

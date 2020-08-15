@@ -366,6 +366,7 @@ vi:
         select_state: "Chọn trạng thái"
         select_academy: "Chọn học viện"
         select_time: "Chọn thời gian"
+        lesson_number: "Buổi số"
     No homework: "Chưa có bài tập về nhà"
     user:
       name: "Người dùng"

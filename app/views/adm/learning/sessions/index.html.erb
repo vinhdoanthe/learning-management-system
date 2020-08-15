@@ -10,7 +10,7 @@
         <label for='filter-batch'><%= t("learning.batch.code") %></label>
         <select class='select2 select2-hidden-accessible' id='filter-batch' data-placeholder="<%= t("adm.learning.session.select_batch") %>" name="company[]" multiple="multiple" style="width: 100%;">
           <% @allow_batches.all.each do |batch| %>
-          <option value='<%= batch.id %>'><%= batch.code %></option>
+            <option value='<%= batch.id %>'><%= batch.code %></option>
           <% end %>
         </select>
       </div>
@@ -20,7 +20,7 @@
         <label for='filter-company'><%= t("adm.learning.session.academy") %></label>
         <select class='select2 select2-hidden-accessible' id='filter-company' data-placeholder="<%= t("adm.learning.session.select_academy") %>" name="company[]" multiple="multiple" style="width: 100%;">
           <% @allow_companies.all.each do |company| %>
-          <option value='<%= company.id %>'><%= company.name %></option>
+            <option value='<%= company.id %>'><%= company.name %></option>
           <% end %>
         </select>
       </div>
@@ -61,7 +61,7 @@
   </div>
 </div>
 <hr>
-<div id="session_data_table">
+<div id="session_data_table" class='table-responsive'>
 </div>
 <div id="paginator">
 </div>
@@ -77,9 +77,9 @@
 </div>
 
 <style>
-  .pagination span {
-    margin: 5px;
-  }
+.pagination span {
+  margin: 5px;
+}
   #submit_filter_sessions {
     float: right;
     margin-right: 20px;
@@ -91,9 +91,9 @@
 
 </div>
 <style>
-  .filter_form {
-    margin-bottom: 30px;
-  }
+.filter_form {
+  margin-bottom: 30px;
+}
 
   #submit_filter_user {
     float: right;
@@ -112,5 +112,12 @@
         format: 'DD/MM/YYYY hh:mm A'
       }
     })
+    $('#filter-time').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+    });
+
+    $('#filter-time').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+    });
   })
 </script>
