@@ -1,7 +1,8 @@
 <% @subjects.each_with_index  do |subject, index| %>
 <div class="card collapsed-card">
-  <div class="card-header">
-    <h3 class="card-title"><%= subject[:name]%></h3>
+  <div class="card-header admin-subject-header-title">
+    <img src="http://localhost:3000/AdminLTE-3.0.5/images/logo-teky-30.png" class="admin-subject-img-thumbnail" />
+    <h3 class="card-title" title="<%= subject[:name]%>"><%= subject[:name].to_s.truncate(150)%></h3>
     <div class="card-tools">
       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
       </button>

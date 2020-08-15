@@ -31,14 +31,16 @@ class Adm::Learning::CourseController < ApplicationController
   def show
     @report_title_page = t('adm.course.management_course')
 
-    @course = []
+    @course = @subjects = []
 
     if params[:course_id].present?
       @course   = Learning::Course::OpCourse.find(params[:course_id])
       # Chuong trinh hoc
       @subjects = @course.op_subjects.order(level: :ASC).select(:id, :name)
 
-      @lessions = Learning::Course::OpCoursesService.get_all_lession_of_course(params[:course_id])
+      #@lessions = Learning::Course::OpCoursesService.get_all_lession_of_course(params[:course_id])
+
+      @lessions = []
     else
       flash[:warning] = t("adm.Object does not exist")
     end	    
@@ -67,6 +69,7 @@ class Adm::Learning::CourseController < ApplicationController
 
     if params[:frm_course][:course_id].present?
 
+      course   = Learning::Course::OpCourse.find(params[:frm_course][:course_id])
       course_description   = Learning::Course::CourseDescription.find_by(op_course_id: params[:frm_course][:course_id])
 
       if course_description.nil?
@@ -74,7 +77,7 @@ class Adm::Learning::CourseController < ApplicationController
         redirect_to adm_learning_course_path
       else
 
-        if course_description.update(description: params[:frm_course][:description])
+        if course_description.update(description: params[:frm_course][:description]) && course.update(competences: params[:frm_course][:competences])
           flash[:success] = t("adm.The item was updated successfully")		  		
         else
           flash[:danger] = t("adm.The item was updated fail")
