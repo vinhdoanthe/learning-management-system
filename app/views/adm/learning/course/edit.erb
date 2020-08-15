@@ -22,24 +22,42 @@
   <div class="card-body">
     <div class="tab-content" id="custom-tabs-three-tabContent">
         <div class="tab-pane fade show active" id="tab-course-description" role="tabpanel" aria-labelledby="tab-course-description">
+          
           <div class="row">
             <label class="col-sm-3 control-label"><%= t('adm.course.course_name')%>:</label>
             <div class="col-sm-9"><%= @course.name%></div>
           </div>
+
           <div class="row">
             <label class="col-sm-3 control-label"><%= t('adm.course.course_code')%>:</label>
             <div class="col-sm-9"><%= @course.code%></div>
           </div>
-          <div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.Section')%>:</label>
+
+          <div class="row">
+            <label class="col-sm-3 control-label"><%= t('adm.course.Section')%>:</label>
             <div class="col-sm-9"><%= @course.section%></div>
           </div>
-          <div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.number_subjects')%>:</label>
+
+          <div class="row">
+            <label class="col-sm-3 control-label"><%= t('adm.course.number_subjects')%>:</label>
             <div class="col-sm-9"><span class="text-danger text-bold"><%= @subjects.length%></span></div>
           </div>
+
           <div class="row">
-            <label class="col-sm-3 control-label"><%= t('adm.course.course_description')%>:</label>
-            <div class="col-sm-12">
-            <%= text_area_tag :'frm_course[description]', course_description, :id => 'frm_course_description' , :class => "tinymce"%>
+            <div class="form-group">
+              <label class="col-sm-3 control-label"><%= t('adm.course.course_description')%>:</label>
+              <div class="col-sm-12">
+              <%= text_area_tag :'frm_course[description]', course_description, :id => 'frm_course_description' , :class => "tinymce"%>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="col-sm-3 control-label"><%= t('adm.course.What do students learn?')%>:</label>
+              <div class="col-sm-12">
+                <%= text_area_tag :'frm_course[competences]', @course.competences, :id => 'frm_course_competences' , :class => "tinymce"%>
+              </div>
             </div>
           </div>
 

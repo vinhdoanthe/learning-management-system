@@ -281,6 +281,7 @@ vi:
       album: "Bộ sưu tập"
       photo: "Ảnh"
     notice: "Thông báo"
+    Alert!: "Cảnh báo!"
     redeem:
       name: "Đổi quà"
       redeem_button: "Đổi quà ngay"
