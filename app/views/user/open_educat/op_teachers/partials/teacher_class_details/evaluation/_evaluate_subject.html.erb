@@ -1,4 +1,3 @@
-
 <%= tinymce_assets %>
 <input type="hidden" name='session_id' value='<%= session.id %>'>
 <% User::Constant::Evaluate::CATEGORY_EVALUATE.each do |e| %>
@@ -21,6 +20,6 @@
   <label class='label-note'>Nhận xét khác:</label>
   <br>
   <textarea class='tinymce' id="teacher_note" name="teacher_note" rows="6"><%= (attendance.present? && attendance.note_2.present?) ? attendance.note_2.html_safe : '' %></textarea>
-  <%= tinymce :simple %>
 </div>
 
+<%= tinymce :simple %>
