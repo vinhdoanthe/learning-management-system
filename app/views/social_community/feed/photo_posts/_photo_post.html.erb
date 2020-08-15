@@ -12,3 +12,25 @@
     <%= render :partial => "social_community/dashboards/shared/posts/comments", :locals => {post: feed.post, comments: feed.comments} %>    	
     </div>
 </div>
+<style>
+  .close-modal {
+    position: absolute;
+    font-size: 40px;
+    font-weight: 700;
+    right: 20px;
+    z-index: 10;
+    color: white;
+  }
+  .close-modal:hover {
+    color: white;
+  }
+  .fotorama__fullscreen-icon {
+    display: none;
+  }
+  .fotorama__nav-wrap {
+    background-color: black;
+  }
+  .fotorama__wrap--slide .fotorama__stage__frame {
+    background-color: black;
+  }
+</style>
