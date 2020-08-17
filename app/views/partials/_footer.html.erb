@@ -18,6 +18,7 @@
     window.fbAsyncInit = window.fbAsyncInit || function () {
       window.fbMessengerPlugins.callable.forEach(function (item) { item(); });
       window.fbMessengerPlugins.init();
+      FB.CustomerChat.hideDialog();
     };
     setTimeout(function () {
       (function (d, s, id) {
