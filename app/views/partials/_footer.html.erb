@@ -1,10 +1,11 @@
 <footer>
+  <div id="fb-root"></div>
   <script>
-    var div = document.createElement('div');
-    div.className = 'fb-customerchat';
-    div.setAttribute('page_id', '1020601744684807');
-    div.setAttribute('ref', 'b64:Q2hhdCBGcm9tIExNUw==');
-    document.body.appendChild(div);
+    //var div = document.createElement('div');
+    //div.className = 'fb-customerchat';
+    //div.setAttribute('page_id', '1020601744684807');
+    //div.setAttribute('ref', 'b64:Q2hhdCBGcm9tIExNUw==');
+    //document.body.appendChild(div);
     window.fbMessengerPlugins = window.fbMessengerPlugins || {
       init: function () {
         FB.init({
@@ -31,4 +32,5 @@
       }(document, 'script', 'facebook-jssdk'));
     }, 0);
   </script>
+  <div class="fb-customerchat" page_id="1020601744684807" ref="b64:Q2hhdCBGcm9tIExNUw==" greeting_dialog_display="fade"></div>
 </footer>
