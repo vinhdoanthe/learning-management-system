@@ -19,7 +19,7 @@
           <% s_tobe = tobe_session[:session] %>
           <% l_tobe = tobe_session[:lesson] %>
           <% style_display = (s_tobe.subject_id == active_subject)? "" : "style=display:none;" %>
-          <tr class="student_subject_level subject_level_<%s_tobe.op_subject.id.to_s %>" <%= style_display %>>
+          <tr class="student_subject_level subject_level_<%=s_tobe.op_subject.id.to_s %>" <%= style_display %>>
             <%= render 'user/open_educat/op_students/progress/session/tobe_session_student', {:session => s_tobe, :lesson => l_tobe} %>
           </tr>
         <% end %>
