@@ -25,7 +25,7 @@ class User::Reward::CoinStarsService
 
       if setting.is_add_coin
         amount = setting.coin
-        create_coin_star_transaction coinstarable, student_user_id, give_by, amount, 'star'
+        create_coin_star_transaction coinstarable, student_user_id, give_by, amount, 'coin'
         update_coin_star_user student_user_id, amount, 'coin'
       end
     end

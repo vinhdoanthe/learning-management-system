@@ -16,9 +16,9 @@ class User::Reward::CoinStarTransactionDecorator < SimpleDelegator
 
       case coinstarable.class.to_s
       when "Learning::Batch::SessionStudentFeedback"
-        str += "#{I18n.t('reward.feedback')} #{ I18n.t('reward.course') } #{ coinstarable.op_session.name}"
+        str += "#{I18n.t('reward.feedback')} #{ I18n.t('reward.course') } #{ coinstarable.op_session&.name}"
       when "Learning::Batch::SessionStudentReward"
-        str += "#{I18n.t('reward.reward')}  #{ I18n.t('reward.course') } #{ coinstarable.op_session.name}"
+        str += "#{I18n.t('reward.reward')}  #{ I18n.t('reward.course') } #{ coinstarable.op_session&.name}"
       when "Learning::Homework::UserAnswer"
         batch = Learning::Batch::OpBatch.where(id: coinstarable.batch_id).first
 
@@ -35,7 +35,7 @@ class User::Reward::CoinStarTransactionDecorator < SimpleDelegator
         course_name = course.present? ? course.name : ''
         str += "#{ I18n.t('reward.attendance') } #{ I18n.t('reward.course') } #{ course_name }"
       when "SocialCommunity::ScStudentProject"
-        str += "#{I18n.t('reward.complete_project')} #{ I18n.t('reward.course')} #{ coinstarable.op_course_name }"
+        str += "#{I18n.t('reward.complete_project')} #{ I18n.t('reward.course')} #{ coinstarable.op_course&.name }"
       when "Redeem::RedeemTransaction"
         product = coinstarable.redeem_product
         product_name = product.present? ? product.name : ''
