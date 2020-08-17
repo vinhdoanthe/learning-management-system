@@ -125,7 +125,7 @@ module Learning
 
         question_ids = @lesson.questions.pluck(:id)
 
-        @user_questions = Homework::UserQuestion.where(student_id: current_user.id, question_id: question_ids)
+        @user_questions = Homework::UserQuestion.where(student_id: current_user.id, question_id: question_ids, op_batch_id: @session.batch_id)
         
         if @user_questions.present?
           if @user_questions.first.student_id != current_user.id

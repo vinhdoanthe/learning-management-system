@@ -110,30 +110,35 @@ class Learning::Homework::QuestionService
 
       user_question = Learning::Homework::UserQuestion.new
       user_question.op_batch_id = batch_id
-      user_question.student_id = User::Account::User.where(student_id: student_id).first.id
+      user_question.student_id = user.id
       user_question.question_id = question.id
       user_question.save
     end
   end
 
-  def assign_homework student_id, question_list, batch_id
-    unless question_list.present?
+  def assign_homework user_id, question_list, batch_id
+    if question_list.present?
       question_list.each do |question|
         next if question.blank?
-        create_user_question student_id, question.to_i, batch_id.to_i
+        next if user_question_exist question, user_id, batch_id
+        create_user_question user_id, question.to_i, batch_id.to_i
       end
     end
   end
 
-  def create_user_question student_id, question_id, batch_id
+  def create_user_question user_id, question_id, batch_id
     user_question = Learning::Homework::UserQuestion.new
     user_question.op_batch_id = batch_id
-    user_question.student_id = User::Account::User.where(student_id: student_id).first.id
+    user_question.student_id = user_id
     user_question.question_id = question_id
     user_question.save
   end
 
   private
+
+  def user_question_exist question_id, user_id, batch_id
+    Learning::Homework::UserQuestion.where(question_id: question_id, student_id: user_id, batch_id: batch_id).first.present?
+  end
 
   def find_user_question user_question
     Learning::Homework::UserQuestion.where(id: user_question).first

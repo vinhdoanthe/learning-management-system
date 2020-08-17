@@ -17,7 +17,7 @@ module User
     end
 
     def teacher_class
-      batch_ids = @teacher.op_sessions.pluck(:batch_id).uniq
+      batch_ids = @teacher.op_sessions.where.not(state: 'cancel').pluck(:batch_id).uniq
       all_batches ||= Learning::Batch::OpBatch.where(id: batch_ids)
 
       company_id = []
