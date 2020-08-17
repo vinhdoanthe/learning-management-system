@@ -126,7 +126,7 @@ $(document).ready(function(){
       url: '/learning/reward_student',
       data: { students: students, reward_type: reward_type, session_id: session_id },
       success: function(res){        
-	display_noti(res)
+	display_response_noti(res)
       }
     })
   })
@@ -141,7 +141,7 @@ $(document).ready(function(){
       url: '/user/open_educat/teacher_checkin',
       data: {'faculty_id': teacher, 'time': time, 'session_id': session_id},
       success: function (res) {
-	display_noti(res.error)
+	display_response_noti(res.error)
       }
     })
   })
@@ -243,7 +243,7 @@ $(document).ready(function(){
       method: 'POST',
       data: { photo_id: photo_id },
       success: function(res){
-	display_noti(res)
+	display_response_noti(res)
 	$('input[name="delete_photo"][value="' + photo_id + '"]').parent().remove();
       }
     })
@@ -276,7 +276,7 @@ $(document).ready(function(){
         method: 'POST',
         data: { student_ids: student_ids, question_ids: question_ids, session_id: session_id },
         success: function(res){
-	        display_noti(res)
+	        display_response_noti(res)
         }
       })
     }else{

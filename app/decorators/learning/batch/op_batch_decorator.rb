@@ -19,7 +19,7 @@ class Learning::Batch::OpBatchDecorator < SimpleDelegator
       lines = gen_batch_table_lines.sort_by {|line| line.day}
       timings_str_arr = lines.map {|line| Learning::Batch::GenBatchTableLineDecorator.new(line).display_timing}    
       return_str = timings_str_arr.join(', ')
-      return_str += " hàng tuần"
+      return_str += " #{I18n.t('learning.batch.timing.weekly')}"
     end
 
     return_str

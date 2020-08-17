@@ -115,6 +115,13 @@ en:
     attendance: "Attendance"
     no_lesson: "No lesson yet"
     no_video_lesson: "No video yet"
+    select_subject: "Select subject"
+    class_online: "Online class"
+    class_in_center: "Class in center"
+    class_cancel: "Cancel class"
+    learning_center: "Class in center"
+    learning_online: "Online class"
+    your_other_feelings: "Your other feelings"
     batch:
       type: "Batch type"
       batch_time: "Batch time"
@@ -165,12 +172,15 @@ en:
         coming_soon_html: "<span class='color-F16357'>Comming soon</span> lesson"
         end: "End"
       tooltip:
+        attend_school: 'Attend School'
+        absent: 'Absent'
         feedback: "Feedback"
         homework: "Do homework"
         evaluation: "Teacher's evaluation"
         video: "Review by video"
         picture: "Class pictures"
   homework:
+    span_name: 'Quest'
     name: "Homework"
     review: "Review"
     no_homework: "No homework yet"
@@ -195,9 +205,39 @@ en:
     new_comment_placeholder: "Typing comment here"
     new_feeds: "TEKY's Activities"
     home_feeds: "My Activities"
+    Like: "Like"
+    Heart: "Love"
+    Sad: "Sad"
+    social_student_project: 'Social student project'
+    project: 'Project'
+    no_project_yet: 'You have no project yet!'
+    course_no_project_yet: 'Course have no project yet!'
+    my_project_html: '<span style="color:#16BD56;text-transform: uppercase;font-weight: normal;">My</span> <span class="color-000">project </span>'
+    social_project_html: '<span style="color:#16BD56;text-transform: uppercase;font-weight: normal;">Social</span> <span class="color-000">project</span>'
+    detail:
+      name: 'Project Detail'
+      full_name: 'Fullname'
+      course: 'Course'
+      batch: 'Batch'
+      company: 'Center'
+      description: 'Project Description'
+      intro: 'Project Introduction'
+      slide: 'Project Slide Show'
+      lesson: 'Lesson'
   datetime:
     from: "from"
     to: "to"
+    day_in_week:
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      - Sunday
+    morning: "Morning"
+    afternoon: "Afternoon"
+    night: "Night"
   role:
     student: "Student"
     faculty: "Teacher"

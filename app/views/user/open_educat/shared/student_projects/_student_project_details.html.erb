@@ -1,16 +1,16 @@
 <div class="modal-news">
   <div class='panel-content'>
     <ul class='project_infomation'>
-      <li>Họ tên: <span><%= student.full_name %></span></li>
-      <li>Khóa học: <span><%= course.name %></span></li>
-      <li>Lớp học: <span><%= batch.name %></span></li>
-      <li>Cơ sở: <span><%= company_name %></span></li>
+      <li><%= t('social_community.detail.full_name') %>: <span><%= student.full_name %></span></li>
+      <li><%= t('social_community.detail.course') %>: <span><%= course.name %></span></li>
+      <li><%= t('social_community.detail.batch') %>: <span><%= batch.name %></span></li>
+      <li><%= t('social_community.detail.company') %>: <span><%= company_name %></span></li>
     </ul>
   </div>
   <div class="panel-content">
     <div class="box-product">
       <div class="fc-header" style='margin: 15px 0 15px 0'>
-        <h3 style="margin: 0 !important">Mô tả sản phẩm</h3>
+        <h3 style="margin: 0 !important"><%= t('social_community.detail.description') %></h3>
       </div>
       <div class="project_description">
         <p><%= project.description.html_safe if project.description.present?%></p>
@@ -21,7 +21,7 @@
   <div class="panel-content">
     <div class="box-product">
       <div class="fc-header" style='margin: 15px 0 15px 0'>
-        <h3 style="margin: 0 !important">Giới thiệu sản phẩm</h3>
+        <h3 style="margin: 0 !important"><%= t('social_community.detail.intro') %></h3>
       </div>
       <div class="project_intro">
         <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
@@ -33,7 +33,7 @@
   <div class="panel-content">
     <div class="box-product">
       <div class="fc-header" style='margin: 15px 0 15px 0'>
-        <h3 style="margin: 0 !important">Slide sản phẩm</h3>
+        <h3 style="margin: 0 !important"><%= t('social_community.detail.slide') %></h3>
       </div>
       <div class="project_intro">
         <%= link_to image_tag('/global/images/downloadinvoice.png') + t('attachment.download'), rails_blob_path(project.presentation, disposition: "attachment") %>

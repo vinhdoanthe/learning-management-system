@@ -4,7 +4,7 @@ function updateFaqQuesiton(question_content, question_state, answer_content){
     method: 'POST',
     data: { quesiton_content: question_content, question_state: question_state, answer_content: answer_content },
     success: function(res){
-      display_noti(res)
+      display_response_noti(res)
     }
   })
 }

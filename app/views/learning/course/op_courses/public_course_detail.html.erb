@@ -20,7 +20,7 @@
               <input type='hidden' value="<%= course.id %>" name="course_id">
             </div>
             <div class="col-md-6 p-r-0">              
-              <label class="custom-select-label"><%= t('learning.Select subject')%></label>
+              <label class="custom-select-label"><%= t('learning.select_subject')%></label>
               <select class="custom-select form-control-filters student_subject_filter" id="subject_course_select">
                 <% subjects.each do |subject| %>
                   <% if subject[0] == course_subject_detail[:active_subject] %>

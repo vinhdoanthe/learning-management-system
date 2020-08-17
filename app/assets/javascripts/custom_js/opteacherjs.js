@@ -242,7 +242,7 @@ $(document).ready(function () {
             url: '/user/teacher_checkin',
             data: {'faculty_id': teacher, 'time': time, 'session_id': session_id},
             success: function (res) {
-                display_noti(res.error)
+                display_response_noti(res.error)
             }
         })
     })
@@ -297,7 +297,7 @@ $(document).ready(function () {
             url: '/user/teacher_attendance',
             data: data,
             success: function (res) {
-                display_noti(res)
+                display_response_noti(res)
             }
         })
     })
@@ -342,7 +342,7 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (res) {
-                display_noti(res)
+                display_response_noti(res)
             }
         })
     })
@@ -403,7 +403,7 @@ $(document).ready(function () {
             method: 'POST',
             data: info,
             success: function (res) {
-                display_noti(res);
+                display_response_noti(res);
             }
         })
     })

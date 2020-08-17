@@ -106,7 +106,7 @@ $(document).ready(function(){
       url: '/social_community/update_student_project',
       data: { project_id: project_id, permission: 'public', state: 'publish' },
       sucess: function(res){
-        display_noti(res)
+        display_response_noti(res)
       }
     })
   })
