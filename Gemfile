@@ -12,6 +12,9 @@ gem 'bcrypt', '~> 3.1.7'
   gem 'enumerize'
 # User for administration
 gem 'rails_admin', '~> 2.0'
+gem 'cancancan'
+gem 'cancancan-mongoid'
+
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'composite_primary_keys', '~> 12.0'
 gem 'tinymce-rails'

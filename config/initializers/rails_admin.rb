@@ -5,16 +5,16 @@ RailsAdmin.config do |config|
   config.default_items_per_page = 100
 
   config.authenticate_with do
-    unless current_user&.is_admin?
+    unless current_user && (current_user.is_admin? || current_user.is_content_admin?)
       redirect_to(
         main_app.root_path,
         alert: "You are not permitted to view this page"
       )
     end
   end
-
   config.current_user_method(&:current_user)
 
+  config.authorize_with :cancancan, AdminAbility
 
   ActiveRecord::Base.descendants.each do |imodel|
     config.model "#{imodel.name}" do

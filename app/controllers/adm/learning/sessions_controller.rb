@@ -2,6 +2,10 @@ class Adm::Learning::SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :find_session, only: [:session_photos, :session_attendances, :session_videos, :session_info, :student_attendance_detail]
 
+ rescue_from CanCan::AccessDenied do |exception|
+    redirect_to main_app.root_path, alert: exception.message
+ end
+
   def index
     @allow_companies =  if current_user.is_operation_admin?
                         current_user.res_companies
