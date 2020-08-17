@@ -7779,10 +7779,10 @@ label.custom-select-label {
 }
 
 .subject_description .subject_description_content {
-      margin: 0;
-      color: $color-time;
-      line-height: 1.3;
-    }
+    margin: 0;
+    color: #000;
+    line-height: 1.3;
+}
 
 [class*="icon24"]{
   width:24px;
