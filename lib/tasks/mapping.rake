@@ -42,10 +42,18 @@ namespace :mapping do
               session.update(lession_id: att_sheet.lession_id) if !att_sheet.lession_id.blank?
             end
           end
-          if !session.lession_id.blank? and !session.batch_id.blank?
+          if !session.lession_id.blank? and !session.subject_id.blank? and !session.batch_id.blank?
             # Assign homework
-            student_ids = Learning::Batch::OpStudentCourse.where(batch_id: session.batch_id).pluck(:student_id)
+            puts "session_id: #{session.id}, lesson_id: #{session.lession_id}, subject_id: #{session.subject_id}, batch_id: #{session.batch_id}"
+            op_student_courses = Learning::Batch::OpStudentCourse.where(batch_id: session.batch_id, state: Learning::Constant::STUDENT_BATCH_STATUS_ON)
+            student_ids = []
+            op_student_courses.each do |op_student_course|
+              subject_ids = op_student_course.op_subjects.pluck(:id)
+              student_ids << op_student_course.student_id if subject_ids.include?(session.subject_id)
+            end
+            # student_ids = Learning::Batch::OpStudentCourse.where(batch_id: session.batch_id).pluck(:student_id)
             if !student_ids.blank?
+              puts "student_ids: #{student_ids}"
               student_ids.each do |student_id|
                 Learning::Homework::QuestionService.new.assign_homework_by_session(student_id, session.lession_id, session.id)
               end
@@ -57,10 +65,10 @@ namespace :mapping do
       puts "Undefined previous days"
     end
   end
-  
+
   desc 'Mapping old session photos'
   task :mapping_old_session_photos, [] => :environment do |t, args|
-     # Find all attachment attached to sessions
+    # Find all attachment attached to sessions
     old_attachment_ids = ActiveStorage::Attachment.where(record_type: "Learning::Batch::OpSession").pluck(:id)
     total_count = old_attachment_ids.size
     puts total_count
