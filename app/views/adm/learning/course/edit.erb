@@ -1,7 +1,7 @@
 <%= tinymce_assets %>
 <%= javascript_include_tag 'tinymce/langs/vi_VN.js' %>
 <% course_description = get_description(@course) %>
-<form class="form-horizontal" method="post" action="<%= adm_learning_course_update_path%>">
+<form id="frm_course" class="form-horizontal" method="post" action="<%= adm_learning_course_update_path%>" enctype="multipart/form-data">
 <input type="hidden" name="frm_course[course_id]" value="<%= @course.id%>">
 <div class="card">
   <div class="card-footer">
@@ -22,25 +22,88 @@
   <div class="card-body">
     <div class="tab-content" id="custom-tabs-three-tabContent">
         <div class="tab-pane fade show active" id="tab-course-description" role="tabpanel" aria-labelledby="tab-course-description">
-          
           <div class="row">
-            <label class="col-sm-3 control-label"><%= t('adm.course.course_name')%>:</label>
-            <div class="col-sm-9"><%= @course.name%></div>
-          </div>
+            <div class="col-md-6">
+              
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label"><%= t('adm.course.course_name')%></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" value="<%= @course.name%>" disabled>
+                </div>
+              </div>
 
-          <div class="row">
-            <label class="col-sm-3 control-label"><%= t('adm.course.course_code')%>:</label>
-            <div class="col-sm-9"><%= @course.code%></div>
-          </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label"><%= t('adm.course.course_code')%></label>
+                <div class="col-sm-9"><input type="text" class="form-control" value="<%= @course.code%>" disabled></div>
+              </div>
 
-          <div class="row">
-            <label class="col-sm-3 control-label"><%= t('adm.course.Section')%>:</label>
-            <div class="col-sm-9"><%= @course.section%></div>
-          </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label"><%= t('adm.course.Section')%></label>
+                <div class="col-sm-9"><input type="text" class="form-control" value="<%= @course.section%>" disabled></div>
+              </div>
 
-          <div class="row">
-            <label class="col-sm-3 control-label"><%= t('adm.course.number_subjects')%>:</label>
-            <div class="col-sm-9"><span class="text-danger text-bold"><%= @subjects.length%></span></div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label"><%= t('adm.course.number_subjects')%></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control text-danger text-bold" value="<%= @subjects.length%>" disabled>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"><%= t('adm.course.Ages')%></label>
+                  <div class="col-sm-9">
+                    <input  type="text" required maxlength="5" placeholder="<%= t('adm.course.Example Suitable age')%>" class="form-control" id="frm_course_suitable_age" name="frm_course[suitable_age]" value="<%= @frm_course.suitable_age%>">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"><%= t('adm.course.Duration')%></label>
+                  <div class="col-sm-9">
+                    <input type="text" required maxlength="100" placeholder="<%= t('adm.course.Example duration')%>" class="form-control" name="frm_course[duration]" value="<%= @frm_course.duration%>">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"><%= t('adm.course.Tools')%></label>
+                  <div class="col-sm-9">
+                    <input type="text" required maxlength="100" placeholder="<%= t('adm.course.Example Suitable age')%>" class="form-control" name="frm_course[equipments]" value="<%= @frm_course.equipments%>">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"><%= t('adm.course.Conditions learning')%></label>
+                  <div class="col-sm-9">
+                    <input type="text" required maxlength="100" placeholder="<%= t('adm.course.Example Suitable age')%>" class="form-control" name="frm_course[prerequisites]" value="<%= @frm_course.prerequisites%>">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"><%= t('adm.course.Photo of course')%></label>
+                  <div class="col-sm-9">
+                    <input data-fileupload="true" type="file" name="frm_course[thumbnail]" id="frm_image_thumbnail">
+                    <div style="color:#dc3545;"><%= t('adm.course.Please enter the image size')%></div>
+                    <div id="img_contain_preview">
+                      <% if @course.thumbnail.attached? %>
+                      <img id="blah" align="middle"  src="<%= url_for @course.thumbnail%>" alt="" style="width: 200px; max-height: 249px;"/>
+                      <% else %>
+                      <img id="blah" align="middle"  src="/global/images/course_thumb_preview.png" alt="" style="width: 200px; max-height: 249px;"/>
+                      <% end%>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group row">
+                <label class="col-sm-3 control-label"><%= t('adm.course.Short description')%><span class="error invalid-feedback">*</span></label>
+                <div class="col-sm-12">
+                  <textarea style="width:100%;" required class="form-control" maxlength="255" rows="3" id="frm_course_short_description" name="frm_course[short_description]"></textarea>                  
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <div class="row">
@@ -73,3 +136,70 @@
 </div>
 </form>
 <%= tinymce :fulleditor %>
+<script type="text/javascript">
+
+  $('.btn-subject-click').on("click",function(e) {
+
+    var subject_id = $(this).data("id");
+
+    if (subject_id && ($(this).data("item-collapse") == 0)) {
+      $('#table-subject-' + subject_id).html(null);
+      $.ajax({
+        type: "GET",
+        url: '<%= adm_learning_get_lesson_by_session_path%>',
+        async: false,
+        data: {subject_id: $(this).data("id")},
+        success:function(data){
+          $(this).data("item-collapse",1);
+          $('#table-subject-' + subject_id).html(data);
+        }
+      });
+    } else {
+      $('#table-subject-' + subject_id).html(null);
+    }
+  });
+
+  $("#frm_image_thumbnail").change(function(event) {  
+    readURL(this);    
+  });
+  
+  function readURL(input) {    
+    if (input.files && input.files[0]) {   
+      var reader = new FileReader();
+      var filename = $("#frm_image_thumbnail").val();
+      filename = filename.substring(filename.lastIndexOf('\\')+1);
+      reader.onload = function(e) {
+        $('#blah').attr('src', e.target.result);
+        $('#blah').hide();
+        $('#blah').fadeIn(500);            
+      }
+      reader.readAsDataURL(input.files[0]);    
+    }
+  }
+
+$(document).ready(function () {
+
+  $('#frm_course').validate({
+    lang: 'vi',
+    rules: {
+      "frm_course[suitable_age]": {
+        required: true
+      }
+    },
+    messages: {
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group div').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+
+});
+</script>

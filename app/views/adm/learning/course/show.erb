@@ -42,21 +42,22 @@
 
   $('.btn-subject-click').on("click",function(e) {
 
-    var subject_id = $(this).data("id");    
-    
-    alert($(this).data("status"));
+    var subject_id = $(this).data("id");
 
-    if (subject_id) {
-      //$('.table-responsive').html(null);
+    if (subject_id && ($(this).data("item-collapse") == 0)) {
+      $('#table-subject-' + subject_id).html(null);
       $.ajax({
         type: "GET",
         url: '<%= adm_learning_get_lesson_by_session_path%>',
         async: false,
         data: {subject_id: $(this).data("id")},
         success:function(data){
+          $(this).data("item-collapse",1);
           $('#table-subject-' + subject_id).html(data);
         }
       });
+    } else {
+      $('#table-subject-' + subject_id).html(null);
     }
   });
 

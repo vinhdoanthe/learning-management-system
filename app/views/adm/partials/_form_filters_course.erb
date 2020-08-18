@@ -1,5 +1,5 @@
 <%
-	keywords 	= @param_form[:keywords]
+	keywords 	= @param_form[:keywords].to_s
 %>
 <form name="form_filters_course" id="form_filters_course" method="post" class="form-inline" onsubmit="return false">
   	<div class="input-group input-group-sm">

@@ -24,6 +24,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;515;600;700&display=swap" rel="stylesheet">
   <script src="/AdminLTE-3.0.5/plugins/jquery/jquery.min.js"></script>
   <%= javascript_include_tag 'adm/application' %>
+  
   <!-- Custom style -->
   <link rel="stylesheet" href="/AdminLTE-3.0.5/css/custom.css">
   <style type="text/css">
@@ -63,7 +64,6 @@
     |               | sidebar-mini                            |
     |---------------------------------------------------------|
   -->
-
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <!-- Navbar -->
@@ -167,9 +167,13 @@
     <script src="/AdminLTE-3.0.5/js/adminlte.js"></script>
     <script src="/AdminLTE-3.0.5/js/demo.js"></script>
     <script src="/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/AdminLTE-3.0.5/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/AdminLTE-3.0.5/plugins/jquery-validation/localization/messages_<%= session[:current_language].nil? ? 'vi' : session[:current_language]%>.min.js"></script>
+    
     <%= yield :javascript_includes %>
     <script>
       $(document).ready(
+        
         function() {
 
           $('#frm_report_from_date').datepicker({

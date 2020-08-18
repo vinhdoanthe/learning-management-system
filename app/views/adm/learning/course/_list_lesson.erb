@@ -1,4 +1,4 @@
-<table class="table table-hover">
+<table class="table table-hover list-lesson">
   <thead>
   <tr>
     <th style="width: 40%"><%= t('adm.course.lesson')%></th>
@@ -7,18 +7,25 @@
   </tr>
   </thead>
   <tbody>
-  <% @lessions.each_with_index  do |lession, index| %>  
+  <% @lessions.each_with_index  do |lesson, index| %>  
   <tr>
-    <td>
-      <a href="#"><%= lession[:name]%></a>            
-      <div class="small"><label><%= t('adm.Code')%></label>: <%= lession[:code]%></div>
-      <div class="small"><label><%= t('adm.Homework')%></label>: <%= count_question(lession.id).to_s%></div>
-      <div class="small"><label><%= t('adm.Video')%></label>: <i class="fas fa-file-video-o"></i><%= count_videos(lession.id).to_s%></div>
-      <div class="small"><label><%= t('adm.Slide')%></label>: <%= count_slides(lession.id).to_s%></div>
+    <td>      
+      <% if !lesson.nil? && !lesson[:thumbnail].nil? %>
+        <%= image_tag url_for(lesson[:thumbnail]),  class: 'admin-subject-img-thumbnail'%>
+      <% else%>
+        <div class="admin-subject-img-thumbnail bg-cfcfcf">No image</div>
+      <% end%>
+      <div style="margin-left: 50px;">
+        <a href="#"><%= lesson[:name]%></a>            
+        <div class="small"><label><%= t('adm.Code')%></label>: <%= lesson[:code]%></div>
+        <div class="small"><label><%= t('adm.Homework')%></label>: <%= count_question(lesson.id).to_s%></div>
+        <div class="small"><label><%= t('adm.Video')%></label>: <i class="fas fa-file-video-o"></i><%= count_videos(lesson.id).to_s%></div>
+        <div class="small"><label><%= t('adm.Slide')%></label>: <%= count_slides(lesson.id).to_s%></div>
+      </div>
     </td>
-    <td><%= lession[:note].to_s%></td>
+    <td><%= lesson[:note].to_s%></td>
     <td class="text-center">
-      <div class="small"><%= lession[:write_date].strftime('%d-%m-%Y %H:%M:%S').to_s%></div>
+      <div class="small"><%= lesson[:write_date].strftime('%d-%m-%Y %H:%M:%S').to_s%></div>
     </td>
   </tr>
   <% end %>
