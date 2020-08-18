@@ -104,6 +104,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
         end
       end
     end
+
     lesson = Learning::Course::OpLession.where(id: params[:lesson_id].to_i).first
     lesson_name = (lesson.nil? ? '' : lesson.name)
     begin

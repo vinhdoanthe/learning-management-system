@@ -24,6 +24,7 @@
           </span>
           <span class="table-name"><%= student[:name] %></span>
         </td>
+
         <% if student[:attendance] == false %>
           <td class="attendance_state" align="center" data-code="<%= student[:code] %>"><img src="/global/images/remove.png" style="width: 20px" alt=""> </td>
           <td style="text-align: center; opacity: 0.3;">

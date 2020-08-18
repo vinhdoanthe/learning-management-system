@@ -452,6 +452,8 @@ vi:
     Parent's name: "Họ và tên phụ huynh"
     Phone: "Điện thoại"
     student: "Học sinh"
+    Parent email: 'Email phụ huynh'
+    Other Note: 'Ghi chú khác'
     Refer date: "Ngày giới thiệu"
     learning_activity:
       name: "Hoạt động học tập"

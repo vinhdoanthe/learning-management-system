@@ -87,9 +87,11 @@
               <p style="text-align: center; text-transform: uppercase;"><%= t('page.coming_soon') %></p>
             <% end %>
           </div>
-          <div class="modal-footer text-right">
+          <div class="modal-footer text-right" style="background-color: #D7DFE9">
             <% if !Rails.env.production? %>
-              <input type='submit' class="btn btn-primary btn-embossed bg-5DC2A7" form="student_refer_friend_form" value='Giới thiệu'>
+              <span data-dissmiss='modal'>
+              <input type='submit' class="btn btn-primary btn-embossed bg-5DC2A7 text-uppercase" form="student_refer_friend_form" value='Giới thiệu'>
+              </span>
             <% end %>
             <button type="button" id="close_refer_form" class="btn btn-danger" data-dismiss="modal">Close</button>
           </div>

@@ -8,25 +8,19 @@ class User::OpenEducat::OpTeachersService
 
     student_courses.each do |sst|
       student = sst.op_student
+      attendance = Learning::Batch::OpAttendanceLine.where(student_id: student.id, session_id: session.id).order(create_date: :DESC).first
+      attendance_state = if attendance.present?
+                           attendance.present
+                         else
+                           ''
+                         end
+
       student_avatar = get_student_avatar student
-      student_info = {student.id => {:note => '', :status => sst.state, :attendance => '', :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
+      student_info = {student.id => {:note => '', :status => sst.state, :attendance => attendance_state, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
       all_students.merge!(student_info)
     end
 
-    if session.state == Learning::Constant::Batch::Session::STATE_CONFIRM
-      session_students = session.op_session_students
-      session_students.each do |st|
-        op_student_course = st.op_student_course
-        next if op_student_course.blank?
-        student = op_student_course.op_student
-        next if student.blank?
-        student_avatar = get_student_avatar student
-#        status = st.present ? 'on' : 'off'
-
-        student_info = {student.id => {:note => st.note || '', :attendance => '', :code => student.code || '', :name => student.full_name, :avatar_src => student_avatar}}
-        students.merge!(student_info)
-      end
-    elsif session.state == Learning::Constant::Batch::Session::STATE_DONE
+    if session.state == Learning::Constant::Batch::Session::STATE_DONE
       session_students = session.op_attendance_lines
 
       session_students.each do |st|
