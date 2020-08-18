@@ -11,13 +11,14 @@
 <div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.number_subjects')%>:</label>
 	<div class="col-sm-9"><span class="text-danger text-bold"><%= @subjects.length%></span></div>
 </div>
+
 <div class="row">
-	<label class="col-sm-3 control-label"><%= t('adm.course.course_description')%>:</label>
-</div>
-<div class="row">
-	<% if course_description.empty? %>
-	  <div class="col-sm-12"><%= t('adm.The content is being updated')%></div>
-	<% else %>
-	  <div class="col-sm-12 custom-scroll"><%= course_description.html_safe %></div>
-	<% end %>
+	<div class="col-sm-12">
+		<hr/>
+		<h2 class="lms-course-title"><%= t('adm.course.course_description')%></h2>
+		<div class="custom-scroll"><%= course_description.html_safe %></div>
+
+		<h2 class="lms-course-title"><%= t('adm.course.What do students learn?')%></h2>
+		<div class="custom-scroll"><%= @course.competences.to_s.html_safe %></div>
+	</div>
 </div>

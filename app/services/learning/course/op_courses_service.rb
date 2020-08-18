@@ -43,7 +43,7 @@ class Learning::Course::OpCoursesService
         .joins('INNER JOIN res_users ON res_users.id = op_course.write_uid')
         .select("op_course.id as course_id,op_course.code, op_course.name, op_course.section, op_course.active, count(op_subject.id) as number_subject, op_course.write_date as update_at, res_users.login as user_name")
         .group('op_course.id, res_users.login')
-        .order("op_course.write_date, op_course.section")
+        .order("op_course.write_date DESC, op_course.section")
     else
       courses = Learning::Course::OpCourse
         .joins('INNER JOIN op_subject ON op_subject.course_id=op_course.id')
@@ -51,7 +51,7 @@ class Learning::Course::OpCoursesService
         .select("op_course.id as course_id,op_course.code, op_course.name, op_course.section, op_course.active, count(op_subject.id) as number_subject, op_course.write_date as update_at, res_users.login as user_name")
         .where("op_course.name like '%#{keywords}%' OR op_course.code like '%#{keywords}%'")
         .group('op_course.id, res_users.login')
-        .order("op_course.write_date, op_course.section")
+        .order("op_course.write_date DESC, op_course.section")
       courses
     end
 

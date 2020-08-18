@@ -47,6 +47,16 @@ $(document).ready(function () {
       }
     })
   })
+
+
+  $('#tab_newFeeds').on('click', '.show_dashboard_photo', function(){
+    post_id = $(this).data('post');
+    $.ajax({
+      url: '/social_community/dashboard_photos?post_id=' + post_id,
+      method: 'GET',
+      dataType: 'script'
+    })
+  })
 });
 
 function get_feeds() {
@@ -115,3 +125,4 @@ function load_more_new_feeds() {
     }) 
   }
 }
+

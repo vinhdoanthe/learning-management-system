@@ -3,7 +3,7 @@
     <div class="bnd-comment">
       <div class="bc-edit">
         <span>
-          <%= User::Account::UserDecorator.new(current_user).display_avatar.html_safe %>
+          <%= User::Account::UserDecorator.new(current_user).display_avatar("100%").html_safe %>
         </span>
         <%= form_with(url: social_community_user_custom_post_contents_path, id: 'new-user-custom-post-form') do |form| %>
           <%= form.text_area :content, :id => 'new-user-custom-post-content', :placeholder => t('dashboard.what_are_you_thinking'), :rows => "1", :wrap => 'hard' %>
