@@ -59,6 +59,9 @@ RailsAdmin.config do |config|
       field :short_description
       field :suitable_age
       field :duration
+      field :equipments
+      field :prerequisites
+      field :competences
       field :course_description
       field :thumbnail
     end
@@ -67,6 +70,9 @@ RailsAdmin.config do |config|
       field :short_description
       field :suitable_age
       field :duration
+      field :equipments
+      field :prerequisites
+      field :competences
       field :course_description
       field :thumbnail
     end
