@@ -115,4 +115,24 @@ class SocialCommunity::DashboardsController < ApplicationController
       format.js { render 'social_community/dashboards/teacher/js/comming_soon', locals: { coming_soon_sessions: coming_soon_sessions } }
     end
   end
+
+  def dashboard_photos
+    photos = []
+    post = SocialCommunity::Feed::Post.where(id: params[:post_id]).first
+
+    if post.type == "SocialCommunity::Feed::PhotoPost"
+      social_photos = post.photos
+      social_photos.each do |photo|
+        photos << photo.image
+      end
+    elsif post.type == 'SocialCommunity::Feed::UserCustomPost'
+      post_activity = SocialCommunity::Feed::PostActivity.where(sc_post_id: params[:post_id]).first
+      photos = post_activity.activitiable.photos
+    end
+
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/dashboards/shared/js/dashboard_photo_modal_content', locals: { photos: photos } }
+    end
+  end
 end
