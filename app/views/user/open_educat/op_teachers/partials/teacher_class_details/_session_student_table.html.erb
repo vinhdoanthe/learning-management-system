@@ -34,7 +34,7 @@
         <% elsif student[:attendance] == true %>
           <td class="attendance_state" align="center" data-code="<%= student[:code] %>"><img src="/global/images/check.png" style="width: 20px" alt=""></td>
           <td style="text-align: center">
-            <a class="student_evaluate" data-value="" data-code="<%= student[:code] %>" data-toggle="modal" data-target="#modal_evaluate">
+            <a class="student_evaluate" data-code="<%= student[:code] %>" data-toggle="modal" data-target="#modal_evaluate">
               <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px; cursor: pointer;">
             </a>
           </td>

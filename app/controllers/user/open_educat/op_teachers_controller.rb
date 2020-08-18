@@ -68,6 +68,15 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     checkin_values = []
     errs = []
     errors = [true]
+    result = prepare_attendance params[:session_id]
+
+    if result.present?
+      respond_to do |format|
+        format.html
+        format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/attendance_response', locals: result }
+      end
+      return
+    end
 
     unless params[:student].blank?
       params[:student].each_value do |student_params|
@@ -109,17 +118,13 @@ class User::OpenEducat::OpTeachersController < ApplicationController
           user = User::Account::User.where(student_id: student_id).first
           next if user.blank?
           attendance_line = Learning::Batch::OpAttendanceLine.where(session_id: params[:session_id], student_id: student_id).first
-          User::Reward::CoinStarsService.new.reward_coin_star attendance_line, user.id, 0
+          User::Reward::CoinStarsService.new.reward_coin_star attendance_line, user.id, 0 if attendance_line.present?
         end
       end
 
-      student_codes = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:code)
       response_values = []
-      student_codes.each_with_index do |code, index|
-        response_values << {
-          :student_code => code,
-          :checkin_value => checkin_values[index]
-        }
+      params[:student].each do |student|
+        response_values << { student_code: student[1][:student_id], checkin_value: student[1][:check].to_boolean }
       end
 
       result = { noti: {type: 'success', message: 'Điểm danh thành công!'}, data: response_values}
@@ -225,6 +230,18 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   private
+
+  def prepare_attendance session_id
+    session = Learning::Batch::OpSession.where(id: session_id).first
+
+    if session.blank?
+      return { noti: {type: 'danger', message: 'Lớp học không tồn tại!'} }
+    else
+      if session.check_in_time.blank?
+        return { noti: { type: 'danger', message: 'Bạn phải checkin trước khi điểm danh học sinh' } }
+      end
+    end
+  end
 
   def find_teacher
     @teacher = current_user.op_faculty
