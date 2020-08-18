@@ -55,4 +55,5 @@ namespace :social_community do
   get 'leader_board' => 'dashboards#leader_board', as: 'leader_board'
   get 'leaders' => 'dashboards#leaders', as: 'leaders'
   post 'delete_session_photo' => 'photos#delete_session_photo', as: 'delete_session_photo'
+  get 'dashboard_photos' => 'dashboards#dashboard_photos', as: 'dashboard_photos'
 end
