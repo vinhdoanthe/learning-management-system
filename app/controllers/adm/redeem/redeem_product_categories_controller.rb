@@ -1,63 +1,46 @@
-class Adm::Redeem::RedeemProductCategoriesController < ApplicationController
+class Adm::Redeem::RedeemProductCategoriesController < Adm::AdmController
   before_action :set_adm_redeem_redeem_product_category, only: [:show, :edit, :update, :destroy]
 
-  # GET /redeem/redeem_product_categories
-  # GET /redeem/redeem_product_categories.json
   def index
-    @adm_redeem_redeem_product_categories = Redeem::RedeemProductCategory.all
+    @adm_redeem_redeem_product_categories = Redeem::RedeemProductCategory.order(:created_at => :ASC).all
   end
 
-  # GET /redeem/redeem_product_categories/1
-  # GET /redeem/redeem_product_categories/1.json
   def show
   end
 
-  # GET /redeem/redeem_product_categories/new
   def new
     @adm_redeem_redeem_product_category = Redeem::RedeemProductCategory.new
   end
 
-  # GET /redeem/redeem_product_categories/1/edit
   def edit
   end
 
-  # POST /redeem/redeem_product_categories
-  # POST /redeem/redeem_product_categories.json
   def create
-    @adm_redeem_redeem_product_category = Redeem::RedeemProductCategory.new(adm_redeem_redeem_product_category_params)
+    @adm_redeem_redeem_product_category = Redeem::RedeemProductCategory.new(create_params)
 
     respond_to do |format|
       if @adm_redeem_redeem_product_category.save
-        format.html { redirect_to @adm_redeem_redeem_product_category, notice: 'Redeem product category was successfully created.' }
-        format.json { render :show, status: :created, location: @adm_redeem_redeem_product_category }
+        format.html { redirect_to adm_redeem_redeem_product_category_path(@adm_redeem_redeem_product_category), notice: 'Redeem product category was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @adm_redeem_redeem_product_category.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /redeem/redeem_product_categories/1
-  # PATCH/PUT /redeem/redeem_product_categories/1.json
   def update
     respond_to do |format|
-      if @adm_redeem_redeem_product_category.update(adm_redeem_redeem_product_category_params)
-        format.html { redirect_to @adm_redeem_redeem_product_category, notice: 'Redeem product category was successfully updated.' }
-        format.json { render :show, status: :ok, location: @adm_redeem_redeem_product_category }
+      if @adm_redeem_redeem_product_category.update(edit_params)
+        format.html { redirect_to adm_redeem_redeem_product_category_path(@adm_redeem_redeem_product_category), notice: 'Redeem product category was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @adm_redeem_redeem_product_category.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /redeem/redeem_product_categories/1
-  # DELETE /redeem/redeem_product_categories/1.json
   def destroy
     @adm_redeem_redeem_product_category.destroy
     respond_to do |format|
       format.html { redirect_to adm_redeem_redeem_product_categories_url, notice: 'Redeem product category was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
@@ -70,5 +53,13 @@ class Adm::Redeem::RedeemProductCategoriesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def adm_redeem_redeem_product_category_params
       params.fetch(:adm_redeem_redeem_product_category, {})
+    end
+
+    def create_params
+      params.permit(:name)
+    end
+    
+    def edit_params
+      params.permit(:name)
     end
 end

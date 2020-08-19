@@ -1,4 +1,5 @@
 namespace :adm do
+  delete 'image_attachment/:blob_id', :to => 'image_attachments#delete_image_attachment', as: 'delete_image_attachment',  :defaults => { :format => :json }
   namespace :learning do
     match "/activity_homework" => "activity#homework", via: [:get, :post]
     get 'activity_get_batch' => 'activity#list_batch'

@@ -1,4 +1,11 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <h4>Name</h4> 
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <p><%= @adm_redeem_redeem_product_brand.name %></p>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_adm_redeem_redeem_product_brand_path(@adm_redeem_redeem_product_brand) %> |
-<%= link_to 'Back', adm_redeem_redeem_product_brands_path %>
+<%= link_to 'Edit', edit_adm_redeem_redeem_product_brand_path(@adm_redeem_redeem_product_brand), class: 'btn btn-warning' %> |
+<%= link_to 'Back', adm_redeem_redeem_product_brands_path, class: 'btn btn-secondary' %>

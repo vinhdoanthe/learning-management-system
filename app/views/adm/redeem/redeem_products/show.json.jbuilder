@@ -1,1 +1,0 @@
-json.partial! "adm_redeem_redeem_products/adm_redeem_redeem_product", adm_redeem_redeem_product: @adm_redeem_redeem_product

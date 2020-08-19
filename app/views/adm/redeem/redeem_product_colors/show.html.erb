@@ -1,4 +1,19 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <h4>Color name</h4> 
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <p><%= @adm_redeem_redeem_product_color.name %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <h4>Color</h4> 
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <input type="color" value="<%=@adm_redeem_redeem_product_color.color_code%>" disabled >
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_adm_redeem_redeem_product_color_path(@adm_redeem_redeem_product_color) %> |
-<%= link_to 'Back', adm_redeem_redeem_product_colors_path %>
+<%= link_to 'Edit', edit_adm_redeem_redeem_product_color_path(@adm_redeem_redeem_product_color), class: 'btn btn-warning' %> |
+<%= link_to 'Back', adm_redeem_redeem_product_colors_path, class: "btn btn-secondary" %>

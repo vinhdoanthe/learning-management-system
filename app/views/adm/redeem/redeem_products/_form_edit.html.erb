@@ -1,0 +1,89 @@
+<%= javascript_include_tag 'adm/redeem' %>
+<%= stylesheet_link_tag 'adm/redeem' %>
+<%= tinymce_assets %>
+<%= javascript_include_tag 'tinymce/langs/vi_VN.js' %>
+
+<%= form_with(url: adm_redeem_redeem_product_path(adm_redeem_redeem_product), method: :patch, local: true) do |form| %>
+  <div class="form-group row">
+    <label for="name" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <%= form.text_field :name, class: "form-control", value: adm_redeem_redeem_product.name %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="price" class="col-sm-2 col-form-label">Price</label>
+    <div class="col-sm-10">
+      <%= form.number_field :price, class: "form-control", value: adm_redeem_redeem_product.price %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="description" class="col-sm-2 col-form-label">Description</label>
+    <div class="col-sm-10">
+      <%= form.text_area :description, class: 'tinymce', value: adm_redeem_redeem_product.description %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="category" class="col-sm-2 col-form-label">Category</label>
+    <div class="col-sm-10">
+      <%= form.collection_select(:category_id, Redeem::RedeemProductCategory.order(:created_at => :ASC).all, :id, :name, {:selected => adm_redeem_redeem_product.category_id}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="brand" class="col-sm-2 col-form-label">Brand</label>
+    <div class="col-sm-10">
+      <%= form.collection_select(:brand_id, Redeem::RedeemProductBrand.order(:created_at => :ASC).all, :id, :name, {:selected => adm_redeem_redeem_product.brand_id}) %>
+    </div>
+  </div>
+  <h4>Images</h4>
+  <div>
+    <!-- current images -->
+    <div class="row">
+      <% if adm_redeem_redeem_product.images.attached? %>
+        <% adm_redeem_redeem_product.images.each do |image| %>
+          <div class="row col-sm-12" id="product-image-<%=image.signed_id%>">
+            <%= image_tag(image.variant(resize_to_limit: [284, 212]), class: "img-fluid mb-2", alt: @adm_redeem_redeem_product.name) %>
+            <a href="#" class="remove-image" data-blob-id="<%= image.signed_id %>">Remove</a>
+            <%# <%= link_to 'Remove', adm_delete_image_attachment_path(image.signed_id), class: 'remove-image', html: {data-blod-id} %1> %> 
+          </div> 
+        <% end %>
+      <% end %>
+    </div>
+    <div class="row">
+      <a class="btn btn-primary" onclick="document.getElementById('images').click()">Add images</a>
+      <%= form.file_field :images, title: 'Add images', multiple: true, style: "display:none", accept: 'image/png,image/gif,image/jpeg' %>
+    </div>
+    <div class="row" id="images-preview">
+    </div>
+  </div>
+  <div class="actions">
+    <%= form.submit(class: "btn btn-success") %>
+  </div>
+<% end %>
+<%= tinymce :simple %>
+<script>
+  $(document).ready(() => {
+    $(".remove-image").click((event) => {
+      event.preventDefault();
+
+      const blob_id = $(event.currentTarget).data('blob-id')
+      $.ajax({
+        url: '/adm/image_attachment/' + blob_id,
+        type: 'DELETE',
+        dataType: 'json',
+        success: (response) => {
+          // debugger
+          if (response.success) {
+            const deleted_image_div_id = "#product-image-" + response.blob_id
+            $(deleted_image_div_id).remove()
+            toastr.success("Image deleted!")
+          } else {  
+            toastr.error("Error!")
+          }
+        },
+        failure: (response) => {
+          toastr.error("Error!")
+        }
+      })
+    })
+  })
+</script>

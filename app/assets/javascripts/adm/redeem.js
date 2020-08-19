@@ -1,7 +1,7 @@
 $(document).ready(function(){
-  $('#user-custom-post-images').change(function(){
+  $('#images').change(function(){
     if (window.File && window.FileList && window.FileReader) {
-      const files = $('#user-custom-post-images')[0].files
+      const files = $('#images')[0].files
       if (validateFileTypes(files)) {
         processFiles(files);
       }
@@ -9,19 +9,6 @@ $(document).ready(function(){
       alert("Your browser does not support File API");
     }
   })
-})
-
-addEventListener("direct-upload:initialize", event => {
-  const { detail } = event
-  const { id } = detail
-  const target_element_id = "redeem_image_" + (id-1)
-  const target = $("#"+target_element_id)
-  target.append(`
-    <div id="direct-upload-${id}" class="direct-upload direct-upload--pending">
-      <div id="direct-upload-progress-${id}" class="direct-upload__progress" style="width: 0%"></div>
-      <span class="direct-upload__filename"></span>
-    </Gdiv>
-  `)
 })
 
 addEventListener("direct-upload:start", event => {
@@ -67,7 +54,7 @@ const validateFileTypes = files => {
 const processFiles = files => {
   fl = files.length
   if (fl > 0) {
-    const preview = $('#files-preview')
+    const preview = $('#images-preview')
     for (let i=0; i<fl; i++) {
       var file = files[i];
       //Only pics
@@ -76,7 +63,7 @@ const processFiles = files => {
       picReader.addEventListener("load", function (event) {
         var picFile = event.target;
         var div = document.createElement("div");
-        div.setAttribute("id", "redeem_image_"+i)
+        //div.setAttribute("id", "new_user_cutom_post_image_"+i)
         div.innerHTML = "<img class='thumbnail rounded float-left preview' src='" + picFile.result + "'" + "title='" + picFile.name + "'/>";
         preview.append(div, null);
       });

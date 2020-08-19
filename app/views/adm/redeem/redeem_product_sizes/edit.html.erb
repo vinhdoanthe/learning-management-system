@@ -1,6 +1,6 @@
 <h1>Editing Redeem Redeem Product Size</h1>
 
-<%= render 'form', adm_redeem_redeem_product_size: @adm_redeem_redeem_product_size %>
+<%= render 'form_edit', adm_redeem_redeem_product_size: @adm_redeem_redeem_product_size %>
 
-<%= link_to 'Show', @adm_redeem_redeem_product_size %> |
-<%= link_to 'Back', adm_redeem_redeem_product_sizes_path %>
+<%= link_to 'Show', adm_redeem_redeem_product_size_path(@adm_redeem_redeem_product_size), class: "btn btn-primary" %> |
+<%= link_to 'Back', adm_redeem_redeem_product_sizes_path, class: "btn btn-secondary" %>

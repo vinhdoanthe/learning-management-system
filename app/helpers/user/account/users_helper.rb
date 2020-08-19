@@ -296,9 +296,34 @@ module User
             ],
             'redeem' => [
               {
-                'path'          => '#',
-                'title'         => '<li class="nav-item"><a class="nav-link" href="#"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.coin_star') <<'</p></a></li>',
-                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="#"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.coin_star') <<'</p></a></li>',
+                'path'          => adm_redeem_redeem_product_brands_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="' + adm_redeem_redeem_product_brands_path + '"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_brands') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'+adm_redeem_redeem_product_brands_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_brands') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_redeem_redeem_product_categories_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'+adm_redeem_redeem_product_categories_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_categories') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="#"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_categories') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_redeem_redeem_product_colors_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'+adm_redeem_redeem_product_colors_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_colors') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'+adm_redeem_redeem_product_colors_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_colors') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_redeem_redeem_product_sizes_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'+adm_redeem_redeem_product_sizes_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_sizes') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'+adm_redeem_redeem_product_sizes_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_sizes') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_redeem_redeem_products_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'+adm_redeem_redeem_products_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.products') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'+adm_redeem_redeem_products_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.products') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_redeem_redeem_product_items_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'+adm_redeem_redeem_product_items_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_items') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'+adm_redeem_redeem_product_items_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_items') <<'</p></a></li>',
               },
               {
                 'path'          => '#',

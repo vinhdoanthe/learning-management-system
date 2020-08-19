@@ -1,6 +1,6 @@
 <h1>Editing Redeem Redeem Product</h1>
 
-<%= render 'form', adm_redeem_redeem_product: @adm_redeem_redeem_product %>
+<%= render 'form_edit', adm_redeem_redeem_product: @adm_redeem_redeem_product %>
 
-<%= link_to 'Show', @adm_redeem_redeem_product %> |
-<%= link_to 'Back', adm_redeem_redeem_products_path %>
+<%= link_to 'Show', adm_redeem_redeem_product_path(@adm_redeem_redeem_product), class: 'btn btn-primary' %> |
+<%= link_to 'Back', adm_redeem_redeem_products_path, class: 'btn btn-secondary' %>

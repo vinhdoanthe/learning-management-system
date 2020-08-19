@@ -1,1 +1,0 @@
-json.partial! "adm_redeem_redeem_product_colors/adm_redeem_redeem_product_color", adm_redeem_redeem_product_color: @adm_redeem_redeem_product_color
