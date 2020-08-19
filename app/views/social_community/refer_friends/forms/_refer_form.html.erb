@@ -1,7 +1,7 @@
 <%= form_with model: refer, url: url, method: :post, locals: true, html: { class: 'student_refer_friend_form', id: 'student_refer_friend_form' } do |f| %>
   <div class='row'>
     <div class='col-md-3 col-md-push-1'>
-      <label>Họ tên phụ huynh:<span style="color: red">*</span> </label>
+      <label><%= t("adm.Parent's name")%>:<span style="color: red">*</span> </label>
     </div>
     <div class='col-md-7 col-md-push-1'>
       <%= f.text_field :parent_name, required: true %>
@@ -9,17 +9,17 @@
   </div>
   <div class='row'>
     <div class='col-md-3 col-md-push-1'>
-      <label>Email phụ huynh: </label>
+      <label><%= t("adm.Parent email")%>: </label>
     </div>
     <div class='col-md-7 col-md-push-1'>
       <%= f.text_field :email,
-          pattern: '^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$'
+          pattern: '^[a-z][a-z0-9_\.]{4,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$'
        %>
     </div>
   </div>
   <div class='row'>
     <div class='col-md-3 col-md-push-1'>
-      <label>Số điện thoại phụ huynh:<span style="color: red">*</span> </label>
+      <label><%= t("adm.Phone")%>:<span style="color: red">*</span> </label>
     </div>
     <div class='col-md-7 col-md-push-1'>
       <%= f.text_field :mobile, required: true, pattern: '(09|01[2|6|8|9])+([0-9]{8})\b'  %>
@@ -27,28 +27,28 @@
   </div>
   <div class='row'>
     <div class='col-md-3 col-md-push-1'>
-      <label>Ghi chú khác:</label>
+      <label><%= t("adm.Other Note")%>:</label>
     </div>
     <div class='col-md-7 col-md-push-1'>
-      <%= f.text_area :note, :rows => 6 %>
+      <%= f.text_area :note, :rows => 6, maxlength: 255; %>
     </div>
   </div>
   <%= f.hidden_field :refer_by, value: current_user.id %>
 <% end %>
 <style>
-#student_refer_friend_form input{  
+#student_refer_friend_form input{
   width: 100%;
   padding: 5px;
 }
 
-#student_refer_friend_form textarea{  
+#student_refer_friend_form textarea{
   width: 100%;
   padding: 5px;
 }
 #student_refer_friend_form .row {
   margin-top: 10px;
 }
+#student_refer_friend_form label{
+  font-weight: 700;
+}
 </style>
-  <script>
-
-  </script>
