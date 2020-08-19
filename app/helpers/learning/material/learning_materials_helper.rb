@@ -16,7 +16,7 @@ module Learning
         return { state: 'Không có bài tập', progres: '' } if session.op_lession.blank?
 
         questions = session.op_lession.questions.pluck(:id)
-        user_questions = Learning::Homework::UserQuestion.where(student_id: user.id, question_id: questions).pluck(:id)
+        user_questions = Learning::Homework::UserQuestion.where(student_id: user.id, question_id: questions, op_batch_id: session.batch_id).pluck(:id)
         done_user_answers = Learning::Homework::UserAnswer.where(user_question_id: user_questions, state: [HomeworkConstants::UserAnswer::ANSWER_RIGHT, HomeworkConstants::UserAnswer::ANSWER_WAITING]).order(created_at: :DESC).pluck(:created_at)
 
         progress = done_user_answers.count.to_s + '/' + user_questions.count.to_s

@@ -48,100 +48,106 @@
         </div>
       </div>
       <div class="redem-tab">        
-        <!-- Tab panes -->
-        <div class="tab-content">
-          <div class="tab-pane active" id="messages">
-            <div class="row">
-              <% @redeem_products.each_with_index do |product, index| %>
-                <div class="col-sm-4 product_item product_<%= product.redeem_product_category.name %>">
-                  <div class="rt-detail product_infomation">
-                    <div class="rtd-img">
-                      <div class="owl-carousel" id="product<%= index+1 %>">
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="messages">
+          <div class="row">
+            <% @redeem_products.each_with_index do |product, index| %>
+              <div class="col-sm-4 product_item product_category_<%= product.redeem_product_category.id %>">
+                <div class="rt-detail product_infomation">
+                  <div class="rtd-img">
+                    <div class="owl-carousel" id="product<%= index+1 %>">
+                      <% if product.images.present? %>
+                        <% product.images.each do |img| %>
+                          <div><%= image_tag img %></div>
+                        <% end %>
+                      <% else %>
                         <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                        <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                        <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                        <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
-                      </div>
-                    </div><!-- #  rtd-img-->
-                    <% available_items = get_available_size_and_color product %>
-                    <div class="rtd-text">
-                      <div class="product-brand text-uppercase"><%= product.redeem_product_brand.present? ? product.redeem_product_brand.name : '' %></div>
-                      <h3 class="product-name"><%= product.name %></h3>
-                      <div class="rtd-center clearfix product-option">
-                        <div class="row">
-                          <div class="col-md-5 right-color-li">
-                            <div class="form-group rtdt-left">
-                              <label><%= t('adm.redeem.redeem_color')%></label>
-                              <ul>
-                                <% available_items[:color].each do |color| %>
-                                  <% if color.present? %>
-                                  <li>
-                                    <label class="check-multi">
-                                      <input type="radio" name="product_color" checked value='<%= color.color_code %>'>
-                                      <span class="checkmark" style="background-color: <%= color.color_code  %>"></span>
-                                    </label>
-                                  </li>
-                                  <% end %>
+                      <% end %>
+                    </div>
+                  </div><!-- #  rtd-img-->
+                  <% available_items = get_available_size_and_color product %>
+                  <div class="rtd-text">
+                    <div class="product-brand text-uppercase"><%= product.redeem_product_brand.present? ? product.redeem_product_brand.name : '' %></div>
+                    <h3 class="product-name"><%= product.name %></h3>
+                    <div class="rtd-center clearfix product-option">
+                      <div class="row">
+                        <div class="col-md-5 right-color-li">
+                          <div class="form-group rtdt-left">
+                            <label><%= t('adm.redeem.redeem_color')%></label>
+                            <ul style="margin-top: 0">
+                              <% available_items[:color].each do |color| %>
+                                <% if color.present? %>
+                                <li>
+                                  <label class="check-multi">
+                                    <input type="radio" name="product_color" checked value='<%= color.color_code %>'>
+                                    <span class="checkmark" style="background-color: <%= color.color_code  %>"></span>
+                                  </label>
+                                </li>
                                 <% end %>
-                              </ul>
-                            </div>
+                              <% end %>
+                            </ul>
                           </div>
-                          <div class="col-md-7">
-                            <div class="row">
-                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group rtdt-left">
-                                  <label><%= t('adm.redeem.redeem_quantily')%></label>
-                                  <select name="product_amount" class="product_amount form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                  </select>
-                                </div>                            
-                              </div>
-                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group rtdt-left">
-                                  <label><%= t('adm.redeem.redeem_available')%></label>
-                                  <select name="" class="product_size form-control">
-                                    <% available_items[:size].each do |size| %>
-                                      <% if size.present? %>
-                                      <option value="<%= size.name %>"><%= size.name %></option>
-                                      <% end %>
-                                    <% end %>
-                                  </select>
+                        </div>
+                        <div class="col-md-7">
+                          <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-12 col-lg-6" style="padding:0">
+                              <div class="form-group rtdt-left">
+                                <label><%= t('adm.redeem.redeem_quantity')%></label>
+                                <div class='quantity_div'>
+                                  <div class="minus_quantity">
+                                  <i class="fa fa-minus"></i>
+                                  </div>
+                                  <input type='number' style="text-align: center; font-weight: 700;" class="form-control" name='product_amount' value="1" min='0'>
+                                  <div class="plus_quantity">
+                                  <i class="fa fa-plus"></i>
+                                </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="product-description">
-                        <%= truncate(strip_tags(product.description), length: 220, separator: ' ')%>
-                      </div>
-                      <div class="rtd-btn clearfix">
-                        <div class="row">
-                          <div class="col-md-5">
-                            <div class="product-box">
-                              <p class="product-coin-text"><%= t('reward.coin')%></p>
-                              <p class="product-coin-number"><%= number_with_delimiter(product.price.to_i, delimiter: ".") %></p>
+                            <div class="col-xs-12 col-sm-6 col-md-12 col-lg-6" style='padding:0'>
+                              <div class="form-group rtdt-left">
+                                <label style='display: block;'><%= t('adm.redeem.redeem_available')%></label>
+                                <select name="" class="product_size form-control" style="padding: 5px 10px">
+                                  <% available_items[:size].each do |size| %>
+                                    <% if size.present? %>
+                                    <option value="<%= size.name %>"><%= size.name %></option>
+                                    <% end %>
+                                  <% end %>
+                                </select>
+                              </div>
                             </div>
                           </div>
-                          <div class="col-md-7">
-                            <input type='hidden' name="redeem_product_id" value='<%= product.id %>'>
-                            <button data-toggle="modal" data-target="#confirm_redeem_modal" id="btn_redeem_product_confirm" data-product="<%= product.id %>" class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('adm.redeem.redeem_button')%></button>
-                          </div>
                         </div>
                       </div>
-                    </div><!-- #  rtd-text-->
-                  </div>
+                    </div>
+                    <div class="product-description">
+                      <%= truncate(strip_tags(product.description), length: 220, separator: ' ')%>
+                    </div>
+                    <div class="rtd-btn clearfix">
+                      <div class="row">
+                        <div class="col-md-5">
+                          <div class="product-box">
+                            <p class="product-coin-text"><%= t('reward.coin')%></p>
+                            <p class="product-coin-number"><%= number_with_delimiter(product.price.to_i, delimiter: ".") %></p>
+                          </div>
+                        </div>
+                        <div class="col-md-7">
+                          <input type='hidden' name="redeem_product_id" value='<%= product.id %>'>
+                          <button data-toggle="modal" data-target="#confirm_redeem_modal" id="btn_redeem_product_confirm" data-product="<%= product.id %>" class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('adm.redeem.redeem_button')%></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div><!-- #  rtd-text-->
                 </div>
-              <% end %>          
-            </div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 <input type='hidden' id='active_product_size' value=''>
 <input type='hidden' id='active_product_color' value=''>
@@ -150,17 +156,73 @@
 <div id='confirm_redeem_modal' class="modal fade" role="dialog">
 </div>
 
+<style>
+  .product-description {
+    overflow: hidden;
+  }
+</style>
+
 <script>
-  $(document).ready(function() {
-    $('.product_categories').on('change', function(){
-      $('.product_item').hide();
-      category_id = $(this).val();
-      if (category_id == '-1'){
-        $('.product_item').show()
-      }
-      else{
-        $('.product_' + category_id).show();
-      }
-    });   
+  function changeQuantity(target, count){
+    current_val = target.val()
+    new_val = parseInt(current_val) + count
+    if (new_val >= 0){
+      target.val(new_val);
+    }else{
+      target.val(0);
+    }
+  }
+
+$(document).ready(function() {
+  $('.product_categories').on('change', function(){
+    $('.product_item').hide();
+    category_id = $(this).val();
+    if (category_id == '-1'){
+      $('.product_item').show()
+    }
+    else{
+      $('.product_category_' + category_id).show();
+    }
   });
+
+  $('.minus_quantity').on('click', function(){
+    target = $(this).parent().find('input[name="product_amount"]');
+    changeQuantity(target, -1)
+  })
+  $('.plus_quantity').on('click', function(){
+    target = $(this).parent().find('input[name="product_amount"]');
+    changeQuantity(target, 1)
+  })
+});
 </script>
+<style>
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+  .product-option .form-control {
+    padding: 5px 10px;
+  }
+  select.product_size {
+    width: 70px;
+  }
+  .quantity_div {
+    width: 90px;
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    border: 1px solid #ECEDEE;
+  }
+  .quantity_div div {
+    display: flex;
+  }
+  .quantity_div i {
+    padding: 0 !important;
+    margin: auto;
+  }
+</style>

@@ -55,8 +55,8 @@
               </a>
             </span>
           <% else %>
-            <span title="<%= t('my_class.detail.tooltip.homework') %>" data-toggle="tooltip">
-              <a data-session='<%= session.id %>' class='student_homework_view' style='cursor: pointer;'>
+            <span data-session='<%= session.id %>' class='student_homework_view'>
+              <a title="<%= t('my_class.detail.tooltip.homework') %>" data-toggle="tooltip" style='cursor: pointer;'>
                 <span>
                   <%= image_tag('global/images/icon-BTVN.png', style: 'width: 32px;margin-right: 10px') %>
                 </span>

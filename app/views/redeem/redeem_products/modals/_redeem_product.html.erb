@@ -7,7 +7,7 @@
       <div class='row' style='display: flex'>
         <div class='col-md-6'>
           <% if product.images.present? %>
-            <div><%= image_tag(img)  %></div>
+            <div><%= image_tag(product.images[0]) %></div>
           <% else %>
             <div><%= image_tag ('default_lesson_thumbnail.jpg') %></div>
           <% end %>
@@ -17,7 +17,7 @@
             <div class="product-brand text-uppercase"><%= t('adm.redeem.brand')%>: <%= brand_name %></div>
             <h3 class="product-name"><%= product.name %></h3>
             <hr class="product-line">
-            <div class="rtd-center clearfix redeem_info">
+            <div class="rtd-center clearfix redeem_info" style='min-height: 360px'>
               <div>
                 <table style="width: 100%" id="table_redeem_product_info">
                   <colgroup>
@@ -37,8 +37,8 @@
                     <td align='left' ><span id="confirm_redeem_color"></span></td>
                   </tr>
                   <tr>
-                    <td><label><%= t('adm.redeem.redeem_quantily')%></label></td>
-                    <td id="confirm_redeem_quantily" align='left' ></td>
+                    <td><label><%= t('adm.redeem.redeem_quantity')%></label></td>
+                    <td id="confirm_redeem_quantity" align='left' ></td>
                   </tr>
                   <tr>
                     <td><label><%= t('adm.redeem.redeem_available')%></label></td>

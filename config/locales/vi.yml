@@ -95,6 +95,7 @@ vi:
     nation: "Quốc gia"
     relation: "Quan hệ"
     mobile: "Di động"
+    company: "Học viên tham gia giảng dạy"
   notification:
     title: "Thông báo từ Học viện TEKY"
     dashboard: "Thông báo"
@@ -322,7 +323,7 @@ vi:
       category_redeem: "Danh mục quà"
       redeem_infomation: "Thông tin đổi quà"
       redeem_color: "Màu sắc"
-      redeem_quantily: "Số lượng"
+      redeem_quantity: "Số lượng"
       redeem_available: "Kích cỡ"
       product_introduction: "Giới thiệu sản phẩm"
       product_infomation: "Thông tin sản phẩm"

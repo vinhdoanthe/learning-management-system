@@ -19,9 +19,9 @@ $(document).ready(function(){
     });
 
 
-  $('#btn_redeem_product_confirm').on('click', function(){
+  $('.redeem_product_submit').on('click', function(){
     color = $(this).closest('.product_infomation').find('input[name="product_color"]:checked').val()
-    amount = $(this).closest('.product_infomation').find('select.product_amount').val();
+    amount = $(this).closest('.product_infomation').find('input[name="product_amount"]').val();
     size = $(this).closest('.product_infomation').find('select.product_size').val();
     product_id = $(this).data('product');
     $('#active_product_size').val(size);
