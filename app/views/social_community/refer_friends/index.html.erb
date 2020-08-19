@@ -33,7 +33,7 @@
           </div>
           <div class="col-sm-12 text-center m-t-20 m-b-20">
             <!-- <p class="text-center m-b-20">Mời bạn bè của bạn tham gia học tại TEKY, chúng tôi sẽ cung cấp cho bạn 100 T-Coin và đồng thời bạn sẽ được giảm 20% cho lần đóng tiền học tiếp theo</p> -->
-            <button type="button" style="height: 50px;" data-toggle="modal" data-target="#refer_friend_modal" data-backdrop="false" class="btn btn-primary btn-embossed bg-5DC2A7 text-transform" id="refer_friend_modal_button">Gửi lời mời</button>
+            <button type="button" style="height: 50px;" data-toggle="modal" data-target="#refer_friend_modal" class="btn btn-primary btn-embossed bg-5DC2A7 text-transform" id="refer_friend_modal_button">Gửi lời mời</button>
           </div>
         </div>
       </div>
@@ -87,16 +87,27 @@
               <p style="text-align: center; text-transform: uppercase;"><%= t('page.coming_soon') %></p>
             <% end %>
           </div>
-          <div class="modal-footer text-right">
+          <div class="modal-footer text-right" style="background-color: #D7DFE9">
             <% if !Rails.env.production? %>
-              <input type='submit' class="btn btn-primary btn-embossed bg-5DC2A7" form="student_refer_friend_form" value='Giới thiệu'>
+              <span data-dissmiss='modal'>
+              <input data-dismiss="modal" id="confirm_refer_friend_form" class="btn btn-primary btn-embossed bg-5DC2A7 text-uppercase" value='Giới thiệu'>
+              <input type='submit' id="submit_refer_friend_form" form="student_refer_friend_form" value='Giới thiệu' style="display: none">
+              </span>
             <% end %>
             <button type="button" id="close_refer_form" class="btn btn-danger" data-dismiss="modal">Close</button>
           </div>
-
         </div>
-
-
       </div>
     </div>
   </div>
+  <script>
+    $('#confirm_refer_friend_form').on('click', function(){
+      $('#submit_refer_friend_form').click();
+    })
+  </script>
+<style>
+  #confirm_refer_friend_form {
+    font-weight: 600;
+    max-width: 130px;
+  }
+</style>

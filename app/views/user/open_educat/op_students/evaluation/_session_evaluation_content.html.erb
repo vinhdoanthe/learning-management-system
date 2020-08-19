@@ -1,14 +1,17 @@
 <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content modal-test">
+    <div class="modal_student_evaluation_title">
+      <h4>Phiếu đánh giá học sinh </h4>
+    </div>
     <div class="modal-body modal-body-fix">
       <div class="box-mt">
         <div class="bmt-img">
-          <span>
+          <span style="width: 134px; height: 134px">
             <%= image_tag('global/images/teacher-img-default.png') %>
           </span>
         </div>
-        <div class="bmt-text">
-          <p>Giáo viên<br/><strong><%= op_faculty.nil? ? '' : op_faculty.full_name %></strong></p>
+        <div class="bmt-text evaluate_form_teacher_info">
+          <p>Giáo viên<br/><strong style="text-transform: uppercase; font-weight: 700;"><%= op_faculty.nil? ? '' : op_faculty.full_name %></strong></p>
           <p><a href=""><%= op_batch.nil? ? '' : op_batch.code %></a>     |     <span>
             <% unless op_session.nil? %>
               <%= op_session.start_datetime.strftime('%d/%m/%Y') %>; <%= op_session.start_datetime.strftime('%H:%M') %> đến <%= op_session.end_datetime.strftime('%H:%M') %>
@@ -43,3 +46,24 @@
     </div>
   </div>
 </div>
+<style>
+  .modal_student_evaluation_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: black;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+  .evaluate_form_teacher_info p{
+    margin-bottom: 15px;
+    
+  }
+  .evaluate_form_teacher_info p:last-child{
+    font-weight: 500;
+    color: #BCD0E5;
+  }
+</style>

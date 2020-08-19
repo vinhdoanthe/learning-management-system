@@ -13,7 +13,7 @@ class User::Reward::CoinStarsService
   end
 
   def reward_coin_star coinstarable, student_user_id, give_by
-    validate_transaction coinstarable
+    return if validate_transaction coinstarable
     setting = coinstarable.coin_star_setting
 
     ActiveRecord::Base.transaction do
@@ -56,8 +56,6 @@ class User::Reward::CoinStarsService
   end
   
   def validate_transaction coinstarable
-    if User::Reward::CoinStarTransaction.where(coinstarable_id: coinstarable.id).first.present?
-      return { type: 'danger', message: 'Đã khen thưởng!' }
-    end
+    User::Reward::CoinStarTransaction.where(coinstarable_id: coinstarable.id, coinstarable_type: coinstarable.class.to_s).first.present?
   end
 end

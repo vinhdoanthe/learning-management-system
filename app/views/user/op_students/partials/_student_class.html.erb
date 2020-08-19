@@ -16,7 +16,7 @@
           <% levels = list_subject_level_of_student(op_student_course) %> 
           <tr>
             <td><%= batch.op_course.name %></td>
-            <td><%= batch.code %></td>
+            <td><%= link_to batch.code, user_open_educat_op_students_batch_detail_path(batch_id: batch.id) %></td>
             <td>
               <% levels.each do |level| %>
                 <span class="label-course label label-default"><%= level[1] %></span>

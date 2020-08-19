@@ -1,5 +1,5 @@
 <% content_for :javascript_includes do %>
-<%= javascript_include_tag 'social_community/question_answer/session_qa_area.js' %>
+  <%= javascript_include_tag 'social_community/question_answer/session_qa_area.js' %>
 <% end %>
 
 <div class="page-content page-thin">
@@ -38,28 +38,28 @@
                     </div>
                   </div>
 
-                  <div class="fc-footer">
+                  <div class="fc-footer" style="display: flex; justify-content: center; align-items: center">
                     <div class="paging">
                       <ul id="user_question_list">
                         <input type="hidden" name="questions_count" value="<%= @user_questions.count %>">
                         <% @user_questions.each_with_index do |user_quest, index| %>
 
-                        <% user_answer = user_quest.user_answers.order(created_at: :DESC).first %>
-                        <% if user_answer.present? && (user_answer.state == 'right' || user_answer.state == 'waiting') %>
-                        <li>
-                          <a href="/learning/question_content?user_question_id=<%= user_quest.id %>&index=<%= index %>" class="btn btn-embossed done_question question_select" data-remote='true'><%= index + 1 %></a>
-                          <input type="hidden" value="<%= user_quest.id %>" name="student_question_id">
-                        </li>
-                        <% else %>
-                        <li>
-                          <a href="/learning/question_content?user_question_id=<%= user_quest.id %>&index=<%= index %>" class="btn btn-embossed undone_question question_select" data-remote='true'><%= index + 1 %></a>
-                          <input type="hidden" value="<%= user_quest.id %>" name="student_question_id">
-                        </li>
-                        <% end %>
+                          <% user_answer = user_quest.user_answers.order(created_at: :DESC).first %>
+                          <% if user_answer.present? && (user_answer.state == 'right' || user_answer.state == 'waiting') %>
+                            <li>
+                              <a href="/learning/question_content?user_question_id=<%= user_quest.id %>&index=<%= index %>" class="btn btn-embossed done_question question_select" data-remote='true'><%= index + 1 %></a>
+                              <input type="hidden" value="<%= user_quest.id %>" name="student_question_id">
+                            </li>
+                          <% else %>
+                            <li>
+                              <a href="/learning/question_content?user_question_id=<%= user_quest.id %>&index=<%= index %>" class="btn btn-embossed undone_question question_select" data-remote='true'><%= index + 1 %></a>
+                              <input type="hidden" value="<%= user_quest.id %>" name="student_question_id">
+                            </li>
+                          <% end %>
                         <% end %>
                       </ul>
                     </div>
-                    <div class="btn-submit">
+                    <div class="btn-submit" style="margin-left: auto; order: 2">
                       <a type="submit" data-toggle="modal" data-target="#modal-basic" class="btn btn-primary btn-embossed bg-5DC2A7" id='answer_the_question' data-remote='true'><img style='margin-right: 5px' src="/global/images/submit.png" alt=""><%= t('homework.submit') %></a>
                     </div>
                     <div class="modal fade" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true"></div>
@@ -85,13 +85,15 @@
 </div>
 
 <style>
-  .question_select {
-    text-transform: uppercase;
-    font-weight: 600;
-  }
+.question_select {
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 5 !important;
+}
 
   #answer_the_question {
     text-transform: uppercase;
+    min-width: 150px;
     font-weight: 600;
   }
 
@@ -112,11 +114,11 @@
     session_id = $(this).data('session')
     window.location.href = '/user/open_educat/op_students/student_homework?show_video=true&session=' + session_id
   })
-  $('#qa_area').ready(function() {
-    data = {
-      'session_id': $('#qa_area').data('session-id'),
-      'lesson_id': $('#qa_area').data('lesson-id'),
-    };
-    get_qa_threads(data);
-  })
+$('#qa_area').ready(function() {
+  data = {
+    'session_id': $('#qa_area').data('session-id'),
+    'lesson_id': $('#qa_area').data('lesson-id'),
+  };
+  get_qa_threads(data);
+})
 </script>
