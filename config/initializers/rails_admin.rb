@@ -23,7 +23,7 @@ RailsAdmin.config do |config|
       end
     end
   end
-  config.included_models = %w(Common::RewardType Common::FeelingType
+  config.included_models = %w(Common::RewardType Common::FeelingType Common::UserCompany Common::ResCompany
                               Learning::Course::OpCourse Learning::Course::CourseDescription Learning::Course::OpLession 
                               Learning::Batch::OpBatch Learning::Batch::OpSession 
                               Learning::Material::Question Learning::Material::QuestionChoice Learning::Material::LearningMaterial
@@ -392,7 +392,7 @@ RailsAdmin.config do |config|
     dashboard
     index
     new do
-      only %w(Common::RewardType Common::FeelingType
+      only %w(Common::RewardType Common::FeelingType Common::UserCompany
               Learning::Course::CourseDescription 
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice
               Notification::BroadcastNoti
@@ -404,7 +404,7 @@ RailsAdmin.config do |config|
       only %w(Learning::Course::OpLession)
     end
     edit do
-      only %w(Common::RewardType Common::FeelingType
+      only %w(Common::RewardType Common::FeelingType Common::UserCompany Common::ResCompany
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice, 
               Learning::Course::OpLession Learning::Course::OpCourse Learning::Course::CourseDescription 
               Notification::BroadcastNoti
