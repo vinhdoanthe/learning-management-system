@@ -1,0 +1,78 @@
+<table id='table_loading_homework'>
+  <colgroup>
+    <col>
+    <col width="200">
+    <col width="110">
+    <col width="200px">
+  </colgroup>
+  <% (1..5).each do |i| %>
+    <tr>
+      <td>
+        <div class="lesson_title">
+        </div>
+        <div class="lesson_title_content">
+        </div>
+      </td>
+      <td>
+        <div class="last_time_do_homework_div">
+        </div>
+      </td>
+      <td>
+        <div class="homework_progress_div">
+        </div>
+      </td>
+      <td>
+        <div class="homework_action_div">
+          <div class="img_div">
+          </div>
+          <div class="img_div">
+          </div>
+          <div class="img_div">
+          </div>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<style>
+  #table_loading_homework{
+    width: 100%;
+    border-top: 3px solid #D7DFE9;
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
+  #table_loading_homework td{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-top: 1px solid #ddd;
+  }
+  #table_loading_homework div{
+    height: 20px;
+    background-color: #f0f2f5;
+  }
+  .lesson_title {
+    width: 50px;
+    display: inline-block;
+  }
+  .lesson_title_content {
+    width: 50%;
+    display: inline-block;
+  }
+  .last_time_do_homework_div{
+    float: right;
+    width: 50%;
+  }
+  .homework_action_div {
+    float: right;
+    display: flex;
+    background-color: white !important;
+  }
+  .homework_action_div .img_div {
+    margin-right: 10px;
+    width: 32px !important;
+    height: 32px !important; 
+  }
+</style>
