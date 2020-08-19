@@ -20,7 +20,11 @@
                 </a>
               <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                 <i class="fa fa-calendar"></i>&nbsp;
-                <span></span> <i class="fa fa-caret-down"></i>
+                <span></span>
+                <div style='position: relative; bottom: -5px;'>
+                  <i class="fa fa-caret-down"></i>
+                  <i style="position: absolute; top: -5px; right: 0px;" class="fa fa-caret-up"></i>
+                </div>
             </div>
                 <a class="cd-right schedule_time_next">
                   <i class="fa fa-caret-square-o-right i-pdr-0"></i>
@@ -205,6 +209,15 @@
 
     #reportrange .fa-caret-down {
       margin-left: 20px;
+    }
+    .daterangepicker table.table-condensed tbody:hover tr:hover {
+      background-color:#ecf5f8;
+    }
+    .daterangepicker table.table-condensed tbody:hover tr:hover td{
+      background-color: #ecf5f8 !important;
+    }
+    .daterangepicker table.table-condensed tbody:hover tr:hover td:hover{
+      background-color: white !important;
     }
   </style>
 <%= javascript_include_tag( 'user/open_educat/shared/timetable.js' ) %>

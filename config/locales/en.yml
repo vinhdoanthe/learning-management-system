@@ -66,6 +66,7 @@ en:
     nation: "Nation"
     relation: "Relation"
     mobile: "Mobile"
+    company: "Teaching's Center"
   notification:
     title: "Notifications from TEKY"
     dashboard: "NOTIFICATIONS"
@@ -97,7 +98,7 @@ en:
     report_attend_title: "Attend"
     report_absent_title: "Absent"
     report_chart_prorata_title: "Report by proportion"
-    report_chart_based_on_quantity_title: "Report by quantily"
+    report_chart_based_on_quantity_title: "Report by quantity"
     report_range_title: "Report by range datetime"
     report_month_title: "Report by month"
     report_year_title: "Report by year"
