@@ -30,7 +30,7 @@ class SocialCommunity::ScStudentProjectsService
       else
         { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
       end
-    rescue StandardError => e
+    rescue StandardError
       return { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
     end
   end
@@ -141,7 +141,9 @@ class SocialCommunity::ScStudentProjectsService
     course_ids = SocialCommunity::ScStudentProject.all.pluck(:course_id).uniq
     course_projects = []
     course_ids.each do |course_id|
-      projects = SocialCommunity::ScStudentProject.where(course_id: course_id, permission: 'public').where.not(user_id: user.id).limit(5)
+      # TODO: temporary load all projects
+      # projects = SocialCommunity::ScStudentProject.where(course_id: course_id, permission: 'public').where.not(user_id: user.id).limit(5)
+      projects = SocialCommunity::ScStudentProject.where(course_id: course_id).where.not(user_id: user.id).limit(5)
       course_projects << (get_course_projects_hash projects)
     end
 

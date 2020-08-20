@@ -112,7 +112,9 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
 
   def course_student_projects
     @course = Learning::Course::OpCourse.where(id: params[:course_id]).first
-    @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id], permission: 'public').page params[:page]
+    # TODO temporary load all projects
+    # @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id], permission: 'public').page params[:page]
+    @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id]).page params[:page]
   end
 
   private

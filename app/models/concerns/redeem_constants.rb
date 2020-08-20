@@ -9,4 +9,10 @@ module RedeemConstants
                                  REDEEM_TRANSACTION_STATE_DONE,
                                  REDEEM_TRANSACTION_STATE_CANCEL]
   end
+
+  module ProductItem
+    STATE_AVAILABLE = 'AVAILABLE'
+    STATE_LOCKED = 'LOCKED'
+    STATE_SOLD = 'SOLD'
+  end
 end

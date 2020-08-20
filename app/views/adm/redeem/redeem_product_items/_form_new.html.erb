@@ -1,0 +1,30 @@
+<%= form_with(url: adm_redeem_redeem_product_items_path, local: true) do |form| %>
+
+  <div class="form-group row">
+    <label for="product" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <%= form.collection_select(:product_id, Redeem::RedeemProduct.order(:created_at => :ASC).all, :id, :name) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="size" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <%= form.collection_select(:size_id, Redeem::RedeemProductSize.order(:created_at => :ASC).all, :id, :name) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="color" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <%= form.collection_select(:color_id, Redeem::RedeemProductColor.order(:created_at => :ASC).all, :id, :name) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="amout" class="col-sm-2 col-form-label">Amount</label>
+    <div class="col-sm-10">
+      <%= form.number_field :amount, class: "form-control" %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= form.submit(class: 'btn btn-primary') %>
+  </div>
+<% end %>
