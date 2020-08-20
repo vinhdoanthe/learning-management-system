@@ -176,8 +176,7 @@ module User
         end
       end
 
-      def student_homework
-        # binding.pry
+      def student_homework_content
         @student = @op_student
         data = User::OpenEducat::OpStudentsService.new.student_homework @student, params
         @courses = @student.op_courses
@@ -192,11 +191,11 @@ module User
 
         respond_to do |format|
           format.html
-          format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => data}
+          format.js {render 'user/open_educat/op_students/js/student_homework_index'}
         end
+      end
 
-      rescue StandardError => e
-        redirect_error_site(e)
+      def student_homework
       end
 
       def student_project_detail
@@ -325,7 +324,7 @@ module User
 
         respond_to do |format|
           format.html
-          format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => {batch: batch, batches: batches, session: session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson}}
+          format.js {render 'user/open_educat/op_students/js/table_homework_list', :locals => {batch: batch, batches: batches, session: active_session, sessions: sessions, subject: subject, subjects: subjects, course: course, errors: '', lesson: lesson}}
         end
 
       end
@@ -338,6 +337,7 @@ module User
         sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = @op_student.id, subject_ids = subjects.pluck(:id)).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
         active_session = sessions.sort_by{|s| s.start_datetime}.select{|s| s.state == Learning::Constant::Batch::Session::STATE_DONE}.last
         active_session = sessions.last if active_session.blank?
+        sessions.select! { |s| s.subject_id == active_session.subject_id }
 
         if active_session.present?
           subject = active_session.op_subject

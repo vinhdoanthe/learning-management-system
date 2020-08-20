@@ -117,3 +117,6 @@ button.add-new-post {
     width: 100%;
     height: -webkit-fill-available;
 }
+.show_dashboard_photo {
+  cursor: pointer;
+}

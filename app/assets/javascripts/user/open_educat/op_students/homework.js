@@ -1,3 +1,11 @@
+function firstLoading(){
+  $.ajax({
+    url: '/user/open_educat/op_students/student_homework_content',
+    method: "GET",
+    dataType: 'script'
+  })
+}
+
 function get_video( batch_id, subject_id){
   session_id = $('input[name="active_session"]').val();
   $.ajax({
@@ -42,14 +50,16 @@ function get_homework(data, url){
 }
 
 $('document').ready(function () {
-
+  firstLoading();
   active_batch = $('input[name="active_batch"]').val();
   active_subject = $('input[name="active_subject"]').val();
 
   $('#homework_tab1').on('click','.student_homework_watch_videos', function(){
     $('input[name="active_session"]').val($(this).data('session'));
     $('input[name="change_video"][value="' + $(this).data('session') + '"]').parent().css('background-color', 'rgba(44, 42, 41, 0)');
-    $('#student_homework_videos').trigger('click')
+    $('#homework_tab2_new').ready(function(){
+      $('#student_homework_videos').trigger('click')
+    })
   })
 
   $('#student_homework_videos').on('click', function(){
@@ -66,20 +76,26 @@ $('document').ready(function () {
     get_video(active_batch, active_subject)
   })
 
-  $('#homework_course_selection').on('change', function(){
+  $('#filter_homework_row').on('change', '#homework_course_selection', function(){
+    $('#table_loading_homework').show();
+    $('#homework_session_table').hide();
     course = $('#homework_course_selection').val()
     get_homework({course: course}, '/user/open_educat/op_students/filter_course_homework'
     )
   })
 
-  $('#homework_batch_selection').on('change', function(){
+  $('#filter_homework_row').on('change', '#homework_batch_selection', function(){
+    $('#table_loading_homework').show();
+    $('#homework_session_table').hide();
     course = $('#homework_course_selection').val()
     batch = $('#homework_batch_selection').val() 
     get_homework({course: course, batch: batch}, '/user/open_educat/op_students/filter_batch_homework'
     )
   })  
 
-  $('#homework_subject_selection').on('change', function(){
+  $('#filter_homework_row').on('change', '#homework_subject_selection', function(){
+    $('#table_loading_homework').show();
+    $('#homework_session_table').hide();
     course = $('#homework_course_selection').val()
     batch = $('#homework_batch_selection').val() 
     subject = $('#homework_subject_selection').val()
@@ -156,7 +172,9 @@ $('document').ready(function () {
 
 
   if (window.location.href.includes('show_video=true')){
-    $('#student_homework_videos').trigger('click')
+    $('#homework_tab2_new').ready(function(){
+      $('#student_homework_videos').trigger('click')
+    })
     $('#homework_tab2_new').addClass('active in')
     $('#homework_tab1').removeClass('active')
   }

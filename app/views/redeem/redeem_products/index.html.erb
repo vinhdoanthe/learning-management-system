@@ -56,7 +56,8 @@
                 <div class="col-sm-4 product_item product_category_<%= product.redeem_product_category.id %>">
                   <div class="rt-detail product_infomation">
                     <div class="rtd-img">
-                      <div class="owl-carousel" id="product<%= index+1 %>">
+                      <% index_id = index.to_i + 1 %>
+                      <div class="owl-carousel" id="product<%= index_id %>">
                         <% if product.images.present? %>
                           <% product.images.each do |img| %>
                             <div><%= image_tag img %></div>
@@ -228,6 +229,7 @@ input::-webkit-inner-spin-button {
   .quantity_div i {
     padding: 0 !important;
     margin: auto;
+    font-size: 10px;
   }
 
   .redeem-product-submit-disabled {
@@ -239,4 +241,17 @@ input::-webkit-inner-spin-button {
     font-weight: 700;
     padding-top: 17px;
   }
+  .product-box {
+    min-width: 115px;
+    border-radius: 0 !important;
+  }
+  .redeem_product_submit {
+    padding: 0 !important;
+  }
+  .redeem_product_submit span:after{
+    content: ' \002B';
+    font-size: 18px;
+    color: #2F2F3E;
+  }
+
 </style>
