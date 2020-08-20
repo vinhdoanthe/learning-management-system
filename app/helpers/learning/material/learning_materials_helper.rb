@@ -21,7 +21,7 @@ module Learning
 
         progress = done_user_answers.count.to_s + '/' + user_questions.count.to_s
 
-        if done_user_answers.count == user_questions.count
+        if done_user_answers.count == user_questions.count && user_questions.count != 0
           state = 'done'
         elsif done_user_answers.count == 0
           state = 'undone'

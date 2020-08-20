@@ -28,7 +28,7 @@
                     <td><label><%= t('student_project.description')%></label></td>
                     <td align='left' >
                       <% if !product.description.nil? && product.description.length > 0 %>
-                        <div style="max-height:300px; overflow-y: scroll;"><%= product.description %></div>
+                        <div style="max-height:300px; overflow-y: scroll;"><%= product.description.html_safe %></div>
                       <% end %>                
                     </td>
                   </tr>

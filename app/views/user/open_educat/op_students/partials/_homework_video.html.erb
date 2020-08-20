@@ -1,10 +1,3 @@
-<% content_for :javascript_includes do %>
-  <%= javascript_include_tag 'social_community/question_answer/session_qa_area.js' %>
-  <%= javascript_include_tag ('swiper.min.js') %>
-<% end %>
-<% content_for :stylesheet_includes do %>
-  <%= stylesheet_link_tag ('swiper.min.css') %>
-<% end %>
 <% session_has_video_list = get_session_has_video sessions %>
 
 <% unless session_has_video_list.present? %>

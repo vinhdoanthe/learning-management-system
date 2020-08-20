@@ -134,7 +134,7 @@
                         </div>
                         <div class="col-md-7">
                           <input type='hidden' name="redeem_product_id" value='<%= product.id %>'>
-                          <button data-toggle="modal" data-target="#confirm_redeem_modal" id="btn_redeem_product_confirm" data-product="<%= product.id %>" class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('adm.redeem.redeem_button')%></button>
+                          <button data-toggle="modal" data-target="#confirm_redeem_modal" data-product="<%= product.id %>" class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><span><%= t('adm.redeem.redeem_button')%></span></button>
                         </div>
                       </div>
                     </div>
@@ -224,5 +224,20 @@ $(document).ready(function() {
   .quantity_div i {
     padding: 0 !important;
     margin: auto;
+    font-size: 10px;
   }
+  .product-box {
+    min-width: 115px;
+    border-radius: 0 !important;
+  }
+  .redeem_product_submit {
+    padding: 0 !important;
+  }
+  .redeem_product_submit span:after{
+    content: ' \002B';
+    font-size: 18px;
+    color: #2F2F3E;
+  }
+
 </style>
+

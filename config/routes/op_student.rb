@@ -8,6 +8,7 @@ namespace :user do
       get 'batch_progress', action: 'batch_progress', as: 'batch_progress'
       get 'session_evaluation', action: 'session_evaluation', as: 'session_evaluation'
       get 'student_homework', action: 'student_homework', as: 'student_homework'
+      get 'student_homework_content', action: 'student_homework_content', as: 'student_homework_content'
       get 'information', action: 'information', as: 'information'
       get 'timetable', action: 'timetable', as: 'timetable'
       post 'timetable_content', action: 'timetable_content', as: 'timetable_content'
