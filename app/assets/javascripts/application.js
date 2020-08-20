@@ -96,7 +96,7 @@ $(document).ready(function () {
     $(this).closest('.broadcast_notice_content').find('.notice_collapse').collapse('show')
   })
 
-  $('.fl_wrap.m-t-0').append('<span class="fa fa-caret-down" style="position: absolute; right: 20px; top: 42%"></span>');
+  //$('.fl_wrap.m-t-0').append('<span class="fa fa-caret-down" style="position: absolute; right: 20px; top: 42%"></span>');
 });
 
 window.onbeforeunload = function (e) {

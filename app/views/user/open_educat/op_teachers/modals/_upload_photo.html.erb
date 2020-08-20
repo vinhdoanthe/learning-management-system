@@ -77,7 +77,7 @@ $('#upload_photo').on('click', '#upload_photo_confirm', function () {
     processData: false,
     success: function (res) {
       waitingdialog.hide();
-      display_noti(res); 
+      display_response_noti(res);
     }
   })
 })  

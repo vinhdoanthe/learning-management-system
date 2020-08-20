@@ -7,6 +7,8 @@ class Redeem::RedeemProductsController < ApplicationController
 
   def product_detail
     redeem_product = Redeem::RedeemProduct.where(id: params[:product_id]).first
+    size = Redeem::RedeemProductSize.where(id: params[:size]).first
+    color = Redeem::RedeemProductColor.where(id: params[:color]).first
 
     if redeem_product.present?
       brand_name = redeem_product.redeem_product_brand.name
@@ -14,7 +16,7 @@ class Redeem::RedeemProductsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render "redeem/redeem_products/js/product_detail", locals: { product: redeem_product, brand_name: brand_name } }
+      format.js { render "redeem/redeem_products/js/product_detail", locals: { product: redeem_product, brand_name: brand_name, size: size, color: color } }
     end
   end
 end
