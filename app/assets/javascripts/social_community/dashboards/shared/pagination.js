@@ -57,6 +57,15 @@ $(document).ready(function () {
       dataType: 'script'
     })
   })
+
+  $('#tab_homeFeeds').on('click', '.show_dashboard_photo', function(){
+    post_id = $(this).data('post');
+    $.ajax({
+      url: '/social_community/dashboard_photos?post_id=' + post_id,
+      method: 'GET',
+      dataType: 'script'
+    })
+  })
 });
 
 function get_feeds() {
