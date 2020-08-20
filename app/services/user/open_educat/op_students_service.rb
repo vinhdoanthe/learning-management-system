@@ -137,7 +137,7 @@ class User::OpenEducat::OpStudentsService
       classroom = session.classroom_id.nil? ? '' : Common::OpClassroom.find(session.classroom_id).name
 
       #      batch_class_online = session.op_batch.company_id == 35 ? true : false
-      batch_class_online = (['1', '2'].include? session.op_batch.select_place) ? false : true
+      batch_class_online = (['1', '2'].include? session.op_batch.place_id) ? false : true
       # batch_class = session.op_batch.is_online_class
       course = session.op_batch.op_course.name
       lesson = session.op_batch.current_session_level
