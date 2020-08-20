@@ -18,12 +18,12 @@
                   <div class='icon' style="float: left; margin: auto; margin: 0px">
                     <%= image_tag('global-noti.png', style: 'width: 30px;') %>
                   </div>
-                  <div class='col-md-9'>
+                  <div class='col-md-9 toggle_collapse_title'>
                     <h3 class="public_notice_title"><%= notice.title %></h3>
                     <p><%= notice.user.username %> đăng lúc <%= notice.created_at.strftime('%H:%M - %d/%m/%y') %></p> 
                   </div>
                   <div class='col-md-2'>
-                    <span data-toggle="collapse" data-parent="#notice_index" class="toggle_notice_collapse"  data-target="#notice_content_<%= index.to_s %>" >
+                    <span data-toggle="collapse" data-parent="#notice_index" class="toggle_notice_collapse toggle_collapse_title"  data-target="#notice_content_<%= index.to_s %>" >
                     <a href="/notification/broadcast/read_notice?notice_id=<%= notice.id %>" data-remote='true'style='float: right; cursor: pointer' ><%= t('button.see_more') %></a>
                     </span>
                   </div>
@@ -45,3 +45,8 @@
     </div>
   </div>
 </div>
+<style>
+  .toggle_collapse_title {
+    cursor: pointer;
+  }
+</style>
