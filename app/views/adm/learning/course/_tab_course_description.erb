@@ -37,8 +37,7 @@
 		<hr/>
 		<h2 class="lms-course-title"><%= t('adm.course.course_description')%></h2>
 		<div class="custom-scroll"><%= course_description.html_safe %></div>
-
-		<h2 class="lms-course-title"><%= t('adm.course.What do students learn?')%></h2>
+		<h2 class="lms-course-title" style="margin-top: 15px;"><%= t('adm.course.What do students learn?')%></h2>
 		<div class="custom-scroll"><%= @course.competences.to_s.html_safe %></div>
 	</div>
 </div>

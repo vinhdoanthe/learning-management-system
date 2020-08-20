@@ -33,7 +33,14 @@ body {
 
 #list_course ul.course-option{width: 100%; float: left;padding-left: 0px;}
 
-#list_course ul.course-option li{width:50%;float:left;display: inline-block;list-style: none;}
+#list_course ul.course-option li {list-style: none;}
+
+#list_course ul.course-option li.cource-info-content {
+    width:calc((100% - 45px)/2);
+    float:left;
+    display: inline-block;
+    list-style: none;
+}
 
 /*** Style description for tinymce **/
 

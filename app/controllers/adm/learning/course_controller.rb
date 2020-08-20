@@ -34,6 +34,7 @@ class Adm::Learning::CourseController < ApplicationController
     @course = @subjects = []
 
     if params[:course_id].present?
+
       @course   = Learning::Course::OpCourse.find(params[:course_id])
       
       # Chuong trinh hoc
@@ -71,26 +72,46 @@ class Adm::Learning::CourseController < ApplicationController
 
   # Edit khoa hoc
   def edit
+    
     @report_title_page = t('adm.course.management_course')
 
-    @course = []
+    @course = nil
 
     if params[:course_id].present?
       @course   = Learning::Course::OpCourse.find(params[:course_id])
+
       # Chuong trinh hoc
       @subjects = @course.op_subjects.order(level: :ASC).select(:id, :name)
 
       #@lessions = Learning::Course::OpCoursesService.get_all_lession_of_course(params[:course_id])
+
+      course_descriptions = @course.course_description        
+      course_description  = course_descriptions.nil? ? '' : course_descriptions[0].description
+
+      @frm_course = {
+        'suitable_age': @course.suitable_age,
+        'duration': @course.duration,
+        'equipments': @course.equipments,
+        'prerequisites': @course.prerequisites,          
+        'short_description': @course.short_description,
+        'description': course_description,
+        'competences': @course.competences,
+      }
+
+      @valid_messages = nil
+
     end
 
-    @frm_course = @course
-
+    if @course.nil?
+      flash[:danger] = t("adm.Object does not exist")
+      redirect_to adm_learning_course_path
+    end
   end
 
   # update khoa hoc
   def update
 
-    course = []
+    @frm_course = course = []
 
     if params[:frm_course][:course_id].present?
 
@@ -102,14 +123,47 @@ class Adm::Learning::CourseController < ApplicationController
         redirect_to adm_learning_course_path
       else
 
-        if course_description.update(description: params[:frm_course][:description]) && course.update(competences: params[:frm_course][:competences])
-          flash[:success] = t("adm.The item was updated successfully")		  		
+        course_update = course.update(
+          suitable_age: params[:frm_course][:suitable_age],
+          duration: params[:frm_course][:duration],
+          equipments: params[:frm_course][:equipments],
+          prerequisites: params[:frm_course][:prerequisites],
+          short_description: params[:frm_course][:short_description],
+          competences: params[:frm_course][:competences],
+        )
+
+        if course_description.update(description: params[:frm_course][:description]) && course_update
+          
+          if params[:frm_course][:thumbnail].present?
+            course.thumbnail.attach(params[:frm_course][:thumbnail])
+          end
+
+          flash[:success] = t("adm.The item was updated successfully")
+          redirect_to adm_learning_course_edit_path(params[:frm_course][:course_id])
         else
+          
+          @valid_messages = course.errors.messages
+
           flash[:danger] = t("adm.The item was updated fail")
+          #@frm_course = params[:frm_course]
+
+          @frm_course = {
+            'suitable_age': params[:frm_course][:suitable_age].to_s,
+            'duration': params[:frm_course][:duration],
+            'equipments': params[:frm_course][:equipments],
+            'prerequisites': params[:frm_course][:prerequisites],            
+            'short_description': params[:frm_course][:short_description],
+            'description': params[:frm_course][:description],
+            'competences': params[:frm_course][:competences]
+          }
+
+          @subjects   = course.op_subjects.order(level: :ASC).select(:id, :name)
+          @course     = course
+
+          @course_update = course_update
+
+          render 'adm/learning/course/edit'
         end
-
-        redirect_to adm_learning_course_edit_path(params[:frm_course][:course_id])
-
       end
     end
   end

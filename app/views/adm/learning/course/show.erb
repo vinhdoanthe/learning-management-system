@@ -5,7 +5,7 @@
           <h3 class="card-title"><label><%= t('adm.course.course_detail')%>:</label> <%= @course.name%></h3>
           <div class="card-tools">
             <a href="<%= adm_learning_course_path%>" class="btn btn-default btn-sm bg-olive"><i class="fas fa-angle-double-left"></i> <%= t('button.back')%></a>
-            <a href="<%= adm_learning_course_edit_path(@course.id)%>" class="btn btn-default btn-sm bg-olive"><i class="fas fa-pencil-alt"></i> <%= t('button.edit')%></a>
+            <a href="<%= adm_learning_course_edit_path(@course.id)%>" class="btn btn-default btn-sm bg-olive"><i class="fas fa-pencil-alt"></i> <%= t('button.Edit')%></a>
           </div> 
       </div>
       <div class="card-header p-0 pt-1 border-bottom-0">
@@ -31,8 +31,11 @@
           </div>
         </div>       
       </div>
-      <div class="card-footer clearfix">
-      
+      <div class="card-footer clearfix text-right">
+        <div class="card-tools">
+            <a href="<%= adm_learning_course_path%>" class="btn btn-default btn-sm bg-olive"><i class="fas fa-angle-double-left"></i> <%= t('button.back')%></a>
+            <a href="<%= adm_learning_course_edit_path(@course.id)%>" class="btn btn-default btn-sm bg-olive"><i class="fas fa-pencil-alt"></i> <%= t('button.Edit')%></a>
+        </div>
       </div>
     </div>
   </div>

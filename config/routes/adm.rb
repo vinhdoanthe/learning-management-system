@@ -22,7 +22,9 @@ namespace :adm do
     get 'course/list_lesson_by_session' => 'course#get_lesson_by_session', as: 'get_lesson_by_session'
 
     get 'course/:course_id/edit' => 'course#edit', as: 'course_edit'
+    
     post 'course/update' => 'course#update', as: 'course_update'
+    
     get 'operation_attendance' => 'operation_attendances#index', as: 'operation_attendance'
     get 'attendance_line' => 'attendance_lines#index', as: 'attendance_line'
   end

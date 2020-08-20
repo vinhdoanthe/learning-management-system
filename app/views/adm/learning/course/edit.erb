@@ -1,6 +1,6 @@
 <%= tinymce_assets %>
 <%= javascript_include_tag 'tinymce/langs/vi_VN.js' %>
-<% course_description = get_description(@course) %>
+
 <form id="frm_course" class="form-horizontal" method="post" action="<%= adm_learning_course_update_path%>" enctype="multipart/form-data">
 <input type="hidden" name="frm_course[course_id]" value="<%= @course.id%>">
 <div class="card">
@@ -53,36 +53,139 @@
             <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label"><%= t('adm.course.Ages')%></label>
+                  <% if @valid_messages.nil? || (!@valid_messages.nil? && !@valid_messages[:suitable_age].nil?)%>
                   <div class="col-sm-9">
-                    <input  type="text" required maxlength="5" placeholder="<%= t('adm.course.Example Suitable age')%>" class="form-control" id="frm_course_suitable_age" name="frm_course[suitable_age]" value="<%= @frm_course.suitable_age%>">
+                    <input
+                    type="text" required
+                    maxlength="50"
+                    placeholder="<%= t('adm.course.Example Suitable age')%>"
+                    class="form-control"
+                    id="frm_course_suitable_age"
+                    name="frm_course[suitable_age]"
+                    value="<%= @frm_course[:suitable_age]%>"/>
                   </div>
+                  <% else%>
+                  <div class="col-sm-9 error">
+                    <input
+                      type="text" required
+                      maxlength="50"
+                      placeholder="<%= t('adm.course.Example Suitable age')%>"
+                      class="form-control is-invalid"
+                      id="frm_course_suitable_age"
+                      name="frm_course[suitable_age]"
+                      value="<%= @frm_course[:suitable_age]%>"
+                      aria-describedby="frm_course_suitable_age-error"
+                      aria-invalid="true"/>
+                      <span id="frm_course_suitable_age-error" class="error invalid-feedback">
+                        <%= @valid_messages[:suitable_age][0]%>
+                      </span>
+                  </div>
+                  <% end%>                  
                 </div>
 
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label"><%= t('adm.course.Duration')%></label>
+                  <% if @valid_messages.nil? || (!@valid_messages.nil? && !@valid_messages[:duration].nil?)%>
                   <div class="col-sm-9">
-                    <input type="text" required maxlength="100" placeholder="<%= t('adm.course.Example duration')%>" class="form-control" name="frm_course[duration]" value="<%= @frm_course.duration%>">
+                    <input
+                    type="text" required
+                    maxlength="50"
+                    placeholder="<%= t('adm.course.Example duration')%>"
+                    class="form-control"
+                    id="frm_course_duration"
+                    name="frm_course[duration]"
+                    value="<%= @frm_course[:duration]%>"/>
                   </div>
+                  <% else%>
+                  <div class="col-sm-9 error">
+                    <input
+                      type="text" required
+                      maxlength="50"
+                      placeholder="<%= t('adm.course.Example duration')%>"
+                      class="form-control is-invalid"
+                      id="frm_course_duration"
+                      name="frm_course[duration]"
+                      value="<%= @frm_course[:duration]%>"
+                      aria-describedby="frm_course_duration-error"
+                      aria-invalid="true"/>
+                      <span id="frm_course_duration-error" class="error invalid-feedback">
+                        <%= @valid_messages[:duration][0]%>
+                      </span>
+                  </div>
+                  <% end%>
                 </div>
 
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label"><%= t('adm.course.Tools')%></label>
+                  <% if @valid_messages.nil? || (!@valid_messages.nil? && !@valid_messages[:equipments].nil?)%>
                   <div class="col-sm-9">
-                    <input type="text" required maxlength="100" placeholder="<%= t('adm.course.Example Suitable age')%>" class="form-control" name="frm_course[equipments]" value="<%= @frm_course.equipments%>">
+                    <input
+                    type="text" required
+                    maxlength="50"
+                    placeholder="<%= t('adm.course.Example equipments')%>"
+                    class="form-control"
+                    id="frm_course_equipments"
+                    name="frm_course[equipments]"
+                    value="<%= @frm_course[:equipments]%>"/>
                   </div>
+                  <% else%>
+                  <div class="col-sm-9 error">
+                    <input
+                      type="text" required
+                      maxlength="50"
+                      placeholder="<%= t('adm.course.Example equipments')%>"
+                      class="form-control is-invalid"
+                      id="frm_course_equipments"
+                      name="frm_course[equipments]"
+                      value="<%= @frm_course[:equipments]%>"
+                      aria-describedby="frm_course_equipments-error"
+                      aria-invalid="true"/>
+                      <span id="frm_course_equipments-error" class="error invalid-feedback">
+                        <%= @valid_messages[:equipments][0]%>
+                      </span>
+                  </div>
+                  <% end%>
+
                 </div>
 
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label"><%= t('adm.course.Conditions learning')%></label>
+                  <% if @valid_messages.nil? || (!@valid_messages.nil? && !@valid_messages[:prerequisites].nil?)%>
                   <div class="col-sm-9">
-                    <input type="text" required maxlength="100" placeholder="<%= t('adm.course.Example Suitable age')%>" class="form-control" name="frm_course[prerequisites]" value="<%= @frm_course.prerequisites%>">
+                    <input
+                    type="text" required
+                    maxlength="50"
+                    placeholder="<%= t('adm.course.Example prerequisites')%>"
+                    class="form-control"
+                    id="frm_course_prerequisites"
+                    name="frm_course[prerequisites]"
+                    value="<%= @frm_course[:prerequisites]%>"/>
                   </div>
+                  <% else%>
+                  <div class="col-sm-9 error">
+                    <input
+                      type="text" required
+                      maxlength="50"
+                      placeholder="<%= t('adm.course.Example prerequisites')%>"
+                      class="form-control is-invalid"
+                      id="frm_course_prerequisites"
+                      name="frm_course[prerequisites]"
+                      value="<%= @frm_course[:prerequisites]%>"
+                      aria-describedby="frm_course_prerequisites-error"
+                      aria-invalid="true"/>
+                      <span id="frm_course_prerequisites-error" class="error invalid-feedback">
+                        <%= @valid_messages[:prerequisites][0]%>
+                      </span>
+                  </div>
+                  <% end%>
+
                 </div>
 
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label"><%= t('adm.course.Photo of course')%></label>
                   <div class="col-sm-9">
                     <input data-fileupload="true" type="file" name="frm_course[thumbnail]" id="frm_image_thumbnail">
+                    
                     <div style="color:#dc3545;"><%= t('adm.course.Please enter the image size')%></div>
                     <div id="img_contain_preview">
                       <% if @course.thumbnail.attached? %>
@@ -97,10 +200,32 @@
 
             <div class="col-md-12">
               <div class="form-group row">
-                <label class="col-sm-3 control-label"><%= t('adm.course.Short description')%><span class="error invalid-feedback">*</span></label>
+                <label class="col-sm-3 control-label"><%= t('adm.course.Short description')%><span class="error invalid-feedback">*</span></label>                
+                <% if @valid_messages.nil? || (!@valid_messages.nil? && @valid_messages[:short_description].nil?)%>
                 <div class="col-sm-12">
-                  <textarea style="width:100%;" required class="form-control" maxlength="255" rows="3" id="frm_course_short_description" name="frm_course[short_description]"></textarea>                  
+                <textarea required 
+                  class="form-control" 
+                  placeholder="<%= t('adm.course.placeholder_short_description')%>" 
+                  maxlength="255"
+                  rows="2"
+                  id="frm_course_short_description"
+                  name="frm_course[short_description]"><%= @frm_course[:short_description]%></textarea>
                 </div>
+                <% else%>
+                <div class="col-sm-12 error">
+                  <textarea required
+                    class="form-control is-invalid" 
+                    maxlength="255"
+                    rows="2"
+                    id="frm_course_short_description"
+                    name="frm_course[short_description]"
+                    aria-describedby="frm_course_short_description-error"
+                    aria-invalid="true"><%= @frm_course[:short_description]%></textarea>
+                  <span id="frm_course_short_description-error" class="error invalid-feedback">
+                    <%= @valid_messages[:short_description][0]%>
+                  </span>
+                </div>
+                <% end%>                
               </div>
             </div>
 
@@ -109,18 +234,36 @@
           <div class="row">
             <div class="form-group">
               <label class="col-sm-3 control-label"><%= t('adm.course.course_description')%>:</label>
-              <div class="col-sm-12">
-              <%= text_area_tag :'frm_course[description]', course_description, :id => 'frm_course_description' , :class => "tinymce"%>
-              </div>
+              <% if @valid_messages.nil? || (!@valid_messages.nil? && !@valid_messages[:description].nil?)%>
+                <div class="col-sm-12">
+                <%= text_area_tag :'frm_course[description]', @frm_course[:description], :id => 'frm_course_description' , :class => "tinymce"%>
+                </div>
+              <% else%>
+                <div class="col-sm-12 error">
+                  <%= text_area_tag :'frm_course[description]', @frm_course[:description], :id => 'frm_course_description' , :class => "tinymce", 'aria-describedby' => "frm_course_description-error", "aria-invalid" => true %>
+                  <span id="frm_course_description-error" class="error invalid-feedback">
+                  <%= @valid_messages[:description][0]%>
+                  </span>
+                </div>
+              <% end%>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
               <label class="col-sm-3 control-label"><%= t('adm.course.What do students learn?')%>:</label>
-              <div class="col-sm-12">
-                <%= text_area_tag :'frm_course[competences]', @course.competences, :id => 'frm_course_competences' , :class => "tinymce"%>
-              </div>
+              <% if @valid_messages.nil? || (!@valid_messages.nil? && !@valid_messages[:competences].nil?)%>
+                <div class="col-sm-12">
+                <%= text_area_tag :'frm_course[competences]', @frm_course[:competences], :id => 'frm_course_competences' , :class => "tinymce"%>
+                </div>
+              <% else%>
+                <div class="col-sm-12 error">
+                  <%= text_area_tag :'frm_course[competences]', @frm_course[:competences], :id => 'frm_course_competences' , :class => "tinymce", 'aria-describedby' => "frm_course_prerequisites-error", "aria-invalid" => true %>
+                  <span id="frm_course_competences-error" class="error invalid-feedback">
+                  <%= @valid_messages[:competences][0]%>
+                  </span>
+                </div>
+              <% end%>
             </div>
           </div>
 
@@ -135,6 +278,11 @@
   </div>
 </div>
 </form>
+<style type="text/css">
+textarea {
+  resize: none;
+}
+</style>
 <%= tinymce :fulleditor %>
 <script type="text/javascript">
 

@@ -5,11 +5,18 @@
     <%= link_to(ct[:name], adm_learning_course_show_path(ct[:course_id]))%>
     <ul class="course-option">
         <li>
+          <% if !ct[:thumbnail].nil? && ct[:thumbnail].attached? %>
+            <%= image_tag url_for(ct[:thumbnail]),  class: 'admin-subject-img-thumbnail'%>
+          <% else%>
+            <div class="admin-subject-img-thumbnail bg-cfcfcf">No image</div>
+          <% end%>
+        </li>
+        <li class="cource-info-content">
           <div class="small"><label><%= t('adm.code')%></label>: <%= ct[:code]%></div>
           <div class="small"><label><%= t('adm.Section')%></label>: <%= ct[:section]%></div>
           <div class="small"><label><%= t('adm.course.number_subjects')%></label>: <%= ct[:number_subject]%></div>
         </li>
-        <li>
+        <li class="cource-info-content">
           <div class="small"><label><%= t('adm.course.Ages')%></label>: <%= ct[:suitable_age]%></div>
           <div class="small"><label><%= t('adm.course.Duration')%></label>: <%= ct[:duration]%></div>
           <div class="small"><label><%= t('adm.course.Tools')%></label>: <%= ct[:equipments]%></div>

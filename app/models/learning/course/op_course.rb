@@ -1,6 +1,9 @@
 module Learning
   module Course
     class OpCourse < ApplicationRecord
+      
+      validates :short_description, presence: true, length: {minimum: 1,maximum: 255, allow_nil: false, message: I18n.t('adm.course.Not mull and maxlength 255 char')}
+
       include Rails.application.routes.url_helpers
       self.table_name = 'op_course'
       
