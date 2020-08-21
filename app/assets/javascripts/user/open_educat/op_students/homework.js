@@ -41,10 +41,10 @@ function get_homework(data, url){
     success: function(){
       select_val = $('#homework_course_selection').val()
       $('.student_course_title').html($('#homework_course_selection option[value="' + select_val.toString() + '"]').html())
-      if (typeof session_id !== 'undefined'){
-        option = $('#homework_session_table').find('input[value="' + session_id +'"]').parent().find('a')
-        if(option){option.trigger('click');}
-      }
+      // if (typeof session_id !== 'undefined'){
+      //   option = $('#homework_session_table').find('input[value="' + session_id +'"]').parent().find('a')
+      //   if(option){option.trigger('click');}
+      // }
     }
   })
 }
