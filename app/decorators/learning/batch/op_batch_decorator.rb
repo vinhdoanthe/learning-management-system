@@ -24,4 +24,19 @@ class Learning::Batch::OpBatchDecorator < SimpleDelegator
 
     return_str
   end
+
+  def display_last_done_session
+    session  = op_sessions.where(batch_id: self.id, state: Learning::Constant::Batch::Session::STATE_DONE).last
+    if session.nil?
+      str = 'Chưa có buổi học nào diễn ra'
+    else
+      if session.op_subject.nil?
+        str = "<a href='/user/open_educat/op_teacher/teacher_class_detail?batch_id=#{ id.to_s }'>" + session.count.to_s + "</a>" + 'Đang cập nhật Subject'
+      else
+        str = "<a href='/user/open_educat/op_teacher/teacher_class_detail?batch_id=#{ id.to_s }'>" + session.count.to_s + "</a>" + ' - Level ' + session.op_subject.level.to_s
+      end
+    end
+
+    str
+  end
 end

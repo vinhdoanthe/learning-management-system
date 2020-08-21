@@ -34,9 +34,9 @@
               <label class="filter-title"><%= t('adm.redeem.category_redeem')%></label>
             </div>
             <div class="col-md-offset-5 col-md-3">
-              <div class='fl_wrap m-0'>
+              <div class='fl_wrap m-0 populated'>
                 <label class='fl_label' for='rf_name'><%= t('adm.redeem.category')%>:</label>
-                <select class='product_categories fl_input' id='rf_name' >
+                <select class='product_categories custom-select form-control-filters' id='rf_name' >
                   <option value='-1'><%= t('select.all')%></option>
                   <%= Redeem::RedeemProductCategory.select('id, name').all.each do |category| %>
                     <option value="<%= category.id %>"><%= category.name %></option>
@@ -83,7 +83,7 @@
                                     <% if color.present? %>
                                       <li>
                                         <label class="check-multi">
-                                          <input type="radio" name="product_color" checked value='<%= color.color_code %>'>
+                                          <input type="radio" class="product_color" name="product_color_<%= product.id %>" checked value='<%= color.id %>'>
                                           <span class="checkmark" style="background-color: <%= color.color_code  %>"></span>
                                         </label>
                                       </li>
@@ -114,7 +114,7 @@
                                     <select name="" class="product_size form-control" style="padding: 5px 10px">
                                       <% available_items[:size].each do |size| %>
                                         <% if size.present? %>
-                                          <option value="<%= size.name %>"><%= size.name %></option>
+                                          <option value="<%= size.id %>"><%= size.name %></option>
                                         <% end %>
                                       <% end %>
                                     </select>

@@ -1,7 +1,7 @@
 class Redeem::RedeemTransactionService
   def create_transaction params, user
-    size = Redeem::RedeemProductSize.where(name: params[:product_size]).first
-    color = Redeem::RedeemProductColor.where(color_code: params[:product_color]).first
+    size = Redeem::RedeemProductSize.where(id: params[:product_size]).first
+    color = Redeem::RedeemProductColor.where(id: params[:product_color]).first
     result = { type: "danger", message: "Đã có lỗi xảy ra! Vui lòng thử lại" }
     return result if size.blank? || color.blank?
 
@@ -36,7 +36,7 @@ class Redeem::RedeemTransactionService
       return { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
     end
     
-    product_items.update_all ({ transaction_id: transaction.id, state: 'waiting' })
+    product_items.update_all ({ transaction_id: transaction.id, state: RedeemConstants::ProductItem::STATE_LOCKED })
     post.create_notifications
     result
 
@@ -70,7 +70,7 @@ class Redeem::RedeemTransactionService
   def check_product_item product, size, color, amount
     return nil if size.blank? || color.blank?
 
-    product_items = product.redeem_product_items.where(size_id: size.id, color_id: color.id, state: 'ready')
+    product_items = product.redeem_product_items.where(size_id: size.id, color_id: color.id, state: RedeemConstants::ProductItem::STATE_AVAILABLE)
 
     if product_items.count >= amount
       product_items.limit(amount)

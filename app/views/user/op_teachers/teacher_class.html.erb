@@ -1,6 +1,7 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag 'custom_js/opteacherjs.js' %>
 <% end %>
+<%= stylesheet_link_tag "user/open_educat/op_teachers/teacher_class" %>
 
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
@@ -13,16 +14,16 @@
   <div class="panel m-t--70">
 
     <div class="panel-content">
-      <div class="table-responsive bo-table">
+      <div class="" style="padding: 20px; padding-bottom: 0">
         <div class="filter-box FlowupLabels b-b-1-869fb229" id='formBody'>
           <div class="row">
             <div class="col-md-4">
               <label class="filter-title">Toàn bộ <span class="color-16BD56">Lớp học</span></label>
             </div>
             <div class="col-md-3">
-              <div class='fl_wrap m-t-0'>
+              <div class='fl_wrap m-t-0 populated'>
                 <label class='fl_label' for='rf_name'>Lọc theo:</label>
-                <select class='fl_input' id='filter_type'>
+                <select class='custom-select form-control-filters' id='filter_type'>
                   <option value='all' selected> Tất cả</option>
                   <option value="true">Đang diễn ra</option>
                   <option value="false">Đã hoàn thành</option>
@@ -31,15 +32,15 @@
               </div>
             </div>
             <div class="col-md-3">
-              <div class='fl_wrap m-t-0' id='date_range_pick_form'>
+              <div class='fl_wrap m-t-0 populated' id='date_range_pick_form'>
                 <label class='fl_label' for='rf_name'>Thời gian:</label>
-                <input type="text" id='daterange_pick' name="daterange_pick" class='fl_input form-control' placeholder="" data-orientation="top" value=''>
+                <input type="text" id='daterange_pick' name="daterange_pick" class='custom-select form-control-filters' placeholder="" data-orientation="top" value=''>
               </div>
             </div>
             <div class="col-md-2">
-              <div class='fl_wrap m-t-0'>
+              <div class='fl_wrap m-t-0 populated'>
                 <label class='fl_label' for='rf_name'>Cơ sở:</label>
-                <select class='fl_input' id='filter_company'>
+                <select class='custom-select form-control-filters' id='filter_company'>
                   <option value='all' selected>Tất cả</option>
                   <% @company.each do |ct| %>
                     <option value="<%= ct.id %>"><%= ct.name %></option>
@@ -49,12 +50,12 @@
             </div>
           </div>
         </div>
-        <table class="table table-hover">
+        <table class="table table-hover" id="table_teacher_class">
           <thead>
           <tr>
             <th>Mã lớp</th>
             <th>Khóa học</th>
-            <th>Học sinh</th>
+            <th style="text-align: center; padding-left: 20px; padding-right: 20px;">Học sinh</th>
             <th>Thời gian</th>
             <th>Buổi học</th>
             <th></th>
@@ -63,11 +64,11 @@
           <tbody id="batch_list">
           <% @batches.each do |batch| %>
             <tr class='batch_info'>
-              <td><a href="<%='/user/open_educat/op_teacher/teacher_class_detail?batch_id=' + batch.id.to_s %>"><%= batch.code %></a></td>
-              <td><%= batch.op_course.name %></td>
-              <td><%= batch.op_student_courses.count %></td>
+              <td><%= batch.code %></td>
+              <td><a href="<%='/user/open_educat/op_teacher/teacher_class_detail?batch_id=' + batch.id.to_s %>"><%= batch.op_course.name %></a></td>
+              <td align='center' style="color:#0654BA"><%= batch.op_student_courses.count %></td>
               <td><%= batch.start_date.to_s + ' - ' + batch.end_date.to_s %></td>
-              <td><%= batch.current_session_level %></td>
+              <td><%= Learning::Batch::OpBatchDecorator.new(batch).display_last_done_session.html_safe %></td>
               <td align="right">
                 <% if batch.check_status %>
                   <span class="label-edit label label-primary">Đang diễn ra</span>

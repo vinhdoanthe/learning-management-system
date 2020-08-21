@@ -33,7 +33,7 @@ $('#teacher_evaluate_confirm').on('click', function () {
     method: 'POST',
     data: {info: info, session_id: <%= session_id %>, student_id: <%= student.id %>},
     success: function (res) {
-      display_noti(res);
+      display_response_noti(res);
     }
   })
 })
