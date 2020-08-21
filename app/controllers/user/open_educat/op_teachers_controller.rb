@@ -2,6 +2,53 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   before_action :find_teacher
   skip_before_action :verify_authenticity_token
 
+  def teacher_class
+  end
+
+  def teacher_class_content
+    session_info = @teacher.op_sessions.where.not(state: 'cancel').pluck(:batch_id, :id,:start_datetime, :state, :count, :subject_id)
+    session_info.sort! {|a,b| [a[0], a[2]] <=> [b[0], b[2]]}
+    @last_done_session_info = {}
+    session_info.each{|session| @last_done_session_info.merge! ({ session[0] => [session[1], session[4], session[5]] }) if session[3] == 'done' }
+
+    @last_done_session_info.each do |k, v|
+      if v[2].present?
+        subject = Learning::Course::OpSubject.where(id: v[2]).pluck(:level).uniq
+        v[2] = subject[0] if subject.present?
+      end
+    end
+
+    batch_ids = @last_done_session_info.keys
+    all_batches ||= Learning::Batch::OpBatch.where(id: batch_ids)
+
+    company_id = []
+    all_batches.each {|b| company_id << b.company_id}
+
+    @company = Common::ResCompany.where(:id => company_id)
+    @batches = User::OpenEducat::OpTeachersService.filter_batch @teacher, all_batches, params
+    @batch_students = Learning::Batch::OpStudentCourse.where(batch_id: batch_ids).all.group(:batch_id).count
+    @render = params[:render]
+
+    data = []
+    @batches.each do |b|
+      data << {
+        id: b.id || '',
+        code: b.code || '',
+        name: b.name || '',
+        start_date: b.start_date,
+        end_date: b.end_date,
+        status: b.check_status,
+        student_count: b.op_student_courses.count.to_s,
+        progress: b.current_session_level
+      }
+    end
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/op_teachers/partials/teacher_classes/index' }
+    end
+  end
+
   def teacher_class_detail
     if params[:session_id].present?
       @active_session = Learning::Batch::OpSession.where(id: params[:session_id]).first

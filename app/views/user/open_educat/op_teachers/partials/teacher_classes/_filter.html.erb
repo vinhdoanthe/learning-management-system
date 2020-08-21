@@ -1,0 +1,51 @@
+<div class="col-md-4">
+  <label class="filter-title">Toàn bộ <span class="color-16BD56">Lớp học</span></label>
+</div>
+<div class="col-md-3">
+  <div class='fl_wrap m-t-0 populated'>
+    <label class='fl_label' for='rf_name'>Lọc theo:</label>
+    <select class='custom-select form-control-filters' id='filter_type'>
+      <option value='all' selected> Tất cả</option>
+      <option value="true">Đang diễn ra</option>
+      <option value="false">Đã hoàn thành</option>
+
+    </select>
+  </div>
+</div>
+<div class="col-md-3">
+  <div class='fl_wrap m-t-0 populated' id='date_range_pick_form'>
+    <label class='fl_label' for='rf_name'>Thời gian:</label>
+    <input type="text" id='daterange_pick' name="daterange_pick" class='custom-select form-control-filters' placeholder="" data-orientation="top" value=''>
+  </div>
+</div>
+<div class="col-md-2">
+  <div class='fl_wrap m-t-0 populated'>
+    <label class='fl_label' for='rf_name'>Cơ sở:</label>
+    <select class='custom-select form-control-filters' id='filter_company'>
+      <option value='all' selected>Tất cả</option>
+      <% company.each do |ct| %>
+        <option value="<%= ct.id %>"><%= ct.name %></option>
+      <% end %>
+    </select>
+  </div>
+</div>
+<script>
+  $('#daterange_pick').daterangepicker({
+    autoUpdateInput: false,
+  });
+
+  $('#daterange_pick').on('apply.daterangepicker', function(ev, picker) {
+    $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+  });
+  
+  $('#daterange_pick').on('cancel.daterangepicker', function(ev, picker) {
+    $(this).val('');
+  });
+  $('#daterange_pick').on('apply.daterangepicker', function (ev, picker) {
+    teacherBatchStart = picker.startDate.format('YYYY-MM-DD');
+    teacherBatchEnd = picker.endDate.format('YYYY-MM-DD');
+    $('#table_loading_homework').show();
+    $('#table_teacher_class').hide();
+    fillClassTable();
+  });
+</script>

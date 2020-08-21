@@ -1,6 +1,9 @@
 module Redeem
   class RedeemTransaction < ApplicationRecord
     self.table_name = 'redeem_transactions'
+    extend Enumerize
+
+    enumerize :status, in: RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATES
 
     belongs_to :redeem_product, class_name: 'Redeem::RedeemProduct', foreign_key: 'product_id'
     belongs_to :user, class_name: 'User::Account::User', foreign_key: 'student_id'

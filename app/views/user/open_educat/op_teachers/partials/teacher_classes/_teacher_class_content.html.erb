@@ -1,0 +1,30 @@
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th>Mã lớp</th>
+      <th>Khóa học</th>
+      <th style="text-align: center; padding-left: 20px; padding-right: 20px;">Học sinh</th>
+      <th>Thời gian</th>
+      <th>Buổi học</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="batch_list">
+    <% batches.each do |batch| %>
+      <tr class='batch_info'>
+        <td><%= batch.code %></td>
+        <td><a href="<%='/user/open_educat/op_teacher/teacher_class_detail?batch_id=' + batch.id.to_s %>"><%= batch.op_course.name %></a></td>
+        <td align='center' style="color:#0654BA"><%= batch_students[batch.id] %></td>
+        <td><%= batch.start_date.to_s + ' - ' + batch.end_date.to_s %></td>
+        <td><%= last_done_sessions[batch.id][1] %> - Level <%= last_done_sessions[batch.id][2] %></td>
+        <td align="right">
+          <% if batch.check_status %>
+            <span class="label-edit label label-primary">Đang diễn ra</span>
+          <% else %>
+            <span class="label-edit label label-stop">Đã hoàn thành</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -281,3 +281,13 @@ button {
 #toast-container {
   margin-top: 100px;
 }
+
+@keyframes loading {
+  0%   {background: #f0f2f5}
+  100% {background: #d6d6d6;}
+}
+
+.loading_div {
+  animation: loading 2s infinite;
+  animation-direction: alternate;
+}
