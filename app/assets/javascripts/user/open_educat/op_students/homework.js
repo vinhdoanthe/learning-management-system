@@ -80,8 +80,7 @@ $('document').ready(function () {
     $('#table_loading_homework').show();
     $('#homework_session_table').hide();
     course = $('#homework_course_selection').val()
-    get_homework({course: course}, '/user/open_educat/op_students/filter_course_homework'
-    )
+    get_homework({course: course}, '/user/open_educat/op_students/filter_course_homework')
   })
 
   $('#filter_homework_row').on('change', '#homework_batch_selection', function(){
@@ -89,8 +88,7 @@ $('document').ready(function () {
     $('#homework_session_table').hide();
     course = $('#homework_course_selection').val()
     batch = $('#homework_batch_selection').val() 
-    get_homework({course: course, batch: batch}, '/user/open_educat/op_students/filter_batch_homework'
-    )
+    get_homework({course: course, batch: batch}, '/user/open_educat/op_students/filter_batch_homework')
   })  
 
   $('#filter_homework_row').on('change', '#homework_subject_selection', function(){
@@ -99,8 +97,7 @@ $('document').ready(function () {
     course = $('#homework_course_selection').val()
     batch = $('#homework_batch_selection').val() 
     subject = $('#homework_subject_selection').val()
-    get_homework({course: course, batch: batch, subject: subject}, '/user/open_educat/op_students/filter_subject_homework'
-    )
+    get_homework({course: course, batch: batch, subject: subject}, '/user/open_educat/op_students/filter_subject_homework' )
   })
 
   $('.video_carousel').owlCarousel({
