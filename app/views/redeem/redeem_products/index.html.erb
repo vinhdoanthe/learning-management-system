@@ -22,7 +22,7 @@
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div class="ra-detail text-uppercase how_to_check_it">
-              <a href=""><%= t('adm.redeem.how_to_check_it') %> <span class="teky-coin-text"><%= t('reward.coin') %></span></a>
+              <a data-toggle="modal" href="#howToGetTekyCoinModal"><%= t('adm.redeem.how_to_check_it') %> <span class="teky-coin-text"><%= t('reward.coin') %></span></a>
             </div>
           </div>
         </div>
@@ -160,6 +160,23 @@
 <input type='hidden' id='active_product_size' value=''>
 <input type='hidden' id='active_product_color' value=''>
 <input type='hidden' id='active_product_amount' value=''>
+<!-- modal show how to get more -->
+  <div class="modal fade" id="howToGetTekyCoinModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><%= t('adm.redeem.how_to_check_it') %> <span class="teky-coin-text"><%= t('reward.coin') %></span></h4>
+        </div>
+        <div class="modal-body">
+          <iframe src="https://drive.google.com/file/d/1jTWBsCw_wCFxeFasCO48uolZvXoIFyby/preview" width="100%" height="600"></iframe>
+        </div>
+        <div class="modal-footer  bg-D7DFE9">
+          <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal"><%= t('button.text_ok')%></button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <div id='confirm_redeem_modal' class="modal fade" role="dialog">
 </div>
