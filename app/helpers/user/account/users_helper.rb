@@ -88,7 +88,7 @@ module User
            'title' => "#{ t('sidebar.teaching_schedule') }", 
            'right_content' => '<span class="left-badge">' << count_sessions_week('op_faculty').to_s << '</span>'
           },
-          {'path' => user_teacher_class_path, 
+          {'path' => user_open_educat_teacher_class_path, 
            'icon' => 'ico-TienDoHocTap.png',
            'title' => "#{ t('sidebar.class_list') }", 
            'right_content' => '<span class="left-badge">' << current_user.op_faculty.op_batches.uniq.count.to_s << '</span>'

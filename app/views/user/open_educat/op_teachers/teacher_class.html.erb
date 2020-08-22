@@ -1,0 +1,30 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag 'custom_js/opteacherjs.js' %>
+  <%= javascript_include_tag 'user/open_educat/op_teachers/teacher_class.js' %>
+<% end %>
+<%= stylesheet_link_tag "user/open_educat/op_teachers/teacher_class" %>
+
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h3 class="color-fff text-transform">Danh sách lớp học</h3>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+
+    <div class="panel-content">
+      <div class="" style="padding: 20px; padding-bottom: 0">
+        <div class="filter-box FlowupLabels b-b-1-869fb229" id='formBody'>
+          <div class="row" id="filter_teacher_class">
+            <%= render 'user/open_educat/shared/loadings/loading_filter_box' %>
+          </div>
+        </div>
+        <%= render 'user/open_educat/shared/loadings/loading_table_template' %>
+        <div id="table_teacher_class">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

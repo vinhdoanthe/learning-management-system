@@ -1,0 +1,7 @@
+<% if @render == '1' %>
+  $('#filter_teacher_class').html('<%= escape_javascript( render partial: 'user/open_educat/op_teachers/partials/teacher_classes/filter', locals: { company: @company} ) %>');
+<% end %>
+
+$('#table_loading_homework').hide();
+$('#table_teacher_class').show();
+$('#table_teacher_class').html('<%= escape_javascript( render partial: 'user/open_educat/op_teachers/partials/teacher_classes/teacher_class_content', locals: { batches: @batches, batch_students: @batch_students, last_done_sessions: @last_done_session_info} ) %>');

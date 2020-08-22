@@ -20,7 +20,7 @@ class Redeem::RedeemTransactionService
     transaction.product_id = product.id
     transaction.color_id = color.id
     transaction.size_id = size.id
-    transaction.status = 'new'
+    transaction.status = RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_NEW
     transaction.amount = params[:product_amount]
     transaction.total_paid = params[:product_amount].to_i * product.price
     return { type: 'danger', message: 'Không đủ Teky đồng để đổi sản phẩm' } if transaction.total_paid > user.coin

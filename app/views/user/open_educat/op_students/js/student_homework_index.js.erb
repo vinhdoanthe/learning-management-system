@@ -1,4 +1,4 @@
-$('#loading_filter_homework').hide();
+$('#loading_filter_box').hide();
 $('#filter_homework_row').html('<%= escape_javascript(render partial: "user/open_educat/op_students/partials/filter_homework_row", locals: { batch: @batch, batches: @batches, subject: @subject, subjects: @subjects, course: @course, courses: @courses } ) %> ');
 $('#table_loading_homework').hide();
 $("#homework_session_table").html('<%= escape_javascript(render partial: "user/open_educat/op_students/partials/table_homework_list", locals: { sessions: @sessions, batch: @batch, session: @session, subject: @subject } ) %>');

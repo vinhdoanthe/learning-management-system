@@ -1,6 +1,8 @@
 namespace :user do
   namespace :open_educat do
     get 'teacher_class_detail' => 'op_teachers#teacher_class_detail'
+    get 'teacher_class' => 'op_teachers#teacher_class'
+    post 'teacher_class_content' => 'op_teachers#teacher_class_content'
     post 'teacher_checkin' => 'op_teachers#teacher_checkin'
     post 'teacher_attendance' => 'op_teachers#teacher_attendance'
     post 'teaching_schedule_content' => 'op_teachers#teaching_schedule_content'

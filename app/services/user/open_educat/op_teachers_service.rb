@@ -1,5 +1,32 @@
 class User::OpenEducat::OpTeachersService
 
+  def self.filter_batch(teacher, batches, params)
+    @batches = batches
+    return [] if @batches.blank?
+
+    query = ''
+
+    if params[:active] && params[:active] != 'all'
+      if params[:active] == 'true'
+        query += "active = true AND "
+      else
+        query += "active = false AND "
+      end
+    end
+
+    query += "op_batch.company_id = #{params[:company]} AND " unless params[:company].blank? || params[:company] == 'all'
+    query = query[0..-5]
+    total_class = @batches.where(query)
+
+    if params[:start_date].present?
+      @class = total_class.where.not('start_date >= ? OR end_date <= ?', params[:end_date].to_time.utc.strftime('%Y-%m-%d'), params[:start_date].to_time.utc.strftime('%Y-%m-%d'))
+    else
+      query = "start_date >= '#{(Time.now - 1000.days).to_time.utc.strftime('%Y-%m-%d')}'"
+      @class = total_class.where(query)
+    end
+    @class.uniq
+  end
+
   def teacher_class_detail batch, session
     students = {}
     all_students = {}
