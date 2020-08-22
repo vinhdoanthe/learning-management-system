@@ -1,0 +1,27 @@
+<div class="loading" style="display: none;">
+  <div class="spinner-wrapper">
+    <span class="spinner-text" style="z-index:9999;"><i class="fa fa-fw fa-spinner fa-spin"></i> Đang tải dữ liệu</span>
+    <span class="loading-overlay"></span>
+  </div>
+</div>
+<style type="text/css">
+.loading {
+  -webkit-animation:fadein 2s;
+     -moz-animation:fadein 2s;
+       -o-animation:fadein 2s;
+          animation:fadein 2s;
+
+          background-color:#fff;
+          color: #000;
+}
+.loading-overlay {
+    opacity:0.8;
+    background-color:#000;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:9998;
+}
+</style>

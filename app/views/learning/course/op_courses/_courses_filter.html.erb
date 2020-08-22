@@ -8,7 +8,9 @@
           <ul class="dropdown-menu" id='listCategories'>
             <input class="form-control" id="filterCategory" type="text" placeholder="Search..">
             <% categs.each do |categ| %>
-              <li><%= link_to categ[1], learning_courses_by_category_path(:category_id => categ[0]), {:remote => true } %></li>
+              <li>
+                <%= link_to categ[1], learning_courses_by_category_path(:category_id => categ[0]), {:remote => true } %>
+              </li>
             <% end %>
           </ul>
         </div>

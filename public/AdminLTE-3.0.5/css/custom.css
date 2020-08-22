@@ -27,8 +27,19 @@ body {
     top: .7rem;
 }
 
-#tab-course-study-program .card-title {
-    font-weight: 500
+#tab-course-study-program .card-title {font-weight: 500;}
+
+#tab-course-study-program .list-lesson .small label, #list_course .small label {margin-bottom: .1rem;}
+
+#list_course ul.course-option{width: 100%; float: left;padding-left: 0px;}
+
+#list_course ul.course-option li {list-style: none;}
+
+#list_course ul.course-option li.cource-info-content {
+    width:calc((100% - 45px)/2);
+    float:left;
+    display: inline-block;
+    list-style: none;
 }
 
 /*** Style description for tinymce **/
@@ -224,5 +235,21 @@ hr.lms-line:after {
 }
 
 .bg-cfcfcf {background: #cfcfcf !important}
+
+#img_contain_preview {
+  padding: 4px;
+  line-height: 1.428571429;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+  width: 100% \9;
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
 
 /** END: Custom for sreen show/edit cource **/

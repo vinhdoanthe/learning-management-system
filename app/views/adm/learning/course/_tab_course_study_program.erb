@@ -6,10 +6,9 @@
     <% else%>
       <div class="admin-subject-img-thumbnail bg-cfcfcf">No image</div>
     <% end%>
-
     <h3 class="card-title" title="<%= subject[:name]%>"><%= subject[:name].to_s.truncate(150)%></h3>
     <div class="card-tools">
-      <button type="button" data-id="<%= subject[:id]%>" data-status="false" class="btn btn-tool btn-subject-click" data-card-widget="collapse"><i class="fas fa-plus"></i>
+      <button type="button" title="<%= t('adm.learning.Click here to see the lesson')%>" data-id="<%= subject[:id]%>" data-item-collapse="0" class="btn btn-tool btn-subject-click" data-card-widget="collapse"><i class="fas fa-plus"></i>
       </button>
     </div>
   </div>
