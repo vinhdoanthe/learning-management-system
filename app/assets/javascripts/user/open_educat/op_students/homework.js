@@ -1,6 +1,13 @@
-function firstLoading(){
+function firstLoading(session_id){
+  if ((typeof session_id !== 'undefined') && session_id !== null){
+    url = '/user/open_educat/op_students/student_homework_content?session=' + session_id
+  }
+  else{
+    url = '/user/open_educat/op_students/student_homework_content'
+  }
+
   $.ajax({
-    url: '/user/open_educat/op_students/student_homework_content',
+    url: url,
     method: "GET",
     dataType: 'script'
   })
@@ -41,16 +48,15 @@ function get_homework(data, url){
     success: function(){
       select_val = $('#homework_course_selection').val()
       $('.student_course_title').html($('#homework_course_selection option[value="' + select_val.toString() + '"]').html())
-      // if (typeof session_id !== 'undefined'){
-      //   option = $('#homework_session_table').find('input[value="' + session_id +'"]').parent().find('a')
-      //   if(option){option.trigger('click');}
-      // }
     }
   })
 }
 
 $('document').ready(function () {
-  firstLoading();
+  let url_string = window.location.href
+  let url = new URL(url_string);
+  let session_id = url.searchParams.get("session");
+  firstLoading(session_id);
   active_batch = $('input[name="active_batch"]').val();
   active_subject = $('input[name="active_subject"]').val();
 
@@ -178,4 +184,9 @@ $('document').ready(function () {
     $('#homework_tab2_new').addClass('active in')
     $('#homework_tab1').removeClass('active')
   }
+
+  $('#homework_session_table').on('click', '.student_homework_view', function(){
+    session_id = $(this).data('session')
+    window.location.href = '/learning/view_question?session_id=' + session_id
+  })
 })
