@@ -9,14 +9,13 @@
   def filters
 
     # Danh sach
-    puts "FORM: "
-    puts params[:active]
-    
+    #puts "FORM: "
+    #puts params[:active]    
     #binding.pry
 
     @list_course = Learning::Course::OpCoursesService.get_courses(params[:keywords].to_s.strip, params[:active])
 
-    render partial: 'adm/learning/course/list_course'    
+    render partial: 'adm/learning/course/list_course'
   end
 
   # Danh sach khoa hoc
@@ -144,7 +143,16 @@
         if course_description.update(description: params[:frm_course][:description]) && course_update
           
           if params[:frm_course][:thumbnail].present?
-            course.thumbnail.attach(params[:frm_course][:thumbnail])
+
+            original_filename = params[:frm_course][:thumbnail].original_filename
+            file_content_type = params[:frm_course][:thumbnail].content_type
+
+            if file_content_type == 'image/jpeg' or file_content_type == 'image/png'
+              course.thumbnail.attach(params[:frm_course][:thumbnail])
+            else
+              flash[:danger] = t("adm.learning.The image file format should be jpg or png")
+            end
+            
           end
 
           flash[:success] = t("adm.The item was updated successfully")

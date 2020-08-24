@@ -8,7 +8,6 @@
     <% end%>
     <h3 class="card-title" title="<%= subject[:name]%>"><%= subject[:name].to_s.truncate(150)%></h3>
     <div class="card-tools">
-
       <button
         type="button"
         class="btn btn-info btn-xs btn-xs btn-subject-upload"
@@ -18,7 +17,7 @@
         data-id="<%= subject[:id]%>"
         data-title="<%= subject[:name].to_s%>"
         data-target="#remoteModalPhoto"><i class="fas fa-photo-video"></i> <%= t('button.Upload photo')%></button>
-      <button type="button" data-toggle="tooltip" title="<%= t('adm.learning.Click here to see the lesson')%>" data-id="<%= subject[:id]%>" data-item-collapse="0" class="btn btn-tool btn-default btn-xs btn-subject-click" data-card-widget="collapse"><i class="fas fa-plus"></i> Xem bài học
+      <button type="button" data-toggle="tooltip" title="<%= t('adm.learning.Click here to see the lesson')%>" data-id="<%= subject[:id]%>" data-item-collapse="0" class="btn btn-tool btn-default btn-xs btn-subject-click" data-card-widget="collapse"><i class="fas fa-plus"></i> <%= t("adm.learning.See lesson")%>
       </button>
     </div>
   </div>

@@ -33,12 +33,18 @@
   
   </div>
 </div>
-<script type="text/javascript">
-  
-  //$('#content_loading').hide();
 
+<style type="text/css">
+.course_name {
+    width:calc(100% - 130px - 30%)
+}
+</style>
+
+<script type="text/javascript">
+
+//$('#content_loading').hide();
   //$('#content_loading').show();
-  $('#list_course').html('');
+  $('#list_course').html(null);
 
   $.ajax({
     type: "POST",
@@ -51,10 +57,10 @@
     }
   });
   
-  $('.btn-search').on("click",function(e) {
+$('.btn-search').on("click",function(e) {    
     
     $('#content_loading').show();
-    $('#list_course').html('');
+    $('#list_course').html(null);
     $.ajax({
       type: "POST",
       url: '<%= adm_learning_course_filters_path%>',
@@ -65,5 +71,6 @@
         $('#content_loading').hide();
       }
     });
-  });
+});
+
 </script>
