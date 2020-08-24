@@ -4,6 +4,7 @@
     <thead>
       <th>ID</th>
       <th>Name</th>
+      <th>Code</th>
       <th>Images</th>
       <th>Price</th>
       <th>Description</th>
@@ -16,6 +17,7 @@
         <tr>
           <th><%= product.id %></th>
           <td><%= product.name %></td>
+          <td><%= product.code %></td>
           <td>
             <% if product.images.attached? %>
               <%= image_tag(product.images.first.variant(resize_to_limit: [142, 106])) %>

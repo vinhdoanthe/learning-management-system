@@ -1,3 +1,7 @@
+include RewardConstants::Type
+include RewardConstants::DefaultUsers
+include RewardConstants::Factor
+
 class User::Reward::CoinStarsService
   def self.get_transactions params, user
     User::Reward::CoinStarTransaction.where(give_to: user.id)
@@ -7,8 +11,8 @@ class User::Reward::CoinStarsService
 
   def redeem_coin_transaction coinstarable, student_user_id, amount
     ActiveRecord::Base.transaction do
-      create_coin_star_transaction coinstarable, student_user_id, 0, amount, 'coin'
-      update_coin_star_user student_user_id, amount, 'coin'
+      create_coin_star_transaction coinstarable, student_user_id, 0, amount, TEKY_COIN
+      update_coin_star_user student_user_id, amount, TEKY_COIN
     end
   end
 
@@ -19,14 +23,14 @@ class User::Reward::CoinStarsService
     ActiveRecord::Base.transaction do
       if setting.is_add_star
         amount = setting.star
-        create_coin_star_transaction coinstarable, student_user_id, give_by, amount, 'star'
-        update_coin_star_user student_user_id, amount, 'star'
+        create_coin_star_transaction coinstarable, student_user_id, give_by, amount, TEKY_STAR
+        update_coin_star_user student_user_id, amount, TEKY_STAR
       end
 
       if setting.is_add_coin
         amount = setting.coin
-        create_coin_star_transaction coinstarable, student_user_id, give_by, amount, 'coin'
-        update_coin_star_user student_user_id, amount, 'coin'
+        create_coin_star_transaction coinstarable, student_user_id, give_by, amount, TEKY_COIN
+        update_coin_star_user student_user_id, amount, TEKY_COIN
       end
     end
 
@@ -43,12 +47,20 @@ class User::Reward::CoinStarsService
   end
 
 
+  def cashback_cancel_redeem_transaction transaction, admin_user
+    # TODO: need to update to user real admin_user
+
+    create_coin_star_transaction transaction, transaction.student_id, SYSTEM_USER, transaction.total_paid, TEKY_COIN 
+
+    update_coin_star_user transaction.student_id, transaction.total_paid, TEKY_COIN
+  end
+
   def update_coin_star_user user_id, amount, type
     user = User::Account::User.where(id: user_id).first
     
-    if type == RewardConstants::Type::TEKY_COIN
+    if type == TEKY_COIN
       user.coin = user.coin.to_i + amount
-    elsif type == RewardConstants::Type::TEKY_STAR
+    elsif type == TEKY_STAR
       user.star = user.star.to_i + amount
     end
 

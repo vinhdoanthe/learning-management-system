@@ -56,10 +56,10 @@ class Adm::Redeem::RedeemProductsController < ApplicationController
     end
 
     def create_params
-      params.permit(:name, :price, :description, :category_id, :brand_id, :images => [])
+      params.permit(:name, :code, :price, :description, :category_id, :brand_id, :images => [])
     end
 
     def edit_params
-      params.permit(:name, :price, :description, :category_id, :brand_id, :images => [])
+      params.permit(:name, :code, :price, :description, :category_id, :brand_id, :images => [])
     end
 end

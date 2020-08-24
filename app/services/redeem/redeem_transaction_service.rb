@@ -1,3 +1,7 @@
+include RedeemConstants::TransactionState
+include RedeemConstants::ProductItem
+include RedeemConstants::Action
+
 class Redeem::RedeemTransactionService
   def create_transaction params, user
     size = Redeem::RedeemProductSize.where(id: params[:product_size]).first
@@ -20,7 +24,7 @@ class Redeem::RedeemTransactionService
     transaction.product_id = product.id
     transaction.color_id = color.id
     transaction.size_id = size.id
-    transaction.status = RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_NEW
+    transaction.status = REDEEM_TRANSACTION_STATE_NEW
     transaction.amount = params[:product_amount]
     transaction.total_paid = params[:product_amount].to_i * product.price
     return { type: 'danger', message: 'Không đủ Teky đồng để đổi sản phẩm' } if transaction.total_paid > user.coin
@@ -51,21 +55,21 @@ class Redeem::RedeemTransactionService
     post
   end
 
-  def update_transaction transaction, status
-    if status == 'cancel'
-      type = 1
-      update_coin transaction, type
-    end
+  # def update_transaction transaction, status
+  #   if status == 'cancel'
+  #     type = 1
+  #     update_coin transaction, type
+  #   end
 
-    if transaction.update!(status: status)
-      post = create_redeem_post transaction, user
+  #   if transaction.update!(status: status)
+  #     post = create_redeem_post transaction, user
 
-      if status == 'done'
-        SocialCommunity::Feed::UserPostsService.create_multiple post.id, [user.id]
-      end
-    end
-    true
-  end
+  #     if status == 'done'
+  #       SocialCommunity::Feed::UserPostsService.create_multiple post.id, [user.id]
+  #     end
+  #   end
+  #   true
+  # end
 
   def check_product_item product, size, color, amount
     return nil if size.blank? || color.blank?
@@ -78,6 +82,92 @@ class Redeem::RedeemTransactionService
       return nil
     end
   end
+  
+  def cancel_transaction transaction, note, admin_user
+    # release product items
+    # update transaction state, admin_note
+    # update user's coin, create cashback coin_start_transaction
+    # create notification
+    # send email
+    result = {}
+   
+    if transaction.status_done? || transaction.status_cancel? 
+      result[:success] = false
+      return result
+    end
+    
+    items = transaction.redeem_product_items.where(:state => STATE_LOCKED)
+    
+    c_s_transaction_service = User::Reward::CoinStarsService.new
+    if c_s_transaction_service.cashback_cancel_redeem_transaction transaction, admin_user
+
+      ActiveRecord::Base.transaction do
+        items.update(:transaction_id => nil, :state => STATE_AVAILABLE)
+        transaction.update(:status => REDEEM_TRANSACTION_STATE_CANCEL, :admin_note => note)
+        
+        result = {
+          :success => true,
+          :transaction_status => REDEEM_TRANSACTION_STATE_CANCEL,
+          :transaction_id => transaction.id,
+          :note => note,
+          :show_url => Rails.application.routes.url_helpers.adm_redeem_redeem_transactions_show_path(transaction.id)
+        }
+        # result[:success] = true
+        # result[:transaction_status] = 
+        # result[:transaction_id] = transaction.id
+        # result[:show_url] = 
+      rescue Exception => exception
+        result[:success] = false
+        result[:message => exception.inspect]
+      end
+
+      if result[:success]
+        # create notification
+        redeem_post = transaction.post_activity&.sc_post
+        redeem_post.notify :users, key: CANCEL_TRANSACTION
+        
+        # TODO: send email
+      end
+      
+      return result
+    else
+      result[:success] = false
+      return result
+    end
+  end
+  
+  def approve_transaction transaction, note, admin_user
+    # update transaction: state, note
+    # create notification
+    # send email
+    
+    result = {}
+
+    if !transaction.status_new?
+      result[:success] = false
+      return result
+    end
+
+    if transaction.update(:status => REDEEM_TRANSACTION_STATE_READY, :admin_note => note)
+        redeem_post = transaction.post_activity&.sc_post
+        redeem_post.notify :users, key: APPROVE_TRANSACTION
+
+        # TODO: send email
+        
+        result = {
+          :success => true,
+          :transaction_type => REDEEM_TRANSACTION_STATE_READY,
+          :transaction_id => transaction.id,
+          :note => note,
+          :show_url => Rails.application.routes.url_helpers.adm_redeem_redeem_transactions_show_path(transaction.id),
+          # :complete_url => Rails.application.routes.url_helpers.adm_redeem_redeem_transactions_complete_path(transaction.id)
+        } 
+    else
+      result[:success] = false 
+    end
+
+    return result
+  end
 
   private
 
@@ -89,4 +179,6 @@ class Redeem::RedeemTransactionService
     amount = transaction.total_paid * type
     User::Reward::CoinStarsService.new.redeem_coin_transaction transaction, transaction.student_id, amount
   end
+
+
 end

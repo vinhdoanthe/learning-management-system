@@ -13,4 +13,5 @@ class SocialCommunity::Feed::RedeemPostsService < SocialCommunity::Feed::PostsSe
 
     subscribed_users
   end
+
 end

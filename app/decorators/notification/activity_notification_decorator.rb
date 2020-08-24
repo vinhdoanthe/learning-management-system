@@ -50,23 +50,25 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
     transaction = activity_post.activitiable
     display_html = ''
 
+    # TODO: update notification display
     case key
     when SC_REDEEM_POST_CREATE
       begin
-        created_user = User::Account::User.where(id: transaction.student_id).first
-        created_str = created_user.present? ? created_user.student_name : ''
-        product = transaction.redeem_product
-        target_str = product.present? ? product.name : ''
-        if transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_NEW 
-          action_str = I18n.t('notification.redeem_product_post.create')
+        # created_user = User::Account::User.where(id: transaction.student_id).first
+        # created_str = created_user.present? ? created_user.student_name : ''
+        # product = transaction.redeem_product
+        # target_str = product.present? ? product.name : ''
+        
+        # if transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_NEW 
+          # action_str = I18n.t('notification.redeem_product_post.create')
           display_html = "Yêu cầu đồi quà thành công"
-        elsif transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_READY
-          display_html = "Yêu cầu đổi quà đã được chấp nhận"
-        elsif transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_DONE
-          display_html = "#{ created_str } #{ action_str } #{ target_str } #{ I18n.t('notification.redeem_product_post.success') }"
-        elsif transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_CANCEL
-          display_html = "Yêu cầu đổi quà của con bị hủy bỏ. TEKY Đồng của con đã được cập nhật lại. Con hãy trọn lại quà để đổi nhé!" 
-        end
+        # elsif transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_READY
+        #   display_html = "Yêu cầu đổi quà đã được chấp nhận"
+        # elsif transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_DONE
+        #   display_html = "#{ created_str } #{ action_str } #{ target_str } #{ I18n.t('notification.redeem_product_post.success') }"
+        # elsif transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_CANCEL
+        #   display_html = "Yêu cầu đổi quà của con bị hủy bỏ. TEKY Đồng của con đã được cập nhật lại. Con hãy trọn lại quà để đổi nhé!" 
+        # end
       end
     when SC_REDEEM_TRANSACTION_CANCEL
       begin

@@ -1,0 +1,15 @@
+<% if transaction.status_new? %>
+  <%= link_to 'view', adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-info" %>
+  <%= link_to 'Cancel', '#', class: 'btn btn-danger btn-cancel-transaction', "data-transaction-id": transaction.id %>
+  <%= link_to 'Approve', '#', class: 'btn btn-primary btn-approve-transaction', "data-transaction-id": transaction.id %>
+<% elsif transaction.status_ready? %>
+  <%= link_to 'view', adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-info" %>
+  <%= link_to 'Cancel', '#', class: 'btn btn-danger btn-cancel-transaction', "data-transaction-id": transaction.id %>
+  <%= link_to 'Complete', '#', class: 'btn btn-success btn-complete-transaction', "data-transaction-id": transaction.id %>
+<% elsif transaction.status_cancel? %>
+  <%= link_to 'view', adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-info" %>
+<% elsif transaction.status_done? %>
+  <%= link_to 'view', adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-info" %>
+<% else %>
+  <%= link_to 'view', adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-info" %>
+<% end %>

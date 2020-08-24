@@ -1,0 +1,10 @@
+<% if mode == 'cancel' %>
+  $('#cancelTransactionBody').html('<%= j(render :partial => 'transaction', :locals => {transaction: transaction}) %>');
+  $('#cancelTransactionBody').attr("data-transaction-id", <%= transaction.id %>);
+<% elsif mode == 'approve' %>
+  $('#approveTransactionBody').html('<%= j(render :partial => 'transaction', :locals => {transaction: transaction}) %>')
+  $('#approveTransactionBody').attr("data-transaction-id", <%= transaction.id %>);
+<% elsif mode == 'complete' %>
+  $('#completeTransactionBody').html('<%= j(render :partial => 'transaction', :locals => {transaction: transaction}) %>')
+  $('#completeTransactionBody').attr("data-transaction-id", <%= transaction.id %>);
+<% end %>

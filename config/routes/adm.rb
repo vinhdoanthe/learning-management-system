@@ -56,5 +56,12 @@ namespace :adm do
     resources :redeem_product_categories
     resources :redeem_product_sizes
     resources :redeem_product_colors
+    namespace :redeem_transactions do
+      get '', action: :index
+      get 'show/:id', action: :show, as: 'show'
+      post 'cancel/:id', action: :cancel, as: 'cancel'
+      post 'approve/:id', action: :approve, as: 'approve'
+      post 'complete/:id', action: :complete, as: 'complete'
+    end
   end
 end

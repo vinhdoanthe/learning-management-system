@@ -1,0 +1,56 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag('adm/redeem/redeem_transactions') %>
+<% end %>
+<%= tinymce_assets %>
+<h1>List Transactions</h1>
+<div class="table-responsive">
+  <table class="table table-condensed">
+    <thead>
+      <th>ID</th>
+      <th>Student</th>
+      <th>Product</th>
+      <th>Color</th>
+      <th>Size</th>
+      <th>Amount</th>
+      <th>Total Paid</th>
+      <th>Status</th>
+      <th>Note</th>
+      <th>Ordered date</th>
+    </thead>
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <tr id="transaction-row-<%=transaction.id%>">
+          <th><%= transaction.id %></th>
+          <td><%= transaction.user&.full_name %></td>
+          <td><%= transaction.redeem_product&.name %></td>
+          <td><%= transaction.redeem_product_color&.name %></td>
+          <td><%= transaction.redeem_product_size&.name %></td>
+          <td><%= transaction.amount %></td>
+          <td><%= transaction.total_paid %></td>
+          <td class="transaction-status"><%= transaction.status %></td>
+          <td><p class="transaction-note"><%= transaction.admin_note&.html_safe %></p></td>
+          <td><%= transaction.created_at %></td>
+          <td class="transaction-actions">
+            <%= render :partial => "actions", :locals => {transaction: transaction} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<!-- cancel transaction confirm modal -->
+<div id="cancelTransactionModal" class="modal" tabindex="-1" role="dialog" data-transaction-id="">
+  <%= render 'cancel_transaction' %>
+</div>
+
+<!-- approve transaction confirm modal -->
+<div id="approveTransactionModal" class="modal" tabindex="-1" role="dialog" data-transaction-id="">
+<%= render 'approve_transaction' %>
+</div>
+
+<!-- complete transaction confirm modal -->
+<div id="completeTransactionModal" class="modal" tabindex="-1" role="dialog" data-transaction-id="">
+<%= render 'complete_transaction' %>
+</div>
+<%= tinymce :simple %>
