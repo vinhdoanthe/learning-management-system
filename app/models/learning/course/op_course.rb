@@ -21,6 +21,8 @@ module Learning
 
       has_one_attached :thumbnail
       has_many_attached :equipment_logos
+
+      #has_one :res_users, foreign_key: :id
       
       def link
         learning_show_course_path(self.id)

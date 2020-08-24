@@ -14,6 +14,14 @@ module Learning
           return course_description.description
         end
       end
+
+      # get status of course
+      def get_html_status(status)
+        
+        return status  == true ? '<span class="badge badge-success">' + t("button.Active") + '</span>' : '<span class="badge badge-warning">' + t("button.Unactive") + '</span>'        
+
+      end #end functions
+
     end
   end
 end

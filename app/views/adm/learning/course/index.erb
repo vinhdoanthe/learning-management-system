@@ -10,12 +10,12 @@
       <div class="col-12">
         <div class="table-responsive-1 p-0">
           <%= render 'partials/content_loading' %>
-          <table class="table table-head-fixed table-hover table-striped table-sm">
+          <table class="table table-head-fixed table-hover table-sm table-responsive-sm">
             <thead>
               <tr>
                 <th style="width: 40px;"><%= t('adm.Order')%></th>
                 <th><%= t('adm.course.name')%></th>
-                <th class="text-center" style="width:15%"><%= t('button.Status')%></th>
+                <th class="text-center" style="width:15%"><%= t('adm.homework_list.state')%></th>
                 <th class="text-center" style="width:15%"><%= t('button.update')%></th>
                 <th class="text-center" style="width:90px;"><%= t('admin.actions.title')%></th>
               </tr>
@@ -35,20 +35,34 @@
 </div>
 <script type="text/javascript">
   
-  $('#content_loading').hide();
+  //$('#content_loading').hide();
+
+  //$('#content_loading').show();
+  $('#list_course').html('');
+
+  $.ajax({
+    type: "POST",
+    url: '<%= adm_learning_course_filters_path%>',
+    async: false,
+    data: {keywords: $('#filters_keywords').val(), active: $('#filters_active').val()},
+    success:function(data){
+      $('#list_course').html(data);
+      $('#content_loading').hide();
+    }
+  });
   
   $('.btn-search').on("click",function(e) {
     
     $('#content_loading').show();
-    $('#list_course').html(null);
+    $('#list_course').html('');
     $.ajax({
       type: "POST",
       url: '<%= adm_learning_course_filters_path%>',
       async: false,
-      data: {keywords: $('#filters_keywords').val()},
+      data: {keywords: $('#filters_keywords').val(), active: $('#filters_active').val()},
       success:function(data){
-        $('#content_loading').hide();
         $('#list_course').html(data);
+        $('#content_loading').hide();
       }
     });
   });

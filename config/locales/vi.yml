@@ -23,6 +23,7 @@ vi:
     cancel: "Huỷ"
     Close: "Đóng"
     back: "Quay lại"
+    Back to list: "Về danh sách"
     reply: 'Trả lời'
     back_to_my_threads: 'Quay lại danh sách câu hỏi'
     apply: "Áp dụng"
@@ -45,6 +46,8 @@ vi:
     Completed: "Hoàn thành"
     Back to courses: "Quay lại toàn bộ khoá học"
     Send review: "GỬI ĐÁNH GIÁ"
+    Active: "Hoạt động"
+    Unactive: "Không hoạt động"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"
@@ -408,6 +411,15 @@ vi:
       Example prerequisites: "Ví dụ: Mạng internet tốc độ cao"
       placeholder_short_description: "Nhập nội dung mô tả ngắn (tối đa 255 ký tự)"
       Not mull and maxlength 255 char: "Không được để trống và tối đa 255 ký tự"
+      Photo of Subject: "Ảnh học phần"
+      Please enter the subject image size: "Chọn ảnh có kích thước 350x208"
+      Photo of Lesson: "Ảnh các bài học"
+      Subject image note: "Ảnh được đánh số trùng với Số thứ tự của bài học và có kích thước 130x80 hoặc 260x160"
+      Update photo Subject successful.: "Cập nhật ảnh Học phần thành công."
+      This Subject has no lesson.: "Học phần này chưa có Bài học."
+      You do not choose to upload pictures for the lesson: "Bạn không chọn upload ảnh cho bài học."
+      Upload photo Lessons successful: "Cập ảnh cho %{total_photo_lesson} Bài học thành công."
+      Upload photo Lessons fail: "Ảnh bạn chọn cho Bài học chưa phù hợp. Hãy xem lại các yếu tố sau:<br>-Tên file ảnh<br>-Phải là file ảnh"
     Note: "Ghi chú"
     Order: "STT"
     Code: "Mã"

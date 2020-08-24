@@ -19,41 +19,90 @@ class Learning::Course::OpCoursesService
   # Lay param form
   def self.form_parameter(param_form, request)
 
-    # Khoi tao cac gia tri ban dau
-    keywords = ''
-    page        = !param_form[:page].nil? ? param_form[:page] : 1 ;
+    keywords  = ''
+    active    = '-1'
+    page      = !param_form[:page].nil? ? param_form[:page] : 1 ;
 
     #if request.method == 'POST'
     if (!param_form[:filters_course].nil?)        
       keywords = param_form[:filters_course][:keywords].to_s.strip
+      active   = param_form[:filters_course][:active]
     end
 
     return {
       'keywords': keywords,
+      'active': active,
       'page': page
     }
   end
 
   # Get list course
-  def self.get_courses(keywords)
+  def self.get_courses(keywords, status)
 
-    if keywords.empty?
+    sql_where = ''
+
+    puts "XXXX: "
+    puts status
+
+    if !keywords.empty?
+      sql_where = sql_where + "(op_course.name like '%#{keywords}%' OR op_course.code like '%#{keywords}%') "
+    end
+
+    if status != '-1'
+      
+      status = status.to_s.to_boolean
+
+      if sql_where == ''
+        sql_where = sql_where + "op_course.active = '#{status}'"      
+      else
+        sql_where = sql_where + " AND op_course.active = '#{status}'"
+      end    
+    end
+    
+    if sql_where == ''
+      
       courses = Learning::Course::OpCourse
-        .joins('INNER JOIN op_subject ON op_subject.course_id=op_course.id')
-        .joins('INNER JOIN res_users ON res_users.id = op_course.write_uid')
-        .select("op_course.id as course_id,op_course.code, op_course.name, op_course.section, op_course.active, count(op_subject.id) as number_subject, op_course.write_date as update_at, res_users.login as user_name, op_course.suitable_age, op_course.duration, op_course.prerequisites, op_course.equipments")
-        .group('op_course.id, res_users.login')
-        .order("op_course.id, op_course.write_date DESC, op_course.section")
-        .includes(thumbnail_attachment: :blob)
+        .joins(:op_subjects)
+        .select(:id,:code, :name, :section, :active,:write_date, :suitable_age, :duration, :prerequisites, :equipments)
+        .select("count(op_subject.id) as number_subject")
+        .group(:id)
+        .order("write_date DESC")
+        .order(:id)    
     else
       courses = Learning::Course::OpCourse
-        .joins('INNER JOIN op_subject ON op_subject.course_id=op_course.id')
-        .joins('INNER JOIN res_users ON res_users.id = op_course.write_uid')
-        .select("op_course.id as course_id,op_course.code, op_course.name, op_course.section, op_course.active, count(op_subject.id) as number_subject, op_course.write_date as update_at, res_users.login as user_name, op_course.suitable_age, op_course.duration, op_course.prerequisites, op_course.equipments")
+        .joins(:op_subjects)
+        .select(:id,:code, :name, :section, :active,:write_date, :suitable_age, :duration, :prerequisites, :equipments)
+        .select("count(op_subject.id) as number_subject")
+        .where("#{sql_where}")
+        .group(:id)
+        .order("write_date DESC")
+        .order(:id)     
+    end
+
+  end
+
+  # Get list course
+  def self.get_courses_2(keywords)
+
+    if keywords.empty?
+
+      courses = Learning::Course::OpCourse
+        .joins(:op_subjects)
+        .select(:id,:code, :name, :section, :active,:write_date, :suitable_age, :duration, :prerequisites, :equipments)
+        .select("count(op_subject.id) as number_subject")
+        .group(:id)
+        .order("write_date DESC")
+        .order(:id)
+    
+    else
+      courses = Learning::Course::OpCourse
+        .joins(:op_subjects)
+        .select(:id,:code, :name, :section, :active,:write_date, :suitable_age, :duration, :prerequisites, :equipments)
+        .select("count(op_subject.id) as number_subject")
         .where("op_course.name like '%#{keywords}%' OR op_course.code like '%#{keywords}%'")
-        .group('op_course.id, res_users.login')
-        .order("op_course.id, op_course.write_date DESC, op_course.section")
-        .includes(thumbnail_attachment: :blob)
+        .group(:id)
+        .order("write_date DESC")
+        .order(:id)
     end
 
   end
