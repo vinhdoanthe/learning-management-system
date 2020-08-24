@@ -1,4 +1,13 @@
 <div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+		<div id="img_contain_preview" style="margin-bottom: 15px;">
+          <% if @course.thumbnail.attached? %>
+          <img id="blah" align="middle"  src="<%= url_for @course.thumbnail%>" alt="" style="width: 100%; max-height: 249px; object-position: center; object-fit: cover;"/>
+          <% else %>
+          <img id="blah" align="middle"  src="/global/images/course_thumb_preview.png" alt="" style="width: 200px; max-height: 249px;"/>
+          <% end%>
+        </div>
+	</div>
 	<div class="col-md-6">
 		<div class="row">
 			<label class="col-sm-3 control-label"><%= t('adm.course.course_name')%>:</label>
@@ -27,7 +36,7 @@
 			<div class="col-sm-9"><%= @course.equipments%></div>
 		</div>
 		<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.Conditions learning')%>:</label>
-			<div class="col-sm-9"><span class="text-danger text-bold"><%= @course.prerequisites%></span></div>
+			<div class="col-sm-9"><%= @course.prerequisites%></div>
 		</div>
 	</div>
 </div>

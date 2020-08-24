@@ -1,6 +1,5 @@
 <%= tinymce_assets %>
 <%= javascript_include_tag 'tinymce/langs/vi_VN.js' %>
-
 <form id="frm_course" class="form-horizontal" method="post" action="<%= adm_learning_course_update_path%>" enctype="multipart/form-data">
 <input type="hidden" name="frm_course[course_id]" value="<%= @course.id%>">
 <div class="card">
@@ -278,10 +277,32 @@
   </div>
 </div>
 </form>
+
+<div id="remoteModalUpload" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body dynamic-content">
+        <div class="row">
+          <i class="fa fa-spinner fa-2x fa-spin text-primary" style="padding: 3px;"></i>Loading...
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "adm/learning/course/subject_upload"%>
+
 <style type="text/css">
-textarea {
-  resize: none;
-}
+  textarea {resize: none;}
 </style>
 <%= tinymce :fulleditor %>
 <script type="text/javascript">
@@ -347,6 +368,22 @@ $(document).ready(function () {
     unhighlight: function (element, errorClass, validClass) {
       $(element).removeClass('is-invalid');
     }
+  });
+
+  $("#remoteModalPhoto").on("hidden.bs.modal", function() {
+    $(this).removeData('bs.modal');
+    $("#remoteModalPhoto .modal-title").html('&nbsp;');
+    //$("#remoteModalPhoto .modal-body").html('<div class="row"><i class="fa fa-spinner fa-2x fa-spin text-primary" style="padding:3px;"></i>Loading...</div>');
+  });
+
+  $('#remoteModalPhoto').on('show.bs.modal', function (e) {
+    //var loadurl = $(e.relatedTarget).data('load-url');
+    //$(this).find('.modal-body').load(loadurl);
+  });
+
+  $('.btn-subject-upload').on("click",function(e) {
+    $('#frm_subject_id').val($(this).data("id"));
+    $("#remoteModalPhoto .modal-title").html('<%= t('learning.subject')%>: ' + $(this).data("title"));    
   });
 
 });

@@ -1,8 +1,16 @@
 <%
 	keywords 	= @param_form[:keywords].to_s
+	active 		= @param_form[:active].to_boolean
 %>
 <form name="form_filters_course" id="form_filters_course" method="post" class="form-inline" onsubmit="return false">
-  	<div class="input-group input-group-sm">
+  	<div class="form-group input-group-sm">
+		<select class="form-control" name="filters_course[active]" id="filters_active">
+        	<option value="-1" <% if active != true and active != false%> selected  <% end%> ><%= t('adm.homework_list.all_states')%></option>
+        	<option value="true"  <% if active  == true%> selected  <% end%> ><%= t("button.Active")%></option>
+        	<option value="false"  <% if active == false%> selected  <% end%> ><%= t("button.Unactive")%></option>
+        </select>		
+	</div>
+  	<div class="form-group input-group input-group-sm">
   		<input type="text" name="filters_course[keywords]" id="filters_keywords" placeholder="<%= t('adm.Name or Code')%>" class="form-control float-right" value="<%= keywords%>" />
 		<span class="input-group-append">
 			<button type="button" class="btn btn-default btn-search"><i class="fas fa-search"></i></button>

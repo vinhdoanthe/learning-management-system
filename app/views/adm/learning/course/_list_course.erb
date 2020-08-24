@@ -2,13 +2,13 @@
 <tr>
   <td class="text-center"><%= (index + 1)%></td>
   <td>
-    <%= link_to(ct[:name], adm_learning_course_show_path(ct[:course_id]))%>
+    <%= link_to(ct[:name], adm_learning_course_show_path(ct[:id]))%>
     <ul class="course-option">
         <li>
-          <% if !ct[:thumbnail].nil? && ct[:thumbnail].attached? %>
-            <%= image_tag url_for(ct[:thumbnail]),  class: 'admin-subject-img-thumbnail'%>
+          <% if !ct.thumbnail.nil? && ct.thumbnail.attached? %>
+            <%= image_tag url_for(ct.thumbnail),  class: 'admin-subject-img-thumbnail'%>
           <% else%>
-            <div class="admin-subject-img-thumbnail bg-cfcfcf">No image</div>
+            <div class="admin-subject-img-no-thumbnail bg-cfcfcf">No image</div>
           <% end%>
         </li>
         <li class="cource-info-content">
@@ -25,20 +25,15 @@
     </ul>
   </td>
   <td class="text-center">
-    <% if ct[:active] == true %>
-      <span class="badge badge-success">Active</span>
-    <% else%>
-      <span class="badge badge-warning">Unactive</span>
-    <% end%>
+    <%= get_html_status(ct[:active]).html_safe%>
   </td>
   <td class="text-center">                      
-    <div class="small"><%= ct[:update_at].strftime('%d-%m-%Y %H:%M:%S').to_s%></div>
-    <div class="small"><%= ct[:user_name]%></div>
+    <div class="small"><%= ct[:write_date].strftime('%d-%m-%Y %H:%M:%S').to_s%></div>
   </td>
   <td class="text-center">
     <div class="btn-group align-items-sm-center">
-      <a href="<%= adm_learning_course_show_path(ct[:course_id])%>" class="btn btn-default btn-xs"><i class="fa fa-eye font-weight-normal"></i></a>
-      <a href="<%= adm_learning_course_edit_path(ct[:course_id])%>"  class="btn btn-default btn-xs"><i class="fa fa-edit font-weight-normal"></i></a>
+      <a href="<%= adm_learning_course_show_path(ct[:id])%>" class="btn btn-default btn-xs"><i class="fa fa-eye font-weight-normal"></i></a>
+      <a href="<%= adm_learning_course_edit_path(ct[:id])%>"  class="btn btn-default btn-xs"><i class="fa fa-edit font-weight-normal"></i></a>
     </div>                      
   </td>
 </tr>

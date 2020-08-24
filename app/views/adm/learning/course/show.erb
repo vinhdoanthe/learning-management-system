@@ -3,10 +3,7 @@
     <div class="card">
       <div class="card-header">
           <h3 class="card-title"><label><%= t('adm.course.course_detail')%>:</label> <%= @course.name%></h3>
-          <div class="card-tools">
-            <a href="<%= adm_learning_course_path%>" class="btn btn-default btn-sm bg-olive"><i class="fas fa-angle-double-left"></i> <%= t('button.back')%></a>
-            <a href="<%= adm_learning_course_edit_path(@course.id)%>" class="btn btn-default btn-sm bg-olive"><i class="fas fa-pencil-alt"></i> <%= t('button.Edit')%></a>
-          </div> 
+          <%= render "adm/learning/course/list_course_button_sreen_show"%>
       </div>
       <div class="card-header p-0 pt-1 border-bottom-0">
         <ul class="nav nav-tabs pull-right" id="custom-tabs-three-tab" role="tablist">          
@@ -32,21 +29,16 @@
         </div>       
       </div>
       <div class="card-footer clearfix text-right">
-        <div class="card-tools">
-            <a href="<%= adm_learning_course_path%>" class="btn btn-default btn-sm bg-olive"><i class="fas fa-angle-double-left"></i> <%= t('button.back')%></a>
-            <a href="<%= adm_learning_course_edit_path(@course.id)%>" class="btn btn-default btn-sm bg-olive"><i class="fas fa-pencil-alt"></i> <%= t('button.Edit')%></a>
-        </div>
+        <%= render "adm/learning/course/list_course_button_sreen_show"%>
       </div>
     </div>
   </div>
 </div>
-
+<%= render "adm/learning/course/subject_upload"%>
 <script type="text/javascript">
-
   $('.btn-subject-click').on("click",function(e) {
 
     var subject_id = $(this).data("id");
-
     if (subject_id && ($(this).data("item-collapse") == 0)) {
       $('#table-subject-' + subject_id).html(null);
       $.ajax({
@@ -64,4 +56,14 @@
     }
   });
 
+  $("#remoteModalPhoto").on("hidden.bs.modal", function() {
+    $(this).removeData('bs.modal');
+    $("#remoteModalPhoto .modal-title").html('&nbsp;');
+    //$("#remoteModalPhoto .modal-body").html('<div class="row"><i class="fa fa-spinner fa-2x fa-spin text-primary" style="padding:3px;"></i>Loading...</div>');
+  });
+
+  $('.btn-subject-upload').on("click",function(e) {
+    $('#frm_subject_id').val($(this).data("id"));
+    $("#remoteModalPhoto .modal-title").html('<%= t('learning.subject')%>: ' + $(this).data("title"));    
+  });
 </script>
