@@ -7,7 +7,7 @@ class Learning::Batch::SessionStudentRewardsController < ApplicationController
     if result.blank?
       render json: { type: 'success', message: 'Khen thưởng thành công!' }
     else
-      render json: { type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau' }
+      render json: { type: 'danger', message: result }
     end
   end
 end
