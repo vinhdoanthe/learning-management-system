@@ -43,6 +43,7 @@ namespace :social_community do
   get 'teacher_student_projects' => 'sc_student_projects#teacher_student_projects'
   get 'edit_student_project' => 'sc_student_projects#edit_student_project'
   post 'update_student_project' => 'sc_student_projects#update_student_project'
+  post 'delete_student_project' => 'sc_student_projects#delete_student_project'
 
   get 'home_feeds' => 'dashboards#home_feeds', as: 'home_feeds'
   get 'new_feeds' => 'dashboards#new_feeds', as: 'new_feeds'

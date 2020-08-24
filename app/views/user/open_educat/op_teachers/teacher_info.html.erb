@@ -24,9 +24,9 @@
             <li class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Thông tin chung</a></li>
           </ul>
           <div class="tab-content ">
-            <%= render :partial => "info", :locals => {:teacher => teacher, :res_partner => res_partner} %>
-            <%= render "evaluation" %>
-            <%= render "movements" %>
+            <%= render :partial => "user/open_educat/op_teachers/partials/teacher_info/info", :locals => {:teacher => teacher, :res_partner => res_partner} %>
+            <%= render "user/open_educat/op_teachers/partials/teacher_info/evaluation" %>
+            <%= render "user/open_educat/op_teachers/partials/teacher_info/movements" %>
           </div>
         </div>
       </div>

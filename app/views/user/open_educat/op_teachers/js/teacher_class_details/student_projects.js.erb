@@ -1,1 +1,1 @@
-$("#student_projects").html("<%= escape_javascript(render partial: 'user/open_educat/shared/student_projects/student_projects', locals: { subject_student_projects: subject_student_projects, subjects: subjects } ) %>");
+$("#student_projects").html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/partials/teacher_class_details/student_projects', locals: { student_projects: student_projects, subjects: subjects, students: students } ) %>");

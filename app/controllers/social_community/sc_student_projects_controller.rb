@@ -117,6 +117,28 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     @course_projects = SocialCommunity::ScStudentProject.where(course_id: params[:course_id]).page params[:page]
   end
 
+  def delete_student_project
+    result = {}
+    project_id = ''
+    project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
+
+    if project.blank?
+      result = { type: "danger", message: "Dự án không tồn tại!" }
+    elsif current_user.id != project.created_by
+      result = { type: "danger", message: "Bạn không có quyền xoá dự án này" }
+    else
+      if project.delete
+        result = { type: "success", message: "Xoá thành công!"}
+        project_id = project.id
+      end
+    end
+
+    respond_to do |format|
+      format.html
+      format.js { render 'user/open_educat/shared/student_projects/js/delete_project', locals: { result: result, project_id: project_id } }
+    end
+  end
+
   private
 
   def handling_params

@@ -9,6 +9,10 @@ module User
         return all_noti - read_noti 
       end
 
+      def teacher_company_names teacher
+        company_ids = teacher.op_sessions.pluck(:company_id).uniq
+        Common::ResCompany.where(id: company_ids).pluck(:name)
+      end
     end
   end
 end
