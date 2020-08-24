@@ -31,11 +31,11 @@ body {
 
 #tab-course-study-program .list-lesson .small label, #list_course .small label {margin-bottom: .1rem;}
 
-#list_course ul.course-option{width: 100%; float: left;padding-left: 0px;margin-top:10px;}
+ul.course-option{width: 100%; float: left;padding-left: 0px;margin-top:10px;}
 
-#list_course ul.course-option li {list-style: none;}
+ul.course-option li {list-style: none;}
 
-#list_course ul.course-option li.cource-info-content {
+ul.course-option li.cource-info-content {
     width:calc((100% - 180px)/2);
     float:left;
     display: inline-block;
@@ -223,7 +223,7 @@ hr.lms-line:after {
 
 .admin-subject-img-thumbnail {
     float: left;
-    margin-right: 5px;
+    margin-right: 10px;
     width: 150px;
     height: 89px;    
     vertical-align: bottom;
@@ -249,7 +249,7 @@ hr.lms-line:after {
 
 .admin-lesson-img-thumbnail {
     float: left;
-    margin-right: 5px;
+    margin-right: 10px;
     width: 130px;
     height: 80px;    
     vertical-align: bottom;
@@ -261,7 +261,7 @@ hr.lms-line:after {
 
 .admin-lesson-img-no-thumbnail {
     float: left;
-    margin-right: 5px;
+    margin-right: 10px;
     width: 130px;
     height: 80px;
     object-position: top; 
