@@ -125,8 +125,10 @@ $(document).ready(function(){
       method: 'POST',
       url: '/learning/reward_student',
       data: { students: students, reward_type: reward_type, session_id: session_id },
-      success: function(res){        
-	display_response_noti(res)
+      success: function(response){
+        response.forEach(function(res,index) {
+          display_response_noti(res)
+        })
       }
     })
   })

@@ -36,4 +36,5 @@ Rails.application.config.assets.precompile += %w( user/open_educat/op_students/b
 Rails.application.config.assets.precompile += %w( learning/learning.css )
 Rails.application.config.assets.precompile += %w( user/open_educat/shared/timetable.js )
 Rails.application.config.assets.precompile += %w( user/open_educat/op_teachers/teacher_class.css )
+Rails.application.config.assets.precompile += %w( user/open_educat/op_teachers/teacher_class_detail.css )
 Rails.application.config.assets.precompile += %w( user/open_educat/op_teachers/teacher_class.js )

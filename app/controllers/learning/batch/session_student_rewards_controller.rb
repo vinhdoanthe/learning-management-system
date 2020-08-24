@@ -4,10 +4,6 @@ class Learning::Batch::SessionStudentRewardsController < ApplicationController
   def reward_student
     result = Learning::Batch::SessionStudentRewardsService.new.reward_student params, current_user
 
-    if result.blank?
-      render json: { type: 'success', message: 'Khen thưởng thành công!' }
-    else
-      render json: { type: 'danger', message: result }
-    end
+    render json: result
   end
 end

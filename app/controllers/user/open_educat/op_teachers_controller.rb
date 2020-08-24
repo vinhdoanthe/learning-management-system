@@ -64,7 +64,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
       @active_subject = @active_session.op_subject
       subject_ids = @sessions.pluck(:subject_id)
       @subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level).uniq
-      @sessions = @sessions.where(subject_id: @active_subject.id)
+      @sessions = @sessions.where(subject_id: @active_subject.id).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL)
       if @active_lesson && @active_lesson.thumbnail.attached?
         @thumbnail = url_for(@active_lesson.thumbnail)
       else
@@ -75,7 +75,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
       @batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
       @course = @batch.op_course
       @faculty = @teacher
-      @sessions = @batch.op_sessions.where(faculty_id: @faculty.id).order(start_datetime: :ASC)
+      @sessions = @batch.op_sessions.where(faculty_id: @faculty.id).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC)
       @active_session = @sessions.where('start_datetime >= ?', Time.now).first
       @active_session = @sessions.last if @active_session.blank?
       classroom = Common::OpClassroom.where(id: @active_session.classroom_id).first
@@ -196,7 +196,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teaching_schedule_content
-    @sessions = @teacher.op_sessions
+    @sessions = @teacher.op_sessions.joins(:op_batch).where.not(op_batch: { state: 'close' } )
     schedules = User::OpenEducat::OpTeachersService.teaching_schedule(@sessions, params)
 
     render json: {schedules: schedules}

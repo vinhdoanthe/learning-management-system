@@ -1,7 +1,7 @@
 <% teacher_id = current_user.op_faculty.id if current_user.is_teacher? %>
 <% course = batch.op_course %>
 <div class="fc-header">
-  <h3><span class="color-F16357 text-uppercase" style="padding: 5px 0 5px 0px;"><%= t('learning.batch.name') %>:</span> <%= course.name %></h3>
+  <h3><span class="color-F16357 text-uppercase font-weight-bold" style="padding: 5px 0 5px 0px; color: black !important;"><%= t('learning.batch.name') %></span><span style="color: #16BD56"> <%= course.name %></span></h3>
 </div>
 <div class="box-progress" style="border-bottom: 1px solid #D7DFE9; padding-bottom: 20px;">
   <div class="row batch-detail-info">
