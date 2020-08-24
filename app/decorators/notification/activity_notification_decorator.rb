@@ -52,20 +52,37 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
 
     case key
     when SC_REDEEM_POST_CREATE
-      created_user = User::Account::User.where(id: transaction.student_id).first
-      created_str = created_user.present? ? created_user.student_name : ''
-      product = transaction.redeem_product
-      target_str = product.present? ? product.name : ''
-      if transaction.status == 'pending'
-        action_str = I18n.t('notification.redeem_product_post.create')
-        display_html = "Yêu cầu đồi quà thành công"
-      elsif transaction.status == 'approve'
-        display_html = "Yêu cầu đổi quà đã được chấp nhận"
-      elsif transaction.status == 'done'
-        display_html = "#{ created_str } #{ action_str } #{ target_str } #{ I18n.t('notification.redeem_product_post.success') }"
-      elsif transaction.status == 'cancel'
-        display_html = "Hết quà" 
+      begin
+        created_user = User::Account::User.where(id: transaction.student_id).first
+        created_str = created_user.present? ? created_user.student_name : ''
+        product = transaction.redeem_product
+        target_str = product.present? ? product.name : ''
+        if transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_NEW 
+          action_str = I18n.t('notification.redeem_product_post.create')
+          display_html = "Yêu cầu đồi quà thành công"
+        elsif transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_READY
+          display_html = "Yêu cầu đổi quà đã được chấp nhận"
+        elsif transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_DONE
+          display_html = "#{ created_str } #{ action_str } #{ target_str } #{ I18n.t('notification.redeem_product_post.success') }"
+        elsif transaction.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_CANCEL
+          display_html = "Yêu cầu đổi quà của con bị hủy bỏ. TEKY Đồng của con đã được cập nhật lại. Con hãy trọn lại quà để đổi nhé!" 
+        end
       end
+    when SC_REDEEM_TRANSACTION_CANCEL
+      begin
+        display_html = "Yêu cầu đổi quà của con bị hủy bỏ. TEKY Đồng của con đã được cập nhật lại. Con hãy trọn lại quà để đổi nhé!"
+      end
+
+    when SC_REDEEM_TRANSACTION_APPROVE
+      begin
+        display_html = "Yêu cầu đổi quà của con đang đã sẵn sàng. Con hãy nhận quà khi đến Học viện nhé!"
+      end
+
+    when SC_REDEEM_TRANSACTION_COMPLETE
+      begin
+        display_html = "Yêu cầu đổi quà của con đã hoàn tất. Con hãy tiếp tục học tập để có thêm điểm nhé!"
+      end
+
     end
 
     display_html
@@ -206,10 +223,10 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
           feedback_user = feedback.user
           feedback_str = (feedback_user.nil? ? '' : feedback_user.full_name)
           op_session = feedback.op_session
-         unless op_session.nil?
-          op_batch = op_session.op_batch
-          target_str = (op_batch.nil? ? '' : op_batch.code)
-         end 
+          unless op_session.nil?
+            op_batch = op_session.op_batch
+            target_str = (op_batch.nil? ? '' : op_batch.code)
+          end 
         end
         display_html = "#{feedback_str} #{I18n.t('notification.student_feedback.create')} #{target_str}"
       end 
