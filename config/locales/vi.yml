@@ -198,7 +198,7 @@ vi:
       name: "Họ và tên"
       subject: "Học phần"
     detail:
-      class_info: "Thông tin lớp học"
+      class_info: "Chi tiết lớp học"
       student_projects: "Dự án của học sinh"
       student_homeworks: 'Bài tập về nhà'
       study_progress: "Tiến độ học tập"
@@ -218,6 +218,26 @@ vi:
         evaluation: "Nhận xét của giảng viên"
         video: "Ôn bài qua video"
         picture: "Hình ảnh lớp học"
+  teacher_class:
+    coming_session: "Chưa diễn ra"
+    pass_session: "Đã diễn ra"
+    subject: 'Học phần'
+    session: 'Buổi học'
+    session_control:
+      learning_device: "Học cụ"
+      learning_material: "Học liệu"
+      attendance: "Điểm danh"
+      take_photo: "Chụp ảnh"
+      reward: "Thưởng"
+      assign_homework: "Giao bài tập"
+    session_student:
+      student_code: "Mã học sinh"
+      name: "Họ và tên"
+      attendance: "Điểm danh"
+      mark_homework: "Chấm bài BTVN"
+      studying: 'Đang học'
+      save: "Bảo lưu"
+      stop: 'Đã nghỉ'
   homework:
     span_name: 'Bài'
     name: "Bài tập về nhà"

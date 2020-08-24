@@ -1,0 +1,124 @@
+#teacher_class_detail_content {
+
+}
+
+#subject_timeline {
+  .teacher_class_detail_subject {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: black;
+  }
+}
+
+#session_time_table:before {
+  content: none;
+}
+
+#session_time_table {
+  li {
+    position: relative;
+    .lesson_timeline.active {
+      .comming_session {
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        background-color: #5DC2A7 !important;
+      }
+    }
+    .lesson_timeline {
+      .tooltip-span {
+        display: flex;
+        justify-content: center;
+        .tag-time {
+          z-index: 1;
+          color: white;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+        .comming_session {
+          background-color: white;
+          color: black;
+        }
+      }
+    }
+    .lesson_timeline:after {
+      position: absolute;
+      height: 1px;
+      width: 120%;
+      border: 1px dashed rgba(0, 0, 0, 0.85);
+      top: 13px;
+      left: -5px;
+      right: -5px;
+      content: '';
+    }
+    .lesson_timeline.active:after {
+      top: 20px;
+    }
+  }
+}
+
+#session_control {
+  border-bottom: 1px solid #D7DFE9;
+  ul {
+    li {
+      button{
+        margin-right: 10px;
+        height: auto !important;
+        padding: 15px 20px;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: black;
+        img {
+          padding-right: 10px;
+          height: 16px;
+        }
+      }
+    }
+  }
+}
+#btn_view_materials {
+  a {
+    height: auto !important;
+    padding: 15px 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-right: 10px;
+    color: black;
+    img {
+      padding-right: 10px;
+      height: 16px;
+    }
+  }
+}
+
+#table_student {
+  thead {
+    tr {
+      th {
+        text-transform: uppercase;
+        font-weight: 700;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-bottom:3px solid #D7DFE9;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+#student_attendance {
+  .unresponse_student td{
+    opacity: 0.3;
+  }
+  td.student_status {
+    opacity: 1;
+  }
+}

@@ -3,9 +3,10 @@
 <table class="table table-hover" id="table_student">
   <thead>
     <tr>
-      <th>Mã học sinh</th>
-      <th>Họ và tên</th>
-      <th class="text-center">Điểm danh</th>
+      <th><%= t('teacher_class.session_student.student_code') %></th>
+      <th><%= t('teacher_class.session_student.name') %></th>
+      <th class="text-center"><%= t('teacher_class.session_student.attendance') %></th>
+      <th class="text-center"><%= t('teacher_class.session_student.mark_homework') %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -14,7 +15,7 @@
   <tbody id='student_attendance'>
     <% all_student.each do |st| %>
       <% student = st[1] %>
-      <tr>
+      <tr class="<%= 'unresponse_student' if student[:status] != 'on' %>">
         <td><%= student[:code] %></td>
         <td>
           <span class="table-img">
@@ -22,42 +23,63 @@
             <!-- <img src="<%= student[:avatar_src] %>" alt=""> -->
             <%= User::Account::UserDecorator.new(user).display_avatar.html_safe %>
           </span>
-          <span class="table-name"><%= student[:name] %></span>
+          <span class="table-name" style='font-weight: 500; color: #0654BA'><%= student[:name] %></span>
         </td>
 
         <% if student[:attendance] == false %>
           <td class="attendance_state" align="center" data-code="<%= student[:code] %>"><img src="/global/images/remove.png" style="width: 20px" alt=""> </td>
+          <td class="text-center">
+            <% if student[:count_homework].present? %>
+              <a href='/learning/marking_question?batch_id=<%= session.batch_id %>'><%= student[:count_homework] %></a>
+            <% end %>
+          </td>
           <td style="text-align: center; opacity: 0.3;">
             <a data-code="<%= student[:code] %>">
-              <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px">
+              <img src="/global/images/add-comment-button.png" style="width: 320px; min-width: 20px;margin-right: 10px">
             </a>
           </td>
         <% elsif student[:attendance] == true %>
           <td class="attendance_state" align="center" data-code="<%= student[:code] %>"><img src="/global/images/check.png" style="width: 20px" alt=""></td>
+          <td class="text-center">
+            <% if student[:count_homework].present? %>
+              <a href='/learning/marking_question?batch_id=<%= session.batch_id %>'><%= student[:count_homework] %></a>
+            <% end %>
+          </td>
           <td style="text-align: center">
+            <a href="/learning/marking_question?batch_id=<%= session.batch_id %>">
+              <%= image_tag('global/images/icon-BTVN.png', style: 'width: 32px; min-width: 32px;margin-right: 10px; cursor: pointer;') %>
+            </a>
             <a class="student_evaluate" data-code="<%= student[:code] %>" data-toggle="modal" data-target="#modal_evaluate">
-              <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px; cursor: pointer;">
+              <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px; min-width: 32px;margin-right: 10px; cursor: pointer;') %>
             </a>
           </td>
         <% else %>
           <td class="attendance_state" align="center" data-code="<%= student[:code] %>"></td>
+          <td class="text-center">
+            <% if student[:count_homework].present? %>
+              <a href='/learning/marking_question?batch_id=<%= session.batch_id %>'><%= student[:count_homework] %></a>
+            <% end %>
+          </td>
           <td style="text-align: center; opacity: 0.3;">
             <a data-code="<%= student[:code] %>">
-              <img src="/global/images/add-comment-button.png" style="min-width: 20px; width: 20px; margin-right: 10px">
+              <%= image_tag('global/images/icon-BTVN.png', style: 'min-width: 32px; width: 32px; margin-right: 10px') %>
+            </a>
+            <a data-code="<%= student[:code] %>">
+              <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px;margin-right: 10px') %>
             </a>
           </td>
         <% end %>
         <% if student[:status] == 'off' %>
-          <td align="right">
-            <span class="label-edit label label-danger">Nghỉ học</span>
+          <td class='student_status' align="right">
+            <span class="label-edit label label-danger text-uppercase" style="font-weight: 700 !important">Nghỉ học</span>
           </td>
         <% elsif student[:status] == 'on' %>
-          <td align="right">
-            <span class="label-edit label label-primary">Đang học</span>
+          <td class='student_status'  align="right">
+            <span class="label-edit label label-primary text-uppercase" style="font-weight: 700 !important">Đang học</span>
           </td>
         <% elsif student[:status] == 'save' %>
-          <td align="right">
-            <span class="label-edit label label-stop">Bảo lưu</span>
+          <td  class='student_status' align="right">
+            <span class="label-edit label label-stop text-uppercase" style="font-weight: 700 !important">Bảo lưu</span>
           </td>
         <% end %>
       </tr>

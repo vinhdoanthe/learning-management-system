@@ -1,5 +1,10 @@
 en:
   button:
+    learning_material: "Học liệu"
+    attendance: "Điểm danh"
+    take_photo: "Chụp ảnh"
+    reward: "Thưởng"
+    assign_homework: "Giao bài tập"
     see_all: "See all"
     see_more: "See more"
     return: "Return"
@@ -180,6 +185,26 @@ en:
         evaluation: "Teacher's evaluation"
         video: "Review by video"
         picture: "Class pictures"
+  teacher_class:
+    coming_session: "Coming session"
+    pass_session: "Done session"
+    subject: 'Subject'
+    session: 'Session'
+    session_control:
+      learning_device: "Learning Devise"
+      learning_material: "Learning Material"
+      attendance: "Attendance"
+      take_photo: "Take Photo"
+      reward: "Reward"
+      assign_homework: "Assign Homework"
+    session_student:
+      student_code: "Student Code"
+      name: "Full name"
+      attendance: "Attendance"
+      mark_homework: "Mark homework"
+      studying: 'Studying'
+      save: "Reserve"
+      stop: 'Ended'
   homework:
     span_name: 'Quest'
     name: "Homework"

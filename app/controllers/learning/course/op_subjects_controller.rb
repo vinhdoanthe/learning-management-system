@@ -4,7 +4,7 @@ class Learning::Course::OpSubjectsController < ApplicationController
     subject = Learning::Course::OpSubject.where(id: params[:subject_id]).first
     return if subject.blank?
     
-    sessions = subject.op_sessions.where(faculty_id: params[:teacher_id], batch_id: params[:batch_id]).order(start_datetime: :ASC)
+    sessions = subject.op_sessions.where(faculty_id: params[:teacher_id], batch_id: params[:batch_id]).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC)
     active_session = sessions.where('start_datetime >= ?', Time.now).first
     active_session = sessions.last if active_session.blank?
     assign_sessions = sessions

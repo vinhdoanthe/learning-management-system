@@ -43,7 +43,7 @@ module User
       end
 
       def count_sessions_week reference
-        current_user.send(reference).op_sessions.where('start_datetime >= ? AND end_datetime <= ?', Time.now.beginning_of_week, Time.now.end_of_week).count
+        current_user.send(reference).op_sessions.joins(:op_batch).where.not(op_batch: { state: 'close' }).where('start_datetime >= ? AND end_datetime <= ?', Time.now.beginning_of_week, Time.now.end_of_week).count
       end
 
       def count_timetable_week

@@ -42,8 +42,9 @@ class User::OpenEducat::OpTeachersService
                            ''
                          end
 
+      count_homework = count_student_homework student, session
       student_avatar = get_student_avatar student
-      student_info = {student.id => {:note => '', :status => sst.state, :attendance => attendance_state, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
+      student_info = {student.id => {:note => '', :status => sst.state, :attendance => attendance_state, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar, :count_homework => count_homework }}
       all_students.merge!(student_info)
     end
 
@@ -57,7 +58,7 @@ class User::OpenEducat::OpTeachersService
         student_avatar = get_student_avatar student
 #        status = st.present ? 'on' : 'off'
 
-        student_info = {student.id => {:note => note || '', :attendance => st.present, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar}}
+        student_info = {student.id => {:note => note || '', :attendance => st.present, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar }}
         students.merge!(student_info)
       end
     end
@@ -211,5 +212,18 @@ class User::OpenEducat::OpTeachersService
     end
 
     student_avatar
+  end
+
+  def count_student_homework student, session
+    user = User::Account::User.where(student_id: student.id).first
+    lesson = session.op_lession
+
+    return '' if user.blank? || lesson.blank?
+
+    user_question_ids = Learning::Homework::UserQuestion.joins(:question).where(student_id: user.id).where(questions: { op_lession_id: lesson.id, question_type: 'text'}).pluck(:id)
+    return 'Chưa có BTVN' if user_question_ids.blank?
+
+    done_questions = Learning::Homework::UserAnswer.where(state: ['right', 'waiting'], user_question_id: user_question_ids).count
+    "#{ done_questions }/#{ user_question_ids.count }"
   end
 end
