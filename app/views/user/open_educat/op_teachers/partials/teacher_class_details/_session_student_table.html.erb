@@ -35,7 +35,10 @@
           </td>
           <td style="text-align: center; opacity: 0.3;">
             <a data-code="<%= student[:code] %>">
-              <img src="/global/images/add-comment-button.png" style="width: 320px; min-width: 20px;margin-right: 10px">
+              <%= image_tag('global/images/icon-BTVN.png', style: 'min-width: 32px; width: 32px; margin-right: 10px') %>
+            </a>
+            <a data-code="<%= student[:code] %>">
+              <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px;margin-right: 10px') %>
             </a>
           </td>
         <% elsif student[:attendance] == true %>
