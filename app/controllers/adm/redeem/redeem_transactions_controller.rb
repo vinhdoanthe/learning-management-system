@@ -36,9 +36,11 @@ class Adm::Redeem::RedeemTransactionsController < Adm::AdmController
   end
 
   def complete
+    redeem_transaction_service = Redeem::RedeemTransactionService.new
+    result = redeem_transaction_service.complete_transaction(@transaction, params[:note], current_user)
     respond_to do |format|
       format.json {
-
+        render json: result
       }
     end
   end

@@ -28,7 +28,7 @@
           <td><%= transaction.amount %></td>
           <td><%= transaction.total_paid %></td>
           <td class="transaction-status"><%= transaction.status %></td>
-          <td><p class="transaction-note"><%= transaction.admin_note&.html_safe %></p></td>
+          <td class="transaction-note"><%= transaction.admin_note&.html_safe %></td>
           <td><%= transaction.created_at %></td>
           <td class="transaction-actions">
             <%= render :partial => "actions", :locals => {transaction: transaction} %>
@@ -46,11 +46,11 @@
 
 <!-- approve transaction confirm modal -->
 <div id="approveTransactionModal" class="modal" tabindex="-1" role="dialog" data-transaction-id="">
-<%= render 'approve_transaction' %>
+  <%= render 'approve_transaction' %>
 </div>
 
 <!-- complete transaction confirm modal -->
 <div id="completeTransactionModal" class="modal" tabindex="-1" role="dialog" data-transaction-id="">
-<%= render 'complete_transaction' %>
+  <%= render 'complete_transaction' %>
 </div>
 <%= tinymce :simple %>

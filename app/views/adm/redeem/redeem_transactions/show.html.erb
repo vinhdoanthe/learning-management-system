@@ -1,2 +1,5 @@
 <h1>Show</h1>
 <%= render :partial => 'transaction', :locals => {transaction: @transaction} %>
+<div class="actions">
+  <%= link_to 'All transactions', adm_redeem_redeem_transactions_path, class: 'btn btn-secondary' %>
+</div>

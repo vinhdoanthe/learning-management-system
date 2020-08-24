@@ -2,7 +2,6 @@ class Adm::ImageAttachmentsController < Adm::AdmController
   def delete_image_attachment
     image = ActiveStorage::Blob.find_signed(params[:blob_id])
     attachment = ActiveStorage::Attachment.where(blob_id: image.id).first
-    binding.pry
     if attachment.nil?
       respond_to do |format|
         format.json {
