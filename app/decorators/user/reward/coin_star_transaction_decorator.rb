@@ -3,7 +3,10 @@ class User::Reward::CoinStarTransactionDecorator < SimpleDelegator
     if __getobj__.nil?
       ''
     else
-      if coinstarable_id.blank?
+      if coinstarable_id.blank? || coinstarable.blank?
+        if coinstarable_type == "SocialCommunity::ScStudentProject"
+          return str = "#{ I18n.t('reward.you')} #{ I18n.t('reward.had_minus')} #{ amount.abs } #{I18n.t('reward.because')} #{ I18n.t('notification.st_project_post.delete') }"
+        end
         return  "#{I18n.t('reward.you_were_reward')} #{amount} #{I18n.t('reward.star')}"
       end
 

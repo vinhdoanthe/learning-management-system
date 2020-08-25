@@ -70,4 +70,23 @@ class User::Reward::CoinStarsService
   def validate_transaction coinstarable
     User::Reward::CoinStarTransaction.where(coinstarable_id: coinstarable.id, coinstarable_type: coinstarable.class.to_s).first.present?
   end
+
+  def create_refund_transaction class_name, student, teacher
+    coinstarable = class_name.constantize.new
+    setting = coinstarable.coin_star_setting
+
+    ActiveRecord::Base.transaction do
+      if setting.is_add_star
+        amount = - setting.star
+        create_coin_star_transaction coinstarable, student, teacher, amount, TEKY_STAR
+        update_coin_star_user student, amount, TEKY_STAR
+      end
+
+      if setting.is_add_coin
+        amount = - setting.coin
+        create_coin_star_transaction coinstarable, student, teacher, amount, TEKY_COIN
+        update_coin_star_user student, amount, TEKY_COIN
+      end
+    end
+  end
 end

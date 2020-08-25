@@ -94,6 +94,16 @@ class SocialCommunity::ScStudentProjectsService
     playlist
   end
 
+  def delete_playlist batch_playlist
+    playlist = Yt::Playlist.new id:  batch_playlist.playlist_id
+    if playlist.playlist_items.count == 0
+      title = playlist.title
+      channel = Yt::Channel.new id: Settings.youtube['api_key']
+      channel.delete_playlists title: title
+      batch_playlist.delete
+    end
+  end
+
   def create_student_project params, video_link, teacher, thumbnail_url
       project = SocialCommunity::ScStudentProject.new
       project.description = params[:description]
@@ -172,5 +182,35 @@ class SocialCommunity::ScStudentProjectsService
     end
 
     course_hash
+  end
+
+  def delete_student_project project
+    #Xoa post
+    begin
+      post = SocialCommunity::Feed::Post.where(id: project.sc_post_id).first
+      #xoa video youtube(neu co)
+      if project.introduction_video.present?
+        delete_video_youtube project.introduction_video
+        #batch_playlist = SocialCommunity::StudentProjectPlaylist.where(batch_id: project.batch_id).first
+        #if batch_playlist.present?
+        #  delete_playlist batch_playlist
+        #end
+      end
+
+      ActiveRecord::Base.transaction do
+        post.create_delete_notifications
+        project.presentation.purge
+        User::Reward::CoinStarsService.new.create_refund_transaction "SocialCommunity::ScStudentProject", project.user_id, project.created_by
+        project.delete
+        post.delete
+      end
+
+      result = { type: 'success', message: 'Xóa sản phẩm thành công' }
+      { result: result, project_id: project.id }
+    rescue => e
+      puts e
+      result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau' }
+      { result: result, project_id: '' }
+    end
   end
 end

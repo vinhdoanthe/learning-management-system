@@ -17,6 +17,7 @@ module NotificationConstants
     SC_RW_POST_CREATE = 'post.create'
     SC_RW_POST_COMMENT = 'post.comment'
     SC_ST_PROJECT_POST_CREATE = 'post.create'
+    SC_ST_PROJECT_POST_DELETE = 'post.delete'
     SC_ST_PROJECT_POST_COMMENT = 'post.comment'
     SC_REDEEM_POST_CREATE = 'post.create'
     SC_REDEEM_TRANSACTION_CANCEL = 'CANCEL_TRANSACTION'

@@ -116,6 +116,7 @@ vi:
       create: 'khen thưởng'
     st_project_post:
       create: 'hoàn thành dự án cuối khóa'
+      delete: "Giáo viên vừa xoá dự án cuối khoá của bạn"
     student_feedback:
       create: 'đánh giá lớp học'
       How do you feel about the class?: "Cảm nhận của con về buổi học như thế nào?"
@@ -505,6 +506,7 @@ vi:
       homework: "Bài tập về nhà"
       project: "Sản phẩm cuối khoá" 
   reward:
+    you: 'Bạn'
     you_were_reward: 'Bạn được tặng thưởng'
     you_were_redeem: "Bạn vừa đồi quà"
     had_minus: "bị trừ"

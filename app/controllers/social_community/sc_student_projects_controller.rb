@@ -4,8 +4,10 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
 
   def create_student_project
     result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+    project = ''
     sc_student_service = SocialCommunity::ScStudentProjectsService.new
     user = User::Account::User.where(student_id: @params[:student_id]).first
+    student = user.op_student
 
     if validate_youtube_upload_params @params
       if @params[:introduction_video].present? && @params[:name].present?
@@ -31,7 +33,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'user/open_educat/shared/student_projects/forms/ajax_response', locals: { result: result } }
+      format.js { render 'user/open_educat/shared/student_projects/forms/ajax_response', locals: { result: result, project: project, student: student } }
     end
   end
 
@@ -119,23 +121,24 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
 
   def delete_student_project
     result = {}
-    project_id = ''
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
 
     if project.blank?
-      result = { type: "danger", message: "Dự án không tồn tại!" }
+      result = { result: { type: "danger", message: "Dự án không tồn tại!"}, project_id: '' }
     elsif current_user.id != project.created_by
-      result = { type: "danger", message: "Bạn không có quyền xoá dự án này" }
+      result = { result: { type: "danger", message: "Bạn không có quyền xoá dự án này" }, project_id: '' }
     else
-      if project.delete
-        result = { type: "success", message: "Xoá thành công!"}
-        project_id = project.id
-      end
+      result = SocialCommunity::ScStudentProjectsService.new.delete_student_project project
+      #if project.delete
+      #  result = { type: "success", message: "Xoá thành công!"}
+      #  project_id = project.id
+      #end
     end
+    binding.pry
 
     respond_to do |format|
       format.html
-      format.js { render 'user/open_educat/shared/student_projects/js/delete_project', locals: { result: result, project_id: project_id } }
+      format.js { render 'user/open_educat/shared/student_projects/js/delete_project', locals: result }
     end
   end
 

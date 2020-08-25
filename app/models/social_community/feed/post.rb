@@ -14,4 +14,8 @@ class SocialCommunity::Feed::Post < ApplicationRecord
   def create_update_notifications
     notify :users, key: 'post.update'
   end
+
+  def create_delete_notifications
+    notify :users, key: 'post.delete'
+  end
 end

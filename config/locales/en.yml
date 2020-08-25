@@ -88,6 +88,7 @@ en:
       create: "felicitated"
     st_project_post:
       create: "published a project"
+      delete: "Teacher had deleted your project"
     student_feedback:
       create: "rate batch"
     redeem_product_post:
@@ -355,6 +356,7 @@ en:
         select_time: "Select time"
         lesson_number: "Lesson Number"
   reward:
+    you: 'You'
     you_were_reward: "You were rewarded"
     you_were_redeem: "You were redeem"
     had_minus: "had minus"
