@@ -268,6 +268,7 @@
 
         </div>
         <div class="tab-pane fade show" id="tab-course-study-program" role="tabpanel" aria-labelledby="tab-course-study-program">
+        <%= render 'partials/content_loading' %>
         <%= render "adm/learning/course/tab_course_study_program"%>
         </div>
       </div>
@@ -298,99 +299,96 @@
     </div>
   </div>
 </div>
-
 <%= render "adm/learning/course/subject_upload"%>
-
 <style type="text/css">
   textarea {resize: none;}
 </style>
 <%= tinymce :fulleditor %>
 <script type="text/javascript">
-  
-  var _validFileExtensions = [".jpg", ".jpeg",".png"];
 
-  function hasExtension(inputID, exts) {
-    var fileName = document.getElementById(inputID).value;
-    return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
-  }   
+$('#content_loading').hide();
   
-  // Check extension image
-  function validateExtensionImage(oForm) {
-      var arrInputs = oForm.getElementsByTagName("input");
-      for (var i = 0; i < arrInputs.length; i++) {
-          var oInput = arrInputs[i];
-          if (oInput.type == "file") {
-              var sFileName = oInput.value;
-              if (sFileName.length > 0) {
-                  var blnValid = false;
-                  for (var j = 0; j < _validFileExtensions.length; j++) {
-                      var sCurExtension = _validFileExtensions[j];
-                      if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-                          blnValid = true;
-                          break;
-                      }
-                  }                  
-                  if (!blnValid) {
-                    alert("Error, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
-                    oInput.value = "";
-                    return false;
-                }
+var _validFileExtensions = [".jpg", ".jpeg",".png"];
+
+function hasExtension(inputID, exts) {
+  var fileName = document.getElementById(inputID).value;
+  return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+}
+  
+// Check extension image
+function validateExtensionImage(oForm) {
+    var arrInputs = oForm.getElementsByTagName("input");
+    for (var i = 0; i < arrInputs.length; i++) {
+        var oInput = arrInputs[i];
+        if (oInput.type == "file") {
+            var sFileName = oInput.value;
+            if (sFileName.length > 0) {
+                var blnValid = false;
+                for (var j = 0; j < _validFileExtensions.length; j++) {
+                    var sCurExtension = _validFileExtensions[j];
+                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                        blnValid = true;
+                        break;
+                    }
+                }                  
+                if (!blnValid) {
+                  alert("Error, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                  oInput.value = "";
+                  return false;
               }
-          }
-      }
-    
-      return true;
-  }
-
-  $('.btn-subject-click').on("click",function(e) {
-
-    var subject_id = $(this).data("id");
-
-    if (subject_id && ($(this).data("item-collapse") == 0)) {
-      $('#table-subject-' + subject_id).html(null);
-      $.ajax({
-        type: "GET",
-        url: '<%= adm_learning_get_lesson_by_session_path%>',
-        async: false,
-        data: {subject_id: $(this).data("id")},
-        success:function(data){
-          $(this).data("item-collapse",1);
-          $('#table-subject-' + subject_id).html(data);
+            }
         }
-      });
-    } else {
-      $('#table-subject-' + subject_id).html(null);
-    }
-  });
+    }  
+    return true;
+}
 
-  $("#frm_image_thumbnail").change(function(event) {  
-    /*
-    if (!hasExtension('frm_image_thumbnail', _validFileExtensions)) {
-      return false;
-    }
-    */
-    readURL(this);
-  });
-  
-  function readURL(input) {    
-    
-    if (!hasExtension('frm_image_thumbnail', _validFileExtensions)) {
-      $("#frm_image_thumbnail").val(null);
-      return false;
-    }
+$('.btn-subject-click').on("click",function(e) {
 
-    if (input.files && input.files[0]) {   
-      var reader = new FileReader();
-      var filename = $("#frm_image_thumbnail").val();
-      filename = filename.substring(filename.lastIndexOf('\\')+1);
-      reader.onload = function(e) {
-        $('#blah').attr('src', e.target.result);
-        $('#blah').hide();
-        $('#blah').fadeIn(500);            
+  var subject_id = $(this).data("id");
+
+  if (subject_id && ($(this).data("item-collapse") == 0)) {
+    $('#content_loading').show();
+    $('#table-subject-' + subject_id).html(null);
+    $.ajax({
+      type: "GET",
+      url: '<%= adm_learning_get_lesson_by_session_path%>',
+      async: false,
+      data: {subject_id: $(this).data("id")},
+      success:function(data){
+        $('#content_loading').hide();
+        $(this).data("item-collapse",1);
+        $('#table-subject-' + subject_id).html(data);
       }
-      reader.readAsDataURL(input.files[0]);    
-    }
+    });
+  } else {
+    $('#content_loading').hide();
+    $('#table-subject-' + subject_id).html(null);
   }
+});
+
+$("#frm_image_thumbnail").change(function(event) {  
+  readURL(this);
+});
+  
+function readURL(input) {
+  
+  if (!hasExtension('frm_image_thumbnail', _validFileExtensions)) {
+    $("#frm_image_thumbnail").val(null);
+    return false;
+  }
+
+  if (input.files && input.files[0]) {   
+    var reader = new FileReader();
+    var filename = $("#frm_image_thumbnail").val();
+    filename = filename.substring(filename.lastIndexOf('\\')+1);
+    reader.onload = function(e) {
+      $('#blah').attr('src', e.target.result);
+      $('#blah').hide();
+      $('#blah').fadeIn(500);            
+    }
+    reader.readAsDataURL(input.files[0]);    
+  }
+}
 
 $(document).ready(function () {
 
@@ -419,13 +417,12 @@ $(document).ready(function () {
   $("#remoteModalPhoto").on("hidden.bs.modal", function() {
     $(this).removeData('bs.modal');
     $("#remoteModalPhoto .modal-title").html('&nbsp;');
-    //$("#remoteModalPhoto .modal-body").html('<div class="row"><i class="fa fa-spinner fa-2x fa-spin text-primary" style="padding:3px;"></i>Loading...</div>');
   });
 
-  $('#remoteModalPhoto').on('show.bs.modal', function (e) {
+  //$('#remoteModalPhoto').on('show.bs.modal', function (e) {
     //var loadurl = $(e.relatedTarget).data('load-url');
     //$(this).find('.modal-body').load(loadurl);
-  });
+  //});
 
   $('.btn-subject-upload').on("click",function(e) {
     $('#frm_subject_id').val($(this).data("id"));

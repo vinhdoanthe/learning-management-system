@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="card-header admin-subject-header-title">
+    <h3 class="card-title"><label><%= t('adm.course.lesson.Study document')%></label></h3>    
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+		<h3 class="card-title text-info"><label><%= t('adm.course.lesson.Lesson plan')%></label></h3>    
+		<table class="table table-hover list-lesson">
+		  <thead>
+		  <tr>
+		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document')%></th>
+		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document url')%></th>
+		  </tr>
+		  </thead>
+		  <tbody>
+		  	<% @obj_lesson_learning_materials.each_with_index  do |learning_material, index| %>
+		  	<% if learning_material.material_type == 'file' && learning_material.learning_type == 'teach' && learning_material.learning_type == 'presentation' %>
+		  	<tr>
+		  		<td><%= learning_material.title%></td>
+		  		<td>XXX</td>
+		  	</tr>
+		  	<% end %>
+		  	<% end %>
+
+		  </tbody>
+		 </table>
+    </div>
+
+    <div class="table-responsive">
+		<h3 class="card-title text-info"><label><%= t('adm.course.lesson.Lesson slide')%></label></h3>    
+		<table class="table table-hover list-lesson">
+		  <thead>
+		  <tr>
+		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document')%></th>
+		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document url')%></th>
+		  </tr>
+		  </thead>
+		  <tbody>
+		  	<tr>
+		  		<td>XXX</td>
+		  		<td>XXX</td>
+		  	</tr>
+		  </tbody>
+		 </table>
+    </div>
+
+    <div class="table-responsive">
+		<h3 class="card-title text-info"><label><%= t('adm.course.lesson.Lesson video review')%></label></h3>    
+		<table class="table table-hover list-lesson">
+		  <thead>
+		  <tr>
+		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document')%></th>
+		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document url')%></th>
+		  </tr>
+		  </thead>
+		  <tbody>
+		  	<% @obj_lesson_learning_materials.each_with_index  do |learning_material, index| %>
+		  	<% if learning_material.material_type == 'video' && learning_material.learning_type == 'review' && learning_material.learning_type == 'lesson_plan' %>
+		  	<tr>
+		  		<td><%= learning_material.title%></td>
+		  		<td>XXX</td>
+		  	</tr>
+		  	<% end %>
+		  	<% end %>
+		  </tbody>
+		 </table>
+    </div>
+  </div>
+</div>

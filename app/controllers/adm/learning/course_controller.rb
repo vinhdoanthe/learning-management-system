@@ -45,7 +45,7 @@
       @course   = Learning::Course::OpCourse.find(params[:course_id])
       
       # Chuong trinh hoc
-      @subjects = @course.op_subjects.order(level: :ASC).select(:id, :name)
+      @subjects = @course.op_subjects.order(level: :ASC).select(:id,:code,:name)
 
       #@subjects = Learning::Course::OpSubject.where(course_id: params[:course_id]).order(level: :ASC).select(:id, :name)
 
