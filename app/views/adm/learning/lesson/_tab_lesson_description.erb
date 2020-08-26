@@ -1,0 +1,46 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+		
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+		
+		<div class="row">		
+			<label class="col-sm-3 control-label"><%= t('adm.course.course_name')%>:</label>
+			<div class="col-sm-9"><%= @obj_lesson.op_course_name%></div>
+		</div>
+		<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.lesson.Subject name')%>:</label> 
+			<div class="col-sm-9"><%= @obj_lesson.op_subject.name%></div>
+		</div>
+
+		<div class="row">
+			<label class="col-sm-3 control-label"><%= t('adm.course.lesson.Lesson name')%>:</label>
+			<div class="col-sm-9"><%= @obj_lesson.name%></div>
+		</div>
+		<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.lesson.Lesson code')%>:</label> 
+			<div class="col-sm-9"><%= @obj_lesson.code%></div>
+		</div>
+
+		<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.lesson.Lesson number')%>:</label> 
+			<div class="col-sm-9"><%= @obj_lesson.lession_number%></div>
+		</div>
+
+		<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.lesson.Lesson devices')%>:</label> 
+			<div class="col-sm-9"><%= @obj_lesson.learning_devices.to_s.html_safe%></div>
+		</div>
+
+		<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.lesson.Lesson note')%>:</label> 
+			<div class="col-sm-9"><%= @obj_lesson.note.to_s.html_safe%></div>
+		</div>
+
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<div class="row">
+		<% if !@obj_lesson.thumbnail.nil? && @obj_lesson.thumbnail.attached? %>
+		        <%= image_tag url_for(@obj_lesson.thumbnail),  class: 'admin-lesson-img-thumbnail'%>
+		    <% else%>
+		    <div class="admin-lesson-img-no-thumbnail bg-cfcfcf">No image</div>
+		<% end%>			
+		</div>
+	</div>	
+</div>
+<%= render "adm/learning/lesson/list_lesson_learning_materials"%>

@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <% if !@obj_lesson.present?%>
+        <div class="card-body">
+
+        </div>
+      <% else%>
+        <div class="card-header">
+            <h3 class="card-title"><label><%= t('adm.course.lesson.Lesson detail')%>: <span class="text-info"><%= @obj_lesson.name%></span></label></h3>
+            <%= render "adm/learning/lesson/list_button_sreen_show"%>
+        </div>      
+        <div class="card-header p-0 pt-1 border-bottom-0">
+          <ul class="nav nav-tabs pull-right" id="custom-tabs-three-tab" role="tablist">          
+            <li class="nav-item header">
+              <a class="nav-link active" id="tab-lesson-description-tab" data-toggle="pill" href="#tab-lesson-description" role="tab" aria-controls="tab-lesson-description" aria-selected="true"><%= t('config.general_info')%>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="tab-lesson-homework-tab" data-toggle="pill" href="#tab-lesson-homework" role="tab" aria-controls="tab-lesson-homework" aria-selected="false"><%= t('adm.course.lesson.Homework')%></a>
+            </li>          
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="custom-tabs-three-tabContent">
+            <div class="tab-pane fade show active" id="tab-lesson-description" role="tabpanel" aria-labelledby="tab-lesson-description">
+            <%= render "adm/learning/lesson/tab_lesson_description"%>
+            </div>
+            <div class="tab-pane fade show" id="tab-lesson-homework" role="tabpanel" aria-labelledby="tab-lesson-homework">
+            
+            
+            </div>
+          </div>       
+        </div>
+        <div class="card-footer clearfix text-right">
+          <%= render "adm/learning/lesson/list_button_sreen_show"%>
+        </div>
+      <% end%>
+    </div>
+  </div>
+</div>

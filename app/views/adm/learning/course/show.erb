@@ -24,6 +24,7 @@
           </div>
 
           <div class="tab-pane fade show" id="tab-course-study-program" role="tabpanel" aria-labelledby="tab-course-study-program">
+          <%= render 'partials/content_loading' %>
           <%= render "adm/learning/course/tab_course_study_program"%>
           </div>
         </div>       
@@ -35,23 +36,30 @@
   </div>
 </div>
 <%= render "adm/learning/course/subject_upload"%>
+
 <script type="text/javascript">
+  
+  $('#content_loading').hide();
+
   $('.btn-subject-click').on("click",function(e) {
 
     var subject_id = $(this).data("id");
-    if (subject_id && ($(this).data("item-collapse") == 0)) {
+
+    if (subject_id && ($(this).data("item-collapse") == 0)) {      
+      $('#content_loading').show();
       $('#table-subject-' + subject_id).html(null);
       $.ajax({
         type: "GET",
         url: '<%= adm_learning_get_lesson_by_session_path%>',
-        async: false,
         data: {subject_id: $(this).data("id")},
         success:function(data){
+          $('#content_loading').hide();
           $(this).data("item-collapse",1);
           $('#table-subject-' + subject_id).html(data);
         }
       });
     } else {
+      $('#content_loading').hide();
       $('#table-subject-' + subject_id).html(null);
     }
   });
@@ -59,7 +67,6 @@
   $("#remoteModalPhoto").on("hidden.bs.modal", function() {
     $(this).removeData('bs.modal');
     $("#remoteModalPhoto .modal-title").html('&nbsp;');
-    //$("#remoteModalPhoto .modal-body").html('<div class="row"><i class="fa fa-spinner fa-2x fa-spin text-primary" style="padding:3px;"></i>Loading...</div>');
   });
 
   $('.btn-subject-upload').on("click",function(e) {

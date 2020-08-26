@@ -24,6 +24,7 @@ vi:
     Close: "Đóng"
     back: "Quay lại"
     Back to list: "Về danh sách"
+    Back to cource: "Về Khóa học"
     reply: 'Trả lời'
     back_to_my_threads: 'Quay lại danh sách câu hỏi'
     apply: "Áp dụng"
@@ -48,7 +49,7 @@ vi:
     Send review: "GỬI ĐÁNH GIÁ"
     Active: "Hoạt động"
     Unactive: "Không hoạt động"
-    Loading...: "Đang tải dữ liệu..."
+    Loading: "Đang tải dữ liệu..."
     Upload photo: "Upload photo"
     Upload: "Upload"
   select:
@@ -398,7 +399,7 @@ vi:
       number_subjects: "Số chủ đề"
       Course introduction: "Giới thiệu khóa học"
       Study program: "Chương trình học"
-      lesson: "Bài học"
+      Lesson: "Bài học"
       Section: "Section"
       Edit course: "Sửa khóa học"
       lesson number: "Bài"
@@ -426,6 +427,22 @@ vi:
       You do not choose to upload pictures for the lesson: "Bạn không chọn upload ảnh cho bài học."
       Upload photo Lessons successful: "Cập ảnh cho %{total_photo_lesson} Bài học thành công."
       Upload photo Lessons fail: "Tệp ảnh bạn chọn cho Bài học chưa phù hợp. Hãy xem lại các yếu tố sau:<br>-Tên file ảnh<br>-Phải là file ảnh"
+      lesson:
+        Lesson detail: "Chi tiết bài học"
+        Lesson does not exist: 'Bài học không tồn tại.'
+        Homework: "Bài tập về nhà"
+        Subject name: "Tên học phần"
+        Lesson name: "Tên bài học"
+        Lesson code: "Mã bài học"
+        Lesson number: "Bài số"
+        Lesson note: "Mô tả ngắn"
+        Lesson devices: "Thiết bị dạy học"
+        Lesson plan: "Giáo án"
+        Lesson slide: "Slide"
+        Lesson video review: "Video ôn tập"
+        Study document: "Tài liệu học tập"
+        Document name: "Tên tài liệu"
+        Document url: "Url"
     Note: "Ghi chú"
     Order: "STT"
     Code: "Mã"
