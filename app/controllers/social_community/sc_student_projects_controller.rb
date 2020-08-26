@@ -82,7 +82,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'user/open_educat/shared/student_projects/forms/ajax_response', locals: { result: result } }
+      format.js { render 'user/open_educat/shared/student_projects/forms/ajax_response', locals: { result: result, project: '' } }
     end
   end
 

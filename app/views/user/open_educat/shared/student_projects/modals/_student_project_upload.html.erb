@@ -4,7 +4,7 @@
   <!-- Modal content-->
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
       <h4 class="modal-title" id="uploadStudentProjectTitle">Upload sản phẩm của học sinh</h4>
     </div>
     <% project = SocialCommunity::ScStudentProject.new %>
@@ -15,7 +15,7 @@
     </div>
     <div class="modal-footer">
       <input type='submit' data-remote='true' form='edit_student_project_form' class='btn btn-primary edit_student_project_form_submit' value='Submit'>
-      <button data-dismiss="modal" data-remote='true' type="button" class="btn btn-primary close-modal" style="background-color: #5DC2A7;">Close</button>
+      <button data-dismiss="modal" type="button" class="btn btn-secondary close-modal">Đóng</button>
     </div>
   </div>
 </div>

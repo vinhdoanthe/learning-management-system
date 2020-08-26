@@ -6,6 +6,7 @@
   <!-- Modal content-->
   <div class="modal-content">
     <div class="modal-header">
+      <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
       <h4 class="modal-title">Edit sản phẩm của học sinh</h4>
     </div>
     <div class="modal-body">
@@ -16,7 +17,7 @@
 
     <div class="modal-footer">
       <input type='submit' form='edit_student_project_form' remote="true" class='btn btn-primary edit_student_project_form_submit' value='Cập nhật'>
-      <button data-dismiss="modal" data-project="<%= project.id %>" type="button" data-remote='true' class="btn btn-primary close-modal" style="background-color: #5DC2A7;">Close</button>
+      <button data-dismiss="modal" type="button" class="btn btn-secondary close-modal">Đóng</button>
     </div>
   </div>
 </div>

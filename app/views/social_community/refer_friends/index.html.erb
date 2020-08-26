@@ -73,6 +73,7 @@
         <div class="modal-content m-b-20">
           <div class="modal-body text-center modal-edit">
             <div class="modal-title">
+              <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
               <label>Mời bạn bè</label>
             </div>
             <% if !Rails.env.production? %>
@@ -94,7 +95,7 @@
               <input type='submit' id="submit_refer_friend_form" form="student_refer_friend_form" value='Giới thiệu' style="display: none">
               </span>
             <% end %>
-            <button type="button" id="close_refer_form" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" id="close_refer_form" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
