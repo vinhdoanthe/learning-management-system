@@ -1,4 +1,4 @@
-class Adm::Learning::CourseController < ApplicationController
+ Adm::Learning::CourseController < ApplicationController
 
   include ApplicationHelper
 
@@ -94,7 +94,7 @@ class Adm::Learning::CourseController < ApplicationController
       #@lessions = Learning::Course::OpCoursesService.get_all_lession_of_course(params[:course_id])
 
       course_descriptions = @course.course_description        
-      course_description  = course_descriptions.nil? ? '' : course_descriptions[0].description
+      course_description  = course_descriptions.blank? ? '' : course_descriptions[0].description
 
       @frm_course = {
         'suitable_age': @course.suitable_age,
