@@ -2,6 +2,9 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   before_action :find_teacher
   skip_before_action :verify_authenticity_token
 
+  def teacher_info
+  end
+
   def teacher_class
   end
 
@@ -221,13 +224,23 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def student_projects
-    subject_student_projects = SocialCommunity::ScStudentProject.where(batch_id: params[:batch_id]).all.group_by{ |product| product.subject_id }
-    subject_ids = subject_student_projects.keys
-    subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level)
+    batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
+    return if batch.blank?
+
+    subjects = batch.op_subjects.pluck(:id, :level).uniq
+    subject_info = {}
+    subjects.each{ |s| subject_info.merge!({s[0] => s[1] })}
+
+    student_projects = SocialCommunity::ScStudentProject.where(batch_id: params[:batch_id]).order(created_at: :DESC)
+
+    student_ids = Learning::Batch::OpStudentCourse.where(batch_id: params[:batch_id], state: 'on').pluck(:student_id)
+    students = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:id, :code, :full_name)
+    student_info = {}
+    students.each{ |s| student_info.merge! ({s[0] => { code: s[1], full_name: s[2]}}) }
 
     respond_to do |format|
       format.html
-      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/student_projects', locals: { subject_student_projects: subject_student_projects, subjects: subjects } }
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/student_projects', locals: { student_projects: student_projects, subjects: subject_info, students: student_info } }
     end
   end
 

@@ -1,0 +1,34 @@
+<tr>
+  <td>[<%= students[project.student_id][:code] %>]</td>
+  <td class='project_student_name'>
+    <span class="student_avatar">
+      <% user = User::Account::User.where(student_id: project.student_id).first %>
+      <%= User::Account::UserDecorator.new(user).display_avatar.html_safe %>
+    </span>
+    <span>
+      <%= students[project.student_id][:full_name] %>
+    </span>
+  </td>
+  <td style="text-align: center"><%= subjects[project.subject_id] %></td>
+  <td style="text-align: center">
+    <span class='student_project_icon <%= 'active_icon' if project.presentation.attached? %>'>
+      <%= image_tag('global/images/microsoft-powerpoint.png', style: 'width: 32px') %>
+    </span>
+    <span class='student_project_icon <%= 'active_icon' if project.introduction_video.present? %>'>
+      <%= image_tag('global/images/button-youtube.png', style: 'width: 32px') %>
+    </span>
+    <span class='student_project_icon <%= 'active_icon' if project.project_show_video.present? %>'>
+      <%= image_tag('global/images/browser.png', style: 'width: 32px') %>
+    </span>
+  </td>
+  <td class="table_student_project_action" style="text-align: center">
+    <span class="show_project student_project_show <%= 'new_student_project_show' if new %>"  data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><i class="fa fa-eye"></i></span>
+    <% if project.created_by == teacher_id %>
+      <span class="edit_project  <%= 'edit_new_project' if new %>" data-project="<%= project.id %>" data-toggle="modal" data-target="#editStudentProjectDetail"><i class="fa fa-edit"></i></span>
+      <span class="delete_student_project" data-project="<%= project.id %>"><i class="fa fa-trash"></i></span>
+    <% else %>
+      <span class="not_allow"><i class="fa fa-edit"></i></span>
+      <span class="not_allow"><i class="fa fa-trash"></i></span>
+    <% end %>
+  </td>
+</tr>

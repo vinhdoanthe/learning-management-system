@@ -8,7 +8,7 @@ function student_table(session_id){
 
 function getStudentProjects (batch_id) {
   $.ajax({
-    url: '/social_community/student_projects?batch_id=' + batch_id,
+    url: '/user/open_educat/op_teachers/student_projects?batch_id=' + batch_id,
     method: 'GET',
     dataType: 'script'
   })
@@ -283,6 +283,18 @@ $(document).ready(function(){
       })
     }else{
       alert('Bạn chưa chọn câu hỏi!')
+    }
+  })
+
+  $('#student_projects').on('click', '.delete_student_project', function(){
+    project_id = $(this).data('project');
+    if (confirm("Bạn chắc chắn muốn xoá sản phẩm cuối khoá này?")) {
+      $.ajax({
+      method: "POST",
+      url: "/social_community/delete_student_project",
+      data: { project_id: project_id },
+      dataType: 'script'
+    })
     }
   })
 })

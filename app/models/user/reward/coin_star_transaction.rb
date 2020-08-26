@@ -12,7 +12,7 @@ module User
       field :coinstarable_type, type: String
 
       def coinstarable
-        coinstarable_type.constantize.find(coinstarable_id)
+        coinstarable_type.constantize.where(id: coinstarable_id).first
       end
 
       def coinstarable=(input)

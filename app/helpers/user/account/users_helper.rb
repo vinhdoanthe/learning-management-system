@@ -29,13 +29,13 @@ module User
       end
 
       def count_mark_question teacher
-        Learning::Homework::UserAnswer.where(faculty_id: teacher.id, state: 'waiting').count.to_s
+        Learning::Homework::UserAnswer.joins(user_question: :question).where(faculty_id: teacher.id, state: 'waiting').where.not(questions: { id: nil }).count.to_s
       end
 
       # get Menu for User is Teacher
       def get_menus_teacher(fullpath)
         menus = [
-          {'path' => user_teacher_info_path, 
+          {'path' => user_open_educat_teacher_info_path,
            'icon' => 'icon-Setting.png',
            'title' => "#{ t('sidebar.config') }", 
            'right_content' => ''

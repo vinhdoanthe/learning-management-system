@@ -1,0 +1,6 @@
+res = JSON.parse('<%= raw(result.to_json) %>');
+display_response_noti(res);
+<% if project_id.present? %>
+  target = $('.delete_student_project[data-project="<%= project_id %>"]')
+  target.closest('tr').hide();
+<% end %>

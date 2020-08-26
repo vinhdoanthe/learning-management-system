@@ -187,11 +187,11 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
 
   def sc_student_project_notification_content
     st_project_post = SocialCommunity::Feed::StudentProjectPost.where(id: notifiable_id).first
-    return '' if st_project_post.nil?
 
     display_html = ''
     case key
     when SC_ST_PROJECT_POST_CREATE
+      return '' if st_project_post.nil?
       begin
         project = SocialCommunity::ScStudentProject.where(sc_post_id: st_project_post.id).first
         unless project.nil?
@@ -205,6 +205,8 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
           display_html = "#{student_name} #{I18n.t('notification.st_project_post.create')} #{course_name} #{subject_level}"
         end
       end
+    when SC_ST_PROJECT_POST_DELETE
+      display_html = "#{ I18n.t('notification.st_project_post.delete') }"
     when SC_ST_PROJECT_POST_COMMENT
       begin
       end
