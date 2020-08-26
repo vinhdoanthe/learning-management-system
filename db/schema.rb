@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_20_040655) do
+ActiveRecord::Schema.define(version: 2020_08_25_050239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1478,6 +1478,155 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "addition_config_settings", id: :serial, comment: "addition.config.settings", force: :cascade do |t|
+    t.integer "addition_max_date_approved", comment: "Giới hạn số ngày duyệt"
+    t.boolean "module_document", comment: "Attachments List and Document Indexation"
+    t.boolean "group_ir_attachment_user", comment: "Central access to Documents"
+    t.boolean "module_document_page", comment: "Manage document pages (Wiki)"
+    t.boolean "module_document_page_approval", comment: "Manage documents approval"
+    t.boolean "module_cmis_read", comment: "Attach files from an external DMS into Odoo"
+    t.boolean "module_cmis_write", comment: "Store attachments in an external DMS instead of the Odoo Filestore"
+    t.boolean "group_multi_company", comment: "Manage multiple companies"
+    t.integer "company_id", null: false, comment: "Company"
+    t.boolean "default_user_rights", comment: "Default Access Rights"
+    t.boolean "default_external_email_server", comment: "External Email Servers"
+    t.boolean "module_base_import", comment: "Allow users to import data from CSV/XLS/XLSX/ODS files"
+    t.boolean "module_google_calendar", comment: "Allow the users to synchronize their calendar  with Google Calendar"
+    t.boolean "module_google_drive", comment: "Attach Google documents to any record"
+    t.boolean "module_google_spreadsheet", comment: "Google Spreadsheet"
+    t.boolean "module_auth_oauth", comment: "Use external authentication providers (OAuth)"
+    t.boolean "module_auth_ldap", comment: "LDAP Authentication"
+    t.boolean "module_base_gengo", comment: "Translate Your Website with Gengo"
+    t.boolean "module_inter_company_rules", comment: "Manage Inter Company"
+    t.boolean "module_pad", comment: "Collaborative Pads"
+    t.boolean "module_voip", comment: "Asterisk (VoIP)"
+    t.boolean "company_share_partner", comment: "Share partners to all companies"
+    t.boolean "default_custom_report_footer", comment: "Custom Report Footer"
+    t.boolean "group_multi_currency", comment: "Multi-Currencies"
+    t.integer "fail_counter", comment: "Fail Mail"
+    t.string "alias_domain", comment: "Alias Domain"
+    t.boolean "auth_signup_reset_password", comment: "Enable password reset from Login page"
+    t.integer "auth_signup_template_user_id", comment: "Template user for new users created through signup"
+    t.boolean "module_event_sale", comment: "Tickets"
+    t.boolean "module_website_event_track", comment: "Tracks and Agenda"
+    t.boolean "module_website_event_questions", comment: "Registration Survey"
+    t.boolean "module_event_barcode", comment: "Barcode"
+    t.boolean "module_website_event_sale", comment: "Online Ticketing"
+    t.string "google_drive_authorization_code", comment: "Authorization Code"
+    t.boolean "module_hr_org_chart", comment: "Show Organizational Chart"
+    t.boolean "group_mass_mailing_campaign", comment: "Mass Mailing Campaigns"
+    t.boolean "module_muk_web_client_refresh", comment: "Web Refresh"
+    t.boolean "module_muk_web_client_notification", comment: "Web Notification"
+    t.boolean "company_share_product", comment: "Share product to all companies"
+    t.boolean "group_uom", comment: "Units of Measure"
+    t.boolean "group_product_variant", comment: "Attributes and Variants"
+    t.boolean "group_stock_packaging", comment: "Product Packages"
+    t.boolean "group_sale_pricelist", comment: "Use pricelists to adapt your price per customers"
+    t.boolean "group_product_pricelist", comment: "Show pricelists On Products"
+    t.boolean "group_pricelist_item", comment: "Show pricelists to customers"
+    t.integer "chart_template_id", comment: "Template"
+    t.boolean "group_analytic_accounting", comment: "Analytic Accounting"
+    t.boolean "group_warning_account", comment: "Warnings"
+    t.boolean "group_cash_rounding", comment: "Cash Rounding"
+    t.boolean "module_account_asset", comment: "Assets Management"
+    t.boolean "module_account_deferred_revenue", comment: "Revenue Recognition"
+    t.boolean "module_account_budget", comment: "Budget Management"
+    t.boolean "module_account_payment", comment: "Online Payment"
+    t.boolean "module_account_reports", comment: "Dynamic Reports"
+    t.boolean "module_account_reports_followup", comment: "Follow-up Levels"
+    t.boolean "module_l10n_us_check_printing", comment: "Allow check printing and deposits"
+    t.boolean "module_account_batch_deposit", comment: "Use batch deposit"
+    t.boolean "module_account_sepa", comment: "SEPA Credit Transfer (SCT)"
+    t.boolean "module_account_sepa_direct_debit", comment: "Use SEPA Direct Debit"
+    t.boolean "module_account_plaid", comment: "Plaid Connector"
+    t.boolean "module_account_yodlee", comment: "Bank Interface - Sync your bank feeds automatically"
+    t.boolean "module_account_bank_statement_import_qif", comment: "Import .qif files"
+    t.boolean "module_account_bank_statement_import_ofx", comment: "Import in .ofx format"
+    t.boolean "module_account_bank_statement_import_csv", comment: "Import in .csv format"
+    t.boolean "module_account_bank_statement_import_camt", comment: "Import in CAMT.053 format"
+    t.boolean "module_currency_rate_live", comment: "Automatic Currency Rates"
+    t.boolean "module_print_docsaway", comment: "Docsaway"
+    t.boolean "module_product_margin", comment: "Allow Product Margin"
+    t.boolean "module_l10n_eu_service", comment: "EU Digital Goods VAT"
+    t.boolean "module_account_taxcloud", comment: "Account TaxCloud"
+    t.boolean "auth_oauth_google_enabled", comment: "Allow users to sign in with Google"
+    t.string "auth_oauth_google_client_id", comment: "Client ID"
+    t.string "server_uri_google", comment: "Server uri"
+    t.string "crm_alias_prefix", comment: "Default Alias Name for Leads"
+    t.boolean "generate_lead_from_alias", comment: "Manual Assignation of Emails"
+    t.boolean "group_use_lead", comment: "Leads"
+    t.boolean "module_crm_phone_validation", comment: "Phone Formatting"
+    t.boolean "module_web_clearbit", comment: "Customer Autocomplete"
+    t.string "cal_client_id", comment: "Client_id"
+    t.string "cal_client_secret", comment: "Client_key"
+    t.string "server_uri", comment: "URI for tuto"
+    t.boolean "group_attendance_use_pin", comment: "Employee PIN"
+    t.boolean "module_website_hr_recruitment", comment: "Online Posting"
+    t.boolean "module_hr_recruitment_survey", comment: "Interview Forms"
+    t.boolean "module_hr_timesheet", comment: "Timesheets"
+    t.boolean "module_rating_project", comment: "Rating on Tasks"
+    t.boolean "module_project_forecast", comment: "Forecasts"
+    t.boolean "group_subtask_project", comment: "Sub-tasks"
+    t.integer "website_id", null: false, comment: "website"
+    t.boolean "module_website_version", comment: "A/B Testing"
+    t.string "google_maps_api_key", comment: "Google Maps API Key"
+    t.boolean "has_google_analytics", comment: "Google Analytics"
+    t.boolean "has_google_analytics_dashboard", comment: "Google Analytics in Dashboard"
+    t.boolean "has_google_maps", comment: "Google Maps"
+    t.string "expense_alias_prefix", comment: "Default Alias Name for Expenses"
+    t.boolean "use_mailgateway", comment: "Let your employees record expenses by email"
+    t.boolean "module_sale_management", comment: "Customer Billing"
+    t.boolean "module_account_accountant", comment: "Account Accountant"
+    t.boolean "module_l10n_fr_hr_payroll", comment: "French Payroll"
+    t.boolean "module_l10n_be_hr_payroll", comment: "Belgium Payroll"
+    t.boolean "module_l10n_in_hr_payroll", comment: "Indian Payroll"
+    t.boolean "module_project_timesheet_synchro", comment: "Awesome Timesheet"
+    t.boolean "module_sale_timesheet", comment: "Time Billing"
+    t.boolean "module_project_timesheet_holidays", comment: "Leaves"
+    t.boolean "use_sale_note", comment: "Default Terms & Conditions"
+    t.boolean "group_discount_per_so_line", comment: "Discounts"
+    t.boolean "module_sale_margin", comment: "Margins"
+    t.boolean "group_sale_layout", comment: "Sections on Sales Orders"
+    t.boolean "group_warning_sale", comment: "Warnings"
+    t.boolean "portal_confirmation", comment: "Online Signature & Payment"
+    t.string "portal_confirmation_options", comment: "Online Signature & Payment options"
+    t.boolean "module_sale_payment", comment: "Online Signature & Payment"
+    t.boolean "module_website_quote", comment: "Quotations Templates"
+    t.boolean "group_sale_delivery_address", comment: "Customer Addresses"
+    t.boolean "multi_sales_price", comment: "Multiple Sales Prices per Product"
+    t.string "multi_sales_price_method", comment: "Pricelists"
+    t.string "sale_pricelist_setting", comment: "Pricelists"
+    t.boolean "group_show_price_subtotal", comment: "Show subtotal"
+    t.boolean "group_show_price_total", comment: "Show total"
+    t.boolean "group_proforma_sales", comment: "Pro-Forma Invoice"
+    t.string "sale_show_tax", null: false, comment: "Tax Display"
+    t.string "default_invoice_policy", comment: "Invoicing Policy"
+    t.integer "default_deposit_product_id", comment: "Deposit Product"
+    t.boolean "auto_done_setting", comment: "Lock Confirmed Orders"
+    t.boolean "module_website_sale_digital", comment: "Sell digital products - provide downloadable content on your customer portal"
+    t.string "auth_signup_uninvited", comment: "Customer Account"
+    t.boolean "module_delivery", comment: "Shipping Costs"
+    t.boolean "module_delivery_dhl", comment: "DHL"
+    t.boolean "module_delivery_fedex", comment: "FedEx"
+    t.boolean "module_delivery_ups", comment: "UPS"
+    t.boolean "module_delivery_usps", comment: "USPS"
+    t.boolean "module_delivery_bpost", comment: "bpost"
+    t.boolean "module_product_email_template", comment: "Specific Email"
+    t.boolean "module_sale_coupon", comment: "Coupons & Promotions"
+    t.boolean "group_website_popup_on_exit", comment: "Website Popup"
+    t.boolean "voip_enable", comment: "VoIP Phone Call"
+    t.string "voip_domain", comment: "Domain"
+    t.boolean "cdr_api_enable", comment: "Enable Phonenet.vn Api?"
+    t.string "cdr_api_key", comment: "API Key"
+    t.float "last_sync_time", comment: "Last Sync Time"
+    t.string "website_slide_google_app_key", comment: "Google Doc Key"
+    t.integer "default_survey_id", comment: "Default Survey"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
   create_table "admission_analysis", id: :serial, comment: "admission.analysis", force: :cascade do |t|
     t.integer "course_id", null: false, comment: "Course"
     t.date "start_date", null: false, comment: "Start Date"
@@ -2189,6 +2338,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.integer "company_id", comment: "Company"
     t.date "overtime_date", comment: "Ngày OT"
     t.string "type_of_day", comment: "Ngày OT"
+    t.datetime "message_last_post", comment: "Last Message Date"
   end
 
   create_table "bus_bus", id: :serial, comment: "bus.bus", force: :cascade do |t|
@@ -2458,6 +2608,11 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
     t.datetime "write_date", comment: "Last Updated on"
+    t.integer "sale_order_template_id", comment: "SO Email"
+    t.integer "admission_template_id", comment: "Admission Email"
+    t.integer "lms_template_id", comment: "LMS Email"
+    t.integer "event_template_id", comment: "Event Email"
+    t.integer "student_test_template_id", comment: "Student Test Email"
   end
 
   create_table "course_description", force: :cascade do |t|
@@ -4074,6 +4229,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.string "health_insurance_code", comment: "Số Thẻ BHYT"
     t.string "health_insurance_place", comment: "Nơi khám chữa bệnh ban đầu"
     t.integer "task", comment: "Task"
+    t.date "off_date", comment: "Off date"
     t.index ["barcode"], name: "hr_employee_barcode_uniq", unique: true
     t.index ["company_id"], name: "hr_employee_company_id_index"
     t.index ["resource_id"], name: "hr_employee_resource_id_index"
@@ -4126,6 +4282,16 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.integer "employee_id", null: false, comment: "Nhân viên"
     t.float "leaves_day", null: false, comment: "Ngày công"
     t.text "note", comment: "Mô tả"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "hr_employee_move", id: :serial, comment: "hr.employee.move", force: :cascade do |t|
+    t.integer "company_id", comment: "Company"
+    t.integer "department_id", comment: "Department"
+    t.integer "job_id", comment: "Job position"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -4357,6 +4523,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.text "website_meta_description", comment: "Website meta description"
     t.string "website_meta_keywords", comment: "Website meta keywords"
     t.boolean "website_published", comment: "Visible in Website"
+    t.boolean "active", comment: "Active"
     t.index ["name", "company_id", "department_id"], name: "hr_job_name_company_uniq", unique: true
     t.index ["name"], name: "hr_job_name_index"
   end
@@ -7071,6 +7238,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.integer "session_offset_session_total"
     t.integer "session_total"
     t.integer "session_offset_total"
+    t.integer "place_id", comment: "Place - Location"
     t.index ["code"], name: "op_batch_unique_batch_code", unique: true
   end
 
@@ -7098,6 +7266,14 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.boolean "skip_cancel", comment: "Skip cancel session"
     t.integer "start_lession_id", comment: "Start lession"
     t.integer "start_lesson_id", comment: "Start lesson"
+  end
+
+  create_table "op_batch_place", id: :serial, comment: "op.batch.place", force: :cascade do |t|
+    t.string "name", null: false, comment: "Name"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
   end
 
   create_table "op_batch_type", id: :serial, comment: "op.batch.type", force: :cascade do |t|
@@ -7767,6 +7943,8 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.string "batch_state", comment: "Status"
     t.integer "offset_session_id", comment: "offset for"
     t.integer "request_offset_id", comment: "Offset request"
+    t.boolean "recreate", comment: "Cho học lại"
+    t.integer "place_id", comment: "Place"
     t.index ["end_datetime"], name: "end_date"
     t.index ["start_datetime"], name: "Start_date"
     t.index ["type"], name: "Type"
@@ -7954,6 +8132,8 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.text "lesson_link", comment: "Link bài tập"
     t.string "parent_email", comment: "Parent email"
     t.datetime "message_last_post", comment: "Last Message Date"
+    t.boolean "sended_email_lms", comment: "Sended email LMS"
+    t.boolean "verdify_email_lms", comment: "Verify LMS"
     t.index ["roll_number", "course_id", "batch_id", "student_id"], name: "op_student_course_unique_name_roll_number_id", unique: true
     t.index ["roll_number", "course_id", "batch_id"], name: "op_student_course_unique_name_roll_number_course_id", unique: true
     t.index ["student_id", "course_id", "batch_id"], name: "op_student_course_unique_name_roll_number_student_id", unique: true
@@ -9076,7 +9256,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.bigint "product_id", null: false
     t.decimal "amount", precision: 10, scale: 2
     t.decimal "total_paid", precision: 10, scale: 2
-    t.integer "status"
+    t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "admin_note"
@@ -9101,6 +9281,11 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.integer "refer_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "refer_key"
+    t.integer "crm_lead_id"
+    t.date "success_conversion_date"
+    t.decimal "conversion_value", precision: 20, scale: 2
+    t.decimal "cashback_value", precision: 20, scale: 2
   end
 
   create_table "rel_badge_auth_users", id: false, comment: "RELATION BETWEEN gamification_badge AND res_users", force: :cascade do |t|
@@ -9670,6 +9855,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.datetime "activity_datetime_deadline", comment: "Next Activity Datetime Deadline"
     t.integer "phonecall_count", comment: "Phonecalls"
     t.integer "claim_count", comment: "# Claims"
+    t.integer "type_id", comment: "Customer Type"
     t.index ["commercial_partner_id"], name: "res_partner_commercial_partner_id_index"
     t.index ["company_id"], name: "res_partner_company_id_index"
     t.index ["date"], name: "res_partner_date_index"
@@ -9722,6 +9908,19 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
     t.datetime "write_date", comment: "Last Updated on"
   end
 
+  create_table "res_partner_request", id: :serial, comment: "res.partner.request", force: :cascade do |t|
+    t.string "name", comment: "Name"
+    t.integer "type_id", null: false, comment: "Type"
+    t.integer "partner_id", null: false, comment: "Partner"
+    t.text "note", comment: "Note"
+    t.string "state", comment: "state"
+    t.datetime "message_last_post", comment: "Last Message Date"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
   create_table "res_partner_res_partner_category_rel", id: false, comment: "RELATION BETWEEN res_partner_category AND res_partner", force: :cascade do |t|
     t.integer "category_id", null: false
     t.integer "partner_id", null: false
@@ -9733,6 +9932,15 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   create_table "res_partner_title", id: :serial, comment: "res.partner.title", force: :cascade do |t|
     t.string "name", null: false, comment: "Title"
     t.string "shortcut", comment: "Abbreviation"
+    t.integer "create_uid", comment: "Created by"
+    t.datetime "create_date", comment: "Created on"
+    t.integer "write_uid", comment: "Last Updated by"
+    t.datetime "write_date", comment: "Last Updated on"
+  end
+
+  create_table "res_partner_type", id: :serial, comment: "res.partner.type", force: :cascade do |t|
+    t.string "name", comment: "Name"
+    t.text "note", comment: "Description"
     t.integer "create_uid", comment: "Created by"
     t.datetime "create_date", comment: "Created on"
     t.integer "write_uid", comment: "Last Updated by"
@@ -11586,6 +11794,14 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "accounting_report", "res_users", column: "create_uid", name: "accounting_report_create_uid_fkey", on_delete: :nullify
   add_foreign_key "accounting_report", "res_users", column: "write_uid", name: "accounting_report_write_uid_fkey", on_delete: :nullify
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addition_config_settings", "account_chart_template", column: "chart_template_id", name: "addition_config_settings_chart_template_id_fkey", on_delete: :nullify
+  add_foreign_key "addition_config_settings", "product_product", column: "default_deposit_product_id", name: "addition_config_settings_default_deposit_product_id_fkey", on_delete: :nullify
+  add_foreign_key "addition_config_settings", "res_company", column: "company_id", name: "addition_config_settings_company_id_fkey", on_delete: :nullify
+  add_foreign_key "addition_config_settings", "res_users", column: "auth_signup_template_user_id", name: "addition_config_settings_auth_signup_template_user_id_fkey", on_delete: :nullify
+  add_foreign_key "addition_config_settings", "res_users", column: "create_uid", name: "addition_config_settings_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "addition_config_settings", "res_users", column: "write_uid", name: "addition_config_settings_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "addition_config_settings", "survey_survey", column: "default_survey_id", name: "addition_config_settings_default_survey_id_fkey", on_delete: :nullify
+  add_foreign_key "addition_config_settings", "website", name: "addition_config_settings_website_id_fkey", on_delete: :nullify
   add_foreign_key "admission_analysis", "op_course", column: "course_id", name: "admission_analysis_course_id_fkey", on_delete: :nullify
   add_foreign_key "admission_analysis", "res_users", column: "create_uid", name: "admission_analysis_create_uid_fkey", on_delete: :nullify
   add_foreign_key "admission_analysis", "res_users", column: "write_uid", name: "admission_analysis_write_uid_fkey", on_delete: :nullify
@@ -11813,6 +12029,11 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "comments", "users", column: "commented_by"
   add_foreign_key "conversations", "op_batch", column: "batch_id"
   add_foreign_key "conversations", "users", column: "created_by"
+  add_foreign_key "course_categ", "mail_template", column: "admission_template_id", name: "course_categ_admission_template_id_fkey", on_delete: :nullify
+  add_foreign_key "course_categ", "mail_template", column: "event_template_id", name: "course_categ_event_template_id_fkey", on_delete: :nullify
+  add_foreign_key "course_categ", "mail_template", column: "lms_template_id", name: "course_categ_lms_template_id_fkey", on_delete: :nullify
+  add_foreign_key "course_categ", "mail_template", column: "sale_order_template_id", name: "course_categ_sale_order_template_id_fkey", on_delete: :nullify
+  add_foreign_key "course_categ", "mail_template", column: "student_test_template_id", name: "course_categ_student_test_template_id_fkey", on_delete: :nullify
   add_foreign_key "course_categ", "res_users", column: "create_uid", name: "course_categ_create_uid_fkey", on_delete: :nullify
   add_foreign_key "course_categ", "res_users", column: "write_uid", name: "course_categ_write_uid_fkey", on_delete: :nullify
   add_foreign_key "course_description", "op_course"
@@ -12268,6 +12489,11 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "hr_employee_leave", "hr_employee", column: "employee_id", name: "hr_employee_leave_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_leave", "res_users", column: "create_uid", name: "hr_employee_leave_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_leave", "res_users", column: "write_uid", name: "hr_employee_leave_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_move", "hr_department", column: "department_id", name: "hr_employee_move_department_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_move", "hr_job", column: "job_id", name: "hr_employee_move_job_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_move", "res_company", column: "company_id", name: "hr_employee_move_company_id_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_move", "res_users", column: "create_uid", name: "hr_employee_move_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "hr_employee_move", "res_users", column: "write_uid", name: "hr_employee_move_write_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_task", "hr_employee", column: "employee_id", name: "hr_employee_task_employee_id_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_task", "res_users", column: "create_uid", name: "hr_employee_task_create_uid_fkey", on_delete: :nullify
   add_foreign_key "hr_employee_task", "res_users", column: "write_uid", name: "hr_employee_task_write_uid_fkey", on_delete: :nullify
@@ -13003,6 +13229,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "op_badge_student_wizard", "res_users", column: "create_uid", name: "op_badge_student_wizard_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_badge_student_wizard", "res_users", column: "write_uid", name: "op_badge_student_wizard_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_admission_register", column: "register_id", name: "op_batch_register_id_fkey", on_delete: :nullify
+  add_foreign_key "op_batch", "op_batch_place", column: "place_id", name: "op_batch_place_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_batch_type", column: "type_id", name: "op_batch_type_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_course", column: "course_id", name: "op_batch_course_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch", "op_subject", column: "start_subject_id", name: "op_batch_start_subject_id_fkey", on_delete: :nullify
@@ -13020,6 +13247,8 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "op_batch_gen", "op_subject", column: "subject_id", name: "op_batch_gen_subject_id_fkey", on_delete: :nullify
   add_foreign_key "op_batch_gen", "res_users", column: "create_uid", name: "op_batch_gen_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch_gen", "res_users", column: "write_uid", name: "op_batch_gen_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_place", "res_users", column: "create_uid", name: "op_batch_place_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "op_batch_place", "res_users", column: "write_uid", name: "op_batch_place_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch_type", "res_users", column: "create_uid", name: "op_batch_type_create_uid_fkey", on_delete: :nullify
   add_foreign_key "op_batch_type", "res_users", column: "write_uid", name: "op_batch_type_write_uid_fkey", on_delete: :nullify
   add_foreign_key "op_board_affiliation", "res_company", column: "company_id", name: "op_board_affiliation_company_id_fkey", on_delete: :nullify
@@ -13206,6 +13435,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "op_room_distribution_op_student_rel", "op_student", name: "op_room_distribution_op_student_rel_op_student_id_fkey", on_delete: :cascade
   add_foreign_key "op_session", "course_categ", column: "course_categ", name: "op_session_course_categ_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_batch", column: "batch_id", name: "op_session_batch_id_fkey", on_delete: :nullify
+  add_foreign_key "op_session", "op_batch_place", column: "place_id", name: "op_session_place_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_batch_type", column: "batch_type_id", name: "op_session_batch_type_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_classroom", column: "classroom_id", name: "op_session_classroom_id_fkey", on_delete: :nullify
   add_foreign_key "op_session", "op_course", column: "course_id", name: "op_session_course_id_fkey", on_delete: :nullify
@@ -13453,7 +13683,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "product_order_attribute_line", "res_company", column: "company_id", name: "product_order_attribute_line_company_id_fkey", on_delete: :nullify
   add_foreign_key "product_order_attribute_line", "res_users", column: "create_uid", name: "product_order_attribute_line_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_order_attribute_line", "res_users", column: "write_uid", name: "product_order_attribute_line_write_uid_fkey", on_delete: :nullify
-  add_foreign_key "product_order_attribute_line", "sale_order_line", column: "order_line_id", name: "product_order_attribute_line_order_line_id_fkey", on_delete: :nullify
+  add_foreign_key "product_order_attribute_line", "sale_order_line", column: "order_line_id", name: "product_order_attribute_line_order_line_id_fkey", on_delete: :cascade
   add_foreign_key "product_packaging", "product_product", column: "product_id", name: "product_packaging_product_id_fkey", on_delete: :nullify
   add_foreign_key "product_packaging", "res_users", column: "create_uid", name: "product_packaging_create_uid_fkey", on_delete: :nullify
   add_foreign_key "product_packaging", "res_users", column: "write_uid", name: "product_packaging_write_uid_fkey", on_delete: :nullify
@@ -13562,6 +13792,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "redeem_products", "redeem_product_categories", column: "category_id"
   add_foreign_key "redeem_transactions", "redeem_product_colors", column: "color_id"
   add_foreign_key "redeem_transactions", "redeem_product_sizes", column: "size_id"
+  add_foreign_key "refer_friends", "crm_lead"
   add_foreign_key "refer_friends", "users", column: "refer_by"
   add_foreign_key "rel_badge_auth_users", "gamification_badge", name: "rel_badge_auth_users_gamification_badge_id_fkey", on_delete: :cascade
   add_foreign_key "rel_badge_auth_users", "res_users", column: "res_users_id", name: "rel_badge_auth_users_res_users_id_fkey", on_delete: :cascade
@@ -13659,6 +13890,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "res_partner", "res_partner", column: "parent_id", name: "res_partner_parent_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_partner_industry", column: "industry_id", name: "res_partner_industry_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_partner_title", column: "title", name: "res_partner_title_fkey", on_delete: :nullify
+  add_foreign_key "res_partner", "res_partner_type", column: "type_id", name: "res_partner_type_id_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_province", column: "province_id", name: "res_partner_province_id_fkey", on_delete: :restrict
   add_foreign_key "res_partner", "res_users", column: "create_uid", name: "res_partner_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_partner", "res_users", column: "user_id", name: "res_partner_user_id_fkey", on_delete: :nullify
@@ -13675,10 +13907,16 @@ ActiveRecord::Schema.define(version: 2020_08_20_040655) do
   add_foreign_key "res_partner_category", "res_users", column: "write_uid", name: "res_partner_category_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_partner_industry", "res_users", column: "create_uid", name: "res_partner_industry_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_partner_industry", "res_users", column: "write_uid", name: "res_partner_industry_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_request", "res_partner", column: "partner_id", name: "res_partner_request_partner_id_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_request", "res_partner_type", column: "type_id", name: "res_partner_request_type_id_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_request", "res_users", column: "create_uid", name: "res_partner_request_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_request", "res_users", column: "write_uid", name: "res_partner_request_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_partner_res_partner_category_rel", "res_partner", column: "partner_id", name: "res_partner_res_partner_category_rel_partner_id_fkey", on_delete: :cascade
   add_foreign_key "res_partner_res_partner_category_rel", "res_partner_category", column: "category_id", name: "res_partner_res_partner_category_rel_category_id_fkey", on_delete: :cascade
   add_foreign_key "res_partner_title", "res_users", column: "create_uid", name: "res_partner_title_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_partner_title", "res_users", column: "write_uid", name: "res_partner_title_write_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_type", "res_users", column: "create_uid", name: "res_partner_type_create_uid_fkey", on_delete: :nullify
+  add_foreign_key "res_partner_type", "res_users", column: "write_uid", name: "res_partner_type_write_uid_fkey", on_delete: :nullify
   add_foreign_key "res_province", "res_country", column: "country_id", name: "res_province_country_id_fkey", on_delete: :nullify
   add_foreign_key "res_province", "res_users", column: "create_uid", name: "res_province_create_uid_fkey", on_delete: :nullify
   add_foreign_key "res_province", "res_users", column: "write_uid", name: "res_province_write_uid_fkey", on_delete: :nullify

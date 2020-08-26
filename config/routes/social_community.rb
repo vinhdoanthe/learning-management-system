@@ -32,9 +32,16 @@ namespace :social_community do
     resources :messages
   end
 
-  resources :refer_friends
+  # resources :refer_friends
   namespace :refer_friends do
+    get '', action: 'index'
     post 'create_new_refer_request', action: 'create_new_refer_request', as: 'create_new_refer_request'
+    put 'confirm/:refer_key', action: 'confirm'
+    get 'confirm/:refer_key', action: 'confirm', as: 'confirm'
+    put 'discard/:refer_key', action: 'discard'
+    get 'discard/:refer_key', action: 'discard', as: 'discard'
+    post 'cancel', action: 'cancel', as: 'cancel'
+    post 'approve', action: 'approve', as: 'approve'
     post 'update_refer_request', action: 'update_refer_request', as: 'update_refer_request'
   end
 

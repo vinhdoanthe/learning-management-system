@@ -1,0 +1,12 @@
+.label-edit.label {
+  width: auto !important;
+}
+
+.label-edit.label-primary {
+  background-color: #337ab7 !important;
+}
+
+#submit_refer_friend_btn {
+  font-weight: 600;
+  max-width: 130px;
+}

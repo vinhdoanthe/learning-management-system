@@ -10,10 +10,13 @@ class SendGridMailer
   end
 
   def send_email type, data
+    binding.pry
     if type == MailType::SEND_FACULTY_ACCOUNT_INFORMATION
       send_faculty_account_email data 
     elsif type == MailType::SEND_RESET_PASSWORD_EMAIL
       send_reset_password_email data
+    elsif type == MailType::SEND_REFER_FRIEND_CONFIRM_EMAIL
+      send_refer_friend_email data
     else
     end
   end
@@ -83,6 +86,41 @@ class SendGridMailer
   def send_reset_password_email user
     data = parse_reset_password_data(user)
     execute_send(data)
+  end
+
+  def send_refer_friend_email data
+    # data:
+    # parent_email
+    # parent_name
+    # refer_person_name
+    # confirm_url
+    # discard_url
+    # expired_after_hours
+    refer_friend_data = {
+      "personalizations": [
+        {
+          "to": [
+            {
+              "email": data[:parent_email]
+            }
+          ],
+          "dynamic_template_data": {
+            "parent_name": data[:parent_name],
+            "refer_person_name": data[:refer_person_name],
+            "confirm_url": data[:confirm_url],
+            "discard_url": data[:discard_url], 
+            "expire_after_hours": data[:expire_after_hours]
+          }
+        }
+      ],
+      "from": {
+        "email": Settings.sendgrid.from[:email],
+        "name": Settings.sendgrid.from[:name]
+      },
+      "template_id": Settings.sendgrid.template[:send_refer_friend_confirm]
+    }
+
+    execute_send refer_friend_data
   end
 
   def execute_send data

@@ -52,7 +52,7 @@ namespace :user do
   get 'student_homework_detail' => 'op_students#student_homework_detail'
   get 'student_videos' => 'op_students#student_videos'
   get 'student_video_subs' => 'op_students#student_video_subs'
-  get 'refer_friend' => 'op_students#refer_friend'
+  # get 'refer_friend' => 'op_students#refer_friend'
   post 'student_attendance_line' => 'op_students#student_attendance_line'
   # post 'student_timetable' => 'op_students#student_timetable'
   post 'teacher_evaluate' => 'op_teachers#teacher_evaluate'

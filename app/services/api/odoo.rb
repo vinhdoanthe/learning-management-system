@@ -79,5 +79,28 @@ module Api
 
     end
 
+    def self.create_lead params
+      # authenticate
+      uid, models = odoo_xml_authenticate()
+
+      begin
+        id = models.execute_kw(@@odoo_db, uid, @@odoo_password, 'crm.lead', 'create',[params]) 
+
+        return {
+          success: true,
+          crm_lead_id: id,
+          message: nil
+        }
+      rescue XMLRPC::FaultException => exception            
+
+        return {
+          success: false,
+          crm_lead_id: nil,
+          message: get_error(exception)
+        }
+      end
+
+    end
+
   end
 end
