@@ -134,7 +134,6 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
       #  project_id = project.id
       #end
     end
-    binding.pry
 
     respond_to do |format|
       format.html
