@@ -99,6 +99,7 @@
       <div class="upload_info">
         <label style="width: 100%; text-align: center"><%= t('student_project.link') %></label>
         <%= f.text_field :project_show_video, id: "upload_project_file", class:"blank_show_video" %>
+        <%= f.hidden_field :change_video, id: "video_had_change", value: '0' %>
         <p style="text-align: center; width: 100%"> <span class="no_link_file"><%= t('student_project.no_link') %></span> </p>
         <p style="text-align: center"> <span class="project_presentation_state click_to_update"><%= t('student_project.click_to_update') %></span> </p>
       </div>
@@ -264,8 +265,8 @@
 </style>
 <script>
   $("#edit_video_infomation").ready(function() {
-    subject_id = $('input[name="active_subject_project"]').val();
-    $('#student_project_subject').val(subject_id);
+    //subject_id = $('input[name="active_subject_project"]').val();
+    //$('#student_project_subject').val(subject_id);
     $('.project_detail_select').append('<span class="fa fa-caret-down" style="position: absolute; right: 30px; top: 30%"></span>');
     $('.upload_project_presentation').on('click', function(e) {
       if ((e.target !== this) && ($(e.target).is($('#download-presentation'))))

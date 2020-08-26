@@ -38,7 +38,7 @@ module Learning
       end
 
       def is_online?
-        if ['1','2'].include?(place_id)
+        if ['1','2'].include?(place_id.to_s)
           false
         else
           true

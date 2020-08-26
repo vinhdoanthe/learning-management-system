@@ -3,6 +3,7 @@
 
     <div class="modal-body">
       <div class="modal-title">
+        <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
         <label>Giao bài tập về nhà</label>
       </div>
       <% unless result %>
@@ -54,10 +55,10 @@
       </div>
       <% end %>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <% if result %>
           <button type="button" id="assign_homework_confirm" data-dismiss="modal" class="btn btn-primary">Giao bài tập</button>
         <% end %>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <div class="modal-dialog" style="width: 60%">
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">            
       <div class='row' style='display: flex'>
@@ -25,10 +25,10 @@
                     <col style='padding-top: 5px; padding-bottom: 5px;'>
                   </colgroup>
                   <tr>
-                    <td><label><%= t('student_project.description')%></label></td>
+                    <td style="vertical-align: top;"><label><%= t('student_project.description')%></label></td>
                     <td align='left' >
                       <% if !product.description.nil? && product.description.length > 0 %>
-                        <div style="max-height:300px; overflow-y: scroll;"><%= product.description.html_safe %></div>
+                        <div style="max-height:300px; padding-top: 5px;"><%= product.description.html_safe %></div>
                       <% end %>                
                     </td>
                   </tr>
