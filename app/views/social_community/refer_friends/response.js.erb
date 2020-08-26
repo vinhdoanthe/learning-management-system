@@ -1,0 +1,14 @@
+res = JSON.parse('<%= raw(result.to_json) %>');
+
+<% if key.present? && type == 'cancel' %>
+  target = $('.delete_refer_request[data-refer="<%= key %>"')
+  target.closest('tr').find('.refer_state').html(`<span class="label-edit label label-danger"><%= ReferFriendConstants::REFER_FRIEND_STATE_FAILED %></span>`)
+<% end %>
+
+<% if key.present? && type == 'new' %>
+    $('#refer_request_table').append('<%= escape_javascript ( render partial: 'social_community/refer_friends/partials/refer_item', locals: { refer: key } ) %>');
+    $('#refer_friend_modal').modal('hide');
+    $('.modal-backdrop').remove();
+<% end %>
+
+display_response_noti(res)
