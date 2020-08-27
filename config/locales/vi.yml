@@ -406,7 +406,7 @@ vi:
       Waiting to receive gifts: "Chờ đợi nhận quà"
       Click here to see the lesson: "Bấm vào đây để xem bài học."
       See lesson: "Xem bài học"
-      The system is processing the data. Please keep the screen on until successful processing!: "Hệ thống đang xử lý dữ liệu. Hãy giữ màn hình đến khi xử lý thành công!"
+      The_system_is_processing_the_data: "Hệ thống đang xử lý dữ liệu. Hãy giữ màn hình đến khi xử lý thành công!"
       The image file format should be jpg or png: "Định dạng tệp ảnh phải là jpg hoặc png"
     No homework: "Chưa có bài tập về nhà"
     user:
@@ -479,6 +479,8 @@ vi:
       You do not choose to upload pictures for the lesson: "Bạn không chọn upload ảnh cho bài học."
       Upload photo Lessons successful: "Cập ảnh cho %{total_photo_lesson} Bài học thành công."
       Upload photo Lessons fail: "Tệp ảnh bạn chọn cho Bài học chưa phù hợp. Hãy xem lại các yếu tố sau:<br>-Tên file ảnh<br>-Phải là file ảnh"
+      Photo Of Lesson Video: "Ảnh đại diện video các bài học"
+      Photo_Lesson_Video_Note: "Tệp ảnh Video bài học được đánh số trùng với Số thứ tự của bài học và có kích thước 252x252. Định dạng: jpg, png"
       lesson:
         Lesson detail: "Chi tiết bài học"
         Lesson does not exist: 'Bài học không tồn tại.'
@@ -490,11 +492,15 @@ vi:
         Lesson note: "Mô tả ngắn"
         Lesson devices: "Thiết bị dạy học"
         Lesson plan: "Giáo án"
-        Lesson slide: "Slide"
+        Lesson slide: "Slide(File trình chiếu của giảng viên)"
         Lesson video review: "Video ôn tập"
         Study document: "Tài liệu học tập"
         Document name: "Tên tài liệu"
         Document url: "Url"
+      LearningMaterial:
+        Title: "Tên tài liệu"
+        Description: "Mô tả ngắn(<= 255 ký tự)"
+        Google drive link: "Google drive link"
     Note: "Ghi chú"
     Order: "STT"
     Code: "Mã"

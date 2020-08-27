@@ -1,0 +1,27 @@
+<div class="modal-body">        
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"><%= t('adm.course.LearningMaterial.Title')%></label>
+      <div class="col-sm-10">
+        <input
+          type="text" required
+          maxlength="50"
+          class="form-control"
+          id="frm_title"
+          name="frm[title]"
+          value="<%= @obj_learning_material[:title]%>"/>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"><%= t('adm.course.LearningMaterial.Description')%></label>
+      <div class="col-sm-10">
+        <textarea required
+          class="form-control" 
+          maxlength="255"
+          rows="2"
+          id="frm_description"
+          name="frm_course[description]"
+          aria-describedby="frm_description"
+          aria-invalid="true"><%= @obj_learning_material[:description]%></textarea>             
+      </div>
+    </div>
+</div>

@@ -206,15 +206,14 @@
         end
       end
 
-      if params[:frm_subject][:lesson_thumbnail].present?
-        
-        # get lesson of subject
-        lessions = Learning::Course::OpLession.where(subject_id: params[:frm_subject][:subject_id]).order(lession_number: :ASC)
+      # get lesson of subject
+      lessions = Learning::Course::OpLession.where(subject_id: params[:frm_subject][:subject_id]).order(lession_number: :ASC)
 
-        if lessions.length <= 0
-          flash[:warning] = t('adm.course.This Subject has no lesson.')        
-        else
-          
+      if lessions.length <= 0
+        flash[:warning] = t('adm.course.This Subject has no lesson.')
+      else
+        #Upload thumbail lesson
+        if params[:frm_subject][:lesson_thumbnail].present?
           params[:frm_subject][:lesson_thumbnail].each  do |lesson_thumbnail|
           
             original_filename = lesson_thumbnail.original_filename
@@ -243,10 +242,49 @@
           else
             flash[:warning] = t('adm.course.Upload photo Lessons fail').html_safe
           end
+        else
+          flash[:warning] = t('adm.course.You do not choose to upload pictures for the lesson.')
+        end
+
+        # Upload thumbail for Video lesson
+        if params[:frm_subject][:lesson_video_thumbnail].present?
+
+          original_filename = ''
+          file_content_type = ''
+
+          params[:frm_subject][:lesson_video_thumbnail].each  do |lesson_video_thumbnail|
+          
+            original_filename = lesson_video_thumbnail.original_filename
+            file_content_type = lesson_video_thumbnail.content_type
+
+            if file_content_type == 'image/jpeg' or file_content_type == 'image/png'
+
+              # Lay ten file khong chua phan mo rong
+              first_filename = File.basename(original_filename, File.extname(original_filename))
+
+              lessions.each  do |lesson|
+                
+                if lesson.lession_number.to_i == first_filename.to_i
+                  # Lay cac video cua Lesson
+                  lesson_learning_materials = lesson.learning_materials.where(material_type: 'video', learning_type: 'review')
+                  if lesson_learning_materials.length > 0
+                    lesson_learning_materials[0].thumbnail_image.attach(lesson_video_thumbnail)
+                  else
+                    # Them moi vao learning_materials
+                    lesson_learning_material = Learning::Material::LearningMaterial.new(:material_type => 'video', :learning_type => 'review', :title => lesson.name, :description => lesson.name, :op_lession_id => lesson.id)
+                    lesson_learning_material.save
+                    lesson_learning_material.thumbnail_image.attach(lesson_video_thumbnail)
+                  end
+                  break
+                end
+              end
+            end
+          
+            #binding.pry
+          end #end for each
 
         end
-      else
-        flash[:warning] = t('adm.course.You do not choose to upload pictures for the lesson.')
+
       end
 
       redirect_to adm_learning_course_edit_path(params[:frm_subject][:course_id])

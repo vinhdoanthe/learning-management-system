@@ -1,0 +1,48 @@
+<div class="modal fade" id="remoteModalVimeoPlay" role="dialog" aria-labelledby="remoteModalVimeoPlayLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="100%" id="vimeo_play_allowFullScreen"  src="" frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>          
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group" role="group" style="float: right;">
+          <button type="button" class="btn btn-default btn-sm btn-close" data-dismiss="modal">
+            <i class="fas fa-ban"></i> <%= t('button.Close')%>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+#play_video_box  { 
+  position: relative; 
+  padding-bottom: 56.25%; 
+  height: 0; 
+  overflow: hidden; 
+  max-width: 100%; 
+  height: auto; 
+} 
+#play_video_box iframe, #play_video_box  object, #play_video_box embed { 
+  position: absolute; 
+  top: 0; left: 0; 
+  width: 100%; 
+  height: 100%; 
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function () {
+  $('.video_play_modal').on("click",function(e) {
+    var vimeo_id  = $(this).data("video-id")
+    
+    //$('#vimeo_play_allowFullScreen').val(vimeo_id)
+    document.getElementById("vimeo_play_allowFullScreen").src = '<%= Learning::Constant::Material::VIMEO_PLAYER_PREFIX%>' + vimeo_id;  
+  });
+});
+</script>

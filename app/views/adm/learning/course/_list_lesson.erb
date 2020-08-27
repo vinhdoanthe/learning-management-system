@@ -4,7 +4,7 @@
     <th style="width: 40%" class="text-info"><%= t('adm.course.Lesson')%></th>
     <th  class="text-info"><%= t('adm.Note')%></th>
     <th class="text-center text-info" style="width:15%"><%= t('button.update')%></th>
-    <th style="width:50px" class="text-center"><%= t('admin.actions.title')%></th>
+    <th style="width:50px" class="text-center">#</th>
   </tr>
   </thead>
   <tbody>
@@ -30,8 +30,7 @@
     </td>
     <td class="text-center">
       <div class="btn-group align-items-sm-center">
-        <a href="<%= adm_learning_course_lesson_show_path(lesson[:id])%>" class="btn btn-default btn-xs"><i class="fa fa-eye font-weight-normal"></i></a>
-        <a href="<%= adm_learning_course_lesson_edit_path(lesson[:id])%>" class="btn btn-default btn-xs"><i class="fa fa-edit font-weight-normal"></i></a>
+        <a title="<%= t('adm.course.lesson.Lesson detail')%>" href="<%= adm_learning_course_lesson_show_path(lesson[:id])%>" class="btn btn-default btn-xs"><i class="fa fa-eye font-weight-normal"></i></a>
       </div>
     </td>
   </tr>
