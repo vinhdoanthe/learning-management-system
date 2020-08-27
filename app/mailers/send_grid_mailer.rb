@@ -10,7 +10,6 @@ class SendGridMailer
   end
 
   def send_email type, data
-    binding.pry
     if type == MailType::SEND_FACULTY_ACCOUNT_INFORMATION
       send_faculty_account_email data 
     elsif type == MailType::SEND_RESET_PASSWORD_EMAIL

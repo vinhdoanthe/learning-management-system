@@ -339,7 +339,13 @@ en:
     List: "List"
     Presentee: "Presentee"
     Referral code: "Referral code"
+    Refer state: "Refer state"
     Parent's name: "Parent's name"
+    state_waiting: "Waiting"
+    state_comfirm: "Comfirmed"
+    state_success: "Success"
+    state_failed: "Failed"
+    Refer state: "Refer state"
     Phone: "Phone"
     student: "Student"
     Parent email: 'Parent Email'

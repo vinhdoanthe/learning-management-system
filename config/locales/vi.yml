@@ -525,11 +525,17 @@ vi:
     Presentee: "Người được giới thiệu"
     Referral code: "Mã giới thiệu"
     Parent's name: "Họ và tên phụ huynh"
+    Refer state: "Trạng thái"
+    state_waiting: "Đã gửi"
+    state_comfirm: "Đã xác nhận"
+    state_success: "Thành công"
+    state_failed: "Đã huỷ"
     Phone: "Điện thoại"
     student: "Học sinh"
     Parent email: 'Email phụ huynh'
     Other Note: 'Ghi chú khác'
     Refer date: "Ngày giới thiệu"
+    Refer state: "Trạng thái"
     learning_activity:
       name: "Hoạt động học tập"
       discussion: "Thảo luận"

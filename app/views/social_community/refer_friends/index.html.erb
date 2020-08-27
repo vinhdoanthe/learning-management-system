@@ -47,27 +47,20 @@
               <th><%= t("adm.Referral code")%></th>
               <th><%= t("adm.Parent's name")%></th>
               <th><%= t("adm.Phone")%></th>
-              <th><%= t("adm.student")%></th>
               <th><%= t("adm.Refer date")%></th>
+              <th><%= t("adm.Refer state") %></th>
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="refer_request_table">
             <% @refers.each do |refer| %>
-              <tr>
-                <td><%= refer.code %></td>
-                <td><%= refer.parent_name %></td>
-                <td><%= refer.mobile %></td>
-                <td><%= refer.student_name %></td>
-                <td><%= refer.created_at.strftime('%d.%m.%Y') %></td>
-                <%= render :partial => "refer_state", :locals => {refer: refer} %>
-              </tr>
+              <%= render "social_community/refer_friends/partials/refer_item", { refer: refer } %>
             <% end %>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="modal fade" id="refer_friend_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal" id="refer_friend_modal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content m-b-20">
           <div class="modal-body text-center modal-edit">
@@ -100,3 +93,4 @@
 <% content_for :stylesheet_includes do %>
   <%= stylesheet_link_tag('social_community/refer_friends') %>
 <% end %>
+<%= javascript_include_tag 'social_community/refer_friend/refer_friend' %>
