@@ -1,3 +1,4 @@
+<% teacher_id = current_user.op_faculty.id %>
 <div class="box-lession">
   <div class="row">
     <div class="col-md-2">
@@ -9,21 +10,39 @@
       <div class="bl-content">
         <ul id="session_time_table">
           <% sessions.each_with_index do |session, index| %>
-            <li>
-              <a href='/user/open_educat/session_student?session_id=<%= session.id %>' data-remote='true' style="text-decoration: none; color: #5b5b5b">
-                <p class="lesson_timeline <%= 'active' if session.id == active_session.id %>">
-              <input type='hidden' name="lession_id" value="<%= session.id %>">
-              <span class="tooltip-span" data-toggle="tooltip" data-html="true" title="<%= Learning::Batch::OpSessionDecorator.new(session).display_tooltip_session_timeline %>">
-                <span class="tag-time <%= (session.start_datetime > Time.now) ? 'comming_session' : 'had_passed_session' %> "><%= index + 1 %></span>
-              </span>
-              <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M') %></span>
-              <span class="last-time"><%= session.start_datetime.strftime('%d.%m.%Y') %></span>
-              </p>
-              </a>
-            </li>
+            <% if session.faculty_id == teacher_id %>
+              <li>
+                <a href='/user/open_educat/session_student?session_id=<%= session.id %>' data-remote='true' style="text-decoration: none; color: #5b5b5b">
+                  <p class="lesson_timeline <%= 'active' if session.id == active_session.id %>">
+                  <input type='hidden' name="lession_id" value="<%= session.id %>">
+                  <span class="tooltip-span" data-toggle="tooltip" data-html="true" title="<%= Learning::Batch::OpSessionDecorator.new(session).display_tooltip_session_timeline %>">
+                    <span class="tag-time <%= (session.start_datetime > Time.now) ? 'comming_session' : 'had_passed_session' %> "><%= index + 1 %></span>
+                  </span>
+                  <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M') %></span>
+                  <span class="last-time"><%= session.start_datetime.strftime('%d.%m.%Y') %></span>
+                  </p>
+                </a>
+              </li>
+            <% else %>
+              <li>
+                <a style="text-decoration: none; color: #5b5b5b">
+                  <p class="lesson_timeline other_teacher">
+                  <input type='hidden' name="lession_id" value="<%= session.id %>">
+                  <span class="tooltip-span" data-toggle="tooltip" data-html="true" title="<%= session.op_faculty.full_name %> <br><%= Learning::Batch::OpSessionDecorator.new(session).display_tooltip_session_timeline %>">
+                    <span class="tag-time <%= (session.start_datetime > Time.now) ? 'comming_session' : 'had_passed_session' %> "><%= index + 1 %></span>
+                  </span>
+                  <span class="first-time"><%= session.start_datetime.strftime('%H:%M') + ' - ' + session.end_datetime.strftime('%H:%M') %></span>
+                  <span class="last-time"><%= session.start_datetime.strftime('%d.%m.%Y') %></span>
+                  </p>
+                </a>
+              </li>
+            <% end %>
           <% end %>
         </ul>
       </div>
     </div>
   </div>
 </div>
+<script>
+  $('[data-toggle="tooltip"]').tooltip();
+</script>

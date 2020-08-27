@@ -28,12 +28,14 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
     #user = User::Account::User.where(id: refer.refer_by)
 
     case refer.state
-    when 'waiting'
+    when ReferFriendConstants::REFER_FRIEND_STATE_WAITING
       "Cảm ơn con đã giới thiệu bạn #{ refer.student_name } vào học!"
-    when 'approve'
+    when ReferFriendConstants::REFER_FRIEND_STATE_SUCCEED
       "Bạn #{ refer.student_name } con giới thiệu đã vào học. Con được cộng TODO TEKY đồng. Tiếp tục phát huy nhé!"
-    when 'reject'
-      "Tiếc quá! Con giới thiệu bạn chưa thành công rồi! Hãy thử lại nhé"
+    when ReferFriendConstants::REFER_FRIEND_STATE_CONFIRM
+      "Lời giới thiệu của con đang được xét duyệt! Cảm ơn con nhé!"
+    when ReferFriendConstants::REFER_FRIEND_STATE_FAILED
+      "Yêu cầu giới thiệu bạn của con chưa phù hợp! Giơí thiệu bạn khác nhé!"
     end
   end
 

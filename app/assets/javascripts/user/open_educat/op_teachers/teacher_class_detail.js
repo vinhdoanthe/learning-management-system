@@ -159,8 +159,10 @@ $(document).ready(function(){
 
 
   $('#subject_timeline').on('click', '.lesson_timeline', function(){
-    $('.lesson_timeline').removeClass('active');
-    $(this).addClass('active')
+    if (!$(this).hasClass('other_teacher')){
+      $('.lesson_timeline').removeClass('active');
+      $(this).addClass('active')
+    }
   })
 
   $('#session_student_info').on('click', '.student_evaluate', function(){
