@@ -29,13 +29,13 @@ class SocialCommunity::ReferFriendsService
       # TODO: send Zalo notification
 
       return {
-        success: true,
-        refer_friend: refer_friend
+        noti: { type: 'success', message: 'Gửi lời mời thành công' },
+        key: refer_friend
       }
     else
       return {
-        success: false,
-        refer_friend: nil
+        noti: { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau' },
+        key: ''
       }
     end
   end
@@ -162,6 +162,60 @@ class SocialCommunity::ReferFriendsService
 
   def self.get_subscribed_users user_id
     [User::Account::User.where(id: user_id).first]
+  end
+
+  def cancel_refer_request refer_request, reason
+    if refer_request.update(state: REFER_FRIEND_STATE_FAILED, note: reason)
+      result = {
+        noti: { type: 'success', message: 'Huỷ lời mời thành công' },
+        key: refer_request
+      }
+    else
+      result = {
+        noti: {type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau' },
+        key: ''
+      }
+    end
+
+    result
+  end
+
+  def can_cancel? refer_key, user, reason
+    refer_friend = SocialCommunity::ReferFriend.where(refer_key: refer_key).last
+
+    if refer_friend.blank?
+      return {
+        success: false,
+        noti: {type: 'danger', message: 'Lời mời không tồn tại hoặc đã bị xoá! Vui lòng kiểm tra lại!' },
+        key: ''
+      }
+    end
+
+    result = {}
+
+    if user.is_admin? || user.id == refer_friend.refer_by
+      if reason.blank? && user.is_admin?
+        return {
+          success: false,
+          noti: {type: 'danger', message: 'Không thể huỷ yêu cầu giới thiệu mà thiếu lý do' },
+          key: ''
+        }
+      end
+
+        result = {
+          success: true,
+          noti: {},
+          key: refer_friend
+        }
+    else
+      result = {
+        success: false,
+        noti: {type: 'danger', message: "Bạn không có quyền xoá lời mời này" },
+        key: ''
+      }
+    end
+
+    result
   end
 
   private

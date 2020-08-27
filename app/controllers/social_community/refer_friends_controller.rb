@@ -1,9 +1,10 @@
 class SocialCommunity::ReferFriendsController < ApplicationController
   before_action :set_paper_trail_whodunnit
   before_action :params_permit, only: [:create_new_refer_request]
+  skip_before_action :authenticate_user!, only: [:confirm, :discard]
 
   def index
-    @refers = SocialCommunity::ReferFriend.where(refer_by: current_user)
+    @refers = SocialCommunity::ReferFriend.where(refer_by: current_user).order(created_at: :DESC)
   end
 
   def create_new_refer_request
@@ -11,21 +12,33 @@ class SocialCommunity::ReferFriendsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'social_community/refer_friends/respond', locals: { result: result.to_json }}
+      format.js { render 'social_community/refer_friends/response', locals: { result: result, type: 'new' }}
     end
   end
   
   def cancel
+    permission = authorize_cancel_refer params[:refer_key]
+
+    if permission[:success]
+      result = SocialCommunity::ReferFriendsService.new.cancel_refer_request permission[:key], params[:note]
+    else
+      result = permission
+    end
+
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/refer_friends/response', locals: { result: result, type: 'cancel' }}
+    end
   end
 
   def confirm
     
     result = SocialCommunity::ReferFriendsService.new.confirm_refer_friend(params[:refer_key])
-    
+
     if result[:success]
-      render :partial => 'confirm_success', :locals => {result: result}
+      render template: 'social_community/refer_friends/partials/confirms/confirm_success', :locals => {result: result}
     else
-      render :partial => 'confirm_failed', :locals => {result: result}
+      render template: 'social_community/refer_friends/partials/confirms/confirm_failed', :locals => {result: result}
     end
   end
 
@@ -58,5 +71,9 @@ class SocialCommunity::ReferFriendsController < ApplicationController
 
   def discard_refer_key_params
     params.permit(:refer_key)
+  end
+
+  def authorize_cancel_refer refer_key
+    SocialCommunity::ReferFriendsService.new.can_cancel? refer_key, current_user, params[:note]
   end
 end
