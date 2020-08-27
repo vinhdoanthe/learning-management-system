@@ -429,6 +429,7 @@ vi:
       Upload photo Lessons fail: "Tệp ảnh bạn chọn cho Bài học chưa phù hợp. Hãy xem lại các yếu tố sau:<br>-Tên file ảnh<br>-Phải là file ảnh"
       Photo Of Lesson Video: "Ảnh đại diện video các bài học"
       Photo_Lesson_Video_Note: "Tệp ảnh Video bài học được đánh số trùng với Số thứ tự của bài học và có kích thước 252x252. Định dạng: jpg, png"
+      Additional data representations for the Subject and Lessons: "Bổ sung các dữ liệu hình ảnh đại diện cho Học phần và bài học"
       lesson:
         Lesson detail: "Chi tiết bài học"
         Lesson does not exist: 'Bài học không tồn tại.'

@@ -6,7 +6,12 @@
     <% else%>
       <div class="admin-subject-img-no-thumbnail bg-cfcfcf">No image</div>
     <% end%>
-    <h3 class="card-title" title="<%= subject[:name]%>"><%= subject[:name].to_s.truncate(150)%></h3>
+    <h3 class="card-title" title="<%= subject[:name]%>"><%= subject[:name].to_s.truncate(150)%>
+    <div id="content_loading_<%= subject[:id]%>" style="display: block;font-size: 12px;" class="process_loading text-primary">
+      <i class="fa fa-spinner fa-2x fa-spin" style="padding: 3px;"></i><%= t('button.Loading')%>
+    </div>
+    </h3>
+
     <div class="card-tools">
       <button
         type="button"

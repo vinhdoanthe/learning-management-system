@@ -22,9 +22,7 @@
           <div class="tab-pane fade show active" id="tab-course-description" role="tabpanel" aria-labelledby="tab-course-description">
           <%= render "adm/learning/course/tab_course_description"%>
           </div>
-
           <div class="tab-pane fade show" id="tab-course-study-program" role="tabpanel" aria-labelledby="tab-course-study-program">
-          <%= render 'partials/content_loading' %>
           <%= render "adm/learning/course/tab_course_study_program"%>
           </div>
         </div>       
@@ -39,27 +37,29 @@
 
 <script type="text/javascript">
   
-  $('#content_loading').hide();
+  $('.process_loading').hide();
 
   $('.btn-subject-click').on("click",function(e) {
+
+    $('.process_loading').hide();
 
     var subject_id = $(this).data("id");
 
     if (subject_id && ($(this).data("item-collapse") == 0)) {      
-      $('#content_loading').show();
+      $('#content_loading_' + subject_id).show();
       $('#table-subject-' + subject_id).html(null);
       $.ajax({
         type: "GET",
         url: '<%= adm_learning_get_lesson_by_session_path%>',
         data: {subject_id: $(this).data("id")},
         success:function(data){
-          $('#content_loading').hide();
+          $('#content_loading_' + subject_id).hide();
           $(this).data("item-collapse",1);
           $('#table-subject-' + subject_id).html(data);
         }
       });
     } else {
-      $('#content_loading').hide();
+      $('.process_loading').hide();
       $('#table-subject-' + subject_id).html(null);
     }
   });
