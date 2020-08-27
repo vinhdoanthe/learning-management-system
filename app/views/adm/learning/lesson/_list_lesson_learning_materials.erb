@@ -1,64 +1,155 @@
-<div class="card">
+<div class="card" style="margin-top:15px;">
   <div class="card-header admin-subject-header-title">
     <h3 class="card-title"><label><%= t('adm.course.lesson.Study document')%></label></h3>    
   </div>
   <div class="card-body">
     <div class="table-responsive">
-		<h3 class="card-title text-info"><label><%= t('adm.course.lesson.Lesson plan')%></label></h3>    
+		<h3 class="card-title"><label><%= t('adm.course.lesson.Lesson plan')%></label></h3>    
 		<table class="table table-hover list-lesson">
 		  <thead>
 		  <tr>
-		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document')%></th>
-		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document url')%></th>
+		    <th style="width:40%" class="text-info"><%= t('adm.course.lesson.Document')%></th>
+		    <th style="width:calc(100% - 40% - 70px); word-break: break-all;" class="text-info"><%= t('adm.course.lesson.Document url')%></th>
+		    <th style="width:70px" class="text-info">#</th>
 		  </tr>
 		  </thead>
 		  <tbody>
 		  	<% @obj_lesson_learning_materials.each_with_index  do |learning_material, index| %>
-		  	<% if learning_material.material_type == 'file' && learning_material.learning_type == 'teach' && learning_material.learning_type == 'presentation' %>
+		  	<% if learning_material.material_type.to_s == 'file' && learning_material.learning_type.to_s == 'teach' && learning_material.content_type.to_s == 'lesson_plan' %>
 		  	<tr>
-		  		<td><%= learning_material.title%></td>
-		  		<td>XXX</td>
+		  		<td>
+		  			<div><%= learning_material.title%></div>
+		  			<small>
+		  				<label><%= t('adm.course.lesson.Lesson note')%>:</label> <%= learning_material.description.to_s.html_safe%>
+		  			</small>
+		  		</td>
+		  		<td>
+		  			<a title="Click to here" target="_blank" href="<%= learning_material.google_drive_link%>">
+		  			<%= learning_material.google_drive_link%>
+		  			</a>
+		  		</td>
+		  		<td>
+		  			<a  title="Click to here"
+		  			data-title="<%= learning_material.title%>"
+		  			data-backdrop="static"
+			        data-toggle="modal"
+			        data-remote="true"
+			        data-id="<%= learning_material.id%>"
+			        data-target="#modalFormLearningMaterial"
+		  			data-load-url="<%= adm_learning_course_lesson_learning_materials_edit_path(learning_material.id)%>"
+		  			class="btn btn-default btn-xs modal_edit"
+		  			>
+		  			<i class="fa fa-edit font-weight-normal"></i>
+		  			</a>
+		  		</td>
 		  	</tr>
 		  	<% end %>
 		  	<% end %>
-
 		  </tbody>
 		 </table>
     </div>
 
     <div class="table-responsive">
-		<h3 class="card-title text-info"><label><%= t('adm.course.lesson.Lesson slide')%></label></h3>    
+		<h3 class="card-title"><label><%= t('adm.course.lesson.Lesson slide')%></label></h3>    
 		<table class="table table-hover list-lesson">
 		  <thead>
 		  <tr>
-		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document')%></th>
-		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document url')%></th>
+		    <th style="width:40%" class="text-info"><%= t('adm.course.lesson.Document')%></th>
+		    <th style="width:calc(100% - 40% - 70px); word-break: break-all;" class="text-info"><%= t('adm.course.lesson.Document url')%></th>
+		    <th style="width:70px" class="text-info">#</th>
 		  </tr>
 		  </thead>
 		  <tbody>
+		  	<% @obj_lesson_learning_materials.each_with_index  do |learning_material, index| %>
+		  	<% if learning_material.material_type == 'file' && learning_material.learning_type == 'teach' && learning_material.content_type 	== 'presentation' %>
 		  	<tr>
-		  		<td>XXX</td>
-		  		<td>XXX</td>
+		  		<td>
+		  			<div><%= learning_material.title%></div>
+		  			<small>
+		  				<label><%= t('adm.course.lesson.Lesson note')%>:</label> <%= learning_material.description.to_s.html_safe%>
+		  			</small>
+		  		</td>
+		  		<td>
+		  			<a title="Click to here" target="_blank" href="<%= learning_material.google_drive_link%>">
+		  			<%= learning_material.google_drive_link%>
+		  			</a>
+		  		</td>
+		  		<td>
+		  			<a
+			  			title="Click to here"
+			  			data-title="<%= learning_material.title%>"
+			  			data-backdrop="static"
+				        data-toggle="modal"
+				        data-remote="true"
+				        data-id="<%= learning_material.id%>"
+				        data-target="#modalFormLearningMaterial"
+		  				data-load-url="<%= adm_learning_course_lesson_learning_materials_edit_path(learning_material.id)%>"
+		  				class="btn btn-default btn-xs modal_edit"
+		  			>
+		  			<i class="fa fa-edit font-weight-normal"></i>
+		  			</a>
+		  		</td>
 		  	</tr>
+		  	<% end %>
+		  	<% end %>
 		  </tbody>
 		 </table>
     </div>
 
     <div class="table-responsive">
-		<h3 class="card-title text-info"><label><%= t('adm.course.lesson.Lesson video review')%></label></h3>    
+		<h3 class="card-title"><label><%= t('adm.course.lesson.Lesson video review')%></label></h3>    
 		<table class="table table-hover list-lesson">
 		  <thead>
 		  <tr>
-		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document')%></th>
-		    <th style="width:50%" class="text-info"><%= t('adm.course.lesson.Document url')%></th>
+		    <th style="width:40%" class="text-info"><%= t('adm.course.lesson.Document')%></th>
+		    <th style="width:calc(100% - 40% - 70px); word-break: break-all;" class="text-info">ID Vimeo</th>
+		    <th style="width:70px" class="text-info">#</th>
 		  </tr>
 		  </thead>
 		  <tbody>
 		  	<% @obj_lesson_learning_materials.each_with_index  do |learning_material, index| %>
-		  	<% if learning_material.material_type == 'video' && learning_material.learning_type == 'review' && learning_material.learning_type == 'lesson_plan' %>
+		  	<% if learning_material.material_type == 'video' && learning_material.learning_type == 'review'%>
 		  	<tr>
-		  		<td><%= learning_material.title%></td>
-		  		<td>XXX</td>
+		  		<td>
+		  			<div><%= learning_material.title%></div>
+		  			<small>
+		  				<label><%= t('adm.course.lesson.Lesson note')%>:</label> <%= learning_material.description.to_s.html_safe%>
+		  			</small>
+		  		</td>
+		  		<td>
+		  			<% if !learning_material.thumbnail_image.nil? && learning_material.thumbnail_image.attached? %>
+			        <img style="cursor:pointer;" data-toggle="modal" data-target="#ModalPhoto" src="<%= url_for(learning_material.thumbnail_image)%>" class="admin-lesson-img-thumbnail" />
+			      <% else%>
+			        <div class="admin-lesson-img-no-thumbnail bg-cfcfcf">No image</div>
+			      <% end%>
+		  			<a
+		  			class="video_play_modal"
+		  			title="Click to here"
+		  			href="#"
+		  			data-title="<%= learning_material.title%>"
+		  			data-backdrop="static"
+			        data-toggle="modal"
+			        data-remote="true"
+			        data-video-id="<%= learning_material.ziggeo_file_id.to_s%>"
+			        data-target="#remoteModalVimeoPlay"
+		  			>
+		  			<%= learning_material.ziggeo_file_id.to_s%>
+		  			</a>
+		  		</td>
+		  		<td>
+		  		<a  title="Click to here"
+		  			data-title="<%= learning_material.title%>"
+		  			data-backdrop="static"
+			        data-toggle="modal"
+			        data-remote="true"
+			        data-id="<%= learning_material.id%>"
+			        data-target="#modalFormLearningMaterial"
+		  			data-load-url="<%= adm_learning_course_lesson_learning_materials_edit_path(learning_material.id)%>"
+		  			class="btn btn-default btn-xs modal_edit"
+		  			>
+		  			<i class="fa fa-edit font-weight-normal"></i>
+		  		</a>
+		  		</td>
 		  	</tr>
 		  	<% end %>
 		  	<% end %>
