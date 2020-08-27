@@ -500,6 +500,7 @@ vi:
     Parent email: 'Email phụ huynh'
     Other Note: 'Ghi chú khác'
     Refer date: "Ngày giới thiệu"
+    Refer state: "Trạng thái"
     learning_activity:
       name: "Hoạt động học tập"
       discussion: "Thảo luận"

@@ -21,6 +21,8 @@ class SocialCommunity::ReferFriendsService
         state: state,
         refer_by: user_id)
 
+      # create noti
+        refer_friend.create_notifications
       # build refer_friend_confirm_data
       email_data = build_confirm_data refer_friend
 
@@ -62,6 +64,7 @@ class SocialCommunity::ReferFriendsService
             :crm_lead_id => crm_lead[:crm_lead_id])
           # TODO: send email
           # TODO: send Zalo notification
+          refer_friend.create_notifications
           return {
             success: true,
             refer_friend: refer_friend
@@ -164,10 +167,35 @@ class SocialCommunity::ReferFriendsService
     [User::Account::User.where(id: user_id).first]
   end
 
+  def cancel_refer_request refer_request, reason
+    if refer_request.update(state: REFER_FRIEND_STATE_FAILED, note: reason)
+      result = { type: 'success', message: 'Huỷ lời mời thành công' }
+    else
+      result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau' }
+    end
+
+    result
+  end
+
+  def can_cancel? refer_friend, user, reason
+    result = {}
+
+    if user.is_admin? || user.id == refer_friend.refer_by
+      if reason.blank?
+        result = [false, { type: 'danger', message: 'Không thể huỷ yêu cầu giới thiệu mà thiếu lý do' } ]
+      end
+      result = [true, {}]
+    else
+      result = [false, { type: 'danger', message: "Bạn không có quyền xoá lời mời nayf" }]
+    end
+
+    result
+  end
+
   private
 
   def build_confirm_data refer_friend
-    result = {
+    {
       :parent_email => refer_friend.email,
       :parent_name => refer_friend.parent_name,
       :refer_person_name => User::Account::User.find(refer_friend.refer_by).op_student&.vattr_parent_full_name,
@@ -175,8 +203,6 @@ class SocialCommunity::ReferFriendsService
       :discard_url => Rails.application.routes.url_helpers.social_community_refer_friends_discard_url(refer_friend.refer_key),
       :expired_after_hours => Settings.refer_friend.request[:expired_after_hours].to_i
     }
-
-    result
   end
 
   def can_confirm? refer_friend
@@ -198,7 +224,6 @@ class SocialCommunity::ReferFriendsService
 
     return true
   end
-
 
   def build_lead_object refer_friend
     {
