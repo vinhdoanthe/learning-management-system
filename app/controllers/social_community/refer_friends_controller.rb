@@ -9,6 +9,12 @@ class SocialCommunity::ReferFriendsController < ApplicationController
 
   def create_new_refer_request
     result = SocialCommunity::ReferFriendsService.new.create_refer_friend(@params[:email], @params[:mobile], @params[:parent_name], @params[:note], current_user.id)
+    key = result[:refer_friend]
+    response = if result[:success]
+                 { type: 'success', message: 'Gửi lời mời thành công'}
+               else
+                 { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+               end
 
     respond_to do |format|
       format.html
@@ -32,7 +38,6 @@ class SocialCommunity::ReferFriendsController < ApplicationController
   end
 
   def confirm
-    
     result = SocialCommunity::ReferFriendsService.new.confirm_refer_friend(params[:refer_key])
 
     if result[:success]
@@ -49,9 +54,9 @@ class SocialCommunity::ReferFriendsController < ApplicationController
     result = SocialCommunity::ReferFriendsService.new.discard_refer_friend(params[:refer_key])
 
     if result[:success]
-      render :partial => 'discard_success', :locals => {result: result}
+      render template: 'social_community/refer_friends/partials/discards/discard_success', :locals => {result: result}
     else
-      render :partial => 'discard_failed', :locals => {result: result}
+      render template: 'social_community/refer_friends/partials/discards/discard_failed', :locals => {result: result}
     end
   end
 

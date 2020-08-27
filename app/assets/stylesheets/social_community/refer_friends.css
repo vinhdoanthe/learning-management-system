@@ -10,3 +10,24 @@
   font-weight: 600;
   max-width: 130px;
 }
+.delete_refer_request {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.refer_state span{
+  min-width: 100px !important;
+  padding: 5px !important;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.table-list-refer th {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+
+.table-list-refer td {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}

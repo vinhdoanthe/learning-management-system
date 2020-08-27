@@ -21,6 +21,8 @@ class SocialCommunity::ReferFriendsService
         state: state,
         refer_by: user_id)
 
+      # create noti
+        refer_friend.create_notifications
       # build refer_friend_confirm_data
       email_data = build_confirm_data refer_friend
 
@@ -62,6 +64,7 @@ class SocialCommunity::ReferFriendsService
             :crm_lead_id => crm_lead[:crm_lead_id])
           # TODO: send email
           # TODO: send Zalo notification
+          refer_friend.create_notifications
           return {
             success: true,
             refer_friend: refer_friend
@@ -193,6 +196,14 @@ class SocialCommunity::ReferFriendsService
 
     result = {}
 
+    unless refer_friend.is_waiting?
+      return {
+        success: false,
+        noti: {type: 'danger', message: 'Chỉ có thể huỷ lời mời ở trạng thái đã gửi' },
+        key: ''
+      }
+    end
+
     if user.is_admin? || user.id == refer_friend.refer_by
       if reason.blank? && user.is_admin?
         return {
@@ -221,7 +232,7 @@ class SocialCommunity::ReferFriendsService
   private
 
   def build_confirm_data refer_friend
-    result = {
+    {
       :parent_email => refer_friend.email,
       :parent_name => refer_friend.parent_name,
       :refer_person_name => User::Account::User.find(refer_friend.refer_by).op_student&.vattr_parent_full_name,
@@ -229,8 +240,6 @@ class SocialCommunity::ReferFriendsService
       :discard_url => Rails.application.routes.url_helpers.social_community_refer_friends_discard_url(refer_friend.refer_key),
       :expired_after_hours => Settings.refer_friend.request[:expired_after_hours].to_i
     }
-
-    result
   end
 
   def can_confirm? refer_friend
@@ -252,7 +261,6 @@ class SocialCommunity::ReferFriendsService
 
     return true
   end
-
 
   def build_lead_object refer_friend
     {

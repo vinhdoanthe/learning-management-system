@@ -3,7 +3,7 @@ res = JSON.parse('<%= raw(result[:noti].to_json) %>');
 
 <% if key.present? && type == 'cancel' %>
   target = $('.delete_refer_request[data-refer="<%= key.refer_key %>"')
-  target.closest('tr').find('.refer_state').html(`<span class="label-edit label label-danger"><%= ReferFriendConstants::REFER_FRIEND_STATE_FAILED %></span>`)
+  target.closest('tr').find('.refer_state').html(`<span class="label-edit label label-danger"><%= I18n.t('adm.state_waiting') %></span>`)
 <% end %>
 
 <% if key.present? && type == 'new' %>
