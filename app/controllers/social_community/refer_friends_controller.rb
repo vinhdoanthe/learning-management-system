@@ -8,60 +8,24 @@ class SocialCommunity::ReferFriendsController < ApplicationController
 
   def create_new_refer_request
     result = SocialCommunity::ReferFriendsService.new.create_refer_friend(@params[:email], @params[:mobile], @params[:parent_name], @params[:note], current_user.id)
-    key = result[:refer_friend]
-    response = if result[:success]
-                 { type: 'success', message: 'Gửi lời mời thành công'}
-               else
-                 { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
-               end
 
     respond_to do |format|
       format.html
-      format.js { render 'social_community/refer_friends/response', locals: { result: response, key: key, type: 'new' }}
+      format.js { render 'social_community/refer_friends/respond', locals: { result: result.to_json }}
     end
   end
   
   def cancel
-    service = SocialCommunity::ReferFriendsService.new
-    refer_request = SocialCommunity::ReferFriend.where(refer_key: params[:refer_key]).first
-    key = ''
-
-    if refer_request.blank?
-      result = { type: 'danger', message: 'Yêu cầu giới thiệu không tồn tai' }
-    else
-      permission = service.can_cancel? refer_request, current_user, params[:note]
-
-      if permission[0]
-        result = service.cancel_refer_request refer_request, params[:note]
-      else
-        result = permisson[1]
-      end
-    end
-
-    if result[:type] == 'success'
-      key = params[:refer_key]
-      refer_request.create_notifications if current_user.is_admin?
-    end
-
-    respond_to do |format|
-      format.html
-      format.js { render 'social_community/refer_friends/response', locals: { result: result, key: key, type: 'cancel' }}
-    end
   end
 
   def confirm
+    
     result = SocialCommunity::ReferFriendsService.new.confirm_refer_friend(params[:refer_key])
-    key = result[:refer_friend]
-    response = if result[:success]
-                 { type: 'success', message: 'Cập nhật thành công'}
-               else
-                 { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
-               end
-
-
-    respond_to do |format|
-      format.html
-      format.js { render 'social_community/refer_friends/response', locals: { result: response, key: key, type: 'confirm' }}
+    
+    if result[:success]
+      render :partial => 'confirm_success', :locals => {result: result}
+    else
+      render :partial => 'confirm_failed', :locals => {result: result}
     end
   end
 
@@ -95,5 +59,4 @@ class SocialCommunity::ReferFriendsController < ApplicationController
   def discard_refer_key_params
     params.permit(:refer_key)
   end
-
 end
