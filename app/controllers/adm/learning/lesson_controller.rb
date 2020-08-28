@@ -54,6 +54,7 @@ class Adm::Learning::LessonController < ApplicationController
 
   end # END learning_material_edit
 
+
   def learning_material_update
 
       if params[:learning_material_id].present?
@@ -81,7 +82,102 @@ class Adm::Learning::LessonController < ApplicationController
 
       render partial: "adm/learning/lesson/#{form_lesson_learning_material}"
 
-    end # END learning_material_edit
+    end # END learning_material_update
 
+    # Update lesson info: Slide; Video; Bai giang
+    def lesson_learning_materials_update
 
+      if params[:subject_id].present?
+
+        @op_subject = Learning::Course::OpSubject.find(params[:subject_id])
+
+        if @op_subject.blank?
+          flash[:danger] = t("adm.course.lesson.Subject does not exist")
+        else
+
+          # get list lesson of subject_id
+          @lessons = @op_subject.op_lessions.order(lession_number: :ASC).select(:id, :name, :lession_number)
+
+          #@learning_materials = @lessons.learning_materials.select(:id,:title,:description, :material_type, :learning_type, :content_type, :google_drive_link, :ziggeo_file_id)
+
+          render partial: "adm/learning/lesson/list_lesson_form"
+
+        end
+
+      else
+        
+        flash[:danger] = t("adm.course.lesson.Subject does not exist")
+      
+      end
+
+    end # END: lesson_learning_materials_update
+
+    # lesson_learning_materials_update_process
+    def lesson_learning_materials_update_process
+
+      if params[:frm_learning_material][:subject_id].present?
+        
+        frm_lesson_learning_material = params[:frm_learning_material][:learning_material]
+
+        frm_lesson_learning_material.each  do |key, learning_material|
+
+          lesson_id = key
+
+          #puts learning_material
+          learning_material.each  do |key , obj_material|
+
+              document_type      = key
+              obj_material_id    = 0
+              obj_material_value = ''
+              
+              obj_material.each  do |key , material|
+
+                obj_material_id    = key.to_i
+                obj_material_value = material
+
+              end              
+
+              if document_type == 'document'
+                material_type = 'file'
+                learning_type = 'teach'
+                content_type  = 'lesson_plan'
+              elsif document_type == 'slide'
+                material_type = 'file'
+                learning_type = 'teach'
+                content_type  = 'presentation'
+              elsif document_type == 'video'
+                material_type = 'video'
+                learning_type = 'review'
+                content_type  = ''
+              end
+
+              if (obj_material_id.to_i > 0) # Update
+
+                  update_learning_material = Learning::Material::LearningMaterial.find(obj_material_id.to_i)
+
+                  if update_learning_material.present?
+                    if (update_learning_material[:material_type] == 'video' &&  update_learning_material[:learning_type] == 'review')
+                      update_learning_material.update(ziggeo_file_id: obj_material_value)
+                    else
+                      update_learning_material.update(google_drive_link: obj_material_value)
+                    end
+                  end
+              elsif (obj_material_id.to_i <= 0 && obj_material_value != '')
+
+                if document_type == 'video'
+                  new_learning_material = Learning::Material::LearningMaterial.new(material_type: material_type, learning_type: learning_type, content_type: content_type, ziggeo_file_id: obj_material_value,op_lession_id: lesson_id)
+                else
+                  new_learning_material = Learning::Material::LearningMaterial.new(material_type: material_type, learning_type: learning_type, content_type: content_type, google_drive_link: obj_material_value,op_lession_id: lesson_id)
+                end
+                new_learning_material.save
+
+              end
+
+          end
+
+        end
+
+      end
+
+    end
 end

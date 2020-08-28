@@ -27,6 +27,9 @@ namespace :adm do
     get 'course/lesson/:lesson_id/edit' => 'lesson#edit', as: 'course_lesson_edit'
     post 'course/lesson/update' => 'lesson#update', as: 'course_lesson_update'
 
+    get 'course/subject/:subject_id/lesson_learning_materials/update' => 'lesson#lesson_learning_materials_update', as: 'course_subject_lesson_learning_materials_update'
+    post 'course/subject/lesson_learning_materials/update/process' => 'lesson#lesson_learning_materials_update_process', as: 'course_lesson_learning_materials_update_process'
+
     get 'course/lesson/learning_materials/:learning_material_id/edit' => 'lesson#learning_material_edit', as: 'course_lesson_learning_materials_edit'    
     
     get 'operation_attendance' => 'operation_attendances#index', as: 'operation_attendance'

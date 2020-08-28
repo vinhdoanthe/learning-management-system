@@ -1,0 +1,124 @@
+<table class="table table-hover table-bordered list-lesson">
+  <thead>
+    <tr>
+      <th rowspan="2" style="width:30%" class="text-info"><%= t('adm.course.Lesson')%></th>
+      <th rowspan="2" style="width:70px" class="text-info"><%= t('adm.course.lesson.Lesson number')%></th>
+      <th colspan="3" class="text-center"><%= t('adm.course.lesson.Study document')%></th>
+      <th rowspan="2" style="width:50px" class="text-center">#</th>
+    </tr>
+    <tr>
+      <th><%= t('adm.course.lesson.Lesson plan')%></th>
+      <th><%= t('adm.course.lesson.Lesson slide')%></th>
+      <th><%= t('adm.course.lesson.Lesson video review')%></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @lessons.each_with_index  do |lesson, index|
+
+    # Lay LearningMaterial
+    learning_materials = lesson.learning_materials.select(:id,:title,:description, :material_type, :learning_type, :content_type, :google_drive_link, :ziggeo_file_id)
+    
+    google_drive_link_document = ''
+    google_drive_link_slide    = ''
+    id_vimeo                   = ''
+    url_thumbnail_video = ''
+
+    learning_material_id_document = 0
+    learning_material_id_slide    = 0
+    learning_material_id_id_vimeo = 0
+    
+    learning_materials.each_with_index  do |lg_mate, index|
+      
+      if lg_mate.material_type.to_s == 'file' && lg_mate.learning_type.to_s == 'teach' && lg_mate.content_type.to_s == 'lesson_plan'
+
+        google_drive_link_document    = lg_mate.google_drive_link
+        learning_material_id_document = lg_mate.id        
+
+      elsif lg_mate.material_type == 'file' && lg_mate.learning_type == 'teach' && lg_mate.content_type  == 'presentation'
+        
+        google_drive_link_slide = lg_mate.google_drive_link
+        learning_material_id_slide = lg_mate.id
+      
+      elsif lg_mate.material_type == 'video' && lg_mate.learning_type == 'review'
+
+        id_vimeo = lg_mate.ziggeo_file_id.to_s
+        learning_material_id_id_vimeo = lg_mate.id
+
+        if !lg_mate.thumbnail_image.nil? && lg_mate.thumbnail_image.attached?
+          url_thumbnail_video = url_for(lg_mate.thumbnail_image)
+        end
+      end
+    end
+  %>  
+  <tr>
+    <td><%= lesson[:name]%></td>
+    <td class="text-center"><%= lesson[:lession_number]%></td>
+    <td>
+      <div class="form-group row">
+        <div class="col-sm-12 input-group input-group-sm">
+        <input
+          type="url"
+          maxlength="1000"
+          class="form-control"
+          placeholder="<%= t('adm.course.LearningMaterial.Google drive link')%>"
+          id="frm_learning_material_google_drive_link_document"
+          name="frm_learning_material[learning_material][<%= lesson.id%>][document][<%= learning_material_id_document%>]"
+          value="<%= google_drive_link_document%>"/>
+          <span class="input-group-append">
+            <a class="btn btn-info btn-xs <% if google_drive_link_document == ''%> disabled <% end%>" href="<%= google_drive_link_document%>" target="_blank">
+            <i class="fas fa-file-contract"></i> <%= t('button.see')%>
+            </a>
+          </span>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="form-group row">
+        <div class="col-sm-12 input-group input-group-sm">
+          <input
+            type="url"
+            maxlength="1000"
+            class="form-control"
+            placeholder="<%= t('adm.course.LearningMaterial.Google drive link')%>"
+            id="frm_learning_material_google_drive_link_slide"
+            name="frm_learning_material[learning_material][<%= lesson.id%>][slide][<%= learning_material_id_slide%>]"
+            value="<%= google_drive_link_slide%>"/>
+            <span class="input-group-append">
+            <a class="btn btn-info btn-xs <% if google_drive_link_slide == ''%> disabled <% end%>" href="<%= google_drive_link_slide%>" target="_blank">
+            <i class="fas fa-file-contract"></i> <%= t('button.see')%>
+            </a>
+            </span>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="form-group row">
+        <div class="col-sm-12 input-group input-group-sm">
+          <input
+            type="text"
+            maxlength="100"
+            class="form-control"
+            placeholder="<%= t('adm.course.LearningMaterial.ID Vimeo')%>"
+            id="frm_learning_material_id_vimeo"
+            name="frm_learning_material[learning_material][<%= lesson.id%>][id_video][<%= learning_material_id_id_vimeo%>]"
+            value="<%= id_vimeo%>"/>
+            <span class="input-group-append">
+            <a class="btn btn-info btn-xs <% if learning_material_id_id_vimeo == ''%> disabled <% end%>" href="#" target="_blank">
+            <i class="fas fa-play"></i> <%= t('button.see')%>
+            </a>
+            </span>
+        </div>        
+      </div>
+      <div class="col-sm-12 row">
+          <% if url_thumbnail_video != '' %>
+            <img style="cursor:pointer;" src="<%= url_thumbnail_video%>" class="admin-lesson-img-thumbnail" />
+            <% else%>
+            <div class="admin-lesson-img-no-thumbnail bg-cfcfcf">No image</div>
+          <% end%>
+        </div>
+    </td>
+    <td></td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

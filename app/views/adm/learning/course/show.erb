@@ -34,6 +34,7 @@
   </div>
 </div>
 <%= render "adm/learning/course/subject_upload"%>
+<%= render "adm/learning/course/modal_form_update_lesson"%>
 
 <script type="text/javascript">
   
@@ -73,4 +74,15 @@
     $('#frm_subject_id').val($(this).data("id"));
     $("#remoteModalPhoto .modal-title").html('<%= t('learning.subject')%>: ' + $(this).data("title"));    
   });
+
+  $('#remoteModalLessonUpdate').on('show.bs.modal', function (e) {
+    
+    $('#frm_learning_material_subject_id').val($(e.relatedTarget).data("id"));
+
+    $("#modal_update_lesson").html('<div style="display: block;font-size: 12px;" class="text-primary"><i class="fa fa-spinner fa-2x fa-spin" style="padding: 3px;"></i><%= t('button.Loading')%></div>');
+    var loadurl = $(e.relatedTarget).data('load-url');    
+    $("#remoteModalLessonUpdate .modal-title").html('<%= t('learning.subject')%>: ' + $(e.relatedTarget).data('title'));
+    $(this).find('.modal-body').load(loadurl);
+  });
+
 </script>
