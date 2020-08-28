@@ -4,5 +4,9 @@
   <td><%= refer.mobile %></td>
   <td><%= refer.created_at.strftime('%d.%m.%Y') %></td>
   <%= render "social_community/refer_friends/partials/refer_state", {refer: refer} %>
-  <td><span class='delete_refer_request fa fa-trash' data-refer="<%= refer.refer_key %>"></span></td>
+  <% if refer.state_waiting? %>
+    <td><span class='delete_refer_request fa fa-times' data-refer="<%= refer.refer_key %>"></span></td>
+  <% else %>
+    <td></td>
+  <% end %>
 </tr>

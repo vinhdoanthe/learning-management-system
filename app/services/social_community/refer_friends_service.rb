@@ -53,7 +53,9 @@ class SocialCommunity::ReferFriendsService
     } if refer_friend.nil?
 
     # check condition
-    if can_confirm?(refer_friend)
+    permission = can_confirm? refer_friend
+
+    if permission[:success]
       # create crm_lead
       lead_object = build_lead_object refer_friend
       crm_lead = Api::Odoo.create_lead lead_object
@@ -77,11 +79,13 @@ class SocialCommunity::ReferFriendsService
 
       return {
         success: false,
+        message: 'đã có lỗi xảy ra',
         refer_friend: refer_friend
       }
     else
       return {
         success: false,
+        message: permission[:message],
         refer_friend: refer_friend
       }
     end 
@@ -93,11 +97,13 @@ class SocialCommunity::ReferFriendsService
 
     return {
       success: false,
+      message: 'lời giới thiệu không tồn tại hoặc đã bị xoá',
       refer_friend: nil
     } if refer_friend.nil?
 
     # check condition can discard?
-    if can_discard?(refer_friend)
+    permission = can_discard? refer_friend
+    if permission[:success]
       if refer_friend.update(:state => REFER_FRIEND_STATE_FAILED)
         # TODO: send email
         # TODO: create notification
@@ -111,6 +117,7 @@ class SocialCommunity::ReferFriendsService
 
     return {
       success: false,
+      message: permission[:message],
       refer_friend: refer_friend
     }
   end
@@ -243,23 +250,43 @@ class SocialCommunity::ReferFriendsService
   end
 
   def can_confirm? refer_friend
-    return false if !refer_friend.state_waiting?
+    if !refer_friend.state_waiting?
+      return {
+        sucess: false,
+        message: "lời mời đã được xử lý"
+      }
+    end
 
     expired_after_hours = Settings.refer_friend.request[:expired_after_hours].to_i
     # return false if refer_friend created too long
-    return false if (Time.now - expired_after_hours.hours) > refer_friend.created_at
+    if (Time.now - expired_after_hours.hours) > refer_friend.created_at
+      return {
+        success: false,
+        message: "đã quá hạn xác nhận"
+      }
+    end
 
-    return true
+    return { success: true }
   end
 
   def can_discard? refer_friend
-    return false if !refer_friend.state_waiting?
+    if !refer_friend.state_waiting?
+      return {
+        success: false,
+        message: "lời mời đã được xử lý"
+      }
+    end
 
     expired_after_hours = Settings.refer_friend.request[:expired_after_hours].to_i
     # return false if refer_friend created too long
-    return false if (Time.now - expired_after_hours.hours) > refer_friend.created_at
+    if (Time.now - expired_after_hours.hours) > refer_friend.created_at
+      return {
+        success: false,
+        message: "đã quá hạn xác nhận"
+      }
+    end
 
-    return true
+    return { success: true }
   end
 
   def build_lead_object refer_friend
