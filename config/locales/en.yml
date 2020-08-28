@@ -345,7 +345,7 @@ en:
     state_comfirm: "Comfirmed"
     state_success: "Success"
     state_failed: "Failed"
-    Refer state: "Refer state"
+    cancel_refer_friend: "Cancel refer friend"
     Phone: "Phone"
     student: "Student"
     Parent email: 'Parent Email'

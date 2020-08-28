@@ -6,6 +6,10 @@
   background-color: #337ab7 !important;
 }
 
+.label-edit.label-secondary {
+  background-color: #6c757d !important;
+}
+
 #submit_refer_friend_btn {
   font-weight: 600;
   max-width: 130px;

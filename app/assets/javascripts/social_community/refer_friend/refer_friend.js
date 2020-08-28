@@ -8,3 +8,7 @@ $('.delete_refer_request').on('click', function(){
     data: {refer_key: key, note: note, authenticity_token: $('[name="csrf-token"]')[0].content}
   })
 })
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});

@@ -1,9 +1,9 @@
 <% if refer.state_waiting? %>
   <td class="refer_state" align="left"><span class="label-edit label label-warning"><%= t('adm.state_waiting') %></span></td>
 <% elsif refer.state_confirm? %>
-  <td class="refer_state" align="left"><span class="label-edit label label-primary"><%= t('adm.state_waiting') %></span></td>
+  <td class="refer_state" align="left"><span class="label-edit label label-primary"><%= t('adm.state_confirm') %></span></td>
 <% elsif refer.state_succeed? %>
-  <td class="refer_state" align="left"><span class="label-edit label label-success"><%= t('adm.state_waiting')%></span></td>
+  <td class="refer_state" align="left"><span class="label-edit label label-success"><%= t('adm.state_success')%></span></td>
 <% elsif refer.state_failed? %>
-  <td class="refer_state" align="left"><span class="label-edit label label-danger"><%= t('adm.state_failed') %></span></td>
+  <td class="refer_state" align="left"><span class="label-edit label label-secondary"><%= t('adm.state_failed') %></span></td>
 <% end %>

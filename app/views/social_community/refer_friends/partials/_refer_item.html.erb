@@ -5,7 +5,7 @@
   <td><%= refer.created_at.strftime('%d.%m.%Y') %></td>
   <%= render "social_community/refer_friends/partials/refer_state", {refer: refer} %>
   <% if refer.state_waiting? %>
-    <td><span class='delete_refer_request fa fa-times' data-refer="<%= refer.refer_key %>"></span></td>
+    <td><span class='delete_refer_request fa fa-minus-square-o' style="color: red;" data-refer="<%= refer.refer_key %>" data-toggle="tooltip" title="<%= t('adm.cancel_refer_friend') %>"></span></td>
   <% else %>
     <td></td>
   <% end %>
