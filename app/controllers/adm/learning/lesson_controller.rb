@@ -173,9 +173,12 @@ class Adm::Learning::LessonController < ApplicationController
                 else
                   obj_learning_material = Learning::Material::LearningMaterial.new(material_type: material_type, learning_type: learning_type, content_type: content_type, google_drive_link: obj_material_value,op_lession_id: lesson_id)
                 end
+                
                 obj_learning_material.save
 
-              end              
+              end
+
+
 
           end
 
