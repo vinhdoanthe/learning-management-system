@@ -139,7 +139,6 @@ class Adm::Learning::LessonController < ApplicationController
             obj_material_value = material
 
           end              
-
           if document_type == 'document'
             material_type = 'file'
             learning_type = 'teach'
