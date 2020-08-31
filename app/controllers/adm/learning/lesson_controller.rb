@@ -175,16 +175,8 @@ class Adm::Learning::LessonController < ApplicationController
             obj_learning_material.save
 
           end
-
-          if ()
-
-          end
-
         end
-
       end
-
     end
-
   end
 end
