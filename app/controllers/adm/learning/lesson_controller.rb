@@ -128,7 +128,7 @@ class Adm::Learning::LessonController < ApplicationController
 
               document_type      = key
 
-              puts "document_type: #{key}"
+              #puts "document_type: #{key}"
 
               obj_material_id    = 0
               obj_material_value = ''
@@ -175,11 +175,7 @@ class Adm::Learning::LessonController < ApplicationController
                 end
                 obj_learning_material.save
 
-              end
-
-              if ()
-
-              end
+              end              
 
           end
 
