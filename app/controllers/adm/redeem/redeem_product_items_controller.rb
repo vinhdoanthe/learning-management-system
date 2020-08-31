@@ -2,7 +2,9 @@ class Adm::Redeem::RedeemProductItemsController < ApplicationController
   before_action :set_adm_redeem_redeem_product_item, only: [:show, :edit, :update, :destroy]
 
   def index
-    @adm_redeem_redeem_product_items = Redeem::RedeemProductItem.order(:created_at => :ASC).all
+    @products = Redeem::RedeemProduct.all
+    @product_item_states = Redeem::RedeemProductItem.pluck(:state).uniq
+    @adm_redeem_redeem_products_items = Adm::Redeem::RedeemProductsService.new.filter_product_items params
   end
 
   def show
