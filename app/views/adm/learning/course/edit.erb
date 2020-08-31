@@ -300,6 +300,8 @@
   </div>
 </div>
 <%= render "adm/learning/course/subject_upload"%>
+<%= render "adm/learning/course/modal_form_update_lesson"%>
+
 <style type="text/css">
   textarea {resize: none;}
 </style>
@@ -341,30 +343,6 @@ function validateExtensionImage(oForm) {
     }  
     return true;
 }
-
-$('.btn-subject-click').on("click",function(e) {
-
-  var subject_id = $(this).data("id");
-
-  if (subject_id && ($(this).data("item-collapse") == 0)) {
-    $('#content_loading').show();
-    $('#table-subject-' + subject_id).html(null);
-    $.ajax({
-      type: "GET",
-      url: '<%= adm_learning_get_lesson_by_session_path%>',
-      async: false,
-      data: {subject_id: $(this).data("id")},
-      success:function(data){
-        $('#content_loading').hide();
-        $(this).data("item-collapse",1);
-        $('#table-subject-' + subject_id).html(data);
-      }
-    });
-  } else {
-    $('#content_loading').hide();
-    $('#table-subject-' + subject_id).html(null);
-  }
-});
 
 $("#frm_image_thumbnail").change(function(event) {  
   readURL(this);
@@ -414,20 +392,9 @@ $(document).ready(function () {
     }
   });
 
-  $("#remoteModalPhoto").on("hidden.bs.modal", function() {
-    $(this).removeData('bs.modal');
-    $("#remoteModalPhoto .modal-title").html('&nbsp;');
-  });
-
   //$('#remoteModalPhoto').on('show.bs.modal', function (e) {
     //var loadurl = $(e.relatedTarget).data('load-url');
     //$(this).find('.modal-body').load(loadurl);
   //});
-
-  $('.btn-subject-upload').on("click",function(e) {
-    $('#frm_subject_id').val($(this).data("id"));
-    $("#remoteModalPhoto .modal-title").html('<%= t('learning.subject')%>: ' + $(this).data("title"));    
-  });
-
 });
 </script>

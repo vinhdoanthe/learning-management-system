@@ -52,7 +52,8 @@ vi:
     Loading: "Đang tải dữ liệu..."
     Upload photo: "Upload photo"
     Upload: "Upload"
-    Edit Lesson: "Cập nhật Bài học"
+    Document Lesson: "Tài nguyên Bài học"
+    Edit Lesson: "Cập nhật tài nguyên Bài học"
   select:
     all: "Tất cả"
     all_company: "Tất cả cơ sở"

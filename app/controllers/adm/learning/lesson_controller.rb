@@ -127,11 +127,15 @@ class Adm::Learning::LessonController < ApplicationController
           learning_material.each  do |key , obj_material|
 
               document_type      = key
+
+              puts "document_type: #{key}"
+
               obj_material_id    = 0
               obj_material_value = ''
               
               obj_material.each  do |key , material|
 
+                #key_temp = key.to_s
                 obj_material_id    = key.to_i
                 obj_material_value = material
 
@@ -148,28 +152,32 @@ class Adm::Learning::LessonController < ApplicationController
               elsif document_type == 'video'
                 material_type = 'video'
                 learning_type = 'review'
-                content_type  = ''
+                content_type  = ''                
               end
 
               if (obj_material_id.to_i > 0) # Update
 
-                  update_learning_material = Learning::Material::LearningMaterial.find(obj_material_id.to_i)
+                  obj_learning_material = Learning::Material::LearningMaterial.find(obj_material_id.to_i)
 
-                  if update_learning_material.present?
-                    if (update_learning_material[:material_type] == 'video' &&  update_learning_material[:learning_type] == 'review')
-                      update_learning_material.update(ziggeo_file_id: obj_material_value)
+                  if obj_learning_material.present?
+                    if (obj_learning_material[:material_type] == 'video' &&  obj_learning_material[:learning_type] == 'review')
+                      obj_learning_material.update(ziggeo_file_id: obj_material_value)
                     else
-                      update_learning_material.update(google_drive_link: obj_material_value)
+                      obj_learning_material.update(google_drive_link: obj_material_value)
                     end
                   end
               elsif (obj_material_id.to_i <= 0 && obj_material_value != '')
 
                 if document_type == 'video'
-                  new_learning_material = Learning::Material::LearningMaterial.new(material_type: material_type, learning_type: learning_type, content_type: content_type, ziggeo_file_id: obj_material_value,op_lession_id: lesson_id)
+                  obj_learning_material = Learning::Material::LearningMaterial.new(material_type: material_type, learning_type: learning_type, content_type: content_type, ziggeo_file_id: obj_material_value,op_lession_id: lesson_id)
                 else
-                  new_learning_material = Learning::Material::LearningMaterial.new(material_type: material_type, learning_type: learning_type, content_type: content_type, google_drive_link: obj_material_value,op_lession_id: lesson_id)
+                  obj_learning_material = Learning::Material::LearningMaterial.new(material_type: material_type, learning_type: learning_type, content_type: content_type, google_drive_link: obj_material_value,op_lession_id: lesson_id)
                 end
-                new_learning_material.save
+                obj_learning_material.save
+
+              end
+
+              if ()
 
               end
 

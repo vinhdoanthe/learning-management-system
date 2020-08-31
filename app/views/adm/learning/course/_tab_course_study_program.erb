@@ -40,7 +40,8 @@
         data-id="<%= subject[:id]%>"
         data-title="<%= subject[:name].to_s%>"
         data-load-url="<%= adm_learning_course_subject_lesson_learning_materials_update_path(subject[:id])%>"
-        data-target="#remoteModalLessonUpdate"><i class="fas fa-edit"></i> <%= t('button.Edit Lesson')%></button>      
+        title="<%= t('button.Edit Lesson')%>"
+        data-target="#remoteModalLessonUpdate"><i class="fas fa-edit"></i> <%= t('button.Document Lesson')%></button>      
     </div>
   </div>
   <div class="card-body p-0">

@@ -110,6 +110,11 @@
         </div>        
       </div>
       <div class="col-sm-12 row">
+          <input accept="image/jpeg,image/jpg,image/png"
+          data-fileupload="true"
+          type="file"
+          name="frm_learning_material[learning_material][<%= lesson.id%>][thumbnail][<%= learning_material_id_id_vimeo%>]"
+          class="image_thumbnail" style="margin-bottom: 5px;" />
           <% if url_thumbnail_video != '' %>
             <img style="cursor:pointer;" src="<%= url_thumbnail_video%>" class="admin-lesson-img-thumbnail" />
             <% else%>
