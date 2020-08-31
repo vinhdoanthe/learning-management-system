@@ -1,0 +1,76 @@
+<form id="frm_lesson_learning_material" class="form-horizontal" method="post" action="<%= adm_learning_course_lesson_learning_materials_update_process_path%>" enctype="multipart/form-data">
+<input type="hidden" name="frm_learning_material[subject_id]" id="frm_learning_material_subject_id">	
+<div class="modal fade" id="remoteModalLessonUpdate" role="dialog" aria-labelledby="remoteModalLessonUpdateLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+	    <div class="modal-header">
+	       <h4 class="modal-title"></h4>
+	       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">×</span>
+	       </button>
+	    </div>
+      	<div class="modal-body" id="modal_update_lesson">
+      		<i class="fa fa-spinner fa-2x fa-spin" style="padding: 3px;"></i><%= t('button.Loading')%>
+      	</div>
+      	<div class="modal-footer">
+      		<div class="btn-group">
+	         	<button type="submit" class="btn btn-primary btn-sm bg-olive" id="btn-save"><i class="fas fa-save"></i> <%= t('button.Save')%></button>&nbsp&nbsp
+	         	<button type="button" class="btn btn-default btn-sm btn-close" data-dismiss="modal">
+	            <i class="fas fa-ban"></i> <%= t('button.Close')%>
+	         	</button>
+	        </div>
+      	</div>
+    </div>
+  </div>
+</div>
+</form>
+<script type="text/javascript">
+  
+  $('.process_loading').hide();
+
+  $('.btn-subject-click').on("click",function(e) {
+
+    $('.process_loading').hide();
+
+    var subject_id = $(this).data("id");
+
+    if (subject_id && ($(this).data("item-collapse") == 0)) {      
+      $('#content_loading_' + subject_id).show();
+      $('#table-subject-' + subject_id).html(null);
+      $.ajax({
+        type: "GET",
+        url: '<%= adm_learning_get_lesson_by_session_path%>',
+        data: {subject_id: $(this).data("id")},
+        success:function(data){
+          $('#content_loading_' + subject_id).hide();
+          $(this).data("item-collapse",1);
+          $('#table-subject-' + subject_id).html(data);
+        }
+      });
+    } else {
+      $('.process_loading').hide();
+      $('#table-subject-' + subject_id).html(null);
+    }
+  });
+
+  $("#remoteModalPhoto").on("hidden.bs.modal", function() {
+    $(this).removeData('bs.modal');
+    $("#remoteModalPhoto .modal-title").html('&nbsp;');
+  });
+
+  $('.btn-subject-upload').on("click",function(e) {
+    $('#frm_subject_id').val($(this).data("id"));
+    $("#remoteModalPhoto .modal-title").html('<%= t('learning.subject')%>: ' + $(this).data("title"));    
+  });
+
+  $('#remoteModalLessonUpdate').on('show.bs.modal', function (e) {
+    
+    $('#frm_learning_material_subject_id').val($(e.relatedTarget).data("id"));
+
+    $("#modal_update_lesson").html('<div style="display: block;font-size: 12px;" class="text-primary"><i class="fa fa-spinner fa-2x fa-spin" style="padding: 3px;"></i><%= t('button.Loading')%></div>');
+    var loadurl = $(e.relatedTarget).data('load-url');    
+    $("#remoteModalLessonUpdate .modal-title").html('<%= t('learning.subject')%>: ' + $(e.relatedTarget).data('title'));
+    $(this).find('.modal-body').load(loadurl);
+  });
+
+</script>
