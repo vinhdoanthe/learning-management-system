@@ -1,0 +1,9 @@
+<%= javascript_include_tag 'social_community/sc_student_projects/sc_student_project.js' %>
+<% social_student_projects.each do |project| %>
+  <div class='col-md-3'>
+    <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
+  </div>
+<% end %>
+<div id="paginator">
+
+</div>

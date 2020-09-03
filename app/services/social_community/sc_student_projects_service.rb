@@ -170,6 +170,39 @@ class SocialCommunity::ScStudentProjectsService
     [student_projects, course_projects]
   end
 
+  def social_student_projects_content filter_params
+    courses = Learning::Course::OpCourse.where(active: true).pluck(:id, :name)
+
+    if filter_params[:course].present? && filter_params[:course] != 'all'
+      info = Learning::Course::OpCourse.where(id: filter_params[:course]).pluck(:id, :name)
+      course_info = { info[0] => info[1] }
+      subjects = Learning::Course::OpSubject.where(course_id: course_info.keys).pluck(:id, :level)
+    else
+      course_info = {}
+      courses.each { |c| course_info.merge!({ c[0] => c[1] })}
+      subjects = []
+    end
+    
+    query = ''
+    query += 'project_show_video IS NOT NULL AND ' if filter_params[:project_show_video] == '1'
+    query += 'introduction_video IS NOT NULL AND ' if filter_params[:introduction_video] == '1'
+
+    if filter_params[:subject].present? && filter_params[:subject] != 'all'
+      query += "subject_id IN (#{ params[:subject] }) AND " 
+    end
+
+    page = filter_params[:page].present? ? filter_params[:page].to_i : 0
+    query = query[0..-5]
+
+    if filter_params[:presentation] != '1'
+      student_projects = SocialCommunity::ScStudentProject.where(course_id: course_info.keys).where(query).limit(40).offset(page * 40)
+    else
+      student_projects = SocialCommunity::ScStudentProject.where(course_id: course_info.keys).where(query).joins(:presentation_attachment).where.not(presentation_attachment: nil).limit(40).offset(page * 40)
+    end
+
+    [student_projects, subjects, courses]
+  end
+
   def get_course_projects_hash projects
     course_hash = {}
     projects.each do |project|
