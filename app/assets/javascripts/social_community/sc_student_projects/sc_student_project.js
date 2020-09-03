@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
   function get_student_projects(batch_id){
     $.ajax({

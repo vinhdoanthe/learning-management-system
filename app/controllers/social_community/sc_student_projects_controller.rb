@@ -107,9 +107,18 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   end
 
   def social_student_projects
-    data = SocialCommunity::ScStudentProjectsService.new.social_student_projects current_user
-    @student_projects = data[0]
-    @course_projects = data[1]
+    @student_projects = SocialCommunity::ScStudentProject.where(student_id: current_user.id)
+    @courses = Learning::Course::OpCourse.pluck(:id, :name)
+  end
+
+  def social_student_projects_content
+    social_student_projects, subjects, courses = SocialCommunity::ScStudentProjectsService.new.social_student_projects_content params
+    page = params[:page].present? ? params[:page] : 0
+    
+    respond_to do |format|
+      format.html
+      format.js { render 'social_community/sc_student_projects/js/social_student_projects_content', locals: { social_student_projects: social_student_projects, subjects: subjects, courses: courses, page: page } }
+    end
   end
 
   def course_student_projects
