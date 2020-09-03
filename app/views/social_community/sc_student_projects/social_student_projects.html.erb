@@ -1,4 +1,7 @@
+<link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/select2/css/select2.min.css">
+<script src="/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js"></script>
 <%= javascript_include_tag 'social_community/sc_student_projects/sc_student_project.js' %>
+<%= javascript_include_tag 'social_community/sc_student_projects/social_student_projects.js' %>
 <%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
 <%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
 <% content_for :stylesheet_includes do %>
@@ -12,71 +15,108 @@
       </div>
     </div>
   </div>
-  <div class="panel m-t--70">
-    <% if current_user.is_student? %>
-      <div class="panel-content">
-        <div class="box-product">
-          <div class="fc-header">
-            <h3><%= t('social_community.my_project_html') %></h3>
+  <%= render "social_community/sc_student_projects/partials/student_projects", { student_projects: @student_projects} %>
+  <div class="panel-content">
+    <div class="box-product">
+      <div class="fc-header">
+        <h3><%= t('social_community.social_project_html') %></h3>
+      </div>
+      <div class='social_student_projects' id="social_student_projects">
+        <div id="social_student_projects_filter">
+          <div class='filter' style="padding-top: 20px;">
+            <div class='row'>
+              <div class='col-md-4'>
+                <select class="form-control" id='filter_course_projects' name="course">
+                  <option value="all" selected >Tất cả</option>
+                  <% @courses.each do |c| %>
+                    <option value="<%= c[0] %>"><%= c[1] %></option>
+                  <% end %>
+                </select>
+              </div>
+              <div class='col-md-4'>
+                <select class="" id='filter_subject_projects' name="subject[]" style='width: 100%'>
+                  <option value="all" selected>Tất cả</option>
+                </select>
+              </div>
+            </div>
+            <div class='row' style="margin-top: 20px; margin-bottom: 20px;">
+              <div class="col-md-3">
+                <label class="filter_label">Có slide
+                  <input type="checkbox" name="filter_project_presentation">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="col-md-3">
+                <label class="filter_label">Có video
+                  <input type="checkbox" name="filter_project_video_show">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="col-md-3">
+                <label class="filter_label">Có sản phẩm
+                  <input type="checkbox" name="filter_project_link">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
           </div>
-          <div class='row' style="padding-top: 17px;">
-            <% unless (check_projects @student_projects) %>
-              <p class='no-projects'><%= t('social_community.no_project_yet') %></p>
-            <% else %>
-              <% @student_projects.each do |course, projects| %>
-                <% projects.each do |project| %>
-                  <div class='col-md-3'>
-                    <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
-                  </div>
-                <% end %>
-              <% end %>
-            <% end %>
+        </div>
+        <div id="has_student_project">
+          <div class='row' id="social_student_projects_content" style="padding-top: 17px; border-bottom: 1px dashed #dcdcdc; padding-bottom: 20px; position: relative">
           </div>
+          <div class='row' id="paginator">
+            <span class="prev_page_projects" data-page="0"><i class="fa fa-fast-backward"> Prev</i></span>
+             <span class="next_page_projects" data-page="1">| Next <i class="fa fa-fast-forward"></i></span>
+          </div>
+        </div>
+        <div id="no_student_project">
+          <p class='no-projects'><%= t('social_community.course_no_project_yet') %></p>
         </div>
       </div>
-    <% end %>
-
-    <div class="panel-content">
-      <div class="box-product">
-        <div class="fc-header">
-            <h3><%= t('social_community.social_project_html') %></h3>
-        </div>
-        <div class=''>
-          <% if @course_projects.blank? %>
-            <p class='no-projects'><%= t('social_community.course_no_project_yet') %></p>
-          <% else %>
-            <% @course_projects.each do |course_project| %>
-              <% course_project.each do |course, projects| %>
-                <div class="fc-header course_project_list">
-                  <div class='row' style="padding-top: 15px;">
-                    <div class='col-md-9'>
-                      <h4><span class="color-000"><%= course.name %></h4>
-                    </div>
-                  </div>
-                </div>
-                <div class='row' style="padding-top: 17px; border-bottom: 1px dashed #dcdcdc; padding-bottom: 20px; position: relative">
-                  <% projects.each_with_index do |project, index| %>
-                    <% unless index >= 4 %>
-                      <div class=' col-lg-3 col-md-3 col-sm-6' style="margin-bottom: 30px;">
-                        <%= render 'user/open_educat/shared/student_projects/student_project_community_item', { project: project, teacher_can_edit: false } %>
-                      </div>
-                    <% end %>
-                  <% end %>
-                  <% if projects.length > 4 %>
-                    <div class='' style="position: absolute; bottom: 10px; right: 0">
-                      <a class='show_course_projects' href="/social_community/sc_student_projects/course_student_projects/<%= course.id %>"><%= t('button.see_more')%>  <i class="fa fa-angle-double-right" style=""></i></a>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
+      <div id="loading_div">
+        <%= render 'partials/content_loading' %>
       </div>
     </div>
   </div>
+</div>
 </div>
 <div id="studentProjectDetail" class="modal fade" role="dialog">
 </div>
 <div id="editStudentProjectDetail" class="modal fade" role="dialog">
 </div>
+<style>
+.select2-container {
+  z-index: 0 !important;
+}
+.item {
+  padding-top: 20px;
+}
+#paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+#paginator span{
+  cursor: pointer;
+  color: #5DC2A7;
+}
+</style>
+  <script>
+    $('#filter_course_projects').select2();
+    $('#filter_subject_projects').select2();
+    $('#no_student_project').hide();
+
+    $('#social_student_projects_filter').on('change', '#filter_course_projects', function(){
+      $('#loading_div').show();
+      $('#social_student_projects_content').hide();
+      data = getDataFilter(0);
+      getSocialStudentProject(data);
+    })  
+    
+    $('#social_student_projects_filter').on('change', '#filter_subject_projects', function(){
+      $('#loading_div').show();
+      $('#social_student_projects_content').hide();
+      data = getDataFilter(0);
+      getSocialStudentProject(data);
+    })  
+  </script>

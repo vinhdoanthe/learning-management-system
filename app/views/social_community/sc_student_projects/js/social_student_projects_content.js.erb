@@ -1,0 +1,26 @@
+$(document).ready(function(){
+  $('#loading_div').hide();
+  $('#social_student_projects_content').show();
+
+  <% if social_student_projects.present? %>
+      $('#paginator').show();
+      $('#no_student_project').hide();
+      $('#has_student_project').show();
+      $('#social_student_projects_content').html('<%= escape_javascript( render partial: "social_community/sc_student_projects/partials/social_student_projects", locals: { social_student_projects: social_student_projects }) %>')
+      $('#filter_subject_proejects').html('<option value="all">Tất cả</option><% subjects.each do |s| %> <option value="<%= s[0] %>"><%= s[1] %></option> <% end %> ')
+
+    <% if page.to_i > 0 %>
+      $('.prev_page_projects').show();
+      $('.prev_page_projects').data('page', <%= page.to_i - 1 %>);
+      $('.next_page_projects').data('page', <%= page.to_i + 1 %>);
+    <% end %>
+
+    <% if social_student_projects.count < 40 %>
+      $('.next_page_projects').hide();
+    <% end %>
+  <% else %>
+    $('#paginator').hide();
+    $('#no_student_project').show();
+    $('#has_student_project').hide();
+  <% end %>
+})

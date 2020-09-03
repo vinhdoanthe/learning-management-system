@@ -313,6 +313,13 @@ en:
       name: "Redeem"
       coin_star: "Coin Start Transaction"
       redeem: "Redeem Transaction"
+      product: "Redeem Products"
+      select_product: "Select Product"
+      item_states: "Item states"
+      select_item_state: "Select Item States"
+      item_input_date: "Item Input Date"
+      item_release_date: "Item Release Date"
+      item_name: "Item name"
     notice: "Notice"
     refer_friend: "Refer Friend"
     learning_activity:

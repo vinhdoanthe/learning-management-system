@@ -21,6 +21,7 @@ namespace :social_community do
 
   namespace :sc_student_projects do
     get 'social_student_projects', action: 'social_student_projects', as: 'social_student_projects'
+    get 'social_student_projects_content', action: 'social_student_projects_content', as: 'social_student_projects_content'
     get 'course_student_projects/:course_id', action: 'course_student_projects', as: 'course_student_projects'
     get 'prepare_upload_project', action: 'prepare_upload_project', as:'prepare_upload_project'
     post 'create_student_project', action: 'create_student_project', as: 'create_student_project'
