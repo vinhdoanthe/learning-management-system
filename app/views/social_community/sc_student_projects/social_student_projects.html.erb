@@ -24,8 +24,9 @@
       <div class='social_student_projects' id="social_student_projects">
         <div id="social_student_projects_filter">
           <div class='filter' style="padding-top: 20px;">
-            <div class='row'>
-              <div class='col-md-4'>
+            <div class='row' style="display: flex">
+              <div class='col-md-4' style="margin: auto">
+                <label for="filter_course_projects">Khoá học:</label>
                 <select class="form-control" id='filter_course_projects' name="course">
                   <option value="all" selected >Tất cả</option>
                   <% @courses.each do |c| %>
@@ -33,26 +34,27 @@
                   <% end %>
                 </select>
               </div>
-              <div class='col-md-4'>
-                <select class="" id='filter_subject_projects' name="subject[]" style='width: 100%'>
+              <div class='col-md-4' style="margin: auto">
+                <label for="filter_subject_projects">Level:</label>
+                <select class="form-control" id='filter_subject_projects' name="subject[]" style='width: 100%'>
                   <option value="all" selected>Tất cả</option>
                 </select>
               </div>
             </div>
-            <div class='row' style="margin-top: 20px; margin-bottom: 20px;">
-              <div class="col-md-3">
+            <div class='row' style="margin-top: 20px; margin-bottom: 20px; display: flex;">
+              <div class="col-md-3" style="margin-left: auto">
                 <label class="filter_label">Có slide
                   <input type="checkbox" name="filter_project_presentation">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3" style="margin-left: auto">
                 <label class="filter_label">Có video
                   <input type="checkbox" name="filter_project_video_show">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3" style="margin-left: auto">
                 <label class="filter_label">Có sản phẩm
                   <input type="checkbox" name="filter_project_link">
                   <span class="checkmark"></span>
@@ -85,11 +87,14 @@
 <div id="editStudentProjectDetail" class="modal fade" role="dialog">
 </div>
 <style>
+#social_student_projects_filter{
+  border-bottom: 3px solid #f0f2f5;
+}
 .select2-container {
   z-index: 0 !important;
 }
 .item {
-  padding-top: 20px;
+  padding-top: 30px;
 }
 #paginator {
   display: flex;
@@ -100,6 +105,24 @@
   cursor: pointer;
   color: #5DC2A7;
 }
+
+.select2-selection.select2-selection--single {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border-radius: 5px !important;
+  padding-left: 15px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.prod-detail .prod-text {
+  padding-top: 0 !important;
+}
 </style>
   <script>
     $('#filter_course_projects').select2();
@@ -107,6 +130,7 @@
     $('#no_student_project').hide();
 
     $('#social_student_projects_filter').on('change', '#filter_course_projects', function(){
+      $('#paginator').hide()
       $('#loading_div').show();
       $('#social_student_projects_content').hide();
       data = getDataFilter(0);
@@ -114,6 +138,7 @@
     })  
     
     $('#social_student_projects_filter').on('change', '#filter_subject_projects', function(){
+      $('#paginator').hide()
       $('#loading_div').show();
       $('#social_student_projects_content').hide();
       data = getDataFilter(0);
