@@ -103,7 +103,7 @@ button.public_project {
   text-align: justify;
   font-size: 14px;
   font-weight: 515;
-  height: 130px;
+  height: 8em;
   overflow: hidden;
 }
 
@@ -160,6 +160,7 @@ button.public_project {
   height: 25px;
   width: 25px;
   background-color: #eee;
+  border-radius: 0;
 }
 
 /* On mouse-over, add a grey background color */
@@ -169,7 +170,7 @@ button.public_project {
 
 /* When the checkbox is checked, add a blue background */
 .filter_label input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: #5DC2A7 !important;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */

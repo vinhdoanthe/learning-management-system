@@ -1,6 +1,7 @@
 <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content modal-test">
     <div class="modal_student_evaluation_title">
+      <div class="close button-close-modal close-evaluation-content" data-dismiss="modal">&times;</div>
       <h4>Phiếu đánh giá học sinh </h4>
     </div>
     <div class="modal-body modal-body-fix">
@@ -65,5 +66,19 @@
   .evaluate_form_teacher_info p:last-child{
     font-weight: 500;
     color: #BCD0E5;
+  }
+  .close-evaluation-content {
+    position: absolute;
+    display: flex;
+    top: -40px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid white;
+    color: white !important;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
   }
 </style>

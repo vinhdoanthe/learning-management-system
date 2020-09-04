@@ -30,49 +30,33 @@ $(document).ready(function(){
   getSocialStudentProject();
   $('#paginator').hide();
   $('.prev_page_projects').hide();
-  //$('#social_student_projects_filter').on('change', '#filter_course_projects', function(){
-  //  debugger
-  //  $('#loading_div').show();
-  //  $('#social_student_projects_content').hide();
-  //  data = getDataFilter();
-  //  getSocialStudentProject(data);
-  //})
-
-  //$('#social_student_projects_filter').on('change', '#filter_subject_projects', function(){
-  //  $('#loading_div').show();
-  //  $('#social_student_projects_content').hide();
-  //  data = getDataFilter();
-  //  getSocialStudentProject(data);
-  //})
 
   $('#social_student_projects_filter').on('click', 'input[name="filter_project_video_show"]', function(){
+    $('#paginator').hide();
     $('#loading_div').show();
     $('#social_student_projects_content').hide();
-    if( $(this).is(':checked') ) {
       data = getDataFilter(0);
       getSocialStudentProject(data);
-    }
   });
 
   $('#social_student_projects_filter').on('click', 'input[name="filter_project_link"]', function(){
+    $('#paginator').hide();
     $('#loading_div').show();
     $('#social_student_projects_content').hide();
-    if( $(this).is(':checked') ) {
       data = getDataFilter(0);
       getSocialStudentProject(data);
-    }
   });
     
   $('#social_student_projects_filter').on('click', 'input[name="filter_project_presentation"]', function(){
+    $('#paginator').hide();
     $('#loading_div').show();
     $('#social_student_projects_content').hide();
-    if( $(this).is(':checked') ) {
       data = getDataFilter(0);
       getSocialStudentProject(data);
-    }
   });
 
   $('#paginator').on('click', '.next_page_projects', function(){
+    $('#paginator').hide();
     $('#loading_div').show();
     $('#social_student_projects_content').hide();
     page = $(this).data('page');
@@ -80,6 +64,7 @@ $(document).ready(function(){
       getSocialStudentProject(data);
   })
   $('#paginator').on('click', '.prev_page_projects', function(){
+    $('#paginator').hide();
     $('#loading_div').show();
     $('#social_student_projects_content').hide();
     page = $(this).data('page');
