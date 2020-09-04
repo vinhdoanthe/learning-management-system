@@ -159,13 +159,15 @@ button.public_project {
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: #eee;
+  background-color: white;
   border-radius: 0;
+  border-radius: 5px;
+  border: 1px solid #DADAEE;
 }
 
 /* On mouse-over, add a grey background color */
 .filter_label:hover input ~ .checkmark {
-  background-color: #ccc;
+  background-color: #white;
 }
 
 /* When the checkbox is checked, add a blue background */
@@ -196,4 +198,11 @@ button.public_project {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+.label_select {
+  font-weight: 500;
+  position: absolute;
+  z-index: 99;
+  padding: 10px 5px 5px 25px;
+  font-size: 12px;
 }

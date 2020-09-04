@@ -1,9 +1,30 @@
 <%= javascript_include_tag 'social_community/sc_student_projects/sc_student_project.js' %>
-<% social_student_projects.each do |project| %>
-  <div class='col-md-3'>
-    <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
-  </div>
-<% end %>
-<div id="paginator">
-
+<div class='row' id="social_student_projects_content" style="border-bottom: 1px dashed #dcdcdc; padding-bottom: 20px; position: relative">
+  <% social_student_projects.each do |project| %>
+    <div class='col-md-3'>
+      <%= render 'user/open_educat/shared/student_projects/student_project_item', { project: project } %>
+    </div>
+  <% end %>
 </div>
+<div id="paginator">
+  <%= paginate social_student_projects, remote: true %>
+</div>
+<style>
+#paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#paginator span{
+  cursor: pointer;
+  color: #5DC2A7;
+}
+#paginator a{
+  color: #5DC2A7;
+}
+#paginator li.active a{
+  color: red;
+  font-weight: 700;
+}
+</style>

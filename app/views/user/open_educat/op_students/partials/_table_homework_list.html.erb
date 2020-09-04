@@ -12,7 +12,7 @@
       <% evaluate = get_student_evaluate current_user, session %>
       <% if has_homework %>
         <td>
-          <a href="/learning/view_question?session_id=<%= session.id %>" class='student_homework_view'><%= lesson_name %></a>
+          <a href="/learning/view_question?session_id=<%= session.id %>" class='student_homework_view_link'><%= lesson_name %></a>
           <input name='session_homework_name' value="<%= session.id %>" type="hidden">
         </td>
         <% homework_state = done_homework? current_user, session %> 
