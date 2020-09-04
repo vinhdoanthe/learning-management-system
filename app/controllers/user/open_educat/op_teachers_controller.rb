@@ -269,16 +269,21 @@ class User::OpenEducat::OpTeachersController < ApplicationController
 
   def assign_homework
     session = Learning::Batch::OpSession.where(id: params[:session_id]).first
-    user_ids = User::Account::User.where(student_id: params[:student_ids]).pluck(:id).uniq.compact!
+    user_ids = User::Account::User.where(student_id: params[:student_ids]).pluck(:id).uniq.compact
+
     if session.blank?
       render json: { type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau' }
     else
-      batch_id = session.batch_id
-      user_ids.each do |user_id|
-        Learning::Homework::QuestionService.new.assign_homework user_id, params[:question_ids], batch_id
-      end
+      if user_ids.blank?
+        render json: { type: 'danger', message: 'Không có học sinh để giao bài tập' }
+      else
+        batch_id = session.batch_id
+        user_ids.each do |user_id|
+          Learning::Homework::QuestionService.new.assign_homework user_id, params[:question_ids], batch_id
+        end
 
-      render json: { type: 'success', message: 'Giao bài tập về nhà thành công' }
+        render json: { type: 'success', message: 'Giao bài tập về nhà thành công' }
+      end
     end
   end
 

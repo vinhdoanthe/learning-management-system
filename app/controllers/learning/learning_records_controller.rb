@@ -111,9 +111,11 @@ module Learning
     def authorize_access_question!
       if params[:session_id].present?
         @session = Learning::Batch::OpSession.where(id: params[:session_id]).last
+
         if @session.blank?
           flash[:danger] = "Câu hỏi này không có trên hệ thống"
           redirect_to root_path
+          return
         end
 
         @lesson = @session.op_lession
