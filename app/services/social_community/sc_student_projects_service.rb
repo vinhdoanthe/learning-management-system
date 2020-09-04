@@ -174,9 +174,11 @@ class SocialCommunity::ScStudentProjectsService
     courses = Learning::Course::OpCourse.where(active: true).pluck(:id, :name)
 
     if filter_params[:course].present? && filter_params[:course] != 'all'
-      info = Learning::Course::OpCourse.where(id: filter_params[:course]).pluck(:id, :name)
-      course_info = { info[0] => info[1] }
+      info = Learning::Course::OpCourse.where(id: filter_params[:course]).order(create_date: :DESC).pluck(:id, :name)
+      course_info = { info[0][0] => info[0][1] }
       subjects = Learning::Course::OpSubject.where(course_id: course_info.keys).pluck(:id, :level)
+      subjects.sort! { |s| s[1] }
+      subjects = subjects.sort
     else
       course_info = {}
       courses.each { |c| course_info.merge!({ c[0] => c[1] })}
@@ -188,16 +190,15 @@ class SocialCommunity::ScStudentProjectsService
     query += "introduction_video IS NOT NULL AND introduction_video <> '' AND " if filter_params[:introduction_video] == '1'
 
     if filter_params[:subject].present? && filter_params[:subject] != 'all'
-      query += "subject_id IN (#{ params[:subject] }) AND " 
+      query += "subject_id IN (#{ filter_params[:subject] }) AND "
     end
 
-    page = filter_params[:page].present? ? filter_params[:page].to_i : 0
     query = query[0..-5]
 
     if filter_params[:presentation] != '1'
-      student_projects = SocialCommunity::ScStudentProject.where(course_id: course_info.keys).where(query).limit(40).offset(page * 40)
+      student_projects = SocialCommunity::ScStudentProject.where(course_id: course_info.keys).where(query).page(filter_params[:page]).per(40)
     else
-      student_projects = SocialCommunity::ScStudentProject.where(course_id: course_info.keys).where(query).joins(:presentation_attachment).where.not(presentation_attachment: nil).limit(40).offset(page * 40)
+      student_projects = SocialCommunity::ScStudentProject.where(course_id: course_info.keys).where(query).joins(:presentation_attachment).where.not(presentation_attachment: nil).page(params[:page]).per(40)
     end
 
     [student_projects, subjects, courses]

@@ -23,53 +23,49 @@
       </div>
       <div class='social_student_projects' id="social_student_projects">
         <div id="social_student_projects_filter">
-          <div class='filter' style="padding-top: 20px;">
+          <div class='filter' style="padding-top: 10px;">
             <div class='row' style="display: flex">
-              <div class='col-md-4' style="margin: auto">
-                <label for="filter_course_projects">Khoá học:</label>
-                <select class="form-control" id='filter_course_projects' name="course">
+              <div class='col-md-4' style="margin-left: auto; margin-right: 30px;">
+                <label class="label_select" for="filter_course_projects">Khoá học:</label>
+                <select class="form-control-filters" id='filter_course_projects' name="course">
                   <option value="all" selected >Tất cả</option>
                   <% @courses.each do |c| %>
                     <option value="<%= c[0] %>"><%= c[1] %></option>
                   <% end %>
                 </select>
               </div>
-              <div class='col-md-4' style="margin: auto">
-                <label for="filter_subject_projects">Level:</label>
-                <select class="form-control" id='filter_subject_projects' name="subject[]" style='width: 100%'>
+              <div class='col-md-4' style="margin-right: 30px;">
+                <label class="label_select" for="filter_subject_projects">Level:</label>
+                <select class="form-control-filters" id='filter_subject_projects' name="subject[]" style='width: 100%'>
                   <option value="all" selected>Tất cả</option>
                 </select>
               </div>
             </div>
-            <div class='row' style="margin-top: 20px; margin-bottom: 20px; display: flex;">
-              <div class="col-md-3" style="margin-left: auto">
+            <div class='row' style="margin-top: 10px; margin-bottom: 10px; display: flex">
+              <div style="margin-left: auto">
+              <div class="" style="margin-left: auto; display: inline-block; margin-right: 30px;">
                 <label class="filter_label">Có slide
                   <input type="checkbox" name="filter_project_presentation">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <div class="col-md-3" style="margin-left: auto">
+              <div class="" style="margin-left: auto; display: inline-block; margin-right: 30px;">
                 <label class="filter_label">Có video
                   <input type="checkbox" name="filter_project_video_show">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <div class="col-md-3" style="margin-left: auto">
+              <div class="" style="margin-left: auto; display: inline-block; margin-right: 30px; padding-right: 15px; ">
                 <label class="filter_label">Có sản phẩm
                   <input type="checkbox" name="filter_project_link">
                   <span class="checkmark"></span>
                 </label>
               </div>
+              </div>
             </div>
           </div>
         </div>
         <div id="has_student_project">
-          <div class='row' id="social_student_projects_content" style="padding-top: 17px; border-bottom: 1px dashed #dcdcdc; padding-bottom: 20px; position: relative">
-          </div>
-          <div class='row' id="paginator">
-            <span class="prev_page_projects" data-page="0"><i class="fa fa-fast-backward"> Prev</i></span>
-             <span class="next_page_projects" data-page="1">| Next <i class="fa fa-fast-forward"></i></span>
-          </div>
         </div>
         <div id="no_student_project">
           <p class='no-projects'><%= t('social_community.course_no_project_yet') %></p>
@@ -92,34 +88,49 @@
 }
 .select2-container {
   z-index: 0 !important;
+  width: 100% !important;
 }
 .item {
-  padding-top: 30px;
-}
-#paginator {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  }
-#paginator span{
-  cursor: pointer;
-  color: #5DC2A7;
+  padding-top: 40px;
 }
 
 .select2-selection.select2-selection--single {
-  height: 50px;
+  height: 60px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: left;
   border-radius: 5px !important;
   padding-left: 15px;
+  border: 1px solid #DADAEE;
+  padding-bottom: 5px;
 }
 
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+  background-color: transparent;
+  background-size: contain;
+  border: none !important;
+  height: 10px !important;
+  width: 20px !important;
+  margin: auto !important;
+  top: auto !important;
+  left: auto !important;
+}
 .select2-container--default .select2-selection--single .select2-selection__arrow {
   top: 50%;
   transform: translate(-50%, -50%);
+  padding-top: 8px;
 }
-
+.select2-container--open .select2-dropdown--below {
+  margin-top: 0 !important;
+  border: 1px solid #DADAEE;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field{
+  border: 1px solid #DADAEE;
+  border-radius: 5px;
+}
 .prod-detail .prod-text {
   padding-top: 0 !important;
 }
@@ -130,7 +141,9 @@
     $('#no_student_project').hide();
 
     $('#social_student_projects_filter').on('change', '#filter_course_projects', function(){
-      $('#paginator').hide()
+      $('#paginator').hide();
+      $('.next_page_projects').hide();
+      $('.prev_page_projects').hide();
       $('#loading_div').show();
       $('#social_student_projects_content').hide();
       data = getDataFilter(0);
@@ -139,6 +152,8 @@
     
     $('#social_student_projects_filter').on('change', '#filter_subject_projects', function(){
       $('#paginator').hide()
+      $('.next_page_projects').hide();
+      $('.prev_page_projects').hide();
       $('#loading_div').show();
       $('#social_student_projects_content').hide();
       data = getDataFilter(0);
