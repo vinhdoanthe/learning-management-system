@@ -23,7 +23,7 @@
           <a id="password" href=""><%= I18n.t 'login.forgot_password' %></a>
         </span>
         </div>
-        <p style="text-align: right;color: #939393;font-size: 12px;" class="m-t-20">
+        <p style="text-align: right;color: #939393;font-size: 12px; margin-bottom: 20px;" class="m-t-20">
         <%= I18n.t 'login.hotline' %>: +84 948-666-183
         </p>
       <% end %>
@@ -43,3 +43,21 @@
     </div>
   </div>
 </div>
+<style>
+  .append-icon input {
+    padding: 15px;
+    background: white;
+    font-size: 14px;
+    padding-left: 20px;
+    color: #939393;
+    border-radius: 5px;
+  }
+  .append-icon i {
+    line-height: 50px;
+  }
+  input[type='submit'] {
+    font-size: 16px;
+    padding: 15px 20px;
+    height: auto !important;
+  }
+</style>

@@ -1,79 +1,48 @@
-<div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Hình ảnh lớp học</h4>
-            </div>
-            <div class="modal-body">
-              <% if photos.present? %>
-                <ul class="owl-carousel list-lightbox" id="session_photo_show">
-                  <% photos.each do |photo| %>
-                    <li>
-                      <span>
-                        <%= image_tag(photo.image, class: 'session_photo_show') if photo.image.attached? %>
-                      </span>
-                    </li>
-                  <% end %>
-                </ul>
-              <% else %>
-                <div> Không có ảnh </div>
-              <% end %>
-                <!-- <div class="bnd-all-other">
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <div class="bnd-other">
-                                <a> 
-                                    <img src="/global/images/like-3.png" alt="">
-                                    Like
-                                    <span>0</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="bnd-other">
-                                <a> 
-                                    <img src="/global/images/love-and-romance.png" alt="">
-                                    Thả tim
-                                    <span>0</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="bnd-other">
-                                <a> 
-                                    <img src="/global/images/iconsad.png" alt="">
-                                    Buồn
-                                    <span>0</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <div class="bnd-comment">
-                    <div class="bc-edit">
-                        <span><img src="" alt=""></span>
-                        <input type="text">
-                        <a href="#"><img src="/global/images/send.png" alt=""></a>
-                    </div>
-                    <div class="bc-ansew">
-                        <div class="bca-parent">
-                            <div class="bpe-detail bpe-parent">
-                                <span class=""><img src="" alt=""></span>
-                                <p><b>Kiều Chí Công :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur, recusandae reiciendis commodi placeat fuga quisquam ipsam nam at, repudiandae aperiam illo! Dolore cumque vel repellat libero quidem? Expedita, aliquid.</p>
-                            </div>
-                        </div>
-                        <div class="bca-child">
-                            <div class="bpe-detail bce-child">
-                                <span class=""><img src="" alt=""></span>
-                                <p><b>Kiều Chí Công :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur, recusandae reiciendis commodi placeat fuga quisquam ipsam nam at, repudiandae aperiam illo! Dolore cumque vel repellat libero quidem? Expedita, aliquid.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-            
-        </div>
+<%= stylesheet_link_tag "fotorama.css" %>
+<%= javascript_include_tag "fotorama.js" %>
+
+<div class="modal-dialog" role="document" style='max-width: 100%; width: 100%; height: 100%; margin: 0;'>
+  <div class="modal-content" style="width: 100%">
+    <button type="button" class="close close-modal" data-dismiss="modal">&times;</button>
+    <% if photos.present? %>
+      <div class="fotorama"  data-allowfullscreen="true" data-nav="thumbs" data-fit="scaledown" data-thumbwidth="100" data-arrows="true" data-click="true" data-swipe="true" data-hash="true" data-width='100%' data-height='100%'>
+        <% photos.each do |photo| %>
+          <%= image_tag photo.image %>
+        <% end %>
+      </div>
+    <% else %>
+      <div> Không có ảnh </div>
+    <% end %>
+  </div>
 </div>
+
+<style>
+.close-modal {
+  position: absolute;
+  font-size: 40px;
+  font-weight: 700;
+  right: 20px;
+  z-index: 10;
+  color: white;
+}
+  .close-modal:hover {
+    color: white;
+  }
+  .fotorama__fullscreen-icon {
+    display: none;
+  }
+  .fotorama__nav-wrap {
+    background-color: black;
+  }
+  .fotorama__wrap--slide .fotorama__stage__frame {
+    background-color: black;
+  }
+</style>
+<script>
+  $(document).ready(function(){
+    $('.fotorama').fotorama();
+  })
+</script>
 <script>
   $('#session_photo_show').owlCarousel({
     items:1,
@@ -88,11 +57,11 @@
 
 <style>
 .list-lightbox .owl-nav button span {
-    font-size: 50px;
-    position: absolute;
-    position: absolute;
-    top: -10px;
-    right: 15px;
+  font-size: 50px;
+  position: absolute;
+  position: absolute;
+  top: -10px;
+  right: 15px;
 }
 
 .owl-next {

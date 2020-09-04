@@ -184,8 +184,8 @@ class SocialCommunity::ScStudentProjectsService
     end
     
     query = ''
-    query += 'project_show_video IS NOT NULL AND ' if filter_params[:project_show_video] == '1'
-    query += 'introduction_video IS NOT NULL AND ' if filter_params[:introduction_video] == '1'
+    query += "project_show_video IS NOT NULL AND project_show_video <> '' AND " if filter_params[:project_show_video] == '1'
+    query += "introduction_video IS NOT NULL AND introduction_video <> '' AND " if filter_params[:introduction_video] == '1'
 
     if filter_params[:subject].present? && filter_params[:subject] != 'all'
       query += "subject_id IN (#{ params[:subject] }) AND " 
