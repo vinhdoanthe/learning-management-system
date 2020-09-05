@@ -9,9 +9,18 @@ $(document).ready(function(){
       $('#has_student_project').show();
       $('#has_student_project').html('<%= escape_javascript( render partial: "social_community/sc_student_projects/partials/social_student_projects", locals: { social_student_projects: social_student_projects }) %>')
 
-    $("#paginator").html("<%= j paginate(social_student_projects, remote: true) %>");
+    $(".paginator").html("<%= j paginate(social_student_projects, remote: true) %>");
   <% else %>
     $('#no_student_project').show();
     $('#has_student_project').hide();
   <% end %>
+
+    $('.paginator').on('click', 'a', function(){
+      $('.paginator li').removeClass('active');
+      $(this).parent().addClass('active');
+      $(this).css('color', 'red');
+      $('#loading_div').show();
+      $('#social_student_projects_content').hide();
+      $('.paginator-bottom').hide();
+    })
 })
