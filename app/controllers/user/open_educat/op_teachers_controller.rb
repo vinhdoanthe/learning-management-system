@@ -9,7 +9,8 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teacher_class_content
-    session_info = @teacher.op_sessions.where.not(state: 'cancel').pluck(:batch_id, :id,:start_datetime, :state, :count, :subject_id)
+    binding.pry
+    session_info = @teacher.op_sessions.where.not(state: 'cancel', batch_id: nil).pluck(:batch_id, :id,:start_datetime, :state, :count, :subject_id)
     session_info.sort! {|a,b| [a[0], a[2]] <=> [b[0], b[2]]}
     @last_done_session_info = {}
     session_info.each{|session| @last_done_session_info.merge! ({ session[0] => [session[1], session[4], session[5]] }) if session[3] == 'done' }
