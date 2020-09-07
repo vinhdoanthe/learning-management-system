@@ -198,7 +198,7 @@ class SocialCommunity::ScStudentProjectsService
     if filter_params[:presentation] != '1'
       student_projects = SocialCommunity::ScStudentProject.where(course_id: course_info.keys).where(query).page(filter_params[:page]).per(40)
     else
-      student_projects = SocialCommunity::ScStudentProject.where(course_id: course_info.keys).where(query).joins(:presentation_attachment).where.not(presentation_attachment: nil).page(params[:page]).per(40)
+      student_projects = SocialCommunity::ScStudentProject.where(course_id: course_info.keys).where(query).joins(:presentation_attachment).where.not(presentation_attachment: nil).page(filter_params[:page]).per(40)
     end
 
     [student_projects, subjects, courses]
