@@ -9,7 +9,6 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teacher_class_content
-    binding.pry
     session_info = @teacher.op_sessions.where.not(state: 'cancel', batch_id: nil).pluck(:batch_id, :id,:start_datetime, :state, :count, :subject_id)
     session_info.sort! {|a,b| [a[0], a[2]] <=> [b[0], b[2]]}
     @last_done_session_info = {}
