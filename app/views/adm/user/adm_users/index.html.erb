@@ -2,7 +2,16 @@
 <%= javascript_include_tag "adm/adm_user.js" %>
 <% end %>
 <% page = 0 %>
-<h3><%= t("adm.user.info") %></h3>
+<div class='row'>
+  <div class='col-md-8'>
+    <h3><%= t("adm.user.info") %></h3>
+  </div>
+  <div class='col-md-4'>
+    <% if current_user.account_role == Constant::ADMIN %>
+      <a href="/adm/user/new_user" class='btn btn-primary float-right'>Thêm người dùng</a>
+    <% end %>
+  </div>
+</div>
 <hr>
 <div class='filter_form'>
   <div class='row'>

@@ -46,6 +46,9 @@ namespace :adm do
     post 'update_user_info' => 'adm_users#update_user_info'
     post 'filter_users' => 'adm_users#filter_users'
     get 'login_as_user/:user_id' => 'adm_users#login_as_user'
+    get 'new_user' => 'adm_users#new_user'
+    post 'create_user' => 'adm_users#create_user'
+    post 'update_user_password' => 'adm_users#update_user_password'
   end
 
   namespace :faqs do

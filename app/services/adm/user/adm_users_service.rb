@@ -73,6 +73,81 @@ class Adm::User::AdmUsersService
     { all_user: all_user, count: count }
   end
 
+  def create_user params
+    result = {}
+    require_params = ['username', 'password', 'confirmation_password', 'company', 'account_role']
+    require_params.each{ |p| result = { type: 'danger', message: (I18n.t 'adm.user.message.missing_info') } if params[p].blank? }
+    return result if result.present?
+
+    exist_user = User::Account::User.where(username: params[:username]).first
+    return { type: 'dange', message: 'Username đã tồn tại!' } if exist_user.present?
+
+    if params[:username] =~ /\A[a-z0-9_]{4,16}\z/
+      user = User::Account::User.new
+      if params[:confirmation_password] == params[:password]
+        user.username = params[:username]
+        user.email = params[:email]
+        user.password = params[:password]
+        user.account_role = params[:account_role]
+
+        if user.save
+          Common::UserCompaniesService.new.create user.id, params[:company]
+          result = { type: 'success', message: "#{ I18n.t 'adm.user.message.create_success'}" }
+        else
+          result = { type: 'danger', message: "#{ I18n.t 'adm.user.message.errors'}" }
+        end
+      else
+        result = { type: 'danger', message: "#{ I18n.t 'adm.user.message.pass_error'}" }
+      end
+    else
+      result = { type: 'danger', message: "#{ I18n.t 'adm.user.message.username_error' }" }
+    end
+
+    result
+  end
+
+  def update_user_info params
+    result = user_can_update? params
+
+    if result[:success]
+      update_params = ['username', 'email', 'account_role']
+      begin
+        update_params.each do |p|
+          @user.update({ p => params[p] }) if params[p].present?
+        end
+
+        if params[:user_companies].present?
+          Common::UserCompany.where(user_id: @user.id).all.delete_all
+          params[:user_companies].each do |uc|
+            Common::UserCompaniesService.new.create @user.id, uc
+          end
+        end
+
+        respond = { type: 'success', message: "#{ I18n.t 'adm.user.message.update_success' }" }
+      rescue
+        respond = { type: 'danger', message: "#{ I18n.t 'adm.user.message.errors'}" }
+      end
+    else
+      respond = { type: 'danger', message: result[:message] }
+    end
+
+    respond
+  end
+
+  def update_password params
+    user = User::Account::User.where(id: params[:user_id]).first
+    if user.blank?
+      return { type: 'danger', message: "#{ I18n.t 'adm.user.message.user_error'}" }
+    end
+
+    if params[:password] != params[:confirmation_password]
+      return { type: 'danger', message: "#{ I18n.t 'adm.user.message.pass_error'}" }
+    else
+      user.update ({ password: params[:password] })
+      return { type: 'success', message: "#{ I18n.t 'adm.user.message.update_success' }" }
+    end
+  end
+
   def student_info user
     student = user.op_student
     return false if student.blank?
@@ -129,13 +204,11 @@ class Adm::User::AdmUsersService
   end
 
   def admin_info user
-    admin = user.res_user.res_partner
-    name = admin.name
+    name = user.username
     email = user.email
-    company = admin.res_company.name
-    mobile = admin.mobile || admin.phone
+    company = user.user_companies
 
-    { user: user, target: admin, email: email, mobile: mobile, name: name, company: company }
+    { user: user, target: user, email: email, mobile: '', name: name, company: company }
   end
 
   def get_student query, sub_query
@@ -168,7 +241,7 @@ class Adm::User::AdmUsersService
   def get_admin query, role
     "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, partner.name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, company.name as company_name, company.id as company_id, partner.mobile as mobile, users.last_sign_in_at as last_sigin, users.email as user_student_email
     FROM users
-    INNER JOIN res_partner as partner ON (partner.email = users.email AND users.account_role IN ('#{ role.join(',') }'))
+    INNER JOIN res_partner as partner ON (partner.email = users.email AND users.account_role IN ('#{role.join("', '")}'))
     LEFT OUTER JOIN res_company as company ON company.id = partner.company_id
     WHERE #{ query }"
   end
@@ -179,5 +252,26 @@ class Adm::User::AdmUsersService
     else
       []
     end
+  end
+
+  private
+
+  def user_can_update? params
+    @user = User::Account::User.where(id: params[:user_id]).first
+
+    if @user.blank?
+      return { success: false, message: 'Người dùng không tồn tại' }
+    end
+
+    exist_user = User::Account::User.where(username: params[:username]).first
+    if exist_user.present? && exist_user.username != params[:username] 
+      return { success: false, message: "Username đã tồn tại" }
+    end
+
+    unless params[:username] =~ /\A[a-z0-9_]{4,16}\z/
+      return { seccess: false, message: 'Tên đăng nhập không đúng' }
+    end
+
+    { success: true }
   end
 end

@@ -19,6 +19,21 @@ en:
       created_at: "Created at"
       username: "Username"
       all: "All"
+      add_user: "Create new user"
+      password: "Password"
+      confirmation_password: "Confirmation password"
+      create: "Create"
+      update: 'Update'
+      update_password: "Update password"
+      update_user_info: "Update user info"
+      message:
+        create_success: "Create successful!"
+        errors: "An error has occurred! Please try again later!"
+        pass_error: "Password incorrect!"
+        username_error: "Invalid username! Username contains only alphanumeric characters and underscores (_)"
+        missing_info: "Missing information! Please check again"
+        user_error: "User does not exist!"
+        update_success: "Update successful!"
     setting:
       name: "Setting"
       coin_star: "Coin Star"

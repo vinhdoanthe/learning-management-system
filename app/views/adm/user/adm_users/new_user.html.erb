@@ -1,0 +1,86 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "adm/adm_user.js" %>
+<% end %>
+<div class="card card-primary card-outline" style='width: 60%; margin: auto'>
+  <div class="card-body box-profile">
+    <div class="text-center">
+      <h3><%= t('adm.user.add_user') %></h3>
+    </div>
+    <div class="new_user_form">
+      <div class='username user_info row'>
+        <div class='col-md-3'>
+          <label><%= t('adm.user.username') %>:</label>
+        </div>
+        <div class='col-md-9'>
+          <input type='text' class='form-control' placeholder="<%= t('adm.user.username') %>" name='username'>
+        </div>
+      </div>
+      <div class='email user_info row'>
+        <div class='col-md-3'>
+          <label>Email:</label>
+        </div>
+        <div class='col-md-9'>
+          <input type='email' class='form-control' placeholder="Email" name='email'>
+        </div>
+      </div>
+      <div class='password user_info row'>
+        <div class='col-md-3'>
+          <label><%= t('adm.user.password') %>:</label>
+        </div>
+        <div class='col-md-9'>
+          <input type='password' class='form-control' placeholder="<%= t('adm.user.password') %>" name='password'>
+        </div>
+      </div>
+      <div class='confirm_password user_info row'>
+        <div class='col-md-3'>
+          <label><%= t('adm.user.confirmation_password') %>:</label>
+        </div>
+        <div class='col-md-9'>
+          <input type='password' class='form-control' placeholder="<%= t('adm.user.confirmation_password') %>" name='confirm_password'>
+        </div>
+      </div>
+      <div class='account_role user_info row'>
+        <div class='col-md-3'>
+          <label><%= t('adm.user.role') %>:</label>
+        </div>
+        <div class='col-md-9'>
+          <select class='form-control' name='user_role'>
+            <%= @available_roles.each do |role| %>
+              <option value='<%= role %>'><%= role %></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+      <div class='companies user_info row'>
+        <div class='col-md-3'>
+          <label><%= t('adm.user.company') %>:</label>
+        </div>
+        <div class='col-md-9'>
+          <select class='form-control' name="user_company">
+            <%= @companies.each do |company| %>
+              <option value='<%= company[0] %>'><%= company[1] %></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button class='btn btn-primary float-right text-uppercase text-bold' id='adm_create_user'><%= t('adm.user.create') %></button>
+  </div>
+</div>
+
+<style>
+.new_user_form {
+  display: table;
+  margin: auto;
+  padding-top: 30px;
+}
+
+.new_user_form input {
+  width: 100%;
+}
+
+.user_info {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+</style>

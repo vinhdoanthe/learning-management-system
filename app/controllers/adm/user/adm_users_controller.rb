@@ -33,7 +33,7 @@ class Adm::User::AdmUsersController < ApplicationController
   end
 
   def search_users
-    all_user = Adm::User::AdmUsersService.new.all_user
+    Adm::User::AdmUsersService.new.all_user
   end
 
   def login_as_user
@@ -57,36 +57,39 @@ class Adm::User::AdmUsersController < ApplicationController
       @info = service.teacher_info user
     elsif user.account_role == 'Parent'
       @info = service.parent_info user
-    elsif user.account_role == 'Admin'
+    else
       @info = service.admin_info user
     end
   end
 
   def edit_user_info
     @user = User::Account::User.where(id: params[:id]).first
+    @user_companies = @user.user_companies
+    @companies = Common::ResCompany.all
+    @available_roles = User::Account::User.pluck(:account_role).uniq
   end
 
   def update_user_info
-    user = User::Account::User.where(id: params[:user_id]).first
-    if user.blank?
-      render json: { type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau!' }
-    else
-      exist_user = User::Account::User.where(username: params[:username]).first
-      if exist_user.present? && params[:username] != exist_user.username
-        render json: { type: 'danger', message: 'Tên đăng nhập đã tồn tại! Thử lại tên khác' }
-      else
-        user.username = params[:username]
-        user.password = params[:password] if params[:password].present?
-        if params[:avatar].present?
-          #TODO create avatar
-        end
-        if user.save
-          render json: { type: 'success', message: 'Cập nhật thành công' }
-        else 
-          render json: { type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau!' }
-        end
-      end
-    end
+    result = Adm::User::AdmUsersService.new.update_user_info params
+
+    render json: result
+  end
+
+  def update_user_password
+    result = Adm::User::AdmUsersService.new.update_password params
+
+    render json: result
+  end
+
+  def new_user
+    @companies = Common::ResCompany.pluck(:id, :name)
+    @available_roles = [Constant::OPERATION_ADMIN]
+  end
+
+  def create_user
+    result = Adm::User::AdmUsersService.new.create_user params
+
+    render json: result
   end
 
   private
