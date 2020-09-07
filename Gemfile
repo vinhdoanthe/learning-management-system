@@ -21,7 +21,7 @@ gem 'tinymce-rails'
 gem 'discard', '~> 1.2'
 gem 'paper_trail'
 gem 'lograge'
-gem 'lograge-sql'
+# gem 'lograge-sql'
 gem 'strong_migrations'
 # Notification
 gem 'activity_notification'
