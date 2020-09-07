@@ -6,7 +6,7 @@ Rails.application.configure do
   config.lograge.formatter = Lograge::Formatters::Json.new
   config.colorize_logging = false
 
-  # config.lograge.ignore_actions = ['ActiveStorage::BlobsController#show', 'ActiveStorage::RepresentationsController#show', 'ActiveStorage::DiskController#show', 'ActiveStorage::DiskController#update', 'ActiveStorage::DirectUploadsController#create']
+  config.lograge.ignore_actions = ['ActiveStorage::BlobsController#show', 'ActiveStorage::RepresentationsController#show', 'ActiveStorage::DiskController#show', 'ActiveStorage::DiskController#update', 'ActiveStorage::DirectUploadsController#create']
 
   # config.lograge.custom_payload do |controller|
   #   {
