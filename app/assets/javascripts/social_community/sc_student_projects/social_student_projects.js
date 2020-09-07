@@ -15,10 +15,10 @@ let getDataFilter = (page) => {
   presentation = 0;
 
   if ($('input[name="filter_project_video_show"]:checked').length > 0){
-    project_show_video = 1;
+    introduction_video = 1;
   }
   if ($('input[name="filter_project_link"]:checked').length > 0){
-    introduction_video = 1;
+    project_show_video = 1;
   }
   if ($('input[name="filter_project_presentation"]:checked').length > 0){
     presentation  = 1;
