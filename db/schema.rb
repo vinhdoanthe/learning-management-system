@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_050239) do
+ActiveRecord::Schema.define(version: 2020_08_29_082951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2339,6 +2339,8 @@ ActiveRecord::Schema.define(version: 2020_08_25_050239) do
     t.date "overtime_date", comment: "Ngày OT"
     t.string "type_of_day", comment: "Ngày OT"
     t.datetime "message_last_post", comment: "Last Message Date"
+    t.integer "approved_uid", comment: "Approved by"
+    t.date "approved_date", comment: "Approve Date"
   end
 
   create_table "bus_bus", id: :serial, comment: "bus.bus", force: :cascade do |t|
@@ -7119,6 +7121,8 @@ ActiveRecord::Schema.define(version: 2020_08_25_050239) do
     t.text "note_2", comment: "Nhận xét khác"
     t.text "product_link_1", comment: "Link sản phẩm"
     t.text "product_link_2", comment: "Link sản phẩm"
+    t.string "attendance_state"
+    t.text "operation_comment"
   end
 
   create_table "op_attendance_register", id: :serial, comment: "op.attendance.register", force: :cascade do |t|
@@ -7266,6 +7270,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_050239) do
     t.boolean "skip_cancel", comment: "Skip cancel session"
     t.integer "start_lession_id", comment: "Start lession"
     t.integer "start_lesson_id", comment: "Start lesson"
+    t.boolean "run_background", comment: "Run in background"
   end
 
   create_table "op_batch_place", id: :serial, comment: "op.batch.place", force: :cascade do |t|
@@ -7945,6 +7950,8 @@ ActiveRecord::Schema.define(version: 2020_08_25_050239) do
     t.integer "request_offset_id", comment: "Offset request"
     t.boolean "recreate", comment: "Cho học lại"
     t.integer "place_id", comment: "Place"
+    t.string "operation_check_status"
+    t.text "operation_check_comment"
     t.index ["end_datetime"], name: "end_date"
     t.index ["start_datetime"], name: "Start_date"
     t.index ["type"], name: "Type"
@@ -11975,6 +11982,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_050239) do
   add_foreign_key "bt_hr_overtime", "hr_employee", column: "employee_id", name: "bt_hr_overtime_employee_id_fkey", on_delete: :nullify
   add_foreign_key "bt_hr_overtime", "hr_employee", column: "manager_id", name: "bt_hr_overtime_manager_id_fkey", on_delete: :nullify
   add_foreign_key "bt_hr_overtime", "res_company", column: "company_id", name: "bt_hr_overtime_company_id_fkey", on_delete: :nullify
+  add_foreign_key "bt_hr_overtime", "res_users", column: "approved_uid", name: "bt_hr_overtime_approved_uid_fkey", on_delete: :nullify
   add_foreign_key "bt_hr_overtime", "res_users", column: "create_uid", name: "bt_hr_overtime_create_uid_fkey", on_delete: :nullify
   add_foreign_key "bt_hr_overtime", "res_users", column: "write_uid", name: "bt_hr_overtime_write_uid_fkey", on_delete: :nullify
   add_foreign_key "bus_bus", "res_users", column: "create_uid", name: "bus_bus_create_uid_fkey", on_delete: :nullify

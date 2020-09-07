@@ -1,0 +1,87 @@
+en:
+  adm:
+    user:
+      name: "User"
+      info: "User Infomation"
+      filter: "Filter"
+      company: "Company"
+      select_company: "Select company"
+      role: "Role"
+      select_role: "Select role"
+      fullname: "Full name"
+      mobile: "Mobile"
+      login: "Login"
+      login_as_user: "Login as user" 
+      last_login_at: "Last login at"
+      last_logout_at: "Last logout at"
+      edit: "Edit"
+      show: "Show detail"
+      created_at: "Created at"
+      username: "Username"
+      all: "All"
+    setting:
+      name: "Setting"
+      coin_star: "Coin Star"
+    course:
+      name: "Course"
+      course: "Course"
+      slide_lesson: "Slide lesson"
+      video: "Video"
+      homework: "Homework"
+    community:
+      name: "Community"
+      post: "Post"
+      album: "Album"
+      photo: "Photo"
+    redeem:
+      name: "Redeem"
+      coin_star: "Coin Start Transaction"
+      redeem: "Redeem Transaction"
+    notice: "Notice"
+    refer_friend: "Refer Friend"
+    learning_activity:
+      name: "Learning Activity"
+      discussion: "Discussion"
+      homework: "Homework"
+      project: "Project"
+    homework_list:
+      batch_code: 'Batch code'
+      answer_time: 'Answer time'
+      state: 'State'
+      all_states: 'All states'
+      student: 'Student'
+      faculty: 'Teacher'
+    learning_activity_management: "Management learning activity"
+    learning_activity_management_homework: "Homework"
+    learning_activity_management_question: "Question"
+    learning_activity_management_project: "Project"
+    learning_activity_management_homework_list: "The list of homework has no answer"
+    learning_operation_attendance: 'Operation Attendance'
+    learning_management_session: "Management Sessions"
+    learning_attendance_line: 'Attendance Line'
+    refer_friend: "Refer Friend"
+    List: "List"
+    Presentee: "Presentee"
+    Referral code: "Referral code"
+    Refer state: "Refer state"
+    Parent's name: "Parent's name"
+    state_waiting: "Waiting"
+    state_comfirm: "Comfirmed"
+    state_success: "Success"
+    state_failed: "Failed"
+    cancel_refer_friend: "Cancel refer friend"
+    Phone: "Phone"
+    student: "Student"
+    Parent email: 'Parent Email'
+    Other Note: 'Note'
+    learning:
+      session:
+        name: 'Sessions'
+        academy: "Academy"
+        state: "State"
+        time: "Time"
+        select_batch: "Select batch"
+        select_state: "Select state"
+        select_academy: "Select Academy"
+        select_time: "Select time"
+        lesson_number: "Lesson Number"

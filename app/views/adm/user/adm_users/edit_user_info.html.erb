@@ -1,16 +1,5 @@
 <h3>Thông tin người dùng <%= @user.username %> </h3>
 <hr>
-<!-- <div class='row' style='justify-content:center'>
-  <div class="">
-    <div class="user_avatar">
-      <%#= (User::Account::UserDecorator.new(@user).display_avatar 150).html_safe %> 
-    </div>
-    <div class="edit_avatar">
-      <label for="avatar_file" class="btn btn-success">Thay đổi</label>
-      <input id="avatar_file" name='user_avatar' style="display: none; visibility:hidden;" type="file">
-    </div>
-  </div>
-</div> -->
 <input type='hidden' name='user_id' value="<%= @user.id %>">
 <div class='row' style='justify-content:center'>
   <div class='edit_user_info row'>

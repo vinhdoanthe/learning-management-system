@@ -12,6 +12,12 @@ class Adm::User::AdmUsersController < ApplicationController
                       end
   end
 
+  def new
+  end
+
+  def create
+  end
+
   def filter_users
     service = Adm::User::AdmUsersService.new
     users = service.user_index params, current_user, @@filter_params
