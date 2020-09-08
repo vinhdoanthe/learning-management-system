@@ -108,6 +108,7 @@ vi:
       create: "Thêm mới"
       update: 'Cập nhật'
       update_password: "Cập nhật mật khẩu"
+      update_info: "Cập nhật thông tin"
       message:
         create_success: "Thêm mới thành công!"
         errors: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"
