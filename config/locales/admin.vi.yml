@@ -101,7 +101,21 @@ vi:
       show: "Xem chi tiết"
       created_at: "Created at"
       username: "Tên đăng nhập"
+      password: "Mật khẩu"
+      confirmation_password: "Mật khẩu xác nhận"
       all: "Tất cả"
+      add_user: "Thêm người dùng mới"
+      create: "Thêm mới"
+      update: 'Cập nhật'
+      update_password: "Cập nhật mật khẩu"
+      message:
+        create_success: "Thêm mới thành công!"
+        errors: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"
+        pass_error: "Mật khẩu không khớp!"
+        username_error: "Tên đăng nhập không phù hợp! Tên đăng nhập chỉ chứa các ký tự chữ, số và dấu gạch dưới(_)"
+        missing_info: "Thiếu thông tin! Vui lòng kiểm tra lại"
+        user_error: "Người dùng không tồn tại"
+        update_success: "Cập nhật thành công!"
     setting:
       name: "Cài đặt"
       coin_star: "Điểm thưởng"

@@ -5,3 +5,13 @@ function display_noti(error) {
     $('#noti-message').html('');
   }, 3000);
 }
+
+function display_response_noti(res) {
+  if (res.type === 'danger'){
+    toastr.error(res.message)
+  }else if (res.type === 'success'){
+    toastr.success(res.message)
+  }else if (res.type === 'warning'){
+    toastr.success(res.message)
+  }
+}

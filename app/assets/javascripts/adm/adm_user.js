@@ -62,4 +62,24 @@ $(document).ready(function () {
     data['index'] = 1;
     get_data_index(data)
   })
+
+
+  $('#adm_create_user').on('click', function(){
+    username = $('input[name="username"]').val();
+    email = $('input[name="email"]').val();
+    password = $('input[name="password"]').val();
+    confirmation_password = $('input[name="confirm_password"]').val();
+    role = $('select[name="user_role"]').val();
+    company = $('select[name="user_company"]').val();
+
+    $.ajax({
+      method: 'POST',
+      url: '/adm/user/create_user',
+      data: { username: username,email: email, password: password, confirmation_password: confirmation_password, account_role: role, company: company, authenticity_token: $('[name="csrf-token"]')[0].content},
+      success: function(res){
+        $('#adm_create_user').attr("disabled", true)
+        display_response_noti(res)
+      }
+    })
+  })
 })

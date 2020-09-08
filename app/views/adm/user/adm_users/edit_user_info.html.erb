@@ -1,97 +1,202 @@
-<h3>Thông tin người dùng <%= @user.username %> </h3>
-<hr>
-<input type='hidden' name='user_id' value="<%= @user.id %>">
-<div class='row' style='justify-content:center'>
-  <div class='edit_user_info row'>
-    <div class='row col-md-12' style='margin-bottom: 10px'>
-      <div class='col-md-4'>
-        <label>Username:</label>
+<!-- <div class='row' style='justify-content:center'>
+  <div class="">
+  <div class="user_avatar">
+  <%#= (User::Account::UserDecorator.new(@user).display_avatar 150).html_safe %> 
+  </div>
+  <div class="edit_avatar">
+  <label for="avatar_file" class="btn btn-success">Thay đổi</label>
+  <input id="avatar_file" name='user_avatar' style="display: none; visibility:hidden;" type="file">
+  </div>
+  </div>
+  </div> -->
+  <div class="card card-primary card-outline" style='width: 60%; margin: auto'>
+    <input type='hidden' name='user_id' value="<%= @user.id %>">
+    <div class="card-body box-profile">
+      <div class="text-center">
+        <h3><%= t('adm.user.info') %> <%= @user.username %> </h3>
       </div>
-      <div class='col-md-8'>
-        <input name='username' required value="<%= @user.username %>">
+      <div class="user_info_form">
+        <div class='username user_info row'>
+          <div class='col-md-3'>
+            <label><%= t('adm.user.username') %>:</label>
+          </div>
+          <div class='col-md-9'>
+            <input name='username' class="form-control" required value="<%= @user.username %>">
+          </div>
+        </div>
+        <div class='email user_info row'>
+          <div class='col-md-3'>
+            <label>Email:</label>
+          </div>
+          <div class='col-md-9'>
+            <input name='username' class="form-control" required value="<%= @user.email %>">
+          </div>
+        </div>
+        <% if @user.account_role == Constant::OPERATION_ADMIN %>
+          <div class='account_role user_info row'>
+            <div class='col-md-3'>
+              <label><%= t('adm.user.role') %>:</label>
+            </div>
+            <div class='col-md-9'>
+              <select class='form-control' name='user_role'>
+                <%= @available_roles.each do |role| %>
+                  <% if @user.account_role == role %>
+                    <option value='<%= role %>' selected><%= role %></option>
+                  <% else %>
+                    <option value='<%= role %>'><%= role %></option>
+                  <% end %>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          <div class='companies user_info row'>
+            <div class='col-md-3'>
+              <label><%= t('adm.user.company') %>:</label>
+            </div>
+            <div class='col-md-9 form-group'>
+              <select class="form-control select2" multiple="multiple" data-placeholder="<%= t('adm.user.select_company') %>" style="width: 100%;" name="user_company">
+                <% @companies.each do |company| %>
+                  <% if @user_companies.present? %>
+                    <% @user_companies.each do |uc| %>
+                      <% if company.id == uc.company_id %>
+                        <option value='<%= company.id %>' selected><%= company.name %></option>
+                      <% else %>
+                        <option value='<%= company.id %>'><%= company.name %></option>
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <option value='<%= company.id %>'><%= company.name %></option>
+                  <% end %>
+                <% end %>
+              </select>
+            </div>
+          </div>
+        <% end %>
       </div>
-    </div>
-    <div class='row col-md-12'>
-      <div class='col-md-4'>
-        <label>Password:</label>
-      </div>
-      <div class='col-md-8'>
-        <input name='password' type="text">
-      </div>
+      <button class='btn btn-primary float-right text-uppercase text-bold' id='adm_edit_user'><%= t('adm.user.update') %></button>
     </div>
   </div>
-</div>
-<div class='row action_edit'>
-  <button class='btn btn-primary' id="submit_edit_user">Cập nhật</button>
-</div>
+  <div class="card card-primary card-outline" style='width: 60%; margin: auto; margin-top: 50px;'>
+    <input type='hidden' name='user_id' value="<%= @user.id %>">
+    <div class="card-body box-profile">
+      <div class="text-center">
+        <h3><%= t('adm.user.update_password') %></h3>
+      </div>
+      <div class="user_info_form">
+        <div class='user_password user_info row'>
+          <div class='col-md-3'>
+            <label><%= t('adm.user.password') %>:</label>
+          </div>
+          <div class='col-md-9'>
+            <input name='password' class="form-control" type='password'>
+          </div>
+        </div>
+        <div class='confirm_password user_info row'>
+          <div class='col-md-3'>
+            <label><%= t('adm.user.confirmation_password') %>:</label>
+          </div>
+          <div class='col-md-9'>
+            <input name='confirmation_password' class="form-control" type='password'>
+          </div>
+        </div>
+      </div>
+      <button class='btn btn-primary float-right text-uppercase text-bold' id='adm_update_password_user'><%= t('adm.user.update') %></button>
+    </div>
+  </div>
 
-<style>
-.edit_user_info input{
-  width: 80%;
-    padding: 5px;
+  <style>
+.new_user_form {
+  display: table;
+  margin: auto;
+  padding-top: 30px;
 }
-.user_avatar {
-  display: flex;
-  justify-content: center;
-}
-.edit_avatar {
-  margin-top: 10px;
-  text-align: center
-}
-.action_edit {
-  display: flex;
-  justify-content: center;
-    margin-top: 10px;
-}
-.action_edit button {
-  margin: 10px;
-}
-</style>
-<script>
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
 
-      reader.onload = function(e) {
-        $('.user_avatar').find('img').attr('src', e.target.result);
-      }
+.new_user_form input {
+  width: 100%;
+}
 
-      reader.readAsDataURL(input.files[0]); // convert to base64 string
-    }
-  }
+.user_info {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+  </style>
+
+  <script>
+  //  function readURL(input) {
+  //    if (input.files && input.files[0]) {
+  //      var reader = new FileReader();
+
+  //      reader.onload = function(e) {
+  //        $('.user_avatar').find('img').attr('src', e.target.result);
+  //      }
+
+  //      reader.readAsDataURL(input.files[0]); // convert to base64 string
+  //    }
+  //  }
 
 $(document).ready(function(){
-  var change_avatar = false;
-  $("#avatar_file").change(function() {
-    readURL(this);
-    change_avatar = true;
-  });
+  //var change_avatar = false;
+  //$("#avatar_file").change(function() {
+  //  readURL(this);
+  //  change_avatar = true;
+  //});
 
-  $('#submit_edit_user').on('click', function(){
-    var formData = new FormData();
+  //$('#submit_edit_user').on('click', function(){
+  //  var formData = new FormData();
+  //  username = $('input[name="username"]').val();
+  //  password = $('input[name="password"]').val();
+  //  user_id = $('input[name="user_id"]').val();
+
+  //  formData.append('username', username);
+  //  formData.append('password', password);
+  //  formData.append('user_id', user_id);
+
+  //  if (change_avatar){
+  //    formData.append('avatar', $('#avatar_file')[0].files[0]); 
+  //  }
+
+  //  $.ajax({
+  //    method: 'POST',
+  //    url: '/adm/user/update_user_info',
+  //    data: formData,
+  //    contentType: false,
+  //    processData: false,
+  //    success: function(res){
+  //      display_response_noti(res);
+  //    }
+  //  })
+  //})
+  $('#adm_edit_user').on('click', function(){
     username = $('input[name="username"]').val();
-    password = $('input[name="password"]').val();
+    email = $('input[name="email"]').val();
+    account_role = $('select[name="user_role"]').val();
+    user_companies = $('select[name="user_company"]').val();
     user_id = $('input[name="user_id"]').val();
-
-    formData.append('username', username);
-    formData.append('password', password);
-    formData.append('user_id', user_id);
-
-    if (change_avatar){
-      formData.append('avatar', $('#avatar_file')[0].files[0]); 
-    }
 
     $.ajax({
       method: 'POST',
       url: '/adm/user/update_user_info',
-      data: formData,
-      contentType: false,
-      processData: false,
-      success: function(res){
+      data: { user_id: user_id, username: username, email: email, account_role: account_role, user_companies: user_companies, authenticity_token: $('[name="csrf-token"]')[0].content },
+      success: function(res) {
         display_response_noti(res);
       }
     })
   })
+
+  $('#adm_update_password_user').on('click', function(){
+    user_id = $('input[name="user_id"]').val();
+    password = $('input[name="password"]').val();
+    confirmation_password = $('input[name="confirmation_password"]').val();
+
+    $.ajax({
+      method: 'POST',
+      url: '/adm/user/update_user_password',
+      data: { user_id: user_id, password: password, confirmation_password: confirmation_password, authenticity_token: $('[name="csrf-token"]')[0].content},
+      success: function(res){
+        display_response_noti(res)
+      }
+    })
+  })
 })
-</script>
+  </script>
 
