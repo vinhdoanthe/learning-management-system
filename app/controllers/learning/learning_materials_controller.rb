@@ -35,8 +35,14 @@ module Learning
       link, plan_link = '',''
 
       if lesson.present?
-        slide = Learning::Material::LearningMaterial.where(content_type: Learning::Constant::Material::MATERIAL_CONTENT_PRESENTATION, op_lession_id: lesson.id).first
-        plan = Learning::Material::LearningMaterial.where(content_type: Learning::Constant::Material::MATERIAL_CONTENT_LESSON_PLAN, op_lession_id: lesson.id).first
+        slide = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE, 
+                                                           learning_type: Learning::Constant::Material::MATERIAL_TYPE_TEACH, 
+                                                           content_type: Learning::Constant::Material::MATERIAL_CONTENT_PRESENTATION, 
+                                                           op_lession_id: lesson.id).first
+        plan = Learning::Material::LearningMaterial.where(material_type: Learning::Constant::Material::MATERIAL_TYPE_FILE, 
+                                                          learning_type: Learning::Constant::Material::MATERIAL_TYPE_TEACH,
+                                                          content_type: Learning::Constant::Material::MATERIAL_CONTENT_LESSON_PLAN, 
+                                                          op_lession_id: lesson.id).first
 
         link = if slide.present?
                  slide.google_drive_link
