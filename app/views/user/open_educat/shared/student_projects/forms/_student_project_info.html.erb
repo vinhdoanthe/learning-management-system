@@ -1,6 +1,16 @@
 <%= tinymce_assets %>
 <%= form_with model: project, url: url, remote: true, format: :js, method: :post, html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
 <%= f.hidden_field :batch_id, value: batch_id %>
+<% if current_user.is_teacher? %>
+<div class='row'>
+  <div class='col-md-3'>
+    <label>Loại sản phẩm<span style="color: red">*</span></label>
+  </div>
+  <div class='col-md-8 project_detail_select'>
+    <%= f.select :project_type, options_for_select(project_type, project.project_type), {} , { class: 'project_detail' } %>
+  </div>
+</div>
+<% end %>
 <div class='row' id="edit_student_project_upload">
   <div class='col-md-3'>
     <label>Học sinh <span style="color: red">*</span></label>
@@ -141,7 +151,9 @@
   }
 
   .project_detail_select .project_detail {
-    -webkit-appearance: none;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
   }
 
   #edit_student_project_form select:hover {

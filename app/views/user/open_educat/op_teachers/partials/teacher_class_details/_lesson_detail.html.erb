@@ -23,7 +23,7 @@
       <td id='lesson_title'>
         <% if active_lesson.present? %>
         <strong><%= active_lesson.name %></strong>
-        <br/>Kiến thức học được: <%= active_lesson.note %>
+        <br/>Kiến thức học được: <%= active_lesson.note.present? ? active_lesson.note.html_safe : '' %>
     <% else %>
         <strong>BÀI: Đang cập nhật</strong>
         <br/>Kiến thức học được: Đang cập nhật

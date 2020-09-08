@@ -10,7 +10,7 @@
     <% project = SocialCommunity::ScStudentProject.new %>
     <div class="modal-body">
       <div id="edit_video_infomation">
-        <%= render 'user/open_educat/shared/student_projects/forms/student_project_info', {all_student: all_student, subjects: subjects, url: social_community_sc_student_projects_create_student_project_path, project: project, batch_id: batch.id } %>
+        <%= render 'user/open_educat/shared/student_projects/forms/student_project_info', {all_student: all_student, subjects: subjects, url: social_community_sc_student_projects_create_student_project_path, project: project, batch_id: batch.id, project_type: project_type } %>
       </div>
     </div>
     <div class="modal-footer">

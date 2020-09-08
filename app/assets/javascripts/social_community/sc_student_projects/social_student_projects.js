@@ -10,6 +10,8 @@ let getSocialStudentProject = (data) => {
 let getDataFilter = (page) => {
   course = $('#filter_course_projects').val();
   subject = $('#filter_subject_projects').val();
+  project_type = $('#filter_project_type').val();
+
   project_show_video = 0;
   introduction_video = 0;
   presentation = 0;
@@ -23,7 +25,7 @@ let getDataFilter = (page) => {
   if ($('input[name="filter_project_presentation"]:checked').length > 0){
     presentation  = 1;
   }
-  return { course: course, subject: subject, introduction_video: introduction_video, presentation: presentation, project_show_video: project_show_video, page: page }
+  return { course: course, subject: subject, introduction_video: introduction_video, presentation: presentation, project_show_video: project_show_video, page: page, project_type: project_type }
 }
 
 $(document).ready(function(){
