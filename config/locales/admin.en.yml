@@ -26,6 +26,7 @@ en:
       update: 'Update'
       update_password: "Update password"
       update_user_info: "Update user info"
+      update_info: "Update info"
       message:
         create_success: "Create successful!"
         errors: "An error has occurred! Please try again later!"

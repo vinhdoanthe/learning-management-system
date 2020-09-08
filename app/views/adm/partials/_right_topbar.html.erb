@@ -1,7 +1,30 @@
 <ul class="navbar-nav ml-auto">
   <li class="nav-item">
-    <a class="nav-link" href="<%= user_logout_path %>">
-      <i class="fas fa-sign-out-alt"> <%= t('login.logout') %></i>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+      <i class="fas fa-user-cog"></i>
     </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="<%= user_logout_path %>">
+        <i class="fas fa-sign-out-alt"> <%= t('login.logout') %></i>
+      </a>
+      <div class="dropdown-divider"></div>
+      <a href="/adm/user/edit_user_info/<%= current_user.id %>" class="dropdown-item">
+        <i class="fas fa-key"> <%= t('adm.user.update_info') %></i>
+      </a>
+    </div>
   </li>
 </ul>
+<style>
+  .dropdown-menu-lg{
+    min-width: 200px;
+  }
+  .dropdown-item {
+    color: #339af0;
+  }
+  .dropdown-item:hover {
+    color: #19d69e;
+  }
+</style>
