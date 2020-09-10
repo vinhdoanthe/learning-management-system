@@ -1,0 +1,2 @@
+$('#reward_history_content').html('<%= escape_javascript ( render partial: 'adm/user/adm_users/partials/student_info/student_reward_history') %>');
+$("#paginator").html("<%= j paginate(@coin_star_transactions, remote: true) %>");

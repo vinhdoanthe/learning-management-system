@@ -49,6 +49,7 @@ namespace :adm do
     get 'new_user' => 'adm_users#new_user'
     post 'create_user' => 'adm_users#create_user'
     post 'update_user_password' => 'adm_users#update_user_password'
+    get 'student_homework' => 'adm_users#student_homework'
   end
 
   namespace :faqs do

@@ -60,6 +60,8 @@ class Adm::User::AdmUsersController < ApplicationController
     else
       @info = service.admin_info user
     end
+
+    @coin_star_transactions = User::Reward::CoinStarsService.get_transactions(params, user)
   end
 
   def edit_user_info
@@ -90,6 +92,22 @@ class Adm::User::AdmUsersController < ApplicationController
     result = Adm::User::AdmUsersService.new.create_user params
 
     render json: result
+  end
+
+  def student_homework
+    user = User::Account::User.where(id: params[:student_id]).first
+
+    return { success: false, message: 'Chưa có bài tập về nhà!' } if Learning::Homework::UserQuestion.where(student_id: user.id).blank?
+
+    student = user.op_student
+    return { success: false, message: 'Đã có lỗi xảy ra' } if student.blank?
+
+    result = Adm::User::AdmUsersService.new.student_homework student, user
+
+    respond_to do |format|
+      format.html
+      format.js { render 'adm/user/adm_users/partials/student_info/student_homework', locals: result }
+    end
   end
 
   private

@@ -1,0 +1,89 @@
+<%= stylesheet_link_tag 'adm/user_info/user_info' %>
+<% student = @info[:user].op_student %>
+<% @batches = student.op_batches %>
+<ul class="nav nav-tabs" id="student_information" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="info_tab" data-toggle="pill" href="#info" role="tab" aria-controls="student_information" aria-selected="true">Thông tin chung</a>
+    <div></div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="study_tab" data-toggle="pill" href="#study" role="tab" aria-controls="student_information" aria-selected="false">Quá trình học tập</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="homework_tab" data-toggle="pill" href="#homework" role="tab" aria-controls="student_information" aria-selected="false">Bài tập vể nhà</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="product_tab" data-toggle="pill" href="#product" role="tab" aria-controls="student_information" aria-selected="false">Sản phẩm</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="invoice_tab" data-toggle="pill" href="#invoice" role="tab" aria-controls="student_information" aria-selected="false">Học phí</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="reward_history_tab" data-toggle="pill" href="#reward_history" role="tab" aria-controls="student_information" aria-selected="false">Lịch sử thưởng điểm</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="redeem_history_tab" data-toggle="pill" href="#redeem_history" role="tab" aria-controls="student_information" aria-selected="false">Lịch sử đồi quà</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="refer_friend_tab" data-toggle="pill" href="#refer_friend" role="tab" aria-controls="student_information" aria-selected="false">Giới thiệu bạn bè</a>
+  </li>
+</ul>
+<div class="tab-content" id="student_information_content">
+  <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info_tab">
+    <%= render 'adm/user/adm_users/partials/user_info' %>
+    <% if @info[:user].parent_account_id.present?  %>
+      <% user_parent = User::Account::User.where(id: @info[:user].parent_account_id).first  %>
+      <% if user_parent.present? %>
+        <% parent = user_parent.op_parent %>
+        <% res_parent = parent.res_partner if parent.present? %>
+        <% if parent.present? && res_parent.present? %>
+          <%= render 'adm/user/adm_users/partials/student_info/student_parent_info', { user_parent: user_parent, parent: parent, res_parent: res_parent } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="tab-pane fade" id="study" role="tabpanel" aria-labelledby="study_tab">
+    <%= render 'user/op_students/partials/student_class', { current_user: @info[:user] } %>
+  </div>
+  <div class="tab-pane fade" id="homework" role="tabpanel" aria-labelledby="homework_tab">
+    <div id='adm_loading'>
+      <%= render 'partials/content_loading' %>
+    </div>
+    <div id="adm_student_homework_content">
+    </div>
+  </div>
+  <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="product_tab">
+    <% student_projects = SocialCommunity::ScStudentProject.where(student_id: student.id) %>
+    <% if student_projects.present? %>
+      <%= render "adm/user/adm_users/partials/student_info/student_projects", { student_projects: student_projects, student: student} %>
+    <% else %>
+      <p>Chưa có sản phẩm</p>
+    <% end %>
+  </div>
+  <div class="tab-pane fade" id="invoice" role="tabpanel" aria-labelledby="invoice_tab">
+  </div>
+  <div class="tab-pane fade" id="reward_history" role="tabpanel" aria-labelledby="reward_history_tab">
+    <div id='reward_history_content'>
+      <%= render 'adm/user/adm_users/partials/student_info/student_reward_history' %>
+    </div>
+    <div id='paginator'>
+      <%= paginate @coin_star_transactions, remote: true %>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="redeem_history" role="tabpanel" aria-labelledby="redeem_history_tab">
+    <%= render 'adm/user/adm_users/partials/student_info/student_redeem_history', { user: @info[:user] } %>
+  </div>
+  <div class="tab-pane fade" id="refer_friend" role="tabpanel" aria-labelledby="refer_friend_tab">
+    <%= render 'adm/user/adm_users/partials/student_info/student_refer_history', { user: @info[:user] } %>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $.ajax({
+      method: 'GET',
+      url: '/adm/user/student_homework?student_id=<%= @info[:user].id.to_s %>',
+      dataType: 'script'
+    })
+  })
+</script>

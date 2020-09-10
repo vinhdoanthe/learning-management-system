@@ -1,0 +1,46 @@
+<div>
+  <table id="table_student_projects">
+    <colgroup>
+      <col>
+      <col>
+      <col>
+      <col>
+      <col>
+      <col width="200px">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Mã học sinh</th>
+        <th>Họ và tên</th>
+        <th style="text-align: center">Level</th>
+        <th style="text-align: center">Sản phẩm</th>
+        <th style="text-align: center">Loại</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% student_projects.each do |project| %>
+        <tr>
+          <td><%= student.code %></td>
+          <td><%= student.full_name %></td>
+          <td style="text-align: center">
+            <% subject = Learning::Course::OpSubject.where(id: project.subject_id).first %>
+            <%= subject.present? ? subject.level : '' %>
+          </td>
+          <td style="text-align: center">
+            <span class='student_project_icon <%= 'active_icon' if project.presentation.attached? %>'>
+              <%= image_tag('global/images/microsoft-powerpoint.png', style: 'width: 32px') %>
+            </span>
+            <span class='student_project_icon <%= 'active_icon' if project.introduction_video.present? %>'>
+              <%= image_tag('global/images/button-youtube.png', style: 'width: 32px') %>
+            </span>
+            <span class='student_project_icon <%= 'active_icon' if project.project_show_video.present? %>'>
+              <%= image_tag('global/images/browser.png', style: 'width: 32px') %>
+            </span>
+          </td>
+          <td style="text-align: center"><%= project.project_type == SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT ? 'Sản phẩm cuối buổi' : 'Sản phẩm cuối khoá' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

@@ -32,7 +32,6 @@ class SocialCommunity::ScStudentProjectsService
             ActiveRecord::Base.transaction do
               project.update!(update_params)
               project.update!( { project_type: params[:project_type] })
-              binding.pry
               User::Reward::CoinStarsService.new.reward_coin_star project, project.user_id, project.created_by
             end
             result = { type: 'success', message: 'Update thành công' }
@@ -215,7 +214,6 @@ class SocialCommunity::ScStudentProjectsService
     query += "introduction_video IS NOT NULL AND introduction_video <> '' AND " if filter_params[:introduction_video] == '1'
     query += "project_type = '#{ filter_params[:project_type] }' AND " if ( filter_params[:project_type].present? && filter_params[:project_type] != 'all' )
 
-    binding.pry
     if filter_params[:subject].present? && filter_params[:subject] != 'all'
       query += "subject_id IN (#{ filter_params[:subject] }) AND "
     end
