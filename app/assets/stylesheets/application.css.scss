@@ -298,3 +298,52 @@ button {
   opacity: 0.6;
   color: black !important;
 }
+.paginate_button.page-item.page {
+  background: #CFCFCF;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  border-radius: 4px;
+  margin-right: 5px;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.paginate_button.page-item.page a{
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 0;
+}
+
+.paginate_button.page-item.active {
+  background-color: #5DC2A7 !important;
+}
+
+.paginate_button.page-item.active a{
+  color: white !important;
+}
+
+
+.paginate_button.page-item.next a {
+  font-size: 14px;
+  color: #0065ff;
+}
+
+
+.paginate_button.page-item.prev a {
+  font-size: 14px;
+  color: #0065ff;
+}
+
+.paginate_button.page-item.first a {
+  font-size: 14px;
+  color: #0065ff;
+}
+
+.paginate_button.page-item.last a {
+  font-size: 14px;
+  color: #0065ff;
+}

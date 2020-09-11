@@ -3,6 +3,7 @@
     <tr>
       <th>ID</th>
       <th><%= t("learning.batch.code") %></th>
+      <th><%= t("adm.learning.session.faculty_name") %></th>
       <th><%= t("adm.learning.session.session_count") %></th>
       <th><%= t("adm.learning.session.lesson_number") %></th>
       <th><%= t("adm.learning.session.start_datetime") %></th>
@@ -17,9 +18,17 @@
       <tr>
         <td><%= session[:id] %></td>
         <td><%= session[:batch_code] %></td>
+        <td>
+          <% user = User::Account::User.where(faculty_id: session[:faculty_id]).first %>
+          <% if user.present? %>
+            <a href='/adm/user/user_info/<%= user.id %>' target='blank'><%= session[:faculty_name] %></a>
+          <% else %>
+            <a><%= session[:faculty_name] %></a>
+          <% end %>
+        </td>
         <td align='center'><%= session[:session_count] %></td>
         <td align='center'><%= session[:lesson_number] %></td>
-        <td align='center'><%= session[:start_datetime].strftime('%d-%m-%Y') %></td>
+        <td align='center'><%= session[:start_datetime].strftime('%H:%M %d-%m-%Y') %></td>
         <% if session[:state] == Learning::Constant::Batch::Session::STATE_DRAFT %>
           <td class="bg-warning text-center"><%= session[:state] %></td>
         <% elsif session[:state] == Learning::Constant::Batch::Session::STATE_CONFIRM %>
@@ -69,6 +78,7 @@
     <tr>
       <th>ID</th>
       <th><%= t("learning.batch.code") %></th>
+      <th><%= t("adm.learning.session.faculty_name") %></th>
       <th><%= t("adm.learning.session.session_count") %></th>
       <th><%= t("adm.learning.session.lesson_number") %></th>
       <th><%= t("adm.learning.session.start_datetime") %></th>
