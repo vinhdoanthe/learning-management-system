@@ -10,7 +10,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
     student = user.op_student
 
     if validate_youtube_upload_params @params
-      if sc_student_service.validate_subject_project? @params
+      if sc_student_service.validate_subject_project @params
         result = { type: 'danger', message: 'Sản phẩm cuối khoá đã tồn tại! Không thể đăng thêm sản phẩm cuối khoá level này!' }
       else
         if @params[:introduction_video].present? && @params[:name].present?
@@ -113,7 +113,8 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
 
   def social_student_projects
     @student_projects = SocialCommunity::ScStudentProject.where(student_id: current_user.id)
-    @courses = Learning::Course::OpCourse.pluck(:id, :name)
+    course_ids = SocialCommunity::ScStudentProject.pluck(:course_id).uniq
+    @courses = Learning::Course::OpCourse.where(id: course_ids).pluck(:id, :name)
     @project_type = [["Sản phẩm cuối buổi", SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT], ["Sản phẩm cuối khoá", SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT]]
   end
 

@@ -72,6 +72,7 @@ vi:
         select_academy: "Chọn học viện"
         select_time: "Chọn thời gian"
         lesson_number: "Buổi số"
+        faculty_name: "Giảng viên"
       Temporary session The lesson has not taken place yet: "Tạm khoá: Buổi học chưa diễn ra"
       Introduce classmates: "Giới thiệu bạn học"
       Step: "Bước"

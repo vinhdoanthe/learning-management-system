@@ -188,6 +188,7 @@ module User
         @lesson = data[:lesson]
         @course = data[:course]
         @subject = data[:subject]
+        @errors = data[:errors]
 
         respond_to do |format|
           format.html

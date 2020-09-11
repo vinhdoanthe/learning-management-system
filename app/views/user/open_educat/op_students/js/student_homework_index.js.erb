@@ -1,8 +1,13 @@
 $('#loading_filter_box').hide();
-$('#filter_homework_row').html('<%= escape_javascript(render partial: "user/open_educat/op_students/partials/filter_homework_row", locals: { batch: @batch, batches: @batches, subject: @subject, subjects: @subjects, course: @course, courses: @courses } ) %> ');
 $('#table_loading_homework').hide();
+<% if @errors.present? %>
+    //display_response_noti({ type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' })
+$('#homework_session_table').html('<p>Lớp học chưa diễn ra!</p>');
+<% else %>
+$('#filter_homework_row').html('<%= escape_javascript(render partial: "user/open_educat/op_students/partials/filter_homework_row", locals: { batch: @batch, batches: @batches, subject: @subject, subjects: @subjects, course: @course, courses: @courses } ) %> ');
 $("#homework_session_table").html('<%= escape_javascript(render partial: "user/open_educat/op_students/partials/table_homework_list", locals: { sessions: @sessions, batch: @batch, session: @session, subject: @subject } ) %>');
 $('#homework_session_table').ready(function(){
   $('#homework_tab2_new').html('<%= escape_javascript(render partial: "user/open_educat/op_students/partials/videos_tab", locals: { sessions: @sessions, course: @course, subject: @subject, lesson: @lesson, session: @session, batch: @batch}) %>');
   get_video( <%= @batch.id %>, <%= @subject.id %>)
 })
+<% end %>

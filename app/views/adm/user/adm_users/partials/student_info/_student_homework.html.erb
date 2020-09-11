@@ -50,14 +50,14 @@
             </td>
           <% else %>
             <td align='right' style="font-size: 10px; color: #000;" class="font-medium"><%= homework_state[:last_done].strftime("%H:%M %d/%m/%Y") if homework_state[:last_done].present? %></td>
-            <td align="right">
+            <td align="left">
               <a style='width: 100%' class="do_homework_state"><span class="label-edit label label-primary" style="padding:6px; font-size: 11px; text-transform: initial; line-height: 7px; font-weight: 500;"><%= t('homework.doing') %> <%= homework_state[:progress] %></span>
               </a>
             </td>
           <% end %>
         <% else %>
           <td></td>
-          <td align='right'>
+          <td align='left'>
             <span class="label-edit label label-stop" style="padding:6px; font-size: 11px; text-transform: initial; line-height: 7px; font-weight: 500;">Chưa có bài tập</span>
           </td>
         <% end %>
