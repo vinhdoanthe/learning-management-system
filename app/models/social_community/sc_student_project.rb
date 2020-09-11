@@ -5,6 +5,7 @@ class SocialCommunity::ScStudentProject < ApplicationRecord
 
   enumerize :state, in: [SocialCommunity::Constant::ScStudentProject::State::PUBLISH, SocialCommunity::Constant::ScStudentProject::State::DRAFT]
   enumerize :permission, in: [SocialCommunity::Constant::ScStudentProject::Permission::PUBLIC, SocialCommunity::Constant::ScStudentProject::Permission::PRIVATE]
+  enumerize :project_type, in: [SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT, SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT]
 
   belongs_to :user, class_name: 'User::Account::User', foreign_key: 'user_id'
   belongs_to :op_student, class_name: 'User::OpenEducat::OpStudent', foreign_key: 'student_id'

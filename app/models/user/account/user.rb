@@ -14,9 +14,9 @@ class User::Account::User < ApplicationRecord
 
   belongs_to :user, required: false, class_name: 'User::Account::User', foreign_key: 'parent_account_id'
 
-  has_many :refer_friends
+  has_many :refer_friends, class_name: 'SocialCommunity::ReferFriend', foreign_key: 'refer_by'
   has_many :coin_star_transactions
-  has_many :redeem_transactions
+  has_many :redeem_transactions, class_name: 'Redeem::RedeemTransaction', foreign_key: 'student_id'
   has_many :user_notifications
   has_many :users, class_name: 'User::Account::User', foreign_key: 'parent_account_id'
   has_many :user_posts, class_name: 'SocialCommunity::Feed::UserPost'

@@ -1,0 +1,29 @@
+<% active_batch = '' %>
+<select id="homework_course_selection">
+  <% hash.keys.each do |course_id| %>
+    <% if course_id == course %>
+      <option selected value="<%= course_id %>"><%= courses[course_id] %></option>
+    <% else %>
+      <option value="<%= course_id %>"><%= courses[course_id] %></option>
+    <% end %>
+  <% end %>
+</select>
+<select id="homework_batch_selection">
+  <% hash.values[0].keys.each do |batch_id| %>
+    <% if batch_id == batch %>
+      <option selected value="<%= batch_id %>"><%= batches[batch_id] %></option>
+      <% active_batch = batch_id %>
+    <% else %>
+      <option value="<%= batch_id %>"><%= batches[batch_id] %></option>
+    <% end %>
+  <% end %>
+</select>
+<select id="homework_subject_selection">
+  <% hash.values[0][active_batch].each do |subject_id| %>
+    <% if subject_id == subject %>
+      <option selected value="<%= subject_id %>"><%= subjects[subject_id] %></option>
+    <% else %>
+      <option value="<%= subject_id %>"><%= subjects[subject_id] %></option>
+    <% end %>
+  <% end %>
+</select>

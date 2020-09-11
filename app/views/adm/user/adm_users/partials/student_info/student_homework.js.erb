@@ -1,0 +1,63 @@
+$('#adm_loading').hide();
+<% if success %>
+    $('#adm_student_homework_content').html('<%= escape_javascript( render partial: 'adm/user/adm_users/partials/student_info/student_homework', locals: { courses: courses, batches: batches, subjects: subjects, user: user, sessions: sessions, info: info } ) %>')
+
+    $(document).ready(function(){
+      function filterHomework(){
+        active_course = $('#homework_course_selection').val();
+        active_batch = $('#homework_batch_selection').val();
+        active_subject = $('#homework_subject_selection').val();
+        $('#adm_table_student_homework tr').hide();
+        $('tr[data-batch="' + active_batch + '"][data-course="' + active_course + '"][data-subject="' + active_subject + '"]').show();
+      }
+    
+      function setSelectValue(course_id, batch_id, subject_id){
+        $(".filter_homework option").attr("selected", false)
+        $('#homework_course_selection option[value="' + course_id + '"]').attr('selected', 'selected');
+        active_course = $('#homework_course_selection').val();
+    
+        $('#homework_batch_selection option').hide();
+        $(`#homework_batch_selection option[data-course="${active_course}"]`).show();
+    
+        if (batch_id != undefined && batch_id.length > 0 ){
+          $(`#homework_batch_selection option[data-course="${active_course}"][value="${ batch_id }"]`).attr('selected', 'selected');
+        }else {
+          $('#homework_batch_selection option[data-course="' + active_course + '"]:first').attr('selected', 'selected');
+        }
+        active_batch = $('#homework_batch_selection').val();
+        $('#homework_subject_selection option').hide();
+        $(`#homework_subject_selection option[data-course="${active_course}"][data-batch="${active_batch}"]`).show();
+    
+        if (subject_id != undefined && subject_id.length > 0){
+          $(`#homework_subject_selection option[data-course="${ active_course }"][data-batch="${ active_batch }"][value="${ course_id }"] `).attr('selected', 'selected');
+        }else{
+          $('#homework_subject_selection option[data-course="' + active_course + '"][data-batch="' + active_batch + '"]:first').attr('selected', 'selected');
+    
+        }
+      }
+    
+      setSelectValue("<%= courses[0][0] %>", '', '');
+      filterHomework();
+    
+      $('#homework_course_selection').on('change', function(){
+        active_course = $(this).val();
+        setSelectValue(active_course, '', '');
+        filterHomework();
+      })
+      $('#homework_batch_selection').on('change', function(){
+        active_course = $('#homework_course_selection').val();
+        active_batch = $(this).val();
+        setSelectValue(active_course, active_batch, '');
+        filterHomework();
+      })
+      $('#homework_subject_selection').on('change', function(){
+        active_course = $('#homework_course_selection').val();
+        active_batch = $('#homework_batch_selection').val();
+        active_subject = $(this).val();
+        setSelectValue(active_course, active_batch, active_subject);
+        filterHomework();
+      })
+    })
+<% else %>
+    $('#adm_student_homework_content').html(`<p><%= message %></p>`)
+<% end %>

@@ -254,6 +254,45 @@ class Adm::User::AdmUsersService
     end
   end
 
+  def student_homework student, user
+    #courses - batches - subjects
+    #lesson_name - prgress
+    batches = student.op_batches
+    sessions = []
+    batch_info = batches.pluck(:id, :course_id, :code)
+    batches.each do |batch|
+      sessions << Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = student.id ).select{|s| s.state != 'cancel' }
+    end
+
+    course_ids = []
+    subject_ids = []
+    sessions = sessions.select{|s| s.present? }
+    sessions.flatten!
+    return { success: false, message: 'Học sinh chưa có bài tập về nhà!' } if sessions.blank?
+
+    sessions.each do |s|
+      course_ids << s.course_id
+      subject_ids << s.subject_id
+    end
+
+    info = {}
+    sessions.each do |s|
+      if info[s.subject_id].blank?
+        info.merge! ({ s.subject_id => { batch_id: s.batch_id, course_id: s.course_id }})
+      end
+    end
+
+    course_ids = course_ids.uniq
+    course_info = Learning::Course::OpCourse.where(id: course_ids).pluck(:id, :name)
+
+    subject_ids = subject_ids.uniq
+    subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level)
+    subject_info = {}
+    subjects.each{|c| subject_info.merge! ({ c[0] => c[1] }) }
+
+    { success: true, sessions: sessions, subjects: subject_info, batches: batch_info, courses: course_info, user: user, info: info }
+  end
+
   private
 
   def user_can_update? params

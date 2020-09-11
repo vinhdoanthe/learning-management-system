@@ -21,6 +21,7 @@
       <%= image_tag('global/images/browser.png', style: 'width: 32px') %>
     </span>
   </td>
+  <td style="text-align: center"><%= project.project_type == SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT ? 'Sản phẩm cuối buổi' : 'Sản phẩm cuối khoá' %></td>
   <td class="table_student_project_action" style="text-align: center">
     <span class="show_project student_project_show <%= 'new_student_project_show' if new %>"  data-project="<%= project.id %>" data-toggle="modal" data-target="#studentProjectDetail"><i class="fa fa-eye"></i></span>
     <% if project.created_by == teacher_id %>

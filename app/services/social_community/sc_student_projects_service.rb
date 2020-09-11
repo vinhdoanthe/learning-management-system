@@ -1,6 +1,7 @@
 class SocialCommunity::ScStudentProjectsService
 
   def update_student_project params
+    result = {}
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
 
     begin
@@ -25,14 +26,36 @@ class SocialCommunity::ScStudentProjectsService
       update_params = {}
       update_attribute.each{ |att| update_params.merge! ({ att => params[att]}) if params[att].present? }
 
-      if project.update!(update_params)
-        { type: 'success', 'message': 'Update thành công' }
+      if params[:project_type] != project.project_type && project.project_type != nil
+        if params[:project_type] == SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT
+          if (validate_subject_project params) == false
+            ActiveRecord::Base.transaction do
+              project.update!(update_params)
+              project.update!( { project_type: params[:project_type] })
+              User::Reward::CoinStarsService.new.reward_coin_star project, project.user_id, project.created_by
+            end
+            result = { type: 'success', message: 'Update thành công' }
+          else
+            result = { type: 'danger', message: 'Sản phẩm cuối khoá đã tồn tại' }
+          end
+        else
+          ActiveRecord::Base.transaction do
+            project.update!(update_params)
+            project.update! ({ project_type: params[:project_type] })
+            User::Reward::CoinStarsService.new.create_refund_transaction "SocialCommunity::ScStudentProject", project.user_id, project.created_by
+            result = { type: 'success', message: 'Update thành công' }
+          end
+        end
       else
-        { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
+        project.update! (update_params)
+        project.update! ({ project_type: params[:project_type] })
+        result = { type: 'success', message: 'Update thành công' }
       end
     rescue StandardError
-      return { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
+      result = { type: 'danger', 'message': 'Đã có lỗi xảy ra! Thử lại sau' }
     end
+
+    result
   end
 
   def delete_video_youtube video_id
@@ -116,6 +139,7 @@ class SocialCommunity::ScStudentProjectsService
       project.subject_id = params[:subject_id]
       project.student_id = params[:student_id]
       project.created_by = teacher.id
+      project.project_type = params[:project_type]
 
       user = User::Account::User.where(student_id: params[:student_id]).first
       batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
@@ -188,6 +212,7 @@ class SocialCommunity::ScStudentProjectsService
     query = ''
     query += "project_show_video IS NOT NULL AND project_show_video <> '' AND " if filter_params[:project_show_video] == '1'
     query += "introduction_video IS NOT NULL AND introduction_video <> '' AND " if filter_params[:introduction_video] == '1'
+    query += "project_type = '#{ filter_params[:project_type] }' AND " if ( filter_params[:project_type].present? && filter_params[:project_type] != 'all' )
 
     if filter_params[:subject].present? && filter_params[:subject] != 'all'
       query += "subject_id IN (#{ filter_params[:subject] }) AND "
@@ -234,7 +259,7 @@ class SocialCommunity::ScStudentProjectsService
       ActiveRecord::Base.transaction do
         post.create_delete_notifications
         project.presentation.purge
-        User::Reward::CoinStarsService.new.create_refund_transaction "SocialCommunity::ScStudentProject", project.user_id, project.created_by
+        User::Reward::CoinStarsService.new.create_refund_transaction "SocialCommunity::ScStudentProject", project.user_id, project.created_by if project.project_type == SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT
         project.delete
         post.delete
       end
@@ -246,5 +271,9 @@ class SocialCommunity::ScStudentProjectsService
       result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau' }
       { result: result, project_id: '' }
     end
+  end
+
+  def validate_subject_project params
+    SocialCommunity::ScStudentProject.where(project_type: SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT, batch_id: params[:batch_id], subject_id: params[:subject_id], student_id: params[:student_id]).first.present?
   end
 end

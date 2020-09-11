@@ -1,6 +1,7 @@
 <% all_student.map! { |st| [st[1], st[0]] } %>
 <% subjects.map! { |s| [s[1], s[0]] } %>
 <% batch_id = project.batch_id %>
+<% project_type = [["Sản phẩm cuối buổi", SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT], ["Sản phẩm cuối khoá", SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT]] %>
 <%= tinymce_assets %>
 <div class="modal-dialog" style="width: 80%" role="document">
   <!-- Modal content-->
@@ -11,7 +12,7 @@
     </div>
     <div class="modal-body">
       <div id="edit_video_infomation">
-        <%= render "user/open_educat/shared/student_projects/forms/student_project_info", { project: project, all_student: all_student, subjects: subjects, url: social_community_update_student_project_path(project_id: project.id), batch_id: batch_id} %>
+        <%= render "user/open_educat/shared/student_projects/forms/student_project_info", { project: project, all_student: all_student, subjects: subjects, url: social_community_update_student_project_path(project_id: project.id), batch_id: batch_id, project_type: project_type} %>
       </div>
     </div>
 

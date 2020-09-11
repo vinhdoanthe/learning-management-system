@@ -1,0 +1,58 @@
+<div class="user_info_content" style="width: 80%; margin: auto">
+  <div class="card card-primary">
+    <div class="card-body box-profile">
+      <div class="text-center">
+        <h3>Thông tin phụ huynh</h3>
+      </div>
+      <div class='parent_info'>
+        <div class='row'>
+          <div class='col-md-6'>
+            <div class='row'>
+              <div class='col-md-3'>
+                <label>Họ và tên:</label>
+              </div>
+              <div class='col-md-9'>
+                <p><%= res_parent.display_name %></p>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-md-3'>
+                <label>Số điện thoại:</label>
+              </div>
+              <div class='col-md-9'>
+                <p><%= res_parent.mobile.present? ? res_parent.mobile : res_parent.phone %></p>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-md-3'>
+                <label>Địa chỉ:</label>
+              </div>
+              <div class='col-md-9'>
+                <p></p>
+              </div>
+            </div>
+          </div>
+          <div class='col-md-6'>
+            <div class='row'>
+              <div class='col-md-3'>
+                <label>Email:</label>
+              </div>
+              <div class='col-md-9'>
+                <p><%= res_parent.email %></p>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-md-3'>
+                <label>Cơ sở:</label>
+              </div>
+              <div class='col-md-9'>
+                  <% company = res_parent.res_company %>
+                  <p><%= company.present? ? company.name : '' %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

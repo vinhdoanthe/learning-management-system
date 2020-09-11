@@ -137,7 +137,7 @@ class Learning::Homework::QuestionService
   private
 
   def user_question_exist question_id, user_id, batch_id
-    Learning::Homework::UserQuestion.where(question_id: question_id, student_id: user_id, batch_id: batch_id).first.present?
+    Learning::Homework::UserQuestion.where(question_id: question_id, student_id: user_id, op_batch_id: batch_id).first.present?
   end
 
   def find_user_question user_question

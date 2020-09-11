@@ -55,17 +55,22 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   def teacher_class_detail
     if params[:session_id].present?
       @active_session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+      if @active_session.blank?
+        redirect_to root_path
+        return
+      end
       @active_lesson = @active_session.op_lession
       @batch = @active_session.op_batch
       @course = @batch.op_course
       @faculty = @teacher
-      @sessions = @batch.op_sessions.where(faculty_id: @faculty.id).order(start_datetime: :ASC)
+      #@sessions = @batch.op_sessions.where(faculty_id: @faculty.id).order(start_datetime: :ASC)
+      @sessions = @batch.op_sessions.order(start_datetime: :ASC)
       classroom = Common::OpClassroom.where(id: @active_session.classroom_id).first
       @classroom_name = classroom ? classroom.name : ''
       company = @batch.res_company
       @company_name = company ? company.name : ''
       @active_subject = @active_session.op_subject
-      subject_ids = @sessions.pluck(:subject_id)
+      subject_ids = @sessions.where(faculty_id: @faculty.id).pluck(:subject_id)
       @subjects = Learning::Course::OpSubject.where(id: subject_ids).pluck(:id, :level).uniq
       @sessions = @sessions.where(subject_id: @active_subject.id).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL)
       if @active_lesson && @active_lesson.thumbnail.attached?
@@ -78,9 +83,11 @@ class User::OpenEducat::OpTeachersController < ApplicationController
       @batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
       @course = @batch.op_course
       @faculty = @teacher
-      @sessions = @batch.op_sessions.where(faculty_id: @faculty.id).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC)
-      @active_session = @sessions.where('start_datetime >= ?', Time.now).first
+      @sessions = @batch.op_sessions.where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC)
+      @active_session = @sessions.where(faculty_id: @faculty.id).where('start_datetime >= ?', Time.now).first
+      @active_session = @sessions.where(faculty_id: @faculty.id).last if @active_session.blank?
       @active_session = @sessions.last if @active_session.blank?
+
       classroom = Common::OpClassroom.where(id: @active_session.classroom_id).first
       @classroom_name = classroom ? classroom.name : ''
       company = @batch.res_company

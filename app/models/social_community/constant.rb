@@ -15,5 +15,10 @@ module SocialCommunity::Constant
         PUBLIC = 'public'
         PRIVATE = 'private'
       end
+
+      module ProjectType
+        SESSION_PROJECT = 'SESSION_PROJECT'
+        SUBJECT_PROJECT = 'SUBJECT_PROJECT'
+      end
     end
 end

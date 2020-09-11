@@ -68,7 +68,11 @@ class User::Reward::CoinStarsService
   end
   
   def validate_transaction coinstarable
-    User::Reward::CoinStarTransaction.where(coinstarable_id: coinstarable.id, coinstarable_type: coinstarable.class.to_s).first.present?
+    if coinstarable.class.to_s == "SocialCommunity::ScStudentProject"
+      false
+    else
+      User::Reward::CoinStarTransaction.where(coinstarable_id: coinstarable.id, coinstarable_type: coinstarable.class.to_s).first.present?
+    end
   end
 
   def create_refund_transaction class_name, student, teacher
