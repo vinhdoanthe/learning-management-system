@@ -1,4 +1,4 @@
- class Adm::Learning::CourseController < ApplicationController
+ class Adm::Learning::CourseController < Adm::AdmController
 
   include ApplicationHelper
 

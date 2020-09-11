@@ -1,27 +1,24 @@
 <div class='filter_homework row'>
   <div class='col-md-4'>
-    <label>Khoá học:</label>
-  <select id="homework_course_selection">
-    <% courses.each do |c| %>
-      <option value="<%= c[0] %>"><%= c[1] %></option>
-    <% end %>
-  </select>
+    <select class='custom-select' id="homework_course_selection">
+      <% courses.each do |c| %>
+        <option value="<%= c[0] %>"><%= c[1] %></option>
+      <% end %>
+    </select>
   </div>
   <div class='col-md-4'>
-    <label>Lớp học:</label>
-  <select id="homework_batch_selection">
-    <% batches.each do |b| %>
-      <option class="batch_filter" value="<%= b[0] %>" data-course="<%= b[1] %>"><%= b[2] %></option>
-    <% end %>
-  </select>
+    <select class='custom-select' id="homework_batch_selection">
+      <% batches.each do |b| %>
+        <option class="batch_filter" value="<%= b[0] %>" data-course="<%= b[1] %>"><%= b[2] %></option>
+      <% end %>
+    </select>
   </div>
   <div class='col-md-4'>
-    <label>Level:</label>
-  <select id="homework_subject_selection">
-    <% info.each do |subject_info| %>
-      <option class="subject_filter" data-batch="<%= subject_info[1][:batch_id] %>" data-course="<%= subject_info[1][:course_id] %>" value='<%= subject_info[0] %>'><%= subjects[subject_info[0]] %></option>
-    <% end %>
-  </select>
+    <select class='custom-select' id="homework_subject_selection">
+      <% info.each do |subject_info| %>
+        <option class="subject_filter" data-batch="<%= subject_info[1][:batch_id] %>" data-course="<%= subject_info[1][:course_id] %>" value='<%= subject_info[0] %>'><%= subjects[subject_info[0]] %></option>
+      <% end %>
+    </select>
   </div>
 </div>
 <div>

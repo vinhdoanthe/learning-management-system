@@ -1,4 +1,4 @@
-class Adm::FaqsController < ApplicationController
+class Adm::FaqsController < Adm::AdmController
   skip_before_action :verify_authenticity_token
   
   def index
