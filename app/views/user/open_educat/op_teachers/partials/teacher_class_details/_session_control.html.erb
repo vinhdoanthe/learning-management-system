@@ -18,19 +18,19 @@
           <button type="button" class="btn btn-default btn-embossed"  disabled><span><%= image_tag('hotel-2.png') %></span>Check-in</button>
         <% end %>
       </li>
-        <% if ['confirm', 'done'].include? active_session.state %>
-      <li>
-        <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance_new" data-toggle="modal" data-target="#modal_attendance" ><span><%= image_tag('wishlist.png') %></span><%= t('teacher_class.session_control.attendance') %>
-        </button>
-      </li>
-      <li id="btn_view_materials">
-        <%= link_to image_tag('file-4.png') +  "#{ t('teacher_class.session_control.learning_material') }", learning_list_slides_of_subject_path(active_session.subject_id), {:class => 'btn btn-default btn-embossed',:style =>  'font-weight: 600', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
-        <%#= link_to 'Học liệu', learning_show_google_doc_materials_path(active_session.id), {:class => 'btn btn-default btn-embossed', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
-      </li>
-      <li>
-        <button type="button" id='upload_session_photo' class="btn btn-default btn-embossed" data-toggle="modal" data-target="#upload_photo"><span><%= image_tag('photo-camera.png') %></span><%= t('teacher_class.session_control.take_photo') %>
-        </button>
-      </li>
+      <% if ['confirm', 'done'].include? active_session.state %>
+        <li>
+          <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance_new" data-toggle="modal" data-target="#modal_attendance" ><span><%= image_tag('wishlist.png') %></span><%= t('teacher_class.session_control.attendance') %>
+          </button>
+        </li>
+        <li id="btn_view_materials">
+          <%= link_to image_tag('file-4.png') +  "#{ t('teacher_class.session_control.learning_material') }", learning_list_slides_of_subject_path(active_session.subject_id), {:class => 'btn btn-default btn-embossed',:style =>  'font-weight: 600', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
+          <%#= link_to 'Học liệu', learning_show_google_doc_materials_path(active_session.id), {:class => 'btn btn-default btn-embossed', 'data-toggle' => 'modal', 'data-target' => '#modal_materials', :remote => true} %>
+        </li>
+        <li>
+          <button type="button" id='upload_session_photo' class="btn btn-default btn-embossed" data-toggle="modal" data-target="#upload_photo"><span><%= image_tag('photo-camera.png') %></span><%= t('teacher_class.session_control.take_photo') %>
+          </button>
+        </li>
     <% else %>
       <li>
         <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance_new" disabled data-toggle="modal" data-target="#modal_attendance" ><span><%= image_tag('wishlist.png') %></span><%= t('teacher_class.session_control.attendance') %>

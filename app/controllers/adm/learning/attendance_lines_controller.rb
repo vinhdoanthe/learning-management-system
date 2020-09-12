@@ -1,4 +1,4 @@
-class Adm::Learning::AttendanceLinesController < ApplicationController
+class Adm::Learning::AttendanceLinesController < Adm::AdmController
   def index
   end
 end

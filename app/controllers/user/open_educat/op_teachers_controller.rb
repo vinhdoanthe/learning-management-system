@@ -309,11 +309,13 @@ class User::OpenEducat::OpTeachersController < ApplicationController
 
     if session.blank?
       return { noti: {type: 'danger', message: 'Lớp học không tồn tại!'} }
-    else
-      if session.check_in_time.blank?
-        return { noti: { type: 'danger', message: 'Bạn phải checkin trước khi điểm danh học sinh' } }
-      end
+    #else
+    #  if session.check_in_time.blank?
+    #    return { noti: { type: 'danger', message: 'Bạn phải checkin trước khi điểm danh học sinh' } }
+    #  end
     end
+
+    nil
   end
 
   def find_teacher

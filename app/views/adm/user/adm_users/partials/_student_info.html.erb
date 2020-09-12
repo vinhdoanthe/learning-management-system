@@ -31,16 +31,16 @@
 <div class="tab-content" id="student_information_content">
   <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info_tab">
     <%= render 'adm/user/adm_users/partials/user_info' %>
-    <% if @info[:user].parent_account_id.present?  %>
-      <% user_parent = User::Account::User.where(id: @info[:user].parent_account_id).first  %>
-      <% if user_parent.present? %>
-        <% parent = user_parent.op_parent %>
+    <%# if @info[:user].parent_account_id.present?  %>
+      <%# user_parent = User::Account::User.where(id: @info[:user].parent_account_id).first  %>
+      <% if student.present? %>
+        <% parent = student.op_parents.first %>
         <% res_parent = parent.res_partner if parent.present? %>
         <% if parent.present? && res_parent.present? %>
-          <%= render 'adm/user/adm_users/partials/student_info/student_parent_info', { user_parent: user_parent, parent: parent, res_parent: res_parent } %>
+          <%= render 'adm/user/adm_users/partials/student_info/student_parent_info', { user_parent: User::Account::User.new, parent: parent, res_parent: res_parent } %>
         <% end %>
       <% end %>
-    <% end %>
+    <%# end %>
   </div>
   <div class="tab-pane fade" id="study" role="tabpanel" aria-labelledby="study_tab">
     <%= render 'user/op_students/partials/student_class', { current_user: @info[:user] } %>

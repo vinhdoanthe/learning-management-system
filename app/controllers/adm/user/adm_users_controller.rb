@@ -95,14 +95,19 @@ class Adm::User::AdmUsersController < ApplicationController
   end
 
   def student_homework
+    result = {}
     user = User::Account::User.where(id: params[:student_id]).first
 
-    return { success: false, message: 'Chưa có bài tập về nhà!' } if Learning::Homework::UserQuestion.where(student_id: user.id).blank?
-
-    student = user.op_student
-    return { success: false, message: 'Đã có lỗi xảy ra' } if student.blank?
-
-    result = Adm::User::AdmUsersService.new.student_homework student, user
+    if Learning::Homework::UserQuestion.where(student_id: user.id).blank?
+      result = { success: false, message: 'Chưa có bài tập về nhà!' }
+    else
+      student = user.op_student
+      if student.blank?
+        result = { success: false, message: 'Đã có lỗi xảy ra' }
+      else
+        result = Adm::User::AdmUsersService.new.student_homework student, user
+      end
+    end
 
     respond_to do |format|
       format.html

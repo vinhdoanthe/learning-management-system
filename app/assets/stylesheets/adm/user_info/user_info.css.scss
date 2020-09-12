@@ -136,16 +136,17 @@
   select {
     height: 60px;
     display: flex;
-    align-items: flex-end;
-    justify-content: left;
+    align-items: center;
+    justify-content: center;
     border-radius: 5px !important;
     padding-left: 15px;
     border: 1px solid #DADAEE;
-    padding-bottom: 5px;
-    padding-left: 20px;
     width: 100%;
     font-size: 14px;
     font-weight: 700;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
   }
   label {
     font-weight: 500;
