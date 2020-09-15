@@ -14,11 +14,13 @@
           </select>
         </div>
         <form action="" id='teacher_evaluate_session'>
-          <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/evaluation/evaluate_session', { attendance: attendance } %>
+          <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/evaluation/evaluate_session', { attendance: attendance, session_id: session_id, student_id: student.id } %>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="teacher_evaluate_confirm" data-dismiss="modal">Gửi đánh giá</button>
+        <% if attendance.attendance_state != OpAttendanceLineConstant::State::STATE_COMPLETED && attendance.attendance_state != OpAttendanceLineConstant::State::STATE_PUBLISHED %>
+          <button type="button" class="btn btn-primary" id="teacher_evaluate_confirm_form" data-dismiss="modal">Gửi đánh giá</button>
+        <% end %>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>

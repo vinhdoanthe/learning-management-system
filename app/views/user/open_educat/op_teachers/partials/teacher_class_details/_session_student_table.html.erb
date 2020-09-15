@@ -64,10 +64,10 @@
             <% end %>
           </td>
           <td style="text-align: center; opacity: 0.3;">
-            <a data-code="<%= student[:code] %>">
+            <a>
               <%= image_tag('global/images/icon-BTVN.png', style: 'min-width: 32px; width: 32px; margin-right: 10px') %>
             </a>
-            <a data-code="<%= student[:code] %>">
+            <a>
               <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px;margin-right: 10px') %>
             </a>
           </td>
@@ -90,4 +90,21 @@
   </tbody>
 </table>
 <div id="modal_evaluate" class="modal fade" role="dialog">
+</div>
+<div id="modal_teacher_evaluate_confirm" class='modal fade' role='dialog'>
+  <div class="modal-dialog batch_student_evaluate">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
+      </div>
+      <div class='modal-body' style='text-align: center'>
+        <h4>Bạn chắc chắn muốn gửi nhận xét?</h4>
+        <h4 style="color: red; padding-top: 20px;">Sau khi gửi sẽ không thể cập nhật thông tin đã nhận xét!</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="teacher_evaluate_confirm_new" data-dismiss="modal">Gửi đánh giá</button>
+      </div>
+    </div>
+  </div>
 </div>

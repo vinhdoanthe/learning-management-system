@@ -57,7 +57,12 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <% if attendance.attendance_state != OpAttendanceLineConstant::State::STATE_PUBLISHED && attendance.attendance_state != OpAttendanceLineConstant::State::STATE_REJECTED %>
+          <button type="button" class="btn btn-primary text-uppercase confirm_teacher_evaluate"  data-att="<%= attendance.id %>" data-state="<%= OpAttendanceLineConstant::State::STATE_PUBLISHED %>" data-dismiss="modal"><b>Đạt yêu cầu</b></button>
+          <button type="button" class="btn btn-danger text-uppercase confirm_teacher_evaluate" data-att="<%= attendance.id %>"  data-state="<%= OpAttendanceLineConstant::State::STATE_REJECTED %>" data-dismiss="modal"><b>Không đạt yêu cầu</b></button>
+        <% else %>
+          <button type="button" class="btn btn-danger text-uppercase" data-dismiss='modal'><b>Close</b></button>
+        <% end %>
       </div>
     </div>
   </div>

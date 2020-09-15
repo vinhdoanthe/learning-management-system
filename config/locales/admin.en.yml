@@ -92,6 +92,7 @@ en:
     Other Note: 'Note'
     learning:
       session:
+        info: 'Sessions info'
         name: 'Sessions'
         academy: "Academy"
         state: "State"

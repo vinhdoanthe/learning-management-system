@@ -67,6 +67,20 @@ class Adm::Learning::SessionsController < Adm::AdmController
     end
   end
 
+  def update_attendance_line
+    att = Learning::Batch::OpAttendanceLine.where(id: params[:attendance_id]).first
+
+    if att.update(attendance_state: params[:attendance_state])
+      if params[:attendance_state] == OpAttendanceLineConstant::State::STATE_PUBLISHED
+        render json: { type: 'success', message: 'Cập nhật đánh giá đạt yêu cầu thành công' }
+      else
+        render json: { type: 'success', message: 'Cập nhật đánh giá không đạt yêu cầu thành công' }
+      end
+    else
+      render json: { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+    end
+  end
+
   private
 
   def find_session

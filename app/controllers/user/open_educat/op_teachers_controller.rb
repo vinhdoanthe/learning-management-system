@@ -238,9 +238,9 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     subject_info = {}
     subjects.each{ |s| subject_info.merge!({s[0] => s[1] })}
 
-    student_projects = SocialCommunity::ScStudentProject.where(batch_id: params[:batch_id]).order(created_at: :DESC)
-
     student_ids = Learning::Batch::OpStudentCourse.where(batch_id: params[:batch_id], state: 'on').pluck(:student_id)
+    student_projects = SocialCommunity::ScStudentProject.where(batch_id: params[:batch_id], student_id: student_ids).order(created_at: :DESC)
+
     students = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:id, :code, :full_name)
     student_info = {}
     students.each{ |s| student_info.merge! ({s[0] => { code: s[1], full_name: s[2]}}) }
@@ -295,7 +295,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teacher_evaluate
-    result = User::OpenEducat::OpTeachersService.teacher_evaluate params, @teacher
+    result = User::OpenEducat::OpTeachersService.teacher_evaluate current_user, params, @teacher
 
     render json: result
   rescue StandardError => e

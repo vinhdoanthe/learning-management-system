@@ -395,17 +395,17 @@ $(document).ready(function () {
       })
     })
 
-    $('#teacher_evaluate_confirm').on('click', function () {
-        info = $('#teacher_evaluate_session').serializeArray();
-        info.push({name: 'student_id', value: student_id})
-        $.ajax({
-            url: '/user/open_educat/op_teachers/teacher_evaluate',
-            method: 'POST',
-            data: info,
-            success: function (res) {
-                display_response_noti(res);
-            }
-        })
-    })
+    //$('#teacher_evaluate_confirm').on('click', function () {
+    //    info = $('#teacher_evaluate_session').serializeArray();
+    //    info.push({name: 'student_id', value: student_id})
+    //    $.ajax({
+    //        url: '/user/open_educat/op_teachers/teacher_evaluate',
+    //        method: 'POST',
+    //        data: info,
+    //        success: function (res) {
+    //            display_response_noti(res);
+    //        }
+    //    })
+    //})
 })
 
