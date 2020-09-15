@@ -36,8 +36,9 @@ function getDataFilter(){
     end_time = $('#filter-time').data('daterangepicker').endDate._d;
   }
   photo_state = $('input[name="session_photo"]:checked').val();
+  attendance = $('input[name="session_attendance_state"]:checked').val()
 
-  return { batch_id: batch_id, company: company, state: state, start_time: start_time, end_time: end_time, photo_state: photo_state }
+  return { batch_id: batch_id, company: company, state: state, start_time: start_time, end_time: end_time, photo_state: photo_state, attendance: attendance }
 }
 
 let updateTeacherEvaluate = (attendance_id, state) => {
