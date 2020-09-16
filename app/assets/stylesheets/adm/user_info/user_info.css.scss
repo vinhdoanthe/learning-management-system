@@ -1,3 +1,5 @@
+// Styling for adm/users controller
+
 .nav-tabs {
   border: none;
 }
@@ -19,15 +21,6 @@
   color: #fff !important;
   padding: 5px 10px;
 }
-.label-edit.label-danger {
-  background: #FF0D38;
-}
-.label-edit.label-primary {
-  background: #2CCA73;
-}
-.label-edit.label-stop {
-  background: #6c757d!important;
-}
 .label {
   padding: 5px 15px;
   border-radius: 20px;
@@ -35,6 +28,15 @@
   font-weight: 700;
   font-size: 10px;
   text-transform: uppercase;
+}
+.label-edit.label-danger {
+  background: #FF0D38;
+}
+.label-edit.label-primary {
+  background: #007bff;
+}
+.label-edit.label-stop {
+  background: #6c757d!important;
 }
 .label-warning {
   background: #ffc107;
@@ -45,6 +47,11 @@
 .label-secondary {
   background: #6c757d;
 }
+
+.label.label-success {
+  background: #2CCA73;
+}
+
 #student_information_content {
   background: white;
   border-top: none;
@@ -186,4 +193,40 @@
       white-space:nowrap;
     }
   }
+}
+
+.do_homework_state {
+  display: inline-block;
+  width: 100%;
+}
+
+.do_homework_state>span {
+  padding: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 7px;
+  font-weight: 500;
+  width: inherit;
+  display: inherit;
+}
+
+.user-teky--coinstar {
+  color: #FFDC64
+}
+
+.user-batch-state {
+  display: inline-block;
+  width: 100%;
+}
+
+.user-batch-state>span {
+  padding: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 7px;
+  font-weight: 500;
+  width: inherit;
+  display: inherit;
 }
