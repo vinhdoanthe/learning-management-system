@@ -1,0 +1,51 @@
+<table id="adm_batches_list" class="display nowrap" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th><%= t("learning.batch.code") %></th>
+      <th><%= t("adm.learning.batch.course") %></th>
+      <th><%= t("adm.learning.session.faculty_name") %></th>
+      <th><%= t("adm.learning.batch.time") %></th>
+      <th><%= t("adm.learning.batch.student") %></th>
+      <th><%= t("adm.learning.batch.place") %></th>
+      <th><%= t("adm.learning.batch.type") %></th>
+      <th><%= t("adm.learning.batch.state") %></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>ID</th>
+      <th><%= t("learning.batch.code") %></th>
+      <th><%= t("adm.learning.batch.course") %></th>
+      <th><%= t("adm.learning.session.faculty_name") %></th>
+      <th><%= t("adm.learning.batch.time") %></th>
+      <th><%= t("adm.learning.batch.student") %></th>
+      <th><%= t("adm.learning.batch.place") %></th>
+      <th><%= t("adm.learning.batch.type") %></th>
+      <th><%= t("adm.learning.batch.state") %></th>
+    </tr>
+  </tfoot>
+</table>
+<style>
+  .dataTables_scrollBody {
+    transform:rotateX(180deg);
+}
+  .dataTables_scrollBody table {
+    transform:rotateX(180deg);
+  }
+</style>
+<script>
+  $(document).ready(function() {
+    $('#adm_session_list').DataTable({
+      "scrollX": true,
+      "responsive": true,
+      "bLengthChange": false,
+      "bFilter": true,
+      "searching": false,
+      "bInfo": false,
+      "bPaginate": false
+    });
+  })
+</script>

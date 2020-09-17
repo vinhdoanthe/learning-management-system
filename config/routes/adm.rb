@@ -36,6 +36,19 @@ namespace :adm do
     
     get 'operation_attendance' => 'operation_attendances#index', as: 'operation_attendance'
     get 'attendance_line' => 'attendance_lines#index', as: 'attendance_line'
+
+    resources :batches
+    namespace :batches do
+      get '', action: :index
+      get 'filter_batches' => 'batches#filter_batches'
+    end
+
+    namespace :operation_attendances do
+      get '', action: :index
+      get 'index_content', action: 'index_content'
+      post 'operation_attendane', action: 'operation_attendance'
+    end
+
   end
 
   namespace :user do
