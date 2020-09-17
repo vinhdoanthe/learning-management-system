@@ -36,15 +36,17 @@ class User::OpenEducat::OpTeachersService
     student_courses.each do |sst|
       student = sst.op_student
       attendance = Learning::Batch::OpAttendanceLine.where(student_id: student.id, session_id: session.id).order(create_date: :DESC).first
-      attendance_state = if attendance.present?
-                           attendance.present
-                         else
-                           ''
-                         end
+      if attendance.present?
+        attendance_state =  attendance.present
+        state = attendance.attendance_state
+      else
+        attendance_state = ''
+        state = ''
+      end
 
       count_homework = count_student_homework student, session
       student_avatar = get_student_avatar student
-      student_info = {student.id => {:note => '', :status => sst.state, :attendance => attendance_state, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar, :count_homework => count_homework }}
+      student_info = {student.id => {:note => '', :status => sst.state, :attendance => attendance_state, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar, :count_homework => count_homework, state: state }}
       all_students.merge!(student_info)
     end
 
@@ -56,9 +58,10 @@ class User::OpenEducat::OpTeachersService
         note = st.note_2 unless note.blank?
         student = st.op_student
         student_avatar = get_student_avatar student
+        state = ''
 #        status = st.present ? 'on' : 'off'
 
-        student_info = {student.id => {:note => note || '', :attendance => st.present, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar }}
+        student_info = {student.id => {:note => note || '', :attendance => st.present, :code => student.code || '', :name => student.full_name || '', :avatar_src => student_avatar, state: state }}
         students.merge!(student_info)
       end
     end
@@ -179,20 +182,27 @@ class User::OpenEducat::OpTeachersService
 
   end
 
-  def self.teacher_evaluate params, teacher
-    faculty_id = teacher.id
-    session_id = params[:session_id]
+  def self.teacher_evaluate user, params, teacher
     evaluate_content = {}
     params[:info].each{|k,v| evaluate_content.merge!({v['name'] => v['value']})}
-    evaluate_content.delete('session_id')
-    evaluate_content.merge!({ "student_id" => params[:student_id].to_i })
+    faculty_id = teacher.id
+    session_id = evaluate_content['session_id']
+    attendance = Learning::Batch::OpAttendanceLine.where(session_id: evaluate_content['session_id'], student_id: evaluate_content['student_id']).first
 
-    errors = Api::Odoo.evaluate(session_id: session_id.to_i, faculty_id: faculty_id, attendance_lines: [evaluate_content], attendance_time: Time.now)
+    if Learning::Batch::OpSessionsService.new.can_update_attendance_line? user, attendance
+      evaluate_content.delete('session_id')
+      evaluate_content.delete('studen_id')
 
-    if errors == true
-      { type: 'success', message: 'Đánh giá thành công' }
+      errors = Api::Odoo.evaluate(session_id: session_id.to_i, faculty_id: faculty_id, attendance_lines: [evaluate_content], attendance_time: Time.now)
+
+      if errors == true
+        attendance.update(attendance_state: OpAttendanceLineConstant::State::STATE_COMPLETED)
+        { type: 'success', message: 'Đánh giá thành công' }
+      else
+        { type: 'danger', message: errors[1] }
+      end
     else
-      { type: 'danger', message: errors[1] }
+      { type: 'danger', message: "Bạn đã hoàn thành đánh giá! Không thể cập nhật đánh giá" }
     end
   end
 

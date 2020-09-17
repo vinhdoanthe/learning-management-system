@@ -1,5 +1,6 @@
 <%= tinymce_assets %>
-<input type="hidden" name='session_id' value='<%= session.id %>'>
+<input type="hidden" name='session_id' value='<%= session_id %>'>
+<input type="hidden" name='student_id' value='<%= student_id %>'>
 <% User::Constant::Evaluate::CATEGORY_EVALUATE.each do |e| %>
   <div class='evaluate_element'>
       <label><%= e[1]['label'] %>:</label>

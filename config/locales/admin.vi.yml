@@ -63,6 +63,7 @@ vi:
     answer_time: "Thời gian trả lời"
     learning:
       session:
+        info: 'Thông tin buổi học'
         name: 'Buổi học'
         academy: "Học viện"
         state: "Trạng thái"

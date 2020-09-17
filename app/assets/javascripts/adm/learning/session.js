@@ -36,8 +36,20 @@ function getDataFilter(){
     end_time = $('#filter-time').data('daterangepicker').endDate._d;
   }
   photo_state = $('input[name="session_photo"]:checked').val();
+  attendance = $('input[name="session_attendance_state"]:checked').val()
 
-  return { batch_id: batch_id, company: company, state: state, start_time: start_time, end_time: end_time, photo_state: photo_state }
+  return { batch_id: batch_id, company: company, state: state, start_time: start_time, end_time: end_time, photo_state: photo_state, attendance: attendance }
+}
+
+let updateTeacherEvaluate = (attendance_id, state) => {
+  $.ajax({
+    method: 'POST',
+    url: '/adm/learning/sessions/update_attendance_line',
+    data: { attendance_state: state, attendance_id: attendance_id, authenticity_token: $('[name="csrf-token"]')[0].content},
+    success: function(res){
+      display_response_noti(res);
+    }
+  })
 }
 
 function getSessionPhotos(session_id) {
@@ -95,5 +107,11 @@ $(document).ready(function(){
   $('#modal_adm_session_attendance').on('click', '.back_to_session_info', function(){
     session_id = $('input[name="active_session"]').val();
     getSessionInfo(session_id);
+  })
+
+  $('#modal_adm_session_attendance').on('click', '.confirm_teacher_evaluate', function(){
+    attendance_id = $(this).data('att')
+    state = $(this).data("state");
+    updateTeacherEvaluate(attendance_id, state)
   })
 })

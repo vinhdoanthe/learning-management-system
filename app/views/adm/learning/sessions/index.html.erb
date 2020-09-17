@@ -1,7 +1,7 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "adm/learning/session.js" %>
 <% end %>
-<h3><%= t("adm.user.info") %></h3>
+<h3><%= t("adm.learning.session.info") %></h3>
 <hr>
 <div class='filter_form'>
   <div class='row'>
@@ -43,21 +43,35 @@
     </div>
   </div>
   <div class="row" style="margin-left: 20px;">
-    <div class="custom-control custom-radio col-md-1">
+    <div class="custom-control custom-radio col-md-2">
       <input class="custom-control-input" type="radio" id="session_photo_all" name="session_photo" value="all" checked>
       <label for="session_photo_all" class="custom-control-label">Tất cả</label>
     </div>
-    <div class="custom-control custom-radio col-md-1">
+    <div class="custom-control custom-radio col-md-2">
       <input class="custom-control-input" type="radio" id="session_photo_exist" name="session_photo" value='1'>
       <label for="session_photo_exist" class="custom-control-label">Đã có ảnh</label>
     </div>
-    <div class="custom-control custom-radio col-md-1">
+    <div class="custom-control custom-radio col-md-2">
       <input class="custom-control-input" type="radio" id="session_photo_not" name="session_photo" value='0'>
       <label for="session_photo_not" class="custom-control-label">Chưa có ảnh</label>
     </div>
-    <div class="col-md-9">
-      <button type="submit" class="btn btn-primary" id="submit_filter_sessions"><%= t("adm.user.filter") %></button>
+  </div>
+  <div class='row' style='margin-left: 20px;'>
+    <div class="custom-control custom-radio col-md-2">
+      <input class="custom-control-input" type="radio" id="no_attendance" name="session_attendance_state" value='0'>
+      <label for="no_attendance" class="custom-control-label">Chưa nhận xét</label>
     </div>
+    <div class="custom-control custom-radio col-md-2">
+      <input class="custom-control-input" type="radio" id="reject_attendance" name="session_attendance_state" value='1'>
+      <label for="reject_attendance" class="custom-control-label">Nhận xét cần đánh giá</label>
+    </div>
+    <div class="custom-control custom-radio col-md-2">
+      <input class="custom-control-input" type="radio" id="evaluation_state" name="session_attendance_state" value='2'>
+      <label for="evaluation_state" class="custom-control-label">Nhận xét chưa đạt yêu cầu</label>
+    </div>
+  </div>
+  <div style="display: flex">
+    <button type="submit" style="margin-left: auto" class="btn btn-primary" id="submit_filter_sessions"><%= t("adm.user.filter") %></button>
   </div>
 </div>
 <hr>

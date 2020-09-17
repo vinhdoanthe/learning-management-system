@@ -299,4 +299,30 @@ $(document).ready(function(){
     })
     }
   })
+
+  $('#session_student_info').on('click', '#teacher_evaluate_confirm_form', function(){
+    $('#modal_teacher_evaluate_confirm').modal('show');
+  })
+
+  $('#session_student_info').on('click','#teacher_evaluate_confirm_new', function () {
+    info = $('#teacher_evaluate_session').serializeArray();
+    teacher_note = tinyMCE.activeEditor.getContent();
+    type = $('#select_evaluate_type').val();
+    info.push({ name: 'state_evaluate', value: type })
+
+    if (type === '1'){
+      info.push({name: 'note_1', value: teacher_note})
+    }else{
+      info.push({name: 'note_2', value: teacher_note})
+    }
+
+    $.ajax({
+      url: '/user/open_educat/op_teachers/teacher_evaluate',
+      method: 'POST',
+      data: {info: info},
+      success: function (res) {
+        display_response_noti(res);
+      }
+    })
+  })
 })
