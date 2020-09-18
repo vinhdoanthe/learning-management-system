@@ -39,7 +39,7 @@
                     <div class="table-responsive" id="lesson_infomation">
                       <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/lesson_detail', {active_session: @active_session, active_lesson: @active_lesson, thumbnail: @thumbnail} %>
                     </div>
-                    <div class="table-responsive" id="session_control">
+                    <div class="table-responsive" id="session_control" style="overflow-x: unset">
                       <%= render 'user/open_educat/op_teachers/partials/teacher_class_details/session_control', { active_lesson: @active_lesson, active_session: @active_session, active_subject: @active_subject} %>
                     </div>
                     <input type='hidden' name='active_session' value="<%= @active_session.id %>">

@@ -162,6 +162,8 @@ $(document).ready(function(){
     if (!$(this).hasClass('other_teacher')){
       $('.lesson_timeline').removeClass('active');
       $(this).addClass('active')
+    }else{
+      $(this).removeClass('active');
     }
   })
 
