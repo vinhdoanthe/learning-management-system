@@ -1,0 +1,80 @@
+<div class="paginator paginator-top">
+  <%= paginate @session_students, remote: true %>
+</div>
+<div class='table-responsive'>
+  <table id="adm_session_student_list" class="display text-nowrap" style="width:100%">
+    <thead>
+      <tr>
+        <th><%= t('adm.learning.operation.attendance') %></th>
+        <th><%= t('adm.learning.operation.student') %></th>
+        <th><%= t('adm.learning.operation.classroom') %></th>
+        <th><%= t('adm.learning.operation.batch') %></th>
+        <th><%= t('adm.learning.operation.teacher') %></th>
+        <th><%= t('adm.learning.operation.start_time') %></th>
+        <th><%= t('adm.learning.operation.end_time') %></th>
+        <th><%= t('adm.learning.operation.note') %></th>
+        <th><%= t('adm.learning.operation.company') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @session_students.each_with_index do |ss, index| %>
+        <tr>
+          <td style="text-align: center">
+            <div class='form-group'>
+              <div class='col-md-3 custom-control custom-checkbox'>
+                <% if ss.present == true %>
+                  <input class="operation-attendance custom-control-input" type="checkbox" id="attendance-check-<%= ss.id %>" value="<%= ss.id %>" checked>
+                <% else %>
+                  <input class="operation-attendance custom-control-input" type="checkbox" value="<%= ss.id %>" id="attendance-check-<%= ss.id %>">
+                <% end %>
+                <label for="attendance-check-<%= ss.id %>" class="custom-control-label"> </label>
+              </div>
+            </div>
+          </td>
+          <td>[<%= ss.student_code %>]<%= ss.student_name %></td>
+          <td><%= ss.classroom_name %></td>
+          <td><%= ss.batch_code %></td>
+          <td><%= ss.faculty_name %></td>
+          <td><%= ss.start_datetime.strftime('%H:%M %d/%m/%Y') %></td>
+          <td><%= ss.end_datetime.strftime('%H:%M %d/%m/%Y') %></td>
+          <td class='td-note'>
+            <p class='p-note session_student_note_<%= ss.id %>'><%= ss.note %></p>
+            <textarea class='operation_note text-note input_session_student_note_<%= ss.id %>' data-id="<%= ss.id %>"  style='display: none'><%= ss.note %></textarea>
+          </td>
+          <td><%= ss.company_name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th><%= t('adm.learning.operation.attendance') %></th>
+        <th><%= t('adm.learning.operation.student') %></th>
+        <th><%= t('adm.learning.operation.classroom') %></th>
+        <th><%= t('adm.learning.operation.batch') %></th>
+        <th><%= t('adm.learning.operation.teacher') %></th>
+        <th><%= t('adm.learning.operation.start_time') %></th>
+        <th><%= t('adm.learning.operation.end_time') %></th>
+        <th><%= t('adm.learning.operation.note') %></th>
+        <th><%= t('adm.learning.operation.company') %></th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+</div>
+<div class="paginator paginator-bottom">
+  <%= paginate @session_students, remote: true %>
+</div>
+<script>
+  $(document).ready(function() {
+    $('#adm_session_student_list').DataTable({
+      "scrollX": true,
+      "responsive": true,
+      "bLengthChange": false,
+      "bFilter": true,
+      "searching": false,
+      "bInfo": false,
+      "bPaginate": false
+    });
+  })
+</script>

@@ -74,6 +74,22 @@ vi:
         select_time: "Chọn thời gian"
         lesson_number: "Buổi số"
         faculty_name: "Giảng viên"
+      batch:
+        info: 'Thông tin lớp học'
+        code: 'Mã lớp học'
+        place: 'Place'
+        select_place: 'Select Place'
+        time: 'Thời gian diễn ra'
+        session_time: 'Thời gian buổi học diễn ra'
+      operation:
+        batch: "Lớp học"
+        teacher: "Giảng viên"
+        student: "Học sinh"
+        start_time: "Thời gian bắt đầu"
+        end_time: "Thời gian kết thúc"
+        company: "Công ty"
+        attendance: "Điểm danh"
+        session_state: "Trạng thái buổi học"
       Temporary session The lesson has not taken place yet: "Tạm khoá: Buổi học chưa diễn ra"
       Introduce classmates: "Giới thiệu bạn học"
       Step: "Bước"

@@ -12,6 +12,6 @@ function display_response_noti(res) {
   }else if (res.type === 'success'){
     toastr.success(res.message)
   }else if (res.type === 'warning'){
-    toastr.success(res.message)
+    toastr.warning(res.message)
   }
 }
