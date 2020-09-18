@@ -21,7 +21,7 @@
         <tr>
           <td style="text-align: center">
             <div class='form-group'>
-              <div class='col-md-3 custom-control custom-checkbox'>
+              <div class='custom-control custom-checkbox'>
                 <% if ss.present == true %>
                   <input class="operation-attendance custom-control-input" type="checkbox" id="attendance-check-<%= ss.id %>" value="<%= ss.id %>" checked>
                 <% else %>
@@ -32,14 +32,20 @@
             </div>
           </td>
           <td>[<%= ss.student_code %>]<%= ss.student_name %></td>
-          <td><%= ss.classroom_name %></td>
+          <td style="text-align: center"><%= ss.classroom_name %></td>
           <td><%= ss.batch_code %></td>
           <td><%= ss.faculty_name %></td>
           <td><%= ss.start_datetime.strftime('%H:%M %d/%m/%Y') %></td>
           <td><%= ss.end_datetime.strftime('%H:%M %d/%m/%Y') %></td>
           <td class='td-note'>
             <p class='p-note session_student_note_<%= ss.id %>'><%= ss.note %></p>
-            <textarea class='operation_note text-note input_session_student_note_<%= ss.id %>' data-id="<%= ss.id %>"  style='display: none'><%= ss.note %></textarea>
+            <div class="text-div" style='display: none'>
+            <textarea class='operation_note text-note input_session_student_note_<%= ss.id %>' data-id="<%= ss.id %>" ><%= ss.note %></textarea>
+            <div class='icon-div'>
+              <span data-id="<%= ss.id %>" class='confirm-update-note'><i class="fa fa-check-square"></i></span>
+              <span class='close-note'><i class="fa fa-window-close"></i></span>
+            </div>
+            </div>
           </td>
           <td><%= ss.company_name %></td>
         </tr>
@@ -65,6 +71,44 @@
 <div class="paginator paginator-bottom">
   <%= paginate @session_students, remote: true %>
 </div>
+<style>
+  .text-div {
+    position: relative;
+    width: 100%;
+  }
+  .text-div textarea{
+    width: 100%;
+  }
+  .icon-div {
+    position: absolute;
+    bottom: -25px;
+    background: white;
+    border: 1px solid gray;
+    border-top: none;
+    padding: 3px;
+    height: 30px;
+    right: 0
+  }
+  .icon-div span.confirm-update-note {
+    color: #007bff;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .icon-div span.close-note {
+    color: #dc3545;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .p-note {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .td-note {
+    max-width: 200px;
+    white-space: nowrap;
+    min-width: 200px;
+  }
+</style>
 <script>
   $(document).ready(function() {
     $('#adm_session_student_list').DataTable({

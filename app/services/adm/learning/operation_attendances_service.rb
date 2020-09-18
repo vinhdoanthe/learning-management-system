@@ -9,6 +9,11 @@ class Adm::Learning::OperationAttendancesService
 
     if params[:company_id].present?
       query = query.where(company_id: params[:company_id])
+    else
+      unless user.is_admin?
+        company_ids = user.user_companies.pluck(:id)
+        query = query.where(company_id: company_ids)
+      end
     end
 
     query = query.joins(op_batch: :op_course).joins( :op_student, :op_faculty, :res_company, :op_classroom, :op_session)
