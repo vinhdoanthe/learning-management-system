@@ -15,13 +15,13 @@ let getDataFilter = () => {
     start_time = $('#filter-time').data('daterangepicker').startDate._d;
     end_time = $('#filter-time').data('daterangepicker').endDate._d;
   }
-  companies = $('#filter-company').val();
+  company = $('#filter-company').val();
   student_name = $('#filter-student').val();
   session_state = $('#filter-session-state').val();
   
-  return { start_time: start_time, end_time: end_time, company: companies, student_name: student_name, session_state: session_state }
+  return { start_time: start_time, end_time: end_time, company_id: company, student_name: student_name, session_state: session_state }
 }
-
+var result = true;
 let operationAttendance = (id, state, note) =>  {
   $.ajax({
     method: 'POST',
@@ -29,6 +29,9 @@ let operationAttendance = (id, state, note) =>  {
     data: { id: id, state: state, note: note },
     success: function(res){
       display_response_noti(res);
+      if (res.type == 'danger'){
+        result = false;
+      }
     }
   })
 }
@@ -40,28 +43,42 @@ $(document).ready(function(){
     getSessionStudent(getDataFilter());
   })
 
-  $('#session_student_table').on('blur', '.text-note', function(){
-    $(this).parent().find('.p-note').html($(this).val());
-    $(this).parent().find('.p-note').show();
-    $(this).hide();
-    note = $(this).val()
-    id = $(this).data('id');
+  $('#session_student_table').on('click', '.td-note', function(e){
+    if (e.target !== $('.fa-check-square')[0] && e.target !== $('.fa-window-close')[0]){
+    $('.p-note').show();
+    $('.text-div').hide();
+    $(this).find('p').hide();
+    $(this).find('.text-div').show();
+    $(this).find('textarea').focus();
+    }
+  })
 
-    if ($(this).parent().parent().find('input.operation-attendance').is(':checked')){
+  $("#session_student_table").on('click', '.confirm-update-note', function(){
+    id = $(this).data('id');
+    note = $(this).closest('td').find('textarea').val();
+
+    if ($(this).closest('td').find('input.operation-attendance').is(':checked')){
       state = true;
     }else{
       state = false;
     }
 
     operationAttendance(id, state, note);
-  });
 
-  $('#session_student_table').on('click', '.td-note', function(e){
-    $('.p-note').show();
-    $('.text-note').hide();
-    $(this).find('p').hide();
-    $(this).find('textarea').show();
-    $(this).find('textarea').focus();
+    if (result){
+      $(this).closest('td').find('p').html(note);
+      $(this).closest('td').find('p').show();
+      $(this).closest('td').find('.text-div').hide();
+    }
+  })
+
+  $('#session_student_table').on('focusout', '.text-div', function(e){
+    let target = $(this)
+    window.setTimeout(function() {
+      target.hide();
+      target.closest('td').find('p').show();
+      target.find('textarea').val(target.closest('td').find('p').html());
+    }, 200);
   })
 
 

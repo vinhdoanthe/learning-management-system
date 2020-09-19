@@ -12,11 +12,7 @@
         </button>
       </li>
       <li>
-        <% if active_session.state == 'confirm' && active_session.check_in_time.blank? %>
-          <button type="button" class="btn btn-default btn-embossed" id="teacher_checkin" data-toggle="modal" data-target="#modal_checkin" ><span><%= image_tag('hotel-2.png') %></span>Check-in</button>
-        <% else %>
-          <button type="button" class="btn btn-default btn-embossed"  disabled><span><%= image_tag('hotel-2.png') %></span>Check-in</button>
-        <% end %>
+        <%= Learning::Batch::OpSessionDecorator.new(active_session).display_checkin_button.html_safe %>
       </li>
       <% if ['confirm', 'done'].include? active_session.state %>
         <li>
@@ -73,3 +69,20 @@
 </div>
 <div class="modal fade" id="give_homework_modal" role="dialog">
 </div>
+
+<style>
+  .btn-success {
+    background-color: #2CCA73 !important;
+  }
+  .btn-warning {
+    background-color: #fcef55 !important;
+  }
+  .btn-danger {
+    background-color: #ff7f96 !important;
+  }
+</style>
+  <script>
+    $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    })
+  </script>
