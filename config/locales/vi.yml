@@ -160,7 +160,7 @@ vi:
     no_video_lesson: "Chưa có video ôn bài"
     class_online: "Lớp học Online"
     class_in_center: "Lớp học tại trung tâm"
-    class_cancel: "Lớp bị hủy"
+    class_cancel_html: "<span style='color: #F16357 !important'>Lớp bị hủy</span>"
     learning_center: "Học tại trung tâm"
     learning_online: "Học Online"
     your_other_feelings: "Cảm nhận khác của con"
