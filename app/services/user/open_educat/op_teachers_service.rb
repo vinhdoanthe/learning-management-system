@@ -196,7 +196,7 @@ class User::OpenEducat::OpTeachersService
       errors = Api::Odoo.evaluate(session_id: session_id.to_i, faculty_id: faculty_id, attendance_lines: [evaluate_content], attendance_time: Time.now)
 
       if errors == true
-        attendance.update(attendance_state: OpAttendanceLineConstant::State::STATE_COMPLETED)
+        attendance.update(attendance_state: OpAttendanceLineConstant::State::STATE_COMPLETED, evaluate_completed_time: Time.now )
         { type: 'success', message: 'Đánh giá thành công' }
       else
         { type: 'danger', message: errors[1] }

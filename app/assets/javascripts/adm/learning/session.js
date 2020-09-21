@@ -41,11 +41,11 @@ function getDataFilter(){
   return { batch_id: batch_id, company: company, state: state, start_time: start_time, end_time: end_time, photo_state: photo_state, attendance: attendance }
 }
 
-let updateTeacherEvaluate = (attendance_id, state) => {
+let updateTeacherEvaluate = (attendance_id, state, note) => {
   $.ajax({
     method: 'POST',
     url: '/adm/learning/sessions/update_attendance_line',
-    data: { attendance_state: state, attendance_id: attendance_id, authenticity_token: $('[name="csrf-token"]')[0].content},
+    data: { attendance_state: state, attendance_id: attendance_id, note: note, authenticity_token: $('[name="csrf-token"]')[0].content},
     success: function(res){
       display_response_noti(res);
     }
@@ -109,9 +109,25 @@ $(document).ready(function(){
     getSessionInfo(session_id);
   })
 
+  $('#modal_adm_session_attendance').on('click', '.published_teacher_evaluate', function(){
+    attendance_id = $(this).data('att')
+    state = $(this).data("state");
+    updateTeacherEvaluate(attendance_id, state, '')
+  })
+
   $('#modal_adm_session_attendance').on('click', '.confirm_teacher_evaluate', function(){
     attendance_id = $(this).data('att')
     state = $(this).data("state");
-    updateTeacherEvaluate(attendance_id, state)
+
+    if ($('#operation_note_content').val().length > 0){
+      note = $('#operation_note_content').val();
+      updateTeacherEvaluate(attendance_id, state, note)
+    }else{
+      if (!$('#operation_note').is(":hidden")){
+        display_response_noti({ type: 'danger', message: "Lý do đánh giá không đạt yêu cầu không được để trống!"})
+      }
+      $('#operation_note').show();
+      $(this).attr('data-dismiss', 'modal');
+    }
   })
 })

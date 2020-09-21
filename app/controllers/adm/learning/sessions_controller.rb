@@ -70,7 +70,7 @@ class Adm::Learning::SessionsController < Adm::AdmController
   def update_attendance_line
     att = Learning::Batch::OpAttendanceLine.where(id: params[:attendance_id]).first
 
-    if att.update(attendance_state: params[:attendance_state])
+    if att.update(attendance_state: params[:attendance_state], operation_comment: params[:note])
       if params[:attendance_state] == OpAttendanceLineConstant::State::STATE_PUBLISHED
         render json: { type: 'success', message: 'Cập nhật đánh giá đạt yêu cầu thành công' }
       else

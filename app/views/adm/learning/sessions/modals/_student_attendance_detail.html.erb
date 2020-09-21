@@ -55,11 +55,15 @@
             </tr>
           <% end %>
         </table>
+        <div id='operation_note' style="display: none; margin-top: 20px;">
+          <h5>Lý do nhận xét không đạt(<span style="color: red">*</span>) :</h5>
+          <textarea id='operation_note_content' rows='5' style="width:100%"></textarea>
+        </div>
       </div>
       <div class="modal-footer">
         <% if attendance.attendance_state != OpAttendanceLineConstant::State::STATE_PUBLISHED && attendance.attendance_state != OpAttendanceLineConstant::State::STATE_REJECTED %>
-          <button type="button" class="btn btn-primary text-uppercase confirm_teacher_evaluate"  data-att="<%= attendance.id %>" data-state="<%= OpAttendanceLineConstant::State::STATE_PUBLISHED %>" data-dismiss="modal"><b>Đạt yêu cầu</b></button>
-          <button type="button" class="btn btn-danger text-uppercase confirm_teacher_evaluate" data-att="<%= attendance.id %>"  data-state="<%= OpAttendanceLineConstant::State::STATE_REJECTED %>" data-dismiss="modal"><b>Không đạt yêu cầu</b></button>
+          <button type="button" class="btn btn-primary text-uppercase published_teacher_evaluate"  data-att="<%= attendance.id %>" data-state="<%= OpAttendanceLineConstant::State::STATE_PUBLISHED %>" data-dismiss="modal"><b>Đạt yêu cầu</b></button>
+          <button type="button" class="btn btn-danger text-uppercase confirm_teacher_evaluate" data-att="<%= attendance.id %>"  data-state="<%= OpAttendanceLineConstant::State::STATE_REJECTED %>"><b>Không đạt yêu cầu</b></button>
         <% else %>
           <button type="button" class="btn btn-danger text-uppercase" data-dismiss='modal'><b>Close</b></button>
         <% end %>
