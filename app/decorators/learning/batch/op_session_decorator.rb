@@ -16,7 +16,7 @@ class Learning::Batch::OpSessionDecorator < SimpleDelegator
 
   def display_checkin_button
     if state == 'confirm' && check_in_time.blank?
-      if Time.now > (start_datetime - 15.mins)
+      if Time.now > (start_datetime - 15.minutes)
         "<button type='button' class='btn btn-default btn-embossed' id='teacher_checkin' data-toggle='modal' data-target='#modal_checkin' ><span>#{ image_tag(ActionController::Base.helpers.asset_path('hotel-2.png')) }</span>Check-in</button>"
       else
         "<div class='tooltip-span' data-toggle='tooltip' data-html='true' title='Chưa tới giờ Check-in'><button type='button' class='btn btn-default btn-embossed'  disabled><span>#{ image_tag(ActionController::Base.helpers.asset_path('hotel-2.png')) }</span>Check-in</button></div>"
