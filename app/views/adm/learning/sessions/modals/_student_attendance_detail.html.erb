@@ -55,10 +55,17 @@
             </tr>
           <% end %>
         </table>
-        <div id='operation_note' style="display: none; margin-top: 20px;">
-          <h5>Lý do nhận xét không đạt(<span style="color: red">*</span>) :</h5>
-          <textarea id='operation_note_content' rows='5' style="width:100%"></textarea>
-        </div>
+        <% if attendance.operation_comment.present? %>
+          <div id='operation_note' style="margin-top: 20px;">
+            <h5>Lý do nhận xét không đạt(<span style="color: red">*</span>) :</h5>
+            <textarea id='operation_note_content' rows='5' disabled style="width:100%" value="<%= attendance.operation_comment %>"><%= attendance.operation_comment %></textarea>
+          </div>
+        <% else %>
+          <div id='operation_note' style="display: none; margin-top: 20px;">
+            <h5>Lý do nhận xét không đạt(<span style="color: red">*</span>) :</h5>
+            <textarea id='operation_note_content' rows='5' style="width:100%"></textarea>
+          </div>
+        <% end %>
       </div>
       <div class="modal-footer">
         <% if attendance.attendance_state != OpAttendanceLineConstant::State::STATE_PUBLISHED && attendance.attendance_state != OpAttendanceLineConstant::State::STATE_REJECTED %>
