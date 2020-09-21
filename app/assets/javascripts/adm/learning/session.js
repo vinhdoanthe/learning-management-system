@@ -115,6 +115,14 @@ $(document).ready(function(){
     updateTeacherEvaluate(attendance_id, state, '')
   })
 
+  $('#modal_adm_session_attendance').on('keyup', '#operation_note_content', function(){
+    if ($(this).val().length > 0){
+      $('.confirm_teacher_evaluate').attr('data-dismiss', 'modal');
+    }else{
+      $('.confirm_teacher_evaluate').removeAttr('data-dismiss');
+    }
+  })
+
   $('#modal_adm_session_attendance').on('click', '.confirm_teacher_evaluate', function(){
     attendance_id = $(this).data('att')
     state = $(this).data("state");
@@ -127,7 +135,6 @@ $(document).ready(function(){
         display_response_noti({ type: 'danger', message: "Lý do đánh giá không đạt yêu cầu không được để trống!"})
       }
       $('#operation_note').show();
-      $(this).attr('data-dismiss', 'modal');
     }
   })
 })
