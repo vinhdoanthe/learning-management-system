@@ -1,5 +1,5 @@
 <% if session.blank? %>
   <%= render 'user/open_educat/op_students/partials/no_homework_video' %>
 <% else %>
-  <%= render 'user/open_educat/op_students/partials/homework_video', { sessions: sessions, course: course, subject: subject, lesson: lesson, session: session, batch: batch } %>
+  <%= render 'user/open_educat/op_students/partials/homework_video', { sessions: sessions, course: course, subject: subject, lesson: lesson, session: session, batch: batch, subjects: subjects } %>
 <% end %>

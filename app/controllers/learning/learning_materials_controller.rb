@@ -67,6 +67,7 @@ module Learning
       session = ''
       name = ''
       errors = ''
+      video = ''
       @video_id = ''
 
       if params[:session_id].present?
@@ -95,7 +96,7 @@ module Learning
       end
 
       respond_to do |format|
-        format.js {render 'learning/show_homework_video', :locals => { session: session, video_id: @video_id, lesson: lesson, name: name, errors: errors }}
+        format.js {render 'learning/show_homework_video', :locals => { session: session, video_id: @video_id, lesson: lesson, name: name, errors: errors, video: video }}
       end
     end
 

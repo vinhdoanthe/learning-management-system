@@ -1,7 +1,7 @@
-<% if errors.blank? %>
+<% if errors.blank? && ( video_id.to_i != 0 || video.thumbnail_image.present? )%>
   $('#no_play_video').hide()
   $('#play_video_box').show()
-  $('#play_video_box').html("<%= escape_javascript(render partial: '/learning/material/learning_materials/vimeo', locals: { video_id: video_id } ) %>");
+  $('#play_video_box').html("<%= escape_javascript(render partial: '/learning/material/learning_materials/vimeo', locals: { video_id: video_id, video: video } ) %>");
 <% else %>
   $('#no_play_video').show();
   $('#play_video_box').hide()

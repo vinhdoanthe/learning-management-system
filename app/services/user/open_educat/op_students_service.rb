@@ -222,4 +222,22 @@ class User::OpenEducat::OpStudentsService
                                                           permission: SocialCommunity::Constant::ScStudentProject::Permission::PUBLIC).to_a
     [count_homework, op_student_courses, achievements, badges, featured_photos, products]
   end
+
+  def student_batches student
+    batch_info = []
+    student_courses = student.op_student_courses
+
+    if student_courses.present?
+      student_courses.each do |sc|
+        batch = sc.op_batch
+        subject_info = sc.op_subjects.pluck(:id, :level)
+        batch_type = batch.type_id.present? ? batch.op_batch_type.name : ''
+        course = Learning::Course::OpCourse.where(id: sc.course_id).first
+
+        batch_info << { batch_id: batch.id, batch_code: batch.code, course_id: course.id, course_name: course.name, subjects: subject_info, batch_type: batch_type, state: sc.state }
+      end
+    end
+
+    batch_info
+  end
 end

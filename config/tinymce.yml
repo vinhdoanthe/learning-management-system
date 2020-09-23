@@ -1,6 +1,9 @@
 default: &default
   toolbar:
     - bold italic | undo redo
+  plugins:
+    - paste
+  paste_as_text: true
 simple:
   <<: *default
   menubar: false

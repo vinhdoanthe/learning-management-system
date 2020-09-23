@@ -1,0 +1,66 @@
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h3 class="color-fff text-transform"><%= t('sidebar.homework') %></h3>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th><%= t('learning.course') %></th>
+              <th><%= t('learning.batch.name') %></th>
+              <th><%= t('learning.subject') %></th>
+              <th><%= t('learning.batch.type') %></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="table-batch-homework">
+            <% @student_batches.each do |batch| %>
+              <tr data-batch="<%= batch[:batch_id] %>">
+                <td><%= batch[:course_name] %></td>
+                <td><%= batch[:batch_id] %></td>
+                <td>
+                  <% if batch[:subjects].present? %>
+                  <% batch[:subjects].each do |s| %>
+                    <span class="label-course label label-default" data-subject="<%= s[0] %>"><%= s[1] %></span>
+                  <% end %>
+                <% end %>
+                </td>
+                <td><%= batch[:batch_type] %></td>
+                <% if batch[:state] == 'on' %>
+                  <td align="right" class="user-batch-state"><span class="label-edit label label-primary"><%= t('learning.batch.status.studying') %></span></td>
+                <% elsif batch[:state] == 'off' %>
+                  <td align="right" class="user-batch-state"><span class="label-edit label label-danger"><%= t('learning.batch.status.stop') %></span></td>
+                <% else %>
+                  <td align="right" class="user-batch-state"><span class="label-edit label label-stop"><%= t('learning.batch.status.reversation') %></span></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+#table-batch-homework tr {
+  cursor: pointer;
+}
+.user-batch-state span{
+  text-transform: uppercase;
+  font-weight: 700 !important;
+  font-size: 10px;
+}
+</style>
+
+<script>
+  $('#table-batch-homework').on('click', 'tr', function(){
+    batch_id = $(this).data('batch');
+    window.location.href = `/user/open_educat/op_students/student_homework?batch_id=${ batch_id }`;
+  }) 
+</script>
