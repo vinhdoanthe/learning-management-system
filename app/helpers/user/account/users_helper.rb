@@ -325,9 +325,9 @@ module User
                 'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'+adm_redeem_redeem_product_items_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.product_items') <<'</p></a></li>',
               },
               {
-                'path'          => '#',
-                'title'         => '<li class="nav-item"><a class="nav-link" href="#"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.redeem') <<'</p></a></li>',
-                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="#"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.redeem') <<'</p></a></li>',
+                'path'          => adm_redeem_redeem_transactions_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'+adm_redeem_redeem_transactions_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.redeem') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'+adm_redeem_redeem_transactions_path+'"><i class="far fa-circle nav-icon"></i><p>'<< t('adm.redeem.redeem') <<'</p></a></li>',
               } 
             ],
             'learning_activity' => [

@@ -14,7 +14,7 @@
 
       <p class="text-muted text-center"><%= @info[:user].account_role %></p>
       <% if @info[:user].is_student? %>
-        <h4 class='text-center'><span class="user-teky--coinstar"><%= @info[:user].coin.to_s %></span> TEKY Sao | <span class="user-teky--coinstar"><%= @info[:user].star.to_s %></span> TEKY Đồng</h4>
+        <h4 class='text-center'><span class="user-teky--coinstar"><%= @info[:user].star.to_s %></span> TEKY Sao | <span class="user-teky--coinstar"><%= @info[:user].coin.to_s %></span> TEKY Đồng</h4>
       <% end %>
       <ul class="list-group list-group-unbordered mb-3">
         <li class="list-group-item">

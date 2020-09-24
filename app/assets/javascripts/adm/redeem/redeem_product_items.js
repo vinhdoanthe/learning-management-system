@@ -1,4 +1,3 @@
-
 let filterProducts = (data) => {
   $.ajax({
     method: "GET",

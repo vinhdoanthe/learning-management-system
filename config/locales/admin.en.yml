@@ -52,6 +52,12 @@ en:
     redeem:
       name: "Redeem"
       coin_star: "Coin Start Transaction"
+      product_brands: 'Product Brands'
+      product_categories: 'Product Categories'
+      product_sizes: 'Product sizes'
+      product_colors: 'Product colors'
+      products: 'Products'
+      product_items: 'Product items'
       redeem: "Redeem Transaction"
     notice: "Notice"
     refer_friend: "Refer Friend"

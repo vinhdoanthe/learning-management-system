@@ -1,64 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>TEKY Learning Management System :: <%= t('report.report_diligent_title')%></title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <!-- favicon icon -->
-  <%= favicon_link_tag 'Logo-fav.ico' %>
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/fontawesome-free/css/all.min.css">
-  <!-- IonIcons -->
-  <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
-  <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/daterangepicker/daterangepicker.css">
-  <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/select2/css/select2.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/AdminLTE-3.0.5/css/adminlte.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;515;600;700&display=swap" rel="stylesheet">
-  <script src="/AdminLTE-3.0.5/plugins/jquery/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ujs/1.2.2/rails.min.js" integrity="sha512-Ry7z8PQhVrwf9SdyK10ybxE+N2t37u5LdkX5UL5XZiSvBWw0nYzBTNF3hUMFXx+k1oAsxK9JhiPDl7Ue6iGazQ==" crossorigin="anonymous"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-  <%= stylesheet_link_tag 'adm_application', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>
-  <%= javascript_include_tag 'adm/application' %>
-  
-  <!-- Custom style -->
-  <link rel="stylesheet" href="/AdminLTE-3.0.5/css/custom.css">
-  <style type="text/css">
-    :root {
-      --font-family-sans-serif: "Quicksand", sans-serif;
-    }
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>TEKY Learning Management System :: <%= t('report.report_diligent_title')%></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <!-- favicon icon -->
+    <%= favicon_link_tag 'Logo-fav.ico' %>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/fontawesome-free/css/all.min.css">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/select2/css/select2.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/AdminLTE-3.0.5/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;515;600;700&display=swap" rel="stylesheet">
+    <script src="/AdminLTE-3.0.5/plugins/jquery/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ujs/1.2.2/rails.min.js" integrity="sha512-Ry7z8PQhVrwf9SdyK10ybxE+N2t37u5LdkX5UL5XZiSvBWw0nYzBTNF3hUMFXx+k1oAsxK9JhiPDl7Ue6iGazQ==" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="/AdminLTE-3.0.5/css/custom.css">
+    <%= stylesheet_link_tag 'adm/application', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>
+    <%= javascript_include_tag 'adm/application' %>
 
-    html {
-      font-family: "Quicksand", sans-serif;
-    }
-
-    body {
-      height: 100%;
-      color: #000;
-      font-family: "Quicksand", sans-serif;
-      font-weight: 400;
-      line-height: 1.42857143;
-      -webkit-font-smoothing: antialiased;
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-      font-size: 14px;
-    }
-
-    .table thead th {
-      vertical-align: middle;
-      border-bottom: 2px solid #dee2e6;
-    }
-  </style>
-</head>
-<!--
+    <!-- Custom style -->
+  </head>
+  <!--
     BODY TAG OPTIONS:
     =================
     Apply one or more of the following classes to to the body tag
@@ -68,194 +42,194 @@
     |               | sidebar-mini                            |
     |---------------------------------------------------------|
   -->
-<body class="hold-transition sidebar-mini">
-  <div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-dark navbar-teal text-sm">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-      </ul>
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-dark navbar-teal text-sm">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
 
-      <!-- Right navbar links -->
-      <%= render "adm/partials/right_topbar" %>
-    </nav>
-    <!-- /.navbar -->
+        <!-- Right navbar links -->
+        <%= render "adm/partials/right_topbar" %>
+      </nav>
+      <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
-      <a href="" class="brand-link">
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="" class="brand-link">
 
-        <span class="brand-text font-weight-light">
-          <%= image_tag("/AdminLTE-3.0.5/images/logo-teky-30.png",class:"brand-text font-weight-light", style:"max-height:33px;") %>
-        </span>
+          <span class="brand-text font-weight-light">
+            <%= image_tag("/AdminLTE-3.0.5/images/logo-teky-30.png",class:"brand-text font-weight-light", style:"max-height:33px;") %>
+          </span>
 
-      </a>
+        </a>
 
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex text-sm">
-          <div class="image">
-            <%= image_tag(get_avatar, class:"img-circle elevation-2") %>
-          </div>
-          <div class="info">
-            <a href="#" class="d-block"><%= current_user.username %></a>
-          </div>
-        </div>
-
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-          <%= get_menus_admin_lte(request.original_fullpath).html_safe %>
-        </nav>
-        <!-- /.sidebar-menu -->
-      </div>
-      <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-12">
-              <h4 class="m-0 text-dark"><%= @report_title_page %></h4>
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user panel (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex text-sm">
+            <div class="image">
+              <%= image_tag(get_avatar, class:"img-circle elevation-2") %>
             </div>
-            <div class="col-sm-12">
-              <%= render 'partials/messages' %>
+            <div class="info">
+              <a href="#" class="d-block"><%= current_user.username %></a>
             </div>
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
+          </div>
 
-      <!-- Main content -->
-      <div class="content">
-        <div class="container-fluid">
-          <%= yield %>
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <%= get_menus_admin_lte(request.original_fullpath).html_safe %>
+          </nav>
+          <!-- /.sidebar-menu -->
         </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- /.content -->
-
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
+        <!-- /.sidebar -->
       </aside>
-      <!-- /.control-sidebar -->
 
-    </div>
-    <!-- ./wrapper -->
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+                <h4 class="m-0 text-dark"><%= @report_title_page %></h4>
+              </div>
+              <div class="col-sm-12">
+                <%= render 'partials/messages' %>
+              </div>
+            </div><!-- /.row -->
+          </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
 
-    <!-- REQUIRED SCRIPTS -->
+        <!-- Main content -->
+        <div class="content">
+          <div class="container-fluid">
+            <%= yield %>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
 
-    <!-- jQuery -->
-    <!-- Bootstrap -->
-    <script src="/AdminLTE-3.0.5/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+          <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
 
-    <script src="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/moment/moment.min.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/daterangepicker/daterangepicker.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.<%= locale%>.min.js"></script>
+      </div>
+      <!-- ./wrapper -->
 
-    <!-- OPTIONAL SCRIPTS -->
-    <script src="/AdminLTE-3.0.5/plugins/chart.js/Chart.min.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-datalabels/chartjs-plugin-datalabels.min.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-deferred/chartjs-plugin-deferred.min.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js"></script>
-    <!-- AdminLTE -->
-    <script src="/AdminLTE-3.0.5/js/adminlte.js"></script>
-    <script src="/AdminLTE-3.0.5/js/demo.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
+      <!-- REQUIRED SCRIPTS -->
 
-    <!-- DataTables 
-    <script src="/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>-->
+      <!-- jQuery -->
+      <!-- Bootstrap -->
+      <script src="/AdminLTE-3.0.5/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="/AdminLTE-3.0.5/plugins/jquery-validation/jquery.validate.min.js"></script>
-    <script src="/AdminLTE-3.0.5/plugins/jquery-validation/localization/messages_<%= session[:current_language].nil? ? 'vi' : session[:current_language]%>.min.js"></script>
-    
-    <%= yield :javascript_includes %>
-    <script>
-      $(document).ready(
-        
-        function() {
+      <script src="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+      <script src="/AdminLTE-3.0.5/plugins/moment/moment.min.js"></script>
+      <script src="/AdminLTE-3.0.5/plugins/daterangepicker/daterangepicker.js"></script>
+      <script src="/AdminLTE-3.0.5/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.<%= locale%>.min.js"></script>
 
-          $('#frm_report_from_date').datepicker({
-            autoclose: true,
-            format: 'dd-mm-yyyy',
-            language: '<%= locale%>'
-          });
+      <!-- OPTIONAL SCRIPTS -->
+      <script src="/AdminLTE-3.0.5/plugins/chart.js/Chart.min.js"></script>
+      <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-datalabels/chartjs-plugin-datalabels.min.js"></script>
+      <script src="/AdminLTE-3.0.5/plugins/chartjs-plugin-deferred/chartjs-plugin-deferred.min.js"></script>
+      <script src="/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js"></script>
+      <!-- AdminLTE -->
+      <script src="/AdminLTE-3.0.5/js/adminlte.js"></script>
+      <script src="/AdminLTE-3.0.5/js/demo.js"></script>
+      <script src="/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
 
-          $('#frm_report_to_date').datepicker({
-            autoclose: true,
-            format: 'dd-mm-yyyy',
-            language: '<%= locale%>',
-            endDate: new Date(),
-          });
+      <!-- DataTables 
+        <script src="/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>-->
 
-          $('.select2').select2();
+        <script src="/AdminLTE-3.0.5/plugins/jquery-validation/jquery.validate.min.js"></script>
+        <script src="/AdminLTE-3.0.5/plugins/jquery-validation/localization/messages_<%= session[:current_language].nil? ? 'vi' : session[:current_language]%>.min.js"></script>
 
-          $('.ui_date').datepicker({
-            autoclose: true,
-            format: 'dd-mm-yyyy',
-            language: '<%= locale%>'
-          });
+        <%= yield :javascript_includes %>
+        <script>
+          $(document).ready(
 
-          $('#frm_batch_name').on("input", function(e) {
+            function() {
 
-            $("#datalist_batch").empty();
+              $('#frm_report_from_date').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+                language: '<%= locale%>'
+              });
 
-            var batch_name = $(this).val();
+              $('#frm_report_to_date').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+                language: '<%= locale%>',
+                endDate: new Date(),
+              });
 
-            if (batch_name === "" || batch_name.length < 5)
-              return false;
+              $('.select2').select2();
 
-            $.ajax({
-              type: "GET",
-              url: '<%= adm_learning_activity_get_batch_path%>',
-              async: false,
-              data: {
-                batch_name: batch_name
-              },
-              success: function(data) {
-                if (data.results.length) {
-                  for (var i = 0, len = data.results.length; i < len; i++) {
-                    var opt = $("<option></option>").attr("value", data.results[i]['name']);
-                    $("#datalist_batch").append(opt);
+              $('.ui_date').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+                language: '<%= locale%>'
+              });
+
+              $('#frm_batch_name').on("input", function(e) {
+
+                $("#datalist_batch").empty();
+
+                var batch_name = $(this).val();
+
+                if (batch_name === "" || batch_name.length < 5)
+                  return false;
+
+                $.ajax({
+                  type: "GET",
+                  url: '<%= adm_learning_activity_get_batch_path%>',
+                  async: false,
+                  data: {
+                    batch_name: batch_name
+                  },
+                  success: function(data) {
+                    if (data.results.length) {
+                      for (var i = 0, len = data.results.length; i < len; i++) {
+                        var opt = $("<option></option>").attr("value", data.results[i]['name']);
+                        $("#datalist_batch").append(opt);
+                      }
+                    }
                   }
-                }
-              }
+                });
+              });
+
             });
-          });
+        </script>
 
-        });
-    </script>
-
-    <% if @sub_module  == 'diligent'%>
-    <% if !@frm_report[:company_id].nil? && @frm_report[:company_id] >0%>
-    <% if !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'range'%>
-    <%= render "report/diligent/diligent_company_range"%>
-    <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'week' %>
-    <%= render "report/diligent/diligent_company_week"%>
-    <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'month' %>
-    <%= render "report/diligent/diligent_company_month"%>
-    <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'year' %>
-    <%= render "report/diligent/diligent_company_year"%>
-    <% end %>
-    <% else %>
-    <%= render "report/diligent/diligent_range"%>
-    <% end %>
-    <% else%>
-    <% if !@js_data_template.nil?%>
-    <%= render @js_data_template%>
-    <% end%>
-    <% end %>
-</body>
+        <% if @sub_module  == 'diligent'%>
+          <% if !@frm_report[:company_id].nil? && @frm_report[:company_id] >0%>
+            <% if !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'range'%>
+              <%= render "report/diligent/diligent_company_range"%>
+            <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'week' %>
+              <%= render "report/diligent/diligent_company_week"%>
+            <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'month' %>
+              <%= render "report/diligent/diligent_company_month"%>
+            <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'year' %>
+              <%= render "report/diligent/diligent_company_year"%>
+            <% end %>
+          <% else %>
+            <%= render "report/diligent/diligent_range"%>
+          <% end %>
+        <% else%>
+          <% if !@js_data_template.nil?%>
+            <%= render @js_data_template%>
+          <% end%>
+        <% end %>
+  </body>
 
 </html>

@@ -42,3 +42,15 @@ img.preview {
 input[type=file][data-direct-upload-url][disabled] {
   display: none;
 }
+
+.bg-f8f9fa {
+  background-color: #f8f9fa;
+}
+
+.mg-10 {
+  margin: 10px;
+}
+
+.fl-right {
+  float: right;
+}

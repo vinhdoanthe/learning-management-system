@@ -1,65 +1,57 @@
 <div class="card">
   <div class="card-header">
-    <h3><%= @adm_redeem_redeem_product.name %></h3>
+    <h3 class="card-title"><%= @adm_redeem_redeem_product.name %></h3>
   </div>
   <div class="card-body p-10">
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Name</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_name') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= @adm_redeem_redeem_product.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Price</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_price') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= number_with_delimiter(@adm_redeem_redeem_product.price) %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Code</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_code') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= @adm_redeem_redeem_product.code %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Price</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_description') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
-        <p><%= number_with_delimiter(@adm_redeem_redeem_product.price) %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Description</h4> 
-      </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= @adm_redeem_redeem_product&.description.html_safe %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Brand</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_brand') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= @adm_redeem_redeem_product&.redeem_product_brand.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Category</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_category') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= @adm_redeem_redeem_product&.redeem_product_category.name %></p>
       </div>
     </div>
-    <h4>Images</h4>
+    <label><%= t('adm.redeem.redeem_product_images') %></label>
     <div class="row">
       <% if @adm_redeem_redeem_product.images.attached? %>
         <% @adm_redeem_redeem_product.images.each do |image| %>
@@ -71,9 +63,9 @@
         <% end %>
       <% end %>
     </div>
-    <div class="card-footer clearfix">
-      <%= link_to 'Edit', edit_adm_redeem_redeem_product_path(@adm_redeem_redeem_product), class: "btn btn-warning" %> |
-      <%= link_to 'Back', adm_redeem_redeem_products_path, class: "btn btn-secondary" %>
-    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "<i class='fas fa-pencil-alt'></i>&nbsp; Edit".html_safe, edit_adm_redeem_redeem_product_path(@adm_redeem_redeem_product), class: "btn btn-sm btn-warning" %>
+    <%= link_to "<i class='fas fa-angle-double-left'></i>&nbsp; Back".html_safe, adm_redeem_redeem_products_path, class: "btn btn-sm btn-secondary" %>
   </div>
 </div>

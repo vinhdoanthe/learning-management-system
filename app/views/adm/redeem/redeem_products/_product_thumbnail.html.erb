@@ -1,0 +1,6 @@
+<div class="bg-f8f9fa mg-10 col-md-3 col-sm-6 col-xs-12" id="product-image-<%=image.signed_id%>">
+  <%= image_tag(image.variant(resize_to_limit: [284, 212]), class: "img-fluid mb-2", alt: @adm_redeem_redeem_product.name) %>
+  <div>
+    <a href="#" class="btn btn-sm btn-danger remove-image" data-blob-id="<%= image.signed_id %>"><i class="far fa-trash-alt"></i>&nbsp;Remove</a>
+  </div>
+</div> 

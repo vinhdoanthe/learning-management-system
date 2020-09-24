@@ -39,6 +39,31 @@ vi:
       Rewards: "Đổi thưởng"
       coin_star: "Giao dịch điểm thưởng"
       Exchange rewards: "Giao dịch đổi thưởng"
+      product_brands: 'Thương hiệu'
+      product_categories: 'Danh mục'
+      product_sizes: 'Kích cỡ'
+      product_colors: 'Màu sắc'
+      products: 'Sản phẩm'
+      product_items: 'Items'
+      redeem_product_name: 'Tên sản phẩm'
+      redeem_product_price: 'Giá sản phẩm'
+      redeem_product_code: 'Mã sản phẩm'
+      redeem_product_description: 'Mô tả sản phẩm'
+      redeem_product_brand: 'Thương hiệu'
+      redeem_product_category: 'Danh mục'
+      redeem_product_images: 'Ảnh sản phẩm'
+      actions_edit_product: 'Cập nhật sản phẩm'
+      actions_add_product_images: 'Thêm ảnh'
+      no_product_images: 'Chưa có ảnh sản phẩm'
+      actions_add_product: 'Thêm sản phẩm'
+      actions_add_items: 'Thêm quà'
+      item_code: 'Mã'
+      item_size: 'Kích cỡ'
+      item_color: 'Màu'
+      item_state: 'Trạng thái'
+      item_transaction: 'Y/c đổi quà'
+      item_input_date: 'Ngày nhập kho'
+      item_release_date: 'Ngày giao h/s'
     refer_friend: "Giới thiệu bạn bè"
     learning_activity:
       name: "Hoạt động học tập"
