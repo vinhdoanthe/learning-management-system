@@ -1,2 +1,18 @@
-<!-- Action Edit tam thoi chua can thiet -->
-<p>Hiện tại chưa cần thiết cho edit item</p>
+<div class="card">
+  <%= form_with(url: adm_redeem_redeem_product_item_path(adm_redeem_redeem_product_item.id), method: :patch, local: true) do |form| %>
+    <div class="card-body">
+      <div class="form-group row">
+        <label for="item_code" class="col-sm-2 col-form-label"><%= t('adm.redeem.item_code') %></label>
+        <div class="col-sm-10">
+          <%= form.text_field :item_code, required: true, class: "form-control", value: adm_redeem_redeem_product_item.item_code %>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <%= form.button "<i class='fas fa-save'></i>&nbsp;Save".html_safe, class: "btn btn-sm btn-primary" %>
+      <%= link_to "<i class='fas fa-ban'></i>&nbsp;Cancel".html_safe, adm_redeem_redeem_product_item_path(adm_redeem_redeem_product_item), class: 'btn btn-sm btn-danger' %>
+      <%= link_to "<i class='fas fa-angle-double-left'></i>&nbsp; Back".html_safe, adm_redeem_redeem_product_items_path, class: 'btn btn-sm btn-secondary' %>
+    </div>
+  <% end %>
+</div>

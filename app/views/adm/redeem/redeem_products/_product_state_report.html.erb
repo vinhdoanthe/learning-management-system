@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-3 col-sm-6 col-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-info">
+      </span>
+      <div class="info-box-content">
+        <span class="info-box-text"><%= t('adm.redeem.item_lbl_available') %></span>
+        <span class="info-box-number"><%= (states[RedeemConstants::ProductItem::STATE_AVAILABLE]).to_i %></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-warning">
+      </span>
+      <div class="info-box-content">
+        <span class="info-box-text"><%= t('adm.redeem.item_lbl_locked') %></span>
+        <span class="info-box-number"><%= (states[RedeemConstants::ProductItem::STATE_LOCKED]).to_i %></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-secondary">
+      </span>
+      <div class="info-box-content">
+        <span class="info-box-text"><%= t('adm.redeem.item_lbl_sold') %></span>
+        <span class="info-box-number"><%= (states[RedeemConstants::ProductItem::STATE_SOLD]).to_i %></span>
+      </div>
+    </div>
+  </div>
+</div>

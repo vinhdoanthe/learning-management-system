@@ -1,0 +1,21 @@
+<tr>
+  <% item_decorated = Redeem::ProductItemDecorator.new(item) %>
+  <th><%= item.id %></th>
+  <td><%= link_to item.redeem_product&.name, adm_redeem_redeem_product_path(item.redeem_product) %></td>
+  <td><%= item.item_code %></td>
+  <td><%= item.redeem_product_size&.name %></td>
+  <td><%= item.redeem_product_color&.name %></td>
+  <td><%= render :partial => "item_state", :locals => {item: item} %></td>
+  <td><%= render :partial => "transaction_link", :locals => {transaction: item.redeem_transaction} %></td>
+  <td><%= item_decorated.input_date_frm %></td>
+  <td><%= item_decorated.release_date_frm %></td>
+  <td>
+    <div class="fl-right">
+      <%= link_to "<i class='far fa-eye'></i>&nbsp;Show".html_safe, adm_redeem_redeem_product_item_path(item), class: 'btn btn-sm btn-primary', disabled: true %>
+      <% if item.available? %>
+        <%= link_to "<i class='far fa-edit'></i>&nbsp;Edit".html_safe, edit_adm_redeem_redeem_product_item_path(item), class: 'btn btn-sm btn-warning' %>
+        <%= link_to "<i class='far fa-trash-alt'></i>&nbsp;Delete".html_safe, adm_redeem_redeem_product_item_path(item), class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    </div>
+  </td>
+</tr>

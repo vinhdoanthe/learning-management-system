@@ -20,7 +20,7 @@ vi:
       redeem_button: "Đổi quà ngay"
       redeem_points: "Đổi quà"
       coin_star: "Giao dịch điểm thưởng"
-      redeem: "Giao dịch đổi quà"
+      redeem: "Yêu cầu đổi quà"
       how_to_check_it: "Làm sao để kiếm được"
       category: "Danh mục"
       category_redeem: "Danh mục quà"
@@ -44,7 +44,9 @@ vi:
       product_sizes: 'Kích cỡ'
       product_colors: 'Màu sắc'
       products: 'Sản phẩm'
-      product_items: 'Items'
+      product_items: 'Quà tặng'
+      transactions: 'Y/c đổi quà'
+      product_warehouse_report: 'Trạng thái'
       redeem_product_name: 'Tên sản phẩm'
       redeem_product_price: 'Giá sản phẩm'
       redeem_product_code: 'Mã sản phẩm'
@@ -57,6 +59,7 @@ vi:
       no_product_images: 'Chưa có ảnh sản phẩm'
       actions_add_product: 'Thêm sản phẩm'
       actions_add_items: 'Thêm quà'
+      actions_edit_item: 'Cập nhật quà'
       item_code: 'Mã'
       item_size: 'Kích cỡ'
       item_color: 'Màu'
@@ -64,6 +67,17 @@ vi:
       item_transaction: 'Y/c đổi quà'
       item_input_date: 'Ngày nhập kho'
       item_release_date: 'Ngày giao h/s'
+      item_amount: 'Số lượng'
+      transaction_abbr: 'YCĐQ'
+      item_lbl_available: 'Còn trong kho'
+      item_lbl_locked: 'Đang được đổi'
+      item_lbl_sold: 'Đã đổi'
+      transaction_student: 'Học sinh'
+      transaction_amount: 'Số lượng'
+      transaction_totalpaid: 'Tổng giá trị'
+      transaction_status: 'Trạng thái'
+      transaction_note: 'Ghi chú'
+      transaction_order_date: 'Ngày y/c'
     refer_friend: "Giới thiệu bạn bè"
     learning_activity:
       name: "Hoạt động học tập"

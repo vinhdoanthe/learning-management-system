@@ -3,9 +3,18 @@ class Adm::Redeem::RedeemProductsController < ApplicationController
 
   def index
     @adm_redeem_redeem_products = Redeem::RedeemProduct.order(:created_at => :ASC).all
+
+    # caculate warehouse state of each product
+    @product_available_counts = Redeem::RedeemProductItem.where(state:RedeemConstants::ProductItem::STATE_AVAILABLE).group(:product_id).count
+    @product_locked_counts = Redeem::RedeemProductItem.where(state:RedeemConstants::ProductItem::STATE_LOCKED).group(:product_id).count
+    @product_sold_counts = Redeem::RedeemProductItem.where(state:RedeemConstants::ProductItem::STATE_SOLD).group(:product_id).count
   end
 
   def show
+
+    # report product by states
+    @states = Redeem::RedeemProductItem.where(product_id: @adm_redeem_redeem_product.id).group(:state).count
+
   end
 
   def new

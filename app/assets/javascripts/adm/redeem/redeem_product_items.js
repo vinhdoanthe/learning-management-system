@@ -172,6 +172,7 @@ $(document).ready(function(){
 
 
   setFilterParamsFromLocalStorage();
+  
   window.onunload = () => {
     window.MyStorage.clear()
   }

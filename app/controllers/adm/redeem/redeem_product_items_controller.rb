@@ -1,4 +1,7 @@
 class Adm::Redeem::RedeemProductItemsController < ApplicationController
+
+  include Redeem::ProductItemHelper
+
   before_action :set_adm_redeem_redeem_product_item, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -22,10 +25,7 @@ class Adm::Redeem::RedeemProductItemsController < ApplicationController
     permited_params = create_params
     item_ids = product_item_service.create_items(permited_params)
 
-    # @adm_redeem_redeem_product_item = Redeem::RedeemProductItem.new(adm_redeem_redeem_product_item_params)
-
     respond_to do |format|
-      # if @adm_redeem_redeem_product_item.save
       if !item_ids.blank?
         flash[:success] = 'Redeem product item was successfully created.'
         format.html { redirect_to adm_redeem_redeem_product_items_path }
@@ -36,15 +36,17 @@ class Adm::Redeem::RedeemProductItemsController < ApplicationController
     end
   end
 
-  # def update
-  #   respond_to do |format|
-  #     if @adm_redeem_redeem_product_item.update(adm_redeem_redeem_product_item_params)
-  #       format.html { redirect_to @adm_redeem_redeem_product_item, notice: 'Redeem product item was successfully updated.' }
-  #     else
-  #       format.html { render :edit }
-  #     end
-  #   end
-  # end
+  def update
+    respond_to do |format|
+      if @adm_redeem_redeem_product_item.update(edit_params)
+        flash[:success] = 'Redeem product item was successfully updated.'
+        format.html { redirect_to @adm_redeem_redeem_product_item }
+      else
+        flash[:danger] = 'Error!!!'
+        format.html { render :edit }
+      end
+    end
+  end
 
   def destroy
     @adm_redeem_redeem_product_item.destroy
@@ -55,17 +57,21 @@ class Adm::Redeem::RedeemProductItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_adm_redeem_redeem_product_item
-      @adm_redeem_redeem_product_item = Redeem::RedeemProductItem.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_adm_redeem_redeem_product_item
+    @adm_redeem_redeem_product_item = Redeem::RedeemProductItem.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def adm_redeem_redeem_product_item_params
-      params.fetch(:adm_redeem_redeem_product_item, {})
-    end
+  # Only allow a list of trusted parameters through.
+  def adm_redeem_redeem_product_item_params
+    params.fetch(:adm_redeem_redeem_product_item, {})
+  end
 
-    def create_params
-      params.permit(:product_id, :size_id, :color_id, :amount)
-    end
+  def create_params
+    params.permit(:product_id, :size_id, :color_id, :amount)
+  end
+
+  def edit_params
+    params.permit(:item_code)
+  end
 end

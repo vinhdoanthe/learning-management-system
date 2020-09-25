@@ -2,8 +2,7 @@ class Adm::Redeem::RedeemTransactionsController < Adm::AdmController
   before_action :set_transaction, only: [:show, :cancel, :approve, :complete]
 
   def index
-    # TODO: filter params
-    @transactions = Redeem::RedeemTransaction.order(:created_at => :ASC).all
+    @transactions = Redeem::RedeemTransactionService.new.list_transactions params
   end
 
   def show

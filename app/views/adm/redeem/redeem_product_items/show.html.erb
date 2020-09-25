@@ -1,103 +1,110 @@
 <% redeem_product = @adm_redeem_redeem_product_item.redeem_product %>
+<% item_decorated = Redeem::ProductItemDecorator.new(@adm_redeem_redeem_product_item) %>
+
 <div class="card">
   <div class="card-header">
-    <h3><%= @adm_redeem_redeem_product_item.item_code %></h3>
+    <h3 class='card-title'><%= @adm_redeem_redeem_product_item.item_code %></h3>
   </div>
   <div class="card-body p-10">
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Product</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.products') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= redeem_product&.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Price</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.item_code') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
+        <p><%= @adm_redeem_redeem_product_item.item_code %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_price') %></label> 
+      </div>
+      <div class="col-md-9 col-sm-12">
         <p><%= number_with_delimiter(redeem_product.price) %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Description</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_description') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= redeem_product&.description.html_safe %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Brand</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_brand') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= redeem_product&.redeem_product_brand.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Category</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.redeem_product_category') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= redeem_product&.redeem_product_category.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Color</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.item_color') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= @adm_redeem_redeem_product_item.redeem_product_color&.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Size</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.item_size') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= @adm_redeem_redeem_product_item.redeem_product_size&.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>State</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.item_state') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= @adm_redeem_redeem_product_item.state %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Input date</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.item_input_date') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
-        <p><%= @adm_redeem_redeem_product_item.input_date %></p>
+      <div class="col-md-9 col-sm-12">
+        <p><%= item_decorated.input_date_frm %></p>
       </div>
     </div>
-    <% if @adm_redeem_redeem_product_item.transaction_id %>
-      <div class="row">
-        <div class="col-md-4 col-sm-12">
-          <h4>Transaction</h4> 
-        </div>
-        <div class="col-md-8 col-sm-12">
-          <p><%= "Transaction #{@adm_redeem_redeem_product_item.transaction_id}" %></p>
-        </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.item_transaction') %></label> 
       </div>
-    <% end %>
-    <% if @adm_redeem_redeem_product_item.release_date %>
-      <div class="row">
-        <div class="col-md-4 col-sm-12">
-          <h4>Transaction</h4> 
-        </div>
-        <div class="col-md-8 col-sm-12">
-          <p><%= @adm_redeem_redeem_product_item.release_date %></p>
-        </div>
+      <div class="col-md-9 col-sm-12">
+        <%= render :partial => "transaction_link", :locals => {transaction: @adm_redeem_redeem_product_item.redeem_transaction} %>
       </div>
-    <% end %>
-    <div class="card-footer clearfix">
-      <%= link_to 'Back', adm_redeem_redeem_product_items_path, class: 'btn btn-secondary' %>
     </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.item_release_date') %></label> 
+      </div>
+      <div class="col-md-9 col-sm-12">
+        <p><%= item_decorated.release_date_frm %></p>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "<i class='fas fa-pencil-alt'></i>&nbsp;Edit".html_safe, edit_adm_redeem_redeem_product_item_path(@adm_redeem_redeem_product_item), class: 'btn btn-sm btn-warning' %>
+    <%= link_to "<i class='fas fa-angle-double-left'></i>&nbsp; Back".html_safe, adm_redeem_redeem_product_items_path, class: 'btn btn-sm btn-secondary' %>
   </div>
 </div>

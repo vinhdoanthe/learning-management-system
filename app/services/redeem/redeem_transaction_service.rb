@@ -3,6 +3,15 @@ include RedeemConstants::ProductItem
 include RedeemConstants::Action
 
 class Redeem::RedeemTransactionService
+
+  def list_transactions params
+    transactions = Redeem::RedeemTransaction.includes(:redeem_product, :user, :redeem_product_color, :redeem_product_size)
+      .order(:created_at => :ASC)
+      .page(params[:page])
+
+    transactions
+  end
+
   def create_transaction params, user
     size = Redeem::RedeemProductSize.where(id: params[:product_size]).first
     color = Redeem::RedeemProductColor.where(id: params[:product_color]).first
@@ -54,22 +63,6 @@ class Redeem::RedeemTransactionService
     post_redeem.save
     post
   end
-
-  # def update_transaction transaction, status
-  #   if status == 'cancel'
-  #     type = 1
-  #     update_coin transaction, type
-  #   end
-
-  #   if transaction.update!(status: status)
-  #     post = create_redeem_post transaction, user
-
-  #     if status == 'done'
-  #       SocialCommunity::Feed::UserPostsService.create_multiple post.id, [user.id]
-  #     end
-  #   end
-  #   true
-  # end
 
   def check_product_item product, size, color, amount
     return nil if size.blank? || color.blank?

@@ -3,6 +3,7 @@
     <h3 class="card-title"><%= @adm_redeem_redeem_product.name %></h3>
   </div>
   <div class="card-body p-10">
+    <%= render :partial => 'product_state_report', :locals => {states: @states} %>
     <div class="row">
       <div class="col-md-3 col-sm-12">
         <label><%= t('adm.redeem.redeem_product_name') %></label> 
@@ -16,7 +17,7 @@
         <label><%= t('adm.redeem.redeem_product_price') %></label> 
       </div>
       <div class="col-md-9 col-sm-12">
-        <p><%= number_with_delimiter(@adm_redeem_redeem_product.price) %></p>
+        <p><%= number_with_precision(@adm_redeem_redeem_product.price, :delimiter => '.', :precision => 0) %></p>
       </div>
     </div>
     <div class="row">

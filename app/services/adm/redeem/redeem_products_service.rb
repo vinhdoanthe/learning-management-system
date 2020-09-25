@@ -26,7 +26,7 @@ class Adm::Redeem::RedeemProductsService
       query_time.merge! ({ input_date: time_start..time_end })
     end
 
-    Redeem::RedeemProductItem.where(query).where(query_time).order(:created_at => :ASC).page(params[:page]).per(25)
+    Redeem::RedeemProductItem.includes(:redeem_product, :redeem_product_color, :redeem_product_size, :redeem_transaction).where(query).where(query_time).order(:created_at => :ASC).page(params[:page]).per(25)
   end
 
 end

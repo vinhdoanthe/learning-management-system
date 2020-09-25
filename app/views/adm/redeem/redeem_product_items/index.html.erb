@@ -9,10 +9,10 @@
     </div>
   </div>
   <div class='filter_form'>
-    <div class='row'>
-      <div class="col-md-4">
+    <div class='row p-10'>
+      <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="form-group">
-          <label for='filter-products'><%= t("adm.redeem.product") %></label>
+          <label for="filter-products"><%= t('adm.redeem.products') %></label>
           <select class="select2 select2-hidden-accessible" id='filter-products' data-placeholder="<%= t("adm.redeem.select_product") %>" name="products[]" multiple="multiple" style="width: 100%;">
             <% @products.each do |product| %>
               <option value='<%= product.id %>'><%= product.name %></option>
@@ -20,9 +20,9 @@
           </select>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 col-sm-6 col-xs-12">
         <div class="form-group">
-          <label for='filter-state'><%= t("adm.redeem.item_states") %></label>
+          <label for="filter-state"><%= t('adm.redeem.item_state') %></label>
           <select class="select2 select2-hidden-accessible" id='filter-state' data-placeholder="<%= t("adm.redeem.select_item_state") %>" name="item_states[]" multiple="multiple" style="width: 100%;">
             <% @product_item_states.each do |state| %>
               <option value='<%= state %>'><%= state %></option>
@@ -30,22 +30,23 @@
           </select>
         </div>
       </div>
-      <div class='col-md-3'>
+      <div class='col-md-3 col-sm-6 col-xs-12'>
         <div class="form-group">
           <label for="filter-input-date"><%= t("adm.redeem.item_input_date") %></label>
           <input type="text" class="form-control" id="filter-input-date">
         </div>
       </div>
-      <div class='col-md-3'>
+      <div class='col-md-3 col-sm-6 col-xs-12'>
         <div class="form-group">
           <label for="filter-release-date"><%= t("adm.redeem.item_release_date") %></label>
           <input type="text" class="form-control" id="filter-release-date">
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <button type="submit" class="btn btn-primary" id="submit_filter_product"><%= t("adm.user.filter") %></button>
+      <div class="col-md-1 col-sm-6 col-xs-12">
+        <div class="form-group">
+          <label for="submit_filter_product">&nbsp;</label>
+          <input type="submit" class="btn btn-primary" style="width:100%" id="submit_filter_product" value="<%= t("adm.user.filter") %>">
+        </div>
       </div>
     </div>
   </div>
@@ -69,25 +70,7 @@
 
         <tbody>
           <% @adm_redeem_redeem_products_items.each do |item| %>
-            <tr>
-              <th><%= item.id %></th>
-              <td><%= link_to item.redeem_product&.name, adm_redeem_redeem_product_path(item.redeem_product) %></td>
-              <td><%= item.item_code %></td>
-              <td><%= item.redeem_product_size&.name %></td>
-              <td><%= item.redeem_product_color&.name %></td>
-              <td><%= item.state %></td>
-              <td><%= link_to item.redeem_transaction&.id, '#' %></td>
-              <td><%= item.input_date %></td>
-              <td><%= item.release_date %></td>
-              <td>
-                <div class="fl-right">
-                  <%= link_to "<i class='far fa-eye'></i>&nbsp;Show".html_safe, adm_redeem_redeem_product_item_path(item), class: 'btn btn-sm btn-primary', disabled: true %>
-                  <% if item.available? %>
-                    <%= link_to "<i class='far fa-trash-alt'></i>&nbsp;Delete".html_safe, adm_redeem_redeem_product_item_path(item), class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                  <% end %>
-                </div>
-              </td>
-            </tr>
+            <%= render :partial => "product_item_tr", :locals => {item: item} %>
           <% end %>
         </tbody>
       </table>

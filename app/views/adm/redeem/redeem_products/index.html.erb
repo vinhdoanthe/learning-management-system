@@ -17,6 +17,7 @@
           <th><%= t('adm.redeem.redeem_product_images') %></th>
           <th><%= t('adm.redeem.redeem_product_price') %></th>
           <th><%= t('adm.redeem.redeem_product_description') %></th>
+          <th><%= t('adm.redeem.product_warehouse_report') %></th>
           <th colspan='1'></th>
         </thead>
         <tbody>
@@ -30,8 +31,13 @@
                   <%= image_tag(product.images.first.variant(resize_to_limit: [142, 106])) %>
                 <% end %>
               </td>
-              <td><%= product.price %></td>
+              <td><%= number_with_precision(product.price, :delimiter => '.', :precision => 0) %></td>
               <td><%= sanitize(product.description) %></td>
+              <td>
+                <span class="badge badge-info"><%= (@product_available_counts[product.id]).to_i %></span>
+                <span class="badge badge-warning"><%= (@product_locked_counts[product.id]).to_i %></span>
+                <span class="badge badge-secondary"><%= (@product_sold_counts[product.id]).to_i %></span>
+              </td>
               <td>
                 <div class="fl-right">
                   <%= link_to "<i class='far fa-eye'></i>&nbsp;Show".html_safe, adm_redeem_redeem_product_path(product), class: 'btn btn-sm btn-primary' %>

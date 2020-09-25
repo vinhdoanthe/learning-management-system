@@ -1,0 +1,5 @@
+<div>
+  <% if transaction %>
+    <%= link_to "#{t('adm.redeem.transaction_abbr')} #{transaction.id}", adm_redeem_redeem_transactions_show_path(transaction) %>
+  <% end %>
+</div>
