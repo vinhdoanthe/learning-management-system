@@ -20,6 +20,7 @@ namespace :user do
       get 'attendance_report', action: 'attendance_report', as: 'attendance_report'
       get 'student_projects', action: 'student_projects', as: 'student_projects'
       get 'student_project_detail', action: 'student_project_detail', as: 'student_project_detail'
+      get 'video_review_list', action: 'video_review_list', as: 'video_review_list'
     end
   end
 end

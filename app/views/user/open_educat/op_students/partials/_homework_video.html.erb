@@ -1,40 +1,16 @@
-<% session_has_video_list = get_session_has_video sessions %>
-<% unless session_has_video_list.present? %>
   <div class="tab-content p-0 tab-all-content bo-table">
     <div class="tab-pane fade active in">
       <div class="fc-header" id="video_detail">
-        <%= render 'user/open_educat/op_students/partials/video_detail', { course: course, subject: subject, lesson: lesson, session: session } %>
+        <%= render 'user/open_educat/op_students/partials/video_detail', { course: course, subject: subject, lesson: lesson, session: session, subjects: subjects } %>
       </div>
       <input type='hidden' value='<%= session.id %>' name='active_session'>
       <input type='hidden' value='<%= subject.id %>' name='active_subject'>
       <input type='hidden' value='<%= batch.id %>' name='active_batch'>
       <div class="row">
-        <div class="col-md-9">
-          <div class="fc-video">
-            <div class="fcv-big" style='height: 100%'>
-              <div id='no_play_video' style='position: relative;display: none'>
-                <%= image_tag 'no-video-placeholder.jpg' %>
-              </div>
-            </div>
-          </div>
+        <div class='col-md-9' id="loading_filter_video" style="display: none">
+          <%= render 'partials/content_loading' %>
         </div>
-        <% if lesson.present? %>
-          <div class="col-md-3" id="video_homework_chat">
-          </div>
-        <% end %>
-      </div>
-    </div>
-<% else %>
-  <div class="tab-content p-0 tab-all-content bo-table">
-    <div class="tab-pane fade active in">
-      <div class="fc-header" id="video_detail">
-        <%= render 'user/open_educat/op_students/partials/video_detail', { course: course, subject: subject, lesson: lesson, session: session } %>
-      </div>
-      <input type='hidden' value='<%= session.id %>' name='active_session'>
-      <input type='hidden' value='<%= subject.id %>' name='active_subject'>
-      <input type='hidden' value='<%= batch.id %>' name='active_batch'>
-      <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9" id="student_homework_video_content">
           <div class="fc-video">
             <div class="fcv-big" style='height: 100%'>
               <div id='no_play_video' style='position: relative;display: none'>
@@ -42,9 +18,6 @@
               </div>
               <div id='play_video_box' >
               </div>
-                <!-- <div class="fc-header video-detail" id="video_detail">
-                  <%#= render 'user/open_educat/op_students/partials/video_detail', { course: course, subject: subject, lesson: lesson } %>
-                </div> -->
                 <div class="title-video">
                   <p style='text-transform: uppercase'>Nội dung Video: <span id="video_description" style="font-weight: 500"><%= lesson.present? ? lesson.name : "" %></span></p>
                 </div>
@@ -54,16 +27,25 @@
             <div class="" style='display: block' id='swiper-video-list'>
               <div class="swiper-container homework_video_swiper">
                 <div class="swiper-wrapper">
-                  <% session_has_video_list.each_with_index do |s, index| %>
+                  <% sessions.each_with_index do |s, index| %>
                     <% if s.id == session.id %>
                       <div class='swiper-slide active_video_slide' style='background: #ffffff'>
                       <input type='hidden' value='<%= index %>' id='active_video_slider'>
                         <%= render 'user/open_educat/op_students/partials/video_item', { session: session, current_session: s } %>
                       </div>
                     <% else %>
-                      <div class='swiper-slide'>
-                        <%= render 'user/open_educat/op_students/partials/video_item', { session: session, current_session: s } %>
-                      </div>
+                      <% if s.state == Learning::Constant::Batch::Session::STATE_DONE %>
+                        <div class='swiper-slide'>
+                          <%= render 'user/open_educat/op_students/partials/video_item', { session: session, current_session: s } %>
+                        </div>
+                      <% else %>
+                        <div class='swiper-slide' style="pointer-events:none">
+                          <%= render 'user/open_educat/op_students/partials/video_item', { session: session, current_session: s } %>
+                          <div class='lock-layer' style="position: absolute">
+                            <%= image_tag '/global/images/prilock.png', class: 'lock-item' %>
+                          </div>
+                        </div>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </div>
@@ -81,7 +63,6 @@
       </div>
     </div>
   </div>
-<% end %>
 <style>
 .no_video_thumbnail {
   width: 100%;
@@ -100,8 +81,6 @@
   background: #dcdcdc;
   border: 1px solid #D7DFE9 !important; 
   border-radius: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
   /* Center slide text vertically */
   display: -webkit-box;
   display: -ms-flexbox;
@@ -123,7 +102,12 @@
   margin-left: 20px;
   margin-bottom: 3px;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 0px;
   border-bottom: 3px solid #D7DFE9;
 }
 </style>
+  <script>
+    $(document).ready(function(){
+      get_video("<%= batch.id %>", "<%= subject.id %>")
+    })
+  </script>

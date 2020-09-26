@@ -197,6 +197,22 @@ module User
       end
 
       def student_homework
+        #if @op_student.op_batches.count > 1 && params[:batch_id].blank?
+        #  redirect_to action: "video_review_list"
+        #  return
+        #end
+
+        #@batch_id = params[:batch_id]
+        #@session = Learning::Batch::OpBatchService.last_done_session @op_student.id, params[:batch_id] if @batch_id.present?
+      end
+
+      def video_review_list
+        @student_batches = User::OpenEducat::OpStudentsService.new.student_batches @op_student
+
+        if @student_batches.length == 1
+          redirect_to user_open_educat_op_students_video_review_path(batch_id: @student_batches.first[:batch_id])
+          return
+        end
       end
 
       def student_project_detail
@@ -370,6 +386,8 @@ module User
           lesson = active_session.op_lession
           batches = ''
           subjects = ''
+          op_student_course = Learning::Batch::OpStudentCourse.where(student_id: @op_student.id, batch_id: batch.id).first
+          subjects = op_student_course.op_subjects if op_student_course.present?
 
           respond_to do |format|
             format.html

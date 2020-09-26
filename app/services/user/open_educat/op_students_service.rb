@@ -42,7 +42,9 @@ class User::OpenEducat::OpStudentsService
     if active_session.present?
       batch = active_session.op_batch
       subject = active_session.op_subject
-      subjects = Learning::Course::OpSubject.where(id: batch.op_sessions.pluck(:subject_id).uniq)
+      student_course = Learning::Batch::OpStudentCourse.where(student_id: student.id, batch_id: batch.id).first
+      subjects = student_course.op_subjects
+#      subjects = Learning::Course::OpSubject.where(id: batch.op_sessions.pluck(:subject_id).uniq)
       sessions = Learning::Batch::OpBatchService.get_sessions( batch_id = batch.id, student_id = student.id, subject_ids = subject.id).select{|s| s.state != Learning::Constant::Batch::Session::STATE_CANCEL}
       course = batch.op_course
       lesson = active_session.op_lession
@@ -221,5 +223,23 @@ class User::OpenEducat::OpStudentsService
                                                           state: SocialCommunity::Constant::ScStudentProject::State::PUBLISH, 
                                                           permission: SocialCommunity::Constant::ScStudentProject::Permission::PUBLIC).to_a
     [count_homework, op_student_courses, achievements, badges, featured_photos, products]
+  end
+
+  def student_batches student
+    batch_info = []
+    student_courses = student.op_student_courses
+
+    if student_courses.present?
+      student_courses.each do |sc|
+        batch = sc.op_batch
+        subject_info = sc.op_subjects.pluck(:id, :level)
+        batch_type = batch.type_id.present? ? batch.op_batch_type.name : ''
+        course = Learning::Course::OpCourse.where(id: sc.course_id).first
+
+        batch_info << { batch_id: batch.id, batch_code: batch.code, course_id: course.id, course_name: course.name, subjects: subject_info, batch_type: batch_type, state: sc.state }
+      end
+    end
+
+    batch_info
   end
 end

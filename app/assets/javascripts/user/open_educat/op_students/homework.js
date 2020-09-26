@@ -20,21 +20,6 @@ function get_video( batch_id, subject_id){
     url: '/learning/show_video/' + session_id + '?session_id=' + session_id + '&batch_id=' + batch_id + '&subject_id=' + subject_id,
     dataType: 'script',
     success: function(){
-      $('.video_carousel').owlCarousel({
-        margin:10,
-        nav:true,
-        responsive:{
-          0:{
-            items:1    
-          },
-          600:{
-            items:3
-          },
-          1000:{
-            items:5
-          }
-        }
-      })
     }
   })
 }
@@ -56,7 +41,16 @@ $('document').ready(function () {
   let url_string = window.location.href
   let url = new URL(url_string);
   let session_id = url.searchParams.get("session");
-  firstLoading(session_id);
+  input_session = $('input[name="input-session"]').val();
+  if (input_session.length > 0 ){
+    firstLoading(input_session);
+  }else {
+    firstLoading(session_id);
+  }
+    //$('#homework_tab2_new').ready(function(){
+    //  $('#student_homework_videos').trigger('click')
+    //})
+
   active_batch = $('input[name="active_batch"]').val();
   active_subject = $('input[name="active_subject"]').val();
 
@@ -70,6 +64,17 @@ $('document').ready(function () {
 
   $('#student_homework_videos').on('click', function(){
     get_video(active_batch, active_subject)
+  })
+
+  $('#homework_tab2_new').on('change', '#student_subject_video_filter', function(){
+    $('#loading_filter_video').show();
+    $('#student_homework_video_content').hide();
+    course = $('#homework_course_selection').val();
+    batch = $('#homework_batch_selection').val();
+    $('#homework_subject_selection').val($('#student_subject_video_filter').val())
+    subject = $('#homework_subject_selection').val();
+    get_homework({course: course, batch: batch, subject: subject}, '/user/open_educat/op_students/filter_subject_homework' )
+//    get_video(batch, subject)
   })
 
   $('#homework_tab2_new').on('click', '.swiper-slide', function(){

@@ -12,3 +12,7 @@ $('input[name="active_lesson_video"]').val('<%= session_id %>')
 <% else %>
     $('.video_to_homework').html("<div class='row'><div class='col-md-4'><a class='btn btn-secondary text-transform video_to_homework' disabled>Làm bài tập</a></div><div class='col-md-6'><a class='btn btn-primary btn-embossed bg-5DC2A7 text-transform' href='/user/batch_detail/<%= batch.id %>'>Nội dung và kiến thức học được</a></div></div></div>")
 <% end %>
+  $(document).ready(function(){
+    $('#student_homework_video_content').show();
+    $('#loading_filter_video').hide();
+  })
