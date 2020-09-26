@@ -147,10 +147,11 @@ vi:
     user:
       name: "Người dùng"
       info: "Thông tin người dùng"
+      email: 'Email'
       filter: "Lọc"
       company: "Cơ sở"
       select_company: "Chọn cơ sở"
-      role: "Quyền"
+      role: "Vai trò"
       select_role: "Chọn quyền"
       fullname: "Tên người dùng"
       mobile: "Số điện thoại"
@@ -160,7 +161,7 @@ vi:
       last_logout_at: "Đăng xuất lần cuối"
       edit: "Sửa"
       show: "Xem chi tiết"
-      created_at: "Created at"
+      created_at: "Tạo lúc"
       username: "Tên đăng nhập"
       password: "Mật khẩu"
       confirmation_password: "Mật khẩu xác nhận"
@@ -168,6 +169,7 @@ vi:
       add_user: "Thêm người dùng mới"
       create: "Thêm mới"
       update: 'Cập nhật'
+      student_code: 'Mã h/s'
       update_password: "Cập nhật mật khẩu"
       update_info: "Cập nhật thông tin"
       message:

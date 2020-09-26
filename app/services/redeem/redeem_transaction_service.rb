@@ -6,7 +6,15 @@ class Redeem::RedeemTransactionService
 
   def list_transactions params
     transactions = Redeem::RedeemTransaction.includes(:redeem_product, :user, :redeem_product_color, :redeem_product_size)
-      .order(:created_at => :ASC)
+    if params[:status].present?
+      transactions = transactions.where(status: params[:status])
+    end
+
+    if params[:order_date_start].present? && params[:order_date_end].present?
+      transactions = transactions.where('created_at > ? AND created_at < ?', params[:order_date_start], params[:order_date_end])
+    end
+
+    transactions = transactions.order(:created_at => :ASC)
       .page(params[:page])
 
     transactions

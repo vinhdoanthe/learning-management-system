@@ -32,16 +32,6 @@
 
     <!-- Custom style -->
   </head>
-  <!--
-    BODY TAG OPTIONS:
-    =================
-    Apply one or more of the following classes to to the body tag
-    to get the desired effect
-    |---------------------------------------------------------|
-    |LAYOUT OPTIONS | sidebar-collapse                        |
-    |               | sidebar-mini                            |
-    |---------------------------------------------------------|
-  -->
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
       <!-- Navbar -->
@@ -146,90 +136,86 @@
       <script src="/AdminLTE-3.0.5/js/demo.js"></script>
       <script src="/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
 
-      <!-- DataTables 
-        <script src="/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>-->
+      <script src="/AdminLTE-3.0.5/plugins/jquery-validation/jquery.validate.min.js"></script>
+      <script src="/AdminLTE-3.0.5/plugins/jquery-validation/localization/messages_<%= session[:current_language].nil? ? 'vi' : session[:current_language]%>.min.js"></script>
 
-        <script src="/AdminLTE-3.0.5/plugins/jquery-validation/jquery.validate.min.js"></script>
-        <script src="/AdminLTE-3.0.5/plugins/jquery-validation/localization/messages_<%= session[:current_language].nil? ? 'vi' : session[:current_language]%>.min.js"></script>
+      <%= yield :javascript_includes %>
+      <%= yield :stylesheet_includes %>
+      <script>
+        $(document).ready(
 
-        <%= yield :javascript_includes %>
-        <script>
-          $(document).ready(
+          function() {
 
-            function() {
+            $('#frm_report_from_date').datepicker({
+              autoclose: true,
+              format: 'dd-mm-yyyy',
+              language: '<%= locale%>'
+            });
 
-              $('#frm_report_from_date').datepicker({
-                autoclose: true,
-                format: 'dd-mm-yyyy',
-                language: '<%= locale%>'
-              });
+            $('#frm_report_to_date').datepicker({
+              autoclose: true,
+              format: 'dd-mm-yyyy',
+              language: '<%= locale%>',
+              endDate: new Date(),
+            });
 
-              $('#frm_report_to_date').datepicker({
-                autoclose: true,
-                format: 'dd-mm-yyyy',
-                language: '<%= locale%>',
-                endDate: new Date(),
-              });
+            $('.select2').select2();
 
-              $('.select2').select2();
+            $('.ui_date').datepicker({
+              autoclose: true,
+              format: 'dd-mm-yyyy',
+              language: '<%= locale%>'
+            });
 
-              $('.ui_date').datepicker({
-                autoclose: true,
-                format: 'dd-mm-yyyy',
-                language: '<%= locale%>'
-              });
+            $('#frm_batch_name').on("input", function(e) {
 
-              $('#frm_batch_name').on("input", function(e) {
+              $("#datalist_batch").empty();
 
-                $("#datalist_batch").empty();
+              var batch_name = $(this).val();
 
-                var batch_name = $(this).val();
+              if (batch_name === "" || batch_name.length < 5)
+                return false;
 
-                if (batch_name === "" || batch_name.length < 5)
-                  return false;
-
-                $.ajax({
-                  type: "GET",
-                  url: '<%= adm_learning_activity_get_batch_path%>',
-                  async: false,
-                  data: {
-                    batch_name: batch_name
-                  },
-                  success: function(data) {
-                    if (data.results.length) {
-                      for (var i = 0, len = data.results.length; i < len; i++) {
-                        var opt = $("<option></option>").attr("value", data.results[i]['name']);
-                        $("#datalist_batch").append(opt);
-                      }
+              $.ajax({
+                type: "GET",
+                url: '<%= adm_learning_activity_get_batch_path%>',
+                async: false,
+                data: {
+                  batch_name: batch_name
+                },
+                success: function(data) {
+                  if (data.results.length) {
+                    for (var i = 0, len = data.results.length; i < len; i++) {
+                      var opt = $("<option></option>").attr("value", data.results[i]['name']);
+                      $("#datalist_batch").append(opt);
                     }
                   }
-                });
+                }
               });
-
             });
-        </script>
 
-        <% if @sub_module  == 'diligent'%>
-          <% if !@frm_report[:company_id].nil? && @frm_report[:company_id] >0%>
-            <% if !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'range'%>
-              <%= render "report/diligent/diligent_company_range"%>
-            <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'week' %>
-              <%= render "report/diligent/diligent_company_week"%>
-            <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'month' %>
-              <%= render "report/diligent/diligent_company_month"%>
-            <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'year' %>
-              <%= render "report/diligent/diligent_company_year"%>
-            <% end %>
-          <% else %>
-            <%= render "report/diligent/diligent_range"%>
+          });
+      </script>
+
+      <% if @sub_module  == 'diligent'%>
+        <% if !@frm_report[:company_id].nil? && @frm_report[:company_id] >0%>
+          <% if !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'range'%>
+            <%= render "report/diligent/diligent_company_range"%>
+          <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'week' %>
+            <%= render "report/diligent/diligent_company_week"%>
+          <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'month' %>
+            <%= render "report/diligent/diligent_company_month"%>
+          <% elsif !@frm_report[:report_type].nil? && @frm_report[:report_type]  == 'year' %>
+            <%= render "report/diligent/diligent_company_year"%>
           <% end %>
-        <% else%>
-          <% if !@js_data_template.nil?%>
-            <%= render @js_data_template%>
-          <% end%>
+        <% else %>
+          <%= render "report/diligent/diligent_range"%>
         <% end %>
+      <% else%>
+        <% if !@js_data_template.nil?%>
+          <%= render @js_data_template%>
+        <% end%>
+      <% end %>
   </body>
 
 </html>

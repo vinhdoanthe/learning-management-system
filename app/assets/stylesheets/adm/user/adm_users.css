@@ -1,0 +1,36 @@
+.pagination span {
+  margin: 5px;
+}
+
+.filter_form {
+  margin-bottom: 30px;
+}
+
+#submit_filter_user {
+  float: right;
+  padding: 5px;
+  margin-right: 40px;
+  width: 100px;
+}
+
+.count-users-paginator {
+  font-size: 15px;
+  font-weight: 700;
+  color: #20C99D;
+  float: right;
+  margin-right: 30px;
+}
+
+.tooltip-span {
+  margin-right: 5px;
+}
+
+.next_page {
+  color: #67dcbf !important;
+  cursor: pointer;
+}
+
+.previous_page {
+  color: #67dcbf !important;
+  cursor: pointer;
+}

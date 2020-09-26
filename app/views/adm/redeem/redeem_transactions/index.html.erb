@@ -1,7 +1,18 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag('adm/redeem/redeem_transactions') %>
 <% end %>
+
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag('adm/redeem/redeem_transactions') %>
+<% end %>
+
 <%= tinymce_assets %>
+
+<div class="card">
+  <div class="card-body">
+    <%= render :partial => 'status_report', :locals => {status_report: @status_report} %>
+  </div>
+</div>
 
 <div class="card">
   <div class="card-header">
@@ -9,9 +20,6 @@
     <div class="card-tools">
       <%= paginate @transactions %>
     </div>
-  </div>
-  <div class="card-body">
-    <%= render :partial => 'status_report', :locals => {status_report: @status_report} %>
   </div>
   <div class="card-body p-0">
     <div class="table table-responsive">
@@ -27,6 +35,7 @@
           <th><%= t('adm.redeem.transaction_status') %></th>
           <th><%= t('adm.redeem.transaction_note') %></th>
           <th><%= t('adm.redeem.transaction_order_date') %></th>
+          <th></th>
         </thead>
         <tbody>
           <% @transactions.each do |transaction| %>

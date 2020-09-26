@@ -2,7 +2,7 @@ class Adm::Redeem::RedeemTransactionsController < Adm::AdmController
   before_action :set_transaction, only: [:show, :cancel, :approve, :complete]
 
   def index
-    @transactions = Redeem::RedeemTransactionService.new.list_transactions params
+    @transactions = Redeem::RedeemTransactionService.new.list_transactions index_params
     @status_report = Redeem::RedeemTransactionService.new.get_status_report params
   end
 
@@ -48,5 +48,9 @@ class Adm::Redeem::RedeemTransactionsController < Adm::AdmController
   private
   def set_transaction
     @transaction = Redeem::RedeemTransaction.where(id: params[:id]).first
+  end
+
+  def index_params
+    params.permit(:page, :status, :order_date_start, :order_date_end)
   end
 end

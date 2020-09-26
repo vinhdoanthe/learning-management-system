@@ -1,75 +1,60 @@
 <% start = page * 25 %>
 <% end_record = (page + 1) * 25 %>
 <% end_record = count if (end_record >= count && count != 0) %>
-<p style="ont-size: 15px; font-weight: 700; color: #20C99D; float: right; margin-right: 30px;"><%= start %> - <%= end_record %>  / <%= count %> kết quả</p>
-<table id="adm_all_user" class="display nowrap" style="width:100%">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th><%= t("adm.user.username") %></th>
-      <th>Student Code</th>
-      <th>Email</th>
-      <th><%= t("adm.user.role") %></th>
-      <th><%= t("adm.user.fullname") %></th>
-      <th><%= t("adm.user.mobile") %></th>
-      <th>Last login</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% users.each do |user| %>
+
+<p class="count-users-paginator"><%= "#{start}-#{end_record}/#{count}" %></p>
+<div class='table table-responsive'>
+  <table class="table table-condensed table-hover">
+    <thead>
+      <tr role='row'>
+        <th>#</th>
+        <th><%= t("adm.user.username") %></th>
+        <th><%= t('adm.user.student_code') %></th>
+        <th><%= t('adm.user.email') %></th>
+        <th><%= t("adm.user.role") %></th>
+        <th><%= t("adm.user.fullname") %></th>
+        <th><%= t("adm.user.mobile") %></th>
+        <th><%= t('adm.user.last_login_at') %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.each do |user| %>
+        <tr role='row'>
+          <td><%= user[:id] %></td>
+          <td><%= user[:username] %></td>
+          <td><%= user[:code] if user[:account_role] == 'Student' %></td>
+          <td><%= user[:email] %></td>
+          <td><%= user[:account_role] %></td>
+          <td><%= user[:full_name] %></td>
+          <td><%= user[:mobile] %></td>
+          <td><%= user[:last_sign_in] %></td>
+          <td>
+            <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
+              <a href="/adm/user/user_info/<%= user[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
+            </span>
+            <span>
+              <a href="/adm/user/edit_user_info/<%= user[:id] %>"><i class="fas fa-user-edit"></i></a>
+            </span>
+            <span>
+              <a href="/adm/user/login_as_user/<%= user[:id] %>" target="_blank"><i class="fas fa-user-check"></i></a>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
       <tr>
-        <td><%= user[:id] %></td>
-        <td><%= user[:username] %></td>
-        <td><%= user[:code] if user[:account_role] == 'Student' %></td>
-        <td><%= user[:email] %></td>
-        <td><%= user[:account_role] %></td>
-        <td><%= user[:full_name] %></td>
-        <td><%= user[:mobile] %></td>
-        <td><%= user[:last_sign_in] %></td>
-        <td>
-          <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
-          <a href="/adm/user/user_info/<%= user[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
-        </span>
-        <span>
-          <a href="/adm/user/edit_user_info/<%= user[:id] %>"><i class="fas fa-user-edit"></i></a>
-        </span>
-        <span>
-          <a href="/adm/user/login_as_user/<%= user[:id] %>" target="_blank"><i class="fas fa-user-check"></i></a>
-        </span>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th>ID</th>
-      <th><%= t("adm.user.username") %></th>
-      <th>Student Code</th>
-      <th>Email</th>
-      <th><%= t("adm.user.role") %></th>
-      <th><%= t("adm.user.fullname") %></th>
-      <th><%= t("adm.user.mobile") %></th>
-      <th>Last login</th>
-      <th>Action</th>
-    </tr>
-  </tfoot>
-</table>
-<style>
-  .tooltip-span {
-    margin-right: 5px;
-  }
-</style>
-<script>
-  $(document).ready(function() {
-    $('#adm_all_user').DataTable({
-      "scrollX": true,
-      "responsive": true,
-      "bLengthChange": false,
-      "bFilter": true,
-      "searching": false,
-      "bInfo": false,
-      "bPaginate": false
-    });
-  })
-</script>
+        <th>ID</th>
+        <th><%= t("adm.user.username") %></th>
+        <th>Student Code</th>
+        <th>Email</th>
+        <th><%= t("adm.user.role") %></th>
+        <th><%= t("adm.user.fullname") %></th>
+        <th><%= t("adm.user.mobile") %></th>
+        <th>Last login</th>
+        <th>Action</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
