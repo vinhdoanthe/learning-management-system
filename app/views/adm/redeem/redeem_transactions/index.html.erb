@@ -10,6 +10,9 @@
       <%= paginate @transactions %>
     </div>
   </div>
+  <div class="card-body">
+    <%= render :partial => 'status_report', :locals => {status_report: @status_report} %>
+  </div>
   <div class="card-body p-0">
     <div class="table table-responsive">
       <table class="table table-condensed table-hover">
@@ -36,7 +39,7 @@
               <td><%= transaction.redeem_product_size&.name %></td>
               <td><%= transaction_decorated.amount_frm %></td>
               <td><%= transaction_decorated.total_paid_frm %></td>
-              <td class="transaction-status"><%= transaction.status %></td>
+              <td class="transaction-status"><%= render :partial => 'status', :locals => {transaction: transaction, transaction_lbl: transaction_decorated.status_label} %></td>
               <td class="transaction-note"><%= transaction.admin_note&.html_safe %></td>
               <td><%= transaction_decorated.order_date_frm %></td>
               <td class="transaction-actions">

@@ -78,6 +78,10 @@ vi:
       transaction_status: 'Trạng thái'
       transaction_note: 'Ghi chú'
       transaction_order_date: 'Ngày y/c'
+      transaction_new_lbl: 'Y/c mới được tạo'
+      transaction_ready_lbl: 'Y/c sẵn sàng bàn giao'
+      transaction_cancel_lbl: 'Y/c bị hủy bỏ'
+      transaction_done_lbl: 'Y/c đã hoàn tất'
     refer_friend: "Giới thiệu bạn bè"
     learning_activity:
       name: "Hoạt động học tập"

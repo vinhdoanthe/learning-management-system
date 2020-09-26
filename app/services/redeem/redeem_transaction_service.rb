@@ -164,7 +164,7 @@ class Redeem::RedeemTransactionService
     # send email
 
     result = {}
-    
+
     if !transaction.status_ready?
       result[:success] = false
       return result
@@ -198,6 +198,12 @@ class Redeem::RedeemTransactionService
     end
 
     return result
+  end
+
+  def get_status_report params
+    # all transaction report
+    # temporary ignore params
+    Redeem::RedeemTransaction.group(:status).count
   end
 
   private

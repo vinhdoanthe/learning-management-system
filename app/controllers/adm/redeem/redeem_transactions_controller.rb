@@ -3,6 +3,7 @@ class Adm::Redeem::RedeemTransactionsController < Adm::AdmController
 
   def index
     @transactions = Redeem::RedeemTransactionService.new.list_transactions params
+    @status_report = Redeem::RedeemTransactionService.new.get_status_report params
   end
 
   def show
