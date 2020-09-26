@@ -197,13 +197,13 @@ module User
       end
 
       def student_homework
-        if @op_student.op_batches.count > 1 && params[:batch_id].blank?
-          redirect_to action: "video_review_list"
-          return
-        end
+        #if @op_student.op_batches.count > 1 && params[:batch_id].blank?
+        #  redirect_to action: "video_review_list"
+        #  return
+        #end
 
-        @batch_id = params[:batch_id]
-        @session = Learning::Batch::OpBatchService.last_done_session @op_student.id, params[:batch_id] if @batch_id.present?
+        #@batch_id = params[:batch_id]
+        #@session = Learning::Batch::OpBatchService.last_done_session @op_student.id, params[:batch_id] if @batch_id.present?
       end
 
       def video_review_list

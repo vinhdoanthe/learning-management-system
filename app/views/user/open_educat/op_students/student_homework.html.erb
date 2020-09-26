@@ -14,20 +14,20 @@
     <div class="panel-content">
       <%= link_to image_tag('global/images/quaylai.svg').html_safe + "#{ t('button.back') }", :back, class: 'PC-back', id: 'student_homework_back' %>
       <ul class="nav nav-tabs nav-primary tab-menu">
-        <li class=""><a href="#homework_tab1" data-toggle="tab"><%= t('homework.name') %></a></li>
-        <li class="active"><a id="student_homework_videos" href="#homework_tab2_new" data-toggle="tab"><%= t('homework.review') %></a></li>
+        <li class="active"><a href="#homework_tab1" data-toggle="tab"><%= t('homework.name') %></a></li>
+        <li class=""><a id="student_homework_videos" href="#homework_tab2_new" data-toggle="tab"><%= t('homework.review') %></a></li>
       </ul>
       <div class="tab-content p-0 tab-all-content m-t-20">
         <input name='input-batch'  type='hidden' value="<%= @batch_id %>">
         <input name='input-session'  type='hidden' value="<%= @session.present? ? @session.id : ''%>">
         <% if @batches.present? %>
-          <div class="tab-pane fade" id='homework_tab1'>
+          <div class="tab-pane fade active in" id='homework_tab1'>
             <div class="table-responsive bo-table">
               <p><%= t('learning.no_lesson') %><p>
             </div>
           </div>
         <% else %>
-          <div class="tab-pane fade" id='homework_tab1'>
+          <div class="tab-pane fade active in" id='homework_tab1'>
 
             <div class="table-responsive bo-table">
               <div class="filter-box FlowupLabels p-b-10" id='formBody'>
@@ -44,7 +44,7 @@
           </div>
         <% end%>
         <!-- <div id="video_play_tab" > -->
-        <div class="tab-pane fade  active in" id='homework_tab2_new'> 
+        <div class="tab-pane fade" id='homework_tab2_new'>
           <%= render "user/open_educat/shared/loadings/loading_video" %>
         </div>
         <!-- </div> --> </div>

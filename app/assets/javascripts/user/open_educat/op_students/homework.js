@@ -47,9 +47,9 @@ $('document').ready(function () {
   }else {
     firstLoading(session_id);
   }
-    $('#homework_tab2_new').ready(function(){
-      $('#student_homework_videos').trigger('click')
-    })
+    //$('#homework_tab2_new').ready(function(){
+    //  $('#student_homework_videos').trigger('click')
+    //})
 
   active_batch = $('input[name="active_batch"]').val();
   active_subject = $('input[name="active_subject"]').val();
