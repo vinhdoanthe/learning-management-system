@@ -58,6 +58,8 @@ en:
       product_colors: 'Product colors'
       products: 'Products'
       product_items: 'Product items'
+      select_item_state: 'Select Item State'
+      select_product: 'Select Product'
       redeem: "Redeem Transaction"
     notice: "Notice"
     refer_friend: "Refer Friend"

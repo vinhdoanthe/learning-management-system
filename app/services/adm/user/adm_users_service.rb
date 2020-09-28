@@ -15,9 +15,9 @@ class Adm::User::AdmUsersService
       query = " AND company.id IN  (#{ allow_companies.join(',') })"
     end
     
-    if params[:had_login].to_i == 0
+    if params[:had_login] == 'unsign'
       query += " AND users.last_sign_in_at IS NULL"
-    else
+    elsif params[:had_login] == 'signed'
       query += " AND users.last_sign_in_at IS NOT NULL"
     end
     
@@ -26,10 +26,14 @@ class Adm::User::AdmUsersService
     parent_query += query
     admin_query += query
 
-    if params[:is_active].to_boolean
-      student_sub_query = "LEFT OUTER JOIN op_student_course as sc ON (sc.student_id = users.student_id AND sc.id IS NOT NULL) LEFT OUTER JOIN res_company as company ON company.id = sc.company_id"
+    if params[:is_active] != 'all'
+      if params[:is_active].to_boolean
+        student_sub_query = "LEFT OUTER JOIN op_student_course as sc ON (sc.student_id = users.student_id AND sc.id IS NOT NULL) LEFT OUTER JOIN res_company as company ON company.id = sc.company_id"
+      else
+        student_sub_query = "LEFT OUTER JOIN op_student_course as sc ON (sc.student_id = users.student_id AND sc.id IS NULL) LEFT OUTER JOIN res_company as company ON company.id = sc.company_id"
+      end
     else
-      student_sub_query = "LEFT OUTER JOIN op_student_course as sc ON (sc.student_id = users.student_id AND sc.id IS NULL) LEFT OUTER JOIN res_company as company ON company.id = sc.company_id"
+        student_sub_query = "LEFT OUTER JOIN op_student_course as sc ON (sc.student_id = users.student_id) LEFT OUTER JOIN res_company as company ON company.id = sc.company_id"
     end
 
     if params[:role].present?

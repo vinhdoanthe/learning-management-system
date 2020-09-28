@@ -11,20 +11,8 @@ function get_filter_params() {
   var company = $("#filter-company").val();
   var role = $("#filter-role").val();
   var search = $("#search-user").val();
-  var had_login = ''
-  var is_active = ''
-
-  if ($('#user-has-sign-in').is(':checked')) {
-    had_login = 1
-  } else {
-    had_login = 0
-  }
-
-  if ($('#user-is-active').is(':checked')) {
-    is_active = true
-  } else {
-    is_active = false
-  }
+  var had_login = $('#user-has-sign-in').val();
+  var is_active = $('#user-is-active').val();
 
   data = { company: company, role: role, search: search, had_login: had_login, is_active: is_active }
 
@@ -57,6 +45,9 @@ $(document).ready(function () {
   })
 
   $('#submit_filter_user').on('click', function () {
+    $('#loading-content-div').show();
+    $('#user_data_table').hide();
+    $('#paginator').hide();
     data = get_filter_params();
     data['page'] = 0;
     data['index'] = 1;
