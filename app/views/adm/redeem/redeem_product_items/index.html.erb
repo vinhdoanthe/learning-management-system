@@ -8,12 +8,13 @@
       <%= link_to "<i class='far fa-plus-square'></i>&nbsp;#{t('adm.redeem.actions_add_items')}".html_safe, new_adm_redeem_redeem_product_item_path, class: 'btn btn-primary' %>
     </div>
   </div>
-  <div class='filter_form'>
+  <div class='filter_form card-body'>
     <div class='row p-10'>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="form-group">
           <label for="filter-products"><%= t('adm.redeem.products') %></label>
           <select class="select2 select2-hidden-accessible" id='filter-products' data-placeholder="<%= t("adm.redeem.select_product") %>" name="products[]" multiple="multiple" style="width: 100%;">
+            <option value='all'>Tất cả</option>
             <% @products.each do |product| %>
               <option value='<%= product.id %>'><%= product.name %></option>
             <% end %>
@@ -24,6 +25,7 @@
         <div class="form-group">
           <label for="filter-state"><%= t('adm.redeem.item_state') %></label>
           <select class="select2 select2-hidden-accessible" id='filter-state' data-placeholder="<%= t("adm.redeem.select_item_state") %>" name="item_states[]" multiple="multiple" style="width: 100%;">
+            <option value='all'>Tất cả</option>
             <% @product_item_states.each do |state| %>
               <option value='<%= state %>'><%= state %></option>
             <% end %>
@@ -50,6 +52,8 @@
       </div>
     </div>
   </div>
+</div>
+<div class='card'>
   <div class="card-body p-0">
     <div class="table table-responsive">
       <table class="table table-condensed table-hover">

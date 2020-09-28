@@ -64,6 +64,8 @@ vi:
       redeem_product_category: 'Danh mục'
       redeem_product_images: 'Ảnh sản phẩm'
       no_product_images: 'Chưa có ảnh sản phẩm'
+      select_item_state: 'Chọn trạng thái sản phẩm'
+      select_product: 'Chọn nhóm sản phẩm'
       item_code: 'Mã'
       item_size: 'Kích cỡ'
       item_color: 'Màu'
