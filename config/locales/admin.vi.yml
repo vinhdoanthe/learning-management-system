@@ -16,6 +16,15 @@ vi:
     notice: "Thông báo"
     Alert!: "Cảnh báo!"
     redeem:
+      actions_add_items: 'Thêm quà'
+      actions_add_product: 'Thêm sản phẩm'
+      actions_add_product_images: 'Thêm ảnh'
+      actions_approve_transaction: 'Duyệt y/c'
+      actions_complete_transaction: 'Hoàn thành y/c'
+      actions_edit_item: 'Cập nhật quà'
+      actions_edit_product: 'Cập nhật sản phẩm'
+      actions_reject_transaction: 'Hủy y/c'
+      actions_view_transaction: 'Xem y/c'
       name: "Đổi quà"
       redeem_button: "Đổi quà ngay"
       redeem_points: "Đổi quà"
@@ -54,12 +63,7 @@ vi:
       redeem_product_brand: 'Thương hiệu'
       redeem_product_category: 'Danh mục'
       redeem_product_images: 'Ảnh sản phẩm'
-      actions_edit_product: 'Cập nhật sản phẩm'
-      actions_add_product_images: 'Thêm ảnh'
       no_product_images: 'Chưa có ảnh sản phẩm'
-      actions_add_product: 'Thêm sản phẩm'
-      actions_add_items: 'Thêm quà'
-      actions_edit_item: 'Cập nhật quà'
       item_code: 'Mã'
       item_size: 'Kích cỡ'
       item_color: 'Màu'
@@ -82,7 +86,17 @@ vi:
       transaction_ready_lbl: 'Y/c sẵn sàng bàn giao'
       transaction_cancel_lbl: 'Y/c bị hủy bỏ'
       transaction_done_lbl: 'Y/c đã hoàn tất'
-    refer_friend: "Giới thiệu bạn bè"
+    refer_friend:
+      title: 'Giới thiệu bạn bè'
+      state_waiting_lbl: 'Mới'
+      state_confirm_lbl: 'Đã xác nhận'
+      state_failed_lbl: 'Không thành công'
+      state_succeed_lbl: 'Thành công'
+      rf_code: 'Mã giới thiệu'
+      rf_parent_name: 'Tên phụ huynh'
+      rf_phone: 'Số ĐT'
+      rf_date: 'Ngày giới thiệu'
+      rf_state: 'Trạng thái'
     learning_activity:
       name: "Hoạt động học tập"
       discussion: "Thảo luận"
@@ -273,7 +287,6 @@ vi:
       album: "Bộ sưu tập"
       photo: "Hình ảnh"    
     notice: "Thông báo"
-    refer_friend: "Giới thiệu bạn"
     List: "Danh sách"
     Presentee: "Người được giới thiệu"
     Referral code: "Mã giới thiệu"

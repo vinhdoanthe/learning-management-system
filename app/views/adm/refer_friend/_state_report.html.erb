@@ -1,0 +1,22 @@
+<div class="card-body">
+  <div class="row clearfix">
+    <div class="col-lg-3 col-6">
+      <%= render :partial => "status_report_item", :locals => {state: ReferFriendConstants::REFER_FRIEND_STATE_WAITING, state_count: state_report[ReferFriendConstants::REFER_FRIEND_STATE_WAITING], state_lbl: t('adm.refer_friend.state_waiting_lbl')} %>
+    </div>
+
+    <div class="col-lg-3 col-6">
+      <%= render :partial => "status_report_item", :locals => {state: ReferFriendConstants::REFER_FRIEND_STATE_CONFIRM, state_count: state_report[ReferFriendConstants::REFER_FRIEND_STATE_CONFIRM], state_lbl: t('adm.refer_friend.state_confirm_lbl')} %>
+    </div>
+    <div class="col-lg-3 col-6">
+      <%= render :partial => "status_report_item", :locals => {state: ReferFriendConstants::REFER_FRIEND_STATE_FAILED, state_count: state_report[ReferFriendConstants::REFER_FRIEND_STATE_FAILED], state_lbl: t('adm.refer_friend.state_failed_lbl')} %>
+    </div>
+    <div class="col-lg-3 col-6">
+      <%= render :partial => "status_report_item", :locals => {state: ReferFriendConstants::REFER_FRIEND_STATE_SUCCEED, state_count: state_report[ReferFriendConstants::REFER_FRIEND_STATE_SUCCEED], state_lbl: t('adm.refer_friend.state_succeed_lbl')} %>
+    </div>
+  </div>
+<div class="align-center">
+  <a href="<%= adm_refer_friend_index_path %>">
+    <%= t('button.see_all') %> <i class="fas fa-arrow-circle-right"></i>
+  </a>
+</div>
+</div>

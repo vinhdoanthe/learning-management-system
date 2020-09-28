@@ -426,8 +426,8 @@ module User
 
             {
               'path'          => root_path,
-              'title'         => '<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.refer_friend') <<'</p></a></li>',
-              'title_active'  => '<li class="nav-item"><a class="nav-link active" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.refer_friend') <<'</p></a></li>'
+              'title'         => '<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.refer_friend.title') <<'</p></a></li>',
+              'title_active'  => '<li class="nav-item"><a class="nav-link active" href="#"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.refer_friend.title') <<'</p></a></li>'
             },
 
             #{

@@ -1,0 +1,22 @@
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_link_tag('adm/refer_friend') %>
+<% end %>
+
+<div class="card">
+  <%= render :partial => 'state_report', :locals => {state_report: @state_report} %>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"><%= t('adm.refer_friend.title') %></h3>
+    <div class="card-tools">
+      <%= paginate @refer_friends %>
+    </div>
+  </div>
+  <%= render :partial => "list_refer_friends", :locals => {refer_friends: @refer_friends} %>
+  <div class="card-footer clearfix">
+    <div class="m-0 float-right">
+      <%= paginate @refer_friends %>
+    </div>
+  </div>
+</div>

@@ -1,15 +1,15 @@
 <% if transaction.status_new? %>
-  <%= link_to "<i class='far fa-eye'></i>".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
-  <%= link_to "<i class='fas fa-ban'></i>".html_safe, '#', class: 'btn btn-sm btn-danger btn-cancel-transaction', "data-transaction-id": transaction.id %>
-  <%= link_to "<i class='far fa-check-square'></i>".html_safe, '#', class: 'btn btn-sm btn-primary btn-approve-transaction', "data-transaction-id": transaction.id %>
+  <%= link_to "<i class='far fa-eye'></i>&nbsp;#{t('adm.redeem.actions_view_transaction')}".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
+  <%= link_to "<i class='fas fa-ban'></i>&nbsp;#{t('adm.redeem.actions_reject_transaction')}".html_safe, '#', class: 'btn btn-sm btn-danger btn-cancel-transaction', "data-transaction-id": transaction.id %>
+  <%= link_to "<i class='far fa-check-square'></i>&nbsp;#{t('adm.redeem.actions_approve_transaction')}".html_safe, '#', class: 'btn btn-sm btn-primary btn-approve-transaction', "data-transaction-id": transaction.id %>
 <% elsif transaction.status_ready? %>
-  <%= link_to "<i class='far fa-eye'></i>".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
-  <%= link_to "<i class='fas fa-ban'></i>".html_safe, '#', class: 'btn btn-sm btn-danger btn-cancel-transaction', "data-transaction-id": transaction.id %>
-  <%= link_to "<i class='far fa-check-square'></i>".html_safe, '#', class: 'btn btn-sm btn-success btn-complete-transaction', "data-transaction-id": transaction.id %>
+  <%= link_to "<i class='far fa-eye'></i>&nbsp;#{t('adm.redeem.actions_view_transaction')}".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
+  <%= link_to "<i class='fas fa-ban'></i>&nbsp;#{t('adm.redeem.actions_reject_transaction')}".html_safe, '#', class: 'btn btn-sm btn-danger btn-cancel-transaction', "data-transaction-id": transaction.id %>
+  <%= link_to "<i class='far fa-check-square'></i>&nbsp;#{t('adm.redeem.actions_complete_transaction')}".html_safe, '#', class: 'btn btn-sm btn-success btn-complete-transaction', "data-transaction-id": transaction.id %>
 <% elsif transaction.status_cancel? %>
-  <%= link_to "<i class='far fa-eye'></i>".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
+  <%= link_to "<i class='far fa-eye'></i>&nbsp;#{t('adm.redeem.actions_view_transaction')}".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
 <% elsif transaction.status_done? %>
-  <%= link_to "<i class='far fa-eye'></i>".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
+  <%= link_to "<i class='far fa-eye'></i>&nbsp;#{t('adm.redeem.actions_view_transaction')}".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
 <% else %>
-  <%= link_to "<i class='far fa-eye'></i>".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
+  <%= link_to "<i class='far fa-eye'></i>&nbsp;#{t('adm.redeem.actions_view_transaction')}".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
 <% end %>

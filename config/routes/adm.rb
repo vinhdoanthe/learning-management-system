@@ -51,6 +51,10 @@ namespace :adm do
 
   end
 
+  namespace :refer_friend do 
+    get 'index', action: 'index'
+  end
+
   namespace :user do
     get 'all_user' => 'adm_users#all_user'
     get 'index' => 'adm_users#index'

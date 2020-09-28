@@ -1,0 +1,9 @@
+<% rf_decorated = SocialCommunity::ReferFriendDecorator.new(rf) %>
+<tr>
+  <th><%= rf.id %></th>
+  <td><%= rf.code %></td>
+  <td><%= rf.parent_name %></td>
+  <td><%= rf.mobile %></td>
+  <td><%= rf_decorated.rf_date_frm %></td>
+  <td><%= render :partial => 'state', :locals => {state: rf.state} %></td>
+</tr>

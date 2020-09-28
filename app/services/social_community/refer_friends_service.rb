@@ -2,7 +2,6 @@ include ReferFriendConstants
 
 class SocialCommunity::ReferFriendsService
   require "securerandom"
-  # require "social_community/refer_friend"
 
   def create_refer_friend email, mobile, parent_name, note, user_id
     refer_friend = SocialCommunity::ReferFriend.new
@@ -122,37 +121,6 @@ class SocialCommunity::ReferFriendsService
     }
   end
 
-  #def create_refer_request params
-  #  #create new record
-  #  begin
-  #    request = SocialCommunity::ReferFriend.create(params)
-  #    refer_code = generate_refer_code params[:refer_by]
-  #    state = 'waiting'
-  #    request.update(code: refer_code, state: state)
-
-  #    request_refer_odoo request
-  #    request.create_notifications
-
-  #    { type: 'success', message: 'Cảm ơn chờ xử lý' }
-  #  rescue StandardError => e
-  #    { type: 'danger', message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' }
-  #  end
-  #end
-
-  # def update_refer_request params
-  #   refer = SocialCommunity::ReferFriend.where(id: params[:refer_id], code: params[:refer_code]).first
-
-  #   if refer.update(state: params[:state])
-  #     if params[:state] == 'approve'
-  #       post = create_refer_post refer
-  #       SocialCommunity::Feed::UserPostsService.create_multiple post.id, [refer.refer_by]
-  #       post.create_notifications
-  #     else
-  #       refer.create_notifications
-  #     end 
-  #   end
-  # end
-
   def request_refer_odoo request
 
   end
@@ -234,6 +202,26 @@ class SocialCommunity::ReferFriendsService
     end
 
     result
+  end
+
+  def get_list params
+    refer_friends = SocialCommunity::ReferFriend.all
+    
+    if params[:state].present?
+      refer_friends = refer_friends.where(:state => params[:state])
+    end
+
+    if params[:rf_date_start].present? && params[:rf_date_end].present?
+      refer_friends = refer_friends.where('created_at > ? AND created_at < ?', params[:rf_date_start], params[:rf_date_end])
+    end
+
+    refer_friends = refer_friends.order(:updated_at => 'DESC')
+      .page(params[:page])
+  end
+
+
+  def get_state_report
+    SocialCommunity::ReferFriend.group(:state).count
   end
 
   private

@@ -1,97 +1,99 @@
+<% transaction_decorated = Redeem::TransactionDecorator.new(transaction) %>
+
 <div class="card">
   <div class="card-header">
-    <h3><%= "Transaction #{transaction.id}" %></h3>
+    <h3 class="card-title"><%= "#{t('adm.redeem.transactions')} #{transaction.id}" %></h3>
   </div>
   <div class="card-body p-10">
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Student</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.transaction_student') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= transaction.user&.full_name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Product</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.products') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= transaction.redeem_product&.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Color</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.product_colors') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= transaction.redeem_product_color&.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Size</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.product_sizes') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <p><%= transaction.redeem_product_size&.name %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Ordered date</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.transaction_order_date') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
-        <p><%= transaction.created_at %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Status</h4> 
-      </div>
-      <div class="col-md-8 col-sm-12">
-        <p><%= transaction.status %></p>
+      <div class="col-md-9 col-sm-12">
+        <p><%= transaction_decorated.order_date_frm %></p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Amount</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.transaction_status') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
-        <p><%= transaction.amount %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Total Paid</h4> 
-      </div>
-      <div class="col-md-8 col-sm-12">
-        <p><%= transaction.total_paid %></p>
+      <div class="col-md-9 col-sm-12">
+        <%= render :partial => 'status', :locals => {transaction: transaction, transaction_lbl: transaction_decorated.status_label} %>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <h4>Admin Note</h4> 
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.transaction_amount') %></label> 
       </div>
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-9 col-sm-12">
+        <p><%= transaction_decorated.amount_frm %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.transaction_totalpaid') %></label> 
+      </div>
+      <div class="col-md-9 col-sm-12">
+        <p><%= transaction_decorated.total_paid_frm %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-12">
+        <label><%= t('adm.redeem.transaction_note') %></label> 
+      </div>
+      <div class="col-md-9 col-sm-12">
         <p><%= transaction.admin_note&.html_safe %></p>
       </div>
     </div>
     <hr>
     <div class="table-responsive">
-      <h4>List of item</h4>
+      <label><%= t('adm.redeem.product_items') %></label>
       <table class="table table-condensed">
         <thead>
-          <th>ID</th>
-          <th>Item code</th>
-          <th>State</th>
-          <th>Color</th>
-          <th>Size</th>
+          <th>#</th>
+          <th><%= t('adm.redeem.item_code') %></th>
+          <th><%= t('adm.redeem.item_state') %></th>
+          <th><%= t('adm.redeem.item_color') %></th>
+          <th><%= t('adm.redeem.item_size') %></th>
         </thead>
         <tbody>
           <% transaction.redeem_product_items.each do |item| %>
             <tr>
               <th><%= item.id %></th>
               <td><%= item.item_code %></td>
-              <td><%= item.state %></td>
+              <td><%= render :partial => 'adm/redeem/redeem_product_items/item_state', :locals => {item: item} %></td>
               <td><%= item.redeem_product_color&.name %></td>
               <td><%= item.redeem_product_size&.name %></td>
             </tr>
@@ -99,5 +101,8 @@
         </tbody>
       </table>
     </div>
+  </div>
+  <div class="card-footer">
+    <%= link_to "<i class='fas fa-angle-double-left'></i>&nbsp;#{t('button.see_all')}".html_safe, adm_redeem_redeem_transactions_path, class: 'btn btn-secondary' %>
   </div>
 </div>

@@ -1,0 +1,13 @@
+<div class="small-box bg-<%= state_css_class(state) %>">
+  <div class="inner">
+    <h3><%= state_count.to_i %></h3>
+
+    <p><%= state_lbl %></p>
+  </div>
+  <div class="icon">
+    <i class="fas fa-user-tag"></i>
+  </div>
+  <a href="<%= adm_refer_friend_index_path(state: state) %>" class="small-box-footer">
+    <%= t('button.see_all') %> <i class="fas fa-arrow-circle-right"></i>
+  </a>
+</div>

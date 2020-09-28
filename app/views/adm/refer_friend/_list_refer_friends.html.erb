@@ -1,0 +1,20 @@
+<div class="card-body p-0">
+  <div class="table table-responsive">
+    <table class="table table-condensed table-hover">
+      <thead>
+        <th>#</th>
+        <th><%= t('adm.refer_friend.rf_code') %></th>
+        <th><%= t('adm.refer_friend.rf_parent_name') %></th>
+        <th><%= t('adm.refer_friend.rf_phone') %></th>
+        <th><%= t('adm.refer_friend.rf_date') %></th>
+        <th><%= t('adm.refer_friend.rf_state') %></th>
+        <th></th>
+      </thead>
+      <tbody>
+        <% refer_friends.each do |rf| %>
+          <%= render :partial => 'refer_friend_tr_item', :locals => {rf: rf} %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
