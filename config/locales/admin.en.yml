@@ -3,6 +3,7 @@ en:
     user:
       name: "User"
       info: "User Infomation"
+      list: "User List"
       filter: "Filter"
       company: "Company"
       select_company: "Select company"
@@ -27,6 +28,12 @@ en:
       update_password: "Update password"
       update_user_info: "Update user info"
       update_info: "Update info"
+      sign_in_state: 'Sign-in state'
+      signed: 'Signed'
+      unsign: 'Unsigned'
+      active_state: 'Account State'
+      active: 'Active'
+      inactive: 'Inactive'
       message:
         create_success: "Create successful!"
         errors: "An error has occurred! Please try again later!"
@@ -58,6 +65,7 @@ en:
       product_colors: 'Product colors'
       products: 'Products'
       product_items: 'Product items'
+      product_item_list: "Product item list"
       select_item_state: 'Select Item State'
       select_product: 'Select Product'
       redeem: "Redeem Transaction"
