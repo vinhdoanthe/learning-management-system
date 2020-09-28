@@ -18,7 +18,7 @@
   <div class="card-body">
     <div class='filter_form'>
       <div class='row'>
-        <div class='col-md-6'>
+        <div class='col-md-3 col-xs-12'>
           <div class="form-group">
             <label for='filter-company'><%= t("adm.user.company") %></label>
             <select class='select2 select2-hidden-accessible' id='filter-company' data-placeholder="<%= t("adm.user.select_company") %>" name="company[]" multiple="multiple" style="width: 100%;">
@@ -28,7 +28,7 @@
             </select>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-xs-12">
           <div class="form-group">
             <label for='filter-role'><%= t("adm.user.role") %></label>
             <select class="select2 select2-hidden-accessible" id='filter-role' data-placeholder="<%= t("adm.user.select_role") %>" name="company[]" multiple="multiple" style="width: 100%;">
@@ -38,31 +38,46 @@
             </select>
           </div>
         </div>
-        <div class='col-md-4'>
+        <div class='col-md-3 col-xs-12'>
           <div class="form-group">
             <label for="search-user"><%= t("adm.user.info") %></label>
             <input type="text" class="form-control" id="search-user" placeholder="<%= t("adm.user.fullname") %>, Email, <%= t("adm.user.mobile") %>, <%= t("adm.user.username") %>">
           </div>
         </div>
+        <div class='col-md-2 col-xs-12'>
+          <div class="form-group">
+            <label for="user-has-sign-in">abc</label>
+            <select class='select2 select2-hidden-accessible' id='user-has-sign-in' style="width: 100%;">
+              <option value="all" selected>Tất cả</option>
+              <option value="signed">Đã đăng nhập</option>
+              <option value="unsign">Chưa đăng nhập</option>
+            </select>
+          </div>
+        </div>
+        <div class='col-md-2 col-xs-12'>
+          <div class="form-group">
+            <label for="user-is-active">abc</label>
+            <select class='select2 select2-hidden-accessible' id='user-is-active' style="width: 100%;">
+              <option value="all" selected>Tất cả</option>
+              <option value="true">Active</option>
+              <option value="false">Deactive</option>
+            </select>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="form-group">
-            <div class="form-check">
-              <input class="form-check-input" id="user-has-sign-in" type="checkbox" checked="">
-              <label class="form-check-label">Đã đăng nhập</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" id="user-is-active" type="checkbox" checked="">
-              <label class="form-check-label">Active</label>
-            </div>
-          </div>
         </div>
         <div class="col-md-6">
           <button type="submit" class="btn btn-primary" id="submit_filter_user"><%= t("adm.user.filter") %></button>
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div class='card'>
+  <div id='loading-content-div'>
+    <%= render 'partials/content_loading' %>
   </div>
   <div class="card-body p-0" id="user_data_table">
   </div>
