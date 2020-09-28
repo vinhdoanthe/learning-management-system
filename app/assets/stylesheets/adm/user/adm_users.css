@@ -7,7 +7,6 @@
 }
 
 #submit_filter_user {
-  float: right;
   padding: 5px;
   margin-right: 40px;
   width: 100px;
@@ -33,4 +32,7 @@
 .previous_page {
   color: #67dcbf !important;
   cursor: pointer;
+}
+#user_data_table {
+  margin-top: 20px;
 }

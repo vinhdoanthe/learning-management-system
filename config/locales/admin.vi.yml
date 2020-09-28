@@ -54,6 +54,7 @@ vi:
       product_colors: 'Màu sắc'
       products: 'Sản phẩm'
       product_items: 'Quà tặng'
+      product_item_list: "Danh sách quà tặng"
       transactions: 'Y/c đổi quà'
       product_warehouse_report: 'Trạng thái'
       redeem_product_name: 'Tên sản phẩm'
@@ -163,6 +164,7 @@ vi:
     user:
       name: "Người dùng"
       info: "Thông tin người dùng"
+      list: "Danh sách người dùng"
       email: 'Email'
       filter: "Lọc"
       company: "Cơ sở"
@@ -188,6 +190,13 @@ vi:
       student_code: 'Mã h/s'
       update_password: "Cập nhật mật khẩu"
       update_info: "Cập nhật thông tin"
+      sign_in_state: 'Trạng thái đăng nhập'
+      signed: 'Đã đăng nhập'
+      unsign: 'Chưa đăng nhập'
+      active_state: 'Trạng thái tài khoản'
+      active: 'Active'
+      inactive: 'Inactive'
+      add_new: 'Thêm mới'
       message:
         create_success: "Thêm mới thành công!"
         errors: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"

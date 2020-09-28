@@ -7,18 +7,10 @@
 <% end %>
 
 <div class="card">
-  <div class="card-header">
-    <h3 class="card-title"><%= t("adm.user.info") %></h3>
-    <div class='card-tools'>
-      <% if current_user.account_role == Constant::ADMIN %>
-        <a href="/adm/user/new_user" class='btn btn-sm btn-primary'><%= t('adm.users.add_new') %></a>
-      <% end %>
-    </div>
-  </div>
   <div class="card-body">
     <div class='filter_form'>
       <div class='row'>
-        <div class='col-md-3 col-xs-12'>
+        <div class='col-md-2 col-xs-12'>
           <div class="form-group">
             <label for='filter-company'><%= t("adm.user.company") %></label>
             <select class='select2 select2-hidden-accessible' id='filter-company' data-placeholder="<%= t("adm.user.select_company") %>" name="company[]" multiple="multiple" style="width: 100%;">
@@ -46,36 +38,41 @@
         </div>
         <div class='col-md-2 col-xs-12'>
           <div class="form-group">
-            <label for="user-has-sign-in">abc</label>
+            <label for="user-has-sign-in"><%= t('adm.user.sign_in_state') %></label>
             <select class='select2 select2-hidden-accessible' id='user-has-sign-in' style="width: 100%;">
-              <option value="all" selected>Tất cả</option>
-              <option value="signed">Đã đăng nhập</option>
-              <option value="unsign">Chưa đăng nhập</option>
+              <option value="all" selected><%= t('adm.user.all') %></option>
+              <option value="signed"><%= t('adm.user.signed') %></option>
+              <option value="unsign"><%= t('adm.user.unsign') %></option>
             </select>
           </div>
         </div>
         <div class='col-md-2 col-xs-12'>
           <div class="form-group">
-            <label for="user-is-active">abc</label>
+            <label for="user-is-active"><%= t('adm.user.active_state') %></label>
             <select class='select2 select2-hidden-accessible' id='user-is-active' style="width: 100%;">
-              <option value="all" selected>Tất cả</option>
+              <option value="all" selected><%= t('adm.user.all') %></option>
               <option value="true">Active</option>
               <option value="false">Deactive</option>
             </select>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-        </div>
-        <div class="col-md-6">
-          <button type="submit" class="btn btn-primary" id="submit_filter_user"><%= t("adm.user.filter") %></button>
+        <div class="col-md-1">
+          <label for='submit_filter_user'>&nbsp;</label>
+          <button type="submit" class="btn btn-primary" style="font-weight: 700" id="submit_filter_user"><%= t("adm.user.filter") %></button>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class='card'>
+  <div class="card-header">
+    <h3 class="card-title"><%= t("adm.user.list") %></h3>
+    <div class='card-tools'>
+      <% if current_user.account_role == Constant::ADMIN %>
+        <%= link_to "<i class='far fa-plus-square'></i>&nbsp;#{t('adm.user.add_new')}".html_safe, adm_user_new_user_path, class: 'btn btn-primary', style: 'font-weight: 700' %>
+      <% end %>
+    </div>
+  </div>
   <div id='loading-content-div'>
     <%= render 'partials/content_loading' %>
   </div>
