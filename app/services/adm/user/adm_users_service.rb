@@ -58,7 +58,8 @@ class Adm::User::AdmUsersService
             )"
     end
 
-    count = ''
+    count = old_params[:count]
+
     if old_params.reject{ |k, _| ( k == 'page' || k == 'count' ) }  != params.reject{ |k, _| k == 'page' }
       count = ActiveRecord::Base.connection.execute(sql).count
     end
@@ -70,7 +71,7 @@ class Adm::User::AdmUsersService
     all_user = []
 
     users.each do |info|
-      user = { id: info[0], username: info[1], email: info[2], account_role: info[3], full_name: info[4], created_at: info[5], last_sign_in_at: info[6], last_sign_out_at: info[7], company: info[8], company_id: info[9], mobile: info[10], last_sign_in: info[11], code: info[12] }
+      user = { id: info[0], username: info[1], email: info[2], account_role: info[3], full_name: info[4], created_at: info[5], last_sign_in_at: info[6], last_sign_out_at: info[7], mobile: info[8], last_sign_in: info[9], code: info[10] }
       all_user << user
     end
 
@@ -216,7 +217,8 @@ class Adm::User::AdmUsersService
   end
 
   def get_student query, sub_query
-     "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, op_student.full_name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, company.name as company_name, company.id as company_id, partner.mobile as mobile, users.last_sign_in_at as last_sigin, op_student.code as code
+     #"SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, op_student.full_name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, company.name as company_name, company.id as company_id, partner.mobile as mobile, users.last_sign_in_at as last_sigin, op_student.code as code
+     "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, op_student.full_name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, partner.mobile as mobile, users.last_sign_in_at as last_sigin, op_student.code as code
      FROM users
      INNER JOIN op_student ON (op_student.id = users.student_id AND users.account_role = 'Student')
      LEFT OUTER JOIN res_partner as partner ON partner.id = op_student.partner_id
@@ -225,7 +227,7 @@ class Adm::User::AdmUsersService
   end
 
   def get_teacher query
-     "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, op_faculty.full_name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, company.name as company_name, company.id as company_id, partner.mobile as mobile,  users.last_sign_in_at as last_sigin, users.email as user_student_email
+     "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, op_faculty.full_name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, partner.mobile as mobile,  users.last_sign_in_at as last_sigin, users.email as user_student_email
      FROM users
      INNER JOIN op_faculty ON (op_faculty.id = users.faculty_id AND users.account_role = 'Teacher')
      LEFT OUTER JOIN res_company as company ON company.id = op_faculty.company_id
@@ -234,7 +236,7 @@ class Adm::User::AdmUsersService
   end
 
   def get_parent query
-    "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, partner.name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, company.name as company_name, company.id as company_id, partner.mobile as mobile, users.last_sign_in_at as last_sigin, users.email as user_student_email
+    "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, partner.name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, partner.mobile as mobile, users.last_sign_in_at as last_sigin, users.email as user_student_email
     FROM users
     INNER JOIN op_parent ON (op_parent.id = users.parent_id AND users.account_role = 'Parent')
     LEFT OUTER JOIN res_partner as partner ON partner.id = op_parent.name
@@ -243,7 +245,7 @@ class Adm::User::AdmUsersService
   end
 
   def get_admin query, role
-    "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, partner.name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, company.name as company_name, company.id as company_id, partner.mobile as mobile, users.last_sign_in_at as last_sigin, users.email as user_student_email
+    "SELECT DISTINCT users.id as user_id, users.username as user_name, users.email as user_email, users.account_role as user_role, partner.name as full_name, users.created_at as user_created_at, users.last_sign_in_at as last_sign_in, users.last_sign_out_at as last_sign_out, partner.mobile as mobile, users.last_sign_in_at as last_sigin, users.email as user_student_email
     FROM users
     INNER JOIN res_partner as partner ON (partner.email = users.email AND users.account_role IN ('#{role.join("', '")}'))
     LEFT OUTER JOIN res_company as company ON company.id = partner.company_id
