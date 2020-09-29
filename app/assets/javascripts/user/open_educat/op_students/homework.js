@@ -37,6 +37,12 @@ function get_homework(data, url){
   })
 }
 
+let duplicateDiv = (origin_id, new_id, target) => {
+  let clonedDiv = $(`#${ origin_id }`).html();
+  $(target).html(clonedDiv);
+  $(target).find('select').attr("id", new_id);
+}
+
 $('document').ready(function () {
   let url_string = window.location.href
   let url = new URL(url_string);
@@ -74,7 +80,26 @@ $('document').ready(function () {
     $('#homework_subject_selection').val($('#student_subject_video_filter').val())
     subject = $('#homework_subject_selection').val();
     get_homework({course: course, batch: batch, subject: subject}, '/user/open_educat/op_students/filter_subject_homework' )
-//    get_video(batch, subject)
+  })
+
+  $('#homework_tab2_new').on('change', '#student_course_video_filter', function(){
+    $('#loading_filter_video').show();
+    $('#student_homework_video_content').hide();
+    course = $(this).val();
+    //batch = $('#homework_batch_selection').val();
+    //$('#homework_subject_selection').val($('#student_subject_video_filter').val())
+    //subject = $('#homework_subject_selection').val();
+    get_homework({course: course}, '/user/open_educat/op_students/filter_course_homework' )
+  })
+
+  $('#homework_tab2_new').on('change', '#student_batch_video_filter', function(){
+    $('#loading_filter_video').show();
+    $('#student_homework_video_content').hide();
+    course = $('#homework_course_selection').val();
+    batch = $(this).val();
+    //$('#homework_subject_selection').val($('#student_subject_video_filter').val())
+    //subject = $('#homework_subject_selection').val();
+    get_homework({course: course, batch: batch}, '/user/open_educat/op_students/filter_batch_homework' )
   })
 
   $('#homework_tab2_new').on('click', '.swiper-slide', function(){
