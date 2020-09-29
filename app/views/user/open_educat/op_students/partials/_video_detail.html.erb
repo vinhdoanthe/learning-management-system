@@ -1,34 +1,49 @@
 <div class='row'>
-  <div class='col-md-9' style="display: flex">
-    <div>
-      <h3 style='padding: 0' class="dis-inlineblock"><%= course.name %></h3><br/>
-      <p class="dis-inlineblock">Học phần <%= subject.level %> - <span id='video_lesson_name' class='video-lesson-name'><%= lesson.name if lesson.present? %> </span></p>
-    </div>
-    <div style="width: 33%; margin-left: auto">
-      <label class="custom-select-label">Học phần</label>
-      <select class="custom-select form-control-filters" id="student_subject_video_filter">
-        <% if subjects.present? %>
-          <% subjects.each do |s| %>
-            <% if s.id == subject.id %>
-              <option value="<%= s.id %>" selected><%= s.level %></option>
-            <% else %>
-              <option value="<%= s.id %>"><%= s.level %></option>
+  <div class='col-md-9'>
+    <div class='row'>
+      <div class='col-md-4 col-xs-12'>
+        <div>
+          <h3 style='padding: 0' class="dis-inlineblock"><%= course.name %></h3><br/>
+          <p class="dis-inlineblock">Học phần <%= subject.level %> - <span id='video_lesson_name' class='video-lesson-name'><%= lesson.name if lesson.present? %> </span></p>
+        </div>
+      </div>
+      <div class='col-md-3 col-xs-12' id='duplicate_filter_course'>
+      </div>
+      <div class='col-md-3 col-xs-12' id='duplicate_filter_batch'>
+      </div>
+      <div class='col-md-2 col-xs-12'>
+        <!-- <div style="width: 33%; margin-left: auto">-->
+        <label class="custom-select-label">Học phần</label>
+        <select class="custom-select form-control-filters" id="student_subject_video_filter">
+          <% if subjects.present? %>
+            <% subjects.each do |s| %>
+              <% if s.id == subject.id %>
+                <option value="<%= s.id %>" selected><%= s.level %></option>
+              <% else %>
+                <option value="<%= s.id %>"><%= s.level %></option>
+              <% end %>
             <% end %>
           <% end %>
+        </select>
+        </div>
+      </div>
+    </div>
+    <div class='col-md-3'>
+      <ul class="lv-btn">
+        <% has_lesson_homework = false %>
+        <% has_lesson_homework = Learning::Material::Question.joins(:user_questions).where(user_questions: { student_id: current_user.id }).where(op_lession_id: lesson.id).first if lesson.present? %>
+        <% if has_lesson_homework.present? %>
+          <li><a type="submit" href='/learning/view_question?session_id=<%= session.id %>' class="do_video_homework btn bg-5DC2A7" >Làm bài tập</a></li>
+        <% else %>
+          <li><a type="submit" style='opacity: 0.5'  class="do_video_homework btn bg-5DC2A7" >Làm bài tập</a></li>
         <% end %>
-      </select>
+      </ul>
     </div>
   </div>
-  <div class='col-md-3'>
-    <ul class="lv-btn">
-      <% has_lesson_homework = false %>
-      <% has_lesson_homework = Learning::Material::Question.joins(:user_questions).where(user_questions: { student_id: current_user.id }).where(op_lession_id: lesson.id).first if lesson.present? %>
-      <% if has_lesson_homework.present? %>
-        <li><a type="submit" href='/learning/view_question?session_id=<%= session.id %>' class="do_video_homework btn bg-5DC2A7" >Làm bài tập</a></li>
-      <% else %>
-        <li><a type="submit" style='opacity: 0.5'  class="do_video_homework btn bg-5DC2A7" >Làm bài tập</a></li>
-      <% end %>
-      <!-- <li><button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7 width-100 text-transform font-bold" >Nội dung & kiến thức học được</button></li> -->
-    </ul>
-  </div>
-</div>
+
+  <script>
+    $(document).ready( function(){
+      duplicateDiv('origin_filter_course', 'student_course_video_filter', '#duplicate_filter_course')
+      duplicateDiv('origin_filter_batch', 'student_batch_video_filter', '#duplicate_filter_batch')
+    })
+  </script>
