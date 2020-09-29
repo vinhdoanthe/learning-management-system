@@ -1,6 +1,6 @@
   <div class="tab-content p-0 tab-all-content bo-table">
     <div class="tab-pane fade active in">
-      <div class="fc-header" id="video_detail">
+      <div class="fc-header" id="video_detail" style="margin-left: 0; margin-bottom: 0; padding-left: 20px;">
         <%= render 'user/open_educat/op_students/partials/video_detail', { course: course, subject: subject, lesson: lesson, session: session, subjects: subjects } %>
       </div>
       <input type='hidden' value='<%= session.id %>' name='active_session'>

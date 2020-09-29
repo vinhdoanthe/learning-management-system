@@ -2,7 +2,11 @@
 <% end_record = (page + 1) * 25 %>
 <% end_record = count if (end_record >= count && count != 0) %>
 
-<p class="count-users-paginator"><%= "#{start}-#{end_record}/#{count}" %></p>
+<% if count == 0 %>
+  <p class="count-users-paginator"><%= "0-0/0" %></p>
+<% else %>
+  <p class="count-users-paginator"><%= "#{start}-#{end_record}/#{count}" %></p>
+<% end %>
 <div class='table table-responsive'>
   <table class="table table-condensed table-hover">
     <thead>
