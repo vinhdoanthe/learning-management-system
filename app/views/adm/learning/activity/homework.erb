@@ -1,15 +1,69 @@
 <div class="row">
   <div class="col-12">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-th mr-1"></i> <%= t('adm.learning_activity_management_homework')%></h3>
+    <div class='quick-report card'>
+      <div class="row card-body" style="display: flex">
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3 id="count-waiting_homework"><%= @count_waiting %></h3>
+              <p><%= t('adm.learning_activity.homeworks.waiting') %></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-file-signature"></i>
+            </div>
+            <a class="small-box-footer filter-homework-state" data-state="waiting">
+              <%= t('adm.learning_activity.homeworks.more') %> <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3 id="count-right-homwork"><%= @count_right %></sup></h3>
+              <p><%= t('adm.learning_activity.homeworks.right') %></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-check custom-check"></i>
+              <i class="fa fa-file"></i>
+              <!-- <i class="ion ion-stats-bars"></i> -->
+            </div>
+            <a class="small-box-footer filter-homework-state" data-state="right">
+              <%= t('adm.learning_activity.homeworks.more') %> <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3 id="count-wrong-homework"><%= @count_wrong %></h3>
+              <p><%= t('adm.learning_activity.homeworks.wrong') %></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-file-excel"></i>
+            </div>
+            <a class="small-box-footer filter-homework-state" data-state="wrong">
+              <%= t('adm.learning_activity.homeworks.more') %> <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
       </div>
+      <div>
+        <a class="small-box-footer show-all" href='/adm/learning/activity_homework' data-state="">
+          <%= t('adm.learning_activity.homeworks.all') %>&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="card">
       <div class="card-body">
         <div class="row">
           <div class="col-12">
             <div class="mailbox-controls"><%= render "adm/partials/form_learning_activity"%></div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class='card'>
+      <div class='card-body'>
         <div class="row">
           <div class="col-12">
             <div class="table-responsive p-0">
@@ -21,7 +75,7 @@
                     <th>Course</th>
                     <th>Subject</th>
                     <th>Lesson</th>
-                    <th><i class="fas fa-calendar hidden-md hidden-sm hidden-xs"></i> <%= t('adm.learning_activity.answer_time') %></th>
+                    <th><%= t('adm.learning_activity.answer_time') %></th>
                     <th class="text-center"><%= t('adm.homework_list.state') %></th>
                     <th><%= t('adm.homework_list.student') %></th>  
                     <th><%= t('adm.homework_list.faculty') %></th>
@@ -33,32 +87,24 @@
                     <tr id="user_answer_<%=ct[:id]%>">
                       <td style="width:10px" class="text-center"><%= ct[:id] %></td>
                       <td><%= ct[:batch_name]%></td>
-                      <th></td>
-                      <th></td>
-                      <th></td>
+                      <th><%= ct[:course_name] %></td>
+                      <th><%= ct[:level] %></td>
+                      <th><%= ct[:lesson_name] %></td>
                       <td style="width:10px" class="text-center">
                         <%= ct[:answer_time].strftime(t('time.formats.long_dmy')).to_s%>    
                       </td>
                       <td class="text-center"><%= get_ui_state_user_answers(ct[:state]).html_safe%></td>
-                      <td><%= ct[:student_full_name]%></td>
+                      <td><%= ct[:student_name]%></td>
                       <td>
                         <%= ct[:full_name]%>
-                        <ul class="small" style="display: none; padding-left: 10px;list-style: none;">
-                          <li><i class="fa fa-envelope"></i> <%= ct[:teacher_email]%></li>
-                          <li><i class="fa fa-phone"></i> <%= ct[:teacher_mobile]!= '' ? ct[:teacher_mobile] : ''%></li>
-                        </ul>
                       </td>
                       <td class="text-center">
                         <div class="btn-group">
-                          <span>
-                            <a href="#" class='teacher_marking_view' data-answer-id="<%=ct[:id]%>"><i class="f-size-24 fas fa-external-link-square-alt"></i></a>
-                          </span>
-                          <span>
-                            <a href="#" class='teacher_marking_mark' data-answer-id="<%=ct[:id]%>"><i class="f-size-24 fas fa-marker"></i></a>
-                          </span>
-                          <span>
-                            <a href="#"><i class="f-size-24 fas fa-exchange-alt"></i></a>
-                          </span>
+                          <% if ct[:state] != 'right' %>
+                            <span>
+                              <a href="#" class='teacher_marking_mark' data-answer-id="<%=ct[:id]%>"><i class="f-size-24 fas fa-marker"></i></a>
+                            </span>
+                          <% end %>
                         </div>
                       </td>
                     </tr>
@@ -85,6 +131,29 @@
 .f-size-24 {
   font-size: 24px;
 }
+.quick-report .card-body {
+  display: flex;
+}
+.quick-report .col-lg-3 {
+  margin: auto;
+}
+.quick-report .filter-homework-state {
+  cursor: pointer;
+}
+.custom-check {
+  font-size: 40px !important;
+  margin-top: 25px;
+  margin-right: 5px;
+  color: #ffffff4f;
+}
+.show-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+  color: #007bff !important;
+  cursor: pointer;
+}
 </style>
 <script>
   $(document).ready(() => {
@@ -100,10 +169,11 @@
         },
         dataType: 'json',
         success: (response) => {
-          // var response_data = $.parseJSON(response)
-          // console.log('success' + response.user_answer.state)
-          // process data
-          $('#questionContent').html(response.question.question)
+          if (response.question !== null && response.question.question.length > 0){
+            $('#questionContent').html(response.question.question)
+          }else{
+            $('#questionContent').html('<b>Câu hỏi không tồn tại hoặc đã bị xoá!</b>')
+          }
           $('#answerContent').html(response.user_answer.answer_content)
           $('#answerId').val(response.user_answer.id)
           // show information
@@ -116,5 +186,12 @@
         }
       })
     })
+
+    $('.filter-homework-state').click((e) => {
+      state = $(event.currentTarget).data('state');
+      $('#frm_state').val(state);
+      $('#btn_report_date_apply').trigger('click');
+    })
+
   })
 </script>
