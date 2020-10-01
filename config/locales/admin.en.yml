@@ -74,7 +74,13 @@ en:
     learning_activity:
       name: "Learning Activity"
       discussion: "Discussion"
-      homework: "Homework"
+      homework:
+        name: "Homework"
+        right: "Right Answers"
+        waiting: "Waitting Answers"
+        wrong: "Wrong Answers"
+        more: "More info"
+        all: "See all"
       project: "Project"
     homework_list:
       batch_code: 'Batch code'

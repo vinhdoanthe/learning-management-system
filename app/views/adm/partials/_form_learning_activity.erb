@@ -4,36 +4,37 @@
 <form name="frm_filters" id="frm_filters" method="post">
   <label for="frm_from_date"><%= t('adm.homework_list.answer_time') %></label>
   <div class="row">
-    <div class="col-md-6 col-sm-12">
-      <div class="input-group-prepend">
-        <span class="input-group-text">
-          <i class="far fa-calendar-alt"></i>
-        </span>
+    <div class="col-md-5 col-sm-12">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="far fa-calendar-alt"></i>
+          </span>
+        </div>
+        <input type="text" required name="frm[from_date]" id="frm_from_date" placeholder="from date" class="form-control ui_date" autocomplete="false" value="<%= from_date%>">
       </div>
-      <input type="text" required name="frm[from_date]" id="frm_from_date" placeholder="from date" class="form-control ui_date" autocomplete="false" value="<%= from_date%>">
     </div>
-    <div class="col-md-6 col-sm-12">
-      <div class="input-group-prepend">
-        <span class="input-group-text">
-          <i class="far fa-calendar-alt"></i>
-        </span>
+    <div class="col-md-5 col-sm-12">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="far fa-calendar-alt"></i>
+          </span>
+        </div>
+        <input type="text" name="frm[to_date]" id="frm_to_date" placeholder="to date" class="form-control ui_date" autocomplete="false" value="<%= to_date %>">
       </div>
-      <input type="text" name="frm[to_date]" id="frm_to_date" placeholder="to date" class="form-control ui_date" autocomplete="false" value="<%= to_date %>">
+    </div>
+    <div class='col-md-2'>
+      <span class="input-group-append" style="float: right">
+        <button type="submit" class="btn btn-primary" id="btn_report_date_apply"><%= t('button.filter')%></button>
+      </span>
     </div>
   </div>
-  <label for="frm_state"><%= t('adm.homework_list.state') %></label>
-  <select name="frm[state]" id="frm_state" class="form-control form-control-sm" autocomplete="false" >
+  <label for="frm_state" style="display: none"><%= t('adm.homework_list.state') %></label>
+  <select name="frm[state]" style="display: none" id="frm_state" class="form-control form-control-sm" autocomplete="false" >
     <option value="">-<%= t('adm.homework_list.all_states') %>-</option>
     <% get_state_user_answers.each do |_state| %>
       <option value="<%= _state%>" <% if _state == state%> selected <% end %> ><%= _state%></option>
     <% end %>
   </select>
-  <!--
-    <label for="datalist_batch"><%= t('adm.homework_list.batch_code') %></label>
-    <input type="text" list="datalist_batch" name="frm[batch_name]" id="frm_batch_name" placeholder="batch name" class="form-control"/>
-    <datalist id="datalist_batch"></datalist>
-  -->
-  <span class="input-group-append">
-    <button type="submit" class="btn btn-primary" id="btn_report_date_apply"><%= t('button.filter')%></button>
-  </span>
 </form>

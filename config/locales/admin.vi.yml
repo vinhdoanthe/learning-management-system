@@ -100,11 +100,6 @@ vi:
       rf_phone: 'Số ĐT'
       rf_date: 'Ngày giới thiệu'
       rf_state: 'Trạng thái'
-    learning_activity:
-      name: "Hoạt động học tập"
-      discussion: "Thảo luận"
-      homework: "Bài tập về nhà"
-      project: "Sản phẩm học sinh"
     homework_list:
       batch_code: 'Mã batch'
       answer_time: 'Thời gian trả lời'
@@ -318,4 +313,11 @@ vi:
       name: "Hoạt động học tập"
       discussion: "Thảo luận"
       homework: "Bài tập về nhà"
-      project: "Sản phẩm cuối khoá" 
+      homeworks:
+        name: "Bài tập về nhà"
+        right: "Câu trả lời đúng"
+        waiting: "Câu trả lời cần chấm"
+        wrong: "Câu trả lời sai"
+        more: "Xem thêm"
+        all: "Xem tất cả"
+      project: "Sản phẩm học sinh"
