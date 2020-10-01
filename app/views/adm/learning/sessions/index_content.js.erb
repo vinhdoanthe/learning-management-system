@@ -1,2 +1,6 @@
 $("#session_data_table").html("<%= j render('adm/learning/sessions/index_content', { sessions: sessions }) %>");
-$("#paginator").html("<%= j render('adm/user/adm_users/paginator', { page: page, users: sessions } ) %>");
+$(".paginator").html("<%= j render('adm/user/adm_users/paginator', { page: page, users: sessions } ) %>");
+$('#session_data_table').ready(function(){
+  $('#loading-div').hide();
+  $('#data-content').css('visibility', 'visible');
+})

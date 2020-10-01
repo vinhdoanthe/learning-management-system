@@ -125,7 +125,13 @@ en:
         select_time: "Select time"
         lesson_number: "Lesson Number"
         faculty_name: "Faculty"
-        student: "Học sinh"
+        student: "Student"
+        all: "All"
+        had_photo: "Had Photo"
+        no_photo: "No Photo"
+        no_attendance: "No Attendance"
+        valid_attendance: "Valid Attendance"
+        invalid_attendance: "Invalid Aattendance"
       batch:
         info: 'Batch info'
         code: 'Code'

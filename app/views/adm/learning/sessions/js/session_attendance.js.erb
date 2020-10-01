@@ -1,1 +1,5 @@
 $('#modal_adm_session_attendance').html("<%= escape_javascript (render partial: 'adm/learning/sessions/modals/session_attendance', locals: { batch: batch, session: session, students: students, course: course, company: company, class_room: class_room } ) %>")
+
+  <% student_attendance = [] %>
+  <% students.each{ |s| student_attendance << s[1][:attendance_id] if s[1][:attendance_state] == true } %>
+$('input[name="attendance_student_list"]').val(<%= student_attendance %>)

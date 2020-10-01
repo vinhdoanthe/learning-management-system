@@ -3,88 +3,95 @@
 <% end %>
 <h3><%= t("adm.learning.session.info") %></h3>
 <hr>
-<div class='filter_form'>
-  <div class='row'>
-    <div class='col-md-3'>
-      <div class="form-group">
-        <label for='filter-batch'><%= t("learning.batch.code") %></label>
-        <select class='select2 select2-hidden-accessible' id='filter-batch' data-placeholder="<%= t("adm.learning.session.select_batch") %>" name="company[]" multiple="multiple" style="width: 100%;">
-          <% @allow_batches.all.each do |batch| %>
-            <option value='<%= batch.id %>'><%= batch.code %></option>
-          <% end %>
-        </select>
+<div class='card'>
+  <div class='filter_form'>
+    <div class='row' style="padding: 15px 30px 0px;">
+      <div class='col-md-3'>
+        <div class="form-group">
+          <label for='filter-batch'><%= t("learning.batch.code") %></label>
+          <select class='select2 select2-hidden-accessible' id='filter-batch' data-placeholder="<%= t("adm.learning.session.select_batch") %>" name="batch[]" multiple="multiple" style="width: 100%;">
+            <% @allow_batches.all.each do |batch| %>
+              <option value='<%= batch.id %>'><%= batch.code %></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+      <div class='col-md-3'>
+        <div class="form-group">
+          <label for='filter-company'><%= t("adm.learning.session.academy") %></label>
+          <select class='select2 select2-hidden-accessible' id='filter-company' data-placeholder="<%= t("adm.learning.session.select_academy") %>" name="company[]" multiple="multiple" style="width: 100%;">
+            <% @allow_companies.all.each do |company| %>
+              <option value='<%= company.id %>'><%= company.name %></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+      <div class='col-md-3'>
+        <div class="form-group">
+          <label for="filter-time"><%= t("adm.learning.session.time") %></label>
+          <input type="text" class="form-control" id="filter-time">
+        </div>
       </div>
     </div>
-    <div class='col-md-3'>
-      <div class="form-group">
-        <label for='filter-company'><%= t("adm.learning.session.academy") %></label>
-        <select class='select2 select2-hidden-accessible' id='filter-company' data-placeholder="<%= t("adm.learning.session.select_academy") %>" name="company[]" multiple="multiple" style="width: 100%;">
-          <% @allow_companies.all.each do |company| %>
-            <option value='<%= company.id %>'><%= company.name %></option>
-          <% end %>
-        </select>
+    <div class='row' style="padding: 15px 30px 0px;">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for='filter-state'><%= t("adm.learning.session.state") %></label>
+          <select class="select2 select2-hidden-accessible" id='filter-state' data-placeholder="<%= t("adm.learning.session.select_state") %>" name="state[]" multiple="multiple" style="width: 100%;">
+            <% @session_states.each do |state| %>
+              <option value='<%= state %>'><%= state %></option>
+            <% end %>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label for='filter-state'><%= t("adm.learning.session.state") %></label>
-        <select class="select2 select2-hidden-accessible" id='filter-state' data-placeholder="<%= t("adm.learning.session.select_state") %>" name="company[]" multiple="multiple" style="width: 100%;">
-          <% @session_states.each do |state| %>
-            <option value='<%= state %>'><%= state %></option>
-          <% end %>
-        </select>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for='filter-photo'><%= t("adm.learning.session.photo") %></label>
+          <select class="select2 select2-hidden-accessible" id='filter-photo' data-placeholder="<%= t("adm.learning.session.select_state") %>" name="photo" style="width: 100%;">
+            <option value="all" selected><%= t('adm.learning.session.all') %></option>
+            <option value="1"><%= t('adm.learning.session.no_photo') %></option>
+            <option value="0"><%= t('adm.learning.session.had_photo') %></option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class='col-md-3'>
-      <div class="form-group">
-        <label for="filter-time"><%= t("adm.learning.session.time") %></label>
-        <input type="text" class="form-control" id="filter-time">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for='filter-attendance'><%= t("adm.learning.session.attendance") %></label>
+          <select class="select2 select2-hidden-accessible" id='filter-attendance' data-placeholder="<%= t("adm.learning.session.select_state") %>" name="attendance" style="width: 100%;">
+            <option value="all" selected><%= t('adm.learning.session.all') %></option>
+            <option value="0"><%= t('adm.learning.session.no_attendance') %></option>
+            <option value="1"><%= t('adm.learning.session.evaluation_attendance') %></option>
+            <option value="3"><%= t('adm.learning.session.invalid_attendance') %></option>
+          </select>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="row" style="margin-left: 20px;">
-    <div class="custom-control custom-radio col-md-2">
-      <input class="custom-control-input" type="radio" id="session_photo_all" name="session_photo" value="all" checked>
-      <label for="session_photo_all" class="custom-control-label">Tất cả</label>
-    </div>
-    <div class="custom-control custom-radio col-md-2">
-      <input class="custom-control-input" type="radio" id="session_photo_exist" name="session_photo" value='1'>
-      <label for="session_photo_exist" class="custom-control-label">Đã có ảnh</label>
-    </div>
-    <div class="custom-control custom-radio col-md-2">
-      <input class="custom-control-input" type="radio" id="session_photo_not" name="session_photo" value='0'>
-      <label for="session_photo_not" class="custom-control-label">Chưa có ảnh</label>
-    </div>
-  </div>
-  <div class='row' style='margin-left: 20px;'>
-    <div class="custom-control custom-radio col-md-2">
-      <input class="custom-control-input" type="radio" id="no_attendance" name="session_attendance_state" value='0'>
-      <label for="no_attendance" class="custom-control-label">Chưa nhận xét</label>
-    </div>
-    <div class="custom-control custom-radio col-md-2">
-      <input class="custom-control-input" type="radio" id="reject_attendance" name="session_attendance_state" value='1'>
-      <label for="reject_attendance" class="custom-control-label">Nhận xét cần đánh giá</label>
-    </div>
-    <div class="custom-control custom-radio col-md-2">
-      <input class="custom-control-input" type="radio" id="evaluation_state" name="session_attendance_state" value='2'>
-      <label for="evaluation_state" class="custom-control-label">Nhận xét chưa đạt yêu cầu</label>
-    </div>
-  </div>
-  <div style="display: flex">
-    <button type="submit" style="margin-left: auto" class="btn btn-primary" id="submit_filter_sessions"><%= t("adm.user.filter") %></button>
-  </div>
-</div>
-<hr>
-<div id="session_data_table" class='table-responsive'>
-</div>
-<div id="paginator">
-</div>
-<div class="modal fade" id="modal_adm_session_photo">
-  <div class="modal-dialog" style='max-width: 100%; margin: 0'>
-    <div class="modal-content" id="modal_adm_session_photo_content">
+      <div class='col-md-3' style="display: flex; align-items: center">
+        <button type="submit" style="margin-left: auto" class="btn btn-primary" id="submit_filter_sessions"><%= t("adm.user.filter") %></button>
+      </div>
     </div>
   </div>
 </div>
+<div class='card' style="padding: 20px";>
+  <div id='loading-div'>
+    <%= render 'partials/content_loading' %>
+  </div>
+
+  <div id='data-content'>
+    <div class="paginator">
+    </div>
+    <div id="session_data_table" class='table-responsive'>
+    </div>
+    <div class="paginator">
+    </div>
+    <div class="modal fade" id="modal_adm_session_photo">
+      <div class="modal-dialog" style='max-width: 100%; margin: 0'>
+        <div class="modal-content" id="modal_adm_session_photo_content">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<input name="attendance_student_list" type="hidden" value="">
 <div class="modal" id="modal_adm_session_attendance">
 </div>
 <div class="modal fade" id="modal_adm_session_video">
@@ -94,13 +101,15 @@
 .pagination span {
   margin: 5px;
 }
-  #submit_filter_sessions {
-    float: right;
-    margin-right: 20px;
-    padding: 5px 30px;
-    text-transform: uppercase;
-    font-weight: 700;
-  }
+#submit_filter_sessions {
+  max-height: 40px;
+  float: right;
+  margin-right: 20px;
+  padding: 5px 30px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 10px;
+}
 </style>
 
 </div>
@@ -114,6 +123,18 @@
     padding: 5px;
     margin-right: 40px;
     width: 100px;
+  }
+
+  .paginator:last-child {
+    margin-bottom: 20px;
+  }
+  .paginator .next_page {
+    cursor: pointer;
+    color: #007bff;
+  }
+  .paginator .previous_page {
+    cursor: pointer;
+    color: #007bff;
   }
 </style>
 <script>

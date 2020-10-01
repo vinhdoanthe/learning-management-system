@@ -1,12 +1,22 @@
 <div class="modal-dialog" style="min-width: 60%">
   <div class="modal-content">
     <div class="modal-header">
-      <div >
+      <div style="width: 100%">
         <h4 class="modal-title">Phiếu nhận xét học sinh <%= student.full_name %></h4>
         <div style='display: inline-block;'>
           <span class='evaluate_type'><%= attendance.state_evaluate == User::Constant::SessionEvaluation::StateEvaluate::SESSION ? 'Đánh giá cuối buổi' : 'Đánh giá cuối khoá' %></span>
         </div>
-        <p><a class='back_to_session_info'><i class="fa fa-long-arrow-alt-left"></i>Quay lai</a></p>
+        <div class='row'>
+          <div class='col-md-6'>
+            <p><a class='back_to_session_info'><i class="fa fa-long-arrow-alt-left"></i>Quay lai</a></p>
+          </div>
+          <div class="col-md-6" id='attendance_index'>
+            <p><span id="attendance_count"></span>
+            <a class='view_attendance_detail prev_attendance' data-session="<%= attendance.session_id %>"><span><i class="fa fa-angle-double-left"></i></span></a>
+            <a class='view_attendance_detail next_attendance' data-session="<%= attendance.session_id %>"><span><i class="fa fa-angle-double-right"></i></span></a>
+            </p>
+          </div>
+        </div>
       </div>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -123,5 +133,19 @@
   .back_to_session_info i{
     font-size: 20px;
     margin-right: 10px;
+  }
+  #attendance_index p{
+    float: right;
+  }
+  #attendance_index i{
+    width: 25px;
+    height: 25px;
+    border: 2px solid #007bff;
+    font-size: 20px;
+    color: #007bff;
+  }
+  #attendance_count {
+    font-size: 16px;
+    font-weight: 700;
   }
   </style>
