@@ -129,6 +129,14 @@ vi:
         select_time: "Chọn thời gian"
         lesson_number: "Buổi số"
         faculty_name: "Giảng viên"
+        all: "Tất cả"
+        photo: "Hình ảnh"
+        attendance: "Nhận xét"
+        had_photo: "Đã có ảnh"
+        no_photo: "Chưa có ảnh"
+        no_attendance: "Chưa nhận xét"
+        evaluation_attendance: "Nhận xét cần đánh giá"
+        invalid_attendance: "Nhận xét chưa đạt yêu cầu"
       batch:
         info: 'Thông tin lớp học'
         code: 'Mã lớp học'

@@ -3,13 +3,15 @@
     <tr>
       <th>ID</th>
       <th><%= t("learning.batch.code") %></th>
+      <th><%= t("learning.batch.code") %></th>
       <th><%= t("adm.learning.session.faculty_name") %></th>
       <th><%= t("adm.learning.session.session_count") %></th>
       <th><%= t("adm.learning.session.lesson_number") %></th>
       <th><%= t("adm.learning.session.start_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
-      <th>Action</th>
+      <th>GVĐD</th>
+      <th>VHĐD</th>
       <th><%= t("adm.learning.session.academy") %></th>
     </tr>
   </thead>
@@ -17,6 +19,7 @@
     <% sessions.each do |session| %>
       <tr>
         <td><%= session[:id] %></td>
+        <td><%= session[:course_name] %></td>
         <td><%= session[:batch_code] %></td>
         <td>
           <% user = User::Account::User.where(faculty_id: session[:faculty_id]).first %>
@@ -69,7 +72,8 @@
             </a>
           </span> -->
         </td>
-        <td></td>
+        <td><%= session[:count_attendance_line] %></td>
+        <td><%= session[:count_session_student] %></td>
         <td><%= session[:company_name] %></td>
       </tr>
     <% end %>
@@ -78,13 +82,15 @@
     <tr>
       <th>ID</th>
       <th><%= t("learning.batch.code") %></th>
+      <th><%= t("learning.batch.code") %></th>
       <th><%= t("adm.learning.session.faculty_name") %></th>
       <th><%= t("adm.learning.session.session_count") %></th>
       <th><%= t("adm.learning.session.lesson_number") %></th>
       <th><%= t("adm.learning.session.start_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
-      <th>Action</th>
+      <th>GVĐD</th>
+      <th>VHĐD</th>
       <th><%= t("adm.learning.session.academy") %></th>
     </tr>
   </tfoot>
