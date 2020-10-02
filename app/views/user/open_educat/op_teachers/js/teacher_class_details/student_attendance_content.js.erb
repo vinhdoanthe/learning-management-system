@@ -1,5 +1,4 @@
 $('#modal_evaluate').html("<%= escape_javascript(render partial: 'user/open_educat/op_teachers/modals/teacher_evaluate', locals: { attendance: attendance, session_id: session_id, student: student } ) %>" );
-
 $('#select_evaluate_type').on('change', function(){
   type = $(this).val();
   if (type === '<%= User::Constant::SessionEvaluation::StateEvaluate::SESSION %>'){
@@ -12,7 +11,7 @@ $('#select_evaluate_type').on('change', function(){
   tinymce.init({
     menubar: false,
     toolbar:  'undo bold | italic redo' ,
-    selector: 'textarea'
+    selector: 'textarea',
     plugins: "paste",
     paste_as_text: true
   })})
