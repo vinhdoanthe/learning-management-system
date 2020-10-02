@@ -21,14 +21,7 @@
         <td><%= session[:id] %></td>
         <td><%= session[:course_name] %></td>
         <td><%= session[:batch_code] %></td>
-        <td>
-          <% user = User::Account::User.where(faculty_id: session[:faculty_id]).first %>
-          <% if user.present? %>
-            <a href='/adm/user/user_info/<%= user.id %>' target='blank'><%= session[:faculty_name] %></a>
-          <% else %>
-            <a><%= session[:faculty_name] %></a>
-          <% end %>
-        </td>
+        <td><%= session[:faculty_name] %></td>
         <td align='center'><%= session[:session_count] %></td>
         <td align='center'><%= session[:lesson_number] %></td>
         <td align='center'><%= session[:start_datetime].strftime('%H:%M %d-%m-%Y') %></td>
@@ -42,7 +35,7 @@
           <td class="bg-secondary text-center"><%= session[:state] %></td>
         <% end %>
         <td align="center">
-          <% if SocialCommunity::Photo.where(session_id: session[:id]).first.present? %>
+          <% if session[:count_photo].to_i > 0 %>
           <span class="session_info">
             <a class="session_photo_modal" data-toggle="modal" data-target="#modal_adm_session_photo" data-session="<%= session[:id] %>">
               <%= image_tag "global/images/new-post-add-photo-btn.png" %>
@@ -72,8 +65,8 @@
             </a>
           </span> -->
         </td>
-        <td><%= session[:count_attendance_line] %></td>
-        <td><%= session[:count_session_student] %></td>
+        <td><%= session[:count_attendance_line].to_i %></td>
+        <td><%= session[:count_session_student].to_i %></td>
         <td><%= session[:company_name] %></td>
       </tr>
     <% end %>

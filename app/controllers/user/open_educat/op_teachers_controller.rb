@@ -206,7 +206,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teaching_schedule_content
-    @sessions = @teacher.op_sessions.joins(:op_batch).where.not(op_batch: { state: 'close' } )
+    @sessions = @teacher.op_sessions.joins(:op_batch).where(op_batch: { state: Learning::Constant::Batch::STATE_APPROVE })
     schedules = User::OpenEducat::OpTeachersService.teaching_schedule(@sessions, params)
 
     render json: {schedules: schedules}

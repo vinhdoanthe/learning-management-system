@@ -1,7 +1,6 @@
 $('#session_student_table').html('<%= escape_javascript ( render partial: 'adm/learning/operation_attendances/index_content' ) %>')
 <% unless @filter_student %>
   $('#filter-student').html(`
-    <option value='' selected>Tất cả</option>
     <%= @students.each do |k,v| %>
       <option value='<%= k %>'><%= v %></option>
     <% end %>
