@@ -148,4 +148,6 @@ en:
         company: "Company"
         attendance: "Attendance"
         session_state: "Session State"
+        classroom: "Classroom"
+        note: "Note"
 
