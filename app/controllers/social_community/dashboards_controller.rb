@@ -108,7 +108,7 @@ class SocialCommunity::DashboardsController < ApplicationController
 
   def teacher_coming_soon_sessions
     teacher = current_user.op_faculty
-    coming_soon_sessions = teacher.op_sessions.where(start_datetime: Time.now..(Time.now + 30.days)).order(start_datetime: :ASC).limit(3)
+    coming_soon_sessions = teacher.op_sessions.joins(:op_batch).where(op_batch: { state: Learning::Constant::Batch::STATE_APPROVE }).where(start_datetime: Time.now..(Time.now + 30.days)).where.not(state: Learning::Constant::Batch::Session::STATE_CANCEL).order(start_datetime: :ASC).limit(3)
 
     respond_to do |format|
       format.html

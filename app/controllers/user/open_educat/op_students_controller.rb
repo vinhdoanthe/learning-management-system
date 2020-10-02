@@ -256,7 +256,7 @@ module User
         end
 
         student_courses = Learning::Batch::OpStudentCourse.where(student_id: @op_student.id)
-        batch_ids = student_courses.pluck(:batch_id)
+        batch_ids = student_courses.joins(:op_batch).where(op_batch: { state: Learning::Constant::Batch::STATE_APPROVE }).pluck(:batch_id)
         subject_ids = []
         sessions = []
         start_time = filter_date.beginning_of_week
