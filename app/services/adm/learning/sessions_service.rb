@@ -27,7 +27,6 @@ class Adm::Learning::SessionsService
     if params[:attendance] == '0'
       query += "op_attendance_line.id IS NULL AND "
     elsif params[:attendance] == '1'
-      #query += "op_attendance_line.attendance_state NOT IN ('published', 'completed') AND "
       query += "op_attendance_line.id IS NOT NULL AND op_attendance_line.present = true AND ((op_attendance_line.attendance_state IS NULL) OR (op_attendance_line.attendance_state = '#{ OpAttendanceLineConstant::State::STATE_COMPLETED }')) AND "
     elsif params[:attendance] == '2'
       query += "op_attendance_line.attendance_state = '#{ OpAttendanceLineConstant::State::STATE_REJECTED }' AND "

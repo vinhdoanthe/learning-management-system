@@ -63,12 +63,29 @@ function getSessionPhotos(session_id) {
 }
 
 $(document).ready(function(){
+
+  $('#filter-time').daterangepicker({
+    timePicker: true,
+    autoUpdateInput: false,
+    timePickerIncrement: 30,
+    locale: {
+      format: 'DD/MM/YYYY hh:mm A'
+    }
+  })
+  $('#filter-time').on('apply.daterangepicker', function(ev, picker) {
+    $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+  });
+
+  $('#filter-time').on('cancel.daterangepicker', function(ev, picker) {
+    $(this).val('');
+  });
+
   var data = getDataFilter();
   data['page'] = 0
   data['index'] = 1
   getDataSession(data);
 
-  
+
   $('.paginator').on('click', '.previous_page', function () {
     $('#loading-div').show();
     $('#data-content').css('visibility', 'hidden');

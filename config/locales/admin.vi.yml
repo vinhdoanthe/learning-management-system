@@ -122,12 +122,19 @@ vi:
         name: 'Buổi học'
         academy: "Học viện"
         state: "Trạng thái"
+        start_datetime: 'Thời gian bắt đầu'
+        session_count: 'Đếm số buổi done'
+        information: 'Hình ảnh, đánh giá'
         time: "Thời gian"
         select_batch: "Chọn lớp học"
         select_state: "Chọn trạng thái"
         select_academy: "Chọn học viện"
         select_time: "Chọn thời gian"
-        lesson_number: "Buổi số"
+        lesson_number: "Bài học"
+        lbl_state_draft: 'Draft'
+        lbl_state_confirm: 'Confirm'
+        lbl_state_done: 'Done'
+        lbl_state_cancel: 'Cancel'
         faculty_name: "Giảng viên"
         all: "Tất cả"
         photo: "Hình ảnh"
