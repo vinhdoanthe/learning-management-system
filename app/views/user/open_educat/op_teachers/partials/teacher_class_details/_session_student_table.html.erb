@@ -37,7 +37,7 @@
             <a data-code="<%= student[:code] %>">
               <%= image_tag('global/images/icon-BTVN.png', style: 'min-width: 32px; width: 32px; margin-right: 10px') %>
             </a>
-            <a data-code="<%= student[:code] %>">
+            <a data-code="<%= student[:code] %>" class="student_evaluate">
               <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px;margin-right: 10px') %>
             </a>
           </td>
@@ -67,7 +67,7 @@
             <a>
               <%= image_tag('global/images/icon-BTVN.png', style: 'min-width: 32px; width: 32px; margin-right: 10px') %>
             </a>
-            <a>
+            <a class="student_evaluate" data-code="<%= student[:code] %>">
               <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px;margin-right: 10px') %>
             </a>
           </td>
