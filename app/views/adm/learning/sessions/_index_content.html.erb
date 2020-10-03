@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th>#</th>
+      <th><%= t("adm.course.name") %></th>
       <th><%= t("learning.batch.code") %></th>
       <th><%= t("adm.learning.session.faculty_name") %></th>
       <th><%= t("adm.learning.session.session_count") %></th>
@@ -9,6 +10,8 @@
       <th><%= t("adm.learning.session.start_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
+      <th>GVDD</th>
+      <th>VHDD</th>
       <th><%= t("adm.learning.session.academy") %></th>
     </tr>
   </thead>
@@ -16,6 +19,7 @@
     <% sessions.each do |session| %>
       <tr>
         <td><%= session[:id] %></td>
+        <td><%= session[:course_name] %></td>
         <td><%= session[:batch_code] %></td>
         <td><%= session[:faculty_name] %></td>
         <td align='center'><%= session[:session_count] %></td>
@@ -25,6 +29,8 @@
         <td align="center">
           <%= render :partial => "review_stats", :locals => {session: session} %>
         </td>
+        <td><%= session[:count_attendance_line].to_i %></td>
+        <td><%= session[:count_session_student].to_i %></td>
         <td><%= session[:company_name] %></td>
       </tr>
     <% end %>
@@ -32,6 +38,7 @@
   <tfoot>
     <tr>
       <th>#</th>
+      <th><%= t("adm.course.name") %></th>
       <th><%= t("learning.batch.code") %></th>
       <th><%= t("adm.learning.session.faculty_name") %></th>
       <th><%= t("adm.learning.session.session_count") %></th>
@@ -39,6 +46,8 @@
       <th><%= t("adm.learning.session.start_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
+      <th>GVDD</th>
+      <th>VHDD</th>
       <th><%= t("adm.learning.session.academy") %></th>
     </tr>
   </tfoot>

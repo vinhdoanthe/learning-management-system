@@ -1,4 +1,4 @@
-<% if SocialCommunity::Photo.where(session_id: session[:id]).first.present? %>
+<% if session[:count_photo].to_i > 0 %>
   <span class="session_info">
     <a class="session_photo_modal" data-toggle="modal" data-target="#modal_adm_session_photo" data-session="<%= session[:id] %>">
       <i class="color-5dc2a7 far fa-2x fa-images"></i>

@@ -65,6 +65,7 @@ class Adm::User::AdmUsersController < ApplicationController
   end
 
   def edit_user_info
+    @origin_user = current_user
     @user = User::Account::User.where(id: params[:id]).first
     @user_companies = @user.user_companies
     @companies = Common::ResCompany.all
