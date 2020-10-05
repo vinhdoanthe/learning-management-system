@@ -85,8 +85,10 @@ $(document).ready(function(){
   $('#session_student_table').on('change', '.operation-attendance', function(){
     if ($(this).is(':checked')){
       state = true;
+      $(this).closest('tr').addClass('att_active');
     }else{
       state = false;
+      $(this).closest('tr').removeClass('att_active');
     }
 
     id = $(this).val();

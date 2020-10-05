@@ -162,6 +162,7 @@ vi:
         session_state: "Trạng thái buổi học"
         note: "Ghi chú"
         classroom: "Phòng học"
+        no_session: "Chưa có học sinh nào"
       Temporary session The lesson has not taken place yet: "Tạm khoá: Buổi học chưa diễn ra"
       Introduce classmates: "Giới thiệu bạn học"
       Step: "Bước"

@@ -150,4 +150,5 @@ en:
         session_state: "Session State"
         classroom: "Classroom"
         note: "Note"
+        no_session: "No student yet"
 
