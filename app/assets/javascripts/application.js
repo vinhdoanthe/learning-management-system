@@ -8,6 +8,7 @@
 //=require bootstrap
 //=require custom_js/custom_ui.js
 //= require activestorage
+//= require cropper.min.js
 //
 var waitingdialog = waitingdialog || (function ($) {
   'use strict';
