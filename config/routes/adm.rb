@@ -92,4 +92,17 @@ namespace :adm do
       post 'complete/:id', action: :complete, as: 'complete'
     end
   end
+
+
+  namespace :contest do
+    resources :contests
+    namespace :contests do
+      post 'update_contest', action: 'update_contest', as: 'update_contest'
+    end
+
+    namespace :contest_prizes do
+      post 'create_prize', action: 'create_prize'
+      get 'prepare_create', action: 'prepare_create'
+    end
+  end
 end

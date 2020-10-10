@@ -15,3 +15,25 @@ function display_response_noti(res) {
     toastr.warning(res.message)
   }
 }
+
+
+function readURL(input, target) {
+  if (input.files) {
+    $.each(input.files, function (i, photo) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $(target).append('<img class="photo_review" src="' + e.target.result + '" alt="" />');
+      }
+
+      reader.readAsDataURL(photo);
+    })
+  }
+}
+
+function previewUploadImage(input, target){
+  $('.photo_review').remove('')
+  $(input).change(function () {
+    $(target).html('');    
+    readURL(this, target);
+  });
+}

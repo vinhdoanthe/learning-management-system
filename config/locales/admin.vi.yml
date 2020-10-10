@@ -339,3 +339,8 @@ vi:
         more: "Xem thêm"
         all: "Xem tất cả"
       project: "Sản phẩm học sinh"
+    contest:
+      contest_prize:
+        w: "Thi tuần"
+        m: "Thi tháng"
+        y: "Thi Năm"
