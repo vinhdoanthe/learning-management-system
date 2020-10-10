@@ -1,0 +1,20 @@
+res = JSON.parse('<%= raw(result.to_json) %>');
+display_response_noti(res);
+
+<% if result[:type] == 'success' %>
+$('#table-prize-body').append(`
+  <tr>
+  <td><%= prize.id %></td>
+  <td><%= prize.name %></td>
+  <td><%= prize.student_price %></td>
+  <td><%= prize.teacher_price %></td>
+  <td><%= prize.number_awards %></td>
+  <td><%= prize.prize %></td>
+  <td><%= t("adm.contest.contest_prizes.#{ prize.prize_type }") %></td>
+  <td><%= prize.student_price + prize.teacher_price %></td>
+  <td><%= prize.description %></td>
+  </tr>
+  `);
+$('#create-new-contest-prize').html("<%= escape_javascript( render partial: 'adm/contest/contest_prizes/partials/contest_prize_detail', locals: { contest: contest, prize: Contest::ContestPrize.new, option: '' } ) %> ");
+$('.create-contest-topic-li').show();
+<% end %>

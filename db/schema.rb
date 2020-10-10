@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_082951) do
+ActiveRecord::Schema.define(version: 2020_10_09_124315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -7123,6 +7123,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_082951) do
     t.text "product_link_2", comment: "Link sản phẩm"
     t.string "attendance_state"
     t.text "operation_comment"
+    t.datetime "evaluate_completed_time"
   end
 
   create_table "op_attendance_register", id: :serial, comment: "op.attendance.register", force: :cascade do |t|
@@ -10356,6 +10357,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_082951) do
     t.string "state"
     t.string "permission"
     t.integer "created_by"
+    t.string "project_type"
     t.index ["sc_post_id"], name: "index_sc_student_projects_on_sc_post_id"
   end
 
@@ -11029,6 +11031,95 @@ ActiveRecord::Schema.define(version: 2020_08_29_082951) do
     t.index ["faculty_id"], name: "timetable_line_faculty_rel_faculty_id_idx"
     t.index ["timetable_line_id", "faculty_id"], name: "timetable_line_faculty_rel_timetable_line_id_faculty_id_key", unique: true
     t.index ["timetable_line_id"], name: "timetable_line_faculty_rel_timetable_line_id_idx"
+  end
+
+  create_table "tk_contest_creterions", force: :cascade do |t|
+    t.integer "contest_topic_id"
+    t.text "description"
+    t.text "name"
+    t.integer "point"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tk_contest_criterions", force: :cascade do |t|
+    t.string "name", limit: 150
+    t.integer "poin"
+    t.string "description", limit: 256
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tk_contest_exchanges", force: :cascade do |t|
+    t.string "title", limit: 256
+    t.integer "top_from"
+    t.integer "top_end"
+    t.integer "point"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tk_contest_prizes", force: :cascade do |t|
+    t.integer "contest_id"
+    t.string "name", limit: 256
+    t.string "description", limit: 256
+    t.string "month_active"
+    t.integer "student_price"
+    t.integer "teacher_price"
+    t.integer "prize"
+    t.string "prize_type"
+    t.integer "number_awards"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tk_contest_projects", force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "contest_id"
+    t.integer "contest_topic_id"
+    t.integer "contest_prize_id"
+    t.integer "user_id"
+    t.integer "views"
+    t.integer "score"
+    t.boolean "valid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tk_contest_topics", force: :cascade do |t|
+    t.integer "contest_id"
+    t.string "name"
+    t.string "description"
+    t.string "rule"
+    t.string "region"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tk_contests", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.boolean "is_publish"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tk_project_criterions", force: :cascade do |t|
+    t.integer "contest_project_id"
+    t.integer "contest_criterion_id"
+    t.integer "number"
+    t.integer "point_exchange"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tk_topic_prizes", force: :cascade do |t|
+    t.integer "contest_topic_id"
+    t.integer "contest_prize_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "user_answers", force: :cascade do |t|

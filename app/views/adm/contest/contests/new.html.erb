@@ -1,0 +1,63 @@
+<%= stylesheet_link_tag "/AdminLTE-3.0.5/plugins/summernote/summernote-bs4.css" %>
+<%= javascript_include_tag "/AdminLTE-3.0.5/plugins/summernote/summernote-bs4.min.js" %>
+<%= javascript_include_tag "adm/contest/contests.js" %>
+
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Thêm cuộc thi mới</h3>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs" id="contest-create-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="create-contest-tab" data-toggle="pill" href="#create-contest" role="tab" aria-controls="create-contest" aria-selected="false">Contest</a>
+      </li>
+      <li class="nav-item create-contest-prize-li">
+        <a class="nav-link" id="create-contest-prize-tab" data-toggle="pill" href="#create-contest-prize" role="tab" aria-controls="create-contest-prize" aria-selected="false">Contest Prize</a>
+      </li>
+      <li class="nav-item create-contest-topic-li">
+        <a class="nav-link" id="create-contest-topic-tab" data-toggle="pill" href="#create-contest-topic" role="tab" aria-controls="create-contest-topic" aria-selected="false">Contest Topic</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <div class="tab-content" id="create-contest-info-content">
+      <div class="tab-pane fade active show" id="create-contest" role="tabpanel" aria-labelledby="create-contest-tab">
+        <%= render "adm/contest/contests/partials/contest_info", { contest: @contest } %>
+      </div>
+      <div class="tab-pane fade" id="create-contest-prize" role="tabpanel" aria-labelledby="create-contest-prize-tab">
+        <div id="contest-prize-table">
+        </div>
+        <div id="create-new-contest-prize">
+        </div>
+      </div>
+      <div class="tab-pane fade" id="create-contest-topic" role="tabpanel" aria-labelledby="create-contest-topic-tab">
+        <%#= render "adm/contest/contest_topics/partials/contest_topic_detail", { topic: @topic } %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<style>
+.create-contest-prize-li {
+  display: none;
+}
+.create-contest-topic-li {
+  display: none;
+}
+</style>
+<script>
+  $(document).ready(function(){
+    $('.contest-description-textarea').summernote({
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['height', ['height']]
+      ]
+    });
+  })
+</script>

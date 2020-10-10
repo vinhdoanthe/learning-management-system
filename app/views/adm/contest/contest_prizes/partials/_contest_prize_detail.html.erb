@@ -1,0 +1,158 @@
+<!-- Thông tin cuộc thi -->
+
+<%= binding.pry %>
+<!-- Thông tin giải -->
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Them giai thuong</h3>
+  </div>
+  <div class="card-body">
+    <div class="form">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" <%= option %> value="<%= prize.name %>" id="contest_prize_name" placeholder="Enter name">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="prize_contest_id">Contest</label>
+            <input type="text" readonly value='<%= contest.name %>' <%= option %> class="form-control" id="prize_contest_name" placeholder="0">
+            <input type="hidden" value='<%= contest.id %>' class="form-control" id="prize_contest_id" placeholder="0">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="contest_student_price">Student_prize</label>
+            <input type="number" value='0' value="<%= prize.student_price %>" class="form-control" <%= option %> id="contest_student_price" placeholder="0">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="contest_teacher_price">Teacher_prize</label>
+            <input type="number" value='0' value="<%= prize.student_price %>" class="form-control" <%= option %> id="contest_teacher_price" placeholder="0">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="contest_price_total">Total</label>
+            <input type="number" disabled class="form-control" <%= option %> value="<%= prize.student_price.to_i + prize.teacher_price.to_i %>" id="contest_price_total" placeholder="0">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="contest_prize_order">Prize</label>
+            <input type="number" class="form-control" value="<%= prize.prize %>" id="contest_prize_order" <%= option %> placeholder="0">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Type</label>
+            <select id="contest_prize_type" style="width: 100%" class="form-control" <%= option %>>
+              <% Contest::Constant::ContestPrize::TYPES.each do |type| %>
+                <% if type == prize.prize_type %>
+                  <option selected value="<%= type %>"><%= t("adm.contest.contest_prize.#{ type }") %></option>
+                <% else %>
+                  <option value="<%= type %>"><%= t("adm.contest.contest_prize.#{ type }") %></option>
+                <% end %>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="contest_prize_number_award">Number_award</label>
+            <input type="number" value="<%= prize&.number_awards %>" class="form-control" id="contest_prize_number_award" placeholder="0" <%= option %>>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-md-12">
+          <textarea <%= option %> class="contest-prize-description-textarea" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= prize&.description %>'><%= prize&.description %></textarea>
+        </div>
+      </div>
+      <div class="row contest_month_award" style="display: none">
+        <p>Choose month</p>
+        <% for i in 1..12 %>
+          <label for="contest_prize_month_<%= i.to_s %>"><%= i %></label>
+          <input id="contest_pize_month_<%= i.to_s %>" value="<%= i %>" type="checkbox" name="contest_prize_month[]">
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button type="button" id="submit-create-new-prize" class="btn btn-info float-right"><i class="fas fa-plus"></i>Tạo mới</button>
+  </div>
+</div>
+
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
+<script>
+  var setTotalPrice = () => {
+    student_price = $('#contest_student_price').val();
+    teacher_price = $('#contest_teacher_price').val();
+    $('#contest_price_total').val(parseInt(student_price) + parseInt(teacher_price));
+  }
+$(document).ready(function(){
+  $('.contest-prize-description-textarea').summernote({
+    toolbar: [
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['height', ['height']]
+    ]
+  });
+
+  $('#contest_student_price').on('change', function(){
+    setTotalPrice();
+  });
+
+  $('#contest_teacher_price').on('change', function(){
+    setTotalPrice();
+  });
+
+  if ($('#contest_prize_type').val() === 'm'){
+    $('.contest_price_month').show();
+  }
+  
+  $('#submit-create-new-prize').on('click', function(){
+    name = $('#contest_prize_name').val();
+    contest_id = $('#prize_contest_id').val();
+    student_price = $('#contest_student_price').val();
+    teacher_price = $('#contest_teacher_price').val();
+    type = $('#contest_prize_type').val();
+    prize = $('#contest_prize_order').val();
+    number_awards = $('#contest_prize_number_award').val();
+    description = $('#contest_prize_description').val();
+    month_active = $('input[name="contest_prize_month[]"]').val()
+
+    data = { name: name, student_price: student_price, teacher_price: teacher_price, prize_type: type, prize: prize, number_awards: number_awards, description: description, month_active: month_active, contest_id: contest_id }
+
+    $.ajax({
+      url: "/adm/contest/contest_prizes/create_prize",
+      method: "POST",
+      data: data,
+      dataType: 'script',
+      success: function(res){
+      }
+    })
+  })
+})
+</script>

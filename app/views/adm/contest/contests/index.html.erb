@@ -1,0 +1,53 @@
+<div class='card'>
+  <div class="card-header">
+    <h3 class="card-title"><%= t('adm.learning.session.name') %></h3>
+    <div class="card-tools">
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div id='data-content'>
+      <div id="contest_data_table" class="table table-responsive">
+        <table id="adm_session_list" class="table table-condensed table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>State</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @contests.each do |contest| %>
+              <tr>
+                <td><%= contest.id %></td>
+                <td><%= contest.name %></td>
+                <td><%= contest.description %></td>
+                <td><%= contest.is_publish ? 'Active' : 'Inactive' %></td>
+                <td style="min-width: 100px">
+                  <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
+                    <a href="/adm/contest/contests/<%= contest[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
+                  </span>
+                  <span>
+                    <a href="/adm/contest/contests/<%= contest[:id] %>" target="_blank"><i class="fas fa-user-check"></i></a>
+                  </span>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>State</th>
+              <th style="min-width: 100px">Action</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+  </div>
+</div>
