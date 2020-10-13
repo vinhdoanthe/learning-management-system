@@ -32,7 +32,15 @@
           <%= form_for :user, url: user_account_users_student_update_nickname_path, :html => {:class => 'FlowupLabels'} do |f| %>
             <div class="row">
               <div class="col-md-12 text-center">
-                <%= link_to "#{ t('config.change_pass') }", user_account_users_change_password_path, class: 'change-password' %>
+                <div class='col-md-6 text-right'>
+                  <%= link_to "#{ t('config.change_pass') }", user_account_users_change_password_path, class: 'change-password' %>
+                </div>
+                <div class='col-md-6 text-left'>
+                    <label for="input" class="label change_avatar change-password">
+                      <%= t('config.change_avatar') %>
+                    </label>
+                    <input type="file" class="sr-only" id="input" name="image" accept="image/*">
+                </div>
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
@@ -60,7 +68,7 @@
               </div>
               <div class="col-md-4">
                 <div class='fl_wrap'>
-<!--                  #TODO: validate username on keypress-->
+                  <!--                  #TODO: validate username on keypress-->
                   <%= f.label 'Nickname:', class: 'fl_label' %>
                   <%= f.text_field :username, class: 'fl_input', :value => current_user.username %>
                 </div>
@@ -117,12 +125,12 @@
                 <div class="col-md-4">
                   <div class='fl_wrap'>
                     <label class='fl_label' for='rf_name'>Email:</label>
-                      <% if parent.email.present? && (parent.email.length < 40) %>
-                        <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= parent ? parent.email : '' %>">
-                      <% else %>
-                        <textarea class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly %><%= parent.email %></textarea> 
-                      <% end %>
-                    </div>
+                    <% if parent.email.present? && (parent.email.length < 40) %>
+                      <input class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly value="<%= parent ? parent.email : '' %>">
+                    <% else %>
+                      <textarea class='fl_input bg-f2f2f2' type='text' id='rf_name' readonly ><%= parent.email %></textarea>
+                    <% end %>
+                  </div>
                 </div>
                 <div class="col-md-4">
                   <div class='fl_wrap'>
@@ -163,12 +171,38 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
 
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel"><%= t('config.choose_avatar') %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="img-container">
+          <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t('button.cancel') %></button>
+        <button type="button" class="btn btn-primary" id="crop"><%= t('button.update') %></button>
+      </div>
+    </div>
   </div>
 </div>
 <style>
-  .infomation_avatar {
-    margin-left: 15px;
-    margin-top: 15px;
-  }
+.infomation_avatar {
+  margin-left: 15px;
+  margin-top: 15px;
+}
+.change_avatar{
+  font-weight: 700 !important;
+  cursor: pointer;
+}
 </style>
+<%= javascript_include_tag ('user/users/avatar.js') %>

@@ -21,7 +21,7 @@
           <input name='username' class="form-control" required value="<%= @user.email %>">
         </div>
       </div>
-      <% if @user.account_role == Constant::OPERATION_ADMIN %>
+      <% if @origin_user.account_role == User::Constant::ADMIN %>
         <div class='account_role user_info row'>
           <div class='col-md-3'>
             <label><%= t('adm.user.role') %>:</label>

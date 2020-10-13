@@ -104,4 +104,33 @@ class User::Account::UsersService
     else
     end
   end
+
+  def update_user_avatar user, avatar
+    return { type: "danger", message: "#{ I18n.t 'notice.no_avatar'}" } if avatar.blank?
+    if user.avatar.present?
+      if user.avatar.thumbnail.attach(avatar)
+        result = { type: 'success', message: "#{ I18n.t 'notice.update_success' }" }
+      else
+        result = { type: 'danger', message: "#{ I18n.t 'notice.update_fail' }" }
+      end
+    else
+      user_avatar = create_user_avatar user
+      if user_avatar.thumbnail.attach(avatar)
+        result = { type: 'success', message: "#{ I18n.t 'notice.update_success' }" }
+      else
+        result = { type: 'danger', message: "#{ I18n.t 'notice.update_fail' }" }
+      end
+    end
+
+    result
+  end
+
+  def create_user_avatar user
+    avatar = User::Account::Avatar.create
+    user.avatar = avatar
+    user.save
+
+    avatar
+  end
+
 end

@@ -41,7 +41,12 @@ class Adm::User::AdmUsersService
       sql += ((get_student student_query, student_sub_query) + ") UNION (") if params[:role].include? "Student"
       sql += ((get_teacher teacher_query) + ") UNION (") if params[:role].include? "Teacher"
       sql += ((get_parent parent_query) + ") UNION (") if params[:role].include? "Parent"
-      sql += ((get_admin admin_query, params[:role]) + ") UNION (")  if (params[:role] & ["Admin", "Content Admin", "Operation Admin"]).present?
+
+      if (params[:role] & ["Admin", "Content Admin", "Operation Admin"]).present?
+        if user.is_admin?
+          sql += ((get_admin admin_query, params[:role]) + ") UNION (")
+        end
+      end
       sql = sql[0..-9]
 
     else
@@ -52,11 +57,15 @@ class Adm::User::AdmUsersService
             )
             UNION
             ( #{ get_parent parent_query }
-            )
-            UNION
+            )"
+      if user.is_admin?
+      sql += " UNION
             ( #{ get_admin admin_query, ['Admin', 'Operation Admin', 'Content Admin'] }
             )"
+      end
     end
+
+    return { all_user: [], count: 0 } if sql.blank?
 
     count = old_params[:count]
 

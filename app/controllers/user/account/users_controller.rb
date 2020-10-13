@@ -1,6 +1,7 @@
 class User::Account::UsersController < ApplicationController
 
-  before_action :authenticate_user!, only: [:get_avatar, :new_avatar, :update_avatar, :update_nickname, :change_password, :update_password]
+  before_action :authenticate_user!, only: [:get_avatar, :new_avatar, :update_avatar, :update_nickname, :change_password, :update_password, :update_user_avatar]
+  skip_before_action :verify_authenticity_token, only: :update_user_avatar
   # before_action :authenticate_student!, only: [:my_class, :batch_detail, :update_nickname]
 
   def get_avatar
@@ -51,6 +52,7 @@ class User::Account::UsersController < ApplicationController
     end 
 
     respond_to do |format|
+      format.html
       format.js { render 'user/open_educat/op_students/modal/change_avatar', :locals => {avatars: list_avatars, current_avatar: current_avatar}}
     end
   end
@@ -65,6 +67,12 @@ class User::Account::UsersController < ApplicationController
         end
       end
     end
+  end
+
+  def update_user_avatar
+    result = User::Account::UsersService.new.update_user_avatar current_user, params[:avatar]
+
+    render json: result
   end
 
   def update_nickname

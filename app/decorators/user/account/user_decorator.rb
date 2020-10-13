@@ -5,7 +5,7 @@ class User::Account::UserDecorator < SimpleDelegator
   def display_avatar size="auto"
     if !nil?
       if avatar.present?
-        "<span><img width='" + size + "' src='" + rails_blob_path(avatar.thumbnail, disposition: "attachment", only_path: true) + "'></span>"
+        "<span><img width='" + size.to_s + "' src='" + rails_blob_path(avatar.thumbnail, disposition: "attachment", only_path: true) + "'></span>"
       else
         display_avatar_by_role size
       end

@@ -11,7 +11,7 @@ class Adm::Learning::OperationAttendancesService
       query = query.where(company_id: params[:company_id])
     else
       unless user.is_admin?
-        company_ids = user.user_companies.pluck(:id)
+        company_ids = user.user_companies.pluck(:company_id)
         query = query.where(company_id: company_ids)
       end
     end

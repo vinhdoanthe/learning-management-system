@@ -14,6 +14,7 @@ namespace :user do
 
       post 'student_update_nickname', action: 'update_nickname'
       get 'change_avatar', action: 'new_avatar'
+      post 'update_user_avatar', action: 'update_user_avatar'
       post 'change_avatar', action: 'update_avatar'
     end
     get 'avatars_list' => 'avatars#avatars_list', as: 'avatars_list'
