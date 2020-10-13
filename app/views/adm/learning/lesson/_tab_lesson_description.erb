@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="row"><label class="col-sm-3 control-label"><%= t('adm.course.lesson.Lesson note')%>:</label> 
-			<div class="col-sm-9"><%= @obj_lesson.note.to_s.html_safe%></div>
+			<div class="col-sm-9"><%= h(@obj_lesson.note.to_s) %></div>
 		</div>
 
 	</div>
