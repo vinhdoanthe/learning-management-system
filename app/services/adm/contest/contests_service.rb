@@ -28,8 +28,22 @@ class Adm::Contest::ContestsService
   end
 
   def create_contest_image photo, contest
-    #  banner = Contest::ContestBanner.new
-    #  banner.contest_id = contest.id
   end
 
+  def delete_contest params
+    contest = Contest::Contest.where(id: params[:id]).first
+    return { type: "danger", message: "Cuoc thi khong ton tai" } if contest.blank?
+
+    if contest.contest_projects.present?
+      result = { type: 'danger', message: "khong the xoa cuoc thi vi da co san pham du thi" }
+    else
+      if contest.delete
+        result = { type: "success", message: "xoa cuoc thi thanh cong" }
+      else
+        result = { type: "danger", message: "da co loi xay ra! vui long thu laij sau" }
+      end
+    end
+
+    result
+  end
 end

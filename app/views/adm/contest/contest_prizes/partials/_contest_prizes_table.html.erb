@@ -1,9 +1,14 @@
 <div class="card table-responsive">
-  <div class='card-hearder'>
+  <div class='card-header'>
+    <h3 class="card-title">Danh sach giai thuong</h3>
+    <% if add_new %>
+      <div class="card-tools">
+        <a data-toggle='modal' data-target="#modal_create_contest_prize" class="btn btn-info float-right"><i class="fas fa-plus"></i></a>
+      </div>
+    <% end %>
   </div>
   <div class="card-body">
-
-    <table id="contest_prize_list" style="width: 100%">
+    <table id="contest_prize_list" class="table table-striped" style="width: 100%">
       <thead>
         <tr>
           <th>#</th>
@@ -18,19 +23,28 @@
         </tr>
       </thead>
       <tbody id="table-prize-body">
-        <%= prizes.each do |prize| %>
-          <tr>
-            <td><%= prize.id %></td>
-            <td><%= prize.name %></td>
-            <td><%= prize.student_price %></td>
-            <td><%= prize.teacher_price %></td>
-            <td><%= prize.number_awards %></td>
-            <td><%= prize.prize %></td>
-            <td><%= t("adm.contest.contest_prizes.#{ prize.prize_type }") %></td>
-            <td><%= prize.student_price + prize.teacher_prize %></td>
-            <td><%= prize.description %></td>
+        <% if prizes.blank? %>
+          <tr class="no_items">
+            <td colspan="9">
+              <p>Chua co giai thuong </p>
+            </td>
           </tr>
-        <% end%>
+        <% else %>
+          <% prizes.each do |prize| %>
+            <tr>
+              <td><%= prize.id %></td>
+              <td><%= prize.name %></td>
+              <td><%= prize.student_price %></td>
+              <td><%= prize.teacher_price %></td>
+              <td><%= prize.number_awards %></td>
+              <td><%= prize.prize %></td>
+              <td><%= t("adm.contest.contest_prizes.#{ prize.prize_type }") %></td>
+              <td><%= prize.student_price + prize.teacher_prize %></td>
+              <td><%= prize.description %></td>
+            </tr>
+          <% end%>
+        <% end %>
+      </tbody>
     </table>
   </div>
 </div>

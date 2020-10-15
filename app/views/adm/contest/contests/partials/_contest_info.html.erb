@@ -1,30 +1,50 @@
-<div class='contest_content' id="contest_form">
-  <div class='col-md-12'>
-    <div class="col-md-3">
-      <label>Tên cuộc thi</label>
-    </div>
-    <div class="contest_name col-md-9">
-      <input name="contest_name" value="<%= contest&.id %>">
-    </div>
+<div class='card' >
+  <div class='card-header'>
+    <h3 class="card-title"><%= title %></h3>
   </div>
-  <div class='col-md-12'>
-    <div class="contest_state">
-      <label for="contest_state">
-        <input type="checkbox" id="contest_state" value="<%= contest&.is_publish %>">
-        Active
-      </label>
-    </div>
-  </div>
-  <div class='col-md-12'>
-    <div class="col-md-3">
-      <label>Mô tả cuộc thi:</label>
-    </div>
-    <div class="contest_name col-md-9">
-      <div class="mb-3">
-        <textarea class="contest-description-textarea" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= contest&.description %>'><%= contest&.description %></textarea>
+  <div class="card-body">
+    <div class='contest_content' id="contest_form">
+      <div class='col-md-12'>
+        <div class="col-md-3">
+          <label>Tên cuộc thi:</label>
+        </div>
+        <div class="contest_name">
+          <input name="contest_name" class="form-control" value="<%= contest&.name %>">
+          <input name="contest_id" class="form-control" value="<%= contest&.id %>" type="hidden">
+        </div>
+      </div>
+      <div class='col-md-12'>
+        <div class="contest_state custom-control custom-checkbox">
+          <% if contest&.is_publish %>
+            <input class="custom-control-input" checked type="checkbox" id="contest_state">
+          <% else %>
+            <input class="custom-control-input" type="checkbox" id="contest_state">
+          <% end %>
+            <label for="contest_state" class="custom-control-label">Active</label>
+        </div>
+      </div>
+      <div class='col-md-12'>
+        <div class="col-md-3">
+          <label>Mô tả cuộc thi:</label>
+        </div>
+        <div class="contest_name">
+          <div class="mb-3">
+            <textarea rows='5' class="contest-description-textarea" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= contest&.description %>'><%= contest&.description %></textarea>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <button class="btn btn-primary" data-contest="<%= contest&.id %>" id="update-contest-button"><%= contest&.id.present? ? "Cập nhật" : "Thêm mới" %></button>
+   <div class="card-footer">
+    <button type="button" data-contest="<%= contest&.id %>" id="update-contest-button" class="btn btn-info float-right"><i class="fas fa-plus"></i><%= contest&.id.present? ? "Cập nhật" : "Thêm mới" %></button>
+  </div>
 </div>
-
+<style>
+.contest_name {
+  margin-bottom: 20px;
+}
+.contest_state{
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+</style>
