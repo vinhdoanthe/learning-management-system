@@ -2,6 +2,7 @@ res = JSON.parse('<%= raw(result.to_json) %>');
 display_response_noti(res);
 
 <% if result[:type] == 'success' %>
+    $('.no_items').hide();
 $('#table-prize-body').append(`
   <tr>
   <td><%= prize.id %></td>
@@ -17,4 +18,6 @@ $('#table-prize-body').append(`
   `);
 $('#create-new-contest-prize').html("<%= escape_javascript( render partial: 'adm/contest/contest_prizes/partials/contest_prize_detail', locals: { contest: contest, prize: Contest::ContestPrize.new, option: '' } ) %> ");
 $('.create-contest-topic-li').show();
+$('#create-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_detail', locals: { contest: contest, topic: Contest::ContestTopic.new } ) %> ");
+$('.contest_month_award').html(`<%= Contest::ContestDecorator.new(contest).display_month_active.html_safe %>`)
 <% end %>

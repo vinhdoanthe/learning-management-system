@@ -1,82 +1,10 @@
-<div class='card'>
-  <div class='card-header'>
-    <h3 class="card-title contest-name-p"><%= @contest.name %></h3>
-    <input value="<%= contest.name %>" type="hidden" class="contest-name-input" name="contest-name">
-  </div>
-  <div class="card-body p-0">
-    <div class="col-md-12">
-      <label for="contest-state">
-        Trang thai
-        <% if contest&.is_publish %>
-          <input id="contest-state" type="checkbox" value="true" checked>
-        <% else %>
-          <input id="contest-state" type="checkbox" value="true">
-        <% end %>
-      </label>
-    </div>
-    <div class='col-md-12'>
-      <h4>Mo ta</h4>
-      <p class="contest-description-p"><%= @contest.description %></p>
-      <textarea class="textarea contest-description-input" placeholder="Place some text here"
-                                 style="display: none; width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-    </div>
-    <!-- <div class="contest-thumbnai col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Banner</h3>
-        </div>
-        <div class="card-body">
-          <% if @contest_images.presents? %>
-            <% if contest_images.count > 4 %>
-              <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-                </ol>
-                <div class="carousel-inner">
-                  <% @contest_images.each_with_index do |image| %>
-                    <div class="carousel-item <%= "active" if index == 0 %>">
-                      <%= image_tage image.image %>
-                    </div>
-                  <% end %>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
-            <% else %>
-                  <% @contest_images.each_with_index do |image| %>
-                    <div class="col-md-3">
-                      <%= image_tag image.image %>
-                    </div>
-                  <% end %>
-                  <div class="col-md-3 upload-contest-banner">
-                  <label for="image_attachment">
-                    <span> + </span>
-                    <input type="file" id="image_attachment">
-                    </label>
-                  </div>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-
-    </div> -->
-    <button style="display: none" data-id="<%= contest.id %> id="udpate_contest">Update</button>
-  </div>
-</div>
+<%= javascript_include_tag "adm/contest/contests.js" %>
+<%= render "adm/contest/contests/partials/contest_info", { contest: @contest, title: "Chi tiet cuoc thi" } %>
 <div class='card'>
   <div class="card-header">
     <h3 class="card-title">Contest Topics</h3>
     <div class="card-tools">
+      <a data-toggle='modal' data-target="#modal_create_contest_topic" class="btn btn-info float-right"><i class="fas fa-plus"></i></a>
     </div>
   </div>
   <div class="card-body p-0">
@@ -85,101 +13,31 @@
     </div>
   </div>
 </div>
-
+<%= render 'adm/contest/contest_prizes/partials/contest_prizes_table', { contest: @contest, prizes: @contest.contest_prizes, add_new: true } %>
+<div class="modal fade" id="modal_create_contest_prize" >
+  <div class="modal-title">
+    <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
+    <label>Them prize</label>
+  </div>
+  <div class="modal-content" style="width: 80%; margin: auto">
+    <div class="modal-body">
+      <%= render "adm/contest/contest_prizes/partials/contest_prize_detail", { contest: @contest, prize: Contest::ContestPrize.new, option: '' } %>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_create_contest_topic" >
+  <div class="modal-title">
+    <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
+    <label>Them prize</label>
+  </div>
+  <div class="modal-content" style="width: 80%; margin: auto">
+    <div class="modal-body">
+      <%= render "adm/contest/contest_topics/partials/contest_topic_detail", { contest: @contest, topic: Contest::ContestTopic.new, option: '', add_new: true } %>
+    </div>
+  </div>
+</div>
 <script>
-  $(function () {
-    $('.textarea').summernote()
-  })
-
   $(document).ready(function(){
-    $('.contest-name-p').on('click', function(){
-      $('.contest-name-input').show();
-      $(this).hide();
-    })
-    
-    $('.contest-description-p').on('click', function(){
-      $('.contest-description-input').show();
-      $(this).hide();
-    })
-
-    $('.contest-name-input').change(function(){
-      $('#update_contest').show();
-    })
-
-    $('.contest-description-input').change(function(){
-      $('#update_contest').show();
-    })
-
-    $('#contest-state').change(function(){
-      $('#update_contest').show();
-    })
-
-    $('#update_contest').on('click', function(){
-      data = new FormData();
-      $.each($('#image_attachment')[0].files, function (i, file) {
-        file_type = file.name.split('.').pop().toLowerCase();
-        if($.inArray(file_type, ['png','jpg','jpeg', 'heic']) == -1) {
-          error_file += 1
-        }else{
-          formData.append("photos[]", file);
-        }
-      })
-
-      if(error_file > 0){
-        alert('Sai ảnh! Chỉ chấp nhận ảnh có đuôi "png/jpg/jpeg/heic"!');
-        return
-      }
-
-      name = $('input[name="contest-name"]').val();
-      if($('#contest-state').is(':checked')){
-        state = true;
-      }else{
-        state = false;
-      }
-
-      description = $('.contest-description-input').val();
-      data.append('name', name);
-      data.append('description', description);
-      data.append('state', state);
-
-      $.ajax({
-        method: 'POST',
-        url: '',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function (res) {
-          display_response_noti(res);
-          window.location.reload();
-        }
-      })
-
-    })
-
-    $('#upload_photo').on('click', '#upload_photo_confirm', function () {
-  params = $('#photo_upload_form').serializeArray()
-  var formData = new FormData();  
-
-  params.forEach(function (p) {   
-    formData.append(p['name'], p['value'])
+    setSummerNote('.contest-description-textarea')
   })
-  $.each($('#photos_attachment')[0].files, function (i, file) {
-    file_type = file.name.split('.').pop().toLowerCase();
-    if($.inArray(file_type, ['png','jpg','jpeg', 'heic']) == -1) {
-      error_file += 1
-    }else{
-    formData.append("photos[]", file);
-    }
-  })
-
-$('#upload_photo_confirm').prop('disabled', true)
-
-
-$('#upload_session_photo').on('click', function () {
-  error_file = 0;
-  $('#photo_review').html('')
-})
-  })
-var error_file = 0;
-
 </script>

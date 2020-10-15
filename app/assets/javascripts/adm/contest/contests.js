@@ -6,6 +6,18 @@ let getContestPrizeForm = (contest_id) => {
   })
 }
 
+let setSummerNote = (target) => {
+  $(target).summernote({
+    height: 150,
+    toolbar: [
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['height', ['height']]
+    ]
+  });
+}
+
 $(document).ready(function(){
   $('#update-contest-button').on('click', function(){
 
@@ -38,4 +50,13 @@ $(document).ready(function(){
         }
       })
   }) 
+
+  $('#').on('click', '#contest_prize_type'), function(){
+    if ($(this).val() == 'm'){
+      $('.contest_month_award').show();
+    }else{
+      $('.contest_month_award').hide();
+    }
+  })
 })
+

@@ -98,6 +98,7 @@ namespace :adm do
     resources :contests
     namespace :contests do
       post 'update_contest', action: 'update_contest', as: 'update_contest'
+      post 'delete_contest', action: 'delete_contest', as: 'delete_contest'
     end
 
     namespace :contest_prizes do

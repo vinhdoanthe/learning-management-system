@@ -1,5 +1,5 @@
 class Adm::Contest::ContestsController < Adm::AdmController
-  skip_before_action :verify_authenticity_token, only: [:update_contest]
+  skip_before_action :verify_authenticity_token, only: [:update_contest, :delete_contest]
   before_action :find_contest, only: [:show]
 
   def index
@@ -8,7 +8,6 @@ class Adm::Contest::ContestsController < Adm::AdmController
 
   def show
     @contest_topics = @contest.contest_topics
-    #@thumbnais = @contest.contest_images
   end
 
   def update_contest
@@ -18,6 +17,13 @@ class Adm::Contest::ContestsController < Adm::AdmController
   end
 
   def edit
+  end
+
+  def delete_contest
+    binding.pry
+    result = Adm::Contest::ContestsService.new.delete_contest params
+
+    render json: result
   end
 
   private

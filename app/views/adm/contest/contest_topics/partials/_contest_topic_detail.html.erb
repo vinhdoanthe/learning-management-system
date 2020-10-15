@@ -1,4 +1,5 @@
 <div class="contest-topic-detail">
+  <%= render "adm/contest/contest_topics/partials/contest_topic_index", topics: [] %>
   <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Contest Topic Detail</h3>
@@ -10,6 +11,11 @@
           <input type="text" value="<%= topic&.name %>" class="form-control" id="topic_name" placeholder="Enter Topic Name">
         </div>
         <div class="form-group">
+          <label for="topic_name">Cuộc thi</label>
+          <input type="text" value="<%= contest&.name %>" readonly class="form-control" name="contest-name">
+          <input type="hidden" value="<%= contest&.id %>" class="form-control" name="contest-id">
+        </div>
+        <div class="form-group">
           <label for="topic_region">Region</label>
           <select class="form-control" id="topic_region">
             <% Contest::Constant::ContestTopic::REGIONS.each do |region| %>
@@ -19,11 +25,11 @@
         </div>
         <div class="form-group">
           <label for="topic_description">Description</label>
-          <textarea class="contest-description-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>' id="topic_description"><%= topic&.description %></textarea>
+          <textarea class="contest-topic-description-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>' id="topic_description"><%= topic&.description %></textarea>
         </div>
         <div class="form-group">
           <label for="topic_name">Rule</label>
-          <textarea class="contest-description-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>'><%= topic&.rule %></textarea>
+          <textarea class="contest-topic-rule-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>'><%= topic&.rule %></textarea>
         </div>
         <div class="form-group">
           <label for="exampleInputFile">Thumbnail</label>
@@ -33,35 +39,89 @@
               <label class="custom-file-label" for="topic_thumbnail">Choose file</label>
             </div>
           </div>
-        <div class="form-group">
-          <label for="topic_name">Choose prize</label>
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>name</th>
-                <th>student_price</th>
-                <th>teacher_price</th>
-                <th>prize</th>
-                <th>type</th>
-                <th>number_award</th>
-                <th>description</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
+          <div class="form-group table-responsive">
+            <label for="topic_name">Choose prize</label>
+            <table class="table table-responsive">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Action</th>
+                  <th>name</th>
+                  <th>student_price</th>
+                  <th>teacher_price</th>
+                  <th>prize</th>
+                  <th>type</th>
+                  <th>number_award</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% contest.contest_prizes.each do |prize| %>
+                  <tr>
+                    <th>#</th>
+                    <th>
+                      <input class="custom-control-input" type="checkbox" id="choose_prizes" value="<%= prize.id %>">
+                    </th>
+                    <th><%= prize.name %></th>
+                    <th><%= prize.student_price %></th>
+                    <th><%= prize.teacher_price %></th>
+                    <th><%= prize.prize %></th>
+                    <th><%= prize.prize_type %></th>
+                    <th><%= prize.number_awards %></th>
+                    <th><%= prize.description %></th>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <!-- /.card-body -->
 
       <% if topic&.id.blank? %>
         <div class="card-footer">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button id="create-contest-topic-confirm" class="btn btn-primary">Submit</button>
         </div>
       <% else %>
       <% end %>
     </form>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    setSummerNote('.contest-topic-description-textarea')
+    setSummerNote('.contest-topic-rule-textarea')
+
+    $('#create-contest-topic-confirm').click(function(){
+      var data = new FormData();
+      name = $('#topic-name').val();
+      data.append('name', name);
+      contest_id = $('#contest-id').val();
+      data.append('contest_id', contest_id);
+      region = $('#topic_region').val();
+      data.append('region', region);
+      description = $('.contest-topic-description-textarea').val();
+      data.append('description', description);
+      rule = $('.contest-topic-rule-textarea').val();
+      data.append('rule', rule);
+
+      $.each($('#topic_thumbnail')[0].files, function (i, file) {
+        file_type = file.name.split('.').pop().toLowerCase();
+        if($.inArray(file_type, ['png','jpg','jpeg', 'heic']) == -1) {
+          arlert("Chi chap nhan anh duoi 'png','jpg', 'jpec', 'heic'!");
+          return
+        }else{
+          data.append("photos[]", file);
+        }
+      })
+
+      $.ajax({
+        method: 'POST',
+        url: '',
+        data: data,
+        dataType: 'script'
+      })
+    })
+  })
+</script>
