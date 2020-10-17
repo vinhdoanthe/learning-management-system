@@ -19,8 +19,8 @@
         <div class="col-md-12">
           <div class="form-group">
             <label for="prize_contest_id">Contest</label>
-            <input type="text" readonly value='<%= contest.name %>' <%= option %> class="form-control" id="prize_contest_name" placeholder="0">
-            <input type="hidden" value='<%= contest.id %>' class="form-control" id="prize_contest_id" placeholder="0">
+            <input type="text" readonly value='<%= contest&.name %>' <%= option %> class="form-control" id="prize_contest_name" placeholder="0">
+            <input type="hidden" value='<%= contest&.id %>' class="form-control" id="prize_contest_id" placeholder="0">
           </div>
         </div>
       </div>
@@ -28,13 +28,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="contest_student_price">Student_prize</label>
-            <input type="number" value='0' value="<%= prize.student_price %>" class="form-control" <%= option %> id="contest_student_price" placeholder="0">
+            <input type="number" min='0' value='0' value="<%= prize.student_price %>" class="form-control price" <%= option %> id="contest_student_price" placeholder="0">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="contest_teacher_price">Teacher_prize</label>
-            <input type="number" value='0' value="<%= prize.student_price %>" class="form-control" <%= option %> id="contest_teacher_price" placeholder="0">
+            <input type="number" value='0' min='0' value="<%= prize.student_price %>" class="form-control price" <%= option %> id="contest_teacher_price" placeholder="0">
           </div>
         </div>
         <div class="col-md-4">
@@ -48,7 +48,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="contest_prize_order">Prize</label>
-            <input type="number" class="form-control" value="<%= prize.prize %>" id="contest_prize_order" <%= option %> placeholder="0">
+            <input type="number" min='1' class="form-control price" value="<%= prize.prize %>" id="contest_prize_order" <%= option %> placeholder="0">
           </div>
         </div>
         <div class="col-md-4">
@@ -68,7 +68,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="contest_prize_number_award">Number_award</label>
-            <input type="number" value="<%= prize&.number_awards %>" class="form-control" id="contest_prize_number_award" placeholder="0" <%= option %>>
+            <input type="number" min='0' value="<%= prize&.number_awards %>" class="form-control price" id="contest_prize_number_award" placeholder="0" <%= option %>>
           </div>
         </div>
       </div>

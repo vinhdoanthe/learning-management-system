@@ -105,5 +105,15 @@ namespace :adm do
       post 'create_prize', action: 'create_prize'
       get 'prepare_create', action: 'prepare_create'
     end
+
+    resources :contest_topics
+    namespace :contest_topics do
+      post 'create_topic', action: 'create_topic', as: 'create_topic'
+    end
+
+    namespace :contest_criterions do
+      post 'create_criterion', action: 'create_criterion', as: 'create_criterion'
+      post 'delete_criterion', action: 'delete_criterion', as: 'delete_criterion'
+    end
   end
 end

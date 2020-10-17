@@ -4,15 +4,6 @@ var setTotalPrice = () => {
   $('#contest_price_total').val(parseInt(student_price) + parseInt(teacher_price));
 }
 
-let showMonthPrize = (contest_id) => {
-  $.ajax({
-    method: "GET",
-    url: "/adm/contest/contest_prizes/get_available_month",
-    data: { contest_id: contest_id },
-    dataType: "script"
-  })
-}
-
 $(document).ready(function(){
   $('.contest-prize-description-textarea').summernote({
     height: 150,

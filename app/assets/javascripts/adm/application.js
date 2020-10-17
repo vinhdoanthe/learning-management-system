@@ -37,3 +37,16 @@ function previewUploadImage(input, target){
     readURL(this, target);
   });
 }
+
+let setSummerNote = (target) => {
+  $(target).summernote({
+    height: 150,
+    toolbar: [
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['height', ['height']]
+    ]
+  });
+}
+

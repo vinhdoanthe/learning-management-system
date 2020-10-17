@@ -18,6 +18,7 @@ $('#table-prize-body').append(`
   `);
 $('#create-new-contest-prize').html("<%= escape_javascript( render partial: 'adm/contest/contest_prizes/partials/contest_prize_detail', locals: { contest: contest, prize: Contest::ContestPrize.new, option: '' } ) %> ");
 $('.create-contest-topic-li').show();
-$('#create-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_detail', locals: { contest: contest, topic: Contest::ContestTopic.new } ) %> ");
+$('#contest-topic-table').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_index', locals: { contest: contest, topics: [] } ) %> ");
+$('#create-new-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_detail', locals: { contest: contest, topic: Contest::ContestTopic.new } ) %> ");
 $('.contest_month_award').html(`<%= Contest::ContestDecorator.new(contest).display_month_active.html_safe %>`)
 <% end %>
