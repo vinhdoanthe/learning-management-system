@@ -17,16 +17,14 @@
       <tr>
         <th><%= topic.id %></th>
         <th><%= topic.name %></th>
-        <th><%= image_tag topic.thumbnail  if topic.thumbnail.present?%></th>
-        <th><%= topic.description %></th>
-        <th><%= topic.rule %></th>
-        <th><%= topic.start_time %></th>
-        <th><%= topic.end_time %></th>
+        <th><%= image_tag topic.thumbnail, style: 'width: 50px; height: 50px'  if topic.thumbnail.present?%></th>
+        <th><%= topic.description&.html_safe %></th>
+        <th><%= topic.rule&.html_safe %></th>
+        <th><%= topic.start_time.strftime("%d/%m/%Y") %></th>
+        <th><%= topic.end_time.strftime("%d/%m/%Y") %></th>
         <th><%= topic.region %></th>
         <td style="min-width: 100px">
-          <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
             <a href="/adm/contest/contests_topics/<%= topic[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
-          </span>
           <span>
             <a href="/adm/contest/contests_topics/<%= topic[:id] %>/edit"><i class="fas fa-user-edit"></i></a>
           </span>

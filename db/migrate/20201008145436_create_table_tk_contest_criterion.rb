@@ -2,7 +2,7 @@ class CreateTableTkContestCriterion < ActiveRecord::Migration[6.0]
   def up
     create_table :tk_contest_criterions do |t|
       t.string :name, limit: 150
-      t.integer :poin
+      t.integer :point
       t.string :description, limit: 256
 
       t.timestamps

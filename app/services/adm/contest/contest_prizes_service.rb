@@ -13,7 +13,6 @@ class Adm::Contest::ContestPrizesService
   end
 
   def create params
-    binding.pry
     contest = Contest::Contest.where(id: params[:contest_id]).first
     if can_create? contest, params
       atts = [:contest_id, :name, :student_price, :teacher_price, :prize_type, :month_active, :contest_id, :description, :number_awards, :prize]

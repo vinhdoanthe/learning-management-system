@@ -26,9 +26,7 @@
                 <td><%= contest.description.present? ? contest.description.html_safe : '' %></td>
                 <td><%= contest.is_publish ? 'Active' : 'Inactive' %></td>
                 <td style="min-width: 100px">
-                  <span class='tooltip-span' data-toggle="tooltip" title="<%= t("adm.user.show") %>">
                     <a href="/adm/contest/contests/<%= contest[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
-                  </span>
                   <% unless contest_has_projects contest %>
                     <a class="delete-contest" data-contest="<%= contest.id %>" ><i class="fas fa-trash"></i></a>
                   <% else %>

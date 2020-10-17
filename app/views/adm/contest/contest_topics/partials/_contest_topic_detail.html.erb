@@ -1,51 +1,87 @@
-<div class="contest-topic-detail">
-  <%= render "adm/contest/contest_topics/partials/contest_topic_index", topics: [] %>
-  <div class="card card-primary">
-    <div class="card-header">
-      <h3 class="card-title">Contest Topic Detail</h3>
-    </div>
-    <form role="form">
-      <div class="card-body">
-        <div class="form-group">
-          <label for="topic_name">Name</label>
-          <input type="text" value="<%= topic&.name %>" class="form-control" id="topic_name" placeholder="Enter Topic Name">
-        </div>
-        <div class="form-group">
-          <label for="topic_name">Cuộc thi</label>
-          <input type="text" value="<%= contest&.name %>" readonly class="form-control" name="contest-name">
-          <input type="hidden" value="<%= contest&.id %>" class="form-control" name="contest-id">
-        </div>
-        <div class="form-group">
-          <label for="topic_region">Region</label>
-          <select class="form-control" id="topic_region">
-            <% Contest::Constant::ContestTopic::REGIONS.each do |region| %>
-              <option value="<%= region %>"><%= region %></option>
-            <% end %>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="topic_description">Description</label>
-          <textarea class="contest-topic-description-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>' id="topic_description"><%= topic&.description %></textarea>
-        </div>
-        <div class="form-group">
-          <label for="topic_name">Rule</label>
-          <textarea class="contest-topic-rule-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>'><%= topic&.rule %></textarea>
-        </div>
-        <div class="form-group">
-          <label for="exampleInputFile">Thumbnail</label>
+<%= javascript_include_tag "adm/contest/contest_topic.js" %>
+<%= javascript_include_tag "adm/contest/contest_criterion.js" %>
+<div class="card card-primary">
+  <div class="card-header">
+    <h3 class="card-title">Contest Topic Detail</h3>
+  </div>
+  <form role="form">
+    <div class="card-body">
+      <div class="form-group">
+        <label for="topic_name">Name</label>
+        <input type="text" value="<%= topic&.name %>" class="form-control" id="topic_name" placeholder="Enter Topic Name">
+      </div>
+      <div class="form-group">
+        <label for="topic_name">Cuộc thi</label>
+        <input type="text" value="<%= contest&.name %>" readonly class="form-control" name="contest-name">
+        <input type="hidden" value="<%= contest&.id %>" class="form-control" name="contest-id">
+      </div>
+      <div class="form-group">
+        <label for="topic_region">Region</label>
+        <select class="form-control" id="topic_region">
+          <% Contest::Constant::ContestTopic::REGIONS.each do |region| %>
+            <option value="<%= region %>"><%= region %></option>
+          <% end %>
+        </select>
+      </div>
+      <div class='row'>
+        <div class="form-group col-md-6">
+          <label>Start date:</label>
           <div class="input-group">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="topic_thumbnail">
-              <label class="custom-file-label" for="topic_thumbnail">Choose file</label>
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="far fa-calendar-alt"></i>
+              </span>
+            </div>
+            <input type="text" value="<%= topic&.start_time.present? ? topic&.start_time.strftime('%d/%m/%Y') : Time.now.strftime('%d/%m/%Y') %>" class="form-control float-right" id="topic-start-date">
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label>End date:</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="far fa-calendar-alt"></i>
+              </span>
+            </div>
+            <input type="text" value="<%= topic&.end_time.present? ? topic&.end_time.strftime('%d/%m/%Y') : Time.now.strftime('%d/%m/%Y') %>" class="form-control float-right" id="topic-end-date">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="topic_description">Description</label>
+        <textarea class="contest-topic-description-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>' id="topic_description"><%= topic&.description %></textarea>
+      </div>
+      <div class="form-group">
+        <label for="topic_name">Rule</label>
+        <textarea class="contest-topic-rule-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>'><%= topic&.rule %></textarea>
+      </div>
+      <div class='row'>
+        <div class='col-md-6'>
+          <div class="form-group">
+            <label for="topic_thumbnail">Thumbnail</label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="topic_thumbnail">
+                <label class="custom-file-label" for="topic_thumbnail">Choose file</label>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Choose prize</h3>
+          <div class="card-tools">
+            <a data-toggle='modal' data-target="#modal_create_contest_prize" class="btn btn-info float-right"><i class="fas fa-plus"></i></a>
+          </div>
+        </div>
+        <div class="card-body">
           <div class="form-group table-responsive">
-            <label for="topic_name">Choose prize</label>
-            <table class="table table-responsive">
+            <table class="table">
               <thead>
                 <tr>
+                  <th>action</th>
                   <th>#</th>
-                  <th>Action</th>
                   <th>name</th>
                   <th>student_price</th>
                   <th>teacher_price</th>
@@ -58,17 +94,21 @@
               <tbody>
                 <% contest.contest_prizes.each do |prize| %>
                   <tr>
-                    <th>#</th>
-                    <th>
-                      <input class="custom-control-input" type="checkbox" id="choose_prizes" value="<%= prize.id %>">
-                    </th>
-                    <th><%= prize.name %></th>
-                    <th><%= prize.student_price %></th>
-                    <th><%= prize.teacher_price %></th>
-                    <th><%= prize.prize %></th>
-                    <th><%= prize.prize_type %></th>
-                    <th><%= prize.number_awards %></th>
-                    <th><%= prize.description %></th>
+                    <td>
+                      <div class="form-check">
+                        <input  type="checkbox" class="choose_prizes" value="<%= prize.id %>">
+                      </div>
+                    </td>
+                    <td>
+                      <%= prize.id %>
+                    </td>
+                    <td><%= prize.name %></td>
+                    <td><%= prize.student_price %></td>
+                    <td><%= prize.teacher_price %></td>
+                    <td><%= prize.prize %></td>
+                    <td><%= prize.prize_type %></td>
+                    <td><%= prize.number_awards %></td>
+                    <td><%= prize.description&.html_safe %></td>
                   </tr>
                 <% end %>
               </tbody>
@@ -76,52 +116,102 @@
           </div>
         </div>
       </div>
-      <!-- /.card-body -->
-
-      <% if topic&.id.blank? %>
-        <div class="card-footer">
-          <button id="create-contest-topic-confirm" class="btn btn-primary">Submit</button>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Choose criterion</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_create_contest_criterion"><i class="fas fa-plus"></i></button>
+          </div>
         </div>
-      <% else %>
-      <% end %>
-    </form>
-  </div>
+        <div class="card-body">
+          <div class="form-group table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>action</th>
+                  <th>#</th>
+                  <th>name</th>
+                  <th>point</th>
+                  <th>description</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody class='table-criterion'>
+                <% Contest::ContestCriterion.all.each do |c| %>
+                  <tr>
+                    <td>
+                      <div class="form-check">
+                        <input  type="checkbox" class="choose_prizes" value="<%= c.id %>">
+                      </div>
+                    </td>
+                    <td>
+                      <%= c.id %>
+                    </td>
+                    <td><%= c.name %></td>
+                    <td><%= c.point %></td>
+                    <td><%= c.description&.html_safe %></td>
+                    <td style="min-width: 100px">
+                      <a target="_blank"><i class="far fa-eye"></i></a>
+                      <% unless false %>
+                        <a class="delete-criterion" data-criterion="<%= c.id %>" ><i class="fas fa-trash"></i></a>
+                      <% else %>
+                        <a class="delete-criterion" disabled data-criterion="<%= c.id %>" ><i class="fas fa-trash"></i></a>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.card-body -->
+
+    <% if topic&.id.blank? %>
+      <div class="card-footer">
+        <button type='button' id="create-contest-topic-confirm" class="btn btn-info float-right"><i class="fas fa-plus"></i>&nbsp;Submit</button>
+      </div>
+    <% else %>
+    <% end %>
+  </form>
 </div>
 
-<script>
-  $(document).ready(function(){
-    setSummerNote('.contest-topic-description-textarea')
-    setSummerNote('.contest-topic-rule-textarea')
-
-    $('#create-contest-topic-confirm').click(function(){
-      var data = new FormData();
-      name = $('#topic-name').val();
-      data.append('name', name);
-      contest_id = $('#contest-id').val();
-      data.append('contest_id', contest_id);
-      region = $('#topic_region').val();
-      data.append('region', region);
-      description = $('.contest-topic-description-textarea').val();
-      data.append('description', description);
-      rule = $('.contest-topic-rule-textarea').val();
-      data.append('rule', rule);
-
-      $.each($('#topic_thumbnail')[0].files, function (i, file) {
-        file_type = file.name.split('.').pop().toLowerCase();
-        if($.inArray(file_type, ['png','jpg','jpeg', 'heic']) == -1) {
-          arlert("Chi chap nhan anh duoi 'png','jpg', 'jpec', 'heic'!");
-          return
-        }else{
-          data.append("photos[]", file);
-        }
-      })
-
-      $.ajax({
-        method: 'POST',
-        url: '',
-        data: data,
-        dataType: 'script'
-      })
-    })
-  })
-</script>
+<div class="modal fade" id="modal_create_contest_prize" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Create prize</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "adm/contest/contest_prizes/partials/contest_prize_detail", { prize: Contest::ContestPrize.new, option: '', contest: contest } %>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="create_criterion_confirm" class="btn btn-primary" data-dismiss='modal'>Add new</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_create_contest_criterion" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Create critreion</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "adm/contest/contest_criterions/partials/criterion_detail", { criterion: Contest::ContestCriterion.new, criterion_option: '' } %>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="create_criterion_confirm" class="btn btn-primary" data-dismiss='modal'>Add new</button>
+      </div>
+    </div>
+  </div>
+</div>
