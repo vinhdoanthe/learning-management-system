@@ -1,4 +1,4 @@
-class CreateTableTkContestProject < ActiveRecord::Migration[6.0]
+class CreateContestProject < ActiveRecord::Migration[6.0]
   def up
     create_table :tk_contest_projects do |t|
       t.integer :project_id

@@ -35,8 +35,14 @@ $(document).ready(function(){
     $('.choose_prizes:checked').each(function(){
       contest_prizes.push($(this).val());
     })
-    debugger
+
+    contest_criterions = new Array();
+    $('.choose_criterions:checked').each(function(){
+      contest_criterions.push($(this).val());
+    })
+
     data.append('contest_prizes[]', contest_prizes);
+    data.append('contest_criterions[]', contest_criterions);
     start_time = $('#topic-start-date').val()
     end_time = $('#topic-end-date').val()
     data.append("start_time", start_time);

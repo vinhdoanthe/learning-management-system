@@ -14,6 +14,7 @@ class Adm::Contest::ContestTopicsService
 
     if topic.save
       create_topic_prizes topic, params[:contest_prizes]
+      create_topic_criterion topic, params[:contest_criterions]
       { type: 'success', message: 'Tao chu de thanh cong', topic: topic, contest: contest }
     else
       { type: 'danger', message: 'Da co loi xay ra! Vui long thu lai sau!' }
@@ -34,6 +35,16 @@ class Adm::Contest::ContestTopicsService
       t_prize.contest_topic_id = topic_id
       t_prize.contest_prize_id = prize
       t_prize.save
+    end
+  end
+
+  def create_topic_criterion topic, criterion_ids
+    topic_id = topic.id
+    criterion_ids.each do |c_id|
+      t_criterion = Contest::ContestTopicCriterion.new
+      t_criterion.contest_topic_id = topic_id
+      t_criterion.contest_criterion_id = c_id
+      t_criterion.save
     end
   end
 end

@@ -4,6 +4,7 @@ module User
     skip_before_action :authenticate_user!, only: [:new, :create]
 
     def new
+      session[:contest] = params[:contest]
       if logged_in?
         redirect_to root_path
       end
@@ -18,7 +19,11 @@ module User
       else
         if user.authenticate(params[:session][:password])
           log_in(user)
-          redirect_to root_path
+          if session[:contest].present? && session[:contest] == 'true'
+            redirect_to new_contest_contests_path
+          else
+            redirect_to root_path
+          end
         else
           flash.now[:danger] = 'Mật khẩu không đúng'
           render 'new'

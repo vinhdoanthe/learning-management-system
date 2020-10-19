@@ -19,4 +19,20 @@ display_response_noti(res);
         </td>
       </tr>
       `);
+
+
+    $(".table-contest-topic").append(`
+      <tr>
+      <td style="widtd: 10px"><%= topic.id %></td>
+        <td><%= topic.name %></td>
+        <td><%= topic.contest.name %></td>
+        <td><%= topic.region %></td>
+        <td><%= topic&.description.html_safe %></td>
+        <td><%= topic&.rule.html_safe %></td>
+        <td>
+        <% if topic.thumbnail.attached? %> <%= image_tag topic.thumbnail, style: "widtd: 20px; height: 20px" %>
+        <% end %>
+        </td>
+      </tr>
+      `);
 <% end %>
