@@ -1,4 +1,4 @@
-class Contest::ProjectCreterion < ApplicationRecord
+class Contest::ProjectCriterion < ApplicationRecord
   self.table_name = "tk_project_criterions"
 
   belongs_to :contest_project, class_name: "Contest::ContestProject", foreign_key: 'contest_project_id'
