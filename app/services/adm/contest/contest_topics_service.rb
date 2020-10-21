@@ -13,11 +13,12 @@ class Adm::Contest::ContestTopicsService
     create_params.each{ |att| topic.send(att + '=', params[att]) }
 
     if topic.save
-      create_topic_prizes topic, params[:contest_prizes]
-      create_topic_criterion topic, params[:contest_criterions]
-      { type: 'success', message: 'Tao chu de thanh cong', topic: topic, contest: contest }
+      create_topic_prizes topic, params[:contest_prizes][0].split(',')
+      binding.pry
+      create_topic_criterion topic, params[:contest_criterions][0].split(',')
+      { result: { type: 'success', message: 'Tao chu de thanh cong'}, topic: topic, contest: contest }
     else
-      { type: 'danger', message: 'Da co loi xay ra! Vui long thu lai sau!' }
+      { result: { type: 'danger', message: 'Da co loi xay ra! Vui long thu lai sau!' } }
     end
 
   end
@@ -39,12 +40,61 @@ class Adm::Contest::ContestTopicsService
   end
 
   def create_topic_criterion topic, criterion_ids
+    binding.pry
     topic_id = topic.id
     criterion_ids.each do |c_id|
       t_criterion = Contest::ContestTopicCriterion.new
       t_criterion.contest_topic_id = topic_id
       t_criterion.contest_criterion_id = c_id
       t_criterion.save
+    end
+  end
+
+  def caculator_projects_point topic
+    qry = " SELECT a.id, SUM(b.point_exchange) AS point_max
+            FROM tk_contest_projects AS a
+            LEFT JOIN tk_project_criterions AS b ON a.id = b.contest_project_id
+            WHERE a.contest_topic_id = #{ topic.id }
+            GROUP BY a.id
+            ORDER BY point_max DESC "
+    #contest_exchanges = Contest::ContestExchange.where(status: 'active').pluck(:id, :top_from, :top_end, :point).sort_by{|e| e[2] }
+    contest_exchanges = Contest::ContestExchange.pluck(:id, :top_from, :top_end, :point).sort_by{|e| e[2] }
+    exchange_hash = {}
+    contest_exchanges.each do |e|
+      exchange_hash.merge!({e[0] => [(e[1] - 1)..(e[2] - 1), e[3]]})
+    end
+
+    limit = contest_exchanges[-1][2]
+
+    qry += " LIMIT #{ limit } "
+    prize_projects = ActiveRecord::Base.connection.execute(qry).values
+
+    exchange_hash.each do |key, val|
+      project_ids = []
+      prize_projects[val[0]]&.each{ |p| project_ids << p[0] }
+      Contest::ContestProject.where(id: project_ids).update_all(score: val[1])
+    end
+  end
+
+  def awarded_project topic, type
+    binding.pry
+    topic_prizes = topic.contest_prizes.where(prize_type: type).pluck(:id, :prize, :number_awards).sort{|p| p[1] }
+    total_awards = 0
+    topic_prizes.each{ |p| total_awards += p[2] }
+
+    sql = " SELECT  project.id, SUM(project.score * #{ SCORE_RATIO } + project.judges_score * #{ JUDGES_SCORE_RATIO }) as point
+            FROM  tk_contest_projects AS project
+            GROUP BY project.id
+            ORDER BY point DESC
+            LIMIT #{ total_awards }
+            "
+    projects = ActiveRecord::Base.connection.execute(sql).values
+
+    topic_prizes.each do |p|
+      project_ids = []
+      projects[0..(p[2] - 1)]&.each{ |p| project_ids << p[0] }
+      Contest::ContestProject.where(id: project_ids).update_all(contest_prize_id: p[0])
+      projects = projects.drop(p[2])
     end
   end
 end

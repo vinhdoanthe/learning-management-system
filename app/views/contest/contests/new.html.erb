@@ -1,1 +1,17 @@
-<%= render 'contest/contests/partials/upload_new_contest_project' %>
+<% project = SocialCommunity::ScStudentProject.new %>
+<% url = '/contest/contest_projects/submit_contest_project' %>
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+        <h4>San pham du thi <%= @topic.name %></h4>
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class="panel-content">
+      <%= render 'contest/contests/partials/upload_new_contest_project', project: project, url: url %>
+      <input type='submit' data-remote='true' form='edit_student_project_form' class='btn btn-primary edit_student_project_form_submit' value='Submit'>
+    </div>
+  </div>
+</div>

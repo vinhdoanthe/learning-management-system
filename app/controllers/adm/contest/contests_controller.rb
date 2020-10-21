@@ -20,7 +20,6 @@ class Adm::Contest::ContestsController < Adm::AdmController
   end
 
   def delete_contest
-    binding.pry
     result = Adm::Contest::ContestsService.new.delete_contest params
 
     render json: result

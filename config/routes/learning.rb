@@ -14,4 +14,5 @@ namespace :learning do
   post 'reward_student' => 'batch/session_student_rewards#reward_student'
   post 'student_feeback' => 'batch/session_student_feedbacks#student_feedback'
   get 'feedback/:id' => 'batch/session_student_feedbacks#show', as: 'feedback'
+  get 'student_batch_subjects' => 'batch/op_batches#student_batch_subjects'
 end

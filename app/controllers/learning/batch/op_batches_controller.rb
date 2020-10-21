@@ -16,6 +16,15 @@ class Learning::Batch::OpBatchesController < ApplicationController
     end
   end
 
+  def student_batch_subjects
+    batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
+    student_course = Learning::Batch::OpStudentCourse.where(batch_id: batch.id, student_id: current_user.op_student.id).first
+    subjects = student_course.op_subjects.pluck(:id, :level).uniq
+
+    render json: subjects
+
+  end
+
   private
   def student_homework_report_params
     [params[:batch_id], params[:subject_id], params[:faculty_id]]
