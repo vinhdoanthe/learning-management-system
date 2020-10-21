@@ -19,7 +19,7 @@ module User
       else
         if user.authenticate(params[:session][:password])
           log_in(user)
-          if session[:contest].present? && session[:contest] == 'true'
+          if session[:contest].present? && session[:contest].to_i != 0
             redirect_to new_contest_contests_path
           else
             redirect_to root_path

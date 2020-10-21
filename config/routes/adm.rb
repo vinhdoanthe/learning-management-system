@@ -115,5 +115,16 @@ namespace :adm do
       post 'create_criterion', action: 'create_criterion', as: 'create_criterion'
       post 'delete_criterion', action: 'delete_criterion', as: 'delete_criterion'
     end
+
+    namespace :contest_projects do
+      get '', action: 'index', as: 'index'
+      get 'index_content', action: 'index_content', as: 'index_content'
+    end
+
+    resources :contest_exchanges
+    namespace :contest_exchanges do
+      post 'create_new', action: 'create_new', as: 'create_new'
+      post 'update', action: 'update', as: 'update'
+    end
   end
 end

@@ -9,4 +9,9 @@ module Contest::Constant
   module ContestPrize
     TYPES = [ 'w', 'm', 'y' ]
   end
+
+  module ScoreRatio
+    SCORE_RATIO = 0.3
+    JUDGES_RATIO = 0.7
+  end
 end

@@ -40,7 +40,7 @@
               <td><%= prize.prize %></td>
               <td><%= t("adm.contest.contest_prizes.#{ prize.prize_type }") %></td>
               <td><%= prize.student_price + prize.teacher_price %></td>
-              <td><%= prize.description %></td>
+              <td><%= prize.description.html_safe %></td>
             </tr>
           <% end%>
         <% end %>

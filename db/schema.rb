@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_17_040450) do
+ActiveRecord::Schema.define(version: 2020_10_21_024933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6797,6 +6797,18 @@ ActiveRecord::Schema.define(version: 2020_10_17_040450) do
     t.index ["tag_id"], name: "note_tags_rel_tag_id_idx"
   end
 
+  create_table "odooapi_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_odooapi_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_odooapi_users_on_reset_password_token", unique: true
+  end
+
   create_table "op_activity", id: :serial, comment: "op.activity", force: :cascade do |t|
     t.datetime "message_last_post", comment: "Last Message Date"
     t.integer "student_id", null: false, comment: "Student"
@@ -11067,6 +11079,7 @@ ActiveRecord::Schema.define(version: 2020_10_17_040450) do
     t.integer "point"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "status"
   end
 
   create_table "tk_contest_prizes", force: :cascade do |t|
@@ -11094,6 +11107,7 @@ ActiveRecord::Schema.define(version: 2020_10_17_040450) do
     t.boolean "is_valid"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "judges_score"
   end
 
   create_table "tk_contest_topics", force: :cascade do |t|
@@ -11106,6 +11120,7 @@ ActiveRecord::Schema.define(version: 2020_10_17_040450) do
     t.datetime "end_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "status"
   end
 
   create_table "tk_contests", force: :cascade do |t|
@@ -11119,8 +11134,8 @@ ActiveRecord::Schema.define(version: 2020_10_17_040450) do
   create_table "tk_project_criterions", force: :cascade do |t|
     t.integer "contest_project_id"
     t.integer "contest_criterion_id"
-    t.integer "number"
-    t.integer "point_exchange"
+    t.integer "number", comment: "So diem cua tieu chi"
+    t.integer "point_exchange", comment: "So diem da quy doi"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

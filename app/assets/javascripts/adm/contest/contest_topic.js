@@ -43,6 +43,7 @@ $(document).ready(function(){
 
     data.append('contest_prizes[]', contest_prizes);
     data.append('contest_criterions[]', contest_criterions);
+    debugger
     start_time = $('#topic-start-date').val()
     end_time = $('#topic-end-date').val()
     data.append("start_time", start_time);

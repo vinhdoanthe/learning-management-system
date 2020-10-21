@@ -1,0 +1,41 @@
+<div class='create_contest_exchange'>
+  <div class="card card-primary" style="margin-bottom: 0">
+    <div class="card-header">
+      <h3 class="card-title">Them Quy doi</h3>
+    </div>
+    <form role="form" id="contest_exchange_form">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="exchange_title">exchange title</label>
+          <input class="form-control" id="exchange_title" placeholder="Enter title">
+        </div>
+        <div class='row'>
+          <div class='col-md-6'>
+            <div class="form-group">
+              <label for="exchange_from">Exchange from</label>
+              <input type="number" class="form-control" id="exchange_from" placeholder="exchange_from">
+            </div>
+          </div>
+          <div class='col-md-6'>
+            <div class="form-group">
+              <label for="exchange_end">Exchange to</label>
+              <input type="number" class="form-control" id="exchange_end" placeholder="exchange_to">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exchange_point">Exchange to</label>
+          <input type="number" class="form-control" id="exchange_point" placeholder="exchange_point">
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="exchange_status">
+          <label class="form-check-label" for="exchange_status">Active</label>
+        </div>
+      </div>
+    </form>
+    <div class="card-footer">
+      <button type="submit" id="submit-create-contest-exchange" class="btn btn-primary" data-dismiss="modal">Submit</button>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag 'adm/contest/contest_exchange.js' %>
