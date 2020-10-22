@@ -82,19 +82,38 @@ class Adm::Contest::ContestTopicsService
     total_awards = 0
     topic_prizes.each{ |p| total_awards += p[2] }
 
-    sql = " SELECT  project.id, SUM(project.score * #{ SCORE_RATIO } + project.judges_score * #{ JUDGES_SCORE_RATIO }) as point
-            FROM  tk_contest_projects AS project
-            GROUP BY project.id
-            ORDER BY point DESC
-            LIMIT #{ total_awards }
-            "
-    projects = ActiveRecord::Base.connection.execute(sql).values
+    #sql = " SELECT  project.id, SUM(project.score * #{ SCORE_RATIO } + project.judges_score * #{ JUDGES_SCORE_RATIO }) as point
+    #        FROM  tk_contest_projects AS project
+    #        GROUP BY project.id
+    #        ORDER BY point DESC
+    #        LIMIT #{ total_awards }
+    #        "
+    #projects = ActiveRecord::Base.connection.execute(sql).values
 
-    topic_prizes.each do |p|
-      project_ids = []
-      projects[0..(p[2] - 1)]&.each{ |p| project_ids << p[0] }
-      Contest::ContestProject.where(id: project_ids).update_all(contest_prize_id: p[0])
-      projects = projects.drop(p[2])
+    awarded_projects = Contest::ContestProject.
+      select("id, SUM(score * #{ SCORE_RATIO } + judges_score * #{ JUDGES_SCORE_RATIO }) as point").
+      group('id').
+      order(point: 'desc').
+      limit(total_awards).
+      to_a
+
+    topic_prizes = topic.contest_prizes.where(prize_type: type).
+    #topic_prizes = Contest::ContestPrize.
+      order(prize: 'asc').
+      select('id, prize, number_awards').
+      to_a
+
+    topic_prizes.each do |prize|
+      puts "Prize: #{prize.prize}: #{awarded_projects.map(&:id).inspect}"
+      Contest::ContestProject.where(id: awarded_projects.map(&:id)).update_all(contest_prize_id: prize.id)
     end
+
+
+    #topic_prizes.each do |p|
+    #  project_ids = []
+    #  projects[0..(p[2] - 1)]&.each{ |p| project_ids << p[0] }
+    #  Contest::ContestProject.where(id: project_ids).update_all(contest_prize_id: p[0])
+    #  projects = projects.drop(p[2])
+    #end
   end
 end

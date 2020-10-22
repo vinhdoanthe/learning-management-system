@@ -1,5 +1,7 @@
 class Contest::ContestsController < ApplicationController
   def index
+    #@contest = Contest::Contest.where(id: params[:contest_id]).first
+    @contest = Contest::Contest.first
   end
 
   def new

@@ -9264,7 +9264,7 @@ a.text-dark:focus, a.text-dark:hover {
   top: 50%;
   margin-left: -40px;
   margin-top: -40px;
-  background: url(contest/images/owl.video.play.png) no-repeat;
+  background: url(/contest/images/owl.video.play.png) no-repeat;
   cursor: pointer;
   z-index: 1;
   -webkit-backface-visibility: hidden;
@@ -12861,8 +12861,8 @@ a.text-dark:focus, a.text-dark:hover {
 /*---------- end owl carousel css ----------*/
 @font-face {
   font-family: 'Utm Avo';
-  src: url("contest/fonts/utm-avo.eot");
-  src: local("☺"), url("contest/fonts/utm-avo.woff") format("woff"), url("contest/fonts/utm-avo.ttf") format("truetype"), url("contest/fonts/utm-avo.svg") format("svg");
+  src: url("/contest/fonts/utm-avo.eot");
+  src: local("☺"), url("/contest/fonts/utm-avo.woff") format("woff"), url("/contest/fonts/utm-avo.ttf") format("truetype"), url("/contest/fonts/utm-avo.svg") format("svg");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -12870,8 +12870,8 @@ a.text-dark:focus, a.text-dark:hover {
 
 @font-face {
   font-family: 'Utm Avo';
-  src: url("contest/fonts/utm-avo-bold.eot");
-  src: local("☺"), url("contest/fonts/utm-avo-bold.woff") format("woff"), url("contest/fonts/utm-avo-bold.ttf") format("truetype"), url("contest/fonts/utm-avo-bold.svg") format("svg");
+  src: url("/contest/fonts/utm-avo-bold.eot");
+  src: local("☺"), url("/contest/fonts/utm-avo-bold.woff") format("woff"), url("/contest/fonts/utm-avo-bold.ttf") format("truetype"), url("/contest/fonts/utm-avo-bold.svg") format("svg");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -13095,193 +13095,193 @@ a:focus {
 }
 
 .icon16-upload {
-  background-image: url("contest/images/icons/icon16-upload.svg");
+  background-image: url("/contest/images/icons/icon16-upload.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon16-calling {
-  background-image: url("contest/images/icons/icon16-calling.svg");
+  background-image: url("/contest/images/icons/icon16-calling.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon16-calendar-white {
-  background-image: url("contest/images/icons/icon16-calendar-white.svg");
+  background-image: url("/contest/images/icons/icon16-calendar-white.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon16-calendar-primary {
-  background-image: url("contest/images/icons/icon16-calendar-primary.svg");
+  background-image: url("/contest/images/icons/icon16-calendar-primary.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon16-like {
-  background-image: url("contest/images/icons/icon16-like.svg");
+  background-image: url("/contest/images/icons/icon16-like.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon16-share {
-  background-image: url("contest/images/icons/icon16-share.svg");
+  background-image: url("/contest/images/icons/icon16-share.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon16-eye {
-  background-image: url("contest/images/icons/icon16-eye.svg");
+  background-image: url("/contest/images/icons/icon16-eye.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon16-angle-left-white {
-  background-image: url("contest/images/icons/icon16-angle-left-white.svg");
+  background-image: url("/contest/images/icons/icon16-angle-left-white.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon16-angle-right-white {
-  background-image: url("contest/images/icons/icon16-angle-right-white.svg");
+  background-image: url("/contest/images/icons/icon16-angle-right-white.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon24-facebook {
-  background-image: url("contest/images/icons/icon24-facebook.svg");
+  background-image: url("/contest/images/icons/icon24-facebook.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon24-youtube {
-  background-image: url("contest/images/icons/icon24-youtube.svg");
+  background-image: url("/contest/images/icons/icon24-youtube.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon24-facebook-white {
-  background-image: url("contest/images/icons/icon24-facebook-white.svg");
+  background-image: url("/contest/images/icons/icon24-facebook-white.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon24-youtube-white {
-  background-image: url("contest/images/icons/icon24-youtube-white.svg");
+  background-image: url("/contest/images/icons/icon24-youtube-white.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon24-share {
-  background-image: url("contest/images/icons/icon24-share.svg");
+  background-image: url("/contest/images/icons/icon24-share.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon24-pdf {
-  background-image: url("contest/images/icons/icon24-pdf.svg");
+  background-image: url("/contest/images/icons/icon24-pdf.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon24-view {
-  background-image: url("contest/images/icons/icon24-view.svg");
+  background-image: url("/contest/images/icons/icon24-view.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon24-refresh {
-  background-image: url("contest/images/icons/icon24-refresh.svg");
+  background-image: url("/contest/images/icons/icon24-refresh.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon24-maximize {
-  background-image: url("contest/images/icons/icon24-maximize.svg");
+  background-image: url("/contest/images/icons/icon24-maximize.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon32-sand-clock {
-  background-image: url("contest/images/icons/icon32-sand-clock.svg");
+  background-image: url("/contest/images/icons/icon32-sand-clock.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon32-meday {
-  background-image: url("contest/images/icons/icon32-meday.svg");
+  background-image: url("/contest/images/icons/icon32-meday.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon32-lecture {
-  background-image: url("contest/images/icons/icon32-lecture.svg");
+  background-image: url("/contest/images/icons/icon32-lecture.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon32-coding {
-  background-image: url("contest/images/icons/icon32-coding.svg");
+  background-image: url("/contest/images/icons/icon32-coding.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon32-teky {
-  background-image: url("contest/images/icons/icon32-teky.svg");
+  background-image: url("/contest/images/icons/icon32-teky.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon44-medal {
-  background-image: url("contest/images/icons/icon44-medal.svg");
+  background-image: url("/contest/images/icons/icon44-medal.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon48-info {
-  background-image: url("contest/images/icons/icon48-info.svg");
+  background-image: url("/contest/images/icons/icon48-info.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon48-desc {
-  background-image: url("contest/images/icons/icon48-desc.svg");
+  background-image: url("/contest/images/icons/icon48-desc.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon48-sent {
-  background-image: url("contest/images/icons/icon48-sent.svg");
+  background-image: url("/contest/images/icons/icon48-sent.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon48-youtube {
-  background-image: url("contest/images/icons/icon48-youtube.svg");
+  background-image: url("/contest/images/icons/icon48-youtube.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon48-file {
-  background-image: url("contest/images/icons/icon48-file.svg");
+  background-image: url("/contest/images/icons/icon48-file.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon48-like {
-  background-image: url("contest/images/icons/icon48-like.svg");
+  background-image: url("/contest/images/icons/icon48-like.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon48-share {
-  background-image: url("contest/images/icons/icon48-share.svg");
+  background-image: url("/contest/images/icons/icon48-share.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .icon128-play {
-  background-image: url("contest/images/icons/icon128-play.svg");
+  background-image: url("/contest/images/icons/icon128-play.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -13291,7 +13291,7 @@ a:focus {
   height: 12px;
   display: inline-block;
   vertical-align: middle;
-  background-image: url("contest/images/icons/icon-long-arrow-right.svg");
+  background-image: url("/contest/images/icons/icon-long-arrow-right.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -13301,7 +13301,7 @@ a:focus {
   height: 12px;
   display: inline-block;
   vertical-align: middle;
-  background-image: url("contest/images/icons/icon-long-arrow-left-blue.svg");
+  background-image: url("/contest/images/icons/icon-long-arrow-left-blue.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -13311,7 +13311,7 @@ a:focus {
   height: 12px;
   display: inline-block;
   vertical-align: middle;
-  background-image: url("contest/images/icons/icon-long-arrow-right-blue.svg");
+  background-image: url("/contest/images/icons/icon-long-arrow-right-blue.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -13321,7 +13321,7 @@ a:focus {
   height: 12px;
   display: inline-block;
   vertical-align: middle;
-  background-image: url("contest/images/icons/icon-medium-arrow-right.svg");
+  background-image: url("/contest/images/icons/icon-medium-arrow-right.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -13331,7 +13331,7 @@ a:focus {
   height: 16px;
   display: inline-block;
   vertical-align: middle;
-  background-image: url("contest/images/icons/icon-right-white.svg");
+  background-image: url("/contest/images/icons/icon-right-white.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -13341,7 +13341,7 @@ a:focus {
   height: 48px;
   display: inline-block;
   vertical-align: middle;
-  background-image: url("contest/images/icons/icon-meday.svg");
+  background-image: url("/contest/images/icons/icon-meday.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -13351,7 +13351,7 @@ a:focus {
   height: 50px;
   display: inline-block;
   vertical-align: middle;
-  background-image: url("contest/images/icons/icon-scroll.png");
+  background-image: url("/contest/images/icons/icon-scroll.png");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -13361,7 +13361,7 @@ a:focus {
   height: 15px;
   display: inline-block;
   vertical-align: middle;
-  background-image: url("contest/images/icons/icon-expand.svg");
+  background-image: url("/contest/images/icons/icon-expand.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -13842,7 +13842,7 @@ select:not([multiple])::-ms-expand {
 }
 
 .b-form .b-form__btnnewimg {
-  background: url(contest/images/btnnewimg.png) no-repeat;
+  background: url(/contest/images/btnnewimg.png) no-repeat;
   border: none;
   box-shadow: none;
   cursor: pointer;
@@ -14070,7 +14070,7 @@ a.btn-push {
   content: "";
   width: 8px;
   height: 6px;
-  background-image: url("contest/images/drop-down.svg");
+  background-image: url("/contest/images/drop-down.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -14196,7 +14196,7 @@ a.btn-push {
   content: "";
   width: 90px;
   height: 16px;
-  background-image: url("contest/images/dropdown-top.png");
+  background-image: url("/contest/images/dropdown-top.png");
   background-position: bottom center;
   background-repeat: no-repeat;
   position: absolute;
@@ -14489,7 +14489,7 @@ a.btn-push {
   bottom: 0;
   width: 78px;
   height: 11px;
-  background-image: url("contest/images/box-dot.svg");
+  background-image: url("/contest/images/box-dot.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -14637,12 +14637,12 @@ a.btn-push {
 }
 
 .c-template-slider .owl-carousel .owl-nav button.owl-next {
-  background-image: url("contest/images/slider-right.svg");
+  background-image: url("/contest/images/slider-right.svg");
   right: 0;
 }
 
 .c-template-slider .owl-carousel .owl-nav button.owl-prev {
-  background-image: url("contest/images/slider-left.svg");
+  background-image: url("/contest/images/slider-left.svg");
   left: 0;
 }
 
@@ -14682,11 +14682,11 @@ a.btn-push {
 }
 
 .c-template-slider.is-button-circle .owl-carousel .owl-nav button.owl-prev:before {
-  background-image: url("contest/images/icons/icon12-arrow-left.svg");
+  background-image: url("/contest/images/icons/icon12-arrow-left.svg");
 }
 
 .c-template-slider.is-button-circle .owl-carousel .owl-nav button.owl-next:before {
-  background-image: url("contest/images/icons/icon12-arrow-right.svg");
+  background-image: url("/contest/images/icons/icon12-arrow-right.svg");
 }
 
 .bg-border .c-template-slider.is-button-circle .owl-carousel .owl-nav button.owl-prev, .bg-border .c-template-slider.is-button-circle .owl-carousel .owl-nav button.owl-next {
@@ -15272,7 +15272,7 @@ a.btn-push {
   content: "";
   width: 7px;
   height: 12px;
-  background-image: url("contest/images/drop-down-select.svg");
+  background-image: url("/contest/images/drop-down-select.svg");
   background-position: center center;
   background-repeat: no-repeat;
   position: absolute;
@@ -15381,7 +15381,7 @@ a.btn-push {
 }
 
 .bg-warning-dark .c-box .c-box__title:before {
-  background-image: url("contest/images/box-dot-white.svg");
+  background-image: url("/contest/images/box-dot-white.svg");
 }
 
 .bg-warning-dark .c-box .c-box__title .c-box__title__name {
@@ -15389,13 +15389,13 @@ a.btn-push {
 }
 
 .bg-gradient {
-  background-image: url("contest/images/gradient.png");
+  background-image: url("/contest/images/gradient.png");
   background-repeat: repeat;
   background-position: top center;
 }
 
 .bg-gradient-2 {
-  background-image: url("contest/images/gradient_2.png");
+  background-image: url("/contest/images/gradient_2.png");
   background-repeat: repeat;
   background-position: top center;
 }
@@ -15796,7 +15796,7 @@ a.btn-push {
   background-repeat: no-repeat;
   background-position: bottom center;
   background-size: 100% 100%;
-  background-image: url("contest/images/warning-dark-caret.svg");
+  background-image: url("/contest/images/warning-dark-caret.svg");
 }
 
 .c-rules-item {
@@ -16030,7 +16030,7 @@ a.btn-push {
 }
 
 .center .c-calendar-item .icon16-calendar-primary {
-  background-image: url("contest/images/icons/icon16-calendar-primary-white.svg");
+  background-image: url("/contest/images/icons/icon16-calendar-primary-white.svg");
 }
 
 .c-road-item {
@@ -16213,11 +16213,11 @@ a.btn-push {
 }
 
 .c-road-slider .owl-carousel .owl-nav button.owl-prev:before {
-  background-image: url("contest/images/icons/icon12-arrow-left.svg");
+  background-image: url("/contest/images/icons/icon12-arrow-left.svg");
 }
 
 .c-road-slider .owl-carousel .owl-nav button.owl-next:before {
-  background-image: url("contest/images/icons/icon12-arrow-right.svg");
+  background-image: url("/contest/images/icons/icon12-arrow-right.svg");
 }
 
 .c-road-board {
@@ -16628,7 +16628,7 @@ a.btn-push {
   max-width: 1440px;
   margin-left: auto;
   margin-right: auto;
-  background-image: url("contest/images/yellow-board.png");
+  background-image: url("/contest/images/yellow-board.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -16679,11 +16679,11 @@ a.btn-push {
 }
 
 .c-board-item__tag.is-warning-dark {
-  background-image: url("contest/images/tag-warning-dark.svg");
+  background-image: url("/contest/images/tag-warning-dark.svg");
 }
 
 .c-board-item__tag.is-purple {
-  background-image: url("contest/images/tag-purple.svg");
+  background-image: url("/contest/images/tag-purple.svg");
 }
 
 .c-board-item__tag span {
@@ -16705,7 +16705,7 @@ a.btn-push {
   justify-content: flex-start;
   width: 147px;
   height: 120px;
-  background-image: url("contest/images/yellow-board-leaf.svg");
+  background-image: url("/contest/images/yellow-board-leaf.svg");
   background-position: center bottom;
   background-repeat: no-repeat;
   margin-bottom: 7px;
@@ -16787,7 +16787,7 @@ a.btn-push {
 .c-board-grid ul li:first-child .c-board-item__thumb {
   width: 185px;
   height: 200px;
-  background-image: url("contest/images/yellow-board-leaf-top.svg");
+  background-image: url("/contest/images/yellow-board-leaf-top.svg");
   padding-top: 42px;
   margin-bottom: 15px;
 }
@@ -16911,7 +16911,7 @@ a.btn-push {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url("contest/images/icons/icon48-video-player.svg");
+  background-image: url("/contest/images/icons/icon48-video-player.svg");
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0;
@@ -17113,13 +17113,13 @@ a.btn-push {
     color: #fff;
   }
   .c-winner-item:hover .c-winner-item__count ul li .icon16-like {
-    background-image: url("contest/images/icons/icon16-like-white.svg");
+    background-image: url("/contest/images/icons/icon16-like-white.svg");
   }
   .c-winner-item:hover .c-winner-item__count ul li .icon16-share {
-    background-image: url("contest/images/icons/icon16-share-white.svg");
+    background-image: url("/contest/images/icons/icon16-share-white.svg");
   }
   .c-winner-item:hover .c-winner-item__count ul li .icon16-eye {
-    background-image: url("contest/images/icons/icon16-eye-white.svg");
+    background-image: url("/contest/images/icons/icon16-eye-white.svg");
   }
 }
 
@@ -17175,7 +17175,7 @@ a.btn-push {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url("contest/images/icons/icon48-video-player.svg");
+  background-image: url("/contest/images/icons/icon48-video-player.svg");
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0;
@@ -17293,13 +17293,13 @@ a.btn-push {
     color: #fff;
   }
   .c-product-small:hover .c-product-small__count ul li .icon16-like {
-    background-image: url("contest/images/icons/icon16-like-white.svg");
+    background-image: url("/contest/images/icons/icon16-like-white.svg");
   }
   .c-product-small:hover .c-product-small__count ul li .icon16-share {
-    background-image: url("contest/images/icons/icon16-share-white.svg");
+    background-image: url("/contest/images/icons/icon16-share-white.svg");
   }
   .c-product-small:hover .c-product-small__count ul li .icon16-eye {
-    background-image: url("contest/images/icons/icon16-eye-white.svg");
+    background-image: url("/contest/images/icons/icon16-eye-white.svg");
   }
 }
 
@@ -17539,7 +17539,7 @@ a.btn-push {
   left: 0;
   right: 0;
   bottom: 25.2100840336%;
-  background-image: url("contest/images/icons/icon48-video-player.svg");
+  background-image: url("/contest/images/icons/icon48-video-player.svg");
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0;
@@ -17771,13 +17771,13 @@ a.btn-push {
     color: #fff;
   }
   .c-product-item:hover .c-product-item__count ul li .icon16-like {
-    background-image: url("contest/images/icons/icon16-like-white.svg");
+    background-image: url("/contest/images/icons/icon16-like-white.svg");
   }
   .c-product-item:hover .c-product-item__count ul li .icon16-share {
-    background-image: url("contest/images/icons/icon16-share-white.svg");
+    background-image: url("/contest/images/icons/icon16-share-white.svg");
   }
   .c-product-item:hover .c-product-item__count ul li .icon16-eye {
-    background-image: url("contest/images/icons/icon16-eye-white.svg");
+    background-image: url("/contest/images/icons/icon16-eye-white.svg");
   }
   .c-product-grid > ul > li {
     padding-bottom: 40px;
@@ -18284,7 +18284,7 @@ a.btn-push {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url("contest/images/icons/icon48-video-player.svg");
+  background-image: url("/contest/images/icons/icon48-video-player.svg");
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0;
@@ -18309,7 +18309,7 @@ a.btn-push {
   height: 180px;
   margin-left: -100px;
   margin-top: -90px;
-  background-image: url("contest/images/award-leaf.svg");
+  background-image: url("/contest/images/award-leaf.svg");
   background-position: center center;
   background-repeat: no-repeat;
   border-radius: 100%;

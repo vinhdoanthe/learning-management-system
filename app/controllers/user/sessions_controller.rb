@@ -4,6 +4,7 @@ module User
     skip_before_action :authenticate_user!, only: [:new, :create]
 
     def new
+      binding.pry
       session[:contest] = params[:contest]
       if logged_in?
         redirect_to root_path
@@ -17,10 +18,11 @@ module User
         flash.now[:danger] = 'Tên đăng nhập không tồn tại'
         render 'new'
       else
+        binding.pry
         if user.authenticate(params[:session][:password])
           log_in(user)
           if session[:contest].present? && session[:contest].to_i != 0
-            redirect_to new_contest_contests_path
+            redirect_to contest_new_project_path(id: session[:contest].to_i)
           else
             redirect_to root_path
           end

@@ -1,5 +1,5 @@
 class Contest::ContestProject < ApplicationRecord
-  after_initialize :default_values
+  before_create :default_values
 
   self.table_name = "tk_contest_projects"
 
