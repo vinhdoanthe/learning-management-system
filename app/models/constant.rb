@@ -6,4 +6,5 @@ module Constant
   include Learning::Constant
   include Notification::Constant
   include SocialCommunity::Constant
+  include Contest::Constant
 end

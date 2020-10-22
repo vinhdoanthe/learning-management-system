@@ -27,7 +27,6 @@ class Adm::Learning::SessionsService
     if params[:attendance] == '0'
       query += "op_attendance_line.id IS NULL AND "
     elsif params[:attendance] == '1'
-      #query += "op_attendance_line.attendance_state NOT IN ('published', 'completed') AND "
       query += "op_attendance_line.id IS NOT NULL AND op_attendance_line.present = true AND ((op_attendance_line.attendance_state IS NULL) OR (op_attendance_line.attendance_state = '#{ OpAttendanceLineConstant::State::STATE_COMPLETED }')) AND "
     elsif params[:attendance] == '2'
       query += "op_attendance_line.attendance_state = '#{ OpAttendanceLineConstant::State::STATE_REJECTED }' AND "
@@ -41,12 +40,23 @@ class Adm::Learning::SessionsService
     end
 
     if params[:start_time].present?
-      sessions = Learning::Batch::OpSession.includes(:op_batch, :res_company, :photos, :op_lession, :op_faculty, :op_attendance_lines).where(query).where(start_datetime: (params[:start_time].to_datetime..params[:end_time].to_datetime)).distinct.order(start_datetime: :DESC).limit(25).offset(offset).pluck(:id, :state, :start_datetime, :end_datetime, 'op_batch.code', 'op_batch.id', 'op_batch.company_id', 'res_company.name', 'op_lession.name', 'op_lession.id', 'op_session.count', 'op_lession.lession_number', 'op_faculty.full_name', 'op_faculty.id')
+      sessions = Learning::Batch::OpSession.includes({ op_batch: :op_course }, :res_company, :photos, :op_lession, :op_faculty, :op_attendance_lines).where(query).where(start_datetime: (params[:start_time].to_datetime..params[:end_time].to_datetime)).distinct.order(start_datetime: :DESC).limit(25).offset(offset).pluck(:id, :state, :start_datetime, :end_datetime, 'op_batch.code', 'op_batch.id', 'op_batch.company_id', 'res_company.name', 'op_lession.name', 'op_lession.id', 'op_session.count', 'op_lession.lession_number', 'op_faculty.full_name', 'op_faculty.id', 'op_course.name')
     else
-      sessions = Learning::Batch::OpSession.includes(:op_batch, :res_company , :photos, :op_lession, :op_faculty, :op_attendance_lines).where(query).where(start_datetime: Time.at(0)..Time.now).distinct.order(start_datetime: :DESC).limit(25).offset(offset).pluck(:id, :state, :start_datetime, :end_datetime, 'op_batch.code', 'op_batch.id', 'op_batch.company_id', 'res_company.name', 'op_lession.name', 'op_lession.id', 'op_session.count', 'op_lession.lession_number', 'op_faculty.full_name', 'op_faculty.id')
+      sessions = Learning::Batch::OpSession.includes({ op_batch: :op_course }, :res_company , :photos, :op_lession, :op_faculty, :op_attendance_lines).where(query).where(start_datetime: Time.at(0)..Time.now).distinct.order(start_datetime: :DESC).limit(25).offset(offset).pluck(:id, :state, :start_datetime, :end_datetime, 'op_batch.code', 'op_batch.id', 'op_batch.company_id', 'res_company.name', 'op_lession.name', 'op_lession.id', 'op_session.count', 'op_lession.lession_number', 'op_faculty.full_name', 'op_faculty.id', 'op_course.name')
     end
 
-    sessions.map!{ |info| { id: info[0], state: info[1], start_datetime: info[2], end_datetime: info[3], batch_id: info[5], batch_code: info[4], company_id: info[6], company_name: info[7], lesson_name: info[8], lesson_id: info[9], session_count: info[10], lesson_number: info[11], faculty_name: info[12], faculty_id: info[13] } }
+    sessions.map!{ |info| { id: info[0], state: info[1], start_datetime: info[2], end_datetime: info[3], batch_id: info[5], batch_code: info[4], company_id: info[6], company_name: info[7], lesson_name: info[8], lesson_id: info[9], session_count: info[10], lesson_number: info[11], faculty_name: info[12], faculty_id: info[13], course_name: info[14] } }
+
+    session_ids = sessions.map{ |s| s[:id] }
+    count_att_line = Learning::Batch::OpAttendanceLine.where(session_id: session_ids).group(:session_id).count
+    count_ss_student = Learning::Batch::OpSessionStudent.where(session_id: session_ids).group(:session_id).count
+    count_photo = SocialCommunity::Photo.where(session_id: session_ids).group(:session_id).count
+
+    sessions.each do |session|
+      session.merge! ( { count_attendance_line: count_att_line[session[:id]], count_session_student: count_ss_student[session[:id]], count_photo: count_photo[session[:id]] })
+    end
+
+    sessions
   end
 
   def get_allow_user_companies user

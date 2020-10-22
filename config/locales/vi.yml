@@ -94,6 +94,8 @@ vi:
     parent_info: "Thông tin phụ huynh"
     study_progress: "Quá trình học tâp"
     change_pass: "Thay đổi mật khẩu"
+    change_avatar: "Thay đổi ảnh đại diện"
+    choose_avatar: "Cập nhật ảnh đại diện"
     full_name: "Họ và tên"
     gender: "Giới tính"
     birthday: "Ngày sinh"
@@ -390,3 +392,7 @@ vi:
     download: 'Tải về'
   flash_notice:
     :no_permissions: 'Bạn không có quyền truy cập tài nguyên này!'
+  notice:
+    update_success: "Cập nhật thành công!"
+    update_fail: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"
+    no_avatar: "Ảnh không tồn tại! Vui lòng thử lại"

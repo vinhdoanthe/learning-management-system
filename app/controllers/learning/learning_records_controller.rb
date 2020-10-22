@@ -89,6 +89,7 @@ module Learning
     end
 
     def get_user_answer
+      question = ''
       user_answer = Learning::Homework::UserAnswer.find(params[:user_answer_id])
       question = user_answer.user_question.question if user_answer.user_question.present?
       answer_mark = user_answer.answer_marks.order(created_at: :DESC).first

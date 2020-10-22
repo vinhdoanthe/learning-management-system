@@ -1,0 +1,21 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width: 10px">#</th>
+      <th>name</th>
+      <th>description</th>
+      <th>point</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% criterions.each do |c| %>
+    <tr>
+      <td><%= c.id %></td>
+      <td><%= c.description&.html_safe %></td>
+      <td><%= c.point %></td>
+      <td></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

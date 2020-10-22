@@ -64,7 +64,7 @@ class User::OpenEducat::OpStudentsService
 
   def self.get_comming_soon_session(student_id)
     coming_soon_session = nil
-    op_student_courses = Learning::Batch::OpStudentCourse.where(student_id: student_id).to_a
+    op_student_courses = Learning::Batch::OpStudentCourse.joins(:op_batch).where(op_batch: { state: Learning::Constant::Batch::STATE_APPROVE }).where(student_id: student_id).to_a
     batch_ids = []
     subject_ids = []
     student_course_ids = []

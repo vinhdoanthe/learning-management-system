@@ -35,8 +35,10 @@ function getDataFilter(){
     start_time = $('#filter-time').data('daterangepicker').startDate._d;
     end_time = $('#filter-time').data('daterangepicker').endDate._d;
   }
-  photo_state = $('input[name="session_photo"]:checked').val();
-  attendance = $('input[name="session_attendance_state"]:checked').val()
+  //photo_state = $('input[name="session_photo"]:checked').val();
+  //attendance = $('input[name="session_attendance_state"]:checked').val()
+  photo_state = $('#filter-photo').val();
+  attendance = $('#filter-attendance').val();
 
   return { batch_id: batch_id, company: company, state: state, start_time: start_time, end_time: end_time, photo_state: photo_state, attendance: attendance }
 }
@@ -61,20 +63,41 @@ function getSessionPhotos(session_id) {
 }
 
 $(document).ready(function(){
+
+  $('#filter-time').daterangepicker({
+    timePicker: true,
+    autoUpdateInput: false,
+    timePickerIncrement: 30,
+    locale: {
+      format: 'DD/MM/YYYY hh:mm A'
+    }
+  })
+  $('#filter-time').on('apply.daterangepicker', function(ev, picker) {
+    $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+  });
+
+  $('#filter-time').on('cancel.daterangepicker', function(ev, picker) {
+    $(this).val('');
+  });
+
   var data = getDataFilter();
   data['page'] = 0
   data['index'] = 1
   getDataSession(data);
 
-  
-  $('#paginator').on('click', '.previous_page', function () {
+
+  $('.paginator').on('click', '.previous_page', function () {
+    $('#loading-div').show();
+    $('#data-content').css('visibility', 'hidden');
     data = getDataFilter();
     data['page'] = $(this).data('page')
     data['index'] = -1;
     getDataSession(data)
   })
 
-  $('#paginator').on('click', '.next_page', function () {
+  $('.paginator').on('click', '.next_page', function () {
+    $('#loading-div').show();
+    $('#data-content').css('visibility', 'hidden');
     data = getDataFilter();
     data['page'] = $(this).data('page')
     data['index'] = 1;
@@ -82,6 +105,8 @@ $(document).ready(function(){
   })
 
   $('#submit_filter_sessions').on('click', function(){
+    $('#loading-div').show();
+    $('#data-content').css('visibility', 'hidden');
     data = getDataFilter();
     data['page'] = 0;
     data['index'] = 1;

@@ -1,4 +1,7 @@
 class Adm::Learning::SessionsController < Adm::AdmController
+
+  include Learning::Batch::OpSessionsHelper
+
   skip_before_action :verify_authenticity_token
   before_action :find_session, only: [:session_photos, :session_attendances, :session_videos, :session_info, :student_attendance_detail]
 

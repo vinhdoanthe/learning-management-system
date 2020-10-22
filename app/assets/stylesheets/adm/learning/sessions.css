@@ -1,0 +1,46 @@
+#submit_filter_sessions {
+  float: right;
+  text-transform: uppercase;
+  font-weight: 700;
+  width: 100%;
+}
+
+.paginator .next_page {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.paginator .previous_page {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.select2-container{
+  width: 100% !important;
+}
+
+.full-width__container {
+  width: 100%;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.session_info {
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+.table {
+  margin-bottom: 0rem !important;
+}
+
+.review-stats__disable {
+  opacity: 0.3;
+}
+
+.color-5dc2a7 {
+  color: #5dc2a7;
+}

@@ -1,0 +1,26 @@
+<div class="c-block c-about-block" id="about-block-id">
+  <div class="container">
+    <div class="row c-about">
+      <div class="col-lg-6">
+        <div class="c-box">
+          <div class="c-box__title">
+            <div class="c-box__title__name"><span>Giới thiệu cuộc thi</span><%= @contest.name %></div>
+            <div class="c-box__title__shadow">About Us</div>
+          </div>
+          <div class="c-box__content">
+            <div class="c-about__content">
+              <div class="b-maincontent">
+                <%= @contest.description.html_safe %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- c-box-->
+      </div>
+      <div class="col-lg-6">
+        <div class="c-about__img"><img src="/contest/upload/about.png" alt="image"></div>
+      </div>
+    </div>
+  </div>
+  <!--end container-->
+</div>

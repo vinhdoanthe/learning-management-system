@@ -58,6 +58,38 @@ module Learning
 
         sessions_has_video
       end
+
+      def css_class_name state
+
+        if state == Learning::Constant::Batch::Session::STATE_DRAFT
+          class_name = 'warning'
+        elsif state == Learning::Constant::Batch::Session::STATE_CONFIRM
+          class_name = 'primary'
+        elsif state == Learning::Constant::Batch::Session::STATE_DONE
+          class_name = 'success'
+        elsif state == Learning::Constant::Batch::Session::STATE_CANCEL
+          class_name = 'secondary'
+        end
+
+        class_name
+      end
+
+
+      def state_label state
+
+        if state == Learning::Constant::Batch::Session::STATE_DRAFT
+          lbl_state = I18n.t('adm.learning.session.lbl_state_draft')
+        elsif state == Learning::Constant::Batch::Session::STATE_CONFIRM
+          lbl_state = I18n.t('adm.learning.session.lbl_state_confirm')
+        elsif state == Learning::Constant::Batch::Session::STATE_DONE
+          lbl_state = I18n.t('adm.learning.session.lbl_state_done')
+        elsif state == Learning::Constant::Batch::Session::STATE_CANCEL
+          lbl_state = I18n.t('adm.learning.session.lbl_state_cancel')
+        end
+
+        lbl_state
+      end
+
     end
   end
 end

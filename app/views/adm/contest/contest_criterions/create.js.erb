@@ -1,0 +1,18 @@
+res = JSON.parse('<%= raw(result.to_json) %>');
+display_response_noti(res);
+
+$('.table-criterion').append(`
+    <tr>
+      <td>
+        <div class="form-check">
+          <input  type="checkbox" class="choose_prizes" value="<%= result[:criterion].id %>">
+        </div>
+      </td>
+      <td>
+        <%= result[:criterion].id %>
+      </td>
+      <td><%= result[:criterion].name %></td>
+      <td><%= result[:criterion].point %></td>
+      <td><%= result[:criterion].description&.html_safe %></td>
+    </tr>
+  `);

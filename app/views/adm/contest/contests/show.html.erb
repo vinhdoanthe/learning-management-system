@@ -1,0 +1,43 @@
+<%= javascript_include_tag "adm/contest/contests.js" %>
+<%= render "adm/contest/contests/partials/contest_info", { contest: @contest, title: "Chi tiet cuoc thi" } %>
+<div class='card'>
+  <div class="card-header">
+    <h3 class="card-title">Contest Topics</h3>
+    <div class="card-tools">
+      <a data-toggle='modal' data-target="#modal_create_contest_topic" class="btn btn-info float-right"><i class="fas fa-plus"></i></a>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div class='table table-responsive'>
+      <%= render 'adm/contest/contest_topics/index', { contest_topics: @contest_topics } %>
+    </div>
+  </div>
+</div>
+<%= render 'adm/contest/contest_prizes/partials/contest_prizes_table', { contest: @contest, prizes: @contest.contest_prizes, add_new: true } %>
+<div class="modal fade" id="modal_create_contest_prize" >
+  <div class="modal-title">
+    <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
+    <label>Them prize</label>
+  </div>
+  <div class="modal-content" style="width: 80%; margin: auto">
+    <div class="modal-body">
+      <%= render "adm/contest/contest_prizes/partials/contest_prize_detail", { contest: @contest, prize: Contest::ContestPrize.new, option: '' } %>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_create_contest_topic" >
+  <div class="modal-title">
+    <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
+    <label>Them prize</label>
+  </div>
+  <div class="modal-content" style="width: 80%; margin: auto">
+    <div class="modal-body">
+      <%= render "adm/contest/contest_topics/partials/contest_topic_detail", { contest: @contest, topic: Contest::ContestTopic.new, option: '', add_new: true } %>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    setSummerNote('.contest-description-textarea')
+  })
+</script>

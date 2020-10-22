@@ -100,11 +100,6 @@ vi:
       rf_phone: 'Số ĐT'
       rf_date: 'Ngày giới thiệu'
       rf_state: 'Trạng thái'
-    learning_activity:
-      name: "Hoạt động học tập"
-      discussion: "Thảo luận"
-      homework: "Bài tập về nhà"
-      project: "Sản phẩm học sinh"
     homework_list:
       batch_code: 'Mã batch'
       answer_time: 'Thời gian trả lời'
@@ -127,13 +122,28 @@ vi:
         name: 'Buổi học'
         academy: "Học viện"
         state: "Trạng thái"
+        start_datetime: 'Thời gian bắt đầu'
+        session_count: 'Đếm số buổi done'
+        information: 'Hình ảnh, đánh giá'
         time: "Thời gian"
         select_batch: "Chọn lớp học"
         select_state: "Chọn trạng thái"
         select_academy: "Chọn học viện"
         select_time: "Chọn thời gian"
-        lesson_number: "Buổi số"
+        lesson_number: "Bài học"
+        lbl_state_draft: 'Draft'
+        lbl_state_confirm: 'Confirm'
+        lbl_state_done: 'Done'
+        lbl_state_cancel: 'Cancel'
         faculty_name: "Giảng viên"
+        all: "Tất cả"
+        photo: "Hình ảnh"
+        attendance: "Nhận xét"
+        had_photo: "Đã có ảnh"
+        no_photo: "Chưa có ảnh"
+        no_attendance: "Chưa nhận xét"
+        evaluation_attendance: "Nhận xét cần đánh giá"
+        invalid_attendance: "Nhận xét chưa đạt yêu cầu"
       batch:
         info: 'Thông tin lớp học'
         code: 'Mã lớp học'
@@ -148,8 +158,11 @@ vi:
         start_time: "Thời gian bắt đầu"
         end_time: "Thời gian kết thúc"
         company: "Công ty"
-        attendance: "Điểm danh"
+        attendance: "Đi học"
         session_state: "Trạng thái buổi học"
+        note: "Ghi chú"
+        classroom: "Phòng học"
+        no_session: "Chưa có học sinh nào"
       Temporary session The lesson has not taken place yet: "Tạm khoá: Buổi học chưa diễn ra"
       Introduce classmates: "Giới thiệu bạn học"
       Step: "Bước"
@@ -318,4 +331,16 @@ vi:
       name: "Hoạt động học tập"
       discussion: "Thảo luận"
       homework: "Bài tập về nhà"
-      project: "Sản phẩm cuối khoá" 
+      homeworks:
+        name: "Bài tập về nhà"
+        right: "Câu trả lời đúng"
+        waiting: "Câu trả lời cần chấm"
+        wrong: "Câu trả lời sai"
+        more: "Xem thêm"
+        all: "Xem tất cả"
+      project: "Sản phẩm học sinh"
+    contest:
+      contest_prize:
+        w: "Thi tuần"
+        m: "Thi tháng"
+        y: "Thi Năm"

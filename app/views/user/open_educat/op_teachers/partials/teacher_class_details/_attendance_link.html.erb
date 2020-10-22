@@ -1,3 +1,9 @@
-<a class="student_evaluate" data-value="" data-code="<%= code %>" data-toggle="modal" data-target="#modal_evaluate">
-  <img src="/global/images/add-comment-button.png" style="width: 20px; min-width: 20px;margin-right: 10px; cursor: pointer;">
-</a>
+<% if code[:checkin_value] %>
+  <a class="student_evaluate" data-value="" data-code="<%= code[:student_code] %>" data-toggle="modal" data-target="#modal_evaluate">
+    <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px; min-width: 32px;margin-right: 10px; cursor: pointer;') %>
+  </a>
+<% else %>
+  <a class="student_evaluate" data-code="<%= code %>">
+    <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px; min-width: 32px;margin-right: 10px; cursor: pointer;') %>
+  </a>
+<% end %>

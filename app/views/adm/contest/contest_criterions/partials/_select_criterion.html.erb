@@ -1,0 +1,10 @@
+<div class="form-group">
+  <label>Choosen Criterion</label>
+  <div class="select2-purple">
+    <select class="select2" id="select_criterion" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
+      <% criterions.each do |criterion| %>
+        <option value="<%= criterion.id %>"><%= criterion.name %></option>
+      <% end %>
+    </select>
+  </div>
+</div>

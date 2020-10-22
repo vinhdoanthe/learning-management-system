@@ -17,38 +17,44 @@
       </tr>
     </thead>
     <tbody>
-      <% @session_students.each_with_index do |ss, index| %>
+      <% if @session_students.blank? %>
         <tr>
-          <td style="text-align: center">
-            <div class='form-group'>
-              <div class='custom-control custom-checkbox'>
-                <% if ss.present == true %>
-                  <input class="operation-attendance custom-control-input" type="checkbox" id="attendance-check-<%= ss.id %>" value="<%= ss.id %>" checked>
-                <% else %>
-                  <input class="operation-attendance custom-control-input" type="checkbox" value="<%= ss.id %>" id="attendance-check-<%= ss.id %>">
-                <% end %>
-                <label for="attendance-check-<%= ss.id %>" class="custom-control-label"> </label>
-              </div>
-            </div>
-          </td>
-          <td>[<%= ss.student_code %>]<%= ss.student_name %></td>
-          <td style="text-align: center"><%= ss.classroom_name %></td>
-          <td><%= ss.batch_code %></td>
-          <td><%= ss.faculty_name %></td>
-          <td><%= ss.start_datetime.strftime('%H:%M %d/%m/%Y') %></td>
-          <td><%= ss.end_datetime.strftime('%H:%M %d/%m/%Y') %></td>
-          <td class='td-note'>
-            <p class='p-note session_student_note_<%= ss.id %>'><%= ss.note %></p>
-            <div class="text-div" style='display: none'>
-            <textarea class='operation_note text-note input_session_student_note_<%= ss.id %>' data-id="<%= ss.id %>" ><%= ss.note %></textarea>
-            <div class='icon-div'>
-              <span data-id="<%= ss.id %>" class='confirm-update-note'><i class="fa fa-check-square"></i></span>
-              <span class='close-note'><i class="fa fa-window-close"></i></span>
-            </div>
-            </div>
-          </td>
-          <td><%= ss.company_name %></td>
+          <td colspan="9"><%= t('adm.learning.operation.no_session') %></td>
         </tr>
+      <% else %>
+        <% @session_students.each_with_index do |ss, index| %>
+          <tr class="<%= 'att_active' if ss.present == true %>">
+            <td>
+              <div class='form-group'>
+                <div class='custom-control custom-checkbox' style="padding-top: 10px;">
+                  <% if ss.present == true %>
+                    <input class="operation-attendance custom-control-input" type="checkbox" id="attendance-check-<%= ss.id %>" value="<%= ss.id %>" checked>
+                  <% else %>
+                    <input class="operation-attendance custom-control-input" type="checkbox" value="<%= ss.id %>" id="attendance-check-<%= ss.id %>">
+                  <% end %>
+                  <label for="attendance-check-<%= ss.id %>" class="custom-control-label"> </label>
+                </div>
+              </div>
+            </td>
+            <td>[<%= ss.student_code %>]<b><%= ss.student_name %></b></td>
+            <td style="text-align: center"><%= ss.classroom_name %></td>
+            <td><%= ss.batch_code %></td>
+            <td><%= ss.faculty_name %></td>
+            <td><%= ss.start_datetime.strftime('%H:%M %d/%m/%Y') %></td>
+            <td><%= ss.end_datetime.strftime('%H:%M %d/%m/%Y') %></td>
+            <td class='td-note'>
+              <p class='p-note session_student_note_<%= ss.id %>'><%= ss.note %></p>
+              <div class="text-div" style='display: none'>
+                <textarea class='operation_note text-note input_session_student_note_<%= ss.id %>' data-id="<%= ss.id %>" ><%= ss.note %></textarea>
+                <div class='icon-div'>
+                  <span data-id="<%= ss.id %>" class='confirm-update-note'><i class="fa fa-check-square"></i></span>
+                  <span class='close-note'><i class="fa fa-window-close"></i></span>
+                </div>
+              </div>
+            </td>
+            <td><%= ss.company_name %></td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
     <tfoot>
@@ -72,6 +78,23 @@
   <%= paginate @session_students, remote: true %>
 </div>
 <style>
+  #adm_session_student_list{
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  #session_student_table .table-responsive {
+    border-top: 2px solid #dee2e6;
+    border-bottom: 2px solid #dee2e6;
+  }
+  #adm_session_student_list td{
+    border-top: 1px solid #dee2e6;
+  }
+  #adm_session_student_list tr:hover{
+    background-color: rgba(0, 0, 0, .075) !important;
+  }
+  #adm_session_student_list tr.att_active {
+    background-color: #d7f5e68c;
+  }
   .text-div {
     position: relative;
     width: 100%;
@@ -87,6 +110,7 @@
     border-top: none;
     padding: 3px;
     height: 30px;
+    max-height: 30px;
     right: 0
   }
   .icon-div span.confirm-update-note {
@@ -108,17 +132,12 @@
     white-space: nowrap;
     min-width: 200px;
   }
+  .paginator-top {
+    float: right;
+    margin-bottom: 20px;
+  }
+  .paginator-bottom {
+    float: right;
+    margin-top: 20px;
+  }
 </style>
-<script>
-  $(document).ready(function() {
-    $('#adm_session_student_list').DataTable({
-      "scrollX": true,
-      "responsive": true,
-      "bLengthChange": false,
-      "bFilter": true,
-      "searching": false,
-      "bInfo": false,
-      "bPaginate": false
-    });
-  })
-</script>

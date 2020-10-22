@@ -3,26 +3,26 @@ class Adm::Learning::OperationAttendancesService
     if params[:start_time].present? && params[:end_time].present?
       query = Learning::Batch::OpSessionStudent.where(start_datetime: params[:start_time]..params[:end_time])
     else
-      #query = Learning::Batch::OpSessionStudent.where(start_datetime: Time.now.beginning_of_day..Time.now.end_of_day)
-      query = Learning::Batch::OpSessionStudent.where(start_datetime: (Time.now - 50.days).beginning_of_day..Time.now.end_of_day)
+      query = Learning::Batch::OpSessionStudent.where(start_datetime: Time.now.beginning_of_day..Time.now.end_of_day)
+ #     query = Learning::Batch::OpSessionStudent.where(start_datetime: (Time.now - 50.days).beginning_of_day..Time.now.end_of_day)
     end
 
-    if params[:company_id].present?
+    unless params[:company_id].blank? || (params[:company_id].include? 'all')
       query = query.where(company_id: params[:company_id])
     else
       unless user.is_admin?
-        company_ids = user.user_companies.pluck(:id)
+        company_ids = user.user_companies.pluck(:company_id)
         query = query.where(company_id: company_ids)
       end
     end
 
     query = query.joins(op_batch: :op_course).joins( :op_student, :op_faculty, :res_company, :op_classroom, :op_session)
 
-    if params[:student_name].present?
-      query = query.where("op_student.id = #{ params[:student_name] }")
+    if params[:student_name].present? && (params[:student_name].reject { |st| st.blank? }).present?
+      query = query.where(op_student: { id: params[:student_name] })
     end
 
-    if params[:session_state].present?
+    unless params[:session_state].blank? || (params[:session_state].include? 'all')
       query = query.where(op_session: { state: params[:session_state] })
     end
 

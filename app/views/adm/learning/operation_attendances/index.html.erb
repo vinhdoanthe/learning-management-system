@@ -1,55 +1,58 @@
 <%= javascript_include_tag 'adm/learning/operation_attendance.js' %>
-<h3><%= t("adm.learning.operation_attendance.name") %></h3>
+<h3><%= t("adm.learning_operation_attendance") %></h3>
 <hr>
-<div class='filter_form'>
-  <div class='row'>
-    <div class='col-md-3'>
-      <div class="form-group">
-        <label for='filter-stuent'><%= t("adm.learning.operation.student") %></label>
-        <select class='select2 select2-hidden-accessible' id='filter-student' data-placeholder="<%= t("adm.learning.operation.student") %>" name="code" style="width: 100%;">
-        </select>
+<div class='card'>
+  <div class='card-body'>
+    <div class='filter_form'>
+      <div class='row'>
+        <div class='col-md-3'>
+          <div class="form-group">
+            <label for='filter-stuent'><%= t("adm.learning.operation.student") %></label>
+            <select class='select2 select2-hidden-accessible' id='filter-student' multiple="mutiple" data-placeholder="<%= t("adm.learning.operation.student") %>" name="student[]" style="width: 100%;">
+            </select>
+          </div>
+        </div>
+        <div class='col-md-3'>
+          <div class="form-group">
+            <label for='filter-company'><%= t("adm.user.company") %></label>
+            <select class='select2 select2-hidden-accessible' id='filter-company' multiple="multiple" data-placeholder="<%= t("adm.user.select_company") %>" name="code" style="width: 100%;">
+              <option value='all' selected><%= t('adm.user.all') %></option>
+              <% @allow_companies.each do |company| %>
+                <option value='<%= company.id %>'><%= company.name %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class='col-md-2'>
+          <div class="form-group">
+            <label for='filter-session-state'><%= t("adm.learning.operation.session_state") %></label>
+            <select class='select2 select2-hidden-accessible' id='filter-session-state' multiple="multiple" data-placeholder="<%= t("adm.learning.operation.session_state") %>" name="code" style="width: 100%;">
+              <option value='all' selected><%= t('adm.user.all') %></option>
+              <% @session_states.each do |state| %>
+                  <option value='<%= state %>'><%= state %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class='col-md-3'>
+          <div class="form-group">
+            <label for="filter-time"><%= t("adm.learning.session.time") %></label>
+            <input type="text" class="form-control" id="filter-time">
+          </div>
+        </div>
+          <div class='col-md-1' style='display: flex; align-items: center; margin-top: 10px; justify-content: center;'>
+            <button id='filter_session_student' class='btn btn-primary' style="width: 100px;">Lọc</button>
+          </div>
       </div>
-    </div>
-    <div class='col-md-3'>
-      <div class="form-group">
-        <label for='filter-company'><%= t("adm.user.company") %></label>
-        <select class='select2 select2-hidden-accessible' id='filter-company' data-placeholder="<%= t("adm.user.select_company") %>" name="code" style="width: 100%;">
-          <option value='' selected>Tất cả</option>
-          <% @allow_companies.each do |company| %>
-            <option value='<%= company.id %>'><%= company.name %></option>
-          <% end %>
-        </select>
-      </div>
-    </div>
-    <div class='col-md-3'>
-      <div class="form-group">
-        <label for='filter-session-state'><%= t("adm.learning.operation.session_state") %></label>
-        <select class='select2 select2-hidden-accessible' id='filter-session-state' data-placeholder="<%= t("adm.learning.operation.session_state") %>" name="code" style="width: 100%;">
-          <% @session_states.each do |state| %>
-            <% if state == Learning::Constant::Batch::Session::STATE_CONFIRM %>
-              <option selected value='<%= state %>'><%= state %></option>
-            <% else %>
-              <option value='<%= state %>'><%= state %></option>
-            <% end %>
-          <% end %>
-        </select>
-      </div>
-    </div>
-    <div class='col-md-3'>
-      <div class="form-group">
-        <label for="filter-time"><%= t("adm.learning.session.time") %></label>
-        <input type="text" class="form-control" id="filter-time">
-      </div>
-    </div>
-  </div>
-  <div>
-    <div style='display: flex'>
-      <button id='filter_session_student' class='btn btn-primary' style="margin-left: auto">Lọc</button>
     </div>
   </div>
 </div>
-<hr>
-<div id="session_student_table" class='table-responsive'>
+
+<div class='card'>
+  <div class='card-body'>
+    <div id="session_student_table" class='table-responsive'>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -62,11 +65,11 @@
   $(document).ready(function(){
     applyDateRangePicker = (target) => {
       $(target).daterangepicker({
-        timePicker: true,
-        autoUpdateInput: false,
+        start:  moment().startOf('day'),
+        end: moment().endOf('day'),
         timePickerIncrement: 30,
         locale: {
-          format: 'DD/MM/YYYY hh:mm A'
+          format: 'DD/MM/YYYY'
         }
       })
       $('#filter-time').on('apply.daterangepicker', function(ev, picker) {

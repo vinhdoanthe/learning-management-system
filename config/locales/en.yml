@@ -60,6 +60,8 @@ en:
     parent_info: "Parent information"
     study_progress: "Study progress"
     change_pass: "Change password"
+    change_avatar: "Change avatar"
+    choose_avatar: "Edit avatar"
     full_name: "Full name"
     gender: "Gender"
     birthday: "Date of birth"
@@ -333,3 +335,7 @@ en:
     download: 'Download'
   flash_notice:
     :no_permissions: 'You have not enough permission to take this action!'
+  notice:
+    update_success: "Update successfull!"
+    update_fail: "Have error! Try later"
+    no_avatar: "Avatar is not exist! Try later"

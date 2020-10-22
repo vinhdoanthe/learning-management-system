@@ -92,4 +92,39 @@ namespace :adm do
       post 'complete/:id', action: :complete, as: 'complete'
     end
   end
+
+
+  namespace :contest do
+    resources :contests
+    namespace :contests do
+      post 'update_contest', action: 'update_contest', as: 'update_contest'
+      post 'delete_contest', action: 'delete_contest', as: 'delete_contest'
+    end
+
+    namespace :contest_prizes do
+      post 'create_prize', action: 'create_prize'
+      get 'prepare_create', action: 'prepare_create'
+    end
+
+    resources :contest_topics
+    namespace :contest_topics do
+      post 'create_topic', action: 'create_topic', as: 'create_topic'
+    end
+
+    namespace :contest_criterions do
+      post 'create_criterion', action: 'create_criterion', as: 'create_criterion'
+      post 'delete_criterion', action: 'delete_criterion', as: 'delete_criterion'
+    end
+
+    namespace :contest_projects do
+      get '', action: 'index', as: 'index'
+      get 'index_content', action: 'index_content', as: 'index_content'
+    end
+
+    resources :contest_exchanges
+    namespace :contest_exchanges do
+      post 'create_new', action: 'create_new', as: 'create_new'
+      post 'update', action: 'update', as: 'update'
+    end
+  end
 end

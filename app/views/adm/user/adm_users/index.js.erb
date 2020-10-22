@@ -1,7 +1,13 @@
-$("#user_data_table").html("<%= j render('adm/user/adm_users/user', { users: users, page: page, count: count }) %>");
-$("#paginator").html("<%= j render('adm/user/adm_users/paginator', { page: page, users: users } ) %>");
-$(document).ready(function(){
+<% if users.present? %>
+  $("#user_data_table").html("<%= j render('adm/user/adm_users/user', { users: users, page: page, count: count }) %>");
+  $("#paginator").html("<%= j render('adm/user/adm_users/paginator', { page: page, users: users } ) %>");
+  $(document).ready(function(){
+    $('#loading-content-div').hide();
+    $('#user_data_table').show();
+    $('#paginator').show();
+  })
+<% else %>
   $('#loading-content-div').hide();
+  $('#user_data_table').html('<p>Người dùng không tồn tại!</p>');
   $('#user_data_table').show();
-  $('#paginator').show();
-})
+<% end %>

@@ -1,1 +1,19 @@
 $('#modal_adm_session_attendance').html("<%= escape_javascript (render partial: 'adm/learning/sessions/modals/student_attendance_detail', locals: { student: student, teacher: teacher, attendance: attendance } ) %>")
+
+list_students = $('input[name="attendance_student_list"]').val().split(',');
+attendance_index = list_students.indexOf('<%= attendance.id %>');
+total = list_students.length
+$('#attendance_count').html((attendance_index + 1).toString() + '/' + total.toString());
+if (total <= 1){
+  $('.prev_attendance').hide();
+  $('.next_attendance').hide();
+}else if (attendance_index === 0){
+  $('.prev_attendance').hide();
+  $('.next_attendance').attr('data-attendance', list_students[attendance_index + 1]);
+}else if (attendance_index == (total - 1)){
+  $('.next_attendance').hide();
+  $('.prev_attendance').attr('data-attendance', list_students[attendance_index - 1]);
+}else{
+  $('.prev_attendance').attr('data-attendance', list_students[attendance_index - 1]);
+  $('.next_attendance').attr('data-attendance', list_students[attendance_index + 1]);
+}
