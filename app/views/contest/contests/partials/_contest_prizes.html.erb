@@ -1,0 +1,83 @@
+<% week_prize = Contest::ContestPrize.first %>
+<% month_prize = Contest::ContestPrize.first %>
+<div class="c-block bg-warning-dark c-prize-block">
+  <div class="container">
+    <div class="c-box is-middle">
+      <div class="c-box__title">
+        <div class="c-box__title__name"><span>Hạng mục</span>Giải thưởng</div>
+        <div class="c-box__title__shadow">Prize</div>
+      </div>
+      <div class="c-box__content">
+        <div class="c-prize-grid">
+          <ul class="clearfix">
+            <li>
+              <div class="c-prize-item">
+                <div class="c-prize-item__img">
+                  <figure><img src="/contest/upload/prize_1.png" alt="img"></figure>
+                </div>
+                <div class="c-prize-item__content">
+                  <div class="c-prize-item__label">Trị giá giải thưởng</div>
+                  <div class="c-prize-item__price"><%= number_with_delimiter(week_prize.student_price * 1000 + week_prize.teacher_price * 1000) %><sup>đ</sup></div>
+                  <div class="c-prize-item__desc">
+                    <p><b><%= number_with_delimiter(week_prize.student_price * 1000) %></b>
+                    dành cho
+                    <span class="h-text__underline">học sinh,</span><b><%= number_with_delimiter(week_prize.teacher_price * 1000) %></b>
+                    dành cho
+                    <span class="h-text__underline">giảng viên</span>
+                    phụ trách
+                    </p>
+                    <p><b>& Bằng khen</b>
+                    của Học viện TEKY cho học sinh
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="c-prize-item">
+                <div class="c-prize-item__img">
+                  <figure><img src="/contest/upload/prize_2.png" alt="img"></figure>
+                </div>
+                <div class="c-prize-item__content">
+                  <div class="c-prize-item__label">Trị giá giải thưởng</div>
+                  <div class="c-prize-item__price"><%= number_with_delimiter(month_prize.student_price * 1000 + month_prize.teacher_price * 1000) %><sup>đ</sup></div>
+                  <div class="c-prize-item__desc">
+                    <p><b><%= number_with_delimiter(month_prize.student_price * 1000) %></b>
+                    dành cho
+                    <span class="h-text__underline">học sinh,</span><b><%= number_with_delimiter(month_prize.teacher_price * 1000) %></b>
+                    dành cho
+                    <span class="h-text__underline">giảng viên</span>
+                    phụ trách
+                    </p>
+                    <p><b>& Bằng khen</b>
+                    của Học viện TEKY cho học sinh
+                    </p>
+                    <p><b>& Video quảng bá</b>
+                    sản phẩm của học sinh đăng tải trên các phương tiện truyền thông của Học viện
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="b-maincontent">
+          <p>
+          Giải thưởng sẽ được trao hàng tuần đối với giải
+          <b>"Student of the week"</b>
+          và các sản phẩm xuất sắc nhất tuần sẽ được đánh giá bởi hội đồng ban giám khảo để chọn ra 01 giải
+          <b>"Student of the month"</b>
+          </p>
+          <p>
+          Đối với giải thưởng
+          <b>"Student of the week"</b>
+          bình chọn dựa theo kết quả
+          <b class="text-secondary">LIKE FACEBOOK, SHARE FACEBOOK</b><b>(1 LIKE = 1 phiếu bình chọn; 1 SHARE =  3 phiếu bình chọn)</b>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- c-box-->
+  </div>
+  <!--end container-->
+</div>

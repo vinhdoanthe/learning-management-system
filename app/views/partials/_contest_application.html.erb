@@ -6,9 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= favicon_link_tag 'Logo-fav.ico' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>
     <%= stylesheet_link_tag 'contest', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>
+    <%= javascript_include_tag 'contest', 'data-turbolinks-track': 'reload' %>
 
     <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/toastr/toastr.min.css">
     <%= yield :javascript_includes %>
