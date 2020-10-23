@@ -1,4 +1,3 @@
-<% topics = Contest::ContestTopic.limit(4) %>
 <div class="c-block c-theme-block">
   <div class="container">
     <div class="c-box is-middle">
@@ -40,11 +39,11 @@
                             'is-last'
                           elsif index == 2
                             #TODO
-                            'is-current-2'
+                            "is-current-#{ active_topic_index }"
                           else
                             ''
                           end %>
-        <%= render 'contest/contests/partials/month_topic', { topics: topics, class_status: class_status, month_index: index } %>
+        <%= render 'contest/contests/partials/month_topic', { topics: month_topics[index-1], class_status: class_status, month_index: index } %>
       <% end %>
     </div>
   </div>
