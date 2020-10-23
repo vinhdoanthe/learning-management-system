@@ -3,10 +3,13 @@ class Adm::Contest::ContestsController < Adm::AdmController
   before_action :find_contest, only: [:show]
 
   def index
+    @report_title_page = t("Contest.Management contest")
+
     @contests = Contest::Contest.all
   end
 
   def show
+    @report_title_page = t("Contest.Management contest")
     @contest_topics = @contest.contest_topics
   end
 
@@ -17,6 +20,11 @@ class Adm::Contest::ContestsController < Adm::AdmController
   end
 
   def edit
+    @report_title_page = t('Contest.Management contest')
+  end
+
+  def new
+    @report_title_page = t('Contest.Management contest')
   end
 
   def delete_contest
@@ -28,6 +36,7 @@ class Adm::Contest::ContestsController < Adm::AdmController
   private
 
   def find_contest
+
     @contest = Contest::Contest.where(id: params[:id]).first
 
     return if @contest.blank?

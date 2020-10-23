@@ -88,7 +88,7 @@ gem 'jbuilder', '~> 2.7'
 
 # Monitoring gems
 gem 'newrelic_rpm'
-gem 'appsignal'
+#gem 'appsignal'
 
 gem 'sentry-raven'
 

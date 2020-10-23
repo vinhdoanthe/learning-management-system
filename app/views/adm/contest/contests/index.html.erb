@@ -1,8 +1,8 @@
 <div class='card'>
   <div class="card-header">
-    <h3 class="card-title"><%= t('adm.learning.session.name') %></h3>
+    <h3 class="card-title"><i class="fas fa-list mr-1"></i> <%= t('Contest.List contest') %></h3>
     <div class="card-tools">
-      <a href="/adm/contest/contests/new" class="btn btn-info float-right"><i class="fas fa-plus"></i>Thêm mới</a>
+      <a href="/adm/contest/contests/new" class="btn btn-info btn-sm bg-olive float-right"><i class="fas fa-plus"></i> <%= t('button.Add new') %></a>
     </div>
   </div>
   <div class="card-body p-0">
@@ -12,10 +12,10 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>State</th>
-              <th>Action</th>
+              <th width="15%"><%= t('Contest.Content.Name') %></th>
+              <th><%= t('Contest.Content.Description') %></th>
+              <th width="10%" class="text-center"><%= t('Contest.Content.State') %></th>
+              <th class="text-center"><%= t('Contest.Content.Action') %></th>
             </tr>
           </thead>
           <tbody>
@@ -24,8 +24,8 @@
                 <td><%= contest.id %></td>
                 <td><%= contest.name %></td>
                 <td><%= contest.description.present? ? contest.description.html_safe : '' %></td>
-                <td><%= contest.is_publish ? 'Active' : 'Inactive' %></td>
-                <td style="min-width: 100px">
+                <td class="text-center"><%= get_html_status(contest.is_publish).html_safe%></td>
+                <td style="min-width: 100px" class="text-center">
                     <a href="/adm/contest/contests/<%= contest[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
                   <% unless contest_has_projects contest %>
                     <a class="delete-contest" data-contest="<%= contest.id %>" ><i class="fas fa-trash"></i></a>
@@ -39,10 +39,10 @@
           <tfoot>
             <tr>
               <th>#</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>State</th>
-              <th style="min-width: 100px">Action</th>
+              <th width="15%"><%= t('Contest.Content.Name') %></th>
+              <th><%= t('Contest.Content.Description') %></th>
+              <th width="10%" class="text-center"><%= t('Contest.Content.State') %></th>
+              <th class="text-center"><%= t('Contest.Content.Action') %></th>
             </tr>
           </tfoot>
         </table>
