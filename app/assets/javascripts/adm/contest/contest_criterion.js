@@ -16,13 +16,16 @@ $(document).ready(function(){
   })
 
   $('.delete-criterion').on('click', function(){
-    id = $(this).closest('tr').find('.choose_prizes').val();
+    id = $(this).data('criterion');
+    topic_id = $('input[name="topic_id"]').val()
 
     $.ajax({
       method: "POST",
       url: "/adm/contest/contest_criterions/delete_criterion",
-      data: { id: id },
-      dataType: 'script'
+      data: { id: id, topic_id: topic_id },
+      success: function(res){
+        display_response_noti(res)
+      }
     })
   })
 })

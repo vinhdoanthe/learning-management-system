@@ -1,0 +1,52 @@
+<%# user = c_project.user %>
+<% if c_project.present? %>
+  <% user = User::Account::User.where(id: c_project.user_id).first %>
+  <div class="c-board-item">
+    <div class="c-board-item__inner">
+      <!-- <div class="c-board-item__tag is-warning-dark"><span>Miền bắc</span></div> -->
+      <div class="c-board-item__thumb">
+        <div class="c-board-item__avatar">
+          <% if user.avatar.present? && user.avatar.avatar.present? %>
+            <%= image_tag user.avatar.avatar %>
+          <% else %>
+            <img src='/contest/images/face-default.png'>
+          <% end %>
+        </div>
+        <% unless is_month %>
+          <div class="c-board-item__name"><%= c_project.student_name %></div>
+        <% end %>
+      </div>
+      <% if is_month %>
+        <div class="c-board-item__name"><%= c_project.student_name %></div>
+      <% end %>
+      <div class="c-board-item__title">
+        Giải nhất
+        <b>tuần <%= c_project.week_number %></b>
+        tháng
+        <b><%= c_project.topic_start.strftime('%m/%Y') %></b>
+      </div>
+      <div class="c-board-item__more"><a href="/contest/contest_projects/<%= c_project.id %>">Xem sản phẩm</a></div>
+    </div>
+  </div>
+<% else %>
+  <div class="c-board-item">
+    <div class="c-board-item__inner">
+      <!-- <div class="c-board-item__tag is-warning-dark"><span>Miền bắc</span></div> -->
+      <div class="c-board-item__thumb">
+        <div class="c-board-item__avatar">
+          <img src='/contest/images/face-default.png'>
+        </div>
+        <% unless is_month %>
+          <div class="c-board-item__name">Coming soon</div>
+        <% end %>
+      </div>
+      <% if is_month %>
+        <div class="c-board-item__name">Coming soon</div>
+      <% end %>
+      <div class="c-board-item__title">
+        Giải nhất
+        <b>tuần 1</b>
+        tháng
+        <b><%= Time.now.strftime('%m/%Y') %></b>
+      </div>
+    <% end %>

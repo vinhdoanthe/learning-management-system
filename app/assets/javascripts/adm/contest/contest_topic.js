@@ -20,6 +20,8 @@ $(document).ready(function(){
 
   $('#create-contest-topic-confirm').click(function(){
     var data = new FormData();
+    topic_id = $(this).data('topic')
+    data.append('topic_id', name);
     name = $('#topic_name').val();
     data.append('name', name);
     contest_id = $('input[name="contest-id"]').val();
@@ -43,7 +45,6 @@ $(document).ready(function(){
 
     data.append('contest_prizes[]', contest_prizes);
     data.append('contest_criterions[]', contest_criterions);
-    debugger
     start_time = $('#topic-start-date').val()
     end_time = $('#topic-end-date').val()
     data.append("start_time", start_time);
