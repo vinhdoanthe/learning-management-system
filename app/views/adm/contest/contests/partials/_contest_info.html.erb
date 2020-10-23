@@ -20,6 +20,33 @@
           </div>
         </div>
       </div>
+
+      <div class='col-md-12'>
+        <div class="row">
+          <div class="col-md-12"><label><%= t('Contest.Content.Rule info') %></label></div>
+          <div class='col-md-4'>
+            <label><%= t('Contest.Content.Rule atendance information') %>:</label>
+            <div class="mb-3">
+                <textarea rows="5" maxlength="255" required class="contest-description-textarea" name="" ></textarea>
+              </div>
+          </div>
+
+          <div class='col-md-4'>
+            <label><%= t('Contest.Content.Rule product description') %>:</label>
+            <div class="mb-3">
+                <textarea rows="5" maxlength="255" required class="contest-description-textarea" ></textarea>
+            </div>
+          </div>
+
+          <div class='col-md-4'>
+            <label><%= t('Contest.Content.Rule submission entries')%>:</label>
+            <div class="mb-3">
+                <textarea rows="5" maxlength="255" required class="contest-description-textarea" name="rule_submission_entries" ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class='col-md-12'>
         <div class="contest_state custom-control custom-checkbox">
           <% if contest&.is_publish %>
@@ -27,7 +54,7 @@
           <% else %>
             <input class="custom-control-input" type="checkbox" id="contest_state">
           <% end %>
-            <label for="contest_state" class="custom-control-label"><%= t('Contest.Content.State') %></label>
+            <label for="contest_state" class="custom-control-label"><%= t('Contest.Content.State')%></label>
         </div>
       </div>
     </div>

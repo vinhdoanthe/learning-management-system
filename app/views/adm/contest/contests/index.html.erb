@@ -14,6 +14,7 @@
               <th>#</th>
               <th width="15%"><%= t('Contest.Content.Name') %></th>
               <th><%= t('Contest.Content.Description') %></th>
+              <th width="30%"><%= t('Contest.Content.Rule info') %></th>
               <th width="10%" class="text-center"><%= t('Contest.Content.State') %></th>
               <th class="text-center"><%= t('Contest.Content.Action') %></th>
             </tr>
@@ -24,6 +25,14 @@
                 <td><%= contest.id %></td>
                 <td><%= contest.name %></td>
                 <td><%= contest.description.present? ? contest.description.html_safe : '' %></td>
+                <td>
+                    <ul style="float: left;padding: 0px;">
+                        <li style="float: left; display: inline-block;" class="col-md-4">XXX</li>
+                        <li style="float: left; display: inline-block;" class="col-md-4">XXX</li>
+                        <li style="float: left; display: inline-block;" class="col-md-4">XXX</li>
+                    </ul>
+                </td>
+
                 <td class="text-center"><%= get_html_status(contest.is_publish).html_safe%></td>
                 <td style="min-width: 100px" class="text-center">
                     <a href="/adm/contest/contests/<%= contest[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
@@ -41,6 +50,7 @@
               <th>#</th>
               <th width="15%"><%= t('Contest.Content.Name') %></th>
               <th><%= t('Contest.Content.Description') %></th>
+              <th width="30%"><%= t('Contest.Content.Rule info') %></th>
               <th width="10%" class="text-center"><%= t('Contest.Content.State') %></th>
               <th class="text-center"><%= t('Contest.Content.Action') %></th>
             </tr>
@@ -49,7 +59,7 @@
       </div>
     </div>
   </div>
-  <div class="card-footer">
+  <div class="card-footer border-top">
     <div class="card-tools">
       <a href="/adm/contest/contests/new" class="btn btn-info btn-sm bg-olive float-right"><i class="fas fa-plus"></i> <%= t('button.Add new') %></a>
     </div>
