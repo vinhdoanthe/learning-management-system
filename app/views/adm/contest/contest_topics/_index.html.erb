@@ -2,27 +2,23 @@
   <thead>
     <tr>
       <th>#</th>
-      <th>Topic</th>
-      <th>Thumbnail</th>
-      <th>Description</th>
-      <th>Rule</th>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Region</th>
-      <th>Action</th>
+      <th><%= t('Contest.Topic.Topic name') %></th>
+      <th><%= t('Contest.Topic.Thumbnail') %></th>
+      <th><%= t('Contest.Topic.Description') %></th>
+      <th><%= t('Contest.Topic.Date time') %></th>
+      <th><%= t('Contest.Topic.Region') %></th>
+      <th><%= t('Contest.Content.Action') %></th>
     </tr>
   </thead>
   <tbody class='table-contest-topic'>
     <% contest_topics.each do |topic| %>
       <tr>
-        <th><%= topic.id %></th>
-        <th><%= topic.name %></th>
-        <th><%= image_tag topic.thumbnail, style: 'width: 50px; height: 50px'  if topic.thumbnail.present?%></th>
-        <th><%= topic.description&.html_safe %></th>
-        <th><%= topic.rule&.html_safe %></th>
-        <th><%= topic.start_time.strftime("%d/%m/%Y") %></th>
-        <th><%= topic.end_time.strftime("%d/%m/%Y") %></th>
-        <th><%= topic.region %></th>
+        <td><%= topic.id %></td>
+        <td><%= topic.name %></td>
+        <td><%= image_tag topic.thumbnail, style: 'width: 50px; height: 50px'  if topic.thumbnail.present?%></td>
+        <td><%= topic.description&.html_safe %></td>
+        <td><%= topic.start_time.strftime("%d/%m/%Y") %> - <%= topic.end_time.strftime("%d/%m/%Y") %></td>
+        <td><%= topic.region %></td>
         <td style="min-width: 100px">
             <a href="/adm/contest/contest_topics/<%= topic[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
           <span>
@@ -32,19 +28,17 @@
       </tr>
     <% end %>
   </tbody>
-  <tfoot>
+  <thead>
     <tr>
       <th>#</th>
-      <th>Topic</th>
-      <th>Thumbnail</th>
-      <th>Description</th>
-      <th>Rule</th>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Region</th>
-      <th>Action</th>
+      <th><%= t('Contest.Topic.Name') %></th>
+      <th><%= t('Contest.Topic.Thumbnail') %></th>
+      <th><%= t('Contest.Topic.Description') %></th>
+      <th><%= t('Contest.Topic.Date time') %></th>
+      <th><%= t('Contest.Topic.Region') %></th>
+      <th><%= t('Contest.Content.Action') %></th>
     </tr>
-  </tfoot>
+  </thead>
 </table>
 
   <script>

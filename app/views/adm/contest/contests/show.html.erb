@@ -1,10 +1,26 @@
 <%= javascript_include_tag "adm/contest/contests.js" %>
-<%= render "adm/contest/contests/partials/contest_info", { contest: @contest, title: "Chi tiet cuoc thi" } %>
+
 <div class='card'>
   <div class="card-header">
-    <h3 class="card-title">Contest Topics</h3>
+    <h3 class="card-title text-info"><label><%= t('Contest.Content.Contest info') %></label>: <%= @contest&.name %></h3>    
+  </div>
+  <div class="card-body">
+  <%= render "adm/contest/contests/partials/contest_info", {contest: @contest} %>
+  </div>
+  <div class="card-footer border-top">
+    <div class="float-right">
+      <button form='idForm' type="button" data-contest="<%= @contest&.id %>" id="update-contest-button" class="btn btn-default btn-sm bg-olive"><i class="fas fa-save"></i> <%= t('button.Save')%></button>
+      <a href="#" class="btn btn-default btn-sm"><i class="fas fa-ban"></i> <%= t('button.cancel')%></a>          
+    </div>      
+  </div>
+</div>
+
+<div class='card'>
+  <div class="card-header">
+    <h3 class="card-title text-info"><label><%= t('Contest.Content.Contest topics') %></label></h3>
     <div class="card-tools">
-      <a data-toggle='modal' data-target="#modal_create_contest_topic" class="btn btn-info float-right"><i class="fas fa-plus"></i></a>
+      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+      <a data-toggle='modal' data-target="#modal_create_contest_topic" class="btn btn-info btn-sm bg-olive float-right"><i class="fas fa-plus"></i></a>
     </div>
   </div>
   <div class="card-body p-0">
@@ -13,7 +29,9 @@
     </div>
   </div>
 </div>
+
 <%= render 'adm/contest/contest_prizes/partials/contest_prizes_table', { contest: @contest, prizes: @contest.contest_prizes, add_new: true } %>
+
 <div class="modal fade" id="modal_create_contest_prize" >
   <div class="modal-title">
     <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
