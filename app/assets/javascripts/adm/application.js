@@ -40,13 +40,6 @@ function previewUploadImage(input, target){
 
 let setSummerNote = (target) => {
   $(target).summernote({
-    height: 150,
-    toolbar: [
-      ['style', ['bold', 'italic', 'underline', 'clear']],
-      ['fontsize', ['fontsize']],
-      ['color', ['color']],
-      ['height', ['height']]
-    ]
+    height: 200    
   });
 }
-
