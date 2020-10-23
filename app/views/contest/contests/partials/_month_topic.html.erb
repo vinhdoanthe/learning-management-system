@@ -1,4 +1,3 @@
-<% topic = topics[0] %>
 <div class="c-road-board <%= class_status %>">
   <div class="c-road-board__backdrop">
     <div class="container">
@@ -34,7 +33,8 @@
     <div class="c-road-grid">
       <ul>
         <% (0..3).each do |index| %>
-          <% if topics[index].present? %>
+          <% if topics.present? && topics[index].present? %>
+            <% topic = topics[index] %>
             <li>
               <div class="c-road-item">
                 <div class="c-road-item__thumb">

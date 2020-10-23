@@ -14,13 +14,27 @@ class Adm::Contest::ContestTopicsService
 
     if topic.save
       create_topic_prizes topic, params[:contest_prizes][0].split(',')
-      binding.pry
       create_topic_criterion topic, params[:contest_criterions][0].split(',')
-      { result: { type: 'success', message: 'Tao chu de thanh cong'}, topic: topic, contest: contest }
+      { result: { type: 'success', message: 'Tao chu de thanh cong'}, topic: topic, contest: contest, action: 'create' }
     else
-      { result: { type: 'danger', message: 'Da co loi xay ra! Vui long thu lai sau!' } }
+      { result: { type: 'danger', message: 'Da co loi xay ra! Vui long thu lai sau!' },action: 'create' }
     end
 
+  end
+
+  def update params
+    topic = Contest::ContestTopic.where(id: params[:topic_id]).first
+
+    update_params = ['name', 'contest_id', 'rule', 'region', 'start_time', 'end_time', 'description', 'rule', 'thumbnail']
+    update_params.each do |att|
+      topic.send(att + '=', params[att]) if params[att].present?
+    end
+
+    if topic.save
+      { result: { type: 'success', message: 'cap nhat thanh cong'}, action: 'update' }
+    else
+      { result: {type: 'danger', message: 'da co loi xay ra! thu lai sau'}, action: 'update'}
+    end
   end
 
   def clone_topic topic_id
@@ -40,7 +54,6 @@ class Adm::Contest::ContestTopicsService
   end
 
   def create_topic_criterion topic, criterion_ids
-    binding.pry
     topic_id = topic.id
     criterion_ids.each do |c_id|
       t_criterion = Contest::ContestTopicCriterion.new
@@ -77,7 +90,6 @@ class Adm::Contest::ContestTopicsService
   end
 
   def awarded_project topic, type
-    binding.pry
     topic_prizes = topic.contest_prizes.where(prize_type: type).pluck(:id, :prize, :number_awards).sort{|p| p[1] }
     total_awards = 0
     topic_prizes.each{ |p| total_awards += p[2] }

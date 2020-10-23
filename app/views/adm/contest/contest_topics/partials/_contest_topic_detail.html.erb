@@ -58,7 +58,13 @@
       <div class='row'>
         <div class='col-md-6'>
           <div class="form-group">
-            <label for="topic_thumbnail">Thumbnail</label>
+            <label for="topic_thumbnail">
+              <% if topic&.thumbnail.present? %>
+                <%= image_tag topic.thumbnail, style: 'width: 100px; height: 100px' %>
+              <% else %>
+                Thumnail
+              <% end %>
+            </label>
             <div class="input-group">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" id="topic_thumbnail">
@@ -92,11 +98,16 @@
                 </tr>
               </thead>
               <tbody>
+                <% topic_prizes = topic.contest_prizes.pluck(:id) %>
                 <% contest.contest_prizes.each do |prize| %>
                   <tr>
                     <td>
                       <div class="form-check">
-                        <input  type="checkbox" class="choose_prizes" value="<%= prize.id %>">
+                        <% if topic_prizes.include? prize.id %>
+                          <input checked type="checkbox" class="choose_prizes" value="<%= prize.id %>">
+                        <% else %>
+                          <input  type="checkbox" class="choose_prizes" value="<%= prize.id %>">
+                        <% end %>
                       </div>
                     </td>
                     <td>
@@ -133,15 +144,19 @@
                   <th>name</th>
                   <th>point</th>
                   <th>description</th>
-                  <th>Action</th>
                 </tr>
               </thead>
+              <% topic_criterions = topic.contest_criterions.pluck(:id) %>
               <tbody class='table-criterion'>
                 <% Contest::ContestCriterion.all.each do |c| %>
                   <tr>
                     <td>
                       <div class="form-check">
-                        <input  type="checkbox" class="choose_criterions" value="<%= c.id %>">
+                        <% if topic_criterions.include? c.id %>
+                          <input  type="checkbox" checked class="choose_criterions" value="<%= c.id %>">
+                        <% else %>
+                          <input  type="checkbox" class="choose_criterions" value="<%= c.id %>">
+                        <% end %>
                       </div>
                     </td>
                     <td>
@@ -150,14 +165,6 @@
                     <td><%= c.name %></td>
                     <td><%= c.point %></td>
                     <td><%= c.description&.html_safe %></td>
-                    <td style="min-width: 100px">
-                      <a target="_blank"><i class="far fa-eye"></i></a>
-                      <% unless false %>
-                        <a class="delete-criterion" data-criterion="<%= c.id %>" ><i class="fas fa-trash"></i></a>
-                      <% else %>
-                        <a class="delete-criterion" disabled data-criterion="<%= c.id %>" ><i class="fas fa-trash"></i></a>
-                      <% end %>
-                    </td>
                   </tr>
                 <% end %>
               </tbody>
@@ -168,12 +175,9 @@
     </div>
     <!-- /.card-body -->
 
-    <% if topic&.id.blank? %>
-      <div class="card-footer">
-        <button type='button' data-dismiss="modal" id="create-contest-topic-confirm" class="btn btn-info float-right"><i class="fas fa-plus"></i>&nbsp;Submit</button>
-      </div>
-    <% else %>
-    <% end %>
+    <div class="card-footer">
+      <button type='button' data-dismiss="modal" id="create-contest-topic-confirm" class="btn btn-info float-right" data-topic="<%= topic&.id %>"><i class="fas fa-plus"></i>&nbsp;Submit</button>
+    </div>
   </form>
 </div>
 
