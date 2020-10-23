@@ -15,10 +15,12 @@ class Adm::Contest::ContestCriterionsService
 
   def delete_criterion params
     c = Contest::ContestCriterion.where(id: params[:id]).first
+    topic = Contest::ContestTopic.where(id: params[:topic_id]).first
     if c.blank?
       { type: 'danger', message: 'Tieu chi k ton tai' }
     else
-      if can_delete? c
+    binding.pry
+      if can_delete_topic_criterion? c, topic
         c.delete
         { type: 'success', message: 'Xoa thanh cong', criterion: c }
       else
@@ -30,6 +32,10 @@ class Adm::Contest::ContestCriterionsService
   private
 
   def can_delete? criterion
-    Contest::ContestProjectCriterion.where(criterion_id: criterion.id).first.present?
+    Contest::ProjectCriterion.where(criterion_id: criterion.id).first.present?
+  end
+
+  def can_delete_topic_criterion? criterion, topic
+    Contest::ContestTopicCriterion.where(contest_topic_id: topic.id, contest_criterion_id: criterion.id).first.present?
   end
 end

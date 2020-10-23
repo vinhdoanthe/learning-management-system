@@ -1,5 +1,5 @@
 class Adm::Contest::ContestCriterionsController < Adm::AdmController
-  skip_before_action :verify_authenticity_token, only: [:create_criterion]
+  skip_before_action :verify_authenticity_token, only: [:create_criterion, :delete_criterion]
   def new
   end
 
@@ -15,9 +15,6 @@ class Adm::Contest::ContestCriterionsController < Adm::AdmController
   def delete_criterion
     result = Adm::Contest::ContestCriterionsService.new.delete_criterion params
 
-    respond_to do |format|
-      format.html
-      format.js { render '', locals: { result: result } }
-    end
+    render json: result
   end
 end

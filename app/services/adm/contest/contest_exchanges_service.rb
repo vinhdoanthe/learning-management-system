@@ -7,7 +7,6 @@ class Adm::Contest::ContestExchangesService
       exchange.send(att + '=', params[att])
     end
 
-    binding.pry
     exchange.status = if params[:status].to_i == 1
                         'active'
                       else

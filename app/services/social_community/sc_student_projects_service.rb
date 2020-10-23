@@ -6,7 +6,6 @@ class SocialCommunity::ScStudentProjectsService
     project = ''
   #  sc_student_service = SocialCommunity::ScStudentProjectsService.new
     user = User::Account::User.where(student_id: @params[:student_id]).first
-    binding.pry
     student = user.op_student
 
     if validate_youtube_upload_params @params
@@ -29,7 +28,6 @@ class SocialCommunity::ScStudentProjectsService
           result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
         end
 
-        binding.pry
         User::Reward::CoinStarsService.new.reward_coin_star project, user.id, user.id if (user.present? && project.project_type == SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT )
       end
     else
