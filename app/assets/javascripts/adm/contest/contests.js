@@ -10,10 +10,7 @@ $(document).ready(function() {
 
   $('#idForm').validate({
     lang: 'vi',
-    rules: {
-      "contest_name": {
-        required: true
-      }      
+    rules: {      
     },
     messages: {
     },
@@ -29,8 +26,13 @@ $(document).ready(function() {
       $(element).removeClass('is-invalid');
     }
   });
-  
-  $('#update-contest-button').on('click', function(){
+
+  $('#___update-contest-button').on('submit', function() {
+
+    if($("#idForm").validate()) {
+     alert("Lỗi không?");
+     return false;
+    }
 
     id = $(this).data('contest');
     name = $('input[name="contest_name"]').val();

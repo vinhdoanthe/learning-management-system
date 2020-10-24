@@ -213,13 +213,13 @@ module User
             'contest' => [
               {
                 'path'          => adm_contest_contests_path,
-                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contests_path << '"><i class="far fa-circle nav-icon"></i><p>Contest</p></a></li>',
-                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contests_path << '"><i class="far fa-circle nav-icon"></i><p>Contest</p></a></li>',
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contests_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contests_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest') <<'</p></a></li>',
               },
               {
                 'path'          => adm_contest_contest_exchanges_path,
-                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>Contest Exchange</p></a></li>',
-                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>Contest Exchange</p></a></li>',
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest exchange') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest exchange') <<'</p></a></li>',
               }
               #{
               #  'path'          => adm_contest_contest_topics_path,
@@ -374,8 +374,8 @@ module User
             },
             {
               'path'          => adm_contest_contests_path,
-              'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="'<< adm_contest_contests_path << '"><i class="nav-icon fas fa-th"></i><p>Contest</p><i class="right fas fa-angle-left"></i></a>',
-              'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="'<< adm_contest_contests_path << '"><i class="nav-icon fas fa-th"></i><p>Contest</p><i class="right fas fa-angle-left"></i></a>',
+              'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="'<< adm_contest_contests_path << '"><i class="nav-icon fas fa-th"></i><p>'<< t('Contest.Management contest') <<'</p><i class="right fas fa-angle-left"></i></a>',
+              'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="'<< adm_contest_contests_path << '"><i class="nav-icon fas fa-th"></i><p>'<< t('Contest.Management contest') <<'</p><i class="right fas fa-angle-left"></i></a>',
               'sub_menu'      => sub_menus['contest']
             },
 

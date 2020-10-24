@@ -400,8 +400,10 @@ vi:
   Contest:
     Management contest: "Quản lý cuộc thi"
     List contest: "Danh sách cuộc thi"
+    Contest exchange: "Quy đổi điểm số"
+    Contest: "Cuộc thi"
     Content:
-      Rule info: "Quy định thể lệ"
+      Rule info: "Nhập quy định thể lệ"
       Name: "Tên cuộc thi"
       Description: "Nội dung"
       State: "Trạng thái"
