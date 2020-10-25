@@ -27,31 +27,35 @@ $(document).ready(function() {
     }
   });
 
-  $('#___update-contest-button').on('submit', function() {
+  $('#update-contest-button').on('click', function() {
 
-    if($("#idForm").validate()) {
-     alert("Lỗi không?");
-     return false;
-    }
+      
+      if(!$("#idForm").valid()) {
+        return false;
+      }
 
-    id = $(this).data('contest');
-    name = $('input[name="contest_name"]').val();
-    description = $('.contest-description-textarea').val();
+      id = $(this).data('contest');
 
-    if ($('#contest_state').is(":checked")){
-      state = true;
-    }else{
-      state = false;
-    }
+      name = $("#contest_name").val();      
+      description = $('#contest_description').val();
+      rule_atendance_information = $('#rule_atendance_information').val();      
+      rule_product_description = $('#rule_product_description').val();      
+      rule_submission_entries = $('#rule_submission_entries').val();
+
+      if ($('#contest_state').is(":checked")){
+        state = true;
+      } else {
+        state = false;
+      }
 
       $.ajax({
         url: "/adm/contest/contests/update_contest",
         method: 'POST',
-        data: { name: name, description: description, state: state, id: id },
+        data: { name: name, description: description, rule_atendance_information: rule_atendance_information, rule_product_description: rule_product_description, rule_submission_entries: rule_submission_entries, state: state, id: id },
         success: function(res){
           display_response_noti(res);
 
-          if (res.type === 'success'){
+          if (res.type === 'success') {
             $('.create-contest-prize-li').show();
             $('#create-contest').removeClass("active show");
             $('#create-contest-tab').removeClass('active');
@@ -61,8 +65,8 @@ $(document).ready(function() {
             getContestPrizeForm(res.contest_id);
           }
         }
-      })
-  }) 
+      });
+  });
 
   $('#create-new-contest-prize').on('click', '#contest_prize_type', function(){
     if ($(this).val() == 'm'){
