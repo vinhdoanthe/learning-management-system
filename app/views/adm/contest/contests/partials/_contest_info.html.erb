@@ -19,7 +19,7 @@
           </div>
           <div class="contest_name">
             <div class="mb-3">
-              <textarea rows='5' required class="form-control contest-description-textarea"
+              <textarea rows='5' required id="contest_description" class="form-control contest-description-textarea"
               style="height: 200px;padding: 10px;"><%= contest&.description %></textarea>
             </div>
           </div>
@@ -34,7 +34,7 @@
               <div class='col-md-12'>
                 <label><%= t('Contest.Content.Rule atendance information') %>:</label>
               </div>
-              <div class="col-md-12 mb-3"><textarea rows="5" maxlength="255" required class="form-control" id="rule_atendance_information" name="rule_atendance_information"></textarea></div>
+              <div class="col-md-12 mb-3"><textarea rows="5" maxlength="255" required class="form-control" id="rule_atendance_information" name="rule_atendance_information"><%= contest&.rule_atendance_information %></textarea></div>
             </div>
           </div>
 
@@ -42,7 +42,7 @@
             <div class="form-group">
               <label><%= t('Contest.Content.Rule product description') %>:</label>
               <div class="mb-3">
-                  <textarea rows="5" maxlength="255" required class="form-control" id="rule_product_description" name="rule_product_description"></textarea>
+                  <textarea rows="5" maxlength="255" required class="form-control" id="rule_product_description" name="rule_product_description"><%= contest&.rule_product_description %></textarea>
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@
           <div class='col-md-4'>
             <label><%= t('Contest.Content.Rule submission entries')%>:</label>
             <div class="mb-3">
-                <textarea rows="5" maxlength="255" required id="rule_submission_entries" name="rule_submission_entries" class="form-control" ></textarea>
+                <textarea rows="5" maxlength="255" required id="rule_submission_entries" name="rule_submission_entries" class="form-control" ><%= contest&.rule_submission_entries %></textarea>
             </div>
           </div>
         </div>
