@@ -220,12 +220,12 @@ module User
                 'path'          => adm_contest_contest_exchanges_path,
                 'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest exchange') <<'</p></a></li>',
                 'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest exchange') <<'</p></a></li>',
-              }
-              #{
-              #  'path'          => adm_contest_contest_topics_path,
-              #  'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_topics_path << '"><i class="far fa-circle nav-icon"></i><p>Contest Exchange</p></a></li>',
-              #  'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_topics_path << '"><i class="far fa-circle nav-icon"></i><p>Contest Exchange</p></a></li>',
-              #},
+              },
+              {
+                'path'          => adm_contest_contest_projects_index_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_projects_index_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Topic.Name') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_projects_index_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Topic.Name') <<'</p></a></li>',
+              },
             ],
             'teaching' => [
               {
