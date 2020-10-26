@@ -24,6 +24,18 @@ $(document).ready(function() {
     },
     unhighlight: function (element, errorClass, validClass) {
       $(element).removeClass('is-invalid');
+
+    id = $(this).data('contest');
+    name = $('input[name="contest_name"]').val();
+    description = $('.contest-description-textarea').val();
+    description_1 = $('#contest_info_description').val();
+    description_2 = $('#contest_project_description').val();
+    description_3 = $('#submit_project_description').val();
+
+    if ($('#contest_state').is(":checked")){
+      state = true;
+    }else{
+      state = false;
     }
   });
 
@@ -67,6 +79,7 @@ $(document).ready(function() {
         }
       });
   });
+
 
   $('#create-new-contest-prize').on('click', '#contest_prize_type', function(){
     if ($(this).val() == 'm'){

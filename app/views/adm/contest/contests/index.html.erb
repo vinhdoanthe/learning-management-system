@@ -26,16 +26,16 @@
                 <td><%= contest.name %></td>
                 <td><%= contest.description.present? ? contest.description.html_safe : '' %></td>
                 <td>
-                    <ul style="float: left;padding: 0px;">
-                        <li style="float: left; display: inline-block;" class="col-md-4">XXX</li>
-                        <li style="float: left; display: inline-block;" class="col-md-4">XXX</li>
-                        <li style="float: left; display: inline-block;" class="col-md-4">XXX</li>
-                    </ul>
+                  <ul style="float: left;padding: 0px;">
+                    <li style="float: left; display: inline-block;" class="col-md-4"><%= contest.rule_atendance_information %></li>
+                    <li style="float: left; display: inline-block;" class="col-md-4"><%= contest.rule_product_description %></li>
+                    <li style="float: left; display: inline-block;" class="col-md-4"><%= contest.rule_submission_entries %></li>
+                  </ul>
                 </td>
 
                 <td class="text-center"><%= get_html_status(contest.is_publish).html_safe%></td>
                 <td style="min-width: 100px" class="text-center">
-                    <a href="/adm/contest/contests/<%= contest[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
+                  <a href="/adm/contest/contests/<%= contest[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
                   <% unless contest_has_projects contest %>
                     <a class="delete-contest" data-contest="<%= contest.id %>" ><i class="fas fa-trash"></i></a>
                   <% else %>
@@ -54,7 +54,7 @@
               <th width="10%" class="text-center"><%= t('Contest.Content.State') %></th>
               <th class="text-center"><%= t('Contest.Content.Action') %></th>
             </tr>
-          </tfoot>
+            </tfoot>
         </table>
       </div>
     </div>

@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'contest/index.js' %>
 <% submit_url = logged_in? ? "/contest/#{ @contest.id}/new_project" : "/user/login?contest=#{ @contest.id }"%>
 <input name="contest_id" type="hidden" value="<%= @contest.id %>" >
 <div class="l-nav is-transparent">
@@ -34,7 +35,7 @@
 <%= render 'contest/contests/partials/contest_description' %>
 <!--end c-block-->
 <div id='contest_rule'>
-<%= render 'contest/contests/partials/contest_rule' %>
+  <%= render 'contest/contests/partials/contest_rule' %>
 </div>
 <!--end c-block-->
 <%= render 'contest/contests/partials/contest_prizes', { month_prize: @month_prize, week_prize: @prize } %>
@@ -42,32 +43,12 @@
 <%= render 'contest/contests/partials/contest_topic_list',{ month_topics: [ @result[:last_month_topics], @result[:current_month_topic], @result[:next_month_topic]], active_topic: @result[:active_topic], active_topic_index: @result[:active_topic_index] } %>
 <!--end c-block-->
 <div id="contest-leader-board">
-<%#= render 'contest/contests/partials/leader_board' %>
+  <%#= render 'contest/contests/partials/leader_board' %>
 </div>
 <!--end c-yellow-board-block-->
 <div class="c-block bg-gradient-2 c-product-block">
   <div class="container is-medium">
-    <div class="c-box is-middle">
-      <div class="c-box__title">
-        <div class="c-box__title__name"><span>Sản phẩm</span>Đạt giải tháng</div>
-        <div class="c-box__title__shadow">Winers</div>
-      </div>
-      <div class="c-box__desc">
-        Sản phẩm của học sinh
-        <b>được vinh danh</b>
-        hàng tháng
-      </div>
-      <div class="c-box__content">
-        <div class="c-template-slider is-margin-minus">
-          <div class="owl-carousel js-slider-2">
-            <%= render 'contest/contests/partials/month_prize_item' %>
-            <%= render 'contest/contests/partials/month_prize_item' %>
-            <%= render 'contest/contests/partials/month_prize_item' %>
-            <%= render 'contest/contests/partials/month_prize_item' %>
-          </div>
-        </div>
-        <div class="c-more"><a class="btn btnl-lg btn-outline-dark" href="product.html">Xem toàn bộ<i class="icon-long-arrow-right icon-right"></i></a></div>
-      </div>
+    <div class="c-box is-middle" id="contest_month_prize">
     </div>
     <!-- c-box-->
     <div class="c-box is-middle">
@@ -77,31 +58,10 @@
       </div>
       <div class="c-box__desc"><b>TOP 20</b>
         sản phẩm được ưa thích trong
-        <b>tuần 2</b>
-        tháng 10/2020
+        <b>tuần <%= get_week_of_month Time.now %></b>
+        tháng <%= Time.now.strftime('%m/%Y') %>
       </div>
-      <div class="c-box__content">
-        <div class="c-template-slider is-margin-minus">
-          <div class="owl-carousel js-slider-5" data-slider-id="slider-product-1">
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-          </div>
-        </div>
-        <div class="c-more"><a class="btn btnl-lg btn-outline-dark" href="product.html">Xem toàn bộ<i class="icon-long-arrow-right icon-right"></i></a></div>
-        <div class="c-template-dots">
-          <ul class="owl-thumbs" data-slider-id="slider-product-1">
-            <li class="owl-thumb-item"><span>1</span></li>
-            <li class="owl-thumb-item"><span>2</span></li>
-            <li class="owl-thumb-item"><span>3</span></li>
-            <li class="owl-thumb-item"><span>4</span></li>
-            <li class="owl-thumb-item"><span>5</span></li>
-            <li class="owl-thumb-item"><span>6</span></li>
-          </ul>
-        </div>
+      <div id="current-week-projects">
       </div>
     </div>
     <!-- c-box-->
@@ -112,31 +72,10 @@
       </div>
       <div class="c-box__desc">
         Các sản phẩm được ưa thích trong
-        <b>tuần 1</b>
-        tháng 10/2020
+        <b>tuần <%= get_week_of_month (Time.now - 1.week) %></b>
+        tháng <%= (Time.now - 1.week).strftime("%m/%Y") %>
       </div>
-      <div class="c-box__content">
-        <div class="c-template-slider is-margin-minus">
-          <div class="owl-carousel js-slider-5" data-slider-id="slider-product-2">
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-            <%= render 'contest/contests/partials/week_prize_item' %>
-          </div>
-        </div>
-        <div class="c-more"><a class="btn btnl-lg btn-outline-dark" href="product.html">Xem toàn bộ<i class="icon-long-arrow-right icon-right"></i></a></div>
-        <div class="c-template-dots">
-          <ul class="owl-thumbs" data-slider-id="slider-product-2">
-            <li class="owl-thumb-item"><span>1</span></li>
-            <li class="owl-thumb-item"><span>2</span></li>
-            <li class="owl-thumb-item"><span>3</span></li>
-            <li class="owl-thumb-item"><span>4</span></li>
-            <li class="owl-thumb-item"><span>5</span></li>
-            <li class="owl-thumb-item"><span>6</span></li>
-          </ul>
-        </div>
+      <div id="last-week-projects">
       </div>
     </div>
     <!-- c-box-->
@@ -204,21 +143,21 @@
   </div>
   <!--end container-->
 </div>
-  <script>
-      $(window).on("load", function (e) {
-        if( $('.c-road-slider').length > 0 && $('.c-calender-slider').length > 0 ) {
-          //this is number of month active slider theme slider, please fill code
-          var numberActive = <%= Time.now.month %>;
-          var calendarOwl = $('#calendar-slider-id');
-          var roadOwl = $('#road-slider-id');
-          if( numberActive !== '' && numberActive !== 0 && numberActive !== null ){
-            var itemActive = $(".c-calendar-item[data-month='" + numberActive + "']");
-            console.log(itemActive);
-            var startMonth = itemActive.attr('data-number');
-            roadOwl.trigger('to.owl.carousel', startMonth - 1);
-            calendarOwl.trigger('to.owl.carousel', startMonth - 1);
-            }
-        }
-      });
+<script>
+  $(window).on("load", function (e) {
+    if( $('.c-road-slider').length > 0 && $('.c-calender-slider').length > 0 ) {
+      //this is number of month active slider theme slider, please fill code
+      var numberActive = <%= Time.now.month %>;
+      var calendarOwl = $('#calendar-slider-id');
+      var roadOwl = $('#road-slider-id');
+      if( numberActive !== '' && numberActive !== 0 && numberActive !== null ){
+        var itemActive = $(".c-calendar-item[data-month='" + numberActive + "']");
+        console.log(itemActive);
+        var startMonth = itemActive.attr('data-number');
+        roadOwl.trigger('to.owl.carousel', startMonth - 1);
+        calendarOwl.trigger('to.owl.carousel', startMonth - 1);
+      }
+    }
+  });
 
-  </script>
+</script>

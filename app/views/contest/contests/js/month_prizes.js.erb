@@ -1,0 +1,42 @@
+$('#contest_month_prize').html("<%= escape_javascript ( render partial: 'contest/contests/partials/month_prize_item', locals: { month_projects: month_projects }) %>")
+$(document).ready(function(){
+  $('.js-slider-2').owlCarousel({
+    loop:true,
+    margin:0,
+    responsiveClass:false,
+    nav:true,
+    dots:false,
+    autoplay:false,
+    autoHeight:false,
+    autoplayTimeout:6000,
+    autoplaySpeed:1000,
+    autoplayHoverPause:true,
+    navText:false,
+    responsive:{
+      0:{
+        items:1,
+        margin:0
+      },
+      768:{
+        items:2,
+        margin:10
+      },
+      992:{
+        items:2,
+        margin:20
+      },
+      1200:{
+        items:2,
+        margin:30
+      }
+    }
+  });
+
+  contest_id = $('input[name="contest_id"]').val();
+  $.ajax({
+    method: 'GET',
+    url: `/contest/contest_projects/week_projects`,
+    data: { contest_id: contest_id, time: 'current' },
+    dataType: 'script'
+  })
+});

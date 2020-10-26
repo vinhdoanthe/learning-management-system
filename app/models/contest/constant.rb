@@ -14,4 +14,9 @@ module Contest::Constant
     SCORE_RATIO = 0.3
     JUDGES_RATIO = 0.7
   end
+
+  module Region
+    MB = [23, 27, 21, 3, 7, 15, 32, 33, 20, 1]
+    MN = []
+  end
 end

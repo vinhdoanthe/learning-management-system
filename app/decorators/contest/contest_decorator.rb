@@ -21,4 +21,12 @@ class Contest::ContestDecorator < SimpleDelegator
 
     display
   end
+
+  def display_like_share
+    like = project_criterions.joins(:contest_criterion).where(tk_contest_criterions: { name: 'like' }).first&.number
+    share = project_criterions.joins(:contest_criterion).where(tk_contest_criterions: { name: 'share' }).first&.number
+    "<li><i class='icon16-like'></i><span>#{ like.to_i }</span></li>
+    <li><i class='icon16-share'></i><span>#{ share.to_i }</span></li>
+    <li><i class='icon16-eye'></i><span>#{ views.to_i }</span></li>"
+  end
 end

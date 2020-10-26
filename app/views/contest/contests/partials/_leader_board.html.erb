@@ -8,7 +8,7 @@
         </li>
         <% (0..7).each do |index| %>
           <li>
-            <%= render 'contest/contests/partials/leader_week_item', { c_project: week_projects[index], is_month: false } %>
+            <%= render 'contest/contests/partials/leader_week_item', { c_project: week_projects[index], is_month: false, week_index: index } %>
           </li>
         <% end %>
       </ul>

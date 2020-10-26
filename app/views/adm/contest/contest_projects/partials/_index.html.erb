@@ -1,74 +1,13 @@
-<%= javascript_include_tag 'social_community/dashboards/shared/posts/reactions.js' %>
-<%= javascript_include_tag 'social_community/dashboards/shared/posts/comments.js' %>
-<%= javascript_include_tag 'social_community/sc_student_projects/sc_student_project.js' %>
-<%= stylesheet_link_tag 'social_community/sc_student_project' %>
-
 <% score_ratio = Contest::Constant::ScoreRatio::SCORE_RATIO %>
 <% judges_ratio = Contest::Constant::ScoreRatio::JUDGES_RATIO %>
 <div id="contest_project_index">
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark"><%= contest.name %> - <%= topic.name %></h1>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3><%= c_projects.length %></h3>
-
-              <p>Sản phẩm dự thi</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-success">
-            <div class="inner">
-              <h3>100<sup style="font-size: 20px">%</sup></h3>
-
-              <p>Đã chấm</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-warning">
-            <div class="inner">
-              <h3>100</h3>
-
-              <p>Chưa chấm</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="card">
     <div class="card-header">
       <div class="card-tools">
-        <a data-toggle='modal' data-target="#modal_create_contest_topic" class="btn btn-info float-right"><i class="fas fa-plus"></i></a>
+        <input type='hidden' value='' name="active-contest" >
+        <input type='hidden' value='' name="active-topic" >
+        <a class="btn btn-info float-right" id="calculate_week_prize">Trao giai tuan</a>
+        <a class="btn btn-info float-right">Trao giai thang</a>
       </div>
     </div>
     <div class="card-body">
@@ -82,7 +21,6 @@
               <th>course_name</th>
               <th>company</th>
               <th>point</th>
-              <th>show_project</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -95,10 +33,8 @@
                 <td><%= project.course_name %></td>
                 <td><%= project.company_name %></td>
                 <td><%= c_projects[project.id][:score] * score_ratio + c_projects[project.id][:judges_score] * judges_ratio %></td>
-                <td><a data-toggle='modal' data-project="<%= project.id %>" data-target="#studentProjectDetail" class="btn btn-primary contest_project_show"><i class="fa fa-eye"></i></a></td>
                 <td>
-                  <span data-toggle='modal' data-target="#" data-mark="<%= c_projects[project.id][:id] %>">
-                  <i class="fas fa-pencil-alt"></i>
+                  <a data-toggle='modal' data-project="<%= c_projects[project.id][:id] %>" data-target="#studentProjectDetail" class="btn btn-primary contest_project_show"><i class="fas fa-pencil-alt"></i> </a>
                   </span>
                 </td>
               </tr>
@@ -110,5 +46,5 @@
   </div>
 </div>
 
-<div class="modal fade" id="studentProjectDetail">
+<div class="modal" id="studentProjectDetail">
 </div>

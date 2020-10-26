@@ -82,4 +82,17 @@ module ApplicationHelper
   def adm_controller?
     controller.class.name.split("::").first =="Adm"
   end
+
+  def get_week_of_month time
+    number_week = (time.strftime('%d').to_i / 7) + 1 
+    number_week = 4 if number_week == 5
+    number_week
+  end
+
+  def render_contest_layout
+    (request.original_fullpath.include? 'contest') &&
+    ((request.original_fullpath.include? 'adm') == false) &&
+    ((request.original_fullpath.include? 'login') == false) &&
+    ((request.original_fullpath.include? 'new_project') == false)
+  end
 end

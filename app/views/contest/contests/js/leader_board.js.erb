@@ -1,1 +1,8 @@
 $('#contest-leader-board').html("<%= escape_javascript( render partial: 'contest/contests/partials/leader_board', locals: { month_project: month_project, week_projects: week_projects }) %>")
+contest_id = $('input[name="contest_id"]').val();
+
+$.ajax({
+  method: 'GET',
+  url: `/contest/contest_projects/month_projects?contest_id=${ contest_id }`,
+  dataType: 'script'
+})
