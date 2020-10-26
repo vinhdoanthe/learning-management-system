@@ -38,13 +38,13 @@
             <tr>
               <td><%= prize.id %></td>
               <td><%= prize.name %></td>
-              <td><%= prize.number_awards %></td>
-              <td><%= prize.prize %></td>
-              <td><%= t("adm.contest.contest_prizes.#{ prize.prize_type }") %></td>
-              <td><%= prize.student_price %></td>
-              <td><%= prize.teacher_price %></td>
-              <td><%= prize.student_price + prize.teacher_price %></td>
-              <td><%= prize.description.html_safe %></td>
+              <td class="text-center"><%= prize.prize %></td>
+              <td class="text-center"><%= t("adm.contest.contest_prizes.#{ prize.prize_type }") %></td>
+              <td class="text-center"><%= prize.number_awards %></td>
+              <td class="text-center"><%= prize.student_price %></td>
+              <td class="text-center"><%= prize.teacher_price %></td>
+              <td class="text-center"><%= prize.student_price + prize.teacher_price %></td>
+              <td><%= prize.description&.html_safe %></td>
             </tr>
           <% end%>
         <% end %>
