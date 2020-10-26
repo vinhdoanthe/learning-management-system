@@ -441,8 +441,10 @@ vi:
       Student price: "Học sinh"
       Teacher price: "Giáo viên"      
       Type prize: "Thứ hạng"
-      Type: "Giải:Tuần | Tháng)"
+      Type: "Giải:Tuần | Tháng"
       Number awards: "Số lượng giải"
       Bonus: "Mức thưởng"
       Description: "Mô tả"
-      Use for weekly topics: "Sử dụng cho chủ đề theo tuần"
+      Use for weekly topics: "Sử dụng cho chủ đề"
+    Products:
+      Contest products: "Sản phẩm dự thi"

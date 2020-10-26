@@ -111,7 +111,7 @@
                     </td>
                     <td><%= prize.name %></td>
                     <td class="text-center"><%= prize.prize %></td>
-                    <td class="text-center"><%= prize.prize_type %></td>
+                    <td class="text-center"><%= t("adm.contest.contest_prizes.#{ prize.prize_type }") %></td>
                     <td class="text-center"><%= prize.number_awards %></td>
                     <td class="text-center"><%= prize.student_price %></td>
                     <td class="text-center"><%= prize.teacher_price %></td>
@@ -136,7 +136,7 @@
         <div class="card-header">
           <h3 class="card-title text-info"><%= t('Contest.Prize.Choose criterion') %></h3>
           <div class="card-tools">
-            <button type="button" class="btn btn-info btn-sm bg-olive float-right" data-toggle="modal" data-target="#modal_create_contest_criterion" title="<%= t("XXXX")%>"><i class="fas fa-plus"></i></button>
+            <button type="button" class="btn btn-info btn-sm bg-olive float-right" data-toggle="modal" data-target="#modal_create_contest_criterion" title="XXX"><i class="fas fa-plus"></i></button>
           </div>
         </div>
         <div class="card-body">

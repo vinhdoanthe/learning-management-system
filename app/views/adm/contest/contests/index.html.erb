@@ -36,7 +36,7 @@
                 <td class="text-center"><%= get_html_status(contest.is_publish).html_safe%></td>
                 <td style="width:100px" class="text-center">
                   <div class="btn-group align-items-sm-center">
-                    <a data-toggle="tooltip" title="<%= t('Contest.Content.Edit contest') %>" href="/adm/contest/contests/<%= contest[:id] %>" target="_blank" class="btn btn-default btn-xs text-primary"><i class="far fa-edit font-weight-normal"></i></a>                    
+                    <a data-toggle="tooltip" title="<%= t('Contest.Content.Edit contest') %>" href="/adm/contest/contests/<%= contest[:id] %>" class="btn btn-default btn-xs text-primary"><i class="far fa-edit font-weight-normal"></i></a>                    
                     <% unless contest_has_projects contest %>
                       <a title="<%= t('Contest.Content.Remove contest') %>" class="btn btn-default btn-xs text-danger delete-contest" data-contest="<%= contest.id %>" ><i class="far fa-trash-alt font-weight-normal"></i></a>
                     <% else %>
