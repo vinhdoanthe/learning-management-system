@@ -19,7 +19,7 @@ class Adm::Contest::ContestProjectsController < Adm::AdmController
   end
 
   def calculate_point
-    binding.pry
+    #binding.pry
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
     result = Adm::Contest::ContestTopicsService.new.calculate_criterions_point topic
 
