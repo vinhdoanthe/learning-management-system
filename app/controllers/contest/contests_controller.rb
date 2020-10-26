@@ -2,7 +2,7 @@ class Contest::ContestsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :leader_board]
 
   def index
-    @contest = Contest::Contest.where(id: params[:contest_id]).first
+    @contest = Contest::Contest.where(id: params[:id]).first
     @topic = @contest.contest_topics.where(status: 'active').first
     @month_prize = @topic.contest_prizes.where(prize_type: 'm', prize: 1).first
     @prize = @topic.contest_prizes.where(prize_type: 'w', prize: 1).first
