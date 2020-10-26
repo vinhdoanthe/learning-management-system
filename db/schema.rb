@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_21_024933) do
+ActiveRecord::Schema.define(version: 2020_10_24_020346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -11121,6 +11121,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_024933) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status"
+    t.integer "week_number"
   end
 
   create_table "tk_contests", force: :cascade do |t|
@@ -11129,6 +11130,9 @@ ActiveRecord::Schema.define(version: 2020_10_21_024933) do
     t.boolean "is_publish"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "rule_atendance_information"
+    t.string "rule_product_description"
+    t.string "rule_submission_entries"
   end
 
   create_table "tk_project_criterions", force: :cascade do |t|

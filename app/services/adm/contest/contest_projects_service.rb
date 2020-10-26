@@ -1,12 +1,14 @@
 class Adm::Contest::ContestProjectsService
 
   def index_content params
-    if params[:contest].present?
-      contest = Contest::Contest.where(id: paramz[:contest]).first
-      topic = contest.contest_topics.where(status: 'active').first
-    else
-      topic = Contest::ContestTopic.where(status: 'active').first
-      contest = topic.contest
+    contest = Contest::Contest.where(id: params[:contest_id]).first
+    topic = Contest::ContestTopic.where(id: params[:topic_id]).first
+
+    query = ''
+    if params[:region] == 'MB'
+      query += "res_company.id IN (#{ Contest::Constant::Region::MB.join(',') })"
+    elsif params[:region] == 'MN'
+      query += "res_company.id NOT IN (#{ Contest::Constant::Region::MB.join(',') })"
     end
 
     c_projects = topic.contest_projects
@@ -17,7 +19,7 @@ class Adm::Contest::ContestProjectsService
     end
 
     project_ids = c_projects.pluck(:project_id)
-    projects_detail = SocialCommunity::ScStudentProject.joins(:op_course).joins(op_student: :res_company).where(id: project_ids).select(:id, :name, "op_course.name as course_name", :student_id, "op_student.full_name as student_name", "res_company.name as company_name")
+    projects_detail = SocialCommunity::ScStudentProject.joins(:op_course).joins(op_student: :res_company).where(id: project_ids).where(query).select(:id, :name, "op_course.name as course_name", :student_id, "op_student.full_name as student_name", "res_company.name as company_name")
     
     [contest, topic, c_projects_detail, projects_detail]
   end

@@ -9,4 +9,13 @@ class Contest::ContestsService
     [week_projects, month_project]
 
   end
+
+  def week_projects contest, time_type
+    time = if time_type == 'current'
+             Time.now
+           elsif time_type == 'last_week'
+             Time.now - 1.week
+           end
+    contest.contest_projects.joins(user: { op_student: :res_company }).joins(:student_project).joins(:project_criterions).where(created_at: time.beginning_of_week..time.end_of_week).order(score: :DESC).select('distinct(tk_contest_projects.id)', :created_at, :user_id, 'op_student.full_name as student_name', 'sc_student_projects.name as project_name', :views, :score, 'res_company.name as company_name').limit(5)
+  end
 end

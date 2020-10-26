@@ -95,6 +95,7 @@ namespace :adm do
 
 
   namespace :contest do
+    get '/topic_list', to: 'contests#topic_list', as: 'topic_list'
     resources :contests
     namespace :contests do
       post 'update_contest', action: 'update_contest', as: 'update_contest'
@@ -109,6 +110,7 @@ namespace :adm do
     resources :contest_topics
     namespace :contest_topics do
       post 'create_topic', action: 'create_topic', as: 'create_topic'
+      post 'delete_topic', action: 'delete_topic', as: 'delete_topic'
     end
 
     namespace :contest_criterions do
@@ -119,6 +121,7 @@ namespace :adm do
     namespace :contest_projects do
       get '', action: 'index', as: 'index'
       get 'index_content', action: 'index_content', as: 'index_content'
+      post 'calculate_point', action: 'calculate_point', as: 'calculate_point'
     end
 
     resources :contest_exchanges

@@ -9,6 +9,7 @@ class Contest::ContestProject < ApplicationRecord
   belongs_to :student_project, class_name: 'SocialCommunity::ScStudentProject', foreign_key: 'project_id'
 
   has_many :project_criterions, class_name: 'Contest::ProjectCriterion', foreign_key: "contest_project_id"
+  has_many :contest_criterions, class_name: 'Contest::ContestCriterion', through: :project_criterions
 
   belongs_to :contest_prize, class_name: "Contest::ContestPrize", foreign_key: "contest_prize_id"
 

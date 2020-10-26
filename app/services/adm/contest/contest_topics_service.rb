@@ -1,4 +1,5 @@
 class Adm::Contest::ContestTopicsService
+
   def create_topic params
     contest = Contest::Contest.where(id: params[:contest_id]).first
     return { type: 'danger', message: 'Cuoc thi khong ton tai' } if contest.blank?
@@ -63,15 +64,15 @@ class Adm::Contest::ContestTopicsService
     end
   end
 
-  def caculator_projects_point topic
+  def calculate_criterions_point topic
+    begin
     qry = " SELECT a.id, SUM(b.point_exchange) AS point_max
             FROM tk_contest_projects AS a
             LEFT JOIN tk_project_criterions AS b ON a.id = b.contest_project_id
             WHERE a.contest_topic_id = #{ topic.id }
             GROUP BY a.id
             ORDER BY point_max DESC "
-    #contest_exchanges = Contest::ContestExchange.where(status: 'active').pluck(:id, :top_from, :top_end, :point).sort_by{|e| e[2] }
-    contest_exchanges = Contest::ContestExchange.pluck(:id, :top_from, :top_end, :point).sort_by{|e| e[2] }
+    contest_exchanges = Contest::ContestExchange.where(status: 'active').pluck(:id, :top_from, :top_end, :point).sort_by{|e| e[2] }
     exchange_hash = {}
     contest_exchanges.each do |e|
       exchange_hash.merge!({e[0] => [(e[1] - 1)..(e[2] - 1), e[3]]})
@@ -86,6 +87,10 @@ class Adm::Contest::ContestTopicsService
       project_ids = []
       prize_projects[val[0]]&.each{ |p| project_ids << p[0] }
       Contest::ContestProject.where(id: project_ids).update_all(score: val[1])
+    end
+      { type: 'success', message: 'tinh toan xong' }
+    rescue
+      { type: 'danger', message: 'da co loi xay ra! Vui long thu laij sau' }
     end
   end
 
@@ -103,7 +108,7 @@ class Adm::Contest::ContestTopicsService
     #projects = ActiveRecord::Base.connection.execute(sql).values
 
     awarded_projects = Contest::ContestProject.
-      select("id, SUM(score * #{ SCORE_RATIO } + judges_score * #{ JUDGES_SCORE_RATIO }) as point").
+      select("tk_contest_projects.id, SUM(score * #{ Contest::Constant::ScoreRatio::SCORE_RATIO } + judges_score * #{ Contest::Constant::ScoreRatio::JUDGES_RATIO }) as point").
       group('id').
       order(point: 'desc').
       limit(total_awards).
@@ -112,11 +117,10 @@ class Adm::Contest::ContestTopicsService
     topic_prizes = topic.contest_prizes.where(prize_type: type).
     #topic_prizes = Contest::ContestPrize.
       order(prize: 'asc').
-      select('id, prize, number_awards').
+      select('tk_topic_prizes.id, prize, number_awards').
       to_a
 
     topic_prizes.each do |prize|
-      puts "Prize: #{prize.prize}: #{awarded_projects.map(&:id).inspect}"
       Contest::ContestProject.where(id: awarded_projects.map(&:id)).update_all(contest_prize_id: prize.id)
     end
 

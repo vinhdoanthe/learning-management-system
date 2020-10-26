@@ -42,3 +42,4 @@ Rails.application.config.assets.precompile += %w( social_community/refer_friend/
 Rails.application.config.assets.precompile += %w( adm_application.css )
 Rails.application.config.assets.precompile += %w( contest.css )
 Rails.application.config.assets.precompile += %w( contest.js )
+Rails.application.config.assets.precompile += %w( contest/index.js )

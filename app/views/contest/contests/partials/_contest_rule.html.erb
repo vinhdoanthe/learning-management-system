@@ -19,7 +19,7 @@
                 <div class="c-rules-item__row">
                   <div class="c-rules-item__title">Thông tin tham dự</div>
                 </div>
-                <div class="c-rules-item__row">Lorem Ipsum is simply dummy text of the printing and typesetting industry</div>
+                <div class="c-rules-item__row"><%= @contest.rule_atendance_information&.html_safe %></div>
                 <div class="c-rules-item__row"><i class="icon48-info"></i></div>
               </div>
             </li>
@@ -29,7 +29,7 @@
                 <div class="c-rules-item__row">
                   <div class="c-rules-item__title">Mô tả sản phẩm</div>
                 </div>
-                <div class="c-rules-item__row">Lorem Ipsum is simply dummy text of the printing and typesetting industry</div>
+                <div class="c-rules-item__row"><%= @contest.rule_product_description&.html_safe %></div>
                 <div class="c-rules-item__row"><i class="icon48-desc"></i></div>
               </div>
             </li>
@@ -39,7 +39,7 @@
                 <div class="c-rules-item__row">
                   <div class="c-rules-item__title">Nộp bài dự thi</div>
                 </div>
-                <div class="c-rules-item__row">Lorem Ipsum is simply dummy text of the printing and typesetting industry</div>
+                <div class="c-rules-item__row"><%= @contest.rule_submission_entries&.html_safe %></div>
                 <div class="c-rules-item__row"><i class="icon48-sent"></i></div>
               </div>
             </li>

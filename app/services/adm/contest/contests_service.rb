@@ -15,6 +15,9 @@ class Adm::Contest::ContestsService
     contest.rule_submission_entries     = params[:rule_submission_entries]
     
     contest.is_publish = params[:state].to_boolean
+    contest.description_1 = params[:description_1]
+    contest.description_2 = params[:description_2]
+    contest.description_3 = params[:description_3]
 
     contest.save!
 
