@@ -1,0 +1,71 @@
+<div class="modal-dialog" style='min-width: 80%'>
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class='panel-content row'>
+        <div class='col-md-9'>
+        <ul class='project_infomation'>
+          <li><%= t('social_community.detail.full_name') %>: <span><%= student.full_name %></span></li>
+          <li><%= t('social_community.detail.course') %>: <span><%= course.name %></span></li>
+          <li><%= t('social_community.detail.batch') %>: <span><%= batch.name %></span></li>
+          <li><%= t('social_community.detail.company') %>: <span><%= company_name %></span></li>
+        </ul>
+        </div>
+        <div class='col-md-3'>
+          <label for"marking-project-point">Diem so</label>
+          <input type='number' min='0' max='100' id="marking-project-point" value="<%= c_project.judges_score %>" style="width: 100px; height: 100px; font-size: 20px; font-weight: 700; text-align: center">
+        </div>
+      </div>
+      <div class="panel-content">
+        <div class="box-product">
+          <div class="fc-header" style='margin: 15px 0 15px 0'>
+            <h3 style="margin: 0 !important"><%= t('social_community.detail.description') %></h3>
+          </div>
+          <div class="project_description">
+            <p><%= project.description.html_safe if project.description.present?%></p>
+          </div>
+        </div>
+      </div>
+      <% if project.introduction_video.present? %>
+        <div class="panel-content">
+          <div class="box-product">
+            <div class="fc-header" style='margin: 15px 0 15px 0'>
+              <h3 style="margin: 0 !important"><%= t('social_community.detail.intro') %></h3>
+            </div>
+            <div class="project_intro">
+              <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <% if project.presentation.present? %>
+        <div class="panel-content">
+          <div class="box-product">
+            <div class="fc-header" style='margin: 15px 0 15px 0'>
+              <h3 style="margin: 0 !important"><%= t('social_community.detail.slide') %></h3>
+            </div>
+            <div class="project_intro">
+              <%= link_to image_tag('/global/images/downloadinvoice.png') + t('attachment.download'), rails_blob_path(project.presentation, disposition: "attachment") %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% if project.project_show_video.present? %>
+        <div class="panel-content">
+          <div class="box-product">
+            <div class="fc-header" style='margin: 15px 0 15px 0'>
+              <h3 style="margin: 0 !important">Chi tiết sản phẩm</h3>
+            </div>
+            <div class="project_intro">
+              <%= project.project_show_video.html_safe %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="modal-footer justify-content-between">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" data-dismiss="modal" data-project="<%= c_project.id %>" id="submit-marking-project">Save changes</button>
+    </div>
+  </div>
+  <!-- /.modal-content -->

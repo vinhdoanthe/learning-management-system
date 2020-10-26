@@ -19,7 +19,6 @@ class Adm::Contest::ContestCriterionsService
     if c.blank?
       { type: 'danger', message: 'Tieu chi k ton tai' }
     else
-    binding.pry
       if can_delete_topic_criterion? c, topic
         c.delete
         { type: 'success', message: 'Xoa thanh cong', criterion: c }

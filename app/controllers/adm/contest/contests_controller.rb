@@ -33,6 +33,13 @@ class Adm::Contest::ContestsController < Adm::AdmController
     render json: result
   end
 
+  def topic_list
+    contest = Contest::Contest.where(id: params[:id]).first
+    topic_list = contest.contest_topics.where(status: 'active').pluck(:id, :name)
+
+    render json: topic_list
+  end
+
   private
 
   def find_contest

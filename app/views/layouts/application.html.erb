@@ -1,4 +1,4 @@
-<% if (request.original_fullpath.include? 'contest') && (request.original_fullpath.include? 'home')%>
+<% if render_contest_layout %>
   <%= render 'partials/contest_application' %>
 <% else %>
   <% if current_user && (current_user.is_admin? || current_user.is_operation_admin? || current_user.is_content_admin? ) && adm_controller? %>

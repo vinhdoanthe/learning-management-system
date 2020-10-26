@@ -1,13 +1,28 @@
-<div class="c-product-small">
-  <div class="c-product-small__thumb"><a href="product-detail.html"><img src="/contest/upload/product-small_1.jpg" alt="image"></a></div>
-  <div class="c-product-small__content">
-    <div class="c-product-small__inside"><a class="c-product-small__title" href="product-detail.html">Fruit Ninja, August 2020</a><span class="c-product-small__author">Nguyễn Minh Khang</span></div>
-    <div class="c-product-small__count">
-      <ul>
-        <li><i class="icon16-like"></i><span>302</span></li>
-        <li><i class="icon16-share"></i><span>98</span></li>
-        <li><i class="icon16-eye"></i><span>2K</span></li>
-      </ul>
+<div class="c-box__content">
+  <div class="c-template-slider is-margin-minus">
+    <div class="owl-carousel js-slider-5" data-slider-id="slider-product-1">
+      <% week_projects.each do |c_project| %>
+      <div class="c-product-small">
+        <div class="c-product-small__thumb"><a href="product-detail.html"><img src="/contest/upload/product-small_1.jpg" alt="image"></a></div>
+        <div class="c-product-small__content">
+          <div class="c-product-small__inside"><a class="c-product-small__title" href="product-detail.html"><%= c_project.project_name %></a><span class="c-product-small__author"><%= c_project.student_name %></span></div>
+          <div class="c-product-small__count">
+            <ul>
+              <% project = Contest::ContestProject.where(id: c_project.id).first %>
+              <%= Contest::ContestDecorator.new(project).display_like_share.html_safe%>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
     </div>
+  </div>
+  <div class="c-more"><a class="btn btnl-lg btn-outline-dark" href="product.html">Xem toàn bộ<i class="icon-long-arrow-right icon-right"></i></a></div>
+  <div class="c-template-dots">
+    <ul class="owl-thumbs" data-slider-id="slider-product-1">
+      <% week_projects.each_with_index do |p, index| %>
+        <li class="owl-thumb-item"><span><%= index + 1 %></span></li>
+      <% end %>
+    </ul>
   </div>
 </div>
