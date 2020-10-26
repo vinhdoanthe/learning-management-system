@@ -1,73 +1,90 @@
-<div class='contest_content' id="contest_form">
-  <form id="idForm">
-    <div class="row">
-      <div class='col-md-12'>
-        <div class="form-group">
-          <div class="col-md-3">
-            <label><%= t('Contest.Content.Name') %>:</label>
-          </div>
-          <div class="contest_name">
-            <input id="contest_name" name="contest_name" required maxlength="150" class="form-control" value="<%= contest&.name %>">
-            <input name="contest_id" value="<%= contest&.id %>" type="hidden">
-          </div>
-        </div>
-      </div>
-      <div class='col-md-12'>
-        <div class="form-group">
-          <div class="col-md-3">
-            <label><%= t('Contest.Content.Description') %>:</label>
-          </div>
-          <div class="contest_name">
-            <div class="mb-3">
-              <textarea rows='5' required id="contest_description" class="form-control contest-description-textarea"
-              style="height: 200px;padding: 10px;"><%= contest&.description %></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class='col-md-12'>
-        <div class="row">
-          <div class="col-md-12"><label><%= t('Contest.Content.Rule info') %></label></div>
-          <div class='col-md-4'>
-            <div class="form-group">
-              <div class='col-md-12'>
-                <label><%= t('Contest.Content.Rule atendance information') %>:</label>
-              </div>
-              <div class="col-md-12 mb-3"><textarea rows="5" maxlength="255" required class="form-control" id="rule_atendance_information" name="rule_atendance_information"><%= contest&.rule_atendance_information %></textarea></div>
-            </div>
-          </div>
-
-          <div class='col-md-4'>
-            <div class="form-group">
-              <label><%= t('Contest.Content.Rule product description') %>:</label>
-              <div class="mb-3">
-                  <textarea rows="5" maxlength="255" required class="form-control" id="rule_product_description" name="rule_product_description"><%= contest&.rule_product_description %></textarea>
+<div class='card'>
+  <div class="card-footer">
+    <div class="float-right">
+      <button form='idForm' type="button" data-contest="<%= @contest&.id %>" id="update-contest-button" class="btn btn-default btn-sm bg-olive"><i class="fas fa-save"></i> <%= t('button.Save')%></button>
+      <a href="#" class="btn btn-default btn-sm"><i class="fas fa-ban"></i> <%= t('button.cancel')%></a>        
+    </div>       
+  </div>
+  <div class="card-body">
+      <div class='row contest_content' id="contest_form">
+        <form id="idForm">
+          <div class="row">
+            <div class='col-md-12'>
+              <div class="form-group">
+                <div class="col-md-3">
+                  <label><%= t('Contest.Content.Name') %>:</label>
+                </div>
+                <div class="contest_name">
+                  <input id="contest_name" name="contest_name" required maxlength="150" class="form-control" value="<%= contest&.name %>">
+                  <input name="contest_id" value="<%= contest&.id %>" type="hidden">
+                </div>
               </div>
             </div>
-          </div>
+            <div class='col-md-12'>
+              <div class="form-group">
+                <div class="col-md-3">
+                  <label><%= t('Contest.Content.Description') %>:</label>
+                </div>
+                <div class="contest_name">
+                  <div class="mb-3">
+                    <textarea rows='5' required id="contest_description" class="form-control contest-description-textarea"
+                    style="height: 200px;padding: 10px;"><%= contest&.description %></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <div class='col-md-4'>
-            <label><%= t('Contest.Content.Rule submission entries')%>:</label>
-            <div class="mb-3">
-                <textarea rows="5" maxlength="255" required id="rule_submission_entries" name="rule_submission_entries" class="form-control" ><%= contest&.rule_submission_entries %></textarea>
+            <div class='col-md-12'>
+              <div class="row">
+                <div class="col-md-12"><label><%= t('Contest.Content.Rule info') %></label></div>
+                <div class='col-md-4'>
+                  <div class="form-group">
+                    <div class='col-md-12'>
+                      <label><%= t('Contest.Content.Rule atendance information') %>:</label>
+                    </div>
+                    <div class="col-md-12 mb-3"><textarea rows="5" maxlength="255" required class="form-control" id="rule_atendance_information" name="rule_atendance_information"><%= contest&.rule_atendance_information %></textarea></div>
+                  </div>
+                </div>
+
+                <div class='col-md-4'>
+                  <div class="form-group">
+                    <label><%= t('Contest.Content.Rule product description') %>:</label>
+                    <div class="mb-3">
+                        <textarea rows="5" maxlength="255" required class="form-control" id="rule_product_description" name="rule_product_description"><%= contest&.rule_product_description %></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class='col-md-4'>
+                  <label><%= t('Contest.Content.Rule submission entries')%>:</label>
+                  <div class="mb-3">
+                      <textarea rows="5" maxlength="255" required id="rule_submission_entries" name="rule_submission_entries" class="form-control" ><%= contest&.rule_submission_entries %></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class='col-md-12'>
+              <div class="contest_state custom-control custom-checkbox">
+                <% if contest&.is_publish %>
+                  <input class="custom-control-input" checked type="checkbox" id="contest_state">
+                <% else %>
+                  <input class="custom-control-input" type="checkbox" id="contest_state">
+                <% end %>
+                  <label for="contest_state" class="custom-control-label"><%= t('Contest.Content.State')%></label>
+              </div>
             </div>
           </div>
-        </div>
+          </form>
       </div>
-
-      <div class='col-md-12'>
-        <div class="contest_state custom-control custom-checkbox">
-          <% if contest&.is_publish %>
-            <input class="custom-control-input" checked type="checkbox" id="contest_state">
-          <% else %>
-            <input class="custom-control-input" type="checkbox" id="contest_state">
-          <% end %>
-            <label for="contest_state" class="custom-control-label"><%= t('Contest.Content.State')%></label>
-        </div>
-      </div>
-    </div>
-    </form>
+  </div>
+  <div class="card-footer border-top">
+    <div class="float-right">
+      <button form='idForm' type="button" data-contest="<%= @contest&.id %>" id="update-contest-button" class="btn btn-default btn-sm bg-olive"><i class="fas fa-save"></i> <%= t('button.Save')%></button>
+      <a href="#" class="btn btn-default btn-sm"><i class="fas fa-ban"></i> <%= t('button.cancel')%></a>          
+    </div>      
+  </div>
 </div>
 
 <style>

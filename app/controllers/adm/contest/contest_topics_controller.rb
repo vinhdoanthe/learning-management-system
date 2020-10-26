@@ -11,6 +11,8 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
   end
 
   def show
+    @report_title_page = t("Contest.Management contest")
+
     @topic = Contest::ContestTopic.where(id: params[:id]).first
     @contest = Contest::Contest.where(id: @topic.contest_id).first
   end
@@ -31,7 +33,7 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
   def delete_topic
     result = ''
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
-    binding.pry
+    #binding.pry
     if topic.blank?
       result = { type: 'danger', message: "chu de k ton tai hoac da bi xoa" }
     else

@@ -1,6 +1,6 @@
 class Contest::ContestProjectsService
   def marking_project params
-    binding.pry
+    #binding.pry
     c_project = Contest::ContestProject.where(id: params[:id]).first
     return { type: 'danger', message: 'san pham k ton tai hoac da bi xoa' } if c_project.blank?
 

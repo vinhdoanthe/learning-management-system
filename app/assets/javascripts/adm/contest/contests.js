@@ -7,7 +7,6 @@ let getContestPrizeForm = (contest_id) => {
 }
 
 $(document).ready(function() {
-
   $('#idForm').validate({
     lang: 'vi',
     rules: {      
@@ -24,23 +23,10 @@ $(document).ready(function() {
     },
     unhighlight: function (element, errorClass, validClass) {
       $(element).removeClass('is-invalid');
-
-    id = $(this).data('contest');
-    name = $('input[name="contest_name"]').val();
-    description = $('.contest-description-textarea').val();
-    description_1 = $('#contest_info_description').val();
-    description_2 = $('#contest_project_description').val();
-    description_3 = $('#submit_project_description').val();
-
-    if ($('#contest_state').is(":checked")){
-      state = true;
-    }else{
-      state = false;
-    }
+    }    
   });
 
   $('#update-contest-button').on('click', function() {
-
       
       if(!$("#idForm").valid()) {
         return false;
@@ -66,7 +52,6 @@ $(document).ready(function() {
         data: { name: name, description: description, rule_atendance_information: rule_atendance_information, rule_product_description: rule_product_description, rule_submission_entries: rule_submission_entries, state: state, id: id },
         success: function(res){
           display_response_noti(res);
-
           if (res.type === 'success') {
             $('.create-contest-prize-li').show();
             $('#create-contest').removeClass("active show");
@@ -87,6 +72,6 @@ $(document).ready(function() {
     }else{
       $('.contest_month_award').hide();
     }
-  })
-})
-
+  });
+  
+});
