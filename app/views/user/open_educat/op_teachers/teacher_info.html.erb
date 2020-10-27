@@ -16,7 +16,17 @@
             <%#= image_tag(get_avatar) %>
             <%= User::Account::UserDecorator.new(current_user).display_avatar("100%").html_safe %>
           </span>
-          <p>Giảng viên Fultime</p>
+          <p>
+            <% if teacher.type_of_faculty == '1' %>
+              Giảng viên Fulltime
+            <% elsif teacher.type_of_faculty == '2' %>
+              Giảng viên Parttime
+            <% elsif teacher.type_of_faculty == '3' %>
+              Cộng tác viên
+            <% elsif teacher.type_of_faculty == 'tester' %>
+              Tester
+            <% end %>
+          </p>
           <label><%= teacher.full_name if teacher.present? %></label>
         </div>
         <div class="bp-tab">
