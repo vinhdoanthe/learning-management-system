@@ -2,6 +2,7 @@
 <div class='card'>
   <div class='card-body'>
     <%= form_with model: project, url: url, remote: true, format: :js, method: :post, html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
+      <%= hidden_field_tag "topic_id", topic.id %>
       <div class='row'>
         <div class='col-md-3'>
           <label>Loại sản phẩm<span style="color: red">*</span></label>
@@ -41,6 +42,16 @@
         </div>
         <div class='col-md-8'>
           <%= f.text_field :name, class: 'project_detail form-control', placeholder: "#{ t('student_project.project_name') }" %>
+        </div>
+      </div>
+      <div class="project_thumbnail row">
+        <div class='col-md-3'>
+          <label><%= t('student_project.thumbnail') %> <span style='color: red'>*</span></label>
+        </div>
+        <div class='col-md-8'>
+          <%= f.file_field :image, id: "upload_project_thumbnail" %>
+          <div id='upload_project_thumbnail_preview' style="max-width: 200px; max-height: 200px;">
+          </div>
         </div>
       </div>
       <div class='row'>

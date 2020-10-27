@@ -16,6 +16,17 @@ class Contest::ContestsService
            elsif time_type == 'last_week'
              Time.now - 1.week
            end
-    contest.contest_projects.joins(user: { op_student: :res_company }).joins(:student_project).joins(:project_criterions).where(created_at: time.beginning_of_week..time.end_of_week).order(score: :DESC).select('distinct(tk_contest_projects.id)', :created_at, :user_id, 'op_student.full_name as student_name', 'sc_student_projects.name as project_name', :views, :score, 'res_company.name as company_name').limit(5)
+    w_projects = contest.contest_projects.joins(user: { op_student: :res_company }).joins(:student_project).joins(:project_criterions).where(created_at: time.beginning_of_week..time.end_of_week).order(score: :DESC).select('distinct(tk_contest_projects.id)', :created_at, :user_id, 'op_student.full_name as student_name', 'sc_student_projects.name as project_name', :views, :score, 'res_company.name as company_name', :project_id).limit(5)
+
+    project_ids = w_projects.pluck(:project_id)
+    w_project_imgs = {}
+
+    project_ids.each do |id|
+      project = SocialCommunity::ScStudentProject.where(id: id).first
+      return {} if project.blank?
+      w_project_imgs.merge!( { project.id => project.image })
+    end
+
+    [ w_projects, w_project_imgs ]
   end
 end
