@@ -1,0 +1,50 @@
+<% score_ratio = Contest::Constant::ScoreRatio::SCORE_RATIO %>
+<% judges_ratio = Contest::Constant::ScoreRatio::JUDGES_RATIO %>
+<div id="contest_project_index">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-tools">
+        <input type='hidden' value='' name="active-contest" >
+        <input type='hidden' value='' name="active-topic" >
+        <a class="btn btn-info float-right" id="calculate_week_prize">Trao giai tuan</a>
+        <a class="btn btn-info float-right">Trao giai thang</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class='table-responsive'>
+        <table class='table table-striped'>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>project_name</th>
+              <th>student_name</th>
+              <th>course_name</th>
+              <th>company</th>
+              <th>point</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% projects.each do |project| %>
+              <tr>
+                <td><%= project.id %></td>
+                <td><%= project.name %></td>
+                <td><%= project.student_name %></td>
+                <td><%= project.course_name %></td>
+                <td><%= project.company_name %></td>
+                <td><%= c_projects[project.id][:score] * score_ratio + c_projects[project.id][:judges_score] * judges_ratio %></td>
+                <td>
+                  <a data-toggle='modal' data-project="<%= c_projects[project.id][:id] %>" data-target="#studentProjectDetail" class="btn btn-primary contest_project_show"><i class="fas fa-pencil-alt"></i> </a>
+                  </span>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="studentProjectDetail">
+</div>

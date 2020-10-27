@@ -1,5 +1,42 @@
 class SocialCommunity::ScStudentProjectsService
 
+  def create_new_student_project params, user
+    @params = handling_params params
+    result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+    project = ''
+  #  sc_student_service = SocialCommunity::ScStudentProjectsService.new
+    user = User::Account::User.where(student_id: @params[:student_id]).first
+    student = user.op_student
+
+    if validate_youtube_upload_params @params
+      if validate_subject_project @params
+        result = { type: 'danger', message: 'Sản phẩm cuối khoá đã tồn tại! Không thể đăng thêm sản phẩm cuối khoá level này!' }
+      else
+        if @params[:introduction_video].present? && @params[:name].present?
+          video_detail = upload_video_youtube @params[:name], @params[:introduction_video], @params[:description], @params[:batch_id]
+          embed_link = video_detail[0]
+          thumbnail_video= video_detail[1]
+        else
+          embed_link = ''
+          thumbnail_video = ''
+        end
+
+        begin
+          project = create_student_project @params, embed_link, user, thumbnail_video
+          result = {type: 'success', message: 'Upload thành công'}
+        rescue StandardError
+          result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+        end
+
+        User::Reward::CoinStarsService.new.reward_coin_star project, user.id, user.id if (user.present? && project.project_type == SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT )
+      end
+    else
+      result = {type: 'danger', message: 'Thiếu thông tin sản phẩm! Vui lòng kiểm tra lại!'}
+    end
+
+    [result, project, student]
+  end
+
   def update_student_project params
     result = {}
     project = SocialCommunity::ScStudentProject.where(id: params[:project_id]).first
@@ -275,5 +312,31 @@ class SocialCommunity::ScStudentProjectsService
 
   def validate_subject_project params
     SocialCommunity::ScStudentProject.where(project_type: SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT, batch_id: params[:batch_id], subject_id: params[:subject_id], student_id: params[:student_id]).first.present?
+  end
+
+  private
+
+  def validate_youtube_upload_params params
+    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present? || params[:project_show_video].present? )
+  end
+
+  def handling_params params
+    @params = {}
+    @params.merge! params[:social_community_sc_student_project].permit! if params[:social_community_sc_student_project].present?
+    @params.merge! ({ state: params[:state]}) if params[:state].present?
+    @params.merge! ({ project_id: params[:project_id]}) if params[:project_id].present?
+
+    if @params['permission'] == '1'
+      @params['permission'] = SocialCommunity::Constant::ScStudentProject::Permission::PUBLIC
+    end
+
+    @params['state'] = if @params['state'] == '1'
+                              SocialCommunity::Constant::ScStudentProject::State::PUBLISH
+                            else
+                              SocialCommunity::Constant::ScStudentProject::State::DRAFT
+                            end
+
+    @params.select! { |k, v| v.present? }
+    @params.symbolize_keys!
   end
 end

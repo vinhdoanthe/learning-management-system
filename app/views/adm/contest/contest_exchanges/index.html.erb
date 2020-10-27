@@ -1,0 +1,53 @@
+<div class="contest_exchange_index">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-tools">
+        <a data-toggle='modal' data-target="#modal_create_contest_exchange" class="btn btn-info float-right"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class='table-responsive'>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>from</th>
+              <th>to</th>
+              <th>point</th>
+              <th>status</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody id='body-exchange'>
+            <% @contest_exchanges.each do |exchange| %>
+              <tr>
+                <th><%= exchange.id %></th>
+                <th><%= exchange.title %></th>
+                <th><%= exchange.top_from %></th>
+                <th><%= exchange.top_end %></th>
+                <th><%= exchange.point %></th>
+                <th>
+                  <% if exchange.status == 'active' %>
+                    <input type="checkbox" class="form-check-input exchange_status" data-exchange="<%= exchange.id %>" checked>
+                  <% else %>
+                    <input type="checkbox" class="form-check-input exchange_status"  data-exchange="<%= exchange.id %>" >
+                  <% end %>
+                </th>
+                <th><span class='delete-exchange' data-exchange='<%= exchange.id %>'<i class="fa fa-trash-alt"></i></span></th>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='modal fade' id="modal_create_contest_exchange">
+  <div class="modal-dialog" style="min-width: 60%">
+    <div class="modal-content">
+    <%= render 'adm/contest/contest_exchanges/partials/new' %>
+    </div>
+  </div>
+</div>

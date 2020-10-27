@@ -210,6 +210,24 @@ module User
         if current_user.is_admin?
           # Khoi menu report
           sub_menus = {
+            'contest' => [
+              {
+                'path'          => adm_contest_contest_projects_index_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_projects_index_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Products.Contest products') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_projects_index_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Products.Contest products') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_contest_contests_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contests_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contests_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_contest_contest_exchanges_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest exchange') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest exchange') <<'</p></a></li>',
+              }             
+
+            ],
             'teaching' => [
               {
                 'path'          => report_teaching_checkin_path,
@@ -354,6 +372,12 @@ module User
               'path'          => report_diligent_path,
               'title'         => '<li class="nav-item"><a class="nav-link" href="'<< report_diligent_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_diligent_title') <<'</p></a></li>',
               'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< report_diligent_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('report.report_diligent_title') <<'</p></a></li>'
+            },
+            {
+              'path'          => adm_contest_contests_path,
+              'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="'<< adm_contest_contests_path << '"><i class="nav-icon fas fa-th"></i><p>'<< t('Contest.Management contest') <<'</p><i class="right fas fa-angle-left"></i></a>',
+              'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="'<< adm_contest_contests_path << '"><i class="nav-icon fas fa-th"></i><p>'<< t('Contest.Management contest') <<'</p><i class="right fas fa-angle-left"></i></a>',
+              'sub_menu'      => sub_menus['contest']
             },
 
             {

@@ -1,0 +1,54 @@
+<div class="card table-responsive">
+  <div class='card-header'>
+    <h3 class="card-title text-info"><%= t('Contest.Prize.List') %>(<small><i><%= t('Contest.Prize.Use for weekly topics') %></i></small>)</h3>
+    <% if add_new %>
+      <div class="card-tools">
+        <a data-toggle='modal' data-target="#modal_create_contest_prize" class="btn btn-info btn-sm bg-olive float-right"><i class="fas fa-plus"></i></a>
+      </div>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <table id="contest_prize_list" class="table table-bordered table-head-fixed table-hover table-sm table-responsive-sm">
+      <thead>
+        <tr>
+            <th rowspan="2">ID</th>
+            <th rowspan="2" style="width: 15%;"><%= t('Contest.Prize.Name') %></th>                  
+            <th rowspan="2" class="text-center"><%= t('Contest.Prize.Type prize') %></th>
+            <th rowspan="2" class="text-center"><%= t('Contest.Prize.Type') %></th>
+            <th rowspan="2" class="text-center"><%= t('Contest.Prize.Number awards') %></th>
+            <th colspan="3" class="text-center"><%= t('Contest.Prize.Bonus') %></th>
+            <th rowspan="2"><%= t('Contest.Prize.Description') %></th>
+          </tr>
+          <tr>
+            <th><%= t('Contest.Prize.Student price') %></th>
+            <th><%= t('Contest.Prize.Teacher price') %></th>
+            <th>Total</th>
+          </tr>
+
+      </thead>
+      <tbody id="table-prize-body">
+        <% if prizes.blank? %>
+          <tr class="no_items">
+            <td colspan="9">
+              <p>Chua co giai thuong </p>
+            </td>
+          </tr>
+        <% else %>
+          <% prizes.each do |prize| %>
+            <tr>
+              <td><%= prize.id %></td>
+              <td><%= prize.name %></td>
+              <td class="text-center"><%= prize.prize %></td>
+              <td class="text-center"><%= t("adm.contest.contest_prizes.#{ prize.prize_type }") %></td>
+              <td class="text-center"><%= prize.number_awards %></td>
+              <td class="text-center"><%= prize.student_price %></td>
+              <td class="text-center"><%= prize.teacher_price %></td>
+              <td class="text-center"><%= prize.student_price + prize.teacher_price %></td>
+              <td><%= prize.description&.html_safe %></td>
+            </tr>
+          <% end%>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

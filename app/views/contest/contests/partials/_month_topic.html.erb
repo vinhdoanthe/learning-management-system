@@ -1,0 +1,80 @@
+<div class="c-road-board <%= class_status %>">
+  <div class="c-road-board__backdrop">
+    <div class="container">
+      <div class="c-road-line">
+        <div class="c-box-line is-left"></div>
+        <div class="c-box-line is-right"></div>
+        <ul>
+          <li>
+            <div class="c-box-line"></div>
+            <div class="c-box-line"></div>
+            <div class="c-box-line"></div>
+          </li>
+          <li>
+            <div class="c-box-line"></div>
+            <div class="c-box-line"></div>
+            <div class="c-box-line"></div>
+          </li>
+          <li>
+            <div class="c-box-line"></div>
+            <div class="c-box-line"></div>
+            <div class="c-box-line"></div>
+          </li>
+          <li>
+            <div class="c-box-line"></div>
+            <div class="c-box-line"></div>
+            <div class="c-box-line"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="c-road-grid">
+      <ul>
+        <% (0..3).each do |index| %>
+          <% if topics.present? && topics[index].present? %>
+            <% topic = topics[index] %>
+            <li>
+              <div class="c-road-item">
+                <div class="c-road-item__thumb">
+                  <figure><%= image_tag topic.thumbnail %></figure>
+                </div>
+                <div class="c-road-item__content">
+                  <div class="c-road-item__title"><%= topic.name %></div>
+                  <div class="c-road-item__desc"><%= topic.description&.html_safe %></div>
+                  <div class="c-road-item__dots">
+                    <ul>
+                      <% (0..3).each do |i| %>
+                        <li class="<%= index == i ? 'active' : '' %>"><span>Tuần <%= i + 1  %>, tháng <%= (Time.now + (month_index - 2).month).strftime('%m/%Y') %></span></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% else %>
+            <li>
+              <div class="c-road-item">
+                <div class="c-road-item__thumb">
+                  <figure><img src="/contest/upload/road_1.png" alt="image"></figure>
+                </div>
+                <div class="c-road-item__content">
+                  <div class="c-road-item__title">Coming Soon</div>
+                  <div class="c-road-item__desc">Coming Soon</div>
+                  <div class="c-road-item__dots">
+                    <ul>
+                      <% (0..3).each do |i| %>
+                        <li class="<%= index == i ? 'active' : '' %>"><span>Tuần <%= i + 1 %>, tháng <%= (Time.now + ( month_index - 2).month).strftime('%m/%Y') %></span></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

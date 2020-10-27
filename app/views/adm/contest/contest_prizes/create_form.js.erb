@@ -1,0 +1,3 @@
+$('#create-new-contest-prize').html("<%= escape_javascript( render partial: 'adm/contest/contest_prizes/partials/contest_prize_detail', locals: { contest: contest, prize: prize, option: option } ) %> ");
+$('#contest-prize-table').html("<%= escape_javascript( render partial: 'adm/contest/contest_prizes/partials/contest_prizes_table', locals: { prizes: prizes, add_new: false } ) %> ");
+

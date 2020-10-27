@@ -1,0 +1,88 @@
+<div class="c-box__title">
+  <div class="c-box__title__name"><span>Sản phẩm</span>Đạt giải tháng</div>
+  <div class="c-box__title__shadow">Winers</div>
+</div>
+<div class="c-box__desc">
+  Sản phẩm của học sinh
+  <b>được vinh danh</b>
+  hàng tháng
+</div>
+<div class="c-box__content">
+  <div class="c-template-slider is-margin-minus">
+    <div class="owl-carousel js-slider-2">
+      <% if month_projects.present? %>
+        <% month_projects.each do |c_project| %>
+          <% user = User::Account::User.where(id: c_project.user_id).first %>
+          <div class="c-winner-item">
+            <div class="c-winner-item__thumb"><a href="product-detail.html"><img src="/contest/upload/winner_1.jpg" alt="image"></a></div>
+            <div class="c-winner-item__content">
+              <div class="c-winner-item__time"><span><%= c_project.created_at.strftime('%m') %></span>
+                <label>Tháng<b>/<%= c_project.created_at.strftime("%Y") %></b></label>
+              </div>
+              <div class="c-winner-item__inside"><i class="icon-meday"></i>
+                <div class="b-grid">
+                  <div class="b-grid__row">
+                    "Student of the month"
+                    <b class="h-text__underline"><%= c_project&.company_name %></b>
+                  </div>
+                  <div class="b-grid__img">
+                    <figure>
+                      <% if user.avatar.present? && user.avatar.avatar.present? %>
+                        <%= image_tag user.avatar.avatar %>
+                      <% else %>
+                        <img src='/contest/images/face-default.png'>
+                      <% end %>
+                    </figure>
+                  </div>
+                  <div class="b-grid__content">
+                    <div class="b-grid__row"><a class="b-grid__title" href="product-detail.html"><%= c_project.project_name %></a></div>
+                    <div class="b-grid__row"><span class="b-grid__author"><%= c_project.student_name %></span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="c-winner-item__count">
+                <ul>
+                  <li><i class="icon16-like"></i><span><%= Contest::ContestCriterion.where(id: c_project.project_criterions.pluck(:contest_criterion_id), name: 'like').first&.point.to_i %></span></li>
+                  <li><i class="icon16-share"></i><span><%= Contest::ContestCriterion.where(id: c_project.project_criterions.pluck(:contest_criterion_id), name: 'share').first&.point.to_i %></span></li>
+                  <li><i class="icon16-eye"></i><span><%= c_project.views %></span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="c-winner-item">
+          <div class="c-winner-item__thumb"><a href="product-detail.html"><img src="upload/winner_1.jpg" alt="image"></a></div>
+          <div class="c-winner-item__content">
+            <div class="c-winner-item__time"><span>8</span>
+              <label>Tháng<b>/2030</b></label>
+            </div>
+            <div class="c-winner-item__inside"><i class="icon-meday"></i>
+              <div class="b-grid">
+                <div class="b-grid__row">
+                  "Student of the month"
+                  <b class="h-text__underline">Cơ sở Cầu Giấy - Hà Nội</b>
+                </div>
+                <div class="b-grid__img">
+                  <figure><img src="upload/avatar_1.jpg" alt="image"></figure>
+                </div>
+                <div class="b-grid__content">
+                  <div class="b-grid__row"><a class="b-grid__title" href="product-detail.html">Amazing Scratch Games | Program</a></div>
+                  <div class="b-grid__row"><span class="b-grid__author">Nguyễn Minh Khang</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="c-winner-item__count">
+              <ul>
+                <li><i class="icon16-like"></i><span>12</span></li>
+                <li><i class="icon16-share"></i><span>3</span></li>
+                <li><i class="icon16-eye"></i><span>3.2K</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="c-more"><a class="btn btnl-lg btn-outline-dark" href="product.html">Xem toàn bộ<i class="icon-long-arrow-right icon-right"></i></a></div>
+</div>

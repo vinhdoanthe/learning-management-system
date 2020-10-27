@@ -151,4 +151,8 @@ en:
         classroom: "Classroom"
         note: "Note"
         no_session: "No student yet"
-
+    contest:
+      contest_prize:
+        w: "Week"
+        m: "Month"
+        y: "Year"

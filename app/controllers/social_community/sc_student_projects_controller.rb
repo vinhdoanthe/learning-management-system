@@ -3,37 +3,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   before_action :handling_params, only: [:create_student_project, :update_student_project]
 
   def create_student_project
-    result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
-    project = ''
-    sc_student_service = SocialCommunity::ScStudentProjectsService.new
-    user = User::Account::User.where(student_id: @params[:student_id]).first
-    student = user.op_student
-
-    if validate_youtube_upload_params @params
-      if sc_student_service.validate_subject_project @params
-        result = { type: 'danger', message: 'Sản phẩm cuối khoá đã tồn tại! Không thể đăng thêm sản phẩm cuối khoá level này!' }
-      else
-        if @params[:introduction_video].present? && @params[:name].present?
-          video_detail = sc_student_service.upload_video_youtube @params[:name], @params[:introduction_video], @params[:description], @params[:batch_id]
-          embed_link = video_detail[0]
-          thumbnail_video= video_detail[1]
-        else
-          embed_link = ''
-          thumbnail_video = ''
-        end
-
-        begin
-          project = sc_student_service.create_student_project @params, embed_link, current_user, thumbnail_video
-          result = {type: 'success', message: 'Upload thành công'}
-        rescue StandardError
-          result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
-        end
-
-        User::Reward::CoinStarsService.new.reward_coin_star project, user.id, current_user.id if (user.present? && project.project_type == SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT )
-      end
-    else
-      result = {type: 'danger', message: 'Thiếu thông tin sản phẩm! Vui lòng kiểm tra lại!'}
-    end
+    result, project, student = SocialCommunity::ScStudentProjectsService.new.create_new_student_project params, current_user
 
     respond_to do |format|
       format.html

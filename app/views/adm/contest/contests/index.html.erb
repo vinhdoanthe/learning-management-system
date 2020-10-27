@@ -1,0 +1,92 @@
+<div class='card'>
+  <div class="card-header">
+    <h3 class="card-title text-info"><i class="fas fa-list mr-1"></i> <label><%= t('Contest.List contest') %></label></h3>
+    <div class="card-tools">
+      <a href="/adm/contest/contests/new" class="btn btn-info btn-sm bg-olive float-right"><i class="fas fa-plus"></i> <%= t('button.Add new') %></a>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div id='data-content'>
+      <div id="contest_data_table" class="table table-responsive">
+        <table id="" class="table table-condensed table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th width="15%"><%= t('Contest.Content.Name') %></th>
+              <th><%= t('Contest.Content.Description') %></th>
+              <th width="30%"><%= t('Contest.Content.Rule info') %></th>
+              <th width="10%" class="text-center"><%= t('Contest.Content.State') %></th>
+              <th class="text-center"><%= t('Contest.Content.Action') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @contests.each do |contest| %>
+              <tr>
+                <td><%= contest.id %></td>
+                <td><%= contest.name %></td>
+                <td><%= contest.description.present? ? contest.description.html_safe : '' %></td>
+                <td>
+                  <ul style="float: left;padding: 0px;">
+                    <li style="float: left; display: inline-block;" class="col-md-4"><%= contest.rule_atendance_information %></li>
+                    <li style="float: left; display: inline-block;" class="col-md-4"><%= contest.rule_product_description %></li>
+                    <li style="float: left; display: inline-block;" class="col-md-4"><%= contest.rule_submission_entries %></li>
+                  </ul>
+                </td>
+
+                <td class="text-center"><%= get_html_status(contest.is_publish).html_safe%></td>
+                <td style="width:100px" class="text-center">
+                  <div class="btn-group align-items-sm-center">
+                    <a data-toggle="tooltip" title="<%= t('Contest.Content.Edit contest') %>" href="/adm/contest/contests/<%= contest[:id] %>" class="btn btn-default btn-xs text-primary"><i class="far fa-edit font-weight-normal"></i></a>                    
+                    <% unless contest_has_projects contest %>
+                      <a title="<%= t('Contest.Content.Remove contest') %>" class="btn btn-default btn-xs text-danger delete-contest" data-contest="<%= contest.id %>" ><i class="far fa-trash-alt font-weight-normal"></i></a>
+                    <% else %>
+                      <a class="btn btn-default btn-xs text-danger  delete-contest" disabled data-contest="<%= contest.id %>" ><i class="far fa-trash-alt font-weight-normal"></i></a>
+                    <% end %>
+
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th width="15%"><%= t('Contest.Content.Name') %></th>
+              <th><%= t('Contest.Content.Description') %></th>
+              <th width="30%"><%= t('Contest.Content.Rule info') %></th>
+              <th width="10%" class="text-center"><%= t('Contest.Content.State') %></th>
+              <th class="text-center"><%= t('Contest.Content.Action') %></th>
+            </tr>
+            </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer border-top">
+    <div class="card-tools">
+      <a href="/adm/contest/contests/new" class="btn btn-info btn-sm bg-olive float-right"><i class="fas fa-plus"></i> <%= t('button.Add new') %></a>
+    </div>
+  </div>
+</div>
+<style>
+.delete-contest {
+  cursor: pointer;
+}
+</style>
+<script>
+  $('.delete-contest').on('click', function(){
+    td = $(this)
+    id = $(this).data('contest');
+    $.ajax({
+      method: 'POST',
+      url: '/adm/contest/contests/delete_contest',
+      data: {id: id},
+      success: function(res){
+        display_response_noti(res)
+        if (res.type === 'success'){
+          td.closest("tr").hide();
+        }
+      }
+    })
+  })
+</script>

@@ -1,0 +1,36 @@
+<div class='card'>
+  <div class="card-header">
+    Danh sach topic
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th style="width: 10px">#</th>
+          <th>name</th>
+          <th>contest</th>
+          <th>region</th>
+          <th>description</th>
+          <th>rule</th>
+          <th>thumbnai</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-contest-topic">
+        <% topics.each do |topic| %>
+          <tr>
+            <th style="width: 10px">#</th>
+            <th><%= topic.name %></th>
+            <th><%= topic.contest.name %></th>
+            <th><%= topic.region %></th>
+            <th><%= topic&.description.html_safe %></th>
+            <th><%= topic&.rule.html_safe %></th>
+            <th>
+              <% if topic.thumbnail.attached? %> <%= image_tag topic.thumbnail, style: "width: 20px; height: 20px" %>
+              <% end %>
+            </th>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

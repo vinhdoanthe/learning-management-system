@@ -1,0 +1,50 @@
+<div class="c-block c-theme-block">
+  <div class="container">
+    <div class="c-box is-middle">
+      <div class="c-box__title">
+        <div class="c-box__title__name"><span>Thời gian &</span>Chủ đề cuộc thi</div>
+        <div class="c-box__title__shadow">Theme</div>
+      </div>
+      <div class="c-box__desc">
+        <p>Các chủ đề của cuộc thi sẽ được thay đổi hằng tuần, hằng tháng và cụ thể như sau</p>
+        <p>
+        Ba mẹ cùng các con đừng quên theo dõi
+        <a href="#">website</a>/<a href="#">Fanpage</a>
+        của TEKY để thường xuyên cập nhật thông tin mới nhất về cuộc thi nhé!
+        </p>
+      </div>
+      <div class="c-box__content">
+        <div class="c-calender-slider">
+          <div class="owl-carousel" id="calendar-slider-id">
+            <div class="c-calendar-item" data-number="1" data-month="9">
+              <div class="icon16-calendar-primary"></div>Tháng <%= (Time.now - 1.month).strftime('%m/%Y') %>
+            </div>
+            <div class="c-calendar-item" data-number="2" data-month="10">
+              <div class="icon16-calendar-primary"></div>Tháng <%= Time.now.strftime("%m/%Y") %>
+            </div>
+            <div class="c-calendar-item" data-number="3" data-month="11">
+              <div class="icon16-calendar-primary"></div>Tháng <%= (Time.now + 1.month).strftime('%m/%Y') %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- c-box-->
+  </div>
+  <!--end container-->
+  <div class="c-road-slider">
+    <div class="owl-carousel" id="road-slider-id">
+      <% (1..3).each do |index| %>
+        <% class_status = if index == 1
+                            'is-last'
+                          elsif index == 2
+                            #TODO
+                            "is-current-#{ active_topic_index }"
+                          else
+                            ''
+                          end %>
+        <%= render 'contest/contests/partials/month_topic', { topics: month_topics[index-1], class_status: class_status, month_index: index } %>
+      <% end %>
+    </div>
+  </div>
+</div>

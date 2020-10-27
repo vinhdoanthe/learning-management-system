@@ -1,0 +1,1 @@
+$('#contest_topic_list').html("<%= escape_javascript (render partial: 'contest/contests/partials/contest_topic_list', locals: { month_topics: [ result[:last_month_topics], result[:current_month_topic], result[:next_month_topic]], active_topic: result[:active_topic], active_topic_index: result[:active_topic_index] } ) %>")

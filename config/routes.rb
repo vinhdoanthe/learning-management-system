@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   draw :redeem
   draw :report
   draw :adm
+  draw :contest
 
   namespace :learning do
     get 'view_learning_material/:material_id' => 'learning_materials#view_learning_material'
