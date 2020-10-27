@@ -37,6 +37,7 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def submit_contest_project
+    binding.pry
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
     #contest = topic.contest
     result, project, student = SocialCommunity::ScStudentProjectsService.new.create_new_student_project params, current_user
@@ -45,11 +46,11 @@ class Contest::ContestProjectsController < ApplicationController
       result, c_project = Adm::Contest::ContestProjectsService.new.create_contest_project topic, project
     end
 
+    student
     respond_to do |format|
       format.html
-      format.js { render '/adm/contest/contest_projects/response_submit_project', locals: { result: result, c_project: c_project}}
+      format.js { render '/contest/contest_projects/response_submit_project', locals: { result: result, c_project: c_project}}
     end
-    [result, project, student, c_project]
   end
 
   def month_projects

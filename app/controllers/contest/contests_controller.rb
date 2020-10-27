@@ -45,4 +45,8 @@ class Contest::ContestsController < ApplicationController
       format.js { render 'contest/contests/js/leader_board', locals: { month_project: month_project, week_projects: week_projects } }
     end
   end
+
+  def award
+    #week_projects, month_project = Contest::ContestsService.new.leader_board params[:contest_id]
+  end
 end
