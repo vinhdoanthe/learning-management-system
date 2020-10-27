@@ -1,0 +1,195 @@
+<%= javascript_include_tag "adm/contest/contest_topic.js" %>
+<%= javascript_include_tag "adm/contest/contest_criterion.js" %>
+  
+    <div class="card-body p-0">
+      <form role="form" name="frm_contest_topic">
+      <div class="form-group">
+        <label for="topic_name"><%= t('Contest.Content.Name') %></label>
+        <input type="text" value="<%= contest&.name %>" readonly class="form-control" name="contest-name">
+        <input type="hidden" value="<%= contest&.id %>" class="form-control" name="contest-id">
+      </div>
+      <div class="form-group">
+        <label for="topic_name"><%= t('Contest.Topic.Name') %></label>
+        <input type="text" maxlength="150" value="<%= topic&.name %>" class="form-control" id="topic_name"
+        placeholder="<%= t("Contest.Topic.Name")%>">
+      </div>
+      
+      <div class="form-group">
+        <label for="topic_region"><%= t('Contest.Content.Region') %></label>
+        <select class="form-control" id="topic_region">
+          <% Contest::Constant::ContestTopic::REGIONS.each do |region| %>
+            <option value="<%= region %>"><%= region %></option>
+          <% end %>
+        </select>
+      </div>
+      <div class='row'>
+        <div class="form-group col-md-6">
+          <label><%= t('Contest.Topic.Start Time') %>:</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="far fa-calendar-alt"></i>
+              </span>
+            </div>
+            <input type="text" value="<%= topic&.start_time.present? ? topic&.start_time.strftime('%d/%m/%Y') : Time.now.strftime('%d/%m/%Y') %>" class="form-control float-right" id="topic-start-date">
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label><%= t('Contest.Topic.End Time') %>:</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="far fa-calendar-alt"></i>
+              </span>
+            </div>
+            <input type="text" value="<%= topic&.end_time.present? ? topic&.end_time.strftime('%d/%m/%Y') : Time.now.strftime('%d/%m/%Y') %>" class="form-control float-right" id="topic-end-date">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="topic_description"><%= t('Contest.Topic.Description') %></label>
+        <textarea class="contest-topic-description-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>' id="topic_description"><%= topic&.description %></textarea>
+      </div>
+      
+      <div class='row'>
+        <div class='col-md-6'>
+          <div class="form-group">
+            <label for="topic_thumbnail">
+              <%= t('Contest.Topic.Image description') %>
+            </label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="topic_thumbnail" accept="image/jpeg,image/jpg,image/png" data-fileupload="true">
+                <label class="custom-file-label" for="topic_thumbnail"><%= t('Contest.Topic.Choose file') %></label>
+              </div>
+            </div>
+            <div id="img_contain_preview">
+              <% if topic&.thumbnail.present? %>
+                <%= image_tag topic.thumbnail, style: 'width: 100px; height: 100px' %>
+              <% else %>
+                Thumnail
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title text-info"><%= t('Contest.Prize.Choose prize') %></h3>         
+        </div>
+        <div class="card-body">
+          <div class="form-group table-responsive">
+            <table class="table table-bordered table-head-fixed table-hover table-sm table-responsive-sm">
+              <thead>
+                <tr>
+                  <th rowspan="2">ID</th>
+                  <th rowspan="2" style="width: 15%;"><%= t('Contest.Prize.Name') %></th>                  
+                  <th rowspan="2" class="text-center"><%= t('Contest.Prize.Type prize') %></th>
+                  <th rowspan="2" class="text-center"><%= t('Contest.Prize.Type') %></th>
+                  <th rowspan="2" class="text-center"><%= t('Contest.Prize.Number awards') %></th>
+                  <th colspan="2" class="text-center"><%= t('Contest.Prize.Bonus') %></th>
+                  <th rowspan="2"><%= t('Contest.Prize.Description') %></th>
+                  <th rowspan="2" class="text-center"><%= t('Contest.Choose') %></th>
+                </tr>
+                <tr>
+                  <th><%= t('Contest.Prize.Student price') %></th>
+                  <th><%= t('Contest.Prize.Teacher price') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% topic_prizes = topic.contest_prizes.pluck(:id) %>
+                <% contest.contest_prizes.each do |prize| %>
+                  <tr>
+                    <td>
+                      <%= prize.id %>
+                    </td>
+                    <td><%= prize.name %></td>
+                    <td class="text-center"><%= prize.prize %></td>
+                    <td class="text-center"><%= t("adm.contest.contest_prizes.#{ prize.prize_type }") %></td>
+                    <td class="text-center"><%= prize.number_awards %></td>
+                    <td class="text-center"><%= prize.student_price %></td>
+                    <td class="text-center"><%= prize.teacher_price %></td>
+                    <td><%= prize.description&.html_safe %></td>
+                    <td class="text-center">
+                      <div class="">
+                        <% if topic_prizes.include? prize.id %>
+                          <input checked type="checkbox" class="choose_prizes" value="<%= prize.id %>">
+                        <% else %>
+                          <input  type="checkbox" class="choose_prizes" value="<%= prize.id %>">
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title text-info"><%= t('Contest.Prize.Choose criterion') %></h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-info btn-sm bg-olive float-right" data-toggle="modal" data-target="#modal_create_contest_criterion" title="XXX"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>action</th>
+                  <th>#</th>
+                  <th>name</th>
+                  <th>point</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <% topic_criterions = topic.contest_criterions.pluck(:id) %>
+              <tbody class='table-criterion'>
+                <% Contest::ContestCriterion.all.each do |c| %>
+                  <tr>
+                    <td>
+                      <div class="form-check">
+                        <% if topic_criterions.include? c.id %>
+                          <input  type="checkbox" checked class="choose_criterions" value="<%= c.id %>">
+                        <% else %>
+                          <input  type="checkbox" class="choose_criterions" value="<%= c.id %>">
+                        <% end %>
+                      </div>
+                    </td>
+                    <td>
+                      <%= c.id %>
+                    </td>
+                    <td><%= c.name %></td>
+                    <td><%= c.point %></td>
+                    <td><%= c.description&.html_safe %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </form>
+    </div>
+    <!-- /.card-body -->
+<div class="modal fade" id="modal_create_contest_criterion" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Create critreion</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "adm/contest/contest_criterions/partials/criterion_detail", { criterion: Contest::ContestCriterion.new, criterion_option: '' } %>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="create_criterion_confirm" class="btn btn-primary" data-dismiss='modal'>Add new</button>
+      </div>
+    </div>
+  </div>
+</div>

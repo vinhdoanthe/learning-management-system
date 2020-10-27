@@ -435,6 +435,7 @@ vi:
       Enter topic name: "Nhập tên chủ đề"
       Image description: "Ảnh đại diện"
       Choose file: "Chọn file ảnh"
+      Add a new topic for contest: "Thêm chủ đề cho cuộc thi"
     Prize:
       List: "Danh sách giải thưởng"
       Choose prize: "Chọn giải thưởng cho chủ đề này"
@@ -446,6 +447,6 @@ vi:
       Number awards: "Số lượng giải"
       Bonus: "Mức thưởng"
       Description: "Mô tả"
-      Use for weekly topics: "Sử dụng cho chủ đề"
+      Use for weekly topics: "Mỗi một cuộc thi có nhiều giải thưởng. Mỗi chủ đề thi sẽ chọn giải thưởng từ danh sách đó."
     Products:
       Contest products: "Sản phẩm dự thi"
