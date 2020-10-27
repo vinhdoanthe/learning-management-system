@@ -3,7 +3,15 @@
     <div class="owl-carousel js-slider-5" data-slider-id="slider-product-1">
       <% week_projects.each do |c_project| %>
       <div class="c-product-small">
-        <div class="c-product-small__thumb"><a href="product-detail.html"><img src="/contest/upload/product-small_1.jpg" alt="image"></a></div>
+        <div class="c-product-small__thumb">
+          <a href="/contest/contest_projects/show/<%= c_project.id %>">
+            <% if project_thumbnails[c_project.project_id]&.attached? %>
+              <%= image_tag project_thumbnails[c_project.project_id] %>
+            <% else %>
+              <img src="/contest/upload/product-small_1.jpg" alt="image">
+            <% end %>
+          </a>
+        </div>
         <div class="c-product-small__content">
           <div class="c-product-small__inside"><a class="c-product-small__title" href="product-detail.html"><%= c_project.project_name %></a><span class="c-product-small__author"><%= c_project.student_name %></span></div>
           <div class="c-product-small__count">

@@ -11,7 +11,7 @@ class Contest::ContestProject < ApplicationRecord
   has_many :project_criterions, class_name: 'Contest::ProjectCriterion', foreign_key: "contest_project_id"
   has_many :contest_criterions, class_name: 'Contest::ContestCriterion', through: :project_criterions
 
-  belongs_to :contest_prize, class_name: "Contest::ContestPrize", foreign_key: "contest_prize_id"
+  belongs_to :contest_prize, class_name: "Contest::ContestPrize", foreign_key: "contest_prize_id", required: false
 
   private
     def default_values

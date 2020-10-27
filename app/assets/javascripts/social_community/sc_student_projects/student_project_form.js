@@ -1,3 +1,16 @@
+function readURL(input, target) {
+  if (input.files) {
+    $.each(input.files, function (i, photo) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $(target).append('<img class="photo_review" src="' + e.target.result + '" alt="" />');
+      }   
+
+      reader.readAsDataURL(photo);
+    })  
+  }
+}
+
 var getBatchSubject = () => {
   batch_id = $('#student_project_batch').val();
   $.ajax({
@@ -76,3 +89,9 @@ $("#edit_video_infomation").ready(function() {
     }
   })
 })
+
+$("#upload_project_thumbnail").change(function () {
+  $('#upload_project_thumbnail_preview').html('');    
+  readURL(this, '#upload_project_thumbnail_preview');
+
+});
