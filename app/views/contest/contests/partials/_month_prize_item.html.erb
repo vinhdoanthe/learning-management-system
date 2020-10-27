@@ -14,7 +14,11 @@
         <% month_projects.each do |c_project| %>
           <% user = User::Account::User.where(id: c_project.user_id).first %>
           <div class="c-winner-item">
-            <div class="c-winner-item__thumb"><a href="product-detail.html"><img src="/contest/upload/winner_1.jpg" alt="image"></a></div>
+            <div class="c-winner-item__thumb">
+              <a href="/contest/contest_projects/show/<%= c_project.id %>">
+                  <img src="/contest/upload/winner_1.jpg" alt="image">
+              </a>
+            </div>
             <div class="c-winner-item__content">
               <div class="c-winner-item__time"><span><%= c_project.created_at.strftime('%m') %></span>
                 <label>Tháng<b>/<%= c_project.created_at.strftime("%Y") %></b></label>
@@ -44,7 +48,7 @@
                 <ul>
                   <li><i class="icon16-like"></i><span><%= Contest::ContestCriterion.where(id: c_project.project_criterions.pluck(:contest_criterion_id), name: 'like').first&.point.to_i %></span></li>
                   <li><i class="icon16-share"></i><span><%= Contest::ContestCriterion.where(id: c_project.project_criterions.pluck(:contest_criterion_id), name: 'share').first&.point.to_i %></span></li>
-                  <li><i class="icon16-eye"></i><span><%= c_project.views %></span></li>
+                  <li><i class="icon16-eye"></i><span><%= c_project.views.to_i %></span></li>
                 </ul>
               </div>
             </div>
