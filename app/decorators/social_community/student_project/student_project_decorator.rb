@@ -10,7 +10,6 @@ class SocialCommunity::StudentProject::StudentProjectDecorator < SimpleDelegator
       Rails.logger.error(error.to_s)
       embed_link = ''
     ensure
-      # No nothing
     end
 
     embed_link

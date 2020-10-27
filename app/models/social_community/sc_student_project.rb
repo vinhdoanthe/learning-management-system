@@ -16,6 +16,7 @@ class SocialCommunity::ScStudentProject < ApplicationRecord
   belongs_to :created_user, class_name: 'User::Account::User', foreign_key: 'created_by', optional: true
   
   has_one_attached :presentation
+  has_one_attached :image
 
 
   def student_name

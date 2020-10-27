@@ -24,19 +24,17 @@ class Adm::Contest::ContestProjectsService
     [contest, topic, c_projects_detail, projects_detail]
   end
 
-  def create_contest_project contest, project
-    return { type: 'danger', message: 'Cuoc thi khong ton tai' } if contest.blank?
+  def create_contest_project topic, project
+    return { type: 'danger', message: 'Cuoc thi khong ton tai' } if topic.blank?
     #topic = contest.contest_topics.where(status: 'active').first
-    topic = Contest::ContestTopic.first
-    return { type: 'danger', message: 'Chu de cuoc thi k ton tai! Vui long lien he ban to chuc de biet them chi tiet' } if topic.blank?
 
     c_project = Contest::ContestProject.new
     c_project.project_id = project.id
     c_project.contest_topic_id = topic.id
     c_project.user_id = project.user_id
     #c_project.is_valid = check_valid? params
-    c_project.is_valid = check_valid? contest
-    c_project.contest_id = contest.id
+    c_project.is_valid = check_valid? topic
+    c_project.contest_id = topic.contest_id
     c_project.save
     create_project_criterion topic, c_project
 

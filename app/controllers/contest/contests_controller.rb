@@ -13,9 +13,10 @@ class Contest::ContestsController < ApplicationController
     unless current_user.is_student?
       redirect_to root_path
     else
-      #@topic = Contest::ContestTopic.where(id: params[:topic_id]).first
-      @topic = Contest::ContestTopic.last
-      @contest = @topic&.contest
+      @contest = Contest::Contest.where(id: params[:id]).first
+      redirect_to root_path if @contest.blank?
+
+      @topic = @contest.contest_topics.where(status: 'active').first
       @student = current_user.op_student
       batch_ids = Learning::Batch::OpStudentCourse.joins(:op_subjects).where(student_id: @student.id).where.not(op_subject: { id: nil}).pluck(:batch_id)
       batches = Learning::Batch::OpBatch.joins(:op_course).where(id: batch_ids).pluck(:id, 'op_course.name')
@@ -41,7 +42,7 @@ class Contest::ContestsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'contest/contests/js/leader_board', locals: { month_project: month_project, week_projects: week_projects} }
+      format.js { render 'contest/contests/js/leader_board', locals: { month_project: month_project, week_projects: week_projects } }
     end
   end
 end
