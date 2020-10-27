@@ -331,6 +331,7 @@ vi:
     click_to_update: "Click để cập nhật sản phẩm"
     public_html: "<b style='text-transform:uppercase; font-size: 15px;'>Công khai</b>(phụ huynh, học sinh sẽ xem được thông tin dự án)"
     state_html: "<b style='text-transform:uppercase; font-size: 15px;'>Hoàn thành</b>(đầy đủ thông tin dự án)"
+    thumbnail: "Ảnh dự án"
   reward:
     you: 'Bạn'
     you_were_reward: 'Bạn được tặng thưởng'

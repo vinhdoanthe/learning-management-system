@@ -10,6 +10,7 @@
 //= require activestorage
 //= require cropper.min.js
 //
+
 var waitingdialog = waitingdialog || (function ($) {
   'use strict';
   var $dialog = $(

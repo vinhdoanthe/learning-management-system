@@ -34,12 +34,16 @@
   <!--end container-->
   <div class="c-road-slider">
     <div class="owl-carousel" id="road-slider-id">
+      <% week_index = get_week_of_month Time.now %>
       <% (1..3).each do |index| %>
         <% class_status = if index == 1
                             'is-last'
                           elsif index == 2
-                            #TODO
-                            "is-current-#{ active_topic_index }"
+                            if week_index == 4
+                              "is-last"
+                            else
+                            "is-current-#{ week_index }"
+                            end
                           else
                             ''
                           end %>

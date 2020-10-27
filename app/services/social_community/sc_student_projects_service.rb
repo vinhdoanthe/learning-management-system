@@ -177,6 +177,7 @@ class SocialCommunity::ScStudentProjectsService
       project.student_id = params[:student_id]
       project.created_by = teacher.id
       project.project_type = params[:project_type]
+      project.image = params[:image]
 
       user = User::Account::User.where(student_id: params[:student_id]).first
       batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
