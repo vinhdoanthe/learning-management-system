@@ -4,6 +4,18 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
   def index
   end
 
+  def load_data
+
+    contest_topics = nil
+    
+    if (params[:contest_id].present? && params[:contest_id].to_i > 0)
+      contest_topics = Contest::ContestTopic.where(contest_id: params[:contest_id]).Order();    
+    end
+
+    render partial: "adm/contest/contest_topics/partials/list_topics", locals: {contest_topics: contest_topics}
+
+  end
+
   def new
 
   end
@@ -38,7 +50,7 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
   end
 
   def create_topic
-    if params[:topic_id].present?
+    if (params[:topic_id].present? && params[:topic_id].to_i > 0)
       result = Adm::Contest::ContestTopicsService.new.update params
     else
       result = Adm::Contest::ContestTopicsService.new.create_topic params

@@ -113,6 +113,7 @@ namespace :adm do
       post 'delete_topic', action: 'delete_topic', as: 'delete_topic'
 
       get 'new/:contest_id', action: 'show', as: 'show'
+      get 'load_data/:contest_id', action: 'load_data', as: 'load_data'
     end
 
     namespace :contest_criterions do

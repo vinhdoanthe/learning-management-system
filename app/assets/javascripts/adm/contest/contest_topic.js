@@ -30,8 +30,9 @@ $(document).ready(function(){
     data.append('region', region);
     description = $('.contest-topic-description-textarea').val();
     data.append('description', description);
-    rule = $('.contest-topic-rule-textarea').val();
-    data.append('rule', rule);
+    
+    //rule = $('.contest-topic-rule-textarea').val();
+    //data.append('rule', rule);
 
     contest_prizes = new Array();
     $('.choose_prizes:checked').each(function(){
