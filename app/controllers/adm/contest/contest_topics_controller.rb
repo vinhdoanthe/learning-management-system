@@ -9,7 +9,7 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
     contest_topics = nil
     
     if (params[:contest_id].present? && params[:contest_id].to_i > 0)
-      contest_topics = Contest::ContestTopic.where(contest_id: params[:contest_id]).Order();    
+      contest_topics = Contest::ContestTopic.where(contest_id: params[:contest_id]);    
     end
 
     render partial: "adm/contest/contest_topics/partials/list_topics", locals: {contest_topics: contest_topics}
