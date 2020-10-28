@@ -32,10 +32,8 @@
                 <a data-toggle='modal' data-backdrop="static" data-target="#modal_create_contest_topic" class="btn btn-info btn-sm bg-olive float-right"><i class="fas fa-plus"></i></a>
               </div>
             </div>
-            <div class="card-body p-0">
-              <div class='table table-responsive'>
-                <%= render 'adm/contest/contest_topics/index', { contest_topics: @contest_topics } %>
-              </div>
+            <div class="card-body">
+              <%= render 'adm/contest/contest_topics/index', { contest_topics: @contest_topics } %>
             </div>
           </div>
         </div>
