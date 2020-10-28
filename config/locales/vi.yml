@@ -398,6 +398,7 @@ vi:
     update_success: "Cập nhật thành công!"
     update_fail: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"
     no_avatar: "Ảnh không tồn tại! Vui lòng thử lại"
+    add_new_success: "Tạo mới thành công!"
   Contest:
     Management contest: "Quản lý cuộc thi"
     List contest: "Danh sách cuộc thi"

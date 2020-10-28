@@ -70,7 +70,8 @@
   </div>
 </div>
 
-<%= render "adm/contest/contest_topics/partials/modal_create_contest_topic", { contest: @contest, topic: Contest::ContestTopic.new} %>
+<%= render "adm/contest/contest_topics/partials/modal_create_contest_topic", { contest: @contest} %>
+
 <%= tinymce :fulleditor %>
 <script>
   $(document).ready(function() {

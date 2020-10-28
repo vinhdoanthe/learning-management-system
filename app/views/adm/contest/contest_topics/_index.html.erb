@@ -10,37 +10,8 @@
       <th class="text-center"><%= t('Contest.Content.Action') %></th>
     </tr>
   </thead>
-  <tbody class='table-contest-topic'>
-    <% contest_topics.each do |topic| %>
-      <tr>
-        <td class="text-center"><%= topic.id %></td>
-        <td><%= topic.name %></td>
-        <td><%= image_tag topic.thumbnail, style: 'width: 50px; height: 50px'  if topic.thumbnail.present?%></td>
-        <td><%= topic.description&.html_safe %></td>
-        <td class="text-center"><%= topic.start_time.strftime("%d/%m/%Y") %> - <%= topic.end_time.strftime("%d/%m/%Y") %></td>
-        <td><%= topic.region %></td>
-        <td class="text-center" style="width: 100px">
-          <div class="btn-group align-items-sm-center">
-            <a title="Edit" class="btn btn-default btn-xs text-primary" href="/adm/contest/contest_topics/<%= topic[:id] %>"><i class="far fa-edit font-weight-normal"></i></a>
-
-            <button
-            type="button"
-            class="btn btn-default btn-xs text-primary btn-edit-topic"
-            data-backdrop="static"
-            data-toggle="modal"
-            data-remote="true"
-            data-topic="<%= topic.id %>"
-            data-title="<%= topic.name.to_s%>"
-            data-load-url="/adm/contest/contest_topics/<%= topic[:id] %>"
-            title="Edit"
-            data-target="#modal_create_contest_topic"><i class="far fa-edit font-weight-normal"></i></button>
-
-            <a title="Remove" class="btn btn-default btn-xs delete_contest_topic text-danger" data-topic="<%= topic.id %>"><i class="far fa-trash-alt font-weight-normal"></i></a>
-
-          </div>
-        </td>
-      </tr>
-    <% end %>
+  <tbody class='table-contest-topic'id="table-contest-topic">
+    <%= render "adm/contest/contest_topics/partials/list_topics", { contest_topics: contest_topics} %>
   </tbody>
   <thead>
     <tr>

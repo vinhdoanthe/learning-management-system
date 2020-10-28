@@ -1,5 +1,5 @@
 class Contest::ContestTopic < ApplicationRecord
-  after_create :ser_number_week
+  after_create :set_number_week
   self.table_name = 'tk_contest_topics'
 
   has_one_attached :thumbnail
@@ -13,8 +13,8 @@ class Contest::ContestTopic < ApplicationRecord
   has_many :contest_criterions, class_name: 'Contest::ContestCriterion', through: :topic_criterions
 
   def set_number_week
-    self.number_week = (self.start_time.strftime('%d').to_id / 7) + 1
-    self.number_week = 4 if self.number_week == 5
+    self.week_number = (self.start_time.strftime('%d').to_i / 7) + 1
+    self.week_number = 4 if self.week_number == 5
     save
   end
 end
