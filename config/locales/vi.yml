@@ -421,8 +421,8 @@ vi:
       Rule product description: "Mô tả sản phẩm"
       Rule submission entries: "Mô tả nộp bài dự thi"
       Region: "Vùng/Miền"
-      W: "Tuần"
-      M: "Tháng"
+      w: "Tuần"
+      m: "Tháng"
     Topic:
       List: "Danh sách chủ đề"
       Name: "Tên chủ đề"
@@ -455,3 +455,5 @@ vi:
     Criterion:
       Choose criterion: "Chọn tiêu chí đánh giá sản phẩm trong chủ đề này"
       Name: "Tên tiêu chí"
+      Point: "Điểm quy đổi"
+      Description: "Mô tả"

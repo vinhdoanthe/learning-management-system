@@ -4,7 +4,7 @@ display_response_noti(res);
 <% if result[:result][:type] == 'success' && result[:action] = 'create' %>
     <% topic = result[:topic] %>
     <% contest = result[:contest] %>
-    $('#create-new-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_detail', locals: { contest: contest, topic: Contest::ContestTopic.new } ) %> ")
+    $('#create-new-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_form_add', locals: { contest: contest, topic: Contest::ContestTopic.new } ) %> ")
     $("#tbody-contest-topic").append(`
       <tr>
       <td style="widtd: 10px"><%= topic.id %></td>

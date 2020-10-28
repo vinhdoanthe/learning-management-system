@@ -1,8 +1,8 @@
 <%= javascript_include_tag "adm/contest/contest_topic.js"%>
 <%= javascript_include_tag "adm/contest/contest_criterion.js"%>  
-<div class="card-body p-0">
+
   <form role="form" name="frm_contest_topic">
-  <input type="hidden" value="<%= topic&.id %>" class="form-control" name="topic_id" id="topic_id" >
+  <input type="hidden" class="form-control" name="topic_id" id="topic_id" >
   <div class="form-group">
     <label for="topic_name"><%= t('Contest.Content.Name') %></label>
     <input type="text" value="<%= contest&.name %>" readonly class="form-control" name="contest-name">
@@ -76,11 +76,10 @@
       <h3 class="card-title text-info"><%= t('Contest.Prize.Choose prize') %></h3>         
     </div>
     <div class="card-body">
-      <div class="form-group table-responsive">
         <table class="table table-bordered table-head-fixed table-hover table-sm table-responsive-sm">
           <thead>
             <tr>
-              <th rowspan="2" class="text-center">ID</th>
+              <th rowspan="2" class="text-center" style="width:50px;">ID</th>
               <th rowspan="2" style="width: 15%;"><%= t('Contest.Prize.Name') %></th>                  
               <th rowspan="2" class="text-center"><%= t('Contest.Prize.Type prize') %></th>
               <th rowspan="2" class="text-center"><%= t('Contest.Prize.Type') %></th>
@@ -103,7 +102,7 @@
                 </td>
                 <td><%= prize.name %></td>
                 <td class="text-center"><%= prize.prize %></td>
-                <td class="text-center"><%= t("Contest.Content.#{ prize.prize_type }") %></td>
+                <td class="text-center"><%= t("Contest.Content.#{prize.prize_type}") %></td>
                 <td class="text-center"><%= prize.number_awards %></td>
                 <td class="text-center"><%= prize.student_price %></td>
                 <td class="text-center"><%= prize.teacher_price %></td>
@@ -119,7 +118,6 @@
             <% end %>
           </tbody>
         </table>
-      </div>
     </div>
   </div>
   <div class="card">
@@ -130,13 +128,13 @@
       </div>
     </div>
     <div class="card-body">
-      <div class="form-group table-responsive">
-        <table class="table">
+      
+        <table class="table table-bordered table-head-fixed table-hover table-sm table-responsive-sm">
           <thead>
             <tr>
-              <th>ID</th>
-              <th><%= t('Contest.Criterion.Name') %></th>
-              <th><%= t('Contest.Criterion.Point') %></th>
+              <th class="text-center" style="width:50px;">ID</th>
+              <th style="width:20%;"><%= t('Contest.Criterion.Name') %></th>
+              <th style="width:70px;" class="text-center"><%= t('Contest.Criterion.Point') %></th>
               <th><%= t('Contest.Criterion.Description') %></th>
               <th class="text-center"><%= t('Contest.Choose') %></th>
             </tr>
@@ -145,30 +143,26 @@
           <tbody class='table-criterion'>
             <% Contest::ContestCriterion.all.each do |c| %>
               <tr>
-                <td width="5%"  class="text-center">
+                <td class="text-center">
                   <%= c.id %>
                 </td>
-                <td width="20%"><%= c.name %></td>
-                <td width="5%" class="text-center"><%= c.point %></td>
+                <td><%= c.name %></td>
+                <td class="text-center"><%= c.point %></td>
                 <td><%= c.description&.html_safe %></td>
                 <td width="50" class="text-center">
-                  <div class="form-check">
-                    <% if topic_criterions.include? c.id %>
+                  <% if topic_criterions.include? c.id %>
                       <input  type="checkbox" checked class="choose_criterions" value="<%= c.id %>">
                     <% else %>
                       <input  type="checkbox" class="choose_criterions" value="<%= c.id %>">
                     <% end %>
-                  </div>
                 </td>
               </tr>
             <% end %>
           </tbody>
         </table>
-      </div>
     </div>
   </div>
   </form>
-</div>
 <div class="modal fade" id="modal_create_contest_criterion" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content">
