@@ -7,6 +7,7 @@ let getContestPrizeForm = (contest_id) => {
 }
 
 $(document).ready(function() {
+  
   $('#idForm').validate({
     lang: 'vi',
     rules: {      
