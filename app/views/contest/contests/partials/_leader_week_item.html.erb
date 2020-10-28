@@ -6,8 +6,8 @@
       <!-- <div class="c-board-item__tag is-warning-dark"><span>Miền bắc</span></div> -->
       <div class="c-board-item__thumb">
         <div class="c-board-item__avatar">
-          <% if user.avatar.present? && user.avatar.avatar.present? %>
-            <%= image_tag user.avatar.avatar %>
+          <% if user.avatar.present? && user.avatar.thumbnail.present? %>
+            <%= image_tag user.avatar.thumbnail %>
           <% else %>
             <img src='/contest/images/face-default.png'>
           <% end %>

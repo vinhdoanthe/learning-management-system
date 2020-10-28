@@ -1,0 +1,38 @@
+<li>
+  <div class="c-face-item">
+    <div class="c-face-item__leaf">
+      <figure>
+        <% if project['user_avatar']&.attached? %>
+          <%= image_tag project['user_avatar'] %>
+        <% else %>
+          <img src="/contest/upload/face_1.jpg" alt="face">
+        <% end %>
+      </figure>
+    </div>
+    <div class="c-face-item__thumb">
+      <a href="/contest/contest_projects/show/<%= project['id'] %>">
+        <% if project['project_img']&.attached? %>
+          <%= image_tag project['project_img'] %>
+        <% else %>
+          <img src="/contest/upload/product_1.jpg" alt="image">
+        <% end %>
+      </a>
+    </div>
+    <div class="c-face-item__content">
+      <div class="c-face-item__row"><a class="c-face-item__title" href="/contest/contest_projects/show/<%= project[:id] %>"><%= project['project_name'] %></a></div>
+      <div class="c-face-item__row"><span class="c-face-item__author"><%= project['student_name'] %></span></div>
+      <div class="c-face-item__bottom">
+        <div class="c-face-item__time">
+          <label>Tuần <%= get_week_of_month project['created_at'] %></label><span>Tháng <%= project['created_at'].strftime('%m/%Y') %></span>
+        </div>
+        <div class="c-face-item__count">
+          <ul>
+            <li><i class="icon16-like"></i><span><%= project['like'].to_i %></span></li>
+            <li><i class="icon16-share"></i><span><%= project['share'].to_i %></span></li>
+            <li><i class="icon16-eye"></i><span><%= project['views'].to_i %></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>

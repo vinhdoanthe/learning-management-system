@@ -15,7 +15,6 @@ class Adm::Contest::ContestsController < Adm::AdmController
 
   def update_contest
     result = Adm::Contest::ContestsService.new.update_contest params
-
     render json: result
   end
 
