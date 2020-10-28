@@ -1,6 +1,6 @@
+<% if !contest.nil?%>
 <%= javascript_include_tag "adm/contest/contest_topic.js"%>
 <%= javascript_include_tag "adm/contest/contest_criterion.js"%>  
-
   <form role="form" name="frm_contest_topic">
   <input type="hidden" class="form-control" name="topic_id" id="topic_id" >
   <div class="form-group">
@@ -182,3 +182,6 @@
     </div>
   </div>
 </div>
+<% else%>
+<%= render 'partials/messages' %>
+<% end%>

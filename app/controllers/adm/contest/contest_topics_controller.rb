@@ -14,23 +14,24 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
   def show
     @report_title_page = t("Contest.Management contest")
 
+    @contest = nil
+
     if params[:id].present?
-      
+
       @topic = Contest::ContestTopic.where(id: params[:id]).first
 
-      if !@topic.nil?
+      if @topic.present?
         @contest = Contest::Contest.where(id: @topic.contest_id).first
       else
-        flash[:warning] = t("adm.Object does not exist")
+        flash[:warning] = t("adm.Object does not exist")      
       end
-    
+
     elsif params[:contest_id].present?   
       
       @topic = Contest::ContestTopic.new
       @contest = Contest::Contest.where(id: params[:contest_id]).first
     
     end
-
 
     render partial: "adm/contest/contest_topics/partials/contest_topic_form_add", locals: { contest: @contest, topic: @topic, option: '', add_new: true }
 
@@ -40,7 +41,7 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
     if params[:topic_id].present?
       result = Adm::Contest::ContestTopicsService.new.update params
     else
-    result = Adm::Contest::ContestTopicsService.new.create_topic params
+      result = Adm::Contest::ContestTopicsService.new.create_topic params
     end
 
     respond_to do |format|
