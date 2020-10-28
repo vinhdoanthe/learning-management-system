@@ -31,8 +31,8 @@
                   </div>
                   <div class="b-grid__img">
                     <figure>
-                      <% if user.avatar.present? && user.avatar.avatar.present? %>
-                        <%= image_tag user.avatar.avatar %>
+                      <% if user.avatar.present? && user.avatar.thumbnail.present? %>
+                        <%= image_tag user.avatar.thumbnail %>
                       <% else %>
                         <img src='/contest/images/face-default.png'>
                       <% end %>
