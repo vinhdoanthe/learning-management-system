@@ -1,35 +1,9 @@
 <%= javascript_include_tag 'contest/index.js' %>
-<% submit_url = logged_in? ? "/contest/#{ @contest.id}/new_project" : "/user/login?contest=#{ @contest.id }"%>
 <input name="contest_id" type="hidden" value="<%= @contest.id %>" >
-<div class="l-nav is-transparent">
-  <div class="container is-full">
-    <div class="c-header-inner">
-      <button class="c-menu-expand js-menu-expand" type="button"><span></span></button>
-      <div class="c-logo"><a href="index.html"><img src="/contest/images/logo.svg" alt="logo"></a></div>
-      <div class="c-menu">
-        <ul>
-          <li class="active"><a href="index.html">Trang chủ</a></li>
-          <li><a href="#contest_rule">Thể lệ</a></li>
-          <li><a href="award.html">Bảng vàng</a></li>
-          <li><a href="product.html">Sản phẩm dự thi</a></li>
-        </ul>
-      </div>
-      <div class="c-hotline">
-        <div class="c-hotline__current"><i class="icon16-calling"></i><span class="c-hotline__text">Hotline</span></div>
-        <div class="c-dropdown-menu is-center">
-          <ul>
-            <li><a href="tel:+842471096668">Miền Bắc<b class="float-right">+8424-7109-6668</b></a></li>
-            <li><a href="tel:+842471096668">Miền Nam<b class="float-right">+8428-710-99948</b></a></li>
-            <li><a href="tel:+842471096668">Email<b class="float-right">contact@teky.edu.vn</b></a></li>
-          </ul>
-        </div>
-      </div><a class="btn-push" href="<%= submit_url %>"><i class="icon16-/contest/upload"></i><span class="btn-push__text">Nộp bài dự thi</span></a>
-    </div>
-  </div>
-  <!--end container-->
-</div>
+<%= render 'contest/partials/header', { contest: @contest, transparent: 'is-transparent' } %>
 <!--end l-nav-->
 <!--Content page part-->
+<% submit_url = logged_in? ? "/contest/#{ @contest.id}/new_project" : "/user/login?contest=#{ @contest.id }"%>
 <%= render 'contest/contests/partials/index_slide', { submit_url: submit_url } %>
 <!--end c-slider-->
 <%= render 'contest/contests/partials/contest_description' %>
@@ -87,62 +61,7 @@
 <%= render 'contest/contests/partials/event_info' %>
 <!--Footer part-->
 <!--l-footer-->
-<div class="l-footer">
-  <div class="container">
-    <div class="c-footer-main">
-      <div class="c-footer-top">
-        <div class="c-footer-logo"><a href="index.html"><img src="/contest/images/logo.svg" alt="logo"></a></div>
-        <div class="c-footer-social"><a href="#"><i class="icon24-facebook"></i></a><a href="#"><i class="icon24-youtube"></i></a></div>
-      </div>
-      <div class="c-footer-center">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="c-footer-label">Học viện Teky</div>
-            <div class="c-footer-content">
-              <div class="b-maincontent">
-                <p>Toà nhà Mac Plaza, Số 10 Trần Phú</p>
-                <p>Mộ Lao, Hà Đông, Hà Nội</p><br>
-                <p>Miền Bắc: 024 7109 6668</p>
-                <p>Miền Nam: 028 710 99948</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="c-footer-label">Thông tin chung</div>
-            <div class="c-footer-content">
-              <div class="c-footer-list">
-                <ul>
-                  <li><a href="#">Teky.edu.vn</a></li>
-                  <li><a href="#">Trang chủ</a></li>
-                  <li><a href="#">Về chúng tôi</a></li>
-                  <li><a href="#">Thể lệ</a></li>
-                  <li><a href="#">Sản phẩm dự thi</a></li>
-                  <li><a href="#">Liên hệ</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="c-footer-label">Đăng ký nhận tin</div>
-            <div class="c-footer-content">
-              <div class="c-footer-text">Subsbribe us to get news and updates directy to your inbox.</div>
-              <div class="c-footer-email">
-                <div class="input-group">
-                  <input class="form-control" type="text" placeholder="Email của bạn">
-                  <div class="input-group-append">
-                    <button class="btn btn-light" type="button"><i class="icon-long-arrow-right"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="c-copyright">© 2020 All Rights Reserved By TEKY Academy.</div>
-  </div>
-  <!--end container-->
-</div>
+<%= render "contest/partials/footer", contest: @contest %>
 <script>
   $(window).on("load", function (e) {
     if( $('.c-road-slider').length > 0 && $('.c-calender-slider').length > 0 ) {
