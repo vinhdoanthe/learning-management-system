@@ -49,13 +49,10 @@ class Contest::ContestProjectsController < ApplicationController
     end
   end
 
-  def contest_projects_content
-    details = Contest::ContestsServive.new.contest_projects params[:id]
-
-    respond_to do |format|
-      format.html
-      format.js { render '', locals: { project_details: details } }
-    end
+  def projects_content
+    @projects = Contest::ContestsService.new.contest_projects params
+    @project_details = []
+    @projects.each{ |project| @project_details << (Contest::ContestsService.new.contest_project_detail project) }
   end
 
   def submit_contest_project

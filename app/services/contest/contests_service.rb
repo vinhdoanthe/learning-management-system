@@ -27,13 +27,13 @@ class Contest::ContestsService
       .where(created_at: time.beginning_of_week..time.end_of_week)
       .order(score: :DESC)
       .select('distinct(tk_contest_projects.id)',
-              :created_at, :user_id,
-              'op_student.full_name as student_name',
-              'sc_student_projects.name as project_name',
-              :views,
-              :score,
-              'res_company.name as company_name',
-              :project_id)
+    :created_at, :user_id,
+    'op_student.full_name as student_name',
+    'sc_student_projects.name as project_name',
+    :views,
+    :score,
+    'res_company.name as company_name',
+    :project_id)
       .limit(6)
 
     project_ids = w_projects.pluck(:project_id)
@@ -97,5 +97,16 @@ class Contest::ContestsService
       puts response.read_body
       # TODO: update project here...
     end
+  end
+
+  def contest_projects params
+    time = Time.now
+    contest = Contest::Contest.where(id: params[:contest_id]).first
+    projects  = Contest::ContestProject.where(contest_id: contest.id, created_at: time.beginning_of_month..time.end_of_month)
+
+    projects = projects.where(contest_topic_id: params[:topic_id]) if params[:topic_id] != 'all'
+    projects = projects.joins(student_project: { op_student: :res_company }).where(res_company: { id: params[:company_id] }) if params[:company_id] != 'all'
+
+    projects.page(params[:page]).per(20)
   end
 end

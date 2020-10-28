@@ -17,6 +17,7 @@ namespace :contest do
     get 'month_projects', action: 'month_projects'
     get 'week_projects', action: 'week_projects'
     get 'project_detail', action: 'project_detail'
+    get 'projects_content', action: 'projects_content'
   end
 
   namespace :contest_topics do
