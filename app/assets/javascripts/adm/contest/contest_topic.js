@@ -21,7 +21,7 @@ $(document).ready(function(){
   $('#create-contest-topic-confirm').click(function(){
     var data = new FormData();
     topic_id = $(this).data('topic')
-    data.append('topic_id', name);
+    data.append('topic_id', topic_id);
     name = $('#topic_name').val();
     data.append('name', name);
     contest_id = $('input[name="contest-id"]').val();
@@ -51,12 +51,14 @@ $(document).ready(function(){
     data.append("end_time", end_time);
 
     file = $('#topic_thumbnail')[0].files[0]
-    file_type = file.name.split('.').pop().toLowerCase();
-    if($.inArray(file_type, ['png','jpg','jpeg', 'heic']) == -1) {
-      arlert("Chi chap nhan anh duoi 'png','jpg', 'jpec', 'heic'!");
-      return
-    }else{
-      data.append("thumbnail", file);
+    if (file) {
+      file_type = file.name.split('.').pop().toLowerCase();
+      if($.inArray(file_type, ['png','jpg','jpeg', 'heic']) == -1) {
+        arlert("Chi chap nhan anh duoi 'png','jpg', 'jpec', 'heic'!");
+        return
+      }else{
+        data.append("thumbnail", file);
+      }
     }
 
     $.ajax({

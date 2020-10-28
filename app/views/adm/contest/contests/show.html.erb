@@ -39,7 +39,7 @@
                 data-remote="true"
                 data-topic=""
                 data-title=""
-                data-load-url="/adm/contest/contest_topics/new"
+                data-load-url="/adm/contest/contest_topics/new/<%= @contest[:id]%>"
                 title="Edit"
                 data-target="#modal_create_contest_topic"><i class="fas fa-plus"></i></button>
 
@@ -70,48 +70,24 @@
   </div>
 </div>
 
-<div class="modal fade" id="modal_create_contest_topic_old" role="dialog" aria-labelledby="modal_create_contest_topicLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-         <h4 class="modal-title"></h4>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-         </button>
-      </div>
-        <div class="modal-body" id="modal_update_lesson">
-        <%= render "adm/contest/contest_topics/partials/contest_topic_detail", { contest: @contest, topic: Contest::ContestTopic.new, option: '', add_new: true } %>
-        </div>
-        <div class="modal-footer">
-          <div class="btn-group">
-            <button type='button' data-dismiss="modal" id="create-contest-topic-confirm" class="btn btn-default btn-sm bg-olive" data-topic=""><i class="fas fa-save"></i>&nbsp;<%= t('button.Save')%></button>&nbsp&nbsp
-            <button type="button" class="btn btn-default btn-sm btn-close" data-dismiss="modal"><i class="fas fa-ban"></i> <%= t('button.Close')%>
-            </button>
-          </div>
-        </div>
-    </div>
-  </div>
-</div>
-
 <%= render "adm/contest/contest_topics/partials/modal_create_contest_topic", { contest: @contest, topic: Contest::ContestTopic.new} %>
 <%= tinymce :fulleditor %>
 <script>
-  $(document).ready(function(){
-    //setSummerNote('#contest_description');
-
-
-
-    $('#modal_create_contest_topic').on('show.bs.modal', function (e) {
+  $(document).ready(function() {
     
+    $('#modal_create_contest_topic').on('show.bs.modal', function (e) {    
+      
       $('#topic_id').val($(e.relatedTarget).data("topic"));
 
+      $('#create-contest-topic-confirm').attr('data-topic', $(e.relatedTarget).data("topic"));
+
       $("#modal_update_topic").html('<div style="display: block;font-size: 12px;" class="text-primary"><i class="fa fa-spinner fa-2x fa-spin" style="padding: 3px;"></i><%= t('button.Loading')%></div>');
-      var loadurl = $(e.relatedTarget).data('load-url');    
-      $("#remoteModalLessonUpdate .modal-title").html('<%= t('learning.subject')%>: ' + $(e.relatedTarget).data('title'));
+      
+      var loadurl = $(e.relatedTarget).data('load-url');     
+      
       $(this).find('.modal-body').load(loadurl);
+
     });
-
-
   });
 </script>
 <%= javascript_include_tag "adm/contest/contests.js" %>
