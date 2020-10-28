@@ -1,7 +1,8 @@
 namespace :contest do
   get '/:id/home', to: 'contests#index'
   get '/:id/new_project', to: 'contests#new', as: 'new_project'
-  get '/:id/award', to: 'contests#award', as: 'award'
+  get '/:contest_id/award', to: 'contests#award', as: 'award'
+  get '/:contest_id/contest_projects', to: 'contest_projects#contest_projects'
 
   namespace :contests do
     get "submit_contest", action: "submit_the_contest", as: "submit_contest"

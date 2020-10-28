@@ -1,5 +1,5 @@
 class Contest::ContestsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :leader_board]
+  skip_before_action :authenticate_user!, only: [:index, :leader_board, :award]
 
   def index
     @contest = Contest::Contest.where(id: params[:id]).first
@@ -38,15 +38,17 @@ class Contest::ContestsController < ApplicationController
   end
 
   def leader_board
-    week_projects, month_project = Contest::ContestsService.new.leader_board params[:contest_id]
+    week_projects, month_project, contest = Contest::ContestsService.new.leader_board params[:contest_id]
 
     respond_to do |format|
       format.html
-      format.js { render 'contest/contests/js/leader_board', locals: { month_project: month_project, week_projects: week_projects } }
+      format.js { render 'contest/contests/js/leader_board', locals: { month_project: month_project, week_projects: week_projects, contest: contest } }
     end
   end
 
   def award
-    #week_projects, month_project = Contest::ContestsService.new.leader_board params[:contest_id]
+    @contest = Contest::Contest.where(id: params[:contest_id]).first
+    @month_projects = Contest::ContestsService.new.awarded_projects @contest, 'm'
+    @week_projects = Contest::ContestsService.new.awarded_projects @contest, 'w'
   end
 end
