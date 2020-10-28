@@ -2,10 +2,11 @@
 <%= javascript_include_tag "adm/contest/contest_criterion.js"%>  
 <div class="card-body p-0">
   <form role="form" name="frm_contest_topic">
+  <input type="hidden" value="<%= topic&.id %>" class="form-control" name="topic_id" id="topic_id" >
   <div class="form-group">
     <label for="topic_name"><%= t('Contest.Content.Name') %></label>
     <input type="text" value="<%= contest&.name %>" readonly class="form-control" name="contest-name">
-    <input type="hidden" value="<%= contest&.id %>" class="form-control" name="contest-id">
+    <input type="hidden" value="<%= contest&.id %>" class="form-control" name="contest-id" >
   </div>
   <div class="form-group">
     <label for="topic_name"><%= t('Contest.Topic.Name') %></label>
@@ -48,7 +49,6 @@
     <label for="topic_description"><%= t('Contest.Topic.Description') %></label>
     <textarea class="contest-topic-description-textarea" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value='<%= topic&.description %>' id="topic_description"><%= topic&.description %></textarea>
   </div>
-  
   <div class='row'>
     <div class='col-md-6'>
       <div class="form-group">

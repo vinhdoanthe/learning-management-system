@@ -111,6 +111,8 @@ namespace :adm do
     namespace :contest_topics do
       post 'create_topic', action: 'create_topic', as: 'create_topic'
       post 'delete_topic', action: 'delete_topic', as: 'delete_topic'
+
+      get 'new', action: 'show'
     end
 
     namespace :contest_criterions do

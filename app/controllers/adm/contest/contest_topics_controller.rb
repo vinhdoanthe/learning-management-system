@@ -5,6 +5,7 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
   end
 
   def new
+    
   end
 
   def edit
@@ -15,6 +16,10 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
 
     @topic = Contest::ContestTopic.where(id: params[:id]).first
     @contest = Contest::Contest.where(id: @topic.contest_id).first
+
+
+    render partial: "adm/contest/contest_topics/partials/contest_topic_form_add", locals: { contest: @contest, topic: @topic, option: '', add_new: true }
+
   end
 
   def create_topic

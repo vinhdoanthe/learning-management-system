@@ -1,5 +1,5 @@
-<%= javascript_include_tag "adm/contest/contests.js" %>
-
+<%= tinymce_assets %>
+<%= javascript_include_tag 'tinymce/langs/vi_VN.js' %>
 <div class="card">
   <div class="card-footer">
     <h3 class="card-title"><label><%= t('Contest.Content.Add new contest') %></label></h3>
@@ -39,8 +39,11 @@
   display: none;
 }
 </style>
+<%= javascript_include_tag "adm/contest/contests.js" %>
 <script>
   $(document).ready(function() {
-    setSummerNote('#contest_description')
+    //setSummerNote('.contest-description-textarea')
   })
 </script>
+
+<%= tinymce :fulleditor %>
