@@ -1,0 +1,133 @@
+<%= render 'contest/partials/header', { contest: @contest, transparent: '' } %>
+<!--end l-nav-->
+<!--Content page part-->
+<div class="c-space"></div>
+<div class="c-block bg-gradient">
+  <div class="container">
+    <div class="c-box is-middle">
+      <div class="c-box__title">
+        <div class="c-box__title__name"><span>Chủ đề</span>Hàng tuần</div>
+        <div class="c-box__title__shadow">Theme</div>
+      </div>
+      <div class="c-box__content">
+        <div class="c-template-slider is-margin-minus is-button-circle">
+          <div class="owl-carousel js-slider-2">
+            <% @topics.each do |topic| %>
+              <div class="c-week-item">
+                <div class="c-week-item__thumb">
+                  <a href="#">
+                    <%= image_tag topic.thumbnail, style: 'object-fit: contain' %>
+                    <span class="c-week-item__title">Tuần <%= topic.week_number %>, Tháng <%= topic.created_at.strftime('%m/%Y') %></span>
+                    <span class="c-week-item__more">
+                      <img src="/contest/images/week-all.png" alt="all">
+                    </span>
+                  </a>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="c-block">
+  <div class="container">
+    <div class="c-product-filter">
+      <div class="c-filter is-calendar">
+        <button class="c-filter-btn" type="button">Tháng này</button>
+        <div class="c-filter-control is-2">
+          <ul>
+            <li>
+              <label>Theo thời gian</label>
+              <select class="form-control">
+                <option>Tất cả sản phẩm</option>
+                <option>Tuần 1, tháng 10/2020</option>
+                <option>Tuần 2, tháng 10/2020</option>
+                <option>Tuần 3, tháng 10/2020</option>
+                <option>Tuần 4, tháng 10/2020</option>
+              </select>
+            </li>
+            <li>
+              <label>Học viện Teky</label>
+              <select class="form-control">
+                <option>Toàn bộ học viện</option>
+                <option>Teky Hà Đông</option>
+                <option>Teky Nguyễn Thị Thập</option>
+                <option>Teky Mỹ Đình</option>
+                <option>Teky Hoàn Kiếm</option>
+                <option>Teky Long Biên</option>
+              </select>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="c-box is-middle">
+      <div class="c-box__title">
+        <div class="c-box__title__name"><span>Toàn bộ</span>Sản phẩm dự thi</div>
+        <div class="c-box__title__shadow">Products</div>
+      </div>
+      <div class="c-box__desc">
+        Có tổng cộng
+        <b>1.034</b>
+        sản phẩm tham gia dự thi
+      </div>
+      <div class="c-box__content">
+        <div class="c-product-grid">
+          <ul class="clearfix">
+            <% @project_details.each do |p| %>
+              <% project = p.values[0] %>
+            <li>
+              <div class="c-product-item">
+                <div class="c-product-item__thumb">
+                  <a href="product-detail.html">
+                    <% if project['project_img']&.attached? %>
+                      <%= image_tag project['project_img'] %>
+                    <% else %>
+                      <img src="/contest/upload/product_1.jpg" alt="image">
+                    <% end %>
+                  </a>
+                </div>
+                <div class="c-product-item__content">
+                  <div class="b-grid">
+                    <div class="b-grid__img">
+                      <figure>
+                        <% if project['user_avatar']&.attached? %>
+                          <%= image_tag project['user_avatar'] %>
+                        <% else %>
+                          <img src="/contest/upload/face_1.jpg" alt="face">
+                        <% end %>
+                      </figure>
+                    </div>
+                    <div class="b-grid__content">
+                      <div class="b-grid__row"><a class="b-grid__title" href="product-detail.html"><%= project['project_name'] %></a></div>
+                      <div class="b-grid__row"><span class="b-grid__author"><%= project['student_name'] %></span></div>
+                    </div>
+                  </div>
+                  <div class="c-product-item__count">
+                    <ul>
+                      <li><i class="icon16-like"></i><span><%= project['like'] %></span></li>
+                      <li><i class="icon16-share"></i><span><%= project['share'] %></span></li>
+                      <li><i class="icon16-eye"></i><span><%= project['views'] %></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="c-loading">
+          <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div>
+          <div class="c-loading__text">Đợi xíu nha...</div>
+        </div>
+        <div class="c-paging">
+          <div class="c-paging__inner"><a class="is-primary is-first" href="#"><i class="icon16-angle-left-white"></i></a><span class="c-paging__text">Trang</span><a class="active" href="#">3</a><span class="c-paging__text">/276</span><a class="is-primary is-last" href="#"><i class="icon16-angle-right-white"></i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!--Footer part-->
+  <%= render "contest/partials/footer", contest: @contest %>

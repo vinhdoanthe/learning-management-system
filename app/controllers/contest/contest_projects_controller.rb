@@ -8,7 +8,8 @@ class Contest::ContestProjectsController < ApplicationController
 
   def show
     @c_project = Contest::ContestProject.where(id: params[:id]).first
-    #@c_project = Contest::ContestProject.last
+    views = @c_project.views
+    @c_project.update(views: views + 1)
     @project = @c_project.student_project
     @user = @c_project.user
     @student = @user.op_student
@@ -34,6 +35,27 @@ class Contest::ContestProjectsController < ApplicationController
   def index_content
     contest = Adm::Contest::ContestProjectsService.new.index_content params
     contest
+  end
+
+  def contest_projects
+    @contest = Contest::Contest.where(id: params[:contest_id]).first
+    @topics = @contest.contest_topics.order(created_at: :DESC).limit(5)
+    @topic = @topics.first
+    @projects = @topic.contest_projects.where.not(project_id: nil)
+    @project_details = []
+
+    @projects.each do |project|
+      @project_details << { project.id => (Contest::ContestsService.new.contest_project_detail project) }
+    end
+  end
+
+  def contest_projects_content
+    details = Contest::ContestsServive.new.contest_projects params[:id]
+
+    respond_to do |format|
+      format.html
+      format.js { render '', locals: { project_details: details } }
+    end
   end
 
   def submit_contest_project
