@@ -10,7 +10,7 @@ display_response_noti(res);
     //$('#create-new-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_form_add', locals: { contest: contest, topic: Contest::ContestTopic.new } ) %> ");
     <% end %>
 
-    $("#table-contest-topic").load("adm/contest/contest_topics/load_data/<%= contest.id %>");
+    $("#table-contest-topic").load("/adm/contest/contest_topics/load_data/<%= contest.id %>");
 
 /*
     $(".table-contest-topic").append(`
