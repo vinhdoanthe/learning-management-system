@@ -40,6 +40,7 @@ Rails.application.config.assets.precompile += %w( user/open_educat/op_teachers/t
 Rails.application.config.assets.precompile += %w( user/open_educat/op_teachers/teacher_class.js )
 Rails.application.config.assets.precompile += %w( social_community/refer_friend/refer_friend.js )
 Rails.application.config.assets.precompile += %w( adm_application.css )
+Rails.application.config.assets.precompile += %w( contest/* )
 Rails.application.config.assets.precompile += %w( contest.css )
 Rails.application.config.assets.precompile += %w( contest.js )
 Rails.application.config.assets.precompile += %w( contest/index.js )
