@@ -7,16 +7,14 @@
             <span aria-hidden="true">×</span>
          </button>
       </div>
-        <div class="modal-body" id="modal_update_topic">
-        
+      <div class="modal-body" id="modal_update_topic"></div>
+      <div class="modal-footer">
+        <div class="btn-group">
+          <button type='button' data-dismiss="modal" id="create-contest-topic-confirm" class="btn btn-default btn-sm bg-olive" data-topic=""><i class="fas fa-save"></i>&nbsp;<%= t('button.Save')%></button>&nbsp&nbsp
+          <button type="button" class="btn btn-default btn-sm btn-close" data-dismiss="modal"><i class="fas fa-ban"></i> <%= t('button.Close')%>
+          </button>
         </div>
-        <div class="modal-footer">
-          <div class="btn-group">
-            <button type='button' data-dismiss="modal" id="create-contest-topic-confirm" class="btn btn-default btn-sm bg-olive" data-topic=""><i class="fas fa-save"></i>&nbsp;<%= t('button.Save')%></button>&nbsp&nbsp
-            <button type="button" class="btn btn-default btn-sm btn-close" data-dismiss="modal"><i class="fas fa-ban"></i> <%= t('button.Close')%>
-            </button>
-          </div>
-        </div>
+      </div>
     </div>
   </div>
 </div>

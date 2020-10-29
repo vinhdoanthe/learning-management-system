@@ -398,7 +398,7 @@ vi:
     update_success: "Cập nhật thành công!"
     update_fail: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"
     no_avatar: "Ảnh không tồn tại! Vui lòng thử lại"
-    add_new_success: "Tạo mới thành công!"
+    add_new_success: "Tạo mới thành công!"    
   Contest:
     Management contest: "Quản lý cuộc thi"
     List contest: "Danh sách cuộc thi"
@@ -439,6 +439,10 @@ vi:
       Image description: "Ảnh đại diện"
       Choose file: "Chọn file ảnh"
       Add a new topic for contest: "Thêm chủ đề cho cuộc thi"
+      Are you sure want to delete this topic?: "Bạn có chắc chắn muốn xóa chủ đề này?"
+      northern: "Bắc"
+      south: "Nam"
+      all: "Tất cả"
     Prize:
       List: "Danh sách giải thưởng"
       Choose prize: "Chọn giải thưởng cho chủ đề này"
