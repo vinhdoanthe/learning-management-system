@@ -26,24 +26,24 @@
   </thead>
 </table>
 
-  <script>
-    $(document).ready(function(){
-      $('.table-contest-topic').on('click', '.delete_contest_topic', function(){
-        button = $(this)
-        id = $(this).data('topic');
-        if (confirm("Ban chac chan muon xoa chu de?")){
-          $.ajax({
-            method: 'POST',
-            url: '/adm/contest/contest_topics/delete_topic',
-            data: { topic_id: id },
-            success: function(res){
-              display_response_noti(res);
-              if (res.type == 'success'){
+<script>
+$(document).ready(function() {
+    $('.table-contest-topic').on('click', '.delete_contest_topic', function() {
+      button = $(this)
+      id = $(this).data('topic');
+      if (confirm("<%= t("Contest.Topic.Are you sure want to delete this topic?")%>")) {
+        $.ajax({
+          method: 'POST',
+          url: '/adm/contest/contest_topics/delete_topic',
+          data: { topic_id: id },
+          success: function(res){
+            display_response_noti(res);
+            if (res.type == 'success') {
               button.closest('tr').hide();
-              }
             }
-          })
-        }
-      })
-    })
-  </script>
+          }
+        });
+      }
+    });
+});
+</script>
