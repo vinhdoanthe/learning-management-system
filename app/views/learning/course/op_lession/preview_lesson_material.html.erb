@@ -62,7 +62,7 @@
                   <% review_videos.each do |video| %>
                     <% unless video.ziggeo_file_id.nil? %>
                       <div>
-                        <%= render :partial => 'learning/material/learning_materials/vimeo', :locals => {video_id: video.ziggeo_file_id} %>
+                        <%= render :partial => 'learning/material/learning_materials/vimeo', :locals => {video_id: video.ziggeo_file_id, video: video} %>
                       </div>
                       <% if video.thumbnail_image.attached? %>
                         <div>
