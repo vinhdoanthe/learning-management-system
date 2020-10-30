@@ -69,8 +69,11 @@ class Contest::ContestsService
     user_avatar = user.avatar&.thumbnail
     project_img = project.image
 
+    student = project.op_student
+    company_name = student.res_company&.name
+    
     details = c_project.as_json
-    details.merge! ({ 'user_avatar' => user_avatar, 'project_name' => project.name, 'project_img' => project_img, 'created_at' => c_project.created_at, 'student_name' => project.op_student&.full_name, 'like' => like, 'share' => share, 'views' => c_project.views })
+    details.merge! ({ 'user_avatar' => user_avatar, 'project_name' => project.name, 'project_img' => project_img, 'created_at' => c_project.created_at, 'student_name' => student.full_name, 'like' => like, 'share' => share, 'views' => c_project.views, 'company_name' => company_name })
 
     details
   end

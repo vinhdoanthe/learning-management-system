@@ -18,7 +18,7 @@
         <div class="c-template-slider is-margin-minus is-button-circle c-award-slider">
           <div class="owl-carousel js-award-slider">
             <% @month_projects.each do |k, project| %>
-              <%= render 'contest/contest_projects/partials/month_project', { project: project } %>
+              <%= render 'contest/contest_projects/partials/month_project', { project: project, contest: @contest } %>
             <% end %>
           </div>
         </div>
