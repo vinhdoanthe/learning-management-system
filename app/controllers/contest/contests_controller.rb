@@ -48,7 +48,19 @@ class Contest::ContestsController < ApplicationController
 
   def award
     @contest = Contest::Contest.where(id: params[:contest_id]).first
-    @month_projects = Contest::ContestsService.new.awarded_projects @contest, 'm'
-    @week_projects = Contest::ContestsService.new.awarded_projects @contest, 'w'
+    @month_projects = Contest::ContestsService.new.awarded_projects @contest, 'm', ''
+    @month_details = {}
+    @month_projects.each do |project|
+     @month_details.merge! ({ project.id => ( contest_project_detail project )})
+    end
+  end
+
+  def week_award_content
+    @contest = Contest::Contest.where(id: params[:contest_id]).first
+    @week_projects = Contest::ContestsService.new.awarded_projects @contest, 'm', ''
+    @week_details = {}
+    @week_projects.each do |project|
+     @week_details.merge! ({ project.id => ( contest_project_detail project )})
+    end
   end
 end

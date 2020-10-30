@@ -16,7 +16,11 @@
               <div class="c-week-item">
                 <div class="c-week-item__thumb">
                   <a href="#">
-                    <%= image_tag topic.thumbnail, style: 'object-fit: contain' %>
+                    <% if topic.thumbnail&.attached? %>
+                      <%= image_tag topic.thumbnail, style: 'object-fit: contain' %>
+                    <% else %>
+                      <img src="/contest/upload/week_1.jpg" alt="image">
+                    <% end %>
                     <span class="c-week-item__title">Tuần <%= topic.week_number %>, Tháng <%= topic.created_at.strftime('%m/%Y') %></span>
                     <span class="c-week-item__more">
                       <img src="/contest/images/week-all.png" alt="all">

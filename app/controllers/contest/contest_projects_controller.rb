@@ -16,7 +16,7 @@ class Contest::ContestProjectsController < ApplicationController
     @like = @c_project.contest_criterions.where(name: 'like').first&.number.to_i
     @share = @c_project.contest_criterions.where(name: 'share').first&.number.to_i
     @prize = @c_project.contest_prize
-    relate_projects = Contest::ContestProject.where(user_id: @c_project.user_id).limit(2)
+    relate_projects = Contest::ContestProject.where(user_id: @c_project.user_id).limit(20)
     @relate_projects = []
 
     relate_projects.each do |p|
