@@ -15,7 +15,7 @@
             <% @topics.each do |topic| %>
               <div class="c-week-item">
                 <div class="c-week-item__thumb">
-                  <a href="#">
+                  <a data-topic="<%= topic.id %>" class="show_topic_projects">
                     <% if topic.thumbnail&.attached? %>
                       <%= image_tag topic.thumbnail, style: 'object-fit: contain' %>
                     <% else %>
@@ -44,44 +44,60 @@
           <ul>
             <li>
               <label>Theo thời gian</label>
-              <select class="form-control">
-                <option>Tất cả sản phẩm</option>
-                <option>Tuần 1, tháng 10/2020</option>
-                <option>Tuần 2, tháng 10/2020</option>
-                <option>Tuần 3, tháng 10/2020</option>
-                <option>Tuần 4, tháng 10/2020</option>
+              <select class="form-control" id="select_project_topic">
+                <option value='all' >Tất cả sản phẩm</option>
+                <% @contest.contest_topics.where(start_time: Time.now.beginning_of_month..Time.now.end_of_month).each do |topic| %>
+                  <option value="<%= topic.id %>">Tuần <%= topic.week_number %>, tháng <%= topic.start_time.strftime("%m/%Y") %></option>
+                <% end %>
               </select>
             </li>
             <li>
+              <% contest_company = get_contest_company @contest %>
               <label>Học viện Teky</label>
-              <select class="form-control">
-                <option>Toàn bộ học viện</option>
-                <option>Teky Hà Đông</option>
-                <option>Teky Nguyễn Thị Thập</option>
-                <option>Teky Mỹ Đình</option>
-                <option>Teky Hoàn Kiếm</option>
-                <option>Teky Long Biên</option>
+              <select class="form-control" id="select_project_company">
+                <option value="all">Toàn bộ học viện</option>
+                <%= contest_company.each do |company| %>
+                  <option value="<%= company[1] %>"><%= company[0] %></option>
+                <% end %>
               </select>
             </li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="c-box is-middle contest-projects-content">
+    <div class="c-box is-middle contest-projects-content" id="contest-project-list">
     </div>
   </div>
 </div>
   <!--Footer part-->
   <%= render "contest/partials/footer", contest: @contest %>
   <script>
-    $(document).ready(function(){
-      topic_id = 'all'
-      company_id = 'all'
+    function getProjectsContent(){
+        $('.contest-projects-content').html(`<div class="c-loading"> <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div> <div class="c-loading__text">Đợi xíu nha...    </div> </div>`)
+      topic_id = $('#select_project_topic').val();
+      company_id = $('#select_project_company').val();
       $.ajax({
         method: "GET",
         url: '/contest/contest_projects/projects_content?contest_id=<%= @contest.id %>',
         data: { topic_id: topic_id, company_id: company_id },
         dataType: 'script'
+      })
+    }
+    $(document).ready(function(){
+      getProjectsContent();
+
+      $('#select_project_topic').change(function(){
+        getProjectsContent();
+      })
+
+      $('#select_project_company').change(function(){
+        getProjectsContent();
+      })
+
+      $('.show_topic_projects').on('click', function(){
+        $('#select_project_topic').val($(this).data('topic'));
+        getProjectsContent();
+        window.location.href = '/contest/<%= @contest.id %>/contest_projects#contest-project-list';
       })
     })
   </script>

@@ -1,49 +1,42 @@
-<div class="c-award-item" id="contest-certificate-<%= project['id'] %>">
-  <div class="c-award-item__thumb"><img src="/contest/upload/award-blank.png" alt="image">
-    <div class="c-award-item__avatar">
-      <figure>
-        <% if project['user_avatar']&.attached? %>
-          <%= image_tag project['user_avatar'] %>
-        <% else %>
-          <img src="/contest/images/face-default.png" alt="image">
-        <% end %>
-      </figure>
-    </div>
-    <div class="c-award-item__name"><%= project['student_name'] %></div>
-    <!-- <div class="c-award-item__address">Class 3A5 - Thanh Cong Primary School A, Teky - Ha Dong, Ha Noi, Viet Nam</div> -->
-    <div class="c-award-item__address"><%= project['company_name'] %></div>
-    <div class="c-award-item__program">For outstanding performance and winning the competition of <b><%= contest&.name %></b></div>
-    <!-- <div class="c-award-item__date">30/SEPTEMBER/2020</div> -->
-    <div class="c-award-item__date"><%= project['created_at'].strftime('%d/%B/%Y') %></div>
+<div class="c-award-item__thumb contest-certificate-download-div" data-project="<%= project['id'] %>" id="contest-certificate-<%= project['id'] %>"><img src="/contest/upload/award-blank.png" alt="image">
+  <div class="c-award-item__avatar">
+    <figure>
+      <% if project['user_avatar']&.attached? %>
+        <%= image_tag project['user_avatar'] %>
+      <% else %>
+        <img src="/contest/images/face-default.png" alt="image">
+      <% end %>
+    </figure>
   </div>
-  <div class="c-award-item__bar">
-    <ul>
-      <li><a href="#"><i class="icon24-share"></i><span>Chia sể lên Facebook</span></a></li>
-      <li><a data-project='<%= project['id'] %>' class="download-certificate" ><i class="icon24-pdf"></i><span>Tải xuống</span></a></li>
-      <li><a href="/contest/contest_projects/show/<%= project['id'] %>"><i class="icon24-view"></i><span>Xem sản phẩm</span></a></li>
-    </ul>
-  </div>
+  <div class="c-award-item__name"><%= project['student_name'] %></div>
+  <!-- <div class="c-award-item__address">Class 3A5 - Thanh Cong Primary School A, Teky - Ha Dong, Ha Noi, Viet Nam</div> -->
+  <div class="c-award-item__address"><%= project['company_name'] %></div>
+  <div class="c-award-item__program">For outstanding performance and winning the competition of <b><%= contest&.name %></b></div>
+  <!-- <div class="c-award-item__date">30/SEPTEMBER/2020</div> -->
+  <div class="c-award-item__date"><%= project['created_at'].strftime('%d/%B/%Y') %></div>
 </div>
-  <script>
-    function downloadimage(target) {
-      //var container = document.getElementById("image-wrap"); //specific element on page
-      var container = document.getElementById(target); // full page
-      html2canvas(container, {
-        allowTaint: false})
-        .then(function (canvas) {
-          var link = document.createElement("a");
-          document.body.appendChild(link);
-          link.download = "";
-          link.href = canvas.toDataURL();
-          link.target = '_blank';
-          link.click();
-        });
-    }
-$(document).ready(function(){
-  $('.download-certificate').on('click', function(){
-    debugger
-    id = $(this).data('project')
-    downloadimage('contest-certificate-' + id)
-  })
-})
-  </script>
+<div class="c-award-item__bar">
+  <ul>
+    <li><a href="#"><i class="icon24-share"></i><span>Chia sể lên Facebook</span></a></li>
+    <li><a data-project='<%= project['id'] %>' class="download-certificate" ><i class="icon24-pdf"></i><span>Tải xuống</span></a></li>
+    <li><a href="/contest/contest_projects/show/<%= project['id'] %>"><i class="icon24-view"></i><span>Xem sản phẩm</span></a></li>
+  </ul>
+</div>
+<script>
+  //    function downloadimage(target) {
+  //      html2canvas(document.querySelector(target)).then(canvas => {
+  //          var link = document.createElement("a");
+  //          document.body.appendChild(link);
+  //          link.download = "certificate";
+  //          link.href = canvas.toDataURL();
+  //          link.target = '_blank';
+  //          link.click();
+  //      });
+  //    }
+  //$(document).ready(function(){
+  //  $('.download-certificate').on('click', function(){
+  //    id = $(this).data('project');
+  //    downloadimage(`#contest-certificate-${ id }`);
+  //  })
+  //})
+</script>

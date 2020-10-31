@@ -48,16 +48,14 @@ class Contest::ContestsService
     [ w_projects, w_project_imgs ]
   end
 
-  def awarded_projects contest, type
+  def awarded_projects contest, type, page
     awarded_projects = contest.contest_projects
       .joins(:contest_prize)
       .where(tk_contest_prizes: { prize: '1', prize_type: type })
 
-    details = {}
-    awarded_projects.each do |project|
-      details.merge! ({ project.id => ( contest_project_detail project )})
-    end
-    details
+    awarded_projects = awarded_projects.page(page).per(20) if type == 'w'
+
+    awarded_projects
   end
 
   def contest_project_detail c_project
