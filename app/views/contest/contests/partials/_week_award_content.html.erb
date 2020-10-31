@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="c-box is-middle">
+    <div class="c-box__title">
+      <div class="c-box__title__name"><span>Sản phẩm</span>Đạt giải tuần</div>
+      <div class="c-box__title__shadow">Winners</div>
+    </div>
+    <div class="c-box__content">
+      <div class="c-face-grid">
+        <ul class="clearfix">
+          <% @week_details.each do |k, project| %>
+            <%= render 'contest/contest_projects/partials/week_project', { project: project } %>
+          <% end %>
+        </ul>
+      </div>
+      <div class="c-paging">
+        <div class="c-paging__inner">
+          <a class="is-primary is-first prev-page-projects">
+            <i class="icon16-angle-left-white"></i>
+          </a>
+          <span class="c-paging__text">Trang</span>
+          <a class="active"><%= @week_projects.current_page %></a>
+          <span class="c-paging__text">/<%= @week_projects.total_pages %></span>
+          <a class="is-primary is-last next-page-projects" data-remote='true'>
+            <i class="icon16-angle-right-white"></i>
+          </a>
+        </div>
+      </div>
+      <div id='paginator' style="display: none">
+        <%= paginate @week_projects, remote: true %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('.prev-page-projects').click(function(){
+    $('a.page-link[rel="prev"]')[0].click()
+    $('#prize_week_projects').html(`<div class="c-loading"> <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div> <div class="c-loading__text">Đợi xíu nha...</div> </div>`)
+  })
+  $('.next-page-projects').click(function(){
+    $('a.page-link[rel="next"]')[0].click()
+    $('#prize_week_projects').html(`<div class="c-loading"> <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div> <div class="c-loading__text">Đợi xíu nha...</div> </div>`)
+  })
+</script>

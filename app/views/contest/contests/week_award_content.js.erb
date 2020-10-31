@@ -1,0 +1,2 @@
+$('#prize_week_projects').html('<%= escape_javascript ( render partial: 'contest/contests/partials/week_award_content' ) %>')
+$("#paginator").html("<%= j paginate(@week_projects, remote: true) %>");

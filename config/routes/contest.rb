@@ -8,6 +8,7 @@ namespace :contest do
     get "submit_contest", action: "submit_the_contest", as: "submit_contest"
     get 'new', action: 'new'
     get 'leader_board', action: 'leader_board', as: 'leader_board'
+    get 'week_award_content', action: 'week_award_content'
   end
 
   namespace :contest_projects do

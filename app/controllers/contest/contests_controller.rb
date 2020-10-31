@@ -1,5 +1,5 @@
 class Contest::ContestsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :leader_board, :award]
+  skip_before_action :authenticate_user!, only: [:index, :leader_board, :award, :week_award_content]
 
   def index
     @contest = Contest::Contest.where(id: params[:id]).first
@@ -51,16 +51,16 @@ class Contest::ContestsController < ApplicationController
     @month_projects = Contest::ContestsService.new.awarded_projects @contest, 'm', ''
     @month_details = {}
     @month_projects.each do |project|
-     @month_details.merge! ({ project.id => ( contest_project_detail project )})
+      @month_details.merge! ({ project.id => ( Contest::ContestsService.new.contest_project_detail project )})
     end
   end
 
   def week_award_content
     @contest = Contest::Contest.where(id: params[:contest_id]).first
-    @week_projects = Contest::ContestsService.new.awarded_projects @contest, 'm', ''
+    @week_projects = Contest::ContestsService.new.awarded_projects @contest, 'w', params[:page]
     @week_details = {}
     @week_projects.each do |project|
-     @week_details.merge! ({ project.id => ( contest_project_detail project )})
+      @week_details.merge! ({ project.id => ( Contest::ContestsService.new.contest_project_detail project )})
     end
   end
 end

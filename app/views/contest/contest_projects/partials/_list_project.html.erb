@@ -4,7 +4,7 @@
 </div>
 <div class="c-box__desc">
   Có tổng cộng
-  <b>1.034</b>
+  <b><%= @projects.total_count %></b>
   sản phẩm tham gia dự thi
 </div>
 <div class="c-box__content">
@@ -15,7 +15,7 @@
         <li>
           <div class="c-product-item">
             <div class="c-product-item__thumb">
-              <a href="product-detail.html">
+              <a href="/contest/contest_projects/show/<%= project['id'] %>">
                 <% if project['project_img']&.attached? %>
                   <%= image_tag project['project_img'] %>
                 <% else %>
@@ -73,8 +73,11 @@
   <script>
     $('.prev-page-projects').click(function(){
       $('a.page-link[rel="prev"]')[0].click()
+      $('.contest-projects-content').html(`<div class="c-loading"> <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div> <div class="c-loading__text">Đợi xíu nha...</div> </div>`)
+
     })
     $('.next-page-projects').click(function(){
       $('a.page-link[rel="next"]')[0].click()
+      $('.contest-projects-content').html(`<div class="c-loading"> <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div> <div class="c-loading__text">Đợi xíu nha...</div> </div>`)
     })
   </script>
