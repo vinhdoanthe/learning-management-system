@@ -6,7 +6,7 @@ class User::OpenEducat::OpTeachersService
 
     query = ''
 
-    if params[:active] && params[:active] != 'all'
+    if params[:active].present? && params[:active] != 'all'
       if params[:active] == 'true'
         query += "active = true AND "
       else
