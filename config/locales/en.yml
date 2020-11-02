@@ -340,6 +340,20 @@ en:
     update_fail: "Have error! Try later"
     no_avatar: "Avatar is not exist! Try later"
   Contest:
+    Menu:
+      Home: 'Home page'
+      Rule: 'Rules'
+      Award: 'Awarded projects'
+      Projects: 'Projects'
+      Submit_project: 'Submit the contest'
+      Teky_academy: 'TEKY Academy'
+      Northern: 'Northern'
+      South: 'South'
+      General_information: 'General Infomation'
+      About_us: 'About Us'
+      Contact: 'Contact'
+      Sign_receive_info: 'Sign up for recieve info'
+
     Product:
       document: "Document"
       presentation: "Presentation"

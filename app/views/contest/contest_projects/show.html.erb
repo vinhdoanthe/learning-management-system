@@ -1,4 +1,4 @@
-<%= render 'contest/partials/header', { contest: @c_project.contest, transparent: '' } %>
+<%= render 'contest/partials/header', { contest: @c_project.contest, transparent: '', active: 'projects' } %>
 <div class="c-space"></div>
 <div class="container">
   <div class="l-content">
@@ -53,7 +53,7 @@
                               Có
                               <b><%= @like %></b>
                               người thích</span></span></a></li>
-                      <li><a href="#"><i class="icon48-share"></i><span class="c-social-action__text"><span class="big">Chia sẻ</span><span>
+                         <li><a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.original_url %>" target='_blank'><i class="icon48-share"></i><span class="c-social-action__text"><span class="big">Chia sẻ</span><span>
                               Có
                               <b><%= @share %></b>
                               lượt chia sẻ</span></span></a></li>

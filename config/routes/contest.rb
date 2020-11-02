@@ -3,6 +3,7 @@ namespace :contest do
   get '/:id/new_project', to: 'contests#new', as: 'new_project'
   get '/:contest_id/award', to: 'contests#award', as: 'award'
   get '/:contest_id/contest_projects', to: 'contest_projects#contest_projects'
+  get '/contest_award/:project_id', to: 'awards#show'
 
   namespace :contests do
     get "submit_contest", action: "submit_the_contest", as: "submit_contest"
@@ -24,5 +25,6 @@ namespace :contest do
   namespace :contest_topics do
     get 'contest_month_topics', action: 'contest_month_topics'
   end
+
 end
 

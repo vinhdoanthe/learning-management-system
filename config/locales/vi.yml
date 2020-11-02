@@ -405,6 +405,20 @@ vi:
     Contest exchange: "Quy đổi điểm số"
     Contest: "Cuộc thi"
     Choose: "Chọn"
+    Menu:
+      Home: 'Trang chủ'
+      Rule: 'Thể lệ'
+      Award: 'Bảng vàng'
+      Projects: 'Sản phẩm dự thi'
+      Submit_project: 'Nộp bài dự thi'
+      Teky_academy: 'Học viện TEKY'
+      Northern: 'Miền Bắc'
+      South: 'Miền Nam'
+      General_information: 'Thông tin chung'
+      About_us: 'Về chúng tôi'
+      Contact: 'Liên hệ'
+      Sign_receive_info: 'Đăng ký nhận tin'
+
     Content:
       Rule info: "Nhập quy định thể lệ"
       Name: "Tên cuộc thi"
