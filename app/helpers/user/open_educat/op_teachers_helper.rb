@@ -13,6 +13,10 @@ module User
         company_ids = teacher.op_sessions.pluck(:company_id).uniq
         Common::ResCompany.where(id: company_ids).pluck(:name)
       end
+
+      def count_teacher_classes teacher
+        Learning::Batch::OpSession.where.not( state: 'cancel').where(faculty_id: teacher.id).pluck(:batch_id).uniq.count
+      end
     end
   end
 end

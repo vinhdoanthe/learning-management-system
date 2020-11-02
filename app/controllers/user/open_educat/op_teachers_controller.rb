@@ -12,7 +12,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
     session_info = @teacher.op_sessions.where.not(state: 'cancel', batch_id: nil).pluck(:batch_id, :id,:start_datetime, :state, :count, :subject_id)
     session_info.sort! {|a,b| [a[0], a[2]] <=> [b[0], b[2]]}
     @last_done_session_info = {}
-    session_info.each{|session| @last_done_session_info.merge! ({ session[0] => [session[1], session[4], session[5]] }) if session[3] == 'done' }
+    session_info.each{|session| @last_done_session_info.merge! ({ session[0] => [session[1], session[4], session[5]] }) if session[3] == 'done'}
 
     @last_done_session_info.each do |k, v|
       if v[2].present?
@@ -21,7 +21,8 @@ class User::OpenEducat::OpTeachersController < ApplicationController
       end
     end
 
-    batch_ids = @last_done_session_info.keys
+    batch_ids = session_info.map{ |s| s[0] }.uniq
+
     all_batches ||= Learning::Batch::OpBatch.where(id: batch_ids)
 
     company_id = []
@@ -156,6 +157,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
           begin
             errs << Api::Odoo.evaluate(session_id: params[:session_id].to_s, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: [{ present: ActiveModel::Type::Boolean.new.cast(student_params['check']), student_id: student_id }])
           rescue StandardError => e
+            puts e
             result = { noti: {type: 'danger', message: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"} }
           end
         end
@@ -206,7 +208,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teaching_schedule_content
-    @sessions = @teacher.op_sessions.joins(:op_batch).where(op_batch: { state: Learning::Constant::Batch::STATE_APPROVE })
+    @sessions = @teacher.op_sessions.where.not(op_session: { state: 'cancel' }).joins(:op_batch).where(op_batch: { state: Learning::Constant::Batch::STATE_APPROVE })
     schedules = User::OpenEducat::OpTeachersService.teaching_schedule(@sessions, params)
 
     render json: {schedules: schedules}
