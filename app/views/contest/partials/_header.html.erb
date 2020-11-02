@@ -3,25 +3,25 @@
   <div class="container is-full">
     <div class="c-header-inner">
       <button class="c-menu-expand js-menu-expand" type="button"><span></span></button>
-      <div class="c-logo"><a href="index.html"><img src="/contest/images/logo.svg" alt="logo"></a></div>
+      <div class="c-logo"><a href="/contest/<%= contest.id %>/home"><img src="/contest/images/logo.svg" alt="logo"></a></div>
       <div class="c-menu">
         <ul>
-          <li class="active"><a href="/">Trang chủ</a></li>
-          <li><a href="/contest/<%= contest.id %>/home#contest_rule">Thể lệ</a></li>
-          <li><a href="/contest/<%= contest.id %>/award">Bảng vàng</a></li>
-          <li><a href="/contest/<%= contest.id %>/contest_projects">Sản phẩm dự thi</a></li>
+          <li class='<%= "active" if active == 'home' %>'><a href="/contest/<%= contest.id %>/home"><%= t('Contest.Menu.Home') %></a></li>
+          <li class='<%= "active" if active == 'rule' %>'><a href="/contest/<%= contest.id %>/home#contest_rule"><%= t('Contest.Menu.Rule') %></a></li>
+          <li class='<%= "active" if active == 'award' %>'><a href="/contest/<%= contest.id %>/award"><%= t('Contest.Menu.Award') %></a></li>
+          <li class='<%= "active" if active == 'projects' %>'><a href="/contest/<%= contest.id %>/contest_projects"><%= t('Contest.Menu.Projects') %></a></li>
         </ul>
       </div>
       <div class="c-hotline">
         <div class="c-hotline__current"><i class="icon16-calling"></i><span class="c-hotline__text">Hotline</span></div>
         <div class="c-dropdown-menu is-center">
           <ul>
-            <li><a href="tel:+842471096668">Miền Bắc<b class="float-right">+8424-7109-6668</b></a></li>
-            <li><a href="tel:+842471096668">Miền Nam<b class="float-right">+8428-710-99948</b></a></li>
+            <li><a href="tel:+842471096668"><%= t('Contest.Menu.Northern') %><b class="float-right">+8424-7109-6668</b></a></li>
+            <li><a href="tel:+842471096668"><%= t('Contest.Menu.South') %><b class="float-right">+8428-710-99948</b></a></li>
             <li><a href="tel:+842471096668">Email<b class="float-right">contact@teky.edu.vn</b></a></li>
           </ul>
         </div>
-      </div><a class="btn-push" href="<%= submit_url %>"><i class="icon16-/contest/upload"></i><span class="btn-push__text">Nộp bài dự thi</span></a>
+      </div><a class="btn-push" href="<%= submit_url %>"><i class="icon16-/contest/upload"></i><span class="btn-push__text"><%= t('Contest.Menu.Submit_project') %></span></a>
     </div>
   </div>
   <!--end container-->

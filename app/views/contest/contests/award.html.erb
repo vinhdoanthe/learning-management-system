@@ -1,4 +1,4 @@
-<%= render 'contest/partials/header', { contest: @contest, transparent: 'is-transparent' } %>
+<%= render 'contest/partials/header', { contest: @contest, transparent: '', active: 'award' } %>
 <div class="c-pano" style="background-image:url('/contest/upload/pano_1.jpg');">
   <div class="c-pano__caption">
     <div class="container">
@@ -44,41 +44,17 @@
 $(document).ready(function(){
   getAwardContent();
 
-  //html2canvas(document.querySelector("#capture")).then(canvas => {
-  //  var link = document.createElement("a");
-  //  document.body.appendChild(link);
-  //  link.download = "certificate";
-  //  link.href = canvas.toDataURL();
-  //  link.target = '_blank';
-  //  link.click();
-  //});
-  //$(document).on('click', '.download-certificate', function(){
-  //  id = $(this).data('project');
-  //  html2canvas(document.querySelector(`#contest-certificate-${ id }`)).then(canvas => {
-  //    document.body.appendChild(canvas)
-  //    var link = document.createElement("a");
-  //    document.body.appendChild(link);
-  //    link.download = "certificate";
-  //    link.href = canvas.toDataURL();
-  //    link.target = '_blank';
-  //    link.click();
-  //  });
-  //})
-  $('.certificate-item').each(function (index, value) {
+  $(document).on('click', '.download-certificate', function(){
     id = $(this).data('project');
-    html2canvas($(this)[0]).then(canvas => {
+    html2canvas($(`#contest-certificate-${ id }`)[0], {scrollY: -window.scrollY, scrollX: -window.scrollX}).then(canvas => {
+      document.body.appendChild(canvas)
       var link = document.createElement("a");
       document.body.appendChild(link);
       link.download = "certificate";
       link.href = canvas.toDataURL();
-      link.id = `link-download-certificate-${ id }`;
       link.target = '_blank';
+      link.click();
     });
-  });
-
-  $(document).on('click', '.download-certificate', function(){
-    project_id = $(this).data('project');
-    $(`a#link-download-certificate-${ project_id }`).click();
   })
 })
 </script>
