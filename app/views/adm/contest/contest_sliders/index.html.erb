@@ -1,0 +1,115 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fas fa-list mr-1"></i> <%= t('adm.course.course_list')%></h3>
+    <div class="card-tool">
+      <a data-toggle="modal" data-target="#modal-slider-detail" class="btn btn-info btn-sm bg-olive float-right" data-backdrop='static'><i class="fas fa-plus"></i> <%= t('button.Add new') %></a>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive-1 p-0">
+          <table class="table table-head-fixed table-hover table-sm table-responsive-sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>title</th>
+                <th>image_side</th>
+                <th>logo</th>
+                <th>image</th>
+                <th>thumbnail</th>
+                <th>publish</th>
+                <th>action</th>
+              </tr>
+            </thead>
+            <tbody id="list_slider">
+              <% @sliders.each do |slider| %>
+                <tr>
+                  <td><%= slider.id %></td>
+                  <td><%= slider.title %></td>
+                  <td><%= slider.image_side %></td>
+                  <td>
+                    <%= (image_tag slider.logo) if slider.logo&.attached? %>
+                  </td>
+                  <td>
+                    <%= (image_tag slider.image) if slider.image&.attached? %>
+                  </td>
+                  <td>
+                    <%= (image_tag slider.thumbnail) if slider.thumbnail&.attached? %>
+                  </td>
+                  <td class='text-center'>
+                    <input type="checkbox" data-slider="<%= slider.id %>" class="form-check-input slider-state" <%= 'checked' if slider.is_publish %>>
+                  </td>
+                  <td class="text-center">
+                    <div class="btn-group align-items-sm-center">
+                      <a data-slider="<%= slider.id %>" data-toggle="modal" data-target="#modal-slider-detail"  class="btn btn-default edit_slider btn-xs"><i class="fa fa-edit font-weight-normal"></i></a>
+                      <a class="btn btn-default btn-xs text-danger  delete-slider"  data-slider="<%= slider.id %>"><i class="far fa-trash-alt font-weight-normal"></i></a>
+                    </div>                      
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer clearfix">
+  </div>
+</div>
+<div class="modal fade" id="modal-slider-detail" role="dialog" aria-labelledby="modal_create_contest_topicLabel" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog" style="min-width: 60%">
+    <div class="modal-content" id='modal-slider-content'>
+      <%= render 'adm/contest/contest_sliders/partials/slider_form', { slider: Contest::ContestSlider.new } %>
+    </div>
+  </div>
+</div>
+
+<style>
+#list_slider img {
+  width: 50px;
+  height: 50px;
+}
+</style>
+<script>
+  $('.edit_slider').click(function(){
+    id = $(this).data('slider');
+    $.ajax({
+      method: 'GET',
+      url: '/adm/contest/contest_sliders/slider_detail?id=' + id,
+      dataType: 'script'
+    })
+  })
+
+$('.delete-slider').click(function(){
+  id = $(this).data('slider');
+  $.ajax({
+    method: 'POST',
+    url: '/adm/contest/contest_sliders/remove_slider',
+    data: { id: id },
+    success: function(res) {
+      display_response_noti(res);
+      location.reload();
+    }
+  })
+})
+
+$('.slider-state').change(function(){
+  is_publish = 'false';
+  id = $(this).data('slider');
+
+  if ($(this).is(':checked')){
+    is_publish = 'true';
+  }
+
+    $.ajax({
+      method: "POST",
+      url: '/adm/contest/contest_sliders/update_slider',
+      data: { is_publish: is_publish, id: id },
+      success: function(res){
+        display_response_noti(res);
+      }
+    })
+
+})
+</script>

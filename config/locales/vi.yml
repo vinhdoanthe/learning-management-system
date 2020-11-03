@@ -405,6 +405,20 @@ vi:
     Contest exchange: "Quy đổi điểm số"
     Contest: "Cuộc thi"
     Choose: "Chọn"
+    Menu:
+      Home: 'Trang chủ'
+      Rule: 'Thể lệ'
+      Award: 'Bảng vàng'
+      Projects: 'Sản phẩm dự thi'
+      Submit_project: 'Nộp bài dự thi'
+      Teky_academy: 'Học viện TEKY'
+      Northern: 'Miền Bắc'
+      South: 'Miền Nam'
+      General_information: 'Thông tin chung'
+      About_us: 'Về chúng tôi'
+      Contact: 'Liên hệ'
+      Sign_receive_info: 'Đăng ký nhận tin'
+
     Content:
       Rule info: "Nhập quy định thể lệ"
       Name: "Tên cuộc thi"
@@ -455,10 +469,24 @@ vi:
       Bonus: "Mức thưởng"
       Description: "Mô tả"
       Use for weekly topics: "Mỗi một cuộc thi có nhiều giải thưởng. Mỗi chủ đề thi sẽ chọn giải thưởng từ danh sách đó."
+      won_week_prize: "Đạt giải nhất tuần"
+      won_month_prize: "Đạt giải nhất tháng"
     Products:
+      back: "Quay lại"
       Contest products: "Sản phẩm dự thi"
+      document: "Tài liệu"
+      presentation: "Trình bày sản phẩm"
+      video: 'Video'
+      introduction: "Giới thiệu sản phẩm"
+      project_of: "Sản phẩm của"
+      show_profile: "Xem hồ sơ"
+      show_all: "Xem toàn bộ"
+      other_project: "Sản phẩm khác"
+      friend_project: "Sản phẩm của bạn khác"
     Criterion:
       Choose criterion: "Chọn tiêu chí đánh giá sản phẩm trong chủ đề này"
       Name: "Tên tiêu chí"
       Point: "Điểm quy đổi"
       Description: "Mô tả"
+    Certification:
+      show: "Xem chứng chỉ"

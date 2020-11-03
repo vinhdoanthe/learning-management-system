@@ -1,9 +1,9 @@
- <%= render 'contest/partials/header', { contest: @contest, transparent: 'is-transparent' } %>
+<%= render 'contest/partials/header', { contest: @contest, transparent: '', active: 'award' } %>
 <div class="c-pano" style="background-image:url('/contest/upload/pano_1.jpg');">
   <div class="c-pano__caption">
     <div class="container">
       <div class="c-pano__title">Bảng vàng vinh danh</div>
-      <div class="c-pano__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry</div>
+      <!--<div class="c-pano__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry</div> -->
     </div>
   </div>
 </div>
@@ -17,8 +17,10 @@
       <div class="c-box__content">
         <div class="c-template-slider is-margin-minus is-button-circle c-award-slider">
           <div class="owl-carousel js-award-slider">
-            <% @month_projects.each do |k, project| %>
-              <%= render 'contest/contest_projects/partials/month_project', { project: project } %>
+            <% @month_details.each do |k, project| %>
+              <div class="c-award-item certificate-item" data-project='<%= project['id'] %>'>
+                <%= render 'contest/contest_projects/partials/month_project', { project: project, contest: @contest } %>
+              </div>
             <% end %>
           </div>
         </div>
@@ -26,30 +28,33 @@
     </div>
   </div>
 </div>
-<div class="c-block">
-  <div class="container">
-    <div class="c-box is-middle">
-      <div class="c-box__title">
-        <div class="c-box__title__name"><span>Sản phẩm</span>Đạt giải tuần</div>
-        <div class="c-box__title__shadow">Winners</div>
-      </div>
-      <div class="c-box__content">
-        <div class="c-face-grid">
-          <ul class="clearfix">
-            <% @week_projects.each do |k, project| %>
-              <%= render 'contest/contest_projects/partials/week_project', { project: project } %>
-            <% end %>
-          </ul>
-        </div>
-        <div class="c-loading">
-          <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div>
-          <div class="c-loading__text">Đợi xíu nha...</div>
-        </div>
-        <div class="c-paging">
-          <div class="c-paging__inner"><a class="is-primary is-first" href="#"><i class="icon16-angle-left-white"></i></a><span class="c-paging__text">Trang</span><a class="active" href="#">3</a><span class="c-paging__text">/276</span><a class="is-primary is-last" href="#"><i class="icon16-angle-right-white"></i></a></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="c-block" id='prize_week_projects'>
 </div>
 <%= render "contest/partials/footer", contest: @contest %>
+<script>
+  function getAwardContent(){
+    $.ajax({
+      method: "GET",
+      url: "/contest/contests/week_award_content?contest_id=<%= @contest.id %>",
+      dataType: 'script'
+    })   
+  }
+
+
+$(document).ready(function(){
+  getAwardContent();
+
+  $(document).on('click', '.download-certificate', function(){
+    id = $(this).data('project');
+    html2canvas($(`#contest-certificate-${ id }`)[0], {scrollY: -window.scrollY, scrollX: -window.scrollX}).then(canvas => {
+      document.body.appendChild(canvas)
+      var link = document.createElement("a");
+      document.body.appendChild(link);
+      link.download = "certificate";
+      link.href = canvas.toDataURL();
+      link.target = '_blank';
+      link.click();
+    });
+  })
+})
+</script>

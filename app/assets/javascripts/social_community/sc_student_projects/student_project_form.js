@@ -40,7 +40,7 @@ $("#edit_video_infomation").ready(function() {
     $('#upload_project_presentation').trigger('click');
     $('#upload_project_presentation').on('change', function() {
       var ext = this.value.match(/\.(.+)$/)[1];
-      if (['ppt', 'pptx', 'pdf'].includes(ext)) {
+      if (['pdf'].includes(ext)) {
         if ($('#upload_project_presentation').get(0).files.length > 0) {
           $('#presentation_had_change').val('1');
           $('.project_presentation_file_name').html("<span style='font-size: 16px; font-weight: 600'>" + $('#upload_project_presentation')[0].files[0].name.substring(0, 20) + "...<span>")

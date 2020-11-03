@@ -95,4 +95,10 @@ module ApplicationHelper
     ((request.original_fullpath.include? 'login') == false) &&
     ((request.original_fullpath.include? 'new_project') == false)
   end
+
+  def get_default_contest_href
+    contest = Contest::Contest.where(default: true).first
+    name = contest.name.gsub(' ', '_')
+    "/contest/#{name}/home"
+  end
 end
