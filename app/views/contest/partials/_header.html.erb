@@ -1,4 +1,5 @@
 <% submit_url = logged_in? ? "/contest/#{ contest.id}/new_project" : "/user/login?contest=#{ contest.id }"%>
+<% contest_name = contest.name.gsub(' ', '_') %>
 <div class="l-nav <%= transparent %>">
   <div class="container is-full">
     <div class="c-header-inner">
@@ -6,9 +7,9 @@
       <div class="c-logo"><a href="/contest/<%= contest.id %>/home"><img src="/contest/images/logo.svg" alt="logo"></a></div>
       <div class="c-menu">
         <ul>
-          <li class='<%= "active" if active == 'home' %>'><a href="/contest/<%= contest.id %>/home"><%= t('Contest.Menu.Home') %></a></li>
-          <li class='<%= "active" if active == 'rule' %>'><a href="/contest/<%= contest.id %>/home#contest_rule"><%= t('Contest.Menu.Rule') %></a></li>
-          <li class='<%= "active" if active == 'award' %>'><a href="/contest/<%= contest.id %>/award"><%= t('Contest.Menu.Award') %></a></li>
+          <li class='<%= "active" if active == 'home' %>'><a href="/contest/<%= contest_name %>/home"><%= t('Contest.Menu.Home') %></a></li>
+          <li class='<%= "active" if active == 'rule' %>'><a href="/contest/<%= contest_name %>/home#contest_rule"><%= t('Contest.Menu.Rule') %></a></li>
+          <li class='<%= "active" if active == 'award' %>'><a href="/contest/<%= contest_name %>/award"><%= t('Contest.Menu.Award') %></a></li>
           <li class='<%= "active" if active == 'projects' %>'><a href="/contest/<%= contest.id %>/contest_projects"><%= t('Contest.Menu.Projects') %></a></li>
         </ul>
       </div>

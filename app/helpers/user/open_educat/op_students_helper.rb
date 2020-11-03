@@ -191,6 +191,12 @@ module User
               'title' => "#{t('sidebar.my_projects')}", 
               'right_content' => ''
             },
+            {
+              'path' =>  get_default_contest_href,
+              'icon' => 'ico-TienDoHocTap.png',
+              'title' => "#{ t('sidebar.my_class') }",
+              'right_content' => ''
+            }
             # {'path' => social_community_leaders_path, 
             #  'icon' => 'top.png',
             #   'title' => "#{t('sidebar.top_achievement')}", 

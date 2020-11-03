@@ -1,8 +1,10 @@
 class Contest::ContestsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :leader_board, :award, :week_award_content]
+  before_action :find_contest
 
   def index
-    @contest = Contest::Contest.where(id: params[:id]).first
+    #name = params[:id].gsub('_',' ')
+    #@contest = Contest::Contest.where(name: name).first
     @topic = @contest.contest_topics.where(status: 'active').first
     @month_prize = @topic.contest_prizes.where(prize_type: 'm', prize: 1).first
     @prize = @topic.contest_prizes.where(prize_type: 'w', prize: 1).first
@@ -13,7 +15,7 @@ class Contest::ContestsController < ApplicationController
     unless current_user.is_student?
       redirect_to root_path
     else
-      @contest = Contest::Contest.where(id: params[:id]).first
+      #@contest = Contest::Contest.where(id: params[:id]).first
       redirect_to root_path if @contest.blank?
 
       @topic = @contest.contest_topics.where(status: 'active').first
@@ -47,7 +49,8 @@ class Contest::ContestsController < ApplicationController
   end
 
   def award
-    @contest = Contest::Contest.where(id: params[:contest_id]).first
+    #name = params[:contest_id].gsub('_', '')
+    #@contest = Contest::Contest.where(name: name).first
     @month_projects = Contest::ContestsService.new.awarded_projects @contest, 'm', ''
     @month_details = {}
     @month_projects.each do |project|
@@ -56,11 +59,18 @@ class Contest::ContestsController < ApplicationController
   end
 
   def week_award_content
-    @contest = Contest::Contest.where(id: params[:contest_id]).first
+    #@contest = Contest::Contest.where(id: params[:contest_id]).first
     @week_projects = Contest::ContestsService.new.awarded_projects @contest, 'w', params[:page]
     @week_details = {}
     @week_projects.each do |project|
       @week_details.merge! ({ project.id => ( Contest::ContestsService.new.contest_project_detail project )})
     end
+  end
+
+  private
+
+  def find_contest
+    name = params[:contest_id].gsub('_', ' ')
+    @contest = Contest::Contest.where(name: name).first
   end
 end

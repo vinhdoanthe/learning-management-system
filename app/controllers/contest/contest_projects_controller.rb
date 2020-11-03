@@ -56,7 +56,6 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def submit_contest_project
-    binding.pry
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
     #contest = topic.contest
     result, project, student = SocialCommunity::ScStudentProjectsService.new.create_new_student_project params, current_user
