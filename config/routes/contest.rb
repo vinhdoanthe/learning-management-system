@@ -1,6 +1,6 @@
 namespace :contest do
-  get '/:id/home', to: 'contests#index'
-  get '/:id/new_project', to: 'contests#new', as: 'new_project'
+  get '/:contest_id/home', to: 'contests#index'
+  get '/:contest_id/new_project', to: 'contests#new', as: 'new_project'
   get '/:contest_id/award', to: 'contests#award', as: 'award'
   get '/:contest_id/contest_projects', to: 'contest_projects#contest_projects'
   get '/contest_award/:project_id', to: 'awards#show'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_02_062332) do
+ActiveRecord::Schema.define(version: 2020_11_03_094337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -11110,6 +11110,14 @@ ActiveRecord::Schema.define(version: 2020_11_02_062332) do
     t.integer "judges_score"
   end
 
+  create_table "tk_contest_sliders", force: :cascade do |t|
+    t.boolean "is_publish"
+    t.string "title"
+    t.string "image_side"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tk_contest_topics", force: :cascade do |t|
     t.integer "contest_id"
     t.string "name"
@@ -11134,6 +11142,7 @@ ActiveRecord::Schema.define(version: 2020_11_02_062332) do
     t.string "rule_atendance_information"
     t.string "rule_product_description"
     t.string "rule_submission_entries"
+    t.boolean "default"
   end
 
   create_table "tk_project_criterions", force: :cascade do |t|

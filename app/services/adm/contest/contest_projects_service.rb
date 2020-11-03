@@ -1,7 +1,8 @@
 class Adm::Contest::ContestProjectsService
 
   def index_content params
-    contest = Contest::Contest.where(id: params[:contest_id]).first
+    name = params[:contest_id].gsub('_', '')
+    contest = Contest::Contest.where(name: name).first
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
 
     query = ''

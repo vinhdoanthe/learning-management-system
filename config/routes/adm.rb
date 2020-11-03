@@ -132,5 +132,12 @@ namespace :adm do
       post 'create_new', action: 'create_new', as: 'create_new'
       post 'update', action: 'update', as: 'update'
     end
+
+    namespace :contest_sliders do
+      get '', action: 'index'
+      get 'slider_detail', action: 'slider_detail'
+      post 'remove_slider', action: 'remove_slider'
+      post 'update_slider', action: 'update_slider'
+    end
   end
 end
