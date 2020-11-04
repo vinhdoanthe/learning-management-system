@@ -88,7 +88,7 @@ class Contest::ContestProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'contest/contests/js/month_prizes', locals: { month_projects: month_projects, m_project_imgs: m_project_imgs }}
+      format.js { render 'contest/contests/js/month_prizes', locals: { month_projects: month_projects, m_project_imgs: m_project_imgs, contest: contest }}
     end
   end
 
@@ -100,7 +100,7 @@ class Contest::ContestProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'contest/contests/js/week_contests', locals: { current_week_projects: current_week_projects, last_week_projects: last_week_projects, c_w_imgs: c_w_imgs, l_w_imgs: l_w_imgs } }
+      format.js { render 'contest/contests/js/week_contests', locals: { current_week_projects: current_week_projects, last_week_projects: last_week_projects, c_w_imgs: c_w_imgs, l_w_imgs: l_w_imgs, contest: contest } }
     end
   end
 

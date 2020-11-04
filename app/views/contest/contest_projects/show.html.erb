@@ -3,8 +3,8 @@
 <div class="container">
   <div class="l-content">
     <div class="c-product-head">
-    <div class="c-product-head__back"><a href="#"><i class="icon-long-arrow-left-blue"></i><%= t('Contest.Products.back') %></a></div>
-      <h1 class="c-product-head__title"><%= @project.name %></h1>
+      <div class="c-product-head__back"><a href="#"><i class="icon-long-arrow-left-blue"></i><%= t('Contest.Products.back') %></a></div>
+      <h1 class="c-product-head__title"><%= @project&.name %></h1>
     </div>
     <div class="clearfix">
       <div class="l-main">
@@ -22,7 +22,7 @@
                   </div>
                 <% elsif @project.presentation.present? %>
                   <div class='presentation_project project-preview'>
-                      <iframe src="<%= rails_blob_path(@project.presentation, disposition: :inline) %>" ></iframe>
+                    <iframe src="<%= rails_blob_path(@project.presentation, disposition: :inline) %>" ></iframe>
                   </div>
                 <% end %>
               </div>
@@ -49,25 +49,24 @@
                 <li>
                   <div class="c-social-action">
                     <ul>
-                      <li><a href="#"><i class="icon48-like"></i><span class="c-social-action__text"><span class="big">Bạn chưa thích</span><span>
-                              Có
-                              <b><%= @like %></b>
-                              người thích</span></span></a></li>
-                         <li><a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.original_url %>" target='_blank'><i class="icon48-share"></i><span class="c-social-action__text"><span class="big">Chia sẻ</span><span>
+                      <li style="padding-left: 20px"><a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.original_url %>" target='_blank'><i class="icon48-share"></i><span class="c-social-action__text"><span class="big">Chia sẻ</span><span>
                               Có
                               <b><%= @share %></b>
                               lượt chia sẻ</span></span></a></li>
+                      <li style="padding-left: 20px">
+                        <div class="fb-like" data-href="http://localhost:3000/contest/contest_projects/show/3" data-width="100px" data-layout="standard" data-action="like" data-size="large"></div>
+                      </li>
                     </ul>
                   </div>
                 </li>
                 <!-- <li>
                   <div class="c-button-action">
-                    <ul>
-                      <li><a href="#"><i class="icon24-refresh"></i><span>Chạy lại</span></a></li>
-                      <li><a href="#"><i class="icon24-maximize"></i><span>Phóng to</span></a></li>
-                    </ul>
+                  <ul>
+                  <li><a href="#"><i class="icon24-refresh"></i><span>Chạy lại</span></a></li>
+                  <li><a href="#"><i class="icon24-maximize"></i><span>Phóng to</span></a></li>
+                  </ul>
                   </div>
-                </li> -->
+                  </li> -->
               </ul>
             </div>
           </div>
@@ -111,7 +110,7 @@
                         <%= t('Contest.Prize.won_prize_prize') %>
                       <% end %>
                       &nbsp; <%= @c_project.created_at.strftime('%m/%Y') %>
-                    </span>
+                  </span>
                   </span>
                   <i class="icon-medium-arrow-right"></i>
                 </a>
@@ -181,49 +180,49 @@
                   </div>
                 </div>
               <% end %>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="c-widget">
-          <div class="c-widget__title">
-            <div class="c-widget__title__name"><%= t('Contest.Products.friend_project') %></div>
-          </div>
-          <div class="c-widget__content">
-            <div class="c-product-other">
-              <% @other_projects.each do |project| %>
-                <div class="b-grid">
-                  <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="upload/product-small_5.jpg" alt="product"></a></div>
-                  <div class="b-grid__content">
-                    <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
-                    <div class="b-grid__row">
-                      <div class="b-grid__count">
-                        <ul>
-                          <%= Contest::ContestDecorator.new(project[:project]).display_like_share.html_safe %>
-                        </ul>
+          <div class="c-widget">
+            <div class="c-widget__title">
+              <div class="c-widget__title__name"><%= t('Contest.Products.friend_project') %></div>
+            </div>
+            <div class="c-widget__content">
+              <div class="c-product-other">
+                <% @other_projects.each do |project| %>
+                  <div class="b-grid">
+                    <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="upload/product-small_5.jpg" alt="product"></a></div>
+                    <div class="b-grid__content">
+                      <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
+                      <div class="b-grid__row">
+                        <div class="b-grid__count">
+                          <ul>
+                            <%= Contest::ContestDecorator.new(project[:project]).display_like_share.html_safe %>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              <% end %>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
+        <!--end l-sidebar-->
       </div>
-      <!--end l-sidebar-->
     </div>
+    <!--end l-content-->
   </div>
-  <!--end l-content-->
-</div>
-<!--end container-->
-<!--Footer part-->
-<!--l-footer-->
-<%= render "contest/partials/footer", contest: @c_project.contest %>
-<style>
+  <!--end container-->
+  <!--Footer part-->
+  <!--l-footer-->
+  <%= render "contest/partials/footer", contest: @c_project.contest %>
+  <style>
 #c_project_show iframe{
   width: 100% !important;
   min-height: 400px !important;
 }
-</style>
+  </style>
   <script>
     $('#project-show-introduction-video').click(function(){
       $('#c_project_show').html('<%= SocialCommunity::StudentProject::StudentProjectDecorator.new(@project).youtube_embed_link.html_safe %>');   

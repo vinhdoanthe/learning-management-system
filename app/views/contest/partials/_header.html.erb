@@ -1,4 +1,4 @@
-<% submit_url = logged_in? ? "/contest/#{ contest.id}/new_project" : "/user/login?contest=#{ contest.id }"%>
+<% submit_url = logged_in? ? "/contest/#{ contest.id}/new_project" : "/user/login?contest=#{ contest.name.gsub(' ', '_') }"%>
 <% contest_name = contest.name.gsub(' ', '_') %>
 <div class="l-nav <%= transparent %>">
   <div class="container is-full">

@@ -22,7 +22,6 @@ class Learning::Batch::OpBatchesController < ApplicationController
     subjects = student_course.op_subjects.pluck(:id, :level).uniq
 
     render json: subjects
-
   end
 
   private

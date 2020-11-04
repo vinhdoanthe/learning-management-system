@@ -1,6 +1,6 @@
 class Contest::ContestsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :leader_board, :award, :week_award_content]
-  before_action :find_contest
+  before_action :find_contest, except: [:week_award_content]
 
   def index
     #name = params[:id].gsub('_',' ')
@@ -59,7 +59,7 @@ class Contest::ContestsController < ApplicationController
   end
 
   def week_award_content
-    #@contest = Contest::Contest.where(id: params[:contest_id]).first
+    @contest = Contest::Contest.where(id: params[:contest_id]).first
     @week_projects = Contest::ContestsService.new.awarded_projects @contest, 'w', params[:page]
     @week_details = {}
     @week_projects.each do |project|

@@ -31,4 +31,5 @@ every 1.hour do
   rake "user:create_users_within_days[30]"
   rake "user:create_faculty_users_within_days[30]"
   rake "social_community:add_reactions_to_posts[15,15]"
+  rake "contest:update_like_share"
 end
