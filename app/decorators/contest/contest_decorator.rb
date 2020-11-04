@@ -29,4 +29,29 @@ class Contest::ContestDecorator < SimpleDelegator
     <li><i class='icon16-share'></i><span>#{ share.to_i }</span></li>
     <li><i class='icon16-eye'></i><span>#{ views.to_i }</span></li>"
   end
+
+  def display_link_project
+    display = ''
+    if project_show_video.present?
+      display = '<div class="c-widget"> <div class="c-widget__content"> <div class="c-link-grid"> <ul>'
+      if introduction_video.present?
+        display += "<li> <div class='c-link-item'><a id='project-show-introduction-video' data-project=#{ id }><i class='icon48-youtube'></i><span class='c-link-item__text'><span class='c-link-item__title'>#{ I18n.t('Contest.Products.video')}</span><span class='c-link-item__desc'>#{ I18n.t('Contest.Products.introduction') }</span></span><i class='icon-medium-arrow-right'></i></a></div> </li> "
+      end
+
+      if presentation.present?
+        display += " <li> <div class='c-link-item'><a id='project-show-presentation'><i class='icon48-file'></i><span class='c-link-item__text'><span class='c-link-item__title'>#{ I18n.t('Contest.Products.document') }</span><span class='c-link-item__desc'>#{ I18n.t('Contest.Products.presentation')}</span></span><i class='icon-medium-arrow-right'></i></a></div> </li> "
+      end
+
+      display += ' </ul> </div> </div> </div> '
+      display = '' if presentation.blank? && introduction_video.blank?
+    else
+      if introduction_video.present?
+        display = '<div class="c-widget"> <div class="c-widget__content"> <div class="c-link-grid"> <ul>'
+        display += " <li> <div class='c-link-item'><a id='project-show-presentation'><i class='icon48-file'></i><span class='c-link-item__text'><span class='c-link-item__title'>#{ I18n.t('Contest.Products.document') }</span><span class='c-link-item__desc'>#{ I18n.t('Contest.Products.presentation')}</span></span><i class='icon-medium-arrow-right'></i></a></div> </li> "
+      display += ' </ul> </div> </div> </div> '
+      end
+    end
+
+    display
+  end
 end

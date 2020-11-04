@@ -24,10 +24,7 @@
                   <label><%= t('Contest.Content.Description') %>:</label>
                 </div>
                 <div class="contest_name">
-                  <div class="mb-3">
-                    <textarea rows='5' required id="contest_description" class="form-control contest-description-textarea"
-                    style="height: 200px;padding: 10px;"><%= contest&.description %></textarea>
-                  </div>
+                  <%= text_area_tag :'contest_description', contest&.description, :id => 'contest_description' , :class => "tinymce"%>
                 </div>
               </div>
             </div>

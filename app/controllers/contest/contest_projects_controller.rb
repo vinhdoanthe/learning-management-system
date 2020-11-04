@@ -16,7 +16,7 @@ class Contest::ContestProjectsController < ApplicationController
     @like = @c_project.contest_criterions.where(name: 'like').first&.number.to_i
     @share = @c_project.contest_criterions.where(name: 'share').first&.number.to_i
     @prize = @c_project.contest_prize
-    relate_projects = Contest::ContestProject.where(user_id: @c_project.user_id).limit(2)
+    relate_projects = Contest::ContestProject.where(user_id: @c_project.user_id).limit(20)
     @relate_projects = []
 
     relate_projects.each do |p|
@@ -49,17 +49,13 @@ class Contest::ContestProjectsController < ApplicationController
     end
   end
 
-  def contest_projects_content
-    details = Contest::ContestsServive.new.contest_projects params[:id]
-
-    respond_to do |format|
-      format.html
-      format.js { render '', locals: { project_details: details } }
-    end
+  def projects_content
+    @projects = Contest::ContestsService.new.contest_projects params
+    @project_details = []
+    @projects.each{ |project| @project_details << (Contest::ContestsService.new.contest_project_detail project) }
   end
 
   def submit_contest_project
-    binding.pry
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
     #contest = topic.contest
     result, project, student = SocialCommunity::ScStudentProjectsService.new.create_new_student_project params, current_user

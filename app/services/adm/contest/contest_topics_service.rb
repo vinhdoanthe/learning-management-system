@@ -4,37 +4,41 @@ class Adm::Contest::ContestTopicsService
     contest = Contest::Contest.where(id: params[:contest_id]).first
     return { type: 'danger', message: 'Cuoc thi khong ton tai' } if contest.blank?
 
-    attributes = ['name', 'contest_id', 'rule', 'region', 'start_time', 'end_time']
+    attributes = ['name', 'contest_id', 'region', 'start_time', 'end_time']
     can_create = true
     attributes.each{ |att| can_create = false if params[att].blank? }
     return { type: 'danger', message: 'Thieu thong tin cuoc thi' } unless can_create
 
-    create_params = ['name', 'contest_id', 'rule', 'region', 'start_time', 'end_time', 'description', 'rule', 'thumbnail']
+    create_params = ['name', 'contest_id', 'region', 'start_time', 'end_time', 'description', 'thumbnail']
+    
     topic = Contest::ContestTopic.new
     create_params.each{ |att| topic.send(att + '=', params[att]) }
 
     if topic.save
       create_topic_prizes topic, params[:contest_prizes][0].split(',')
       create_topic_criterion topic, params[:contest_criterions][0].split(',')
-      { result: { type: 'success', message: 'Tao chu de thanh cong'}, topic: topic, contest: contest, action: 'create' }
+      { result: { type: 'success', message: I18n.t("notice.add_new_success")}, topic: topic, contest: contest, action: 'create' }
     else
-      { result: { type: 'danger', message: 'Da co loi xay ra! Vui long thu lai sau!' },action: 'create' }
+      { result: { type: 'danger', message: I18n.t("notice.update_fail") },action: 'create' }
     end
 
   end
 
   def update params
+    
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
 
-    update_params = ['name', 'contest_id', 'rule', 'region', 'start_time', 'end_time', 'description', 'rule', 'thumbnail']
+    update_params = ['name', 'contest_id', 'region', 'start_time', 'end_time', 'description', 'thumbnail']
     update_params.each do |att|
       topic.send(att + '=', params[att]) if params[att].present?
     end
 
+    contest = Contest::Contest.where(id: params[:contest_id]).first
+
     if topic.save
-      { result: { type: 'success', message: 'cap nhat thanh cong'}, action: 'update' }
+      { result: { type: 'success', message: I18n.t("notice.update_success")}, action: 'update', topic: topic, contest: contest }
     else
-      { result: {type: 'danger', message: 'da co loi xay ra! thu lai sau'}, action: 'update'}
+      { result: {type: 'danger', message: I18n.t("notice.update_fail")}, action: 'update', topic: topic}
     end
   end
 

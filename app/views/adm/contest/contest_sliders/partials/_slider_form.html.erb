@@ -1,0 +1,98 @@
+<div class="card card-primary" style="margin-bottom: 0">
+  <div class="card-header">
+    <h3 class="card-title">Contest Slider</h3>
+    <div class="card-tools">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+  </div>
+  <!-- /.card-header -->
+  <!-- form start -->
+  <form role="form" id='contest-slider-form'>
+    <div class="card-body">
+      <input type='hidden' value="<%= slider&.id %>" name="slider-id">
+      <div class="form-group">
+        <label for="slider-title">Title</label>
+        <input type="text" value="<%= slider&.title %>" class="form-control" id="slider-title" placeholder="Enter title">
+      </div>
+      <div class="form-group">
+        <label for="slider-description">Image side</label>
+        <select class="form-control" id="slider-image-side">
+          <option value="left" selected>Left</option>
+          <option value="right">Right</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="slider-image">Slider image</label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="slider-image">
+            <label class="custom-file-label" for="slider-image">Slider Image</label>
+          </div>
+        </div>
+        <div id='slider-image-preview'>
+          <% if slider.image&.attached? %>
+            <%= image_tag slider.image %>
+          <% end %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="slider-image">Slider logo</label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="slider-logo">
+            <label class="custom-file-label" for="slider-logo">Slider logo</label>
+          </div>
+        </div>
+        <div id='slider-logo-preview'>
+          <% if slider.logo&.attached? %>
+            <%= image_tag slider.logo %>
+          <% end %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="slider-thumbnail">Slider thumbnail</label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="slider-thumbnail">
+            <label class="custom-file-label" for="slider-thumnail">Slider Thumbnail</label>
+          </div>
+        </div>
+        <div id='slider-thumbnail-preview'>
+          <% if slider.thumbnail&.attached? %>
+            <%= image_tag slider.thumbnail %>
+          <% end %>
+        </div>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="slider-publish" <%= slider&.is_publish ? 'checked' : ''%>>
+        <label class="form-check-label" for="slider-publish">Is publish</label>
+      </div>
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+      <div class="float-right">
+        <button type="button" data-contest="<%= @contest&.id %>" data-dismiss='modal' id="update-slider-button" class="btn btn-default btn-sm bg-olive"><i class="fas fa-save"></i> <%= t('button.Save')%></button>
+        <a class="btn btn-default btn-sm" data-dismiss='modal'><i class="fas fa-ban"></i> <%= t('button.cancel')%></a>
+      </div>
+    </div>
+  </form>
+</div>
+<style>
+#slider-image-preview img {
+  max-width: 300px;
+  max-height: 300px;
+}
+#slider-thumbnail-preview img {
+  max-width: 300px;
+  max-height: 300px;
+}
+#slider-logo-preview img {
+  max-width: 300px;
+  max-height: 300px;
+}
+</style>
+<%= javascript_include_tag 'adm/contest/contest_slider.js' %>
+

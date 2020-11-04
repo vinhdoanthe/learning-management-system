@@ -1,35 +1,9 @@
-<div class="l-nav">
-  <div class="container is-full">                                                      
-    <div class="c-header-inner">                                                       
-      <button class="c-menu-expand js-menu-expand" type="button"><span></span></button>
-      <div class="c-logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>   
-      <div class="c-menu">                                                             
-        <ul>
-          <li><a href="index.html">Trang chủ</a></li>                                  
-          <li><a href="#">Thể lệ</a></li>
-          <li><a href="award.html">Bảng vàng</a></li>                                  
-          <li><a href="product.html">Sản phẩm dự thi</a></li>                          
-        </ul>
-      </div>
-      <div class="c-hotline">                                                          
-        <div class="c-hotline__current"><i class="icon16-calling"></i><span class="c-hotline__text">Hotline</span></div>
-        <div class="c-dropdown-menu is-center">
-          <ul>
-            <li><a href="tel:+842471096668">Miền Bắc<b class="float-right">+8424-7109-6668</b></a></li>
-            <li><a href="tel:+842471096668">Miền Nam<b class="float-right">+8428-710-99948</b></a></li>
-            <li><a href="tel:+842471096668">Email<b class="float-right">contact@teky.edu.vn</b></a></li>
-          </ul>                                                                        
-        </div>
-      </div><a class="btn-push" href="#"><i class="icon16-upload"></i><span class="btn-push__text">Nộp bài dự thi</span></a>
-    </div>  
-  </div>
-  <!--end container-->                                                                 
-</div>  
+<%= render 'contest/partials/header', { contest: @c_project.contest, transparent: '', active: 'projects' } %>
 <div class="c-space"></div>
 <div class="container">
   <div class="l-content">
     <div class="c-product-head">
-      <div class="c-product-head__back"><a href="#"><i class="icon-long-arrow-left-blue"></i>Quay lại</a></div>
+    <div class="c-product-head__back"><a href="#"><i class="icon-long-arrow-left-blue"></i><%= t('Contest.Products.back') %></a></div>
       <h1 class="c-product-head__title"><%= @project.name %></h1>
     </div>
     <div class="clearfix">
@@ -37,18 +11,38 @@
         <div class="c-widget is-padding-0">
           <div class="c-widget__content">
             <div class="c-media-view">
-              <%= render 'social_community/dashboards/shared/student_projects', { project: @project } %>
-              <!-- <div class="c-media-box" style="background-image:url('upload/video-detail_1.png');"><a href="#"><i class="icon128-play"></i></a></div> -->
+              <div class="bnd-img" id="c_project_show" style="text-align: center">
+                <% if @project.project_show_video.present? %>
+                  <div class='show_project project-preview'>
+                    <%= @project.project_show_video.html_safe %>
+                  </div>
+                <% elsif @project.introduction_video.present? %>
+                  <div class='intro_project project-preview'>
+                    <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(@project).youtube_embed_link.html_safe %>
+                  </div>
+                <% elsif @project.presentation.present? %>
+                  <div class='presentation_project project-preview'>
+                      <iframe src="<%= rails_blob_path(@project.presentation, disposition: :inline) %>" ></iframe>
+                  </div>
+                <% end %>
+              </div>
             </div>
             <div class="c-product-bar">
               <ul>
                 <li>
                   <div class="c-author-info b-grid">
                     <div class="b-grid__img">
-                      <figure><img src="upload/face_1.jpg" alt="image"></figure>
+                      <% user = @c_project.user %>
+                      <figure>
+                        <% if user.avatar&.thumbnail&.attached? %>
+                          <%= image_tag user.avatar.thumbnail %>
+                        <% else %>
+                          <img src="upload/face_1.jpg" alt="image">
+                        <% end %>
+                      </figure>
                     </div>
                     <div class="b-grid__content">
-                      <div class="b-grid__row"><span class="b-grid__label">Sản phẩm của</span><span class="b-grid__title"><%= @student.full_name %></span><a class="b-grid__more" href="/user/open_educat/op_students/public_profile/<%= @c_project.user_id %>">Xem hồ sơ</a></div>
+                      <div class="b-grid__row"><span class="b-grid__label"><%= t('Contest.Products.project_of') %></span><span class="b-grid__title"><%= @student.full_name %></span><a class="b-grid__more" href="/user/open_educat/op_students/public_profile/<%= @c_project.user_id %>"><%= t('Contest.Products.show_profile') %></a></div>
                     </div>
                   </div>
                 </li>
@@ -59,57 +53,44 @@
                               Có
                               <b><%= @like %></b>
                               người thích</span></span></a></li>
-                      <li><a href="#"><i class="icon48-share"></i><span class="c-social-action__text"><span class="big">Chia sẻ</span><span>
+                         <li><a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.original_url %>" target='_blank'><i class="icon48-share"></i><span class="c-social-action__text"><span class="big">Chia sẻ</span><span>
                               Có
                               <b><%= @share %></b>
                               lượt chia sẻ</span></span></a></li>
                     </ul>
                   </div>
                 </li>
-                <li>
+                <!-- <li>
                   <div class="c-button-action">
                     <ul>
                       <li><a href="#"><i class="icon24-refresh"></i><span>Chạy lại</span></a></li>
                       <li><a href="#"><i class="icon24-maximize"></i><span>Phóng to</span></a></li>
                     </ul>
                   </div>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
         </div>
-        <div class="c-widget">
-          <div class="c-widget__content">
-            <div class="c-link-grid">
-              <ul>
-                <li>
-                  <div class="c-link-item"><a href="#"><i class="icon48-youtube"></i><span class="c-link-item__text"><span class="c-link-item__title">Video</span><span class="c-link-item__desc">Giới thiệu sản phẩm</span></span><i class="icon-medium-arrow-right"></i></a></div>
-                </li>
-                <li>
-                  <div class="c-link-item"><a href="#"><i class="icon48-file"></i><span class="c-link-item__text"><span class="c-link-item__title">Tài liệu</span><span class="c-link-item__desc">Trình bày sản phẩm</span></span><i class="icon-medium-arrow-right"></i></a></div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <%= Contest::ContestDecorator.new(@project).display_link_project.html_safe %>
         <div class="c-widget">
           <div class="c-widget__title">
-            <div class="c-widget__title__name">Giới thiệu sản phẩm</div>
+            <div class="c-widget__title__name"><%= t('Contest.Products.introduction') %></div>
           </div>
           <div class="c-widget__content">
             <div class="c-product-content">
               <div class="b-maincontent">
-                <%= @project.description.html_safe %>
+                <%= @project.description&.html_safe %>
               </div>
               <div class="c-product-content__btn">
-                <button class="btn btn-gray btn-sm is-button-circle" type="button"><i class="icon-expand icon-left"></i>Xem toàn bộ</button>
+                <button class="btn btn-gray btn-sm is-button-circle" type="button"><i class="icon-expand icon-left"></i><%= t('Contest.Products.show_all') %></button>
               </div>
             </div>
           </div>
         </div>
         <div class="c-widget">
           <div class="c-widget__content">
-            <div class="c-comment-box"><img src="upload/comment.png" alt="comment"></div>
+            <div class="c-comment-box"><img src="/contest/upload/comment.png" alt="comment"></div>
           </div>
         </div>
       </div>
@@ -118,7 +99,23 @@
         <% if @prize.present? %>
           <div class="c-widget is-padding-small">
             <div class="c-widget__content">
-              <div class="c-grid-link"><a href="#"><i class="icon44-medal"></i><span class="c-grid-link__content"><span class="c-grid-link__title">Xem chứng chỉ</span><span class="c-grid-link__desc">Sản phẩm này đạt giải nhất <%= @prize.prize_type == 'm' ? 'tháng' : 'tuần' %> 8/2020</span></span><i class="icon-medium-arrow-right"></i></a></div>
+              <div class="c-grid-link">
+                <a href="#">
+                  <i class="icon44-medal"> </i>
+                  <span class="c-grid-link__content">
+                    <span class="c-grid-link__title"><%= t('Contest.Certification.show') %></span>
+                    <span class="c-grid-link__desc">
+                      <% if @prize.prize_type == 'm' %>
+                        <%= t('Contest.Prize.won_month_prize') %>
+                      <% else %>
+                        <%= t('Contest.Prize.won_prize_prize') %>
+                      <% end %>
+                      &nbsp; <%= @c_project.created_at.strftime('%m/%Y') %>
+                    </span>
+                  </span>
+                  <i class="icon-medium-arrow-right"></i>
+                </a>
+              </div>
             </div>
           </div>
         <% end %>
@@ -131,7 +128,7 @@
                 </div>
                 <div class="b-grid__content">
                   <div class="b-grid__row">
-                    <div class="b-grid__label">Giáo viên</div>
+                    <div class="b-grid__label"><%= t('role.faculty') %></div>
                     <div class="b-grid__title"></div>
                   </div>
                 </div>
@@ -142,7 +139,7 @@
                 </div>
                 <div class="b-grid__content">
                   <div class="b-grid__row">
-                    <div class="b-grid__label">Khoá học</div>
+                    <div class="b-grid__label"><%= t('sidebar.courses') %></div>
                     <div class="b-grid__title"><%= @project.op_course&.name %></div>
                   </div>
                 </div>
@@ -153,7 +150,7 @@
                 </div>
                 <div class="b-grid__content">
                   <div class="b-grid__row">
-                    <div class="b-grid__label">Học viện</div>
+                    <div class="b-grid__label"><%= t('config.center') %></div>
                     <div class="b-grid__title"><%= @student.res_company&.name %></div>
                   </div>
                 </div>
@@ -163,7 +160,7 @@
         </div>
         <div class="c-widget">
           <div class="c-widget__title">
-            <div class="c-widget__title__name">Sản phẩm khác của</div>
+            <div class="c-widget__title__name"><%= t('Contest.Products.other_project') %></div>
             <div class="c-widget__title__author"><%= @student.full_name %></div>
           </div>
           <div class="c-widget__content">
@@ -171,9 +168,9 @@
               <!-- <div class="b-grid"><i class="icon32-meday"></i> -->
               <% @relate_projects.each do |project| %>
                 <div class="b-grid">
-                  <div class="b-grid__img"><a href="#"><img src="upload/product-small_5.jpg" alt="product"></a></div>
+                  <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="/contest/upload/product-small_5.jpg" alt="product"></a></div>
                   <div class="b-grid__content">
-                    <div class="b-grid__row"><a class="b-grid__title" href="#"><%=project[:project_name] %></a></div>
+                    <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
                     <div class="b-grid__row">
                       <div class="b-grid__count">
                         <ul>
@@ -189,15 +186,15 @@
         </div>
         <div class="c-widget">
           <div class="c-widget__title">
-            <div class="c-widget__title__name">Sản phẩm của bạn khác</div>
+            <div class="c-widget__title__name"><%= t('Contest.Products.friend_project') %></div>
           </div>
           <div class="c-widget__content">
             <div class="c-product-other">
               <% @other_projects.each do |project| %>
                 <div class="b-grid">
-                  <div class="b-grid__img"><a href="#"><img src="upload/product-small_5.jpg" alt="product"></a></div>
+                  <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="upload/product-small_5.jpg" alt="product"></a></div>
                   <div class="b-grid__content">
-                    <div class="b-grid__row"><a class="b-grid__title" href="#"><%=project[:project_name] %></a></div>
+                    <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
                     <div class="b-grid__row">
                       <div class="b-grid__count">
                         <ul>
@@ -220,60 +217,21 @@
 <!--end container-->
 <!--Footer part-->
 <!--l-footer-->
-<div class="l-footer">
-  <div class="container">
-    <div class="c-footer-main">
-      <div class="c-footer-top">
-        <div class="c-footer-logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
-        <div class="c-footer-social"><a href="#"><i class="icon24-facebook"></i></a><a href="#"><i class="icon24-youtube"></i></a></div>
-      </div>
-      <div class="c-footer-center">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="c-footer-label">Học viện Teky</div>
-            <div class="c-footer-content">
-              <div class="b-maincontent">
-                <p>Toà nhà Mac Plaza, Số 10 Trần Phú</p>
-                <p>Mộ Lao, Hà Đông, Hà Nội</p><br>
-                <p>Miền Bắc: 024 7109 6668</p>
-                <p>Miền Nam: 028 710 99948</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="c-footer-label">Thông tin chung</div>
-            <div class="c-footer-content">
-              <div class="c-footer-list">
-                <ul>
-                  <li><a href="#">Teky.edu.vn</a></li>
-                  <li><a href="#">Trang chủ</a></li>
-                  <li><a href="#">Về chúng tôi</a></li>
-                  <li><a href="#">Thể lệ</a></li>
-                  <li><a href="#">Sản phẩm dự thi</a></li>
-                  <li><a href="#">Liên hệ</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="c-footer-label">Đăng ký nhận tin</div>
-            <div class="c-footer-content">
-              <div class="c-footer-text">Subsbribe us to get news and updates directy to your inbox.</div>
-              <div class="c-footer-email">
-                <div class="input-group">
-                  <input class="form-control" type="text" placeholder="Email của bạn">
-                  <div class="input-group-append">
-                    <button class="btn btn-light" type="button"><i class="icon-long-arrow-right"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="c-copyright">© 2020 All Rights Reserved By TEKY Academy.</div>
-  </div>
-  <!--end container-->
-</div>
+<%= render "contest/partials/footer", contest: @c_project.contest %>
+<style>
+#c_project_show iframe{
+  width: 100% !important;
+  min-height: 400px !important;
+}
+</style>
+  <script>
+    $('#project-show-introduction-video').click(function(){
+      $('#c_project_show').html('<%= SocialCommunity::StudentProject::StudentProjectDecorator.new(@project).youtube_embed_link.html_safe %>');   
+    })
 
+  <% if @project.presentation.present? && @project.presentation&.attached? %>
+    $('#project-show-presentation').click(function(){
+      $('#c_project_show').html('<iframe src="<%= rails_blob_path(@project.presentation, disposition: :inline) %>" ></iframe>')
+    })
+<% end %>
+  </script>

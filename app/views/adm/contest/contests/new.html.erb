@@ -1,5 +1,5 @@
-<%= javascript_include_tag "adm/contest/contests.js" %>
-
+<%= tinymce_assets %>
+<%= javascript_include_tag 'tinymce/langs/vi_VN.js' %>
 <div class="card">
   <div class="card-footer">
     <h3 class="card-title"><label><%= t('Contest.Content.Add new contest') %></label></h3>
@@ -23,8 +23,12 @@
         <%= render "adm/contest/contests/partials/contest_info", { contest: @contest, title: "XXXX" } %>
       </div>
       <div class="tab-pane fade" id="create-contest-prize" role="tabpanel" aria-labelledby="create-contest-prize-tab">
+        <div id='create-new-contest-prize'>
+        </div>
       </div>
       <div class="tab-pane fade" id="create-contest-topic" role="tabpanel" aria-labelledby="create-contest-topic-tab">
+        <div id='create-new-contest-topic'>
+        </div>
       </div>
     </div>
   </div>
@@ -39,8 +43,11 @@
   display: none;
 }
 </style>
+<%= javascript_include_tag "adm/contest/contests.js" %>
 <script>
   $(document).ready(function() {
-    setSummerNote('#contest_description')
+    //setSummerNote('.contest-description-textarea')
   })
 </script>
+
+<%= tinymce :fulleditor %>

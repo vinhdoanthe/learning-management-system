@@ -339,3 +339,28 @@ en:
     update_success: "Update successfull!"
     update_fail: "Have error! Try later"
     no_avatar: "Avatar is not exist! Try later"
+  Contest:
+    Menu:
+      Home: 'Home page'
+      Rule: 'Rules'
+      Award: 'Awarded projects'
+      Projects: 'Projects'
+      Submit_project: 'Submit the contest'
+      Teky_academy: 'TEKY Academy'
+      Northern: 'Northern'
+      South: 'South'
+      General_information: 'General Infomation'
+      About_us: 'About Us'
+      Contact: 'Contact'
+      Sign_receive_info: 'Sign up for recieve info'
+
+    Product:
+      document: "Document"
+      presentation: "Presentation"
+      video: 'Video'
+      introduction: "Project introduction"
+      project_of: "Project of"
+      show_profile: "Show profile"
+      show_all: "Show all"
+      other_project: "Other projects"
+      friend_project: "Friend's projects"

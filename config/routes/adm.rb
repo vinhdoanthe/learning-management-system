@@ -111,6 +111,9 @@ namespace :adm do
     namespace :contest_topics do
       post 'create_topic', action: 'create_topic', as: 'create_topic'
       post 'delete_topic', action: 'delete_topic', as: 'delete_topic'
+
+      get 'new/:contest_id', action: 'show', as: 'show'
+      get 'load_data/:contest_id', action: 'load_data', as: 'load_data'
     end
 
     namespace :contest_criterions do
@@ -128,6 +131,13 @@ namespace :adm do
     namespace :contest_exchanges do
       post 'create_new', action: 'create_new', as: 'create_new'
       post 'update', action: 'update', as: 'update'
+    end
+
+    namespace :contest_sliders do
+      get '', action: 'index'
+      get 'slider_detail', action: 'slider_detail'
+      post 'remove_slider', action: 'remove_slider'
+      post 'update_slider', action: 'update_slider'
     end
   end
 end

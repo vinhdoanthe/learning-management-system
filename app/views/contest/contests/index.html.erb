@@ -1,6 +1,6 @@
 <%= javascript_include_tag 'contest/index.js' %>
 <input name="contest_id" type="hidden" value="<%= @contest.id %>" >
-<%= render 'contest/partials/header', { contest: @contest, transparent: 'is-transparent' } %>
+<%= render 'contest/partials/header', { contest: @contest, transparent: 'is-transparent', active: 'home' } %>
 <!--end l-nav-->
 <!--Content page part-->
 <% submit_url = logged_in? ? "/contest/#{ @contest.id}/new_project" : "/user/login?contest=#{ @contest.id }"%>

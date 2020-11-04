@@ -1,10 +1,49 @@
 res = JSON.parse(`<%= raw(result[:result].to_json) %>`);
 display_response_noti(res);
 
-<% if result[:result][:type] == 'success' && result[:action] = 'create' %>
+<% if result[:result][:type] == 'success' && result[:action] == 'create' %>
     <% topic = result[:topic] %>
     <% contest = result[:contest] %>
-    $('#create-new-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_detail', locals: { contest: contest, topic: Contest::ContestTopic.new } ) %> ")
+
+    <% if result[:action] == 'create'%>    
+    //$('#create-new-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_form_add', locals: { contest: contest, topic: Contest::ContestTopic.new } ) %> ");
+    <% end %>
+
+    $("#table-contest-topic").load("/adm/contest/contest_topics/load_data/<%= contest.id %>");
+
+/*
+    $(".table-contest-topic").append(`
+      <tr>
+        <td class="text-center"><%= topic.id %></td>
+        <td><%= topic.name.to_s %></td>
+        <td class="text-center">
+        <% if topic.thumbnail.attached? %> <%= image_tag topic.thumbnail, style: "widtd: 50px; height: 50px" %>
+        <% end %>
+        </td>
+        <td><%= topic&.description&.html_safe %></td>
+        <td><%= topic.start_time.strftime("%d/%m/%Y") %> - <%= topic.end_time.strftime("%d/%m/%Y") %></td>
+        <td class="text-center"><%= topic.region %></td>
+        <td class="text-center" style="width: 100px">
+          <div class="btn-group align-items-sm-center">
+            <button
+            type="button"
+            class="btn btn-default btn-xs text-primary btn-edit-topic"
+            data-backdrop="static"
+            data-toggle="modal"
+            data-remote="true"
+            data-topic="<%= topic.id %>"
+            data-title="<%= topic.name.to_s%>"
+            data-load-url="/adm/contest/contest_topics/<%= topic.id %>"
+            title="Edit"
+            data-target="#modal_create_contest_topic"><i class="far fa-edit font-weight-normal"></i></button>
+            <a title="Remove" class="btn btn-default btn-xs delete_contest_topic text-danger" data-topic="<%= topic.id %>"><i class="far fa-trash-alt font-weight-normal"></i></a>
+          </div>
+        </td>
+      </tr>
+      `);
+*/
+
+    /*
     $("#tbody-contest-topic").append(`
       <tr>
       <td style="widtd: 10px"><%= topic.id %></td>
@@ -13,8 +52,7 @@ display_response_noti(res);
         <% if topic.thumbnail.attached? %> <%= image_tag topic.thumbnail, style: "widtd: 50px; height: 50px" %>
         <% end %>
         </td>
-        <td><%= topic&.description.html_safe %></td>
-        <td><%= topic&.rule.html_safe %></td>
+        <td><%= topic&.description&.html_safe %></td>
         <td><%= topic.start_time %></td>
         <td><%= topic.end_time %></td>
         <td><%= topic.region %></td>
@@ -25,28 +63,5 @@ display_response_noti(res);
           </span>
         </td>
       </tr>
-      `);
-
-
-    $(".table-contest-topic").append(`
-      <tr>
-      <td style="widtd: 10px"><%= topic.id %></td>
-        <td><%= topic.name %></td>
-        <td>
-        <% if topic.thumbnail.attached? %> <%= image_tag topic.thumbnail, style: "widtd: 50px; height: 50px" %>
-        <% end %>
-        </td>
-        <td><%= topic&.description.html_safe %></td>
-        <td><%= topic&.rule.html_safe %></td>
-        <td><%= topic.start_time %></td>
-        <td><%= topic.end_time %></td>
-        <td><%= topic.region %></td>
-        <td>
-          <a href="/adm/contest/contest_topics/<%= topic[:id] %>" target="_blank"><i class="far fa-eye"></i></a>
-          <span>
-            <a class="delete_contest_topic" data-topic="<%= topic.id %>"><i class="fas fa-trash"></i></a>
-          </span>
-        </td>
-      </tr>
-      `);
+      `);*/
 <% end %>
