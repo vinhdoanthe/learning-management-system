@@ -1,5 +1,7 @@
 class Contest::ContestTopic < ApplicationRecord
   after_create :set_number_week
+  after_create :check_status
+
   self.table_name = 'tk_contest_topics'
 
   has_one_attached :thumbnail
@@ -16,5 +18,15 @@ class Contest::ContestTopic < ApplicationRecord
     self.week_number = (self.start_time.strftime('%d').to_i / 7) + 1
     self.week_number = 4 if self.week_number == 5
     save
+  end
+
+  def check_status
+    if (Time.now > start_time) && (Time.now < end_time)
+    contest = Contest::Contest.where(id: self.contest_id).first
+    contest&.contest_topics&.update_all(status: 'inactive')
+    update(status: 'active')
+    else
+      update(status: 'inactive')
+    end
   end
 end

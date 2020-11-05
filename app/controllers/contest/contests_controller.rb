@@ -3,12 +3,16 @@ class Contest::ContestsController < ApplicationController
   before_action :find_contest, except: [:week_award_content]
 
   def index
-    #name = params[:id].gsub('_',' ')
-    #@contest = Contest::Contest.where(name: name).first
     @topic = @contest.contest_topics.where(status: 'active').first
-    @month_prize = @topic.contest_prizes.where(prize_type: 'm', prize: 1).first
-    @prize = @topic.contest_prizes.where(prize_type: 'w', prize: 1).first
-    @result = Contest::ContestTopicsService.new.contest_month_topic @contest.id
+
+    if @topic.present?
+      @month_prize = @topic.contest_prizes.where(prize_type: 'm', prize: 1).first
+      @prize = @topic.contest_prizes.where(prize_type: 'w', prize: 1).first
+      @result = Contest::ContestTopicsService.new.contest_month_topic @contest.id
+    else
+      flash[:danger] = "Chưa có cuộc thi nào diễn ra!"
+      redirect_to root_path
+    end
   end
 
   def new
