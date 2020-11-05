@@ -19,7 +19,7 @@ class Contest::ContestsController < ApplicationController
     unless current_user.is_student?
       redirect_to root_path
     else
-      #@contest = Contest::Contest.where(id: params[:id]).first
+      #@contest = Contest::Contest.where(id: params[:contest_id]).first
       redirect_to root_path if @contest.blank?
 
       @topic = @contest.contest_topics.where(status: 'active').first
@@ -80,7 +80,6 @@ class Contest::ContestsController < ApplicationController
   private
 
   def find_contest
-    name = params[:contest_id].gsub('_', ' ')
-    @contest = Contest::Contest.where(name: name).first
+    @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
   end
 end

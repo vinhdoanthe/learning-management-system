@@ -41,7 +41,9 @@
                   <% if topic.thumbnail&.attached? %>
                     <figure><%= image_tag topic.thumbnail %></figure>
                   <% else %>
-                    <img src="/contest/upload/winner_1.jpg" alt="image">
+                    <figure>
+                      <img src="/contest/upload/winner_1.jpg" alt="image">
+                    </figure>
                   <% end %>
                 </div>
                 <div class="c-road-item__content">
