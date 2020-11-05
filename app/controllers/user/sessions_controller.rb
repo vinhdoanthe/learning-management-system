@@ -21,7 +21,7 @@ module User
         if user.authenticate(params[:session][:password])
           log_in(user)
           if session[:contest].present? && session[:contest].to_i != 0
-            redirect_to contest_new_project_path(id: session[:contest].to_i)
+            redirect_to contest_new_project_path(contest_id: session[:contest])
           else
             redirect_to root_path
           end

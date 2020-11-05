@@ -76,13 +76,14 @@ class Contest::ContestsService
     details
   end
 
-  def update_fb_social_count
+  def update_fb_social_count active_projects
     # get active projects
     # TODO update how to get active projects
-    active_projects = Contest::ContestProject.all
+    #active_projects = Contest::ContestProject.all
 
     # call FB graph API and update for each project
     active_projects.each do |project|
+      begin
       plain_url = "https://lms.teky.online/contest/contest_projects/show/#{project.id}"
       encoded_url = ERB::Util.url_encode(plain_url)
       url = URI("https://graph.facebook.com/v8.0/?id=#{encoded_url}&fields=engagement&access_token=#{Settings.fbapp_access_token}")
@@ -96,7 +97,13 @@ class Contest::ContestsService
 
       response = https.request(request)
       puts response.read_body
+      data = JSON.parse(response.read_body)
       # TODO: update project here...
+      #
+      Contest::ContestProjectsService.new.update_project_criterion project, data
+      rescue StandardError => e
+        puts "#{ project.id }: #{ e }"
+      end
     end
   end
 

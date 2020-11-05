@@ -88,7 +88,7 @@ class Contest::ContestProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'contest/contests/js/month_prizes', locals: { month_projects: month_projects, m_project_imgs: m_project_imgs }}
+      format.js { render 'contest/contests/js/month_prizes', locals: { month_projects: month_projects, m_project_imgs: m_project_imgs, contest: contest }}
     end
   end
 
@@ -100,12 +100,14 @@ class Contest::ContestProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'contest/contests/js/week_contests', locals: { current_week_projects: current_week_projects, last_week_projects: last_week_projects, c_w_imgs: c_w_imgs, l_w_imgs: l_w_imgs } }
+      format.js { render 'contest/contests/js/week_contests', locals: { current_week_projects: current_week_projects, last_week_projects: last_week_projects, c_w_imgs: c_w_imgs, l_w_imgs: l_w_imgs, contest: contest } }
     end
   end
 
   def project_detail
     c_project = Contest::ContestProject.where(id: params[:id]).first
+    like = c_project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: { name:  'like' }).first&.number
+    share = c_project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: { name:  'share' }).first&.number
     project = c_project.student_project
     batch = project.op_batch
     course = project.op_course
@@ -114,7 +116,7 @@ class Contest::ContestProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'adm/contest/contest_projects/project_details', locals: { batch: batch, course: course, student: student, project: project, c_project: c_project, company_name: company_name}}
+      format.js { render 'adm/contest/contest_projects/project_details', locals: { batch: batch, course: course, student: student, project: project, c_project: c_project, company_name: company_name, like: like, share: share}}
     end
   end
 

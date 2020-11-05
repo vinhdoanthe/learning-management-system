@@ -22,9 +22,10 @@ class Adm::Contest::ContestPrizesService
       end
 
       prize = Contest::ContestPrize.new(create_params)
+      prizes = contest.contest_prizes.where(prize_type: 'm')
 
       if prize.save
-        { result: { type: 'success', message: 'Thêm giải thưởng thành công'}, prize: prize, contest: contest }
+        { result: { type: 'success', message: 'Thêm giải thưởng thành công'}, prize: prize, contest: contest, prizes: prizes }
       else
         { result: { type: 'danger', message: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"} }
       end

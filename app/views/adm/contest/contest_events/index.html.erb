@@ -1,0 +1,62 @@
+<div class="card table-responsive">
+  <div class='card-header'>
+    <h3 class="card-title text-info"></h3>
+      <div class="card-tools">
+        <button
+           type="button"
+           class="btn btn-info btn-sm bg-olive float-right contest-event-detail"
+           data-toggle="modal"
+           data-contest-event= ''
+           data-target="#modal_contest_event_detail"><i class="fas fa-plus"></i></button>
+      </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered table-head-fixed table-hover table-sm table-responsive-sm">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>name</th>
+          <th>thumbnail</th>
+          <th>link</th>
+          <th>action</th>
+        </tr>
+      </thead>
+      <tbody id="table-prize-body">
+        <% @events.each_with_index do |event, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= event.name %></td>
+            <td>
+              <% if event.thumbnail&.attached? %>
+                <%= image_tag event.thumbnail, style: " width: 200px; height: 200px " %>
+              <% end %>
+            </td>
+            <td><%= event.link %></td>
+            <td>
+              <div class="btn-group align-items-sm-center">
+                <button
+                   class="btn btn-default btn-xs text-primary btn-edit-topic contest-event-detail"
+                   data-toggle="modal"
+                   data-contest-event="<%= event.id %>"
+                   data-target="#modal_contest_event_detail"><i class="far fa-edit font-weight-normal"></i></button>
+                <a title="Remove" class="btn btn-default btn-xs delete_contest_event text-danger" data-contest-event="<%= event.id %>"><i class="far fa-trash-alt font-weight-normal"></i></a>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modal_contest_event_detail" role="dialog" aria-labelledby="modal_contest_event_detailLabel" aria-hidden="true">
+</div>
+
+<%= javascript_include_tag('contest/contest_event.js') %>
+<style>
+#modal_contest_event_detail img {
+  width: 200px; height: 200px;
+}
+</style>
+

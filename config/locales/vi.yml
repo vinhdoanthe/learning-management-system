@@ -90,6 +90,7 @@ vi:
     my_projects: 'Sản phẩm cuối khoá'
     top_achievement: 'Top thành tích'
     refer_friend: 'Giới thiệu bạn bè'
+    contest: 'Cuộc thi'
   config:
     general_info: "Thông tin chung"
     parent_info: "Thông tin phụ huynh"
@@ -403,6 +404,7 @@ vi:
     Management contest: "Quản lý cuộc thi"
     List contest: "Danh sách cuộc thi"
     Contest exchange: "Quy đổi điểm số"
+    Contest event: "Sự kiện"
     Contest: "Cuộc thi"
     Choose: "Chọn"
     Menu:

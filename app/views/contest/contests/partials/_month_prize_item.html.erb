@@ -58,29 +58,30 @@
         <div class="c-winner-item">
           <div class="c-winner-item__thumb"><a href="product-detail.html"><img src="upload/winner_1.jpg" alt="image"></a></div>
           <div class="c-winner-item__content">
-            <div class="c-winner-item__time"><span>8</span>
-              <label>Tháng<b>/2030</b></label>
+            <div class="c-winner-item__time"><span><%= Time.now.strftime('%m') %></span>
+              <label>Tháng<b>/<%= Time.now.strftime("%Y") %></b></label>
             </div>
             <div class="c-winner-item__inside"><i class="icon-meday"></i>
               <div class="b-grid">
                 <div class="b-grid__row">
                   "Student of the month"
-                  <b class="h-text__underline">Cơ sở Cầu Giấy - Hà Nội</b>
+                  <!--<b class="h-text__underline">Cơ sở Cầu Giấy - Hà Nội</b> -->
                 </div>
                 <div class="b-grid__img">
                   <figure><img src="upload/avatar_1.jpg" alt="image"></figure>
                 </div>
                 <div class="b-grid__content">
-                  <div class="b-grid__row"><a class="b-grid__title" href="product-detail.html">Amazing Scratch Games | Program</a></div>
-                  <div class="b-grid__row"><span class="b-grid__author">Nguyễn Minh Khang</span></div>
+                  <div class="b-grid__row"><a class="b-grid__title" href="product-detail.html">Coming soon</a></div>
+                  <div class="b-grid__row"><span class="b-grid__author">Coming soon</span></div>
                 </div>
               </div>
             </div>
             <div class="c-winner-item__count">
               <ul>
-                <li><i class="icon16-like"></i><span>12</span></li>
+                Coming soon
+                <!-- <li><i class="icon16-like"></i><span>12</span></li>
                 <li><i class="icon16-share"></i><span>3</span></li>
-                <li><i class="icon16-eye"></i><span>3.2K</span></li>
+                <li><i class="icon16-eye"></i><span>3.2K</span></li> -->
               </ul>
             </div>
           </div>
@@ -88,5 +89,5 @@
       <% end %>
     </div>
   </div>
-  <div class="c-more"><a class="btn btnl-lg btn-outline-dark" href="product.html">Xem toàn bộ<i class="icon-long-arrow-right icon-right"></i></a></div>
+  <div class="c-more"><a class="btn btnl-lg btn-outline-dark" href="/contest/<%= contest.id %>/contest_projects">Xem toàn bộ<i class="icon-long-arrow-right icon-right"></i></a></div>
 </div>

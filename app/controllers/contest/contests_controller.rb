@@ -1,6 +1,6 @@
 class Contest::ContestsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :leader_board, :award, :week_award_content]
-  before_action :find_contest
+  before_action :find_contest, except: [:week_award_content]
 
   def index
     #name = params[:id].gsub('_',' ')
@@ -24,8 +24,14 @@ class Contest::ContestsController < ApplicationController
       batches = Learning::Batch::OpBatch.joins(:op_course).where(id: batch_ids).pluck(:id, 'op_course.name')
       @project_type = [SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT, SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT]
       @batches = {}
+
       batches.each do |batch|
         @batches.merge! ({ batch[1] => batch[0] })
+      end
+
+      if @batches.blank?
+        flash[:danger] = "Bạn chưa tham gia lớp học nào!"
+        redirect_to root_path 
       end
     end
   end
@@ -59,7 +65,7 @@ class Contest::ContestsController < ApplicationController
   end
 
   def week_award_content
-    #@contest = Contest::Contest.where(id: params[:contest_id]).first
+    @contest = Contest::Contest.where(id: params[:contest_id]).first
     @week_projects = Contest::ContestsService.new.awarded_projects @contest, 'w', params[:page]
     @week_details = {}
     @week_projects.each do |project|

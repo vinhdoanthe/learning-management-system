@@ -82,9 +82,11 @@
       </div>
     </div>
   </div>
-  <div class="card-footer">
-    <button type="button" id="submit-create-new-prize" class="btn btn-info float-right"><i class="fas fa-plus"></i>Tạo mới</button>
-  </div>
+  <% if add_new %>
+    <div class="card-footer">
+      <button type="button" id="submit-create-new-prize" class="btn btn-info float-right"><i class="fas fa-plus"></i>Tạo mới</button>
+    </div>
+  <% end %>
 </div>
 
 <style>
