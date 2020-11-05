@@ -14,7 +14,8 @@ class Adm::Contest::ContestsService
     contest.rule_product_description    = params[:rule_product_description]
     contest.rule_submission_entries     = params[:rule_submission_entries]
     contest.is_publish                  = params[:state].to_boolean
-    
+    contest.default                  = params[:default].to_boolean
+
     contest.save!
 
     if params[:photos].present?

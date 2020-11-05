@@ -59,17 +59,30 @@
             </div>
 
             <div class='col-md-12'>
-              <div class="contest_state custom-control custom-checkbox">
-                <% if contest&.is_publish %>
-                  <input class="custom-control-input" checked type="checkbox" id="contest_state">
-                <% else %>
-                  <input class="custom-control-input" type="checkbox" id="contest_state">
-                <% end %>
+              <div class='col-md-4'>
+                <div class="contest_state custom-control custom-checkbox">
+                  <% if contest&.is_publish %>
+                    <input class="custom-control-input" checked type="checkbox" id="contest_state">
+                  <% else %>
+                    <input class="custom-control-input" type="checkbox" id="contest_state">
+                  <% end %>
                   <label for="contest_state" class="custom-control-label"><%= t('Contest.Content.State')%></label>
+                </div>
+              </div>
+              <div class='col-md-4'>
+                <div class="contest_state custom-control custom-checkbox">
+                  <% if contest&.is_publish %>
+                    <input class="custom-control-input" checked type="checkbox" id="contest_default">
+                  <% else %>
+                    <input class="custom-control-input" type="checkbox" id="contest_default">
+                  <% end %>
+                  <label for="contest_default" class="custom-control-label">Đặt làm mặc định</label>
+                </div>
+
               </div>
             </div>
           </div>
-          </form>
+        </form>
       </div>
   </div>
   <div class="card-footer border-top">

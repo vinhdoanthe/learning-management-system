@@ -2,11 +2,11 @@ res = JSON.parse('<%= raw(result.to_json) %>');
 display_response_noti(res);
 
 <% if result[:type] == 'success' %>
-$('#create-contest-prize-table').html(` <%= escape_javascript( render partial: 'adm/contest/contest_prizes/partials/contest_prizes_table', locals: { prizes: contest.contest_prizes.where(prize_type: 'w'), add_new: false } ) %>`)
+$('#create-contest-prize-table').html(` <%= escape_javascript( render partial: 'adm/contest/contest_prizes/partials/contest_prizes_table', locals: { prizes: prizes, add_new: false } ) %>`)
 $('#create-new-contest-prize').html("<%= escape_javascript( render partial: 'adm/contest/contest_prizes/partials/contest_prize_detail', locals: { contest: contest, prize: Contest::ContestPrize.new, option: '', add_new: true } ) %> ");
   $('.no_items').hide();
 $('.create-contest-topic-li').show();
 $('#contest-topic-table').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_index', locals: { contest: contest, topics: [] } ) %> ");
-$('#create-new-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_detail', locals: { contest: contest, topic: Contest::ContestTopic.new } ) %> ");
+$('#create-new-contest-topic').html("<%= escape_javascript( render partial: 'adm/contest/contest_topics/partials/contest_topic_detail', locals: { contest: contest, topic: Contest::ContestTopic.new, prizes: prizes } ) %> ");
 $('.contest_month_award').html(`<%= Contest::ContestDecorator.new(contest).display_month_active.html_safe %>`)
 <% end %>

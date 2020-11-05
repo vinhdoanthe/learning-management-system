@@ -1,3 +1,6 @@
+<% if @topic.blank? %>
+  <h3>Cuộc thi chưa diễn ra</h3>
+<% else %>
 <%= javascript_include_tag 'contest/index.js' %>
 <input name="contest_id" type="hidden" value="<%= @contest.id %>" >
 <%= render 'contest/partials/header', { contest: @contest, transparent: 'is-transparent', active: 'home' } %>
@@ -80,3 +83,4 @@
   });
 
 </script>
+<% end %>
