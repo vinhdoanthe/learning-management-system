@@ -18,13 +18,18 @@
       </div>
       <% if is_month %>
         <div class="c-board-item__name"><%= c_project.student_name %></div>
+        <div class="c-board-item__title">
+          Giải xuất săc tháng
+          <b><%= c_project.topic_start.strftime('%m/%Y') %></b>
+        </div>
+      <% else %>
+        <div class="c-board-item__title">
+          Giải nhất
+          <b>tuần <%= c_project.week_number %></b>
+          tháng
+          <b><%= c_project.topic_start.strftime('%m/%Y') %></b>
+        </div>
       <% end %>
-      <div class="c-board-item__title">
-        Giải nhất
-        <b>tuần <%= c_project.week_number %></b>
-        tháng
-        <b><%= c_project.topic_start.strftime('%m/%Y') %></b>
-      </div>
       <div class="c-board-item__more"><a href="/contest/contest_projects/<%= c_project.id %>">Xem sản phẩm</a></div>
     </div>
   </div>
@@ -42,11 +47,16 @@
       </div>
       <% if is_month %>
         <div class="c-board-item__name">Coming soon</div>
+        <div class="c-board-item__title">
+          Giải xuất săc tháng
+          <b><%= Time.now.strftime('%m/%Y') %></b>
+        </div>
+      <% else %>
+        <div class="c-board-item__title">
+          Giải nhất
+          <b>tuần <%= week_index / 2 + 1 %></b>
+          tháng
+          <b><%= Time.now.strftime('%m/%Y') %></b>
+        </div>
       <% end %>
-      <div class="c-board-item__title">
-        Giải nhất
-        <b>tuần <%= week_index / 2 + 1 %></b>
-        tháng
-        <b><%= Time.now.strftime('%m/%Y') %></b>
-      </div>
     <% end %>
