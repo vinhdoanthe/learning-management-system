@@ -29,3 +29,21 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+.icon16-like {
+  background-image: url("/contest/images/icons/icon16-like.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.icon16-share {
+  background-image: url("/contest/images/icons/icon16-share.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.icon16-eye {
+  background-image: url("/contest/images/icons/icon16-eye.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+

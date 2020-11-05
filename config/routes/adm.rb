@@ -139,5 +139,12 @@ namespace :adm do
       post 'remove_slider', action: 'remove_slider'
       post 'update_slider', action: 'update_slider'
     end
+
+    resources :contest_events, only: [:index]
+    namespace :contest_events do
+      get 'event_detail', action: 'event_detail'
+      post 'update_event', action: 'update_event'
+      post 'delete_event', action: 'delete_event'
+    end
   end
 end

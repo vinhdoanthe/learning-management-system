@@ -104,7 +104,7 @@
               </thead>
               <tbody>
                 <% topic_prizes = topic.contest_prizes.pluck(:id) %>
-                <% contest.contest_prizes.each do |prize| %>
+                <% prizes.each do |prize| %>
                   <tr>
                     <td>
                       <%= prize.id %>

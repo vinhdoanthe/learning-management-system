@@ -8,21 +8,27 @@
       <div class="c-box__content">
         <div class="c-news-grid">
           <ul class="clearfix">
+            <% Contest::ContestEvent.order(created_at: :DESC).limit(3).each do |event| %>
             <li>
               <div class="c-news-item">
-                <div class="c-news-item__thumb"><img src="/contest/upload/news_1.jpg" alt="news"></div><a class="c-news-item__caption" href="#"><span class="c-news-item__time"><i class="icon16-calendar-white"></i>11:25 Thứ 6, 23/09/2020</span><span class="c-news-item__cat">Tin cuộc thi</span><span class="c-news-item__title">Customization & Personalization of</span><span class="c-news-item__more">Xem chi tiết</span></a>
+                <div class="c-news-item__thumb">
+                  <% if event.thumbnail&.attached? %>
+                    <%= image_tag event.thumbnail %>
+                  <% else %>
+                    <img src="/contest/upload/news_1.jpg" alt="news">
+                  <% end %>
+                </div>
+                <a class="c-news-item__caption" href="<%= event.link %>">
+                  <span class="c-news-item__time">
+                    <i class="icon16-calendar-white"></i><%= event.created_at.strftime('%H:%M') %> <%= get_week_day (event.created_at.strftime('%A')) %>, <%= event.created_at.strftime('%d/%m/%Y') %>
+                  </span>
+                  <span class="c-news-item__cat">Tin cuộc thi</span>
+                  <span class="c-news-item__title"><%= event.name %></span>
+                  <span class="c-news-item__more">Xem chi tiết</span>
+                </a>
               </div>
             </li>
-            <li>
-              <div class="c-news-item">
-                <div class="c-news-item__thumb"><img src="/contest/upload/news_2.jpg" alt="news"></div><a class="c-news-item__caption" href="#"><span class="c-news-item__time"><i class="icon16-calendar-white"></i>11:25 Thứ 6, 23/09/2020</span><span class="c-news-item__cat">Tin cuộc thi</span><span class="c-news-item__title">Customization & Personalization of</span><span class="c-news-item__more">Xem chi tiết</span></a>
-              </div>
-            </li>
-            <li>
-              <div class="c-news-item">
-                <div class="c-news-item__thumb"><img src="/contest/upload/news_3.jpg" alt="news"></div><a class="c-news-item__caption" href="#"><span class="c-news-item__time"><i class="icon16-calendar-white"></i>11:25 Thứ 6, 23/09/2020</span><span class="c-news-item__cat">Tin cuộc thi</span><span class="c-news-item__title">Customization & Personalization of</span><span class="c-news-item__more">Xem chi tiết</span></a>
-              </div>
-            </li>
+          <% end %>
           </ul>
         </div>
         <div class="c-more"><a class="btn btnl-lg btn-outline-dark" href="#">Xem toàn bộ<i class="icon-long-arrow-right icon-right"></i></a></div>

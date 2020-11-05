@@ -7,6 +7,8 @@ class Adm::Contest::ContestProjectsController < Adm::AdmController
   end
 
   def index_content
+    contest = Contest::Contest.where(id: params[:contest_id]).first
+    params[:contest_id] = contest.name.gsub(" ", ' ')
     contest, topic, c_projects_detail, projects_detail = Adm::Contest::ContestProjectsService.new.index_content params
 
     respond_to do |format|

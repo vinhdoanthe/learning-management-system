@@ -24,8 +24,14 @@ class Contest::ContestsController < ApplicationController
       batches = Learning::Batch::OpBatch.joins(:op_course).where(id: batch_ids).pluck(:id, 'op_course.name')
       @project_type = [SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT, SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT]
       @batches = {}
+
       batches.each do |batch|
         @batches.merge! ({ batch[1] => batch[0] })
+      end
+
+      if @batches.blank?
+        flash[:danger] = "Bạn chưa tham gia lớp học nào!"
+        redirect_to root_path 
       end
     end
   end

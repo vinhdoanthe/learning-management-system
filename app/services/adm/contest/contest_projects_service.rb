@@ -16,7 +16,7 @@ class Adm::Contest::ContestProjectsService
 
     c_projects_detail = {}
     c_projects.each do |cp|
-      c_projects_detail.merge! ({ cp.project_id => { score: cp.score, judges_score: cp.judges_score, view: cp.views, id: cp.id }})
+      c_projects_detail.merge! ({ cp.project_id => cp.as_json.symbolize_keys })
     end
 
     project_ids = c_projects.pluck(:project_id)

@@ -194,7 +194,7 @@ module User
             {
               'path' =>  get_default_contest_href,
               'icon' => 'ico-TienDoHocTap.png',
-              'title' => "#{ t('sidebar.my_class') }",
+              'title' => "#{ t('sidebar.contest') }",
               'right_content' => ''
             }
             # {'path' => social_community_leaders_path, 
