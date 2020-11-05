@@ -38,7 +38,11 @@
             <li>
               <div class="c-road-item">
                 <div class="c-road-item__thumb">
-                  <figure><%= image_tag topic.thumbnail %></figure>
+                  <% if topic.thumnail&.attached? %>
+                    <figure><%= image_tag topic.thumbnail %></figure>
+                  <% else %>
+                    <img src="/contest/upload/winner_1.jpg" alt="image">
+                  <% end %>
                 </div>
                 <div class="c-road-item__content">
                   <div class="c-road-item__title"><%= topic.name %></div>

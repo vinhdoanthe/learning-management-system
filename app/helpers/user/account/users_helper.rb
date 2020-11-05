@@ -235,7 +235,7 @@ module User
                 'path'          => adm_contest_contest_events_path,
                 'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_events_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest event') <<'</p></a></li>',
                 'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_events_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest event') <<'</p></a></li>',
-              }             
+              }
 
             ],
             'teaching' => [
@@ -623,7 +623,72 @@ module User
 
           tag_html = tag_html + '</ul>'
         elsif current_user.is_content_admin?
-          ''
+          sub_menus = {
+            'contest' => [
+              {
+                'path'          => adm_contest_contest_projects_index_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_projects_index_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Products.Contest products') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_projects_index_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Products.Contest products') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_contest_contests_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contests_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contests_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_contest_contest_exchanges_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest exchange') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_exchanges_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest exchange') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_contest_contest_sliders_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_sliders_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest slider') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_sliders_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest slider') <<'</p></a></li>',
+              },
+              {
+                'path'          => adm_contest_contest_events_path,
+                'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_contest_contest_events_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest event') <<'</p></a></li>',
+                'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_contest_contest_events_path << '"><i class="far fa-circle nav-icon"></i><p>'<< t('Contest.Contest event') <<'</p></a></li>',
+              }
+
+            ]
+          }
+
+          menus = [
+            {
+              'path'          => adm_contest_contests_path,
+              'title'         => '<li class="nav-item has-treeview menu-open"><a class="nav-link" href="'<< adm_contest_contests_path << '"><i class="nav-icon fas fa-th"></i><p>'<< t('Contest.Management contest') <<'</p><i class="right fas fa-angle-left"></i></a>',
+              'title_active'  => '<li class="nav-item has-treeview menu-open"><a class="nav-link active" href="'<< adm_contest_contests_path << '"><i class="nav-icon fas fa-th"></i><p>'<< t('Contest.Management contest') <<'</p><i class="right fas fa-angle-left"></i></a>',
+              'sub_menu'      => sub_menus['contest']
+            }
+          ]
+
+          tag_html = '<ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat" data-widget="treeview" role="menu" data-accordion="false">'
+
+          menus.each do |menu|
+
+            if (menu['path'] == fullpath)
+              tag_html = tag_html + menu['title_active']
+            else
+              tag_html = tag_html + menu['title']
+            end
+
+            if (!menu['sub_menu'].nil?)
+              tag_html = tag_html + '<ul class="nav nav-treeview">'
+              menu['sub_menu'].each do |sub_menu|
+                if (sub_menu['path'] == fullpath)
+                  tag_html = tag_html + sub_menu['title_active']
+                else
+                  tag_html = tag_html + sub_menu['title']
+                end
+              end
+              tag_html = tag_html + '</ul>'
+              tag_html = tag_html + '</li>'
+            end
+
+          end
+
+          tag_html = tag_html + '</ul>'
         end
 
       end
