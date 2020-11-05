@@ -1,4 +1,4 @@
-let getLeaderBoard = (contest_id) => {
+const getLeaderBoard = (contest_id) => {
   $.ajax({
     method: 'GET',
     url: `/contest/contests/leader_board?contest_id=${ contest_id }`,
