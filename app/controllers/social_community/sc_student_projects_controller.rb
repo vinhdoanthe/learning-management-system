@@ -82,7 +82,7 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   end
 
   def social_student_projects
-    @student_projects = SocialCommunity::ScStudentProject.where(student_id: current_user.id)
+    @student_projects = SocialCommunity::ScStudentProject.where(user_id: current_user.id)
     course_ids = SocialCommunity::ScStudentProject.pluck(:course_id).uniq
     @courses = Learning::Course::OpCourse.where(id: course_ids).pluck(:id, :name)
     @project_type = [["Sản phẩm cuối buổi", SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT], ["Sản phẩm cuối khoá", SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT]]
