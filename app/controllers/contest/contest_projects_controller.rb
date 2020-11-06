@@ -40,7 +40,6 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def contest_projects
-    binding.pry
     @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
     @topics = @contest.contest_topics.order(created_at: :DESC).limit(5)
     @topic = @topics.first
@@ -75,8 +74,7 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def month_projects
-    #contest = Contest::Contest.where(id: params[:contest_id]).first
-    contest = Contest::Contest.first
+    contest = Contest::Contest.where(id: params[:contest_id]).first
 
     month_projects = contest.contest_projects.joins(:contest_prize).joins(user: { op_student: :res_company }).joins(:student_project).joins(:project_criterions).where(tk_contest_prizes: { prize_type:'m', prize: 1 }).select('distinct(tk_contest_projects.id)', :created_at, :user_id, 'op_student.full_name as student_name', 'sc_student_projects.name as project_name', :views, 'res_company.name as company_name', :project_id).limit(5)
 
