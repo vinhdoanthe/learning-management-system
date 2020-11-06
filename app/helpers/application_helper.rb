@@ -98,7 +98,6 @@ module ApplicationHelper
 
   def get_default_contest_href
     contest = Contest::Contest.where(default: true).first
-    name = contest.name.gsub(' ', '_')
-    "/contest/#{name}/home"
+    "/contest/#{ contest.alias_name }/home"
   end
 end

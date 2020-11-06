@@ -7,6 +7,7 @@
       <th><%= t('Contest.Topic.Description') %></th>
       <th class="text-center"><%= t('Contest.Topic.Date time') %></th>
       <th class="text-center"><%= t('Contest.Topic.Region') %></th>
+      <th class="text-center"><%= t('Contest.Topic.Status' ) %></th>
       <th class="text-center"><%= t('Contest.Content.Action') %></th>
     </tr>
   </thead>
@@ -45,5 +46,23 @@ $(document).ready(function() {
         });
       }
     });
+
+  var rad = $('input[name="topic_active_check"]');
+  var prev = $('input[name="topic_active_check"]:checked');
+  for (var i = 0; i < rad.length; i++) {
+    rad[i].addEventListener('change', function() {
+      if (this !== prev) {
+        id = $(this).val();
+
+        $.ajax({
+          method: 'POST',
+          url: '/adm/contest/contest_topics/create_topic',
+          data: { topic_id: id, status: 'active' },
+          success: function(res){
+          }
+        })
+      }
+    });
+  }
 });
 </script>

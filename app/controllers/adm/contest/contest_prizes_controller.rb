@@ -26,8 +26,19 @@ class Adm::Contest::ContestPrizesController < Adm::AdmController
     contest = Contest::Contest.where(id: params[:contest_id]).first
 
     respond_to do |format|
-      format.hmtl
+      format.html
       format.js { render "adm/contest/contest_prizes/availabe_months", locals: contest }
+    end
+  end
+
+  def contest_prize_detail
+    prize = Contest::ContestPrize.where(id: params[:id]).first
+    contest = Contest::Contest.where(id: params[:contest_id]).first
+    prizes = contest.contest_prizes
+
+    respond_to do |format|
+      format.html
+      format.js { render 'adm/contest/contest_prizes/contest_prize_detail', locals: { prize: prize, contest: contest, prizes: prizes }}
     end
   end
 end

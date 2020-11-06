@@ -439,6 +439,7 @@ vi:
       Rule product description: "Mô tả sản phẩm"
       Rule submission entries: "Mô tả nộp bài dự thi"
       Region: "Vùng/Miền"
+      Status: "Trạng thái"
       w: "Tuần"
       m: "Tháng"
     Topic:

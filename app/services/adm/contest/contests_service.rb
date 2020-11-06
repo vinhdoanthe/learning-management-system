@@ -9,12 +9,13 @@ class Adm::Contest::ContestsService
     end
 
     contest.name                        = params[:name]    
+    contest.alias_name                  = params[:alias_name]
     contest.description                 = params[:description]
     contest.rule_atendance_information  = params[:rule_atendance_information]
     contest.rule_product_description    = params[:rule_product_description]
     contest.rule_submission_entries     = params[:rule_submission_entries]
     contest.is_publish                  = params[:state].to_boolean
-    contest.default                  = params[:default].to_boolean
+    contest.default                     = params[:default].to_boolean
 
     contest.save!
 

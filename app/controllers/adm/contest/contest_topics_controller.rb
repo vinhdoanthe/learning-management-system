@@ -58,6 +58,7 @@ class Adm::Contest::ContestTopicsController < Adm::AdmController
 
     respond_to do |format|
       format.html
+      format.json { render json: result[:result] }
       format.js { render "adm/contest/contest_topics/create", locals: { result: result } }
     end
   end

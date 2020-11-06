@@ -6,7 +6,7 @@ class Contest::ContestsController < ApplicationController
     @topic = @contest.contest_topics.where(status: 'active').first
 
     if @topic.present?
-      @month_prize = @topic.contest_prizes.where(prize_type: 'm', prize: 1).first
+      @month_prize = @contest.contest_prizes.where(prize_type: 'm', prize: 1).first
       @prize = @topic.contest_prizes.where(prize_type: 'w', prize: 1).first
       @result = Contest::ContestTopicsService.new.contest_month_topic @contest.id
     else
