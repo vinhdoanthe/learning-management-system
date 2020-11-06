@@ -25,15 +25,19 @@ class Adm::Contest::ContestTopicsService
   end
 
   def update params
-    
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
+    contest = topic.contest
+    #contest = Contest::Contest.where(id: params[:contest_id]).first
 
-    update_params = ['name', 'contest_id', 'region', 'start_time', 'end_time', 'description', 'thumbnail']
+    update_params = ['name', 'contest_id', 'region', 'start_time', 'end_time', 'description', 'thumbnail', 'status']
+
+    if params[:status].present? && params[:status] == 'active'
+      contest.contest_topics.update_all(status: 'inactive')
+    end
+
     update_params.each do |att|
       topic.send(att + '=', params[att]) if params[att].present?
     end
-
-    contest = Contest::Contest.where(id: params[:contest_id]).first
 
     if topic.save
       { result: { type: 'success', message: I18n.t("notice.update_success")}, action: 'update', topic: topic, contest: contest }

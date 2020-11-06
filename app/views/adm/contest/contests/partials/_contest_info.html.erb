@@ -20,6 +20,16 @@
             <div class='col-md-12'>
               <div class="form-group">
                 <div class="col-md-3">
+                  <label><%= t('Contest.Content.Alias_Name') %>:</label>
+                </div>
+                <div class="contest_name">
+                  <input id="contest_alias_name" name="contest_alias" required maxlength="150" class="form-control" value="<%= contest&.alias_name %>">
+                </div>
+              </div>
+            </div>
+            <div class='col-md-12'>
+              <div class="form-group">
+                <div class="col-md-3">
                   <label><%= t('Contest.Content.Description') %>:</label>
                 </div>
                 <div class="contest_name">
