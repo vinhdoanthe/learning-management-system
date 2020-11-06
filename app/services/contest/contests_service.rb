@@ -14,17 +14,16 @@ class Contest::ContestsService
   end
 
   def week_projects contest, time_type
-    time = if time_type == 'current'
-             Time.now
-           elsif time_type == 'last_week'
-             Time.now - 1.week
-           end
+    if time_type == 'current'
+      topic = contest.contest_topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
+    elsif time_type == 'last_week'
+      topic = contest.contest_topics.where(start_time: (Time.now - 7.days).beginning_of_week..(Time.now - 7.days).end_of_week).first
+    end
 
-    w_projects =  contest.contest_projects
+    w_projects =  topic.contest_projects
       .joins(user: { op_student: :res_company })
       .joins(:student_project)
       .joins(:project_criterions)
-      .where(created_at: time.beginning_of_week..time.end_of_week)
       .order(score: :DESC)
       .select('distinct(tk_contest_projects.id)',
     :created_at, :user_id,
