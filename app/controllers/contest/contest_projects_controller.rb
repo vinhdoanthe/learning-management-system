@@ -8,6 +8,7 @@ class Contest::ContestProjectsController < ApplicationController
 
   def show
     @c_project = Contest::ContestProject.where(id: params[:id]).first
+    @contest = @c_project.contest
     views = @c_project.views
     @c_project.update(views: views + 1)
     @project = @c_project.student_project
@@ -38,7 +39,7 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def contest_projects
-    @contest = Contest::Contest.where(id: params[:contest_id]).first
+    @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
     @topics = @contest.contest_topics.order(created_at: :DESC).limit(5)
     @topic = @topics.first
     @projects = @topic.contest_projects.where.not(project_id: nil)

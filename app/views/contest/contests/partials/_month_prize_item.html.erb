@@ -39,7 +39,7 @@
                     </figure>
                   </div>
                   <div class="b-grid__content">
-                    <div class="b-grid__row"><a class="b-grid__title" href="product-detail.html"><%= c_project.project_name %></a></div>
+                    <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= c_project.id %>"><%= c_project.project_name %></a></div>
                     <div class="b-grid__row"><span class="b-grid__author"><%= c_project.student_name %></span></div>
                   </div>
                 </div>
@@ -56,7 +56,7 @@
         <% end %>
       <% else %>
         <div class="c-winner-item">
-          <div class="c-winner-item__thumb"><a href="product-detail.html"><img src="upload/winner_1.jpg" alt="image"></a></div>
+          <div class="c-winner-item__thumb"><a><img src="/contest/upload/winner_1.jpg" alt="image"></a></div>
           <div class="c-winner-item__content">
             <div class="c-winner-item__time"><span><%= Time.now.strftime('%m') %></span>
               <label>Tháng<b>/<%= Time.now.strftime("%Y") %></b></label>
@@ -68,10 +68,10 @@
                   <!--<b class="h-text__underline">Cơ sở Cầu Giấy - Hà Nội</b> -->
                 </div>
                 <div class="b-grid__img">
-                  <figure><img src="upload/avatar_1.jpg" alt="image"></figure>
+                  <figure><img src="/contest/images/face-default.png" alt="image"></figure>
                 </div>
                 <div class="b-grid__content">
-                  <div class="b-grid__row"><a class="b-grid__title" href="product-detail.html">Coming soon</a></div>
+                  <div class="b-grid__row"><a class="b-grid__title">Coming soon</a></div>
                   <div class="b-grid__row"><span class="b-grid__author">Coming soon</span></div>
                 </div>
               </div>

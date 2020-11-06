@@ -3,7 +3,7 @@
 <div class="container">
   <div class="l-content">
     <div class="c-product-head">
-      <div class="c-product-head__back"><a href="#"><i class="icon-long-arrow-left-blue"></i><%= t('Contest.Products.back') %></a></div>
+      <div class="c-product-head__back"><a href="/contest/<%= @contest.alias_name %>/contest_projects"><i class="icon-long-arrow-left-blue"></i><%= t('Contest.Products.back') %></a></div>
       <h1 class="c-product-head__title"><%= @project&.name %></h1>
     </div>
     <div class="clearfix">
@@ -54,7 +54,7 @@
                               <b><%= @share %></b>
                               lượt chia sẻ</span></span></a></li>
                       <li style="padding-left: 20px">
-                        <div class="fb-like" data-href="http://localhost:3000/contest/contest_projects/show/3" data-width="100px" data-layout="standard" data-action="like" data-size="large"></div>
+                        <div class="fb-like" data-href="<%= request.base_url %>/contest/contest_projects/show/<% @c_project.id %>" data-width="100px" data-layout="standard" data-action="like" data-size="large"></div>
                       </li>
                     </ul>
                   </div>
@@ -89,7 +89,7 @@
         </div>
         <div class="c-widget">
           <div class="c-widget__content">
-            <div class="c-comment-box"><img src="/contest/upload/comment.png" alt="comment"></div>
+            <div class="fb-comments" data-href="<%= request.original_url %>#configurator" data-numposts="5" data-width=""></div>
           </div>
         </div>
       </div>

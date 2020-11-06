@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_065244) do
+ActiveRecord::Schema.define(version: 2020_11_05_110800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -11150,6 +11150,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_065244) do
     t.string "rule_product_description"
     t.string "rule_submission_entries"
     t.boolean "default"
+    t.string "alias_name"
   end
 
   create_table "tk_project_criterions", force: :cascade do |t|
