@@ -37,7 +37,7 @@ $(document).ready(function() {
 
       name = $("#contest_name").val();      
       alias_name = $("#contest_alias_name").val();      
-      description = $('#contest_description').val();
+      description = tinymce.get("contest_description").getContent();
       rule_atendance_information = $('#rule_atendance_information').val();      
       rule_product_description = $('#rule_product_description').val();      
       rule_submission_entries = $('#rule_submission_entries').val();

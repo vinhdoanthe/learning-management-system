@@ -97,7 +97,7 @@
       $('.show_topic_projects').on('click', function(){
         $('#select_project_topic').val($(this).data('topic'));
         getProjectsContent();
-        window.location.href = '/contest/<%= @contest.id %>/contest_projects#contest-project-list';
+        window.location.href = '/contest/<%= @contest.alias_name %>/contest_projects#contest-project-list';
       })
     })
   </script>

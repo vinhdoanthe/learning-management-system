@@ -14,8 +14,9 @@ class Contest::ContestProjectsController < ApplicationController
     @project = @c_project.student_project
     @user = @c_project.user
     @student = @user.op_student
-    @like = @c_project.contest_criterions.where(name: 'like').first&.number.to_i
-    @share = @c_project.contest_criterions.where(name: 'share').first&.number.to_i
+    @like = @c_project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: {name: 'like'}).first&.number.to_i
+    @share = @c_project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: {name: 'share'}).first&.number.to_i
+    #@share = @c_project.project_criterions.where(name: 'share').first&.number.to_i
     @prize = @c_project.contest_prize
     relate_projects = Contest::ContestProject.where(user_id: @c_project.user_id).limit(20)
     @relate_projects = []
@@ -39,6 +40,7 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def contest_projects
+    binding.pry
     @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
     @topics = @contest.contest_topics.order(created_at: :DESC).limit(5)
     @topic = @topics.first

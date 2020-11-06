@@ -107,14 +107,6 @@ class Adm::Contest::ContestTopicsService
     total_awards = 0
     topic_prizes.each{ |p| total_awards += p[2] }
 
-    #sql = " SELECT  project.id, SUM(project.score * #{ SCORE_RATIO } + project.judges_score * #{ JUDGES_SCORE_RATIO }) as point
-    #        FROM  tk_contest_projects AS project
-    #        GROUP BY project.id
-    #        ORDER BY point DESC
-    #        LIMIT #{ total_awards }
-    #        "
-    #projects = ActiveRecord::Base.connection.execute(sql).values
-
     awarded_projects = Contest::ContestProject.
       select("tk_contest_projects.id, SUM(score * #{ Contest::Constant::ScoreRatio::SCORE_RATIO } + judges_score * #{ Contest::Constant::ScoreRatio::JUDGES_RATIO }) as point").
       group('id').
