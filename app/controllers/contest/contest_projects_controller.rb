@@ -41,8 +41,8 @@ class Contest::ContestProjectsController < ApplicationController
 
   def contest_projects
     @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
-    @topics = @contest.contest_topics.order(created_at: :DESC).limit(5)
-    @topic = @topics.first
+    @topics = @contest.contest_topics.where(created_at: (Time.now - 3.weeks)..(Time.now + 3.weeks)).order(start_time: :ASC)
+    @topic = @topics.where(created_at: Time.now.beginning_of_week..Time.now.end_of_week).first
     @projects = @topic.contest_projects.where.not(project_id: nil)
     @project_details = []
 
@@ -94,8 +94,8 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def week_projects
-    #contest = Contest::Contest.where(id: params[:contest_id]).first
-    contest = Contest::Contest.first
+    contest = Contest::Contest.where(id: params[:contest_id]).first
+    #contest = Contest::Contest.first
     current_week_projects, c_w_imgs = Contest::ContestsService.new.week_projects contest, 'current'
     last_week_projects, l_w_imgs  = Contest::ContestsService.new.week_projects contest, 'last_week'
 

@@ -81,5 +81,7 @@ class Contest::ContestsController < ApplicationController
 
   def find_contest
     @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
+
+    redirect_to root_path if @contest.blank?
   end
 end
