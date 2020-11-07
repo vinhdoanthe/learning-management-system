@@ -13,6 +13,12 @@ function readURL(input, target) {
 
 
 $(document).ready(function(){
+    //$('#reservation').daterangepicker(
+    //  singleDatePicker: true,
+    //  showDropdowns: true,
+    //  minYear: 2017,
+    //  maxYear: parseInt(moment().format('YYYY'),10)
+    //);
     $('#modal_contest_event_detail').on('change', '#event-thumbnail', function(){
       $('#event_thumbnail_preview').html('');
       readURL(this, '#event_thumbnail_preview')
@@ -40,10 +46,12 @@ $(document).ready(function(){
     name = $('#event_name').val();
     link = $('#event_link').val();
     thumbnail = ''
+    //start_time = $('#event_time').val();
     
     data.append('id', id);
     data.append('link', link);
     data.append('name', name);
+    data.append('start_time', start_time);
     if ($('#event-thumbnail')[0].files.length > 0) {
       thumbnail = $('#event-thumbnail')[0].files[0];
     }

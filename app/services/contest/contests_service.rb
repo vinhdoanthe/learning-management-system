@@ -20,6 +20,8 @@ class Contest::ContestsService
       topic = contest.contest_topics.where(start_time: (Time.now - 7.days).beginning_of_week..(Time.now - 7.days).end_of_week).first
     end
 
+    return [ [], {} ] if topic.blank?
+
     w_projects =  topic.contest_projects
       .joins(user: { op_student: :res_company })
       .joins(:student_project)
@@ -33,7 +35,7 @@ class Contest::ContestsService
     :score,
     'res_company.name as company_name',
     :project_id)
-      .limit(6)
+      .limit(10)
 
     project_ids = w_projects.pluck(:project_id)
     w_project_imgs = {}
