@@ -28,7 +28,8 @@ $(document).ready(function(){
     data.append('contest_id', contest_id);
     region = $('#topic_region').val();
     data.append('region', region);
-    description = $('.contest-topic-description-textarea').val();
+    description = $('#topic_description').val();
+
     data.append('description', description);
     
     //rule = $('.contest-topic-rule-textarea').val();

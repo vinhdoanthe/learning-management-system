@@ -35,15 +35,31 @@ class Adm::Contest::ContestTopicsService
       contest.contest_topics.update_all(status: 'inactive')
     end
 
-    update_params.each do |att|
-      topic.send(att + '=', params[att]) if params[att].present?
+    if topic.present?
+
+      #update_params = ['name', 'contest_id', 'region', 'start_time', 'end_time', 'description', 'thumbnail']
+      #update_params.each do |att|
+      #  topic.send(att + '=', params[att]) if params[att].present?
+      #end
+
+      topic_update = topic.update(
+          name: params[:name],
+          region: params[:region],
+          start_time: params[:start_time],
+          end_time: params[:end_time],
+          description: params[:description],
+          thumbnail: params[:thumbnail]
+      )
+
+      contest = Contest::Contest.where(id: params[:contest_id]).first
+
+      if topic_update
+        { result: { type: 'success', message: I18n.t("notice.update_success")}, action: 'update', topic: topic_update, contest: contest }
+      else
+        { result: {type: 'danger', message: I18n.t("notice.update_fail")}, action: 'update', topic: topic_update}
+      end    
     end
 
-    if topic.save
-      { result: { type: 'success', message: I18n.t("notice.update_success")}, action: 'update', topic: topic, contest: contest }
-    else
-      { result: {type: 'danger', message: I18n.t("notice.update_fail")}, action: 'update', topic: topic}
-    end
   end
 
   def clone_topic topic_id
