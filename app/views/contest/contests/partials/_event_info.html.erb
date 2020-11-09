@@ -18,7 +18,7 @@
                     <img src="/contest/upload/news_1.jpg" alt="news">
                   <% end %>
                 </div>
-                <a class="c-news-item__caption" href="<%= event.link %>">
+                <a class="c-news-item__caption" href="<%= event.link %>" target="_blank">
                   <span class="c-news-item__time">
                     <i class="icon16-calendar-white"></i><%= event.created_at.strftime('%H:%M') %> <%= get_week_day (event.created_at.strftime('%A')) %>, <%= event.created_at.strftime('%d/%m/%Y') %>
                   </span>

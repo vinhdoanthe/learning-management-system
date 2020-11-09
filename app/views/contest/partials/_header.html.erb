@@ -17,9 +17,9 @@
         <div class="c-hotline__current"><i class="icon16-calling"></i><span class="c-hotline__text">Hotline</span></div>
         <div class="c-dropdown-menu is-center">
           <ul>
-            <li><a href="tel:+842471096668"><%= t('Contest.Menu.Northern') %><b class="float-right">+8424-7109-6668</b></a></li>
-            <li><a href="tel:+842471096668"><%= t('Contest.Menu.South') %><b class="float-right">+8428-710-99948</b></a></li>
-            <li><a href="tel:+842471096668">Email<b class="float-right">contact@teky.edu.vn</b></a></li>
+            <li><a target="_blank" href="tel:+<%= Contest::Constant::Contact::MB %>"><%= t('Contest.Menu.Northern') %><b class="float-right">+8424-7109-6668</b></a></li>
+            <li><a target="_blank" href="tel:+<%= Contest::Constant::Contact::MN %>"><%= t('Contest.Menu.South') %><b class="float-right">+8428-710-99948</b></a></li>
+            <li><a target="_blank" href="mailto:<%= Contest::Constant::Contact::EMAIL %>">Email<b class="float-right">contact@teky.edu.vn</b></a></li>
           </ul>
         </div>
       </div><a class="btn-push" href="<%= submit_url %>"><i class="icon16-/contest/upload"></i><span class="btn-push__text"><%= t('Contest.Menu.Submit_project') %></span></a>

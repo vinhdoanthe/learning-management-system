@@ -22,20 +22,7 @@ class Contest::ContestsService
 
     return [ [], {} ] if topic.blank?
 
-    w_projects =  topic.contest_projects
-      .joins(user: { op_student: :res_company })
-      .joins(:student_project)
-      .joins(:project_criterions)
-      .order(score: :DESC)
-      .select('distinct(tk_contest_projects.id)',
-    :created_at, :user_id,
-    'op_student.full_name as student_name',
-    'sc_student_projects.name as project_name',
-    :views,
-    :score,
-    'res_company.name as company_name',
-    :project_id)
-      .limit(10)
+    w_projects =  topic.contest_projects.joins(user: { op_student: :res_company }).joins(:student_project).joins(:project_criterions).order(score: :DESC).select('distinct(tk_contest_projects.id)', :created_at, :user_id, 'op_student.full_name as student_name', 'sc_student_projects.name as project_name', :views, :score, 'res_company.name as company_name', :project_id).limit(10)
 
     project_ids = w_projects.pluck(:project_id)
     w_project_imgs = {}
@@ -69,10 +56,12 @@ class Contest::ContestsService
     project_img = project.image
 
     student = project.op_student
-    company_name = student.res_company&.name
+    company = student.res_company
+    company_name = company&.name
+    company_id = company&.id
     
     details = c_project.as_json
-    details.merge! ({ 'user_avatar' => user_avatar, 'project_name' => project.name, 'project_img' => project_img, 'created_at' => c_project.created_at, 'student_name' => student.full_name, 'like' => like, 'share' => share, 'views' => c_project.views, 'company_name' => company_name })
+    details.merge! ({ 'user_avatar' => user_avatar, 'project_name' => project.name, 'project_img' => project_img, 'created_at' => c_project.created_at, 'student_name' => student.full_name, 'like' => like, 'share' => share, 'views' => c_project.views, 'company_name' => company_name, 'company_id' => company_id })
 
     details
   end
@@ -109,11 +98,11 @@ class Contest::ContestsService
   end
 
   def contest_projects params
-    time = Time.now
+    start_time = Time.parse(params[:start_time]).beginning_of_day
+    end_time = Time.parse(params[:end_time]).end_of_day
     contest = Contest::Contest.where(id: params[:contest_id]).first
-    projects  = Contest::ContestProject.where(contest_id: contest.id, created_at: time.beginning_of_month..time.end_of_month)
+    projects  = Contest::ContestProject.where(contest_id: contest.id, created_at: start_time..end_time)
 
-    projects = projects.where(contest_topic_id: params[:topic_id]) if params[:topic_id] != 'all'
     projects = projects.joins(student_project: { op_student: :res_company }).where(res_company: { id: params[:company_id] }) if params[:company_id] != 'all'
 
     projects.page(params[:page]).per(20)

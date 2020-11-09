@@ -4,7 +4,7 @@
 </div>
 <div class="c-box__desc">
   Có tổng cộng
-  <b><%= @projects.total_count %></b>
+  <b class='project-count'><%= @projects.total_count %></b>
   sản phẩm tham gia dự thi
 </div>
 <div class="c-box__content">
@@ -12,7 +12,7 @@
     <ul class="clearfix ul-contest-projects">
       <% @project_details.each do |project| %>
         <% next if project.blank? %>
-        <li>
+        <li class='c-project-detail' data-company="<%= project['company_id'] %>">
           <div class="c-product-item">
             <div class="c-product-item__thumb">
               <a href="/contest/contest_projects/show/<%= project['id'] %>">
