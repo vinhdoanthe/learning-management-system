@@ -37,7 +37,7 @@
                         <% if user.avatar&.thumbnail&.attached? %>
                           <%= image_tag user.avatar.thumbnail %>
                         <% else %>
-                          <img src="/contest/upload/face_1.jpg" alt="image">
+                          <img src="/contest/images/face-default.png" alt="image">
                         <% end %>
                       </figure>
                     </div>
@@ -59,14 +59,6 @@
                     </ul>
                   </div>
                 </li>
-                <!-- <li>
-                  <div class="c-button-action">
-                  <ul>
-                  <li><a href="#"><i class="icon24-refresh"></i><span>Chạy lại</span></a></li>
-                  <li><a href="#"><i class="icon24-maximize"></i><span>Phóng to</span></a></li>
-                  </ul>
-                  </div>
-                  </li> -->
               </ul>
             </div>
           </div>
@@ -99,7 +91,7 @@
           <div class="c-widget is-padding-small">
             <div class="c-widget__content">
               <div class="c-grid-link">
-                <a href="#">
+                <a href="/contest/contest_award/<%= @c_project.id %>">
                   <i class="icon44-medal"> </i>
                   <span class="c-grid-link__content">
                     <span class="c-grid-link__title"><%= t('Contest.Certification.show') %></span>
@@ -191,7 +183,7 @@
               <div class="c-product-other">
                 <% @other_projects.each do |project| %>
                   <div class="b-grid">
-                    <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="upload/product-small_5.jpg" alt="product"></a></div>
+                    <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="/contest/upload/product-small_5.jpg" alt="product"></a></div>
                     <div class="b-grid__content">
                       <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
                       <div class="b-grid__row">

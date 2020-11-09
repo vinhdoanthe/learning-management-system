@@ -17,26 +17,13 @@
 </div>
 <div class="c-award-item__bar">
   <ul>
-    <li><a href="#"><i class="icon24-share"></i><span>Chia sể lên Facebook</span></a></li>
+    <li><a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.base_url %>/contest/contest_projects/show/<%= project['id'] %>" target='_blank'><i class="icon24-share"></i><span><%= t('Contest.Award.share') %></span></a></li>
     <li><a data-project='<%= project['id'] %>' class="download-certificate" ><i class="icon24-pdf"></i><span>Tải xuống</span></a></li>
     <li><a href="/contest/contest_projects/show/<%= project['id'] %>"><i class="icon24-view"></i><span>Xem sản phẩm</span></a></li>
   </ul>
 </div>
-<script>
-  //    function downloadimage(target) {
-  //      html2canvas(document.querySelector(target)).then(canvas => {
-  //          var link = document.createElement("a");
-  //          document.body.appendChild(link);
-  //          link.download = "certificate";
-  //          link.href = canvas.toDataURL();
-  //          link.target = '_blank';
-  //          link.click();
-  //      });
-  //    }
-  //$(document).ready(function(){
-  //  $('.download-certificate').on('click', function(){
-  //    id = $(this).data('project');
-  //    downloadimage(`#contest-certificate-${ id }`);
-  //  })
-  //})
-</script>
+<style>
+  .c-award-item__bar a {
+    cursor: pointer;
+  }
+</style>
