@@ -41,9 +41,9 @@ class Contest::ContestProjectsController < ApplicationController
 
   def contest_projects
     @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
-    @topics = @contest.contest_topics.where(created_at: (Time.now - 3.weeks)..(Time.now + 3.weeks)).order(start_time: :ASC)
-    @topic = @topics.where(created_at: Time.now.beginning_of_week..Time.now.end_of_week).first
-    @projects = @topic.contest_projects.where.not(project_id: nil)
+    @topics = @contest.contest_topics.where(start_time: (Time.now - 3.weeks)..(Time.now + 3.weeks)).order(start_time: :ASC)
+    @topic = @topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
+    @projects = @topic&.contest_projects.where.not(project_id: nil)
     @project_details = []
 
     @projects.each do |project|
