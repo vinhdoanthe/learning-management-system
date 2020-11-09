@@ -5,3 +5,4 @@
 //=require bootstrap
 //= require activestorage
 //=require_tree ./contest/js
+
