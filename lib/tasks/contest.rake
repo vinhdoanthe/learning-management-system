@@ -3,6 +3,17 @@ namespace :contest do
   desc 'Update like share for contest projects'
   task :update_like_share, [] => :environment do |t, args|
     contests = Contest::Contest.where(is_publish: true)
+    active_contest = Contest::Contest.where(default: true).first
+    topics = active_contest.contest_topics
+
+    if topics.present?
+      active_topic = topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
+
+      if active_topic.present?
+        topics.update_all(status: 'inactive')
+        active_topic.update(status: 'active')
+      end
+    end
 
     contests.each do |contest|
       #topic = contest.contest_topic.where(active: true).first
