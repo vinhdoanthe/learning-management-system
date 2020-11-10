@@ -1,5 +1,14 @@
-$('#current-week-projects').html("<%= escape_javascript(render partial: 'contest/contests/partials/week_prize_item', locals: { week_projects: current_week_projects, project_thumbnails: c_w_imgs, contest: contest }) %>")
-$('#last-week-projects').html("<%= escape_javascript(render partial: 'contest/contests/partials/week_prize_item', locals: { week_projects: last_week_projects, project_thumbnails: l_w_imgs, contest: contest }) %>")
+<% if current_week_projects.blank? %>
+    $('#current-week-projects').html(`<p style='text-align: center'>Chưa có sản phẩm nào</p>`);
+<% else %>
+    $('#current-week-projects').html("<%= escape_javascript(render partial: 'contest/contests/partials/week_prize_item', locals: { week_projects: current_week_projects, project_thumbnails: c_w_imgs, contest: contest }) %>")
+<% end %>
+
+<% if last_week_projects.blank? %>
+    $('#last-week-projects').html(`<p style='text-align: center'>Chưa có sản phẩm nào</p>`);
+<% else %>
+    $('#last-week-projects').html("<%= escape_javascript(render partial: 'contest/contests/partials/week_prize_item', locals: { week_projects: last_week_projects, project_thumbnails: l_w_imgs, contest: contest }) %>")
+<% end %>
 
 $(document).ready(function(){
   $('.js-slider-5').owlCarousel({

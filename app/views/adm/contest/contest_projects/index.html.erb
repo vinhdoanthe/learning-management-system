@@ -5,6 +5,7 @@
       <div class="form-group">
         <label>contest</label>
         <select class="form-control select2" style="width: 100%;" id="select_contest">
+          <option value="all">Tất cả</option>
           <% @contests.each do |contest| %>
             <% if contest.id == @contest.id %>
               <option value="<%= contest.id %>" selected="selected"><%= contest.name %></option>

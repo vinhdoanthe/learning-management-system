@@ -8,13 +8,15 @@ class Contest::ContestProjectsController < ApplicationController
 
   def show
     @c_project = Contest::ContestProject.where(id: params[:id]).first
+    @contest = @c_project.contest
     views = @c_project.views
     @c_project.update(views: views + 1)
     @project = @c_project.student_project
     @user = @c_project.user
     @student = @user.op_student
-    @like = @c_project.contest_criterions.where(name: 'like').first&.number.to_i
-    @share = @c_project.contest_criterions.where(name: 'share').first&.number.to_i
+    @like = @c_project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: {name: 'like'}).first&.number.to_i
+    @share = @c_project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: {name: 'share'}).first&.number.to_i
+    #@share = @c_project.project_criterions.where(name: 'share').first&.number.to_i
     @prize = @c_project.contest_prize
     relate_projects = Contest::ContestProject.where(user_id: @c_project.user_id).limit(20)
     @relate_projects = []
@@ -38,10 +40,10 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def contest_projects
-    @contest = Contest::Contest.where(id: params[:contest_id]).first
-    @topics = @contest.contest_topics.order(created_at: :DESC).limit(5)
-    @topic = @topics.first
-    @projects = @topic.contest_projects.where.not(project_id: nil)
+    @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
+    @topics = @contest.contest_topics.where(start_time: (Time.now - 3.weeks)..(Time.now + 3.weeks)).order(start_time: :ASC)
+    @topic = @topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
+    @projects = @topic&.contest_projects.where.not(project_id: nil)
     @project_details = []
 
     @projects.each do |project|
@@ -72,8 +74,7 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def month_projects
-    #contest = Contest::Contest.where(id: params[:contest_id]).first
-    contest = Contest::Contest.first
+    contest = Contest::Contest.where(id: params[:contest_id]).first
 
     month_projects = contest.contest_projects.joins(:contest_prize).joins(user: { op_student: :res_company }).joins(:student_project).joins(:project_criterions).where(tk_contest_prizes: { prize_type:'m', prize: 1 }).select('distinct(tk_contest_projects.id)', :created_at, :user_id, 'op_student.full_name as student_name', 'sc_student_projects.name as project_name', :views, 'res_company.name as company_name', :project_id).limit(5)
 
@@ -93,8 +94,8 @@ class Contest::ContestProjectsController < ApplicationController
   end
 
   def week_projects
-    #contest = Contest::Contest.where(id: params[:contest_id]).first
-    contest = Contest::Contest.first
+    contest = Contest::Contest.where(id: params[:contest_id]).first
+    #contest = Contest::Contest.first
     current_week_projects, c_w_imgs = Contest::ContestsService.new.week_projects contest, 'current'
     last_week_projects, l_w_imgs  = Contest::ContestsService.new.week_projects contest, 'last_week'
 

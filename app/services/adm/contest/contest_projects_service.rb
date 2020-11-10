@@ -1,18 +1,22 @@
 class Adm::Contest::ContestProjectsService
 
   def index_content params
-    name = params[:contest_id].gsub('_', '')
-    contest = Contest::Contest.where(name: name).first
+    contest = Contest::Contest.where(id: params[:contest_id]).first
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
 
     query = ''
+
     if params[:region] == 'MB'
       query += "res_company.id IN (#{ Contest::Constant::Region::MB.join(',') })"
     elsif params[:region] == 'MN'
       query += "res_company.id NOT IN (#{ Contest::Constant::Region::MB.join(',') })"
     end
 
-    c_projects = topic.contest_projects
+    if topic.present?
+      c_projects = topic.contest_projects
+    else
+      c_projects = contest.contest_projects
+    end
 
     c_projects_detail = {}
     c_projects.each do |cp|
@@ -51,7 +55,7 @@ class Adm::Contest::ContestProjectsService
     c_project_id = c_project.id
     criterion_ids = Contest::ContestTopicCriterion.where(contest_topic_id: topic.id).pluck(:contest_criterion_id)
     #criterion_ids << JUDGES_CRITERION_ID
-    criterion_ids << 1
+    #criterion_ids << 1
 
     criterion_ids.each do |c_id|
       p_criterion = Contest::ProjectCriterion.new

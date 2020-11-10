@@ -4,7 +4,7 @@ class Contest::ContestTopicsService
     topics = contest.contest_topics
     last_month_topics = topics.where(start_time: month_time(Time.now - 1.month)).limit(4)
     next_month_topics = topics.where(start_time: month_time(Time.now + 1.month)).limit(4)
-    current_month_topics = topics.where(start_time: Time.now).order(start_time: :ASC).limit(4)
+    current_month_topics = topics.where(start_time: month_time(Time.now)).order(start_time: :ASC).limit(4)
     active_topic = topics.where(status: 'active').first
     active_topic = current_month_topics[-1] if active_topic.blank?
 

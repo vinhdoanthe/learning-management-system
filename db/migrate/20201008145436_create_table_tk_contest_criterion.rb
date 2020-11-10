@@ -1,6 +1,6 @@
 class CreateTableTkContestCriterion < ActiveRecord::Migration[6.0]
   def up
-    create_table :tk_contest_criterions do |t|
+    create_table :tk_contest_criterions, if_not_exists: true do |t|
       t.string :name, limit: 150
       t.integer :point
       t.string :description, limit: 256

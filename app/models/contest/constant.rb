@@ -19,4 +19,12 @@ module Contest::Constant
     MB = [23, 27, 21, 3, 7, 15, 32, 33, 20, 1]
     MN = []
   end
+
+  module Contact
+    ADDRESS = "Toà nhà Mac Plaza, Số 10 Trần Phú"
+    DISTRICT = "Mộ Lao, Hà Đông, Hà Nội"
+    MB = "+8424 7109 6668"
+    MN = "+8424 710 99948"
+    EMAIL = "contact@teky.edu.vn"
+  end
 end

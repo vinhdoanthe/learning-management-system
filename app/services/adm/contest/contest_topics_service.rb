@@ -25,8 +25,15 @@ class Adm::Contest::ContestTopicsService
   end
 
   def update params
-    
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
+    contest = topic.contest
+    #contest = Contest::Contest.where(id: params[:contest_id]).first
+
+    update_params = ['name', 'contest_id', 'region', 'start_time', 'end_time', 'description', 'thumbnail', 'status']
+
+    if params[:status].present? && params[:status] == 'active'
+      contest.contest_topics.update_all(status: 'inactive')
+    end
 
     if topic.present?
 
@@ -115,14 +122,6 @@ class Adm::Contest::ContestTopicsService
     topic_prizes = topic.contest_prizes.where(prize_type: type).pluck(:id, :prize, :number_awards).sort{|p| p[1] }
     total_awards = 0
     topic_prizes.each{ |p| total_awards += p[2] }
-
-    #sql = " SELECT  project.id, SUM(project.score * #{ SCORE_RATIO } + project.judges_score * #{ JUDGES_SCORE_RATIO }) as point
-    #        FROM  tk_contest_projects AS project
-    #        GROUP BY project.id
-    #        ORDER BY point DESC
-    #        LIMIT #{ total_awards }
-    #        "
-    #projects = ActiveRecord::Base.connection.execute(sql).values
 
     awarded_projects = Contest::ContestProject.
       select("tk_contest_projects.id, SUM(score * #{ Contest::Constant::ScoreRatio::SCORE_RATIO } + judges_score * #{ Contest::Constant::ScoreRatio::JUDGES_RATIO }) as point").

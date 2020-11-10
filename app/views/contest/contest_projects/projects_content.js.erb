@@ -1,2 +1,3 @@
 $('.contest-projects-content').html('<%= escape_javascript ( render partial: 'contest/contest_projects/partials/list_project' ) %>')
+total = $('#contest-project-list').find('.project-count').html();
 $("#paginator").html("<%= j paginate(@projects, remote: true) %>");

@@ -6,6 +6,9 @@
     <td><%= topic.description&.html_safe %></td>
     <td class="text-center"><%= topic.start_time.strftime("%d/%m/%Y") %> - <%= topic.end_time.strftime("%d/%m/%Y") %></td>
     <td class="text-center"><%= t("Contest.Topic.#{topic.region}") %></td>
+    <td class="text-center">
+      <input type="radio" value="<%= topic.id %>" class="form-check-input topic_status" name="topic_active_check" <%= topic.status == 'active' ? 'checked' : '' %>>
+    </td>
     <td class="text-center" style="width: 100px">
       <div class="btn-group align-items-sm-center">
         <button

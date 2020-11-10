@@ -12,6 +12,8 @@ class User::HomeController < ApplicationController
         redirect_to social_community_teacher_dashboard_path
       elsif current_user.is_operation_admin?
         redirect_to adm_user_index_path
+      elsif current_user.is_content_admin?
+        redirect_to adm_contest_contests_path
       elsif current_user.is_admin? or current_user.is_content_admin?
         redirect_to rails_admin_path
       end

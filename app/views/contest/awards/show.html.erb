@@ -27,7 +27,7 @@
             <div class="c-award-item__bar">
               <ul>
                 <li><a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.original_url %>" target='_blank'><i class="icon24-share"></i><span>Chia sể lên Facebook</span></a></li>
-                <li><a data-project='<%= @c_project_detail['id'] %>' class="download-certificate" ><i class="icon24-pdf"></i><span>Tải xuống</span></a></li>
+                <li><a style="cursor: pointer" data-project='<%= @c_project_detail['id'] %>' class="download-certificate" ><i class="icon24-pdf"></i><span>Tải xuống</span></a></li>
                 <li><a href="/contest/contest_projects/show/<%= @c_project_detail['id'] %>"><i class="icon24-view"></i><span>Xem sản phẩm</span></a></li>
               </ul>
             </div>

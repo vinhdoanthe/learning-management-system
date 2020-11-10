@@ -1,9 +1,12 @@
+<% if @topic.blank? %>
+  <h3>Cuộc thi chưa diễn ra</h3>
+<% else %>
 <%= javascript_include_tag 'contest/index.js' %>
 <input name="contest_id" type="hidden" value="<%= @contest.id %>" >
 <%= render 'contest/partials/header', { contest: @contest, transparent: 'is-transparent', active: 'home' } %>
 <!--end l-nav-->
 <!--Content page part-->
-<% submit_url = logged_in? ? "/contest/#{ @contest.id}/new_project" : "/user/login?contest=#{ @contest.id }"%>
+<% submit_url = logged_in? ? "/contest/#{ @contest.alias_name}/new_project" : "/user/login?contest=#{ @contest.alias_name }"%>
 <%= render 'contest/contests/partials/index_slide', { submit_url: submit_url } %>
 <!--end c-slider-->
 <%= render 'contest/contests/partials/contest_description' %>
@@ -14,7 +17,7 @@
 <!--end c-block-->
 <%= render 'contest/contests/partials/contest_prizes', { month_prize: @month_prize, week_prize: @prize } %>
 <!--end c-block-->
-<%= render 'contest/contests/partials/contest_topic_list',{ month_topics: [ @result[:last_month_topics], @result[:current_month_topic], @result[:next_month_topic]], active_topic: @result[:active_topic], active_topic_index: @result[:active_topic_index] } %>
+<%= render 'contest/contests/partials/contest_topic_list',{ month_topics: [ @result[:last_month_topics], @result[:current_month_topics], @result[:next_month_topics]], active_topic: @result[:active_topic], active_topic_index: @result[:active_topic_index] } %>
 <!--end c-block-->
 <div id="contest-leader-board">
   <%#= render 'contest/contests/partials/leader_board' %>
@@ -30,7 +33,7 @@
         <div class="c-box__title__name"><span>Bảng xếp hạng</span>Tuần này</div>
         <div class="c-box__title__shadow">Leader</div>
       </div>
-      <div class="c-box__desc"><b>TOP 20</b>
+      <div class="c-box__desc"><b>TOP</b>
         sản phẩm được ưa thích trong
         <b>tuần <%= get_week_of_month Time.now %></b>
         tháng <%= Time.now.strftime('%m/%Y') %>
@@ -66,7 +69,7 @@
   $(window).on("load", function (e) {
     if( $('.c-road-slider').length > 0 && $('.c-calender-slider').length > 0 ) {
       //this is number of month active slider theme slider, please fill code
-      var numberActive = <%= Time.now.month %>;
+      var numberActive = <%= Time.now.month - 1 %>;
       var calendarOwl = $('#calendar-slider-id');
       var roadOwl = $('#road-slider-id');
       if( numberActive !== '' && numberActive !== 0 && numberActive !== null ){
@@ -80,3 +83,4 @@
   });
 
 </script>
+<% end %>

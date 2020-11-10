@@ -9,7 +9,7 @@
         <p>Các chủ đề của cuộc thi sẽ được thay đổi hằng tuần, hằng tháng và cụ thể như sau</p>
         <p>
         Ba mẹ cùng các con đừng quên theo dõi
-        <a href="#">website</a>/<a href="#">Fanpage</a>
+        <a href="https://teky.edu.vn">website</a>/<a href="#">Fanpage</a>
         của TEKY để thường xuyên cập nhật thông tin mới nhất về cuộc thi nhé!
         </p>
       </div>
@@ -42,13 +42,13 @@
                             if week_index == 4
                               "is-last"
                             else
-                            "is-current-#{ week_index }"
+                              "is-current-#{ week_index }"
                             end
                           else
                             ''
                           end %>
-        <%= render 'contest/contests/partials/month_topic', { topics: month_topics[index-1], class_status: class_status, month_index: index } %>
-      <% end %>
+                          <%= render 'contest/contests/partials/month_topic', { topics: month_topics[index-1], class_status: class_status, month_index: index } %>
+                        <% end %>
     </div>
   </div>
 </div>

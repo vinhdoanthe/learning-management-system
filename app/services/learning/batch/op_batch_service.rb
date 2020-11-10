@@ -74,7 +74,7 @@ module Learning
         last_done_lesson = done_lessons.empty? ? nil : done_lessons[-1]
         # Find tobe_lessions
         all_lessons = Learning::Course::OpLession.where(subject_id: subject_ids).to_a.compact
-        sorted_lessons = all_lessons.sort_by{|lesson| [lesson[:subject_id], lesson[:lession_number]]}
+        sorted_lessons = all_lessons.sort_by{|lesson| [lesson[:subject_id].to_i, lesson[:lession_number].to_i]}
         tobe_lessons = []
         if last_done_lesson.nil?
           current_index = -1

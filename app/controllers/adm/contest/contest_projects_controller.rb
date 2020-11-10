@@ -2,13 +2,11 @@ class Adm::Contest::ContestProjectsController < Adm::AdmController
 
   def index
     @contests = Contest::Contest.where(is_publish: true)
-    @contest = @contests.first
-    @topics = @contest.contest_topics.where(status: 'active')
+    @contest = @contests.where(default: true).first
+    @topics = @contest.contest_topics
   end
 
   def index_content
-    contest = Contest::Contest.where(id: params[:contest_id]).first
-    params[:contest_id] = contest.name.gsub(" ", ' ')
     contest, topic, c_projects_detail, projects_detail = Adm::Contest::ContestProjectsService.new.index_content params
 
     respond_to do |format|

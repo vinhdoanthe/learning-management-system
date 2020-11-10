@@ -36,7 +36,8 @@ $(document).ready(function() {
       id = $(this).data('contest');
 
       name = $("#contest_name").val();      
-      description = $('#contest_description').val();
+      alias_name = $("#contest_alias_name").val();      
+      description = tinymce.get("contest_description").getContent();
       rule_atendance_information = $('#rule_atendance_information').val();      
       rule_product_description = $('#rule_product_description').val();      
       rule_submission_entries = $('#rule_submission_entries').val();
@@ -47,10 +48,23 @@ $(document).ready(function() {
         state = false;
       }
 
+
+      if ($('#contest_state').is(":checked")){
+        is_publish = true;
+      } else {
+        is_publish = false;
+      }
+
+      if ($('#contest_state').is(":checked")){
+        is_default = true;
+      } else {
+        is_default = false;
+      }
+
       $.ajax({
         url: "/adm/contest/contests/update_contest",
         method: 'POST',
-        data: { name: name, description: description, rule_atendance_information: rule_atendance_information, rule_product_description: rule_product_description, rule_submission_entries: rule_submission_entries, state: state, id: id },
+        data: { name: name, description: description, rule_atendance_information: rule_atendance_information, rule_product_description: rule_product_description, rule_submission_entries: rule_submission_entries, state: state, id: id, default: is_default, alias_name: alias_name },
         success: function(res){
           display_response_noti(res);
           if (res.type === 'success') {

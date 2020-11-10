@@ -55,14 +55,14 @@
                   <% end %>
                 <% end %>
               </div>
-              <div class="box-progress">
+              <div class="box-progress" style="position: relative">
                 <h4>Video ôn tập</h4>
                 <br>
                 <% unless review_videos.empty? %>
                   <% review_videos.each do |video| %>
                     <% unless video.ziggeo_file_id.nil? %>
-                      <div>
-                        <%= render :partial => 'learning/material/learning_materials/vimeo', :locals => {video_id: video.ziggeo_file_id} %>
+                      <div style="position: relative">
+                        <%= render :partial => 'learning/material/learning_materials/vimeo', :locals => {video_id: video.ziggeo_file_id, video: video} %>
                       </div>
                       <% if video.thumbnail_image.attached? %>
                         <div>
@@ -112,13 +112,11 @@
                               <% if choice.is_right_choice %>
                                 <label class="check-multi" style="background: #aad3aa"><%= choice.choice_content %>
                                 <input type="radio" name="student_choise_answer" value="<%= choice.id %>" >
-                                <% choice_key = ('A'.ord + i) %>
                                 <span class="checkmark"></span>
                                 </label>
                               <% else %>
                                 <label class="check-multi"><%= choice.choice_content %>
                                 <input type="radio" >
-                                <% choice_key = ('A'.ord + i) %>
                                 <span class="checkmark"></span>
                                 </label>
                               <% end %>
@@ -143,13 +141,11 @@
                               <% if choice.is_right_choice %>
                                 <label class="check-multi" style="background: #aad3aa"><%= choice.choice_content %>
                                 <input type="checkbox">
-                                <% choice_key = ('A'.ord + i) %>
                                 <span class="checkmark"></span>
                                 </label>
                               <% else %>
                                 <label class="check-multi"><%= choice.choice_content %>
                                 <input type="checkbox">
-                                <% choice_key = ('A'.ord + i) %>
                                 <span class="checkmark"></span>
                                 </label>
                               <% end %>
