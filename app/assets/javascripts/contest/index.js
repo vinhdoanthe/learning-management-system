@@ -7,6 +7,6 @@ const getLeaderBoard = (contest_id) => {
 }
 
 $(document).ready(function(){
-  contest_id = $('input[name="contest_id"]').val();
+  let contest_id = $('input[name="contest_id"]').val();
   getLeaderBoard(contest_id)
 })

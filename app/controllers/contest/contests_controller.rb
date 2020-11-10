@@ -1,6 +1,6 @@
 class Contest::ContestsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :leader_board, :award, :week_award_content]
-  before_action :find_contest, except: [:week_award_content]
+  before_action :find_contest, except: [:week_award_content, :leader_board]
 
   def index
     @topic = @contest.contest_topics.where(status: 'active').first
