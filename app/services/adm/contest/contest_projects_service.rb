@@ -29,7 +29,7 @@ class Adm::Contest::ContestProjectsService
     [contest, topic, c_projects_detail, projects_detail]
   end
 
-  def create_contest_project topic, project
+  def create_contest_project topic, project, teacher_id
     return { type: 'danger', message: 'Cuoc thi khong ton tai' } if topic.blank?
     #topic = contest.contest_topics.where(status: 'active').first
 
@@ -40,6 +40,7 @@ class Adm::Contest::ContestProjectsService
     #c_project.is_valid = check_valid? params
     c_project.is_valid = check_valid? topic
     c_project.contest_id = topic.contest_id
+    c_project.teacher_id = teacher_id
     c_project.save
     create_project_criterion topic, c_project
 

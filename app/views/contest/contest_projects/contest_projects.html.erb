@@ -39,7 +39,7 @@
   <div class="container">
     <div class="c-product-filter">
       <div class="c-filter is-calendar">
-        <button class="c-filter-btn" type="button">Tháng này</button>
+        <button class="c-filter-btn current_month_topic_projects" type="button">Tháng này</button>
         <div class="c-filter-control is-2">
           <ul>
             <li>
@@ -79,6 +79,11 @@
 </div>
 <input type='hidden' value="<%= @contest.id %>" name="contest_id" id="input_contest_id"%>
 <input type='hidden' value="<%= @contest.alias_name %>" name="contest_alias_name" id="input_contest_alias"%>
+<style>
+.show_topic_projects {
+  cursor: pointer;
+}
+</style>
 <%= javascript_include_tag 'contest/js/datepicker.min.js' %>
 <%= javascript_include_tag 'contest/js/datepicker.vi-VN.js' %>
   <!--Footer part-->
