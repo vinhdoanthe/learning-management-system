@@ -2,6 +2,6 @@ $('#contest-leader-board').html("<%= escape_javascript( render partial: 'contest
 
 $.ajax({
   method: 'GET',
-  url: `/contest/contest_projects/month_projects?contest_id=<%= contest.id %>`,
+  url: "/contest/contest_projects/month_projects?contest_id=<%= contest.id %>",
   dataType: 'script'
 })
