@@ -3,7 +3,7 @@
     <td class="text-center"><%= topic.id %></td>
     <td><%= topic.name %></td>
     <td class="text-center"><%= image_tag topic.thumbnail, style: 'width: 50px; height: 50px'  if topic.thumbnail.present?%></td>
-    <td><%= topic.description&.html_safe %></td>
+    <td class='topic-description-<%= topic.id%>'><%= topic.description&.html_safe %></td>
     <td class="text-center"><%= topic.start_time&.strftime("%d/%m/%Y") %> - <%= topic.end_time&.strftime("%d/%m/%Y") %></td>
     <td class="text-center"><%= t("Contest.Topic.#{topic.region}") %></td>
     <td class="text-center">

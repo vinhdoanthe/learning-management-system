@@ -29,7 +29,8 @@ class Contest::ContestsService
 
     project_ids.each do |id|
       project = SocialCommunity::ScStudentProject.where(id: id).first
-      return {} if project.blank?
+
+      next if project.blank?
       w_project_imgs.merge!( { project.id => project.image })
     end
 
