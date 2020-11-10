@@ -3,7 +3,7 @@
 <div class="container">
   <div class="l-content">
     <div class="c-product-head">
-      <div class="c-product-head__back"><a href="#"><i class="icon-long-arrow-left-blue"></i><%= t('Contest.Products.back') %></a></div>
+      <div class="c-product-head__back"><a href="/contest/<%= @contest.alias_name %>/contest_projects"><i class="icon-long-arrow-left-blue"></i><%= t('Contest.Products.back') %></a></div>
       <h1 class="c-product-head__title"><%= @project&.name %></h1>
     </div>
     <div class="clearfix">
@@ -37,7 +37,7 @@
                         <% if user.avatar&.thumbnail&.attached? %>
                           <%= image_tag user.avatar.thumbnail %>
                         <% else %>
-                          <img src="upload/face_1.jpg" alt="image">
+                          <img src="/contest/images/face-default.png" alt="image">
                         <% end %>
                       </figure>
                     </div>
@@ -54,19 +54,11 @@
                               <b><%= @share %></b>
                               lượt chia sẻ</span></span></a></li>
                       <li style="padding-left: 20px">
-                        <div class="fb-like" data-href="http://localhost:3000/contest/contest_projects/show/3" data-width="100px" data-layout="standard" data-action="like" data-size="large"></div>
+                        <div class="fb-like" data-href="<%= request.base_url %>/contest/contest_projects/show/<% @c_project.id %>" data-width="100px" data-layout="standard" data-action="like" data-size="large"></div>
                       </li>
                     </ul>
                   </div>
                 </li>
-                <!-- <li>
-                  <div class="c-button-action">
-                  <ul>
-                  <li><a href="#"><i class="icon24-refresh"></i><span>Chạy lại</span></a></li>
-                  <li><a href="#"><i class="icon24-maximize"></i><span>Phóng to</span></a></li>
-                  </ul>
-                  </div>
-                  </li> -->
               </ul>
             </div>
           </div>
@@ -89,7 +81,7 @@
         </div>
         <div class="c-widget">
           <div class="c-widget__content">
-            <div class="c-comment-box"><img src="/contest/upload/comment.png" alt="comment"></div>
+            <div class="fb-comments" data-href="<%= request.original_url %>#configurator" data-numposts="5" data-width=""></div>
           </div>
         </div>
       </div>
@@ -99,7 +91,7 @@
           <div class="c-widget is-padding-small">
             <div class="c-widget__content">
               <div class="c-grid-link">
-                <a href="#">
+                <a href="/contest/contest_award/<%= @c_project.id %>">
                   <i class="icon44-medal"> </i>
                   <span class="c-grid-link__content">
                     <span class="c-grid-link__title"><%= t('Contest.Certification.show') %></span>
@@ -167,7 +159,7 @@
               <!-- <div class="b-grid"><i class="icon32-meday"></i> -->
               <% @relate_projects.each do |project| %>
                 <div class="b-grid">
-                  <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="/contest/upload/product-small_5.jpg" alt="product"></a></div>
+                  <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="/contest/upload/product-small_2.jpg" alt="product"></a></div>
                   <div class="b-grid__content">
                     <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
                     <div class="b-grid__row">
@@ -191,7 +183,7 @@
               <div class="c-product-other">
                 <% @other_projects.each do |project| %>
                   <div class="b-grid">
-                    <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="upload/product-small_5.jpg" alt="product"></a></div>
+                    <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="/contest/upload/product-small_5.jpg" alt="product"></a></div>
                     <div class="b-grid__content">
                       <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
                       <div class="b-grid__row">

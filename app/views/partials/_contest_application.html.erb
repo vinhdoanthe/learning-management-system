@@ -7,10 +7,10 @@
     <%= csp_meta_tag %>
     <%= favicon_link_tag 'Logo-fav.ico' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>
-    <%= stylesheet_link_tag 'contest', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>
-    <%= javascript_include_tag 'contest', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'contests/css/style', media: 'all', 'data-turbolink.mCustomScrollBars-track': 'reload' %>
+    <%= javascript_include_tag 'contests', 'data-turbolinks-track': 'reload' %>
     <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v8.0&appId=332989550981679&autoLogAppEvents=1" nonce="YeBzg9IT"></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v8.0&appId=332989550981679&autoLogAppEvents=1" nonce="YeBzg9IT"></script>
 
     <link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/toastr/toastr.min.css">
     <%= yield :javascript_includes %>
@@ -30,8 +30,8 @@
           m.parentNode.insertBefore(a, m)
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-ga('create', 'UA-153405093-2', 'auto');
-ga('send', 'pageview');
+        ga('create', 'UA-153405093-2', 'auto');
+        ga('send', 'pageview');
       </script>
 
     <% elsif Rails.env.development? %>
@@ -49,8 +49,8 @@ ga('send', 'pageview');
           m.parentNode.insertBefore(a, m)
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-ga('create', 'UA-153405093-3', 'auto');
-ga('send', 'pageview');
+        ga('create', 'UA-153405093-3', 'auto');
+        ga('send', 'pageview');
       </script>
       <!-- End Google Analytics -->
     <% end %>

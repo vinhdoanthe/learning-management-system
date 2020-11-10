@@ -1,5 +1,5 @@
-<% submit_url = logged_in? ? "/contest/#{ contest.id}/new_project" : "/user/login?contest=#{ contest.name.gsub(' ', '_') }"%>
-<% contest_name = contest.name.gsub(' ', '_') %>
+<% alias_name = contest.alias_name %>
+<% submit_url = logged_in? ? "/contest/#{ alias_name }/new_project" : "/user/login?contest=#{ alias_name }"%>
 <div class="l-nav <%= transparent %>">
   <div class="container is-full">
     <div class="c-header-inner">
@@ -7,19 +7,19 @@
       <div class="c-logo"><a href="/contest/<%= contest.id %>/home"><img src="/contest/images/logo.svg" alt="logo"></a></div>
       <div class="c-menu">
         <ul>
-          <li class='<%= "active" if active == 'home' %>'><a href="/contest/<%= contest_name %>/home"><%= t('Contest.Menu.Home') %></a></li>
-          <li class='<%= "active" if active == 'rule' %>'><a href="/contest/<%= contest_name %>/home#contest_rule"><%= t('Contest.Menu.Rule') %></a></li>
-          <li class='<%= "active" if active == 'award' %>'><a href="/contest/<%= contest_name %>/award"><%= t('Contest.Menu.Award') %></a></li>
-          <li class='<%= "active" if active == 'projects' %>'><a href="/contest/<%= contest.id %>/contest_projects"><%= t('Contest.Menu.Projects') %></a></li>
+          <li class='<%= "active" if active == 'home' %>'><a href="/contest/<%= alias_name %>/home"><%= t('Contest.Menu.Home') %></a></li>
+          <li class='<%= "active" if active == 'rule' %>'><a href="/contest/<%= alias_name %>/home#contest_rule"><%= t('Contest.Menu.Rule') %></a></li>
+          <li class='<%= "active" if active == 'award' %>'><a href="/contest/<%= alias_name %>/award"><%= t('Contest.Menu.Award') %></a></li>
+          <li class='<%= "active" if active == 'projects' %>'><a href="/contest/<%= alias_name %>/contest_projects"><%= t('Contest.Menu.Projects') %></a></li>
         </ul>
       </div>
       <div class="c-hotline">
         <div class="c-hotline__current"><i class="icon16-calling"></i><span class="c-hotline__text">Hotline</span></div>
         <div class="c-dropdown-menu is-center">
           <ul>
-            <li><a href="tel:+842471096668"><%= t('Contest.Menu.Northern') %><b class="float-right">+8424-7109-6668</b></a></li>
-            <li><a href="tel:+842471096668"><%= t('Contest.Menu.South') %><b class="float-right">+8428-710-99948</b></a></li>
-            <li><a href="tel:+842471096668">Email<b class="float-right">contact@teky.edu.vn</b></a></li>
+            <li><a target="_blank" href="tel:+<%= Contest::Constant::Contact::MB %>"><%= t('Contest.Menu.Northern') %><b class="float-right">+8424-7109-6668</b></a></li>
+            <li><a target="_blank" href="tel:+<%= Contest::Constant::Contact::MN %>"><%= t('Contest.Menu.South') %><b class="float-right">+8428-710-99948</b></a></li>
+            <li><a target="_blank" href="mailto:<%= Contest::Constant::Contact::EMAIL %>">Email<b class="float-right">contact@teky.edu.vn</b></a></li>
           </ul>
         </div>
       </div><a class="btn-push" href="<%= submit_url %>"><i class="icon16-/contest/upload"></i><span class="btn-push__text"><%= t('Contest.Menu.Submit_project') %></span></a>

@@ -105,6 +105,7 @@ namespace :adm do
     namespace :contest_prizes do
       post 'create_prize', action: 'create_prize'
       get 'prepare_create', action: 'prepare_create'
+      get 'contest_prize_detail', action: 'contest_prize_detail'
     end
 
     resources :contest_topics

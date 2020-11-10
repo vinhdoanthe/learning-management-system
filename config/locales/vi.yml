@@ -404,7 +404,8 @@ vi:
     Management contest: "Quản lý cuộc thi"
     List contest: "Danh sách cuộc thi"
     Contest exchange: "Quy đổi điểm số"
-    Contest event: "Tin tức-Sự kiện"
+    Contest event: "Sự kiện"
+    Contest slider: 'Ảnh cuộc thi'
     Contest: "Cuộc thi"
     Choose: "Chọn"
     Menu:
@@ -438,9 +439,11 @@ vi:
       Rule product description: "Mô tả sản phẩm"
       Rule submission entries: "Mô tả nộp bài dự thi"
       Region: "Vùng/Miền"
+      Status: "Trạng thái"
       w: "Tuần"
       m: "Tháng"
     Topic:
+      sort_name: 'Chủ đề'
       List: "Danh sách chủ đề"
       Name: "Tên chủ đề"
       Description: "Mô tả chủ đề"
@@ -474,6 +477,7 @@ vi:
       won_week_prize: "Đạt giải nhất tuần"
       won_month_prize: "Đạt giải nhất tháng"
     Products:
+      Attendance products: 'Sản phẩm tham dự cuộc thi'
       back: "Quay lại"
       Contest products: "Sản phẩm dự thi"
       document: "Tài liệu"
@@ -483,7 +487,7 @@ vi:
       project_of: "Sản phẩm của"
       show_profile: "Xem hồ sơ"
       show_all: "Xem toàn bộ"
-      other_project: "Sản phẩm khác"
+      other_project: "Sản phẩm khác của"
       friend_project: "Sản phẩm của bạn khác"
     Criterion:
       Choose criterion: "Chọn tiêu chí đánh giá sản phẩm trong chủ đề này"
@@ -492,3 +496,5 @@ vi:
       Description: "Mô tả"
     Certification:
       show: "Xem chứng chỉ"
+    Award:
+      share: 'Chia sẻ lên facebook'

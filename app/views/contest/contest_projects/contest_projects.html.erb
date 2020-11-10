@@ -21,7 +21,7 @@
                     <% else %>
                       <img src="/contest/upload/week_1.jpg" alt="image">
                     <% end %>
-                    <span class="c-week-item__title">Tuần <%= topic.week_number %>, Tháng <%= topic.created_at.strftime('%m/%Y') %></span>
+                    <span class="c-week-item__title">Tuần <%= topic.week_number %>, Tháng <%= topic.start_time.strftime('%m/%Y') %></span>
                     <span class="c-week-item__more">
                       <img src="/contest/images/week-all.png" alt="all">
                     </span>
@@ -44,19 +44,27 @@
           <ul>
             <li>
               <label>Theo thời gian</label>
+              <div class="c-range-control">
+                <input class="form-control start-date" type="text" placeholder="Từ ngày" aria-label="Từ ngày">
+                <input class="form-control end-date" type="text" placeholder="Đến ngày" aria-label="Đến ngày">
+              </div>
+            </li>
+
+            <!-- <li>
+              <label>Theo thời gian</label>
               <select class="form-control" id="select_project_topic">
                 <option value='all' >Tất cả sản phẩm</option>
-                <% @contest.contest_topics.where(start_time: Time.now.beginning_of_month..Time.now.end_of_month).each do |topic| %>
-                  <option value="<%= topic.id %>">Tuần <%= topic.week_number %>, tháng <%= topic.start_time.strftime("%m/%Y") %></option>
-                <% end %>
+                <%# @contest.contest_topics.where(start_time: Time.now.beginning_of_month..Time.now.end_of_month).each do |topic| %>
+                  <option value="<%#= topic.id %>">Tuần <%#= topic.week_number %>, tháng <%#= topic.start_time.strftime("%m/%Y") %></option>
+                <%# end %>
               </select>
-            </li>
+            </li> -->
             <li>
               <% contest_company = get_contest_company @contest %>
               <label>Học viện Teky</label>
               <select class="form-control" id="select_project_company">
                 <option value="all">Toàn bộ học viện</option>
-                <%= contest_company.each do |company| %>
+                <% contest_company.each do |company| %>
                   <option value="<%= company[1] %>"><%= company[0] %></option>
                 <% end %>
               </select>
@@ -69,35 +77,10 @@
     </div>
   </div>
 </div>
+<input type='hidden' value="<%= @contest.id %>" name="contest_id" id="input_contest_id"%>
+<input type='hidden' value="<%= @contest.alias_name %>" name="contest_alias_name" id="input_contest_alias"%>
+<%= javascript_include_tag 'contest/js/datepicker.min.js' %>
+<%= javascript_include_tag 'contest/js/datepicker.vi-VN.js' %>
   <!--Footer part-->
   <%= render "contest/partials/footer", contest: @contest %>
-  <script>
-    function getProjectsContent(){
-        $('.contest-projects-content').html(`<div class="c-loading"> <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div> <div class="c-loading__text">Đợi xíu nha...    </div> </div>`)
-      topic_id = $('#select_project_topic').val();
-      company_id = $('#select_project_company').val();
-      $.ajax({
-        method: "GET",
-        url: '/contest/contest_projects/projects_content?contest_id=<%= @contest.id %>',
-        data: { topic_id: topic_id, company_id: company_id },
-        dataType: 'script'
-      })
-    }
-    $(document).ready(function(){
-      getProjectsContent();
-
-      $('#select_project_topic').change(function(){
-        getProjectsContent();
-      })
-
-      $('#select_project_company').change(function(){
-        getProjectsContent();
-      })
-
-      $('.show_topic_projects').on('click', function(){
-        $('#select_project_topic').val($(this).data('topic'));
-        getProjectsContent();
-        window.location.href = '/contest/<%= @contest.id %>/contest_projects#contest-project-list';
-      })
-    })
-  </script>
+  <%= javascript_include_tag 'contest/contest_project.js' %>

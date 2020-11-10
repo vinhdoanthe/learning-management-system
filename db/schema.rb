@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_065244) do
+ActiveRecord::Schema.define(version: 2020_11_07_033613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -11077,6 +11077,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_065244) do
     t.string "link"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_time"
   end
 
   create_table "tk_contest_exchanges", force: :cascade do |t|
@@ -11150,6 +11151,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_065244) do
     t.string "rule_product_description"
     t.string "rule_submission_entries"
     t.boolean "default"
+    t.string "alias_name"
   end
 
   create_table "tk_project_criterions", force: :cascade do |t|

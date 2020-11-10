@@ -34,6 +34,9 @@
 <%= render 'user/open_educat/op_students/progress/tobe_sessions', {:tobe_sessions => tobe_sessions, active_subject: active_subject} %>
 <%= render 'user/open_educat/op_students/progress/cancel_sessions', {:cancel_sessions => cancel_sessions, active_subject: active_subject} %>
 
+<div class="modal fade" id="session_photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+</div>
+
 <script>
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();

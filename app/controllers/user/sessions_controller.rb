@@ -4,7 +4,7 @@ module User
     skip_before_action :authenticate_user!, only: [:new, :create]
 
     def new
-      session[:contest] = params[:contest]
+      session[:contest] = params[:contest_alias]
       if logged_in?
         redirect_to root_path
       end
@@ -21,7 +21,7 @@ module User
         if user.authenticate(params[:session][:password])
           log_in(user)
           if session[:contest].present? && session[:contest].to_i != 0
-            redirect_to contest_new_project_path(contest_id: session[:contest])
+            redirect_to contest_new_project_path(contest_alias: session[:contest])
           else
             redirect_to root_path
           end

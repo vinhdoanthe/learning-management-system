@@ -22,7 +22,7 @@ class Adm::Contest::ContestPrizesService
       end
 
       prize = Contest::ContestPrize.new(create_params)
-      prizes = contest.contest_prizes.where(prize_type: 'm')
+      prizes = contest.contest_prizes.where(prize_type: 'w')
 
       if prize.save
         { result: { type: 'success', message: 'Thêm giải thưởng thành công'}, prize: prize, contest: contest, prizes: prizes }
