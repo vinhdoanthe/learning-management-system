@@ -82,4 +82,8 @@ $(document).ready(function(){
   $startDate.on('change', function () {
     $endDate.datepicker('setStartDate', $startDate.datepicker('getDate'));
   });
+
+  $('.end-date').on('pick.datepicker', function(){
+    getProjectsContent();
+  })
 })
