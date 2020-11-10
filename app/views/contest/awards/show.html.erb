@@ -8,29 +8,7 @@
       <div class="c-box__content">
         <div class="c-template-slider is-margin-minus is-button-circle c-award-slider">
           <div class='c-award-item'>
-            <div class="c-award-item__thumb" data-project="<%= @c_project_detail['id'] %>" id="contest-certificate-<%= @c_project_detail['id'] %>" style="padding-left: 0 !important">
-              <img src="/contest/upload/award-blank.png" alt="image"></img>
-              <div class="c-award-item__avatar">
-                <figure>
-                  <% if @c_project_detail['user_avatar']&.attached? %>
-                    <%= image_tag @c_project_detail['user_avatar'] %>
-                  <% else %>
-                    <img src="/contest/images/face-default.png" alt="image"></img>
-                  <% end %>
-                </figure>
-              </div>
-              <div class="c-award-item__name"><%= @c_project_detail['student_name'] %></div>
-              <div class="c-award-item__address"><%= @c_project_detail['company_name'] %></div>
-              <div class="c-award-item__program">For outstanding performance and winning the competition of <b><%= @contest&.name %></b></div>
-              <div class="c-award-item__date"><%= @c_project_detail['created_at'].strftime('%d/%B/%Y') %></div>
-            </div>
-            <div class="c-award-item__bar">
-              <ul>
-                <li><a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.original_url %>" target='_blank'><i class="icon24-share"></i><span>Chia sể lên Facebook</span></a></li>
-                <li><a style="cursor: pointer" data-project='<%= @c_project_detail['id'] %>' class="download-certificate" ><i class="icon24-pdf"></i><span>Tải xuống</span></a></li>
-                <li><a href="/contest/contest_projects/show/<%= @c_project_detail['id'] %>"><i class="icon24-view"></i><span>Xem sản phẩm</span></a></li>
-              </ul>
-            </div>
+            <%= render :partial => "contest/awards/award", :locals => {project: @c_project_detail, contest: @contest} %>
           </div>
         </div>
       </div>
@@ -39,7 +17,6 @@
 </div>
 
 <script>
-
   $(document).on('click', '.download-certificate', function(){
     id =  $(this).data('project')
     html2canvas($(`#contest-certificate-${ id }`)[0], {scrollY: -window.scrollY, scrollX: -window.scrollX}).then(canvas => {
@@ -53,4 +30,3 @@
     });
   })
 </script>
-
