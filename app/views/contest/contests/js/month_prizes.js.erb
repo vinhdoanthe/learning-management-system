@@ -1,4 +1,4 @@
-$('#contest_month_prize').html("<%= escape_javascript ( render partial: 'contest/contests/partials/month_prize_item', locals: { month_projects: month_projects, contest: contest }) %>")
+$('#contest_month_prize').html(`<%= escape_javascript ( render partial: 'contest/contests/partials/month_prize_item', locals: { month_projects: month_projects, contest: contest }) %>`)
 $(document).ready(function(){
   $('.js-slider-2').owlCarousel({
     loop:true,

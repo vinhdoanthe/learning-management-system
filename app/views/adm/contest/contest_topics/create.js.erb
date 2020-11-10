@@ -64,4 +64,7 @@ display_response_noti(res);
         </td>
       </tr>
       `);*/
+<% elsif result[:result][:type] == 'success' && result[:action] == 'update' %>
+    <% topic = result[:topic] %>
+    $('.topic-description-<%= topic.id %>').html('<%= topic&.description&.html_safe %>')
 <% end %>
