@@ -105,8 +105,14 @@ class Contest::ContestsService
   def contest_projects params
     start_time = Time.parse(params[:start_time]).beginning_of_day
     end_time = Time.parse(params[:end_time]).end_of_day
+
     contest = Contest::Contest.where(id: params[:contest_id]).first
-    projects  = Contest::ContestProject.where(contest_id: contest.id, created_at: start_time..end_time)
+
+    if params[:topic_id].blank?
+      projects  = Contest::ContestProject.where(contest_id: contest.id, created_at: start_time..end_time)
+    else
+      projects  = Contest::ContestProject.where(contest_id: contest.id, contest_topic_id:params[:topic_id])
+    end
 
     projects = projects.joins(student_project: { op_student: :res_company }).where(res_company: { id: params[:company_id] }) if params[:company_id] != 'all'
 

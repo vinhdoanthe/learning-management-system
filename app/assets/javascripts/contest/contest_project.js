@@ -12,7 +12,7 @@ function setTimeFormat(time, value){
   return `${ day }/${ month }/${ year }`
 }
 
-function getProjectsContent(option){
+function getProjectsContent(option, topic_id){
   $('.contest-projects-content').html(`<div class="c-loading"> <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div> <div class="c-loading__text">Đợi xíu nha...    </div> </div>`)
   company_id = $('#select_project_company').val();
   contest_id = $('input#input_contest_id').val()
@@ -30,12 +30,12 @@ function getProjectsContent(option){
   $.ajax({
     method: "GET",
     url: `/contest/contest_projects/projects_content?contest_id=${ contest_id }`,
-    data: { company_id: company_id, start_time, end_time },
+    data: { company_id: company_id, start_time, end_time, topic_id: topic_id },
     dataType: 'script'
   })
 }
 $(document).ready(function(){
-  getProjectsContent('month');
+  getProjectsContent('month', '');
 
   $('#select_project_company').change(function(){
     company_id = $(this).val();
@@ -59,9 +59,14 @@ $(document).ready(function(){
 
   $('.show_topic_projects').on('click', function(){
     $('#select_project_topic').val($(this).data('topic'));
-    getProjectsContent();
+    topic_id = $(this).data('topic');
+    getProjectsContent('', topic_id);
     alias_name = $('input#input_contest_alias').val();
     window.location.href = `/contest/${ alias_name }/contest_projects#contest-project-list`;
+  })
+
+  $('.current_month_topic_projects').on('click', function(){
+    getProjectsContent('month', '');
   })
 
   var $startDate = $('.start-date');
@@ -84,6 +89,6 @@ $(document).ready(function(){
   });
 
   $('.end-date').on('pick.datepicker', function(){
-    getProjectsContent();
+    getProjectsContent('', '');
   })
 })

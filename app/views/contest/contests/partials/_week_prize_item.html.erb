@@ -5,11 +5,8 @@
       <div class="c-product-small">
         <div class="c-product-small__thumb">
           <a href="/contest/contest_projects/show/<%= c_project.id %>">
-            <% if project_thumbnails[c_project.project_id]&.attached? %>
-              <%= image_tag project_thumbnails[c_project.project_id] %>
-            <% else %>
-              <img src="/contest/upload/product-small_1.jpg" alt="image">
-            <% end %>
+            <% s_project = SocialCommunity::ScStudentProject.where(id: c_project.project_id).first %>
+            <%= Contest::ContestDecorator.new(s_project).display_project_thumbnail&.html_safe %>
           </a>
         </div>
         <div class="c-product-small__content">

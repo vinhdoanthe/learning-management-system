@@ -120,7 +120,8 @@
                 <div class="b-grid__content">
                   <div class="b-grid__row">
                     <div class="b-grid__label"><%= t('role.faculty') %></div>
-                    <div class="b-grid__title"></div>
+                    <% teacher = User::OpenEducat::OpFaculty.where(id: @c_project.teacher_id).first %>
+                    <div class="b-grid__title"><%= teacher&.full_name %></div>
                   </div>
                 </div>
               </div>
@@ -159,7 +160,12 @@
               <!-- <div class="b-grid"><i class="icon32-meday"></i> -->
               <% @relate_projects.each do |project| %>
                 <div class="b-grid">
-                  <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="/contest/upload/product-small_2.jpg" alt="product"></a></div>
+                  <div class="b-grid__img">
+                    <% s_project = SocialCommunity::ScStudentProject.where(id: project[:project].id).first %>
+                    <a href="/contest/contest_projects/show/<%= project[:project][:id] %>">
+                      <%= Contest::ContestDecorator.new(s_project).display_project_thumbnail&.html_safe %>
+                    </a>
+                  </div>
                   <div class="b-grid__content">
                     <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
                     <div class="b-grid__row">
@@ -183,7 +189,12 @@
               <div class="c-product-other">
                 <% @other_projects.each do |project| %>
                   <div class="b-grid">
-                    <div class="b-grid__img"><a href="/contest/contest_projects/show/<%= project[:project][:id] %>"><img src="/contest/upload/product-small_5.jpg" alt="product"></a></div>
+                    <div class="b-grid__img">
+                      <% s_project = SocialCommunity::ScStudentProject.where(id: project[:project].id).first %>
+                      <a href="/contest/contest_projects/show/<%= project[:project][:id] %>">
+                        <%= Contest::ContestDecorator.new(s_project).display_project_thumbnail&.html_safe %>
+                      </a>
+                    </div>
                     <div class="b-grid__content">
                       <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
                       <div class="b-grid__row">

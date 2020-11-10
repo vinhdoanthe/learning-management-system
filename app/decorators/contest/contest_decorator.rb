@@ -1,4 +1,6 @@
 class Contest::ContestDecorator < SimpleDelegator
+  include ActionView::Helpers
+  include Rails.application.routes.url_helpers
 
   def display_month_active
     months = contest_prizes.pluck(:month_active).uniq
@@ -46,10 +48,26 @@ class Contest::ContestDecorator < SimpleDelegator
       display = '' if presentation.blank? && introduction_video.blank?
     else
       if introduction_video.present?
-        display = '<div class="c-widget"> <div class="c-widget__content"> <div class="c-link-grid"> <ul>'
-        display += " <li> <div class='c-link-item'><a id='project-show-presentation'><i class='icon48-file'></i><span class='c-link-item__text'><span class='c-link-item__title'>#{ I18n.t('Contest.Products.document') }</span><span class='c-link-item__desc'>#{ I18n.t('Contest.Products.presentation')}</span></span><i class='icon-medium-arrow-right'></i></a></div> </li> "
-      display += ' </ul> </div> </div> </div> '
+        if presentation.present?
+          display = '<div class="c-widget"> <div class="c-widget__content"> <div class="c-link-grid"> <ul>'
+          display += " <li> <div class='c-link-item'><a id='project-show-presentation'><i class='icon48-file'></i><span class='c-link-item__text'><span class='c-link-item__title'>#{ I18n.t('Contest.Products.document') }</span><span class='c-link-item__desc'>#{ I18n.t('Contest.Products.presentation')}</span></span><i class='icon-medium-arrow-right'></i></a></div> </li> "
+          display += ' </ul> </div> </div> </div> '
+        end
       end
+    end
+
+    display
+  end
+
+  def display_project_thumbnail
+    display = ''
+
+    if thumbnail.present?
+      display = "<img src='#{ thumbnail }'" 
+    elsif image.attached?
+      display = "<img src='" + rails_blob_path(image, disposition: "attachment", only_path: true) + "'>"
+    else
+      display = "<img src='/contest/upload/product-small_2.jpg' alt='product'>"
     end
 
     display

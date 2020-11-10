@@ -63,7 +63,7 @@ class Contest::ContestProjectsController < ApplicationController
     result, project, student = SocialCommunity::ScStudentProjectsService.new.create_new_student_project params, current_user
 
     if result[:type] == 'success'
-      result, c_project = Adm::Contest::ContestProjectsService.new.create_contest_project topic, project
+      result, c_project = Adm::Contest::ContestProjectsService.new.create_contest_project topic, project, params[:social_community_sc_student_project][:teacher_id]
     end
 
     student

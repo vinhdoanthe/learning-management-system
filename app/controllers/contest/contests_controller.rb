@@ -24,6 +24,14 @@ class Contest::ContestsController < ApplicationController
 
       @topic = @contest.contest_topics.where(status: 'active').first
       @student = current_user.op_student
+
+      teacher_ids = @student.op_sessions.pluck(:faculty_id).uniq
+      teachers = User::OpenEducat::OpFaculty.where(id: teacher_ids).pluck(:id, :full_name)
+      @teachers = {}
+      teachers.each do |t|
+        @teachers.merge! ( { t[1] => t[0] })
+      end
+
       batch_ids = Learning::Batch::OpStudentCourse.joins(:op_subjects).where(student_id: @student.id).where.not(op_subject: { id: nil}).pluck(:batch_id)
       batches = Learning::Batch::OpBatch.joins(:op_course).where(id: batch_ids).pluck(:id, 'op_course.name')
       @project_type = [SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT, SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT]

@@ -28,6 +28,14 @@
           <input type='text' class="form-control" readonly value="<%= current_user.op_student.full_name %>">
         </div>
       </div>
+      <div class='row' id="edit_teacher_project_upload" style="margin-bottom: 10px;">
+        <div class='col-md-3'>
+          <label>Giảng viên: <span style="color: red">*</span></label>
+        </div>
+        <div class='col-md-8'>
+          <%= f.select :teacher_id, options_for_select(@teachers, @teachers.keys[0]), {} , { class: 'project_detail form-control', id: 'student_project_teacher' }  %>
+        </div>
+      </div>
       <div class='row' id="edit_student_project_subject">
         <div class='col-md-3'>
           <label>Học phần <span style="color: red">*</span></label>
