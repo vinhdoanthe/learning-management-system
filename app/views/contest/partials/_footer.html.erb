@@ -1,3 +1,20 @@
+<script type="text/javascript">
+    if (typeof MauticSDKLoaded == 'undefined') {
+        var MauticSDKLoaded = true;
+        var head            = document.getElementsByTagName('head')[0];
+        var script          = document.createElement('script');
+        script.type         = 'text/javascript';
+        script.src          = 'https://mautic.teky.edu.vn/media/js/mautic-form.js';
+        script.onload       = function() {
+            MauticSDK.onLoad();
+        };
+        head.appendChild(script);
+        var MauticDomain = 'https://mautic.teky.edu.vn';
+        var MauticLang   = {
+            'submittingMessage': "Please wait..."
+        }
+    }
+</script>
 <div class="l-footer">
   <div class="container">
     <div class="c-footer-main">
@@ -34,18 +51,34 @@
             </div>
           </div>
           <div class="col-md-4">
+            <form autocomplete="false" role="form" method="post" action="https://mautic.teky.edu.vn/form/submit?formId=1" id="mauticform_formdangkynhanbantin" data-mautic-form="formdangkynhanbantin" enctype="multipart/form-data" name="mt_newsletter">
             <div class="c-footer-label">Đăng ký nhận tin</div>
             <div class="c-footer-content">
-              <div class="c-footer-text">Subsbribe us to get news and updates directy to your inbox.</div>
+              <div class="c-footer-text">
+                Đăng ký để nhận tin tức và các cập nhật từ chúng tôi.
+                <div class="mauticform-error" id="mauticform_formdangkynhanbantin_error"></div>
+                <div class="mauticform-message" id="mauticform_formdangkynhanbantin_message"></div>
+              </div>
+              <div class="mauticform-error" id="mauticform_formdangkynhanbantin_error"></div>
+              <div class="mauticform-message" id="mauticform_formdangkynhanbantin_message"></div>
               <div class="c-footer-email">
-                <div class="input-group">
-                  <input class="form-control" type="text" placeholder="Email của bạn">
-                  <div class="input-group-append">
-                    <button class="btn btn-light" type="button"><i class="icon-long-arrow-right"></i></button>
+                <div id="mauticform_formdangkynhanbantin_email" class="mauticform-row mauticform-email mauticform-field-1 mauticform-required form-group" data-validate="email" data-validation-type="email">
+                  <div class="input-group">                    
+                    <input id="mauticform_input_formdangkynhanbantin_email" name="mauticform[email]" value="" placeholder="Email *" class="mauticform-input form-control" type="text">                    
+                      <div class="input-group-append">
+                        <button name="mauticform[submit]" id="mauticform_input_formdangkynhanbantin_submit" class="btn btn-light" type="submit"><i class="icon-long-arrow-right"></i></button>
+                      </div>                    
                   </div>
+                  <div class="mauticform-errormsg" style="display: none;">Email bắt buộc phải nhập.</div>
                 </div>
               </div>
             </div>
+            <input type="hidden" name="mauticform[formId]" id="mauticform_formdangkynhanbantin_id" value="1">
+            <input type="hidden" name="mauticform[return]" id="mauticform_formdangkynhanbantin_return" value="">
+            <input type="hidden" name="mauticform[formName]" id="mauticform_formdangkynhanbantin_name" value="formdangkynhanbantin">
+            <input id="mauticform_input_formdangkynhanbantin_tags" name="mauticform[tags]" value="teky.online.contest" class="mauticform-hidden" type="hidden">
+                <input id="mauticform_input_formdangkynhanbantin_datalead_sources" name="mauticform[datalead_sources]" value="5::Website - Newsletter subscription form" class="mauticform-hidden" type="hidden">
+          </form>
           </div>
         </div>
       </div>
@@ -53,3 +86,28 @@
     <div class="c-copyright">© 2020 All Rights Reserved By TEKY Academy.</div>
   </div>
 </div>
+<style type="text/css" scoped>
+    .mauticform_wrapper { max-width: 600px; margin: 10px auto; }
+    .mauticform-innerform {}
+    .mauticform-post-success {}
+    .mauticform-name { font-weight: bold; font-size: 1.5em; margin-bottom: 3px; }
+    .mauticform-description { margin-top: 2px; margin-bottom: 10px; }
+    .mauticform-error { margin-bottom: 10px; color: red; }
+    .mauticform-message { margin-bottom: 10px;color: #FCF055;}
+    .mauticform-row { display: block; margin-bottom: 20px; }
+    .mauticform-label { font-size: 1.1em; display: block; font-weight: bold; margin-bottom: 5px; }
+    .mauticform-row.mauticform-required .mauticform-label:after { color: #e32; content: " *"; display: inline; }
+    .mauticform-helpmessage { display: block; font-size: 0.9em; margin-bottom: 3px; }
+    .mauticform-errormsg { display: block; color: red; margin-top: 2px; }
+    .mauticform-selectbox, .mauticform-input, .mauticform-textarea { width: 100%; padding: 0.5em 0.5em; border: 1px solid #CCC; background: #fff; box-shadow: 0px 0px 0px #fff inset; border-radius: 4px; box-sizing: border-box; }
+    .mauticform-checkboxgrp-row {}
+    .mauticform-checkboxgrp-label { font-weight: normal; }
+    .mauticform-checkboxgrp-checkbox {}
+    .mauticform-radiogrp-row {}
+    .mauticform-radiogrp-label { font-weight: normal; }
+    .mauticform-radiogrp-radio {}
+    .mauticform-button-wrapper .mauticform-button.btn-default, .mauticform-pagebreak-wrapper .mauticform-pagebreak.btn-default { color: #5d6c7c;background-color: #ffffff;border-color: #dddddd;}
+    .mauticform-button-wrapper .mauticform-button, .mauticform-pagebreak-wrapper .mauticform-pagebreak { display: inline-block;margin-bottom: 0;font-weight: 600;text-align: center;vertical-align: middle;cursor: pointer;background-image: none;border: 1px solid transparent;white-space: nowrap;padding: 6px 12px;font-size: 13px;line-height: 1.3856;border-radius: 3px;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
+    .mauticform-button-wrapper .mauticform-button.btn-default[disabled], .mauticform-pagebreak-wrapper .mauticform-pagebreak.btn-default[disabled] { background-color: #ffffff; border-color: #dddddd; opacity: 0.75; cursor: not-allowed; }
+    .mauticform-pagebreak-wrapper .mauticform-button-wrapper {  display: inline; }
+</style>
