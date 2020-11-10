@@ -4,7 +4,7 @@
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
       <div class="ph-text">
-        <h4><%= t('Contest.Products.Attendance products') %> <%= @contest.name %>, <%= t('Contest.Topic.sort_name') %> <%= @topic.name %></h4>
+        <h4 class="text-white"><%= t('Contest.Products.Attendance products') %> <%= @contest.name %>, <%= t('Contest.Topic.sort_name') %> <%= @topic.name %></h4>
       </div>
     </div>
   </div>
@@ -17,3 +17,9 @@
     </div>
   </div>
 </div>
+
+<style>
+.text-white {
+  color: white;
+}
+</style>
