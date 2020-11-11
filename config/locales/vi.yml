@@ -230,6 +230,8 @@ vi:
         evaluation: "Nhận xét của giảng viên"
         video: "Ôn bài qua video"
         picture: "Hình ảnh lớp học"
+  meta:
+    site_title: 'Hệ thống quản lý học tập TEKY'
   teacher_class:
     coming_session: "Chưa diễn ra"
     pass_session: "Đã diễn ra"
