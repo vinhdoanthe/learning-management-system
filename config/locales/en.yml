@@ -189,6 +189,8 @@ en:
         evaluation: "Teacher's evaluation"
         video: "Review by video"
         picture: "Class pictures"
+  meta:
+    site_title: 'TEKY Learning Management System'
   teacher_class:
     coming_session: "Coming session"
     pass_session: "Done session"

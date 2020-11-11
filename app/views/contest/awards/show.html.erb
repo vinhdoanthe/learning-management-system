@@ -1,3 +1,9 @@
+<% set_meta_tags og: {
+  url: request.base_url + "/contest/contest_award/#{@c_project_detail['id']}",
+  description: "#{@c_project_detail['student_name']} - #{@c_project_detail['company_name']}",
+  image: request.base_url + "/contest/award/award-blank.png",
+}                     
+%>
 <div class="c-block bg-border">
   <div class="container">
     <div class="c-box is-middle">
