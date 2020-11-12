@@ -15,12 +15,9 @@
         <li class='c-project-detail' data-company="<%= project['company_id'] %>">
           <div class="c-product-item">
             <div class="c-product-item__thumb">
+              <% s_project = SocialCommunity::ScStudentProject.where(id: project['project_id']).first %>
               <a href="/contest/contest_projects/show/<%= project['id'] %>">
-                <% if project['project_img']&.attached? %>
-                  <%= image_tag project['project_img'] %>
-                <% else %>
-                  <img src="/contest/upload/product_1.jpg" alt="image">
-                <% end %>
+                <%= Contest::ContestDecorator.new(s_project).display_project_thumbnail.html_safe %>
               </a>
             </div>
             <div class="c-product-item__content">
