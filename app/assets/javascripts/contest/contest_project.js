@@ -16,21 +16,22 @@ function getProjectsContent(option, topic_id){
   $('.contest-projects-content').html(`<div class="c-loading"> <div class="c-loading__icon"><i class="icon32-sand-clock"></i></div> <div class="c-loading__text">Đợi xíu nha...    </div> </div>`)
   company_id = $('#select_project_company').val();
   contest_id = $('input#input_contest_id').val()
+  start_time = '';
+  end_time = '';
+
   if (option === 'month'){
     time = new Date();
     start_time = setTimeFormat(time, 0);
     end_time = setTimeFormat(time, 1);
   }else{
-    start = $('input.start-date').datepicker('getDate');
-    start_time = setTimeFormat(start, 0);
-    end = $('input.end-date').datepicker('getDate');
-    end_time = setTimeFormat(start, 1);
+    start_time = $('input.start-date').datepicker('getDate', true);
+    end_time = $('input.end-date').datepicker('getDate', true);
   }
 
   $.ajax({
     method: "GET",
     url: `/contest/contest_projects/projects_content?contest_id=${ contest_id }`,
-    data: { company_id: company_id, start_time, end_time, topic_id: topic_id },
+    data: { company_id: company_id, start_time: start_time, end_time: end_time, topic_id: topic_id },
     dataType: 'script'
   })
 }
@@ -66,6 +67,8 @@ $(document).ready(function(){
   })
 
   $('.current_month_topic_projects').on('click', function(){
+    setDefaultDatePicker('.start-date', -1);
+    setDefaultDatePicker('.end-date', 0);
     getProjectsContent('month', '');
   })
 

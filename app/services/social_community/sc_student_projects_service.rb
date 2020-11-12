@@ -315,12 +315,6 @@ class SocialCommunity::ScStudentProjectsService
     SocialCommunity::ScStudentProject.where(project_type: SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT, batch_id: params[:batch_id], subject_id: params[:subject_id], student_id: params[:student_id]).first.present?
   end
 
-  private
-
-  def validate_youtube_upload_params params
-    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present? || params[:project_show_video].present? )
-  end
-
   def handling_params params
     @params = {}
     @params.merge! params[:social_community_sc_student_project].permit! if params[:social_community_sc_student_project].present?
@@ -341,3 +335,9 @@ class SocialCommunity::ScStudentProjectsService
     @params.symbolize_keys!
   end
 end
+
+  private
+
+  def validate_youtube_upload_params params
+    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present? || params[:project_show_video].present? )
+  end

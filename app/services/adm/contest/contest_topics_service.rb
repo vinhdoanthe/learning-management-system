@@ -119,16 +119,9 @@ class Adm::Contest::ContestTopicsService
   end
 
   def awarded_project topic, type
-    topic_prizes = topic.contest_prizes.where(prize_type: type).pluck(:id, :prize, :number_awards).sort{|p| p[1] }
-    total_awards = 0
-    topic_prizes.each{ |p| total_awards += p[2] }
-
-    awarded_projects = Contest::ContestProject.
-      select("tk_contest_projects.id, SUM(score * #{ Contest::Constant::ScoreRatio::SCORE_RATIO } + judges_score * #{ Contest::Constant::ScoreRatio::JUDGES_RATIO }) as point").
-      group('id').
-      order(point: 'desc').
-      limit(total_awards).
-      to_a
+    # topic_prizes = topic.contest_prizes.where(prize_type: type).pluck(:id, :prize, :number_awards).sort{|p| p[1] }
+    # total_awards = 0
+    # topic_prizes.each{ |p| total_awards += p[2] }
 
     topic_prizes = topic.contest_prizes.where(prize_type: type).
     #topic_prizes = Contest::ContestPrize.
@@ -136,8 +129,18 @@ class Adm::Contest::ContestTopicsService
       select('tk_topic_prizes.id, prize, number_awards').
       to_a
 
+    total_awards = topic_prizes.sum(&:number_awards)
+
+    awarded_projects = Contest::ContestProject.
+      select("tk_contest_projects.id, score * #{ Contest::Constant::ScoreRatio::SCORE_RATIO } + judges_score * #{ Contest::Constant::ScoreRatio::JUDGES_RATIO } as point").
+      # group('id').
+      order(point: 'desc').
+      limit(total_awards).
+      to_a
+
     topic_prizes.each do |prize|
-      Contest::ContestProject.where(id: awarded_projects.map(&:id)).update_all(contest_prize_id: prize.id)
+      projects = awarded_projects.shift prize.number_awards
+      Contest::ContestProject.where(id: projects.map(&:id)).update_all(contest_prize_id: prize.id)
     end
 
 

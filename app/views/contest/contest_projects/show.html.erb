@@ -3,8 +3,19 @@
 <div class="container">
   <div class="l-content">
     <div class="c-product-head">
-      <div class="c-product-head__back"><a href="/contest/<%= @contest.alias_name %>/contest_projects"><i class="icon-long-arrow-left-blue"></i><%= t('Contest.Products.back') %></a></div>
-      <h1 class="c-product-head__title"><%= @project&.name %></h1>
+      <div class="c-product-head__back">
+        <a href="/contest/<%= @contest.alias_name %>/contest_projects"><i class="icon-long-arrow-left-blue"></i><%= t('Contest.Products.back') %></a>
+      </div>
+      <div class="row">
+        <div class='col-md-9'>
+          <h1 class="c-product-head__title"><%= @project&.name %></h1>
+        </div>
+        <% if ((@topic.start_time..@topic.end_time).cover? @c_project.created_at) && current_user&.id == @c_project.user_id %>
+        <div class="col-md-3">
+          <button class="btn btn-primary" id="edit_contest_project_button" data-toggle="modal" data-target="#modal_edit_contest_project" data-project="<%= @c_project.id %>">Chỉnh sửa sản phẩm</button>
+        </div>
+        <% end %>
+      </div>
     </div>
     <div class="clearfix">
       <div class="l-main">
@@ -42,7 +53,7 @@
                       </figure>
                     </div>
                     <div class="b-grid__content">
-                      <div class="b-grid__row"><span class="b-grid__label"><%= t('Contest.Products.project_of') %></span><span class="b-grid__title"><%= @student.full_name %></span><a class="b-grid__more" href="/user/open_educat/op_students/public_profile/<%= @c_project.user_id %>"><%= t('Contest.Products.show_profile') %></a></div>
+                      <div class="b-grid__row"><span class="b-grid__label"><%= t('Contest.Products.project_of') %></span><span class="b-grid__title"><%= @student.full_name %></span><a class="b-grid__more" href="/user/open_educat/op_students/public_profile/<%= @student.id %>" target="_blank"><%= t('Contest.Products.show_profile') %></a></div>
                     </div>
                   </div>
                 </li>
@@ -216,6 +227,28 @@
     </div>
     <!--end l-content-->
   </div>
+
+<div class="modal fade" id="modal_edit_contest_project" role="dialog" aria-labelledby="modal_edit_contest_projectLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+         <h4 class="card-title text-info"><label><%= t('Contest.Topic.Add a new topic for contest') %></label>: <span class="text-primary"><%= @contest&.name %></span></h4>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+         </button>
+      </div>
+      <div class="modal-body" id='edit_contest_project_content'>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+        <input type='submit' data-remote='true' style="margin-left: auto; text-transform: uppercase; font-weight: 600" form='edit_student_project_form' class='btn btn-primary btn-embossed bg-5DC2A7 edit_student_project_form_submit' value='Cập nhật dự án dự thi'>&nbsp&nbsp
+          <button type="button" style="margin-left: auto; text-transform: uppercase; font-weight: 600" class="btn btn-embossed btn-secondary btn-close" data-dismiss="modal"><i class="fas fa-ban"></i> <%= t('button.Close')%>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <!--end container-->
   <!--Footer part-->
   <!--l-footer-->
@@ -236,4 +269,14 @@
       $('#c_project_show').html('<iframe src="<%= rails_blob_path(@project.presentation, disposition: :inline) %>" ></iframe>')
     })
 <% end %>
+
+    $('#edit_contest_project_button').unbind().click(function(){
+      c_project_id = $(this).data('project');
+      $.ajax({
+        method: 'GET',
+        url: '/contest/contests/new',
+        data: { type: 'edit', c_project_id: c_project_id },
+        dataType: 'script'
+      })
+    })
   </script>

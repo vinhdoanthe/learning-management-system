@@ -21,7 +21,8 @@
                     <% else %>
                       <img src="/contest/upload/week_1.jpg" alt="image">
                     <% end %>
-                    <span class="c-week-item__title">Tuần <%= topic.week_number %>, Tháng <%= topic.start_time.strftime('%m/%Y') %></span>
+                    <% week_number = topic.start_time.day / 7 %>
+                    <span class="c-week-item__title">Tuần <%= week_number %>, Tháng <%= topic.start_time.strftime('%m/%Y') %></span>
                     <span class="c-week-item__more">
                       <img src="/contest/images/week-all.png" alt="all">
                     </span>
@@ -49,16 +50,6 @@
                 <input class="form-control end-date" type="text" placeholder="Đến ngày" aria-label="Đến ngày">
               </div>
             </li>
-
-            <!-- <li>
-              <label>Theo thời gian</label>
-              <select class="form-control" id="select_project_topic">
-                <option value='all' >Tất cả sản phẩm</option>
-                <%# @contest.contest_topics.where(start_time: Time.now.beginning_of_month..Time.now.end_of_month).each do |topic| %>
-                  <option value="<%#= topic.id %>">Tuần <%#= topic.week_number %>, tháng <%#= topic.start_time.strftime("%m/%Y") %></option>
-                <%# end %>
-              </select>
-            </li> -->
             <li>
               <% contest_company = get_contest_company @contest %>
               <label>Học viện Teky</label>

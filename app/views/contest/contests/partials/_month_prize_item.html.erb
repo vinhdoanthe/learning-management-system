@@ -16,7 +16,8 @@
           <div class="c-winner-item">
             <div class="c-winner-item__thumb">
               <a href="/contest/contest_projects/show/<%= c_project.id %>">
-                  <img src="/contest/upload/winner_1.jpg" alt="image">
+                <% s_project = SocialCommunity::ScStudentProject.where(id: c_project.project_id).first %>
+                <%= (Contest::ContestDecorator.new(s_project).display_project_thumbnail "/contest/upload/winner_1.jpg" )&.html_safe %>
               </a>
             </div>
             <div class="c-winner-item__content">

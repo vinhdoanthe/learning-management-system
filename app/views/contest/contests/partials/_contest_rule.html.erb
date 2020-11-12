@@ -2,12 +2,12 @@
   <div class="container">
     <div class="c-box is-middle">
       <div class="c-box__title">
-        <div class="c-box__title__name"><span>Thể lệ</span>Giải thưởng cuộc thi</div>
+        <div class="c-box__title__name"><span><%= t('Contest.Menu.Rule') %></span><%= t('Contest.Award.Name') %></div>
         <div class="c-box__title__shadow">Contest Rules</div>
       </div>
       <div class="c-box__desc">
-        Sản phẩm
-        <b class="h-text__underline">dự thi hợp lệ</b>
+        <%= t('Contest.Products.name') %>
+        <b class="h-text__underline"><%= t('Contest.Valid') %></b>
         là sản phẩm có đầy đủ những thông tin bao gồm
       </div>
       <div class="c-box__content">
@@ -17,7 +17,7 @@
               <div class="c-rules-item">
                 <div class="c-rules-item__number"><img src="/contest/upload/number-1.svg" alt="1"></div>
                 <div class="c-rules-item__row">
-                  <div class="c-rules-item__title">Thông tin tham dự</div>
+                  <div class="c-rules-item__title"><%= t('Contest.Attendance infomation') %></div>
                 </div>
                 <div class="c-rules-item__row"><%= @contest.rule_atendance_information&.html_safe %></div>
                 <div class="c-rules-item__row"><i class="icon48-info"></i></div>
@@ -27,7 +27,7 @@
               <div class="c-rules-item">
                 <div class="c-rules-item__number"><img src="/contest/upload/number-2.svg" alt="1"></div>
                 <div class="c-rules-item__row">
-                  <div class="c-rules-item__title">Mô tả sản phẩm</div>
+                  <div class="c-rules-item__title"><%= t('Contest.Content.Rule product description') %></div>
                 </div>
                 <div class="c-rules-item__row"><%= @contest.rule_product_description&.html_safe %></div>
                 <div class="c-rules-item__row"><i class="icon48-desc"></i></div>
@@ -37,7 +37,7 @@
               <div class="c-rules-item">
                 <div class="c-rules-item__number"><img src="/contest/upload/number-3.svg" alt="1"></div>
                 <div class="c-rules-item__row">
-                  <div class="c-rules-item__title">Nộp bài dự thi</div>
+                  <div class="c-rules-item__title"><%= t('Contest.Menu.Submit_project') %></div>
                 </div>
                 <div class="c-rules-item__row"><%= @contest.rule_submission_entries&.html_safe %></div>
                 <div class="c-rules-item__row"><i class="icon48-sent"></i></div>

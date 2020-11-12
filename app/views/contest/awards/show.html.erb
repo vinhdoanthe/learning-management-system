@@ -4,8 +4,9 @@
   image: request.base_url + "/contest/upload/award-blank.png",
 }                     
 %>
+<%= render 'contest/partials/header', { contest: @contest, transparent: '', active: 'award' } %>
 <div class="c-block bg-border">
-  <div class="container">
+  <div class="container" style='margin-top: 50px'>
     <div class="c-box is-middle">
       <div class="c-box__title">
         <div class="c-box__title__name"><span>Sản phẩm</span>Đạt giải <%= @prize == 'm' ? 'Tháng' : 'Tuần' %></div>
@@ -21,6 +22,7 @@
     </div>
   </div>
 </div>
+<%= render "contest/partials/footer", contest: @contest %>
 
 <script>
   $(document).on('click', '.download-certificate', function(){
@@ -36,3 +38,4 @@
     });
   })
 </script>
+

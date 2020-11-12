@@ -1,5 +1,5 @@
 class Contest::ContestTopic < ApplicationRecord
-  after_create :set_number_week
+  after_update :set_number_week
   after_create :check_status
 
   self.table_name = 'tk_contest_topics'

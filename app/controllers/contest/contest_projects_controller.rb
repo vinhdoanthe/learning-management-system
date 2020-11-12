@@ -9,6 +9,7 @@ class Contest::ContestProjectsController < ApplicationController
   def show
     @c_project = Contest::ContestProject.where(id: params[:id]).first
     @contest = @c_project.contest
+    @topic = @c_project.contest_topic
     views = @c_project.views
     @c_project.update(views: views + 1)
     @project = @c_project.student_project
@@ -31,6 +32,17 @@ class Contest::ContestProjectsController < ApplicationController
     other_projects.each do |p|
       name = p.student_project&.name
       @other_projects << { project: p, project_name: name }
+    end
+  end
+
+  def update
+    @params = SocialCommunity::ScStudentProjectsService.new.handling_params params
+    result = SocialCommunity::ScStudentProjectsService.new.update_student_project @params
+    #update student project
+
+    respond_to do |format|
+      format.html
+      format.js { render 'contest/contest_projects/update_response', locals: result }
     end
   end
 
