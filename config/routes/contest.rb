@@ -13,6 +13,7 @@ namespace :contest do
   end
 
   namespace :contest_projects do
+    post 'update', action: 'update'
     get 'show/:id', action: 'show'
     post "submit_contest_project", action: "submit_contest_project"
     post "marking_project", action: "marking_project"

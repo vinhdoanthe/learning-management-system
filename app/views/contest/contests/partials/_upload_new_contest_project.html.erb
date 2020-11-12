@@ -3,6 +3,7 @@
   <div class='card-body'>
     <%= form_with model: project, url: url, remote: true, format: :js, method: :post, html: { class:'edit_student_project_form', id: "edit_student_project_form" } do |f| %>
       <%= hidden_field_tag "topic_id", topic.id %>
+      <%= hidden_field_tag "project_id", project.id %>
       <div class='row' style="display: none">
         <div class='col-md-3'>
           <label>Loại sản phẩm<span style="color: red">*</span></label>
@@ -156,3 +157,13 @@
 </div>
 <%= stylesheet_link_tag "social_community/student_project_form.css" %>
 <%= javascript_include_tag "social_community/sc_student_projects/student_project_form.js" %>
+<style>
+#upload_project_thumbnail_preview img {
+  max-width: 200px;
+  max-height: 200px;
+}
+</style>
+<script>
+  $("#edit_student_project_form").bind('ajax:complete', function() {
+   });
+</script>

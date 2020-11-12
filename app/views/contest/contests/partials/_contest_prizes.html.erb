@@ -2,7 +2,7 @@
   <div class="container">
     <div class="c-box is-middle">
       <div class="c-box__title">
-        <div class="c-box__title__name"><span>Hạng mục</span>Giải thưởng</div>
+        <div class="c-box__title__name"><span><%= t('Contest.Menu.Categories') %></span><%= t('Contest.Award.sort_name') %></div>
         <div class="c-box__title__shadow">Prize</div>
       </div>
       <div class="c-box__content">
@@ -14,7 +14,7 @@
                   <figure><img src="/contest/upload/prize_1.png" alt="img"></figure>
                 </div>
                 <div class="c-prize-item__content">
-                  <div class="c-prize-item__label">Trị giá giải thưởng</div>
+                  <div class="c-prize-item__label"><%= t('Contest.Award.prize_value') %></div>
                   <div class="c-prize-item__price"><%= number_with_delimiter(week_prize&.student_price.to_i * 1000 + week_prize&.teacher_price.to_i * 1000) %><sup>đ</sup></div>
                   <div class="c-prize-item__desc">
                     <p><b><%= number_with_delimiter(week_prize&.student_price.to_i * 1000) %></b>

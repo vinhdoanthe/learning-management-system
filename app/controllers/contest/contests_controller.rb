@@ -45,6 +45,17 @@ class Contest::ContestsController < ApplicationController
         flash[:danger] = "Bạn chưa tham gia lớp học nào!"
         redirect_to root_path 
       end
+
+      if params[:type] == 'edit' && params[:c_project_id].present?
+        @c_project = Contest::ContestProject.where(id: params[:c_project_id]).first
+        @project = SocialCommunity::ScStudentProject.where(id: @c_project.project_id).first
+        @topic = @c_project.contest_topic
+
+        respond_to do |format|
+          format.html
+          format.js { render 'contest/contest_projects/edit' }
+        end
+      end
     end
   end
 

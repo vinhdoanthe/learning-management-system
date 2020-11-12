@@ -18,7 +18,7 @@ $(document).ready(function(){
     }
   })
 
-  $('#create-contest-topic-confirm').click(function(){
+  $('#create-contest-topic-confirm').unbind().click(function(){
     var data = new FormData();
     topic_id = $(this).data('topic')
     data.append('topic_id', topic_id);

@@ -59,15 +59,20 @@ class Contest::ContestDecorator < SimpleDelegator
     display
   end
 
-  def display_project_thumbnail
+  def display_project_thumbnail *img
+    default_img = if img.present?
+                    img[0]
+                  else
+                    '/contest/upload/product-small_2.jpg'
+                  end
     display = ''
 
-    if thumbnail.present?
-      display = "<img src='#{ thumbnail }'" 
-    elsif image.attached?
+    if image.attached?
       display = "<img src='" + rails_blob_path(image, disposition: "attachment", only_path: true) + "'>"
+    elsif thumbnail.present?
+      display = "<img src='#{ thumbnail }'" 
     else
-      display = "<img src='/contest/upload/product-small_2.jpg' alt='product'>"
+      display = "<img src=#{ default_img } alt='product'>"
     end
 
     display

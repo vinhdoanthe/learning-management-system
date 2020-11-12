@@ -30,13 +30,13 @@
     <!-- c-box-->
     <div class="c-box is-middle">
       <div class="c-box__title">
-        <div class="c-box__title__name"><span>Bảng xếp hạng</span>Tuần này</div>
+        <div class="c-box__title__name"><span><%= t('Contest.Award.board') %></span><%= t('Contest.Time.This week') %></div>
         <div class="c-box__title__shadow">Leader</div>
       </div>
       <div class="c-box__desc"><b>TOP</b>
-        sản phẩm được ưa thích trong
-        <b>tuần <%= get_week_of_month Time.now %></b>
-        tháng <%= Time.now.strftime('%m/%Y') %>
+        <%= t('Contest.Products.like') %> <%= t('Contest.Time.In') %>
+        <b><%= t('Contest.Time.Week') %> <%= get_week_of_month Time.now %></b>
+        <%= t('Contest.Time.Month') %> <%= Time.now.strftime('%m/%Y') %>
       </div>
       <div id="current-week-projects">
       </div>
@@ -44,13 +44,13 @@
     <!-- c-box-->
     <div class="c-box is-middle">
       <div class="c-box__title">
-        <div class="c-box__title__name"><span>Sản phẩm</span>Đạt giải tuần trước</div>
+        <div class="c-box__title__name"><span><%= t('Contest.Products.name') %></span><%= t('Contest.Award.Awarded') %> <%= t('Contest.Time.Last week') %></div>
         <div class="c-box__title__shadow">Winers</div>
       </div>
       <div class="c-box__desc">
-        Các sản phẩm được ưa thích trong
-        <b>tuần <%= get_week_of_month (Time.now - 1.week) %></b>
-        tháng <%= (Time.now - 1.week).strftime("%m/%Y") %>
+        <%= t('Contest.Products.like') %> <%= t('Contest.Time.In') %>
+        <b><%= t('Contest.Time.Week') %> <%= get_week_of_month (Time.now - 1.week) %></b>
+        <%= t('Contest.Time.Month') %> <%= (Time.now - 1.week).strftime("%m/%Y") %>
       </div>
       <div id="last-week-projects">
       </div>

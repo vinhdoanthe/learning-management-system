@@ -410,6 +410,8 @@ vi:
     Contest slider: 'Ảnh cuộc thi'
     Contest: "Cuộc thi"
     Choose: "Chọn"
+    Valid: 'dự thi hợp lệ'
+    Attendance infomation: 'Thông tin tham dự'
     Menu:
       Home: 'Trang chủ'
       Rule: 'Thể lệ'
@@ -423,6 +425,7 @@ vi:
       About_us: 'Về chúng tôi'
       Contact: 'Liên hệ'
       Sign_receive_info: 'Đăng ký nhận tin'
+      Categories: 'Hạng mục'
 
     Content:
       Rule info: "Nhập quy định thể lệ"
@@ -444,6 +447,7 @@ vi:
       Status: "Trạng thái"
       w: "Tuần"
       m: "Tháng"
+      Introduction: 'Giới thiệu cuộc thi'
     Topic:
       sort_name: 'Chủ đề'
       List: "Danh sách chủ đề"
@@ -479,6 +483,7 @@ vi:
       won_week_prize: "Đạt giải nhất tuần"
       won_month_prize: "Đạt giải nhất tháng"
     Products:
+      name: 'Sản phẩm'
       Attendance products: 'Sản phẩm tham dự cuộc thi'
       back: "Quay lại"
       Contest products: "Sản phẩm dự thi"
@@ -491,6 +496,7 @@ vi:
       show_all: "Xem toàn bộ"
       other_project: "Sản phẩm khác của"
       friend_project: "Sản phẩm của bạn khác"
+      like: 'sản phẩm được ưa thích'
     Criterion:
       Choose criterion: "Chọn tiêu chí đánh giá sản phẩm trong chủ đề này"
       Name: "Tên tiêu chí"
@@ -499,4 +505,15 @@ vi:
     Certification:
       show: "Xem chứng chỉ"
     Award:
+      sort_name: 'Giải thưởng'
+      Name: 'Giải thưởng cuộc thi'
+      Awarded: 'Đạt giải'
       share: 'Chia sẻ lên facebook'
+      board: 'Bảng xếp hạng'
+      prize_value: 'Giá trị giải thưởng'
+    Time:
+      This week: 'Tuần này'
+      Lasth week: 'tuần trước'
+      Week: 'tuần'
+      Month: 'tháng'
+      In: 'trong'
