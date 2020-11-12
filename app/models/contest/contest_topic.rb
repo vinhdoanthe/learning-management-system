@@ -1,5 +1,5 @@
 class Contest::ContestTopic < ApplicationRecord
-  after_update :set_number_week
+  before_update :set_number_week
   after_create :check_status
 
   self.table_name = 'tk_contest_topics'
@@ -17,7 +17,6 @@ class Contest::ContestTopic < ApplicationRecord
   def set_number_week
     self.week_number = (self.start_time.strftime('%d').to_i / 7) + 1
     self.week_number = 4 if self.week_number == 5
-    save
   end
 
   def check_status

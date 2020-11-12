@@ -3,7 +3,7 @@ namespace :contest do
   desc 'Update like share for contest projects'
   task :update_like_share, [] => :environment do |t, args|
     contests = Contest::Contest.where(is_publish: true)
-    active_contest = contests.where(default: true).first
+    active_contest = [contests.where(default: true).first]
     # topics = active_contest.contest_topics
 
     # if topics.present?

@@ -104,9 +104,9 @@ class Contest::ContestsService
     contest = Contest::Contest.where(id: params[:contest_id]).first
 
     if params[:topic_id].blank?
-      projects  = Contest::ContestProject.where(contest_id: contest.id, created_at: start_time..end_time)
+      projects  = contest.contest_projects.where(contest_id: contest.id, created_at: start_time..end_time)
     else
-      projects  = Contest::ContestProject.where(contest_id: contest.id, contest_topic_id: params[:topic_id])
+      projects  = contest.contest_projects.where(contest_id: contest.id, contest_topic_id: params[:topic_id])
     end
 
     projects = projects.joins(student_project: { op_student: :res_company }).where(res_company: { id: params[:company_id] }) if params[:company_id] != 'all'

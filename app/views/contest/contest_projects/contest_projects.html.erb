@@ -21,7 +21,7 @@
                     <% else %>
                       <img src="/contest/upload/week_1.jpg" alt="image">
                     <% end %>
-                    <% week_number = topic.start_time.day / 7 %>
+                    <% week_number = topic.start_time.day / 7 + 1%>
                     <span class="c-week-item__title">Tuần <%= week_number %>, Tháng <%= topic.start_time.strftime('%m/%Y') %></span>
                     <span class="c-week-item__more">
                       <img src="/contest/images/week-all.png" alt="all">
