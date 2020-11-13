@@ -60,7 +60,7 @@ class Contest::ContestDecorator < SimpleDelegator
   end
 
   def display_project_thumbnail *img
-    return '/contest/upload/product-small_2.jpg' if __getobj__.blank?
+    return "<img src='/contest/upload/product-small_2.jpg' >" if __getobj__.blank?
     default_img = if img.present?
                     img[0]
                   else
