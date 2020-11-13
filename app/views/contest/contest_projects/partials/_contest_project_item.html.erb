@@ -1,6 +1,6 @@
 <div class="b-grid">
   <div class="b-grid__img">
-    <% s_project = SocialCommunity::ScStudentProject.where(id: project[:project].id).first %>
+    <% s_project = SocialCommunity::ScStudentProject.where(id: project[:project].project_id).first %>
     <a href="/contest/contest_projects/show/<%= project[:project][:id] %>">
       <%= Contest::ContestDecorator.new(s_project).display_project_thumbnail.html_safe %>
     </a>
