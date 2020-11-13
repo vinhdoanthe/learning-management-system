@@ -1,0 +1,16 @@
+<div class="modal-dialog" style="width: 80%" role="document">
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Edit sản phẩm dự thi</h4>
+    </div>
+    <div class="modal-body">
+      <%= render partial: 'contest/contests/partials/upload_new_contest_project', locals: { project: project, url: '/contest/contest_projects/update', topic: topic } %>
+    </div>
+    <div class="modal-footer">
+      <input type='submit' form='edit_student_project_form' remote="true" class='btn btn-primary edit_student_project_form_submit' value='Cập nhật'>
+      <button data-dismiss="modal" type="button" class="btn btn-secondary close-modal">Đóng</button>
+    </div>
+  </div>
+</div>

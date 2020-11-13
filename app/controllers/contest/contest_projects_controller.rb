@@ -38,11 +38,10 @@ class Contest::ContestProjectsController < ApplicationController
   def update
     @params = SocialCommunity::ScStudentProjectsService.new.handling_params params
     result = SocialCommunity::ScStudentProjectsService.new.update_student_project @params
-    #update student project
 
     respond_to do |format|
       format.html
-      format.js { render 'contest/contest_projects/update_response', locals: result }
+      format.js { render 'contest/contest_projects/update_response', locals: { result: result } }
     end
   end
 

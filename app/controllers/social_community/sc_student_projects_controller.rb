@@ -82,7 +82,16 @@ class SocialCommunity::ScStudentProjectsController < ApplicationController
   end
 
   def social_student_projects
-    @student_projects = SocialCommunity::ScStudentProject.where(user_id: current_user.id)
+    student_projects = SocialCommunity::ScStudentProject.where(user_id: current_user.id)
+    contest_project_ids = Contest::ContestProject.where(user_id: current_user.id).pluck(:project_id, :contest_id).uniq
+
+    @hash = {}
+    contest_project_ids.each do |p_id, c_id|
+      @hash.merge! ({ p_id => c_id })
+    end
+
+    @contest_projects = student_projects.where(id: @hash.keys)
+    @student_projects = student_projects.where.not(id: @hash.keys)
     course_ids = SocialCommunity::ScStudentProject.pluck(:course_id).uniq
     @courses = Learning::Course::OpCourse.where(id: course_ids).pluck(:id, :name)
     @project_type = [["Sản phẩm cuối buổi", SocialCommunity::Constant::ScStudentProject::ProjectType::SESSION_PROJECT], ["Sản phẩm cuối khoá", SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT]]

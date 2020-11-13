@@ -46,8 +46,8 @@ class Contest::ContestsController < ApplicationController
         redirect_to root_path 
       end
 
-      if params[:type] == 'edit' && params[:c_project_id].present?
-        @c_project = Contest::ContestProject.where(id: params[:c_project_id]).first
+      if params[:type] == 'edit' && params[:project_id].present?
+        @c_project = Contest::ContestProject.where(project_id: params[:project_id]).first
         @project = SocialCommunity::ScStudentProject.where(id: @c_project.project_id).first
         @topic = @c_project.contest_topic
 
@@ -99,7 +99,11 @@ class Contest::ContestsController < ApplicationController
   private
 
   def find_contest
-    @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
+    if params[:contest_alias].present?
+      @contest = Contest::Contest.where(alias_name: params[:contest_alias]).first
+    elsif params[:contest_id].present?
+      @contest = Contest::Contest.where(id: params[:contest_id]).first
+    end
 
     redirect_to root_path if @contest.blank?
   end

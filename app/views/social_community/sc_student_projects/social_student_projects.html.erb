@@ -15,8 +15,11 @@
       </div>
     </div>
   </div>
-  <%= render "social_community/sc_student_projects/partials/student_projects", { student_projects: @student_projects} %>
-  <div class="panel-content">
+  <div style="margin-bottom: 30px">
+    <%= render "social_community/sc_student_projects/partials/student_projects", { student_projects: @contest_projects, hash: @hash, title: 'Sản phẩm tham gia cuộc thi' } %>
+  </div>
+  <%= render "social_community/sc_student_projects/partials/student_projects", { student_projects: @student_projects, hash: {}, title: 'Sản phẩm của tôi' } %>
+  <div class="panel-content panel">
     <div class="box-product">
       <div class="fc-header">
         <h3><%= t('social_community.social_project_html') %></h3>
@@ -52,24 +55,24 @@
             </div>
             <div class='row' style="margin-top: 10px; margin-bottom: 10px; display: flex">
               <div style="margin-left: auto">
-              <div class="" style="margin-left: auto; display: inline-block; margin-right: 30px;">
-                <label class="filter_label">Có slide
-                  <input type="checkbox" name="filter_project_presentation">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <div class="" style="margin-left: auto; display: inline-block; margin-right: 30px;">
-                <label class="filter_label">Có video
-                  <input type="checkbox" name="filter_project_video_show">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <div class="" style="margin-left: auto; display: inline-block; margin-right: 30px; padding-right: 15px; ">
-                <label class="filter_label">Có sản phẩm
-                  <input type="checkbox" name="filter_project_link">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
+                <div class="" style="margin-left: auto; display: inline-block; margin-right: 30px;">
+                  <label class="filter_label">Có slide
+                    <input type="checkbox" name="filter_project_presentation">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="" style="margin-left: auto; display: inline-block; margin-right: 30px;">
+                  <label class="filter_label">Có video
+                    <input type="checkbox" name="filter_project_video_show">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="" style="margin-left: auto; display: inline-block; margin-right: 30px; padding-right: 15px; ">
+                  <label class="filter_label">Có sản phẩm
+                    <input type="checkbox" name="filter_project_link">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -87,9 +90,9 @@
   </div>
 </div>
 </div>
-<div id="studentProjectDetail" class="modal fade" role="dialog">
+<div id="studentProjectDetail" class="modal" role="dialog">
 </div>
-<div id="editStudentProjectDetail" class="modal fade" role="dialog">
+<div id="editStudentProjectDetail" class="modal" role="dialog">
 </div>
 <style>
 #social_student_projects_filter{
@@ -144,39 +147,39 @@
   padding-top: 0 !important;
 }
 </style>
-  <script>
-    $('#filter_course_projects').select2();
-    $('#filter_subject_projects').select2();
-    $('#filter_project_type').select2();
-    $('#no_student_project').hide();
+<script>
+  $('#filter_course_projects').select2();
+$('#filter_subject_projects').select2();
+$('#filter_project_type').select2();
+$('#no_student_project').hide();
 
-    $('#social_student_projects_filter').on('change', '#filter_course_projects', function(){
-      $('.paginator').hide();
-      $('.next_page_projects').hide();
-      $('.prev_page_projects').hide();
-      $('#loading_div').show();
-      $('#social_student_projects_content').hide();
-      data = getDataFilter(0);
-      getSocialStudentProject(data);
-    })  
-    
-    $('#social_student_projects_filter').on('change', '#filter_subject_projects', function(){
-      $('.paginator').hide()
-      $('.next_page_projects').hide();
-      $('.prev_page_projects').hide();
-      $('#loading_div').show();
-      $('#social_student_projects_content').hide();
-      data = getDataFilter(0);
-      getSocialStudentProject(data);
-    })  
+$('#social_student_projects_filter').on('change', '#filter_course_projects', function(){
+  $('.paginator').hide();
+  $('.next_page_projects').hide();
+  $('.prev_page_projects').hide();
+  $('#loading_div').show();
+  $('#social_student_projects_content').hide();
+  data = getDataFilter(0);
+  getSocialStudentProject(data);
+})  
 
-    $('#social_student_projects_filter').on('change', '#filter_project_type', function(){
-      $('.paginator').hide()
-      $('.next_page_projects').hide();
-      $('.prev_page_projects').hide();
-      $('#loading_div').show();
-      $('#social_student_projects_content').hide();
-      data = getDataFilter(0);
-      getSocialStudentProject(data);
-    })
-  </script>
+$('#social_student_projects_filter').on('change', '#filter_subject_projects', function(){
+  $('.paginator').hide()
+  $('.next_page_projects').hide();
+  $('.prev_page_projects').hide();
+  $('#loading_div').show();
+  $('#social_student_projects_content').hide();
+  data = getDataFilter(0);
+  getSocialStudentProject(data);
+})  
+
+$('#social_student_projects_filter').on('change', '#filter_project_type', function(){
+  $('.paginator').hide()
+  $('.next_page_projects').hide();
+  $('.prev_page_projects').hide();
+  $('#loading_div').show();
+  $('#social_student_projects_content').hide();
+  data = getDataFilter(0);
+  getSocialStudentProject(data);
+})
+</script>

@@ -1,6 +1,3 @@
-<% binding.pry %>
 res = JSON.parse('<%= raw(result.to_json) %>');
-display_response_ni(res);
-<% if type == 'success' %>
-location.reload();
-<% end %>
+$('#editStudentProjectDetail').modal('hide');
+display_response_noti(res);
