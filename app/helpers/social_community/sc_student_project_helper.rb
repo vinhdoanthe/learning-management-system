@@ -12,5 +12,17 @@ module SocialCommunity
       check = project_hash.each{ |k,v| check << k if v.present? }
       check.present?
     end
+
+    def student_can_edit_project? project, user
+      return false if project.user_id != user.id
+
+      c_project = Contest::ContestProject.where(project_id: project.id).first
+      return false if c_project.blank?
+
+      topic = c_project.contest_topic
+      return false if topic.blank?
+
+      Time.now > topic.start_time && Time.now < topic.end_time
+    end
   end
 end

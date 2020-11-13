@@ -100,6 +100,18 @@ $(document).ready(function(){
     })
   })
 
+  $('.edit_contest_project').unbind().click(function(){
+    $('#upload_student_project_modal').html();
+    project_id = $(this).data('project');
+    contest_id = $(this).data('contest');
+    $.ajax({
+      method: 'GET',
+      url: '/contest/contests/new',
+      data: { type: 'edit', project_id: project_id, contest_id: contest_id },
+      dataType: 'script'
+    })
+  })
+
   $('.public_project').click(function(){
     project_id = $(this).data('project');
     $.ajax({

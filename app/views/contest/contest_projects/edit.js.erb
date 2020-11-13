@@ -1,1 +1,2 @@
-$('#edit_contest_project_content').html(`<%= escape_javascript( render partial: 'contest/contests/partials/upload_new_contest_project', locals: { project: @project, url: '/contest/contest_projects/update', topic: @topic } ) %>`)
+$('#upload_student_project_modal').html('');
+$('#editStudentProjectDetail').html(`<%= escape_javascript( render partial: 'contest/contests/modals/edit_contest_project', locals: { project: @project, url: '/contest/contest_projects/update', topic: @topic } ) %>`)
