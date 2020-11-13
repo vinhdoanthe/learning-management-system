@@ -165,24 +165,7 @@
             <div class="c-product-other">
               <!-- <div class="b-grid"><i class="icon32-meday"></i> -->
               <% @relate_projects.each do |project| %>
-                <div class="b-grid">
-                  <div class="b-grid__img">
-                    <% s_project = SocialCommunity::ScStudentProject.where(id: project[:project].id).first %>
-                    <a href="/contest/contest_projects/show/<%= project[:project][:id] %>">
-                      <%= Contest::ContestDecorator.new(s_project).display_project_thumbnail&.html_safe %>
-                    </a>
-                  </div>
-                  <div class="b-grid__content">
-                    <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
-                    <div class="b-grid__row">
-                      <div class="b-grid__count">
-                        <ul>
-                          <%= Contest::ContestDecorator.new(project[:project]).display_like_share.html_safe %>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  <%= render '/contest/contest_projects/partials/contest_project_item', { project: project } %>
               <% end %>
               </div>
             </div>
@@ -194,24 +177,7 @@
             <div class="c-widget__content">
               <div class="c-product-other">
                 <% @other_projects.each do |project| %>
-                  <div class="b-grid">
-                    <div class="b-grid__img">
-                      <% s_project = SocialCommunity::ScStudentProject.where(id: project[:project].id).first %>
-                      <a href="/contest/contest_projects/show/<%= project[:project][:id] %>">
-                        <%= Contest::ContestDecorator.new(s_project).display_project_thumbnail&.html_safe %>
-                      </a>
-                    </div>
-                    <div class="b-grid__content">
-                      <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
-                      <div class="b-grid__row">
-                        <div class="b-grid__count">
-                          <ul>
-                            <%= Contest::ContestDecorator.new(project[:project]).display_like_share.html_safe %>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render 'contest/contest_projects/partials/contest_project_item', { project: project } %>
                 <% end %>
               </div>
             </div>
@@ -236,7 +202,7 @@
       </div>
       <div class="modal-footer">
         <div class="btn-group">
-        <input type='submit' data-remote='true' style="margin-left: auto; text-transform: uppercase; font-weight: 600" form='edit_student_project_form' class='btn btn-primary btn-embossed bg-5DC2A7 edit_student_project_form_submit' value='Cập nhật dự án dự thi'>&nbsp&nbsp
+        <input type='submit' data-remote='true' style="margin-left: auto; text-transform: uppercase; font-weight: 600" form='edit_student_project_form' class='btn btn-primary btn-embossed bg-5DC2A7 edit_student_project_form_submit' value='Cập nhật dự án dự thi'>&nbsp;&nbsp;
           <button type="button" style="margin-left: auto; text-transform: uppercase; font-weight: 600" class="btn btn-embossed btn-secondary btn-close" data-dismiss="modal"><i class="fas fa-ban"></i> <%= t('button.Close')%>
           </button>
         </div>

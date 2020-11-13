@@ -2,7 +2,16 @@ class Adm::Contest::ContestProjectsService
 
   def index_content params
     contest = Contest::Contest.where(id: params[:contest_id]).first
-    topic = Contest::ContestTopic.where(id: params[:topic_id]).first
+
+    if params[:topic_id].to_i != 0
+      topic = Contest::ContestTopic.where(id: params[:topic_id]).first
+      c_projects = topic.contest_projects
+    elsif params[:topic_id] == 'active'
+      topic = contest.contest_topics.where(status: 'active').first
+      c_projects = topic.contest_projects
+    else
+      c_projects = contest.contest_projects
+    end
 
     query = ''
 
@@ -10,12 +19,6 @@ class Adm::Contest::ContestProjectsService
       query += "res_company.id IN (#{ Contest::Constant::Region::MB.join(',') })"
     elsif params[:region] == 'MN'
       query += "res_company.id NOT IN (#{ Contest::Constant::Region::MB.join(',') })"
-    end
-
-    if topic.present?
-      c_projects = topic.contest_projects
-    else
-      c_projects = contest.contest_projects
     end
 
     c_projects_detail = {}

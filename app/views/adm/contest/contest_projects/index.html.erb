@@ -3,9 +3,9 @@
   <div class='card-body row'>
     <div class="col-md-6">
       <div class="form-group">
-        <label>contest</label>
+        <label><%= t('Contest.Contest') %></label>
         <select class="form-control select2" style="width: 100%;" id="select_contest">
-          <option value="all">Tất cả</option>
+          <option value="all"><%= t('Contest.all') %></option>
           <% @contests.each do |contest| %>
             <% if contest.id == @contest.id %>
               <option value="<%= contest.id %>" selected="selected"><%= contest.name %></option>
@@ -18,8 +18,10 @@
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <label>Contest Topic</label>
+        <label><%= t('Contest.Content.Contest topics') %></label>
         <select class="form-control select2" style="width: 100%;" id="select_topic">
+          <option value='all'><%= t('Contest.all') %></option>
+          <option value='active'><%= t('Contest.being') %></option>
           <% @topics.each do |topic| %>
             <option value="<%= topic.id %>"><%= topic.name %></option>
           <% end %>
@@ -28,17 +30,17 @@
     </div>
     <div class='col-md-6'>
       <div class="form-group">
-        <label>Region</label>
+        <label><%= t('Contest.Content.Region') %></label>
         <select id="select_region" class="form-control select2" style="width: 100%;">
-          <option value='all'>Tat ca </option>
-          <option value="MB">Mien bac</option>
-          <option value="MN">Mien Nam</option>
+          <option value='all'><%= t('Contest.all') %></option>
+          <option value="MB"><%= t('Contest.Region.northern') %></option>
+          <option value="MN"><%= t('Contest.Region.south') %></option>
         </select>
       </div>
     </div>
   </div>
   <div class='card-footer'>
-    <button type="button" class="btn btn-primary float-right" id="filter-contest-project">Loc</button>
+    <button type="button" class="btn btn-primary float-right" id="filter-contest-project"><%= t('button.filter') %></button>
   </div>
 </div>
 <div id="adm_project_index">

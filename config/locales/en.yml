@@ -356,7 +356,12 @@ en:
       Contact: 'Contact'
       Sign_receive_info: 'Sign up for recieve info'
 
-    Product:
+    Products:
+      name: 'Project'
+      Project name: "Project's name"
+      Attendance products: 'Contest Projects'
+      back: "Back"
+      Contest products: "Contest's Product"
       document: "Document"
       presentation: "Presentation"
       video: 'Video'
@@ -366,3 +371,38 @@ en:
       show_all: "Show all"
       other_project: "Other projects"
       friend_project: "Friend's projects"
+      like: 'preferred product'
+      Submit time: "Submit Time"
+      Reaction Point: "Vote Point"
+      Valid: "Valid"
+      Marking: "Judge's point"
+      Not Update: "Update yet"
+    Criterion:
+      Choose criterion: "Chọn criterion"
+      Name: "Criterion's name"
+      Point: "Exchange point"
+      Description: "Description"
+    Certification:
+      show: "Show Certification"
+    Award:
+      sort_name: 'Award'
+      Name: "Contest's Award"
+      Awarded: 'Awarded'
+      share: 'Share on facebook'
+      board: 'Leader board'
+      prize_value: 'Prize value'
+    Time:
+      This week: 'Current Week'
+      Lasth week: 'Last Week'
+      Week: 'Week'
+      Month: 'Month'
+      In: 'In'
+    Region:
+      south: 'South'
+      northern: "Northern"
+    Event:
+      Name: "Event's name"
+      name: "Event's name"
+      thumbnail: "Event's thumnail"
+      link: 'Link'
+      choose_file: 'Chọn tập tin'

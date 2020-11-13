@@ -1,55 +1,36 @@
-<div class="modal-dialog modal-xl">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="card-title text-info"><label>Contest Event</label>: <span class="text-primary"></span></h4>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
+<form role="form">
+  <div class="card-body">
+    <div class="form-group">
+      <label for="event_name"><%= t('Contest.Event.name') %></label>
+      <input type="text" class="form-control" value='<%= event&.name %>' id="event_name" placeholder="<%= t('Contest.Event.name') %>">
     </div>
-    <div class="modal-body" >
-      <form role="form">
-        <div class="card-body">
-          <div class="form-group">
-            <label for="event_name">Tên sự kiện</label>
-            <input type="text" class="form-control" value='<%= event&.name %>' id="event_name" placeholder="Enter name">
-          </div>
-          <div class="form-group">
-            <label for="event_link">Link sự kiện</label>
-            <input type="text" class="form-control" value='<%= event&.link %>' id="event_link" placeholder="Event Link">
-          </div>
-          <!-- <div class="input-group">
-            <label style="display: block";>Thời gian bắt đầu:</label>
-            <div class="input-group-prepend">
-              <span class="input-group-text">
-                <i class="far fa-calendar-alt"></i>
-              </span>
-            </div>
-            <input type="text" class="form-control float-right" id="event_time">
-          </div> -->
-          <div class="form-group">
-            <label for="exampleInputFile">Ảnh sự kiện</label>
-            <div class="input-group">
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="event-thumbnail">
-                <label class="custom-file-label" for="event-thumbnail">Choose file</label>
-              </div>
-            </div>
-          </div>
-          <div id="event_thumbnail_preview">
-            <% if event.thumbnail&.attached? %>
-              <%= image_tag event.thumbnail, style: "width: 200px; height: 200px" %>
-            <% end %>
+    <div class="form-group">
+      <label for="event_link"><%= t('Contest.Event.link') %></label>
+      <input type="text" class="form-control" value='<%= event&.link %>' id="event_link" placeholder="<%= t('Contest.Event.link') %>">
+    </div>
+    <!-- <div class="input-group">
+      <label style="display: block";>Thời gian bắt đầu:</label>
+      <div class="input-group-prepend">
+      <span class="input-group-text">
+      <i class="far fa-calendar-alt"></i>
+      </span>
+      </div>
+      <input type="text" class="form-control float-right" id="event_time">
+      </div> -->
+      <div class="form-group">
+        <label for="exampleInputFile"><%= t('Contest.Event.thumbnail') %></label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="event-thumbnail">
+            <label class="custom-file-label" for="event-thumbnail"><%= t('Contest.Event.choose_file') %></label>
           </div>
         </div>
-        <input type='hidden' value="<%= event.id %>" name="event-id">
-      </form> 
-    </div>
-    <div class="modal-footer">
-      <div class="btn-group">
-        <button type='button' data-dismiss="modal" id="update_contest_event_confirm" class="btn btn-default btn-sm bg-olive" ><i class="fas fa-save"></i>&nbsp;<%= t('button.Save')%></button>&nbsp;&nbsp;
-        <button type="button" class="btn btn-default btn-sm btn-close" data-dismiss="modal"><i class="fas fa-ban"></i> <%= t('button.Close')%>
-      </button>
       </div>
-    </div>
+      <div id="event_thumbnail_preview">
+        <% if event.thumbnail&.attached? %>
+          <%= image_tag event.thumbnail, style: "width: 200px; height: 200px" %>
+        <% end %>
+      </div>
   </div>
-</div>
+  <input type='hidden' value="<%= event.id %>" name="event-id">
+</form> 
