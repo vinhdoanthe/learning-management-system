@@ -1,0 +1,18 @@
+<div class="b-grid">
+  <div class="b-grid__img">
+    <% s_project = SocialCommunity::ScStudentProject.where(id: project[:project].id).first %>
+    <a href="/contest/contest_projects/show/<%= project[:project][:id] %>">
+      <%= Contest::ContestDecorator.new(s_project).display_project_thumbnail&.html_safe %>
+    </a>
+  </div>
+  <div class="b-grid__content">
+    <div class="b-grid__row"><a class="b-grid__title" href="/contest/contest_projects/show/<%= project[:project][:id] %>"><%=project[:project_name] %></a></div>
+    <div class="b-grid__row">
+      <div class="b-grid__count">
+        <ul>
+          <%= Contest::ContestDecorator.new(project[:project]).display_like_share.html_safe %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -412,6 +412,8 @@ vi:
     Choose: "Chọn"
     Valid: 'dự thi hợp lệ'
     Attendance infomation: 'Thông tin tham dự'
+    all: 'Tất cả'
+    being: 'Đang diễn ra'
     Menu:
       Home: 'Trang chủ'
       Rule: 'Thể lệ'
@@ -484,6 +486,7 @@ vi:
       won_month_prize: "Đạt giải nhất tháng"
     Products:
       name: 'Sản phẩm'
+      Project name: "Tên sản phẩm"
       Attendance products: 'Sản phẩm tham dự cuộc thi'
       back: "Quay lại"
       Contest products: "Sản phẩm dự thi"
@@ -497,6 +500,11 @@ vi:
       other_project: "Sản phẩm khác của"
       friend_project: "Sản phẩm của bạn khác"
       like: 'sản phẩm được ưa thích'
+      Submit time: "Thời gian nộp bài"
+      Reaction Point: "Điểm bình chọn"
+      Valid: "Hợp lệ"
+      Marking: 'Chấm điểm'
+      Not Update: "Chưa cập nhật"
     Criterion:
       Choose criterion: "Chọn tiêu chí đánh giá sản phẩm trong chủ đề này"
       Name: "Tên tiêu chí"
@@ -517,3 +525,12 @@ vi:
       Week: 'tuần'
       Month: 'tháng'
       In: 'trong'
+    Region:
+      south: 'Miền Nam'
+      northern: "Miền Bắc"
+    Event:
+      Name: 'Tin cuộc thi' 
+      name: 'Tên sự kiện'
+      thumbnail: 'Ảnh mô tả'
+      link: 'Link'
+      choose_file: 'Chọn tập tin'

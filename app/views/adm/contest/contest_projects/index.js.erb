@@ -1,3 +1,2 @@
 $('#adm_project_index').html("<%= escape_javascript( render partial: 'adm/contest/contest_projects/partials/index', locals: {contest: contest, topic: topic, c_projects: c_projects, projects: projects } ) %>")
 $('input[name="active-contest"]').val("<%= contest.id %>")
-$('input[name="active-topic"]').val("<%= topic.id %>")
