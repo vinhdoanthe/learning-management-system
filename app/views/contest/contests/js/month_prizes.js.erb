@@ -1,7 +1,7 @@
 $('#contest_month_prize').html(`<%= escape_javascript ( render partial: 'contest/contests/partials/month_prize_item', locals: { month_projects: month_projects, contest: contest }) %>`)
 $(document).ready(function(){
   $('.js-slider-2').owlCarousel({
-    loop:true,
+    loop: $('.js-slider-2 .c-winner-item').size() > 1 ? true:false,
     margin:0,
     responsiveClass:false,
     nav:true,
