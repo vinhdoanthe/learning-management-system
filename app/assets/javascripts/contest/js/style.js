@@ -73,7 +73,7 @@ $(function () {
   $(document).ready(function(){
     if($('.js-slider-5').length > 0){
       $('.js-slider-5').owlCarousel({
-        loop:true,
+        loop:false,
         margin:0,
         responsiveClass:false,
         nav:true,
@@ -110,7 +110,7 @@ $(function () {
   $(document).ready(function(){
     if($('.js-slider-2').length > 0){
       $('.js-slider-2').owlCarousel({
-        loop:true,
+        loop: $('.js-slider-2 .c-winner-item').size() > 1 ? true:false,
         margin:0,
         responsiveClass:false,
         nav:true,

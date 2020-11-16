@@ -1,6 +1,9 @@
 class Adm::Contest::ContestTopicsService
 
   def create_topic params
+    can_create = validate_create_topic params
+    return can_create unless can_create[:success]
+
     contest = Contest::Contest.where(id: params[:contest_id]).first
     return { type: 'danger', message: 'Cuoc thi khong ton tai' } if contest.blank?
 
@@ -150,5 +153,35 @@ class Adm::Contest::ContestTopicsService
     #  Contest::ContestProject.where(id: project_ids).update_all(contest_prize_id: p[0])
     #  projects = projects.drop(p[2])
     #end
+  end
+
+  private
+
+  def validate_create_topic params
+    #check duplicate topic time
+    start_time = Time.parse(params[:start_time])
+    end_time = Time.parse(params[:end_time])
+
+    exist_topic = Contest::ContestTopic.where(start_time: start_time..end_time).or(Contest::ContestTopic.where(end_time: start_time..end_time)).first
+    return { result: { type: 'danger', message: 'Đã có cuộc thi diễn ra trong thời gian này! Vui lòng kiểm tra lại!'}, success: false } if exist_topic.present?
+
+    #check duplicate prizes
+    prizes = Contest::ContestPrize.where(id: params[:contest_prizes]).pluck(:id, :prize_type, :prize)
+    prize_group = prizes.group_by{ |p| p[1] }
+
+    valid_prize = true
+    prize_group.each do |k, v|
+      prize_type = v.group_by{ |p| p[2] }
+      prize_type.each{ |k, v| valid_prize = false if v.length > 1 }
+    end
+
+    if valid_prize == false
+      return { result: { type: 'danger', message: 'Chọn trùng giải thưởng! Vui lòng kiểm tra laị' }, success: false }
+    end
+
+    true
+  end
+
+  def validate_update_topic params
   end
 end

@@ -9109,6 +9109,11 @@ a.text-dark:focus, a.text-dark:hover {
   -moz-backface-visibility: hidden;
 }
 
+.owl-carousel .owl-stage {
+  margin: 0 auto;
+}
+
+
 .owl-carousel .owl-stage:after {
   content: ".";
   display: block;

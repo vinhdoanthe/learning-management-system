@@ -22,7 +22,7 @@
   <br>
   <textarea class='tinymce' id="teacher_note" name="teacher_note" rows="6"><%= (attendance.present? && attendance.note_2.present?) ? attendance.note_2.html_safe : '' %></textarea>
 </div>
-<% if attendance.operation_comment.present? %>
+<% if attendance&.operation_comment.present? %>
   <div class='reject_reason' style='margin: 0 20px 20px'>
     <label class='label-note'>Lý do nhận xét không đạt(Phụ huynh sẽ không thấy):</label>
     <br>
