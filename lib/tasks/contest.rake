@@ -16,7 +16,7 @@ namespace :contest do
     # end
 
     active_contest.each do |contest|
-      topic = contest.contest_topics.where(active: true).first
+      topic = contest.contest_topics.where(status: 'active').first
       projects = topic.contest_projects.where(is_valid: true)
 
       # projects= [Contest::ContestProject.last]
