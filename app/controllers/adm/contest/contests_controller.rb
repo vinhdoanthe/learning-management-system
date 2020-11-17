@@ -10,7 +10,7 @@ class Adm::Contest::ContestsController < Adm::AdmController
 
   def show
     @report_title_page = t("Contest.Management contest")
-    @contest_topics = @contest.contest_topics
+    @contest_topics = @contest.contest_topics.order(start_time: :DESC)
   end
 
   def update_contest

@@ -5,12 +5,12 @@ class Adm::Contest::ContestProjectsService
 
     if params[:topic_id].to_i != 0
       topic = Contest::ContestTopic.where(id: params[:topic_id]).first
-      c_projects = topic.contest_projects
+      c_projects = topic.contest_projects.order(:score)
     elsif params[:topic_id] == 'active'
       topic = contest.contest_topics.where(status: 'active').first
-      c_projects = topic.contest_projects
+      c_projects = topic.contest_projects.order(:score)
     else
-      c_projects = contest.contest_projects
+      c_projects = contest.contest_projects.order(:score)
     end
 
     query = ''

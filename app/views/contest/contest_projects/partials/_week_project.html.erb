@@ -20,7 +20,7 @@
       <div class="c-face-item__row"><span class="c-face-item__author"><%= project['student_name'] %></span></div>
       <div class="c-face-item__bottom">
         <div class="c-face-item__time">
-          <label>Tuần <%= get_week_of_month project['created_at'] %></label><span>Tháng <%= project['created_at'].strftime('%m/%Y') %></span>
+          <label>Tuần <%= get_week_of_month project['topic'].start_time %></label><span>Tháng <%= project['topic'].start_time.strftime('%m/%Y') %></span>
         </div>
         <div class="c-face-item__count">
           <ul>

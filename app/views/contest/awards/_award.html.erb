@@ -12,7 +12,7 @@
   <div class="c-award-item__name"><%= project['student_name'] %></div>
   <div class="c-award-item__address"><%= project['company_name'] %></div>
   <div class="c-award-item__program">For outstanding performance and winning the competition of <b><%= contest&.name %></b></div>
-  <div class="c-award-item__date"><%= project['created_at'].strftime('%d/%B/%Y') %></div>
+  <div class="c-award-item__date"><%= project['topic'].end_time.strftime('%d/%B/%Y') %></div>
 </div>
 <div class="c-award-item__bar">
   <ul>

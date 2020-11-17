@@ -96,6 +96,21 @@ class Contest::ContestsController < ApplicationController
     end
   end
 
+  def award_month_prize_info
+    result = Contest::ContestsService.new.award_month_prize_info @contest, params
+
+    respond_to do |format|
+      format.html
+      format.js { render 'adm/contest/contest_projects/award_month_prize_details', locals: result }
+    end
+  end
+
+  def award_month_prize
+    result = Contest::ContestsService.new.award_month_prize @contest, params
+
+    render json: result
+  end
+
   private
 
   def find_contest

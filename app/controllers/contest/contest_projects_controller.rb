@@ -87,7 +87,7 @@ class Contest::ContestProjectsController < ApplicationController
   def month_projects
     contest = Contest::Contest.where(id: params[:contest_id]).first
 
-    month_projects = contest.contest_projects.joins(:contest_prize).joins(user: { op_student: :res_company }).joins(:student_project).joins(:project_criterions).where(tk_contest_prizes: { prize_type:'m', prize: 1 }).select('distinct(tk_contest_projects.id)', :created_at, :user_id, 'op_student.full_name as student_name', 'sc_student_projects.name as project_name', :views, 'res_company.name as company_name', :project_id).limit(5)
+    month_projects = contest.contest_projects.joins(:contest_prize).joins(user: { op_student: :res_company }).joins(:student_project).joins(:project_criterions).where.not(month_prize: nil).select('distinct(tk_contest_projects.id)', :created_at, :user_id, 'op_student.full_name as student_name', 'sc_student_projects.name as project_name', :views, 'res_company.name as company_name', :project_id).limit(5)
 
     project_ids = month_projects.pluck(:project_id).uniq
     m_project_imgs = {}
@@ -118,6 +118,9 @@ class Contest::ContestProjectsController < ApplicationController
 
   def project_detail
     c_project = Contest::ContestProject.where(id: params[:id]).first
+    contest = c_project.contest
+    topics = contest.contest_topics.order(start_time: :DESC)
+    topic = c_project.contest_topic
     like = c_project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: { name:  'like' }).first&.number
     share = c_project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: { name:  'share' }).first&.number
     project = c_project.student_project
@@ -128,7 +131,7 @@ class Contest::ContestProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'adm/contest/contest_projects/project_details', locals: { batch: batch, course: course, student: student, project: project, c_project: c_project, company_name: company_name, like: like, share: share}}
+      format.js { render 'adm/contest/contest_projects/project_details', locals: { batch: batch, course: course, student: student, project: project, c_project: c_project, company_name: company_name, like: like, share: share, topics: topics, contest: contest, topic: topic }}
     end
   end
 
