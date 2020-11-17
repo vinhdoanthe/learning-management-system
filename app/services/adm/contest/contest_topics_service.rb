@@ -92,13 +92,17 @@ class Adm::Contest::ContestTopicsService
   end
 
   def calculate_criterions_point topic
-    begin
+    validate = validate_week_award topic
+
+    return validate if validate[:type] == 'danger'
+    #begin
     qry = " SELECT a.id, SUM(b.point_exchange) AS point_max
             FROM tk_contest_projects AS a
             LEFT JOIN tk_project_criterions AS b ON a.id = b.contest_project_id
             WHERE a.contest_topic_id = #{ topic.id }
             GROUP BY a.id
             ORDER BY point_max DESC "
+
     contest_exchanges = Contest::ContestExchange.where(status: 'active').pluck(:id, :top_from, :top_end, :point).sort_by{|e| e[2] }
     exchange_hash = {}
     contest_exchanges.each do |e|
@@ -115,17 +119,14 @@ class Adm::Contest::ContestTopicsService
       prize_projects[val[0]]&.each{ |p| project_ids << p[0] }
       Contest::ContestProject.where(id: project_ids).update_all(score: val[1])
     end
-      { type: 'success', message: 'tinh toan xong' }
-    rescue
-      { type: 'danger', message: 'da co loi xay ra! Vui long thu laij sau' }
-    end
+
+    { type: 'success', message: 'tinh toan xong' }
+  rescue
+    { type: 'danger', message: 'da co loi xay ra! Vui long thu laij sau' }
+
   end
 
   def awarded_project topic, type
-    # topic_prizes = topic.contest_prizes.where(prize_type: type).pluck(:id, :prize, :number_awards).sort{|p| p[1] }
-    # total_awards = 0
-    # topic_prizes.each{ |p| total_awards += p[2] }
-
     topic_prizes = topic.contest_prizes.where(prize_type: type).
     #topic_prizes = Contest::ContestPrize.
       order(prize: 'asc').
@@ -145,14 +146,6 @@ class Adm::Contest::ContestTopicsService
       projects = awarded_projects.shift prize.number_awards
       Contest::ContestProject.where(id: projects.map(&:id)).update_all(contest_prize_id: prize.id)
     end
-
-
-    #topic_prizes.each do |p|
-    #  project_ids = []
-    #  projects[0..(p[2] - 1)]&.each{ |p| project_ids << p[0] }
-    #  Contest::ContestProject.where(id: project_ids).update_all(contest_prize_id: p[0])
-    #  projects = projects.drop(p[2])
-    #end
   end
 
   private
@@ -183,5 +176,15 @@ class Adm::Contest::ContestTopicsService
   end
 
   def validate_update_topic params
+  end
+
+  def validate_week_award topic
+    return { type: 'danger', message: 'Chủ đề vẫn đang diễn ra! Chưa thể trao giải!' } if Time.now < topic.end_time
+
+    if topic.contest_projects.where.not(contest_prize_id: nil).first.present?
+      return { type: 'danger', message: 'Chủ đề này đã trao giải thưởng! Không thể trao giải lại' }
+    end
+
+    { type: 'success' }
   end
 end

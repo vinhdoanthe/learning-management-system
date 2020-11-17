@@ -10,6 +10,8 @@ namespace :contest do
     get 'new', action: 'new'
     get 'leader_board', action: 'leader_board', as: 'leader_board'
     get 'week_award_content', action: 'week_award_content'
+    get 'award_month_prize_info', action: 'award_month_prize_info'
+    post 'award_month_prize', action: 'award_month_prize'
   end
 
   namespace :contest_projects do

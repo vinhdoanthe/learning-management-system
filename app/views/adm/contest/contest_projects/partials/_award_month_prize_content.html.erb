@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Project_name</th>
+          <th>Student_name</th>
+          <th>Topic_name</th>
+          <th>Point</th>
+          <th>Company_name</th>
+          <th>Submit Time</th>
+          <th>Show</th>
+          <th>Set award</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% projects.each do |project| %>
+          <% next if project.blank? %>
+          <tr>
+            <td class='project_name'><%= project['project_name'] %></td>
+            <td class='student_name'><%= project['student_name'] %></td>
+            <td><%= topics[project['contest_topic_id']][:name] %></td>
+            <td><%= %></td>
+            <td><%= project['company_name'] %></td>
+            <td><%= project['created_at'].strftime('%H:%M %d/%m/%Y') %></td>
+            <td>
+              <a data-toggle="modal" data-project="<%= project['id'] %>" data-target="#studentProjectDetail" class="btn btn-primary contest_project_show"><i class="fas fa-pencil-alt"></i> </a>
+
+            </td>
+            <td>
+              <input type='radio' name='month_project_awarded' value="<%= project['id'] %>">
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <!-- /.card-body -->
+</div>

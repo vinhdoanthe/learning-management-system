@@ -7,7 +7,7 @@ class Contest::ContestsService
     contest = Contest::Contest.where(id: contest_id).first
     week_projects = contest.contest_projects.joins(:contest_topic).joins(:contest_prize).joins(:student_project).joins(user: { op_student: :res_company }).where(contest_id: contest.id).where(tk_contest_prizes: { prize_type: 'w', prize: 1 }).select(:id, :user_id, 'op_student.full_name as student_name', 'tk_contest_topics.id as topic_id', 'tk_contest_topics.week_number as week_number', 'tk_contest_topics.start_time as topic_start').order(created_at: :DESC).limit(8)
 
-    month_project = contest.contest_projects.joins(:contest_topic).joins(:contest_prize).joins(:student_project).joins(user: { op_student: :res_company }).where(contest_id: contest.id).where(tk_contest_prizes: { prize_type: 'm', prize: 1 }).select(:id, :user_id, 'op_student.full_name as student_name', 'tk_contest_topics.id as topic_id', 'tk_contest_topics.week_number as week_number', 'tk_contest_topics.start_time as topic_start').order(created_at: :DESC).first
+    month_project = contest.contest_projects.joins(:contest_topic).joins(:contest_prize).joins(:student_project).joins(user: { op_student: :res_company }).where(contest_id: contest.id).where.not(month_prize: nil).select(:id, :user_id, 'op_student.full_name as student_name', 'tk_contest_topics.id as topic_id', 'tk_contest_topics.week_number as week_number', 'tk_contest_topics.start_time as topic_start').order(created_at: :DESC).first
     [week_projects, month_project, contest]
 
   end
@@ -37,16 +37,21 @@ class Contest::ContestsService
   end
 
   def awarded_projects contest, type, page
-    awarded_projects = contest.contest_projects
-      .joins(:contest_prize)
-      .where(tk_contest_prizes: { prize: '1', prize_type: type })
+    if type == 'w'
+      awarded_projects = contest.contest_projects
+        .joins(:contest_prize)
+        .where(tk_contest_prizes: { prize: '1', prize_type: type })
 
-    awarded_projects = awarded_projects.page(page).per(20) if type == 'w'
+      awarded_projects = awarded_projects.page(page).per(20)
+    else
+      awarded_projects = contest.contest_projects.where.not(month_prize: nil)
+    end
 
     awarded_projects
   end
 
   def contest_project_detail c_project
+    topic = c_project.contest_topic
     project = c_project.student_project
     return {} if project.blank?
     like = c_project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: { name: 'like' }).first&.number.to_i
@@ -61,7 +66,7 @@ class Contest::ContestsService
     company_id = company&.id
     
     details = c_project.as_json
-    details.merge! ({ 'user_avatar' => user_avatar, 'project_name' => project.name, 'project_img' => project_img, 'created_at' => c_project.created_at, 'student_name' => student.full_name, 'like' => like, 'share' => share, 'views' => c_project.views, 'company_name' => company_name, 'company_id' => company_id })
+    details.merge! ({ 'user_avatar' => user_avatar, 'project_name' => project.name, 'project_img' => project_img, 'created_at' => c_project.created_at, 'student_name' => student.full_name, 'like' => like, 'share' => share, 'views' => c_project.views, 'company_name' => company_name, 'company_id' => company_id, 'topic' => topic })
 
     details
   end
@@ -112,5 +117,49 @@ class Contest::ContestsService
     projects = projects.joins(student_project: { op_student: :res_company }).where(res_company: { id: params[:company_id] }) if params[:company_id] != 'all'
 
     projects.page(params[:page]).per(20)
+  end
+
+  def award_month_prize_info contest, params
+    #time = Time.parse(params[:time])
+    time = Time.now
+    time_range = time.beginning_of_month..time.end_of_month
+
+    topics = contest.contest_topics.where(end_time: time_range).limit(4)
+
+    projects = Contest::ContestProject.joins(:contest_prize).where(contest_topic_id: topics.pluck(:id)).where(tk_contest_prizes: {prize: 1}).to_a
+    project_details = []
+
+    projects.each do |project|
+      project_details << (contest_project_detail project)
+    end
+
+    topic_details = {}
+    topics.each do |topic|
+      topic_details.merge! ({ topic.id => { name: topic.name, start_time: topic.start_time, end_time: topic.end_time }})
+    end
+
+    { topic_details: topic_details, project_details: project_details }
+  end
+
+  def award_month_prize contest, params
+    return { type: 'danger', message: 'Cuộc thi đã có giải tháng này!' } if can_award_month_prize? contest
+
+    project = Contest::ContestProject.where(id: params[:project_id]).first
+    month_prizes = contest.contest_prizes.where(prize: 1, prize_type: 'm').pluck(:id, :month_active)
+    prize = month_prizes.select{|prize| prize[1].include? (Time.now.strftime('%m')) }
+
+    if project.update(month_prize: prize[0][0])
+      { type: "success", message: "Trao giải thành công" }
+    else
+      { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+    end
+  end
+
+  private
+
+  def can_award_month_prize? contest
+    time_range = Time.now.beginning_of_month..Time.now.end_of_month
+    topic_ids = Contest::ContestTopic.where(start_time: time_range).pluck(:id)
+    Contest::ContestProject.where(contest_topic_id: topic_ids).where.not(month_prize: nil).present?
   end
 end

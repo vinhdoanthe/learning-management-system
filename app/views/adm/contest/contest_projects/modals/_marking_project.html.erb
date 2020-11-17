@@ -1,5 +1,10 @@
 <div class="modal-dialog" style='min-width: 80%'>
   <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <div class="modal-body">
       <div class='panel-content card'>
         <div class='card-body row'>
@@ -27,6 +32,32 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Thông tin cuộc thi</h3>
+        </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="project_contest_name">Tên cuộc thi</label>
+              <input class="form-control" id="project_contest_name" value="<%= contest.name %>" readonly>
+            </div>
+            <div class="form-group">
+              <label for="project_topic_choose">Chủ đề</label>
+              <select id="project_topic_choose" class="form-control">
+                <% topics.each do |t| %>
+                  <% if t.id == topic.id %>
+                    <option value="<%= t.id %>" selected><%= t.name %>(<%= t.start_time.strftime('%d/%m/%Y') %> - <%= t.end_time.strftime("%d/%m/%Y") %>)</option>
+                  <% else %>
+                    <option value="<%= t.id %>"><%= t.name %>(<%= t.start_time.strftime('%d/%m/%Y') %> - <%= t.end_time.strftime("%d/%m/%Y") %>)</option>
+                  <% end %>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          <div style="display: flex">
+            <button id='update_topic_for_project' data-project="<%= c_project.id %>"class="btn btn-primary">Cập nhật</button>
+          </div>
       </div>
       <div class='card'>
         <div class='card-body'>
@@ -106,6 +137,12 @@ ul.reaction_info li i{
   display: block;
   position: absolute;
   left: 20px;
+}
+
+#update_topic_for_project {
+  margin-left: auto;
+  margin-bottom: 10px;
+  margin-right: 20px;
 }
 </style>
   <script type="text/javascript">
