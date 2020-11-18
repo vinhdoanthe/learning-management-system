@@ -9,10 +9,10 @@
     </div>
   </div>
   <div class="panel m-t--70">
-    <div class="panel-content">
+    <div class="panel-content" id='form_submit_to_create'>
       <%= render 'contest/contests/partials/upload_new_contest_project', project: project, url: url, contest: @contest, topic: @topic %>
       <div style="display: flex;">
-      <input type='submit' data-remote='true' style="margin-left: auto; margin-top: 30px; text-transform: uppercase; font-weight: 600" form='edit_student_project_form' class='btn btn-primary btn-embossed bg-5DC2A7 edit_student_project_form_submit' value='Nộp bài dự thi'>
+      <input type='submit' data-remote='true'  data-disable-with='Đang xử lý...' style="margin-left: auto; margin-top: 30px; text-transform: uppercase; font-weight: 600" form='edit_student_project_form' class='btn btn-primary btn-embossed bg-5DC2A7 edit_student_project_form_submit' value='Nộp bài dự thi'>
       </div>
     </div>
   </div>
