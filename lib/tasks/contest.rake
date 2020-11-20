@@ -2,24 +2,28 @@ namespace :contest do
 
   desc 'Update like share for contest projects'
   task :update_like_share, [] => :environment do |t, args|
-    contests = Contest::Contest.where(is_publish: true)
-    active_contest = [contests.where(default: true).first]
-    topics = active_contest[0].contest_topics
+    active_contests = Contest::Contest.where(is_publish: true, default: true).to_a
+    active_contests.each do |active_contest|
+      topics = active_contest.contest_topics
 
-    if topics.present?
-      active_topic = topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
+      if topics.present?
+        active_topic = active_contest.contest_topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
 
-      if active_topic.present? && active_topic.present?
-        topics.update_all(status: 'inactive')
-        active_topic.update(status: 'active')
+        c_active_topics = active_contest.contest_topics.where(status: 'active').to_a
+        c_active_topics.each do |c_active_topic|
+          if c_active_topic.id != active_topic.id
+            c_active_topic.update(status: 'inactive')
+          end
+        end
+
+        if active_topic.present?
+          active_topic.update(status: 'active')
+        end
+
       end
-    end
 
-    active_contest.each do |contest|
-      topic = contest.contest_topics.where(status: 'active').first
-      projects = topic.contest_projects.where(is_valid: true)
+      projects = active_topic.contest_projects.where(is_valid: true)
 
-      # projects= [Contest::ContestProject.last]
       Contest::ContestsService.new.update_fb_social_count projects
     end
   end
