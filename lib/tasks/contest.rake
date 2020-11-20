@@ -4,7 +4,7 @@ namespace :contest do
   task :update_like_share, [] => :environment do |t, args|
     contests = Contest::Contest.where(is_publish: true)
     active_contest = [contests.where(default: true).first]
-    topics = active_contest.contest_topics
+    topics = active_contest[0].contest_topics
 
     if topics.present?
       active_topic = topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
