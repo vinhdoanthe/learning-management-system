@@ -36,9 +36,16 @@ class Learning::Batch::SessionsController < ApplicationController
     session = Learning::Batch::OpSession.where(id: params[:session_id]).first
     photos = session.photos
 
+    images = []
+    photos.each do |photo|
+      if photo.image.attached?
+        images << photo.image
+      end
+    end
+
     respond_to do |format|
       format.html
-      format.js { render 'user/open_educat/op_students/js/session_photo', locals: { photos: photos } }
+      format.js { render 'user/open_educat/op_students/js/session_photo', locals: { photos: images } }
     end
   end
 

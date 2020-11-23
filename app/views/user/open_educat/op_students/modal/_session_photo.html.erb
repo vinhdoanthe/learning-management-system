@@ -1,19 +1,13 @@
-<%= stylesheet_link_tag "fotorama.css" %>
-<%= javascript_include_tag "fotorama.js" %>
-
-<% if photos.present? %>
+<% if !photos.blank? %>
   <div class="modal-dialog" role="document" style='max-width: 100%; width: 100%; height: 100%; margin: 0;'>
     <div class="modal-content" style="width: 100%">
       <div class="modal-body">
         <button type="button" class="close close-modal" style="color: white; margin-top: 20px; margin-right: 20px; opacity: 1" data-dismiss="modal">&times;</button>
-        <% if photos.present? %>
-          <div id="done-session-photo-review" class="fotorama"  data-allowfullscreen="true" data-nav="thumbs" data-fit="scaledown" data-thumbwidth="100" data-arrows="always" data-trackpad='true' data-keyboard="true"  data-click="true" data-swipe="true" data-hash="true" data-width='100%' data-height='100%'>
-            <% photos.each do |photo| %>
-              <!-- <%#= image_tag photo.image %> -->
-              <a href="<%= url_for(photo.image) %>"></a>
-            <% end %>
-          </div>
-        <% end %>
+        <div id="done-session-photo-review" class="fotorama"  data-allowfullscreen="true" data-nav="thumbs" data-fit="scaledown" data-thumbwidth="100" data-arrows="always" data-trackpad='true' data-keyboard="true"  data-click="true" data-swipe="true" data-hash="true" data-width='100%' data-height='100%'>
+          <% photos.each do |photo| %>
+            <a href="<%= url_for(photo) %>"></a>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
@@ -59,32 +53,3 @@
     $('#done-session-photo-review').fotorama();
   })
 </script>
-<script>
-  $('#session_photo_show').owlCarousel({
-    items:1,
-    loop:true,
-    margin:10,
-    nav:true,
-    autoplayHoverPause:true,
-    autoplay:true,
-    autoplayTimeout:10000,
-  });
-</script>
-
-<style>
-.list-lightbox .owl-nav button span {
-  font-size: 50px;
-  position: absolute;
-  position: absolute;
-  top: -10px;
-  right: 15px;
-}
-
-.owl-next {
-  right: -40px !important;
-}
-
-.owl-prev {
-  left: -20px !important;
-}
-</style>
