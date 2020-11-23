@@ -150,7 +150,7 @@ class Contest::ContestsService
   def award_month_prize_info contest, params
     month_topics = {}
     month_data = contest.contest_topics.pluck(:start_time)
-    month_data.each{ |time| month_topics.merge! ({ time.strftime('%m %Y') => time.strftime('%m') }) }
+    month_data.each{ |time| month_topics.merge! ({ time.strftime('%m/%Y') => time.strftime('%m') }) }
 
     if params[:time].present?
       time = Time.parse(params[:time])
@@ -158,7 +158,7 @@ class Contest::ContestsService
       time = Time.now - 1.month
     end
 
-    active_award_month = time.strftime('%m %Y')
+    active_award_month = time.strftime('%m/%Y')
     #time = Time.now
     time_range = time.beginning_of_month..time.end_of_month
 
