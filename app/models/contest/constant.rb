@@ -17,7 +17,7 @@ module Contest::Constant
 
   module Region
     MB = [23, 27, 21, 3, 7, 15, 32, 33, 20, 1]
-    MN = []
+    MN = [26, 22, 24, 8, 6, 14, 25, 31, 5, 9, 29, 34]
   end
 
   module Contact

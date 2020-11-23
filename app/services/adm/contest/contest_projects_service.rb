@@ -5,12 +5,12 @@ class Adm::Contest::ContestProjectsService
 
     if params[:topic_id].to_i != 0
       topic = Contest::ContestTopic.where(id: params[:topic_id]).first
-      c_projects = topic.contest_projects.order(:score)
+      c_projects = topic.contest_projects.order(score: :DESC)
     elsif params[:topic_id] == 'active'
       topic = contest.contest_topics.where(status: 'active').first
-      c_projects = topic.contest_projects.order(:score)
+      c_projects = topic.contest_projects.order(score: :DESC)
     else
-      c_projects = contest.contest_projects.order(:score)
+      c_projects = contest.contest_projects.order(score: :DESC)
     end
 
     query = ''
@@ -29,6 +29,7 @@ class Adm::Contest::ContestProjectsService
     project_ids = c_projects.pluck(:project_id)
     projects_detail = SocialCommunity::ScStudentProject.joins(:op_course).joins(op_student: :res_company).where(id: project_ids).where(query).select(:id, :name, "op_course.name as course_name", :student_id, "op_student.full_name as student_name", "res_company.name as company_name")
     
+    projects_detail = (projects_detail.sort_by { |detail| c_projects_detail[detail.id][:score] }).reverse
     [contest, topic, c_projects_detail, projects_detail]
   end
 

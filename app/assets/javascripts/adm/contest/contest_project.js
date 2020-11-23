@@ -11,15 +11,34 @@ let getIndexContent = () => {
   })
 }
 let calculateWeekPrize = (topic_id, type) => {
+  if (confirm('Bạn chắc chắn muốn trao giải tuần? Không thể thay đổi nếu đã trao giải!')){
+    $.ajax({
+      url: '/adm/contest/contest_projects/award_week_projects',
+      method: 'POST',
+      data: { topic_id: topic_id, type: type },
+      success: function(res){
+        display_response_noti(res);
+        if (res.type == 'success'){
+        location.reload();
+        }
+      }
+    })
+  }
+}
+
+let calculateWeekPoint = (topic_id) => {
   $.ajax({
     url: '/adm/contest/contest_projects/calculate_point',
     method: 'POST',
-    data: { topic_id: topic_id, type: type },
+    data: { topic_id: topic_id},
     success: function(res){
       display_response_noti(res);
+      if (res.type === 'success'){
       location.reload();
+      }
     }
   })
+
 }
 
 let getTopicList = (contest_id) => {
@@ -80,5 +99,11 @@ $(document).ready(function(){
     topic_id = $('input[name="active-topic"]').val();
     type = 'w'
     calculateWeekPrize(topic_id, type);
+  })
+
+  $('#adm_project_index').on('click', '#calculate_week_point', function(){
+    topic_id = $('input[name="active-topic"]').val();
+    type = 'w'
+    calculateWeekPoint(topic_id);
   })
 })

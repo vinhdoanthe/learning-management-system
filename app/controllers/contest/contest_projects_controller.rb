@@ -66,6 +66,11 @@ class Contest::ContestProjectsController < ApplicationController
     @projects = Contest::ContestsService.new.contest_projects params
     @project_details = []
     @projects.each{ |project| @project_details << (Contest::ContestsService.new.contest_project_detail project) }
+
+    respond_to do |format|
+      format.html
+      format.js { render 'contest/contest_projects/projects_content' }
+    end
   end
 
   def submit_contest_project
@@ -87,7 +92,22 @@ class Contest::ContestProjectsController < ApplicationController
   def month_projects
     contest = Contest::Contest.where(id: params[:contest_id]).first
 
-    month_projects = contest.contest_projects.joins(:contest_prize).joins(user: { op_student: :res_company }).joins(:student_project).joins(:project_criterions).where.not(month_prize: nil).select('distinct(tk_contest_projects.id)', :created_at, :user_id, 'op_student.full_name as student_name', 'sc_student_projects.name as project_name', :views, 'res_company.name as company_name', :project_id).limit(5)
+    month_projects = contest.contest_projects.
+      joins(:contest_topic).
+      joins(:contest_prize).
+      joins(user: { op_student: :res_company }).
+      joins(:student_project).
+      joins(:project_criterions).
+      where.not(month_prize: nil).
+      select('distinct(tk_contest_projects.id)',
+             :created_at,
+             :user_id,
+             :views,
+             'tk_contest_topics.start_time as topic_start',
+             'op_student.full_name as student_name',
+             'sc_student_projects.name as project_name',
+             'res_company.name as company_name',
+             :project_id).limit(5)
 
     project_ids = month_projects.pluck(:project_id).uniq
     m_project_imgs = {}

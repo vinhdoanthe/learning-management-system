@@ -5,9 +5,37 @@ class Contest::ContestsService
   def leader_board contest_id
     #student_name, topic, c_project_id, res_company => region, week???????????????/
     contest = Contest::Contest.where(id: contest_id).first
-    week_projects = contest.contest_projects.joins(:contest_topic).joins(:contest_prize).joins(:student_project).joins(user: { op_student: :res_company }).where(contest_id: contest.id).where(tk_contest_prizes: { prize_type: 'w', prize: 1 }).select(:id, :user_id, 'op_student.full_name as student_name', 'tk_contest_topics.id as topic_id', 'tk_contest_topics.week_number as week_number', 'tk_contest_topics.start_time as topic_start').order('tk_contest_topics.start_time DESC').limit(8)
+    week_projects = contest.contest_projects.
+                      joins(:contest_topic).
+                      joins(:contest_prize).
+                      joins(:student_project).
+                      joins(user: { op_student: :res_company }).
+                      where(contest_id: contest.id).
+                      where(tk_contest_prizes: { prize_type: 'w', prize: 1 }).
+                      select(:id,
+                             :user_id,
+                             'op_student.full_name as student_name',
+                             'tk_contest_topics.id as topic_id',
+                             'tk_contest_topics.week_number as week_number',
+                             'tk_contest_topics.start_time as topic_start',
+                             'res_company.id as company_id').
+                      order('tk_contest_topics.start_time ASC').limit(8).to_a
 
-    month_project = contest.contest_projects.joins(:contest_topic).joins(:contest_prize).joins(:student_project).joins(user: { op_student: :res_company }).where(contest_id: contest.id).where.not(month_prize: nil).select(:id, :user_id, 'op_student.full_name as student_name', 'tk_contest_topics.id as topic_id', 'tk_contest_topics.week_number as week_number', 'tk_contest_topics.start_time as topic_start').order('tk_contest_topics.start_time DESC').first
+    month_project = contest.contest_projects.
+                      joins(:contest_topic).
+                      joins(:contest_prize).
+                      joins(:student_project).
+                      joins(user: { op_student: :res_company }).
+                      where(contest_id: contest.id).
+                      where.not(month_prize: nil).
+                      select(:id,
+                             :user_id,
+                             'op_student.full_name as student_name',
+                             'tk_contest_topics.id as topic_id',
+                             'tk_contest_topics.week_number as week_number',
+                             'tk_contest_topics.start_time as topic_start',
+                             'res_company.id as company_id').
+                      order('tk_contest_topics.start_time DESC').first
     [week_projects, month_project, contest]
 
   end
@@ -120,8 +148,18 @@ class Contest::ContestsService
   end
 
   def award_month_prize_info contest, params
-    #time = Time.parse(params[:time])
-    time = Time.now
+    month_topics = {}
+    month_data = contest.contest_topics.pluck(:start_time)
+    month_data.each{ |time| month_topics.merge! ({ time.strftime('%m %Y') => time.strftime('%m') }) }
+
+    if params[:time].present?
+      time = Time.parse(params[:time])
+    else
+      time = Time.now - 1.month
+    end
+
+    active_award_month = time.strftime('%m %Y')
+    #time = Time.now
     time_range = time.beginning_of_month..time.end_of_month
 
     topics = contest.contest_topics.where(end_time: time_range).limit(4)
@@ -138,7 +176,7 @@ class Contest::ContestsService
       topic_details.merge! ({ topic.id => { name: topic.name, start_time: topic.start_time, end_time: topic.end_time }})
     end
 
-    { topic_details: topic_details, project_details: project_details }
+    { topic_details: topic_details, project_details: project_details, month_topics: month_topics, active_award_month: active_award_month }
   end
 
   def award_month_prize contest, params

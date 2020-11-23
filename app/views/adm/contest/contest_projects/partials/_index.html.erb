@@ -6,6 +6,9 @@
       <div class="card-tools">
         <input type='hidden' value='' name="active-contest" >
         <input type='hidden' value='' name="active-topic" >
+        <% if topic.present? %>
+          <a class="btn btn-info float-right" id="calculate_week_point">Tính điểm tuần</a>
+        <% end %>
         <% if topic.present? && (Time.now > topic.end_time) %>
           <a class="btn btn-info float-right" id="calculate_week_prize">Trao giải tuần</a>
         <% end %>
@@ -80,15 +83,18 @@
   </div>
 </div>
 <script>
-  $('#award_month_prize').click(function(){
-    contest_id = $('input[name="active-contest"]').val()
-
+  var getAwardMonthProjects = (data) => {
     $.ajax({
       method: 'GET',
       url: '/contest/contests/award_month_prize_info',
-      data: { contest_id: contest_id },
+      data: data,
       dataType: 'script'
     })
+  }
+  $('#award_month_prize').click(function(){
+    contest_id = $('input[name="active-contest"]').val()
+    data = { contest_id: contest_id }
+    getAwardMonthProjects(data)
   })
 
 $('#award_month_prize_project').click(function(){
@@ -108,5 +114,12 @@ $('#award_month_prize_project').click(function(){
       }
     })
   }
+})
+
+$('#modal_award_month_prize').on('change', '#select_month_to_award', function(){
+  contest_id = $('input[name="active-contest"]').val();
+  time = $(this).val();
+  data = { contest_id: contest_id, time: time }
+  getAwardMonthProjects(data);
 })
 </script>

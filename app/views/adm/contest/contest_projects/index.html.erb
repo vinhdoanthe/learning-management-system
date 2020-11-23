@@ -23,7 +23,7 @@
           <option value='all'><%= t('Contest.all') %></option>
           <option value='active'><%= t('Contest.being') %></option>
           <% @topics.each do |topic| %>
-            <option value="<%= topic.id %>"><%= topic.name %></option>
+            <option value="<%= topic.id %>"><%= topic.name %>(<%= topic.start_time.strftime('%d/%m/%y') %> - <%= topic.end_time.strftime('%d/%m/%y') %>)</option>
           <% end %>
         </select>
       </div>
