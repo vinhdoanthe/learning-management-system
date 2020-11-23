@@ -12,9 +12,7 @@
         <% if topic.present? && (Time.now > topic.end_time) %>
           <a class="btn btn-info float-right" id="calculate_week_prize">Trao giải tuần</a>
         <% end %>
-        <% if can_award_month_prize? contest %>
           <a class="btn btn-info float-right" data-toggle='modal' id="award_month_prize" data-target="#modal_award_month_prize" data-backdrop="true">Trao giải tháng</a>
-        <% end %>
       </div>
     </div>
     <div class="card-body">
