@@ -26,6 +26,7 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
   def sc_refer_friend_notification_content
     refer = notifiable
     #user = User::Account::User.where(id: refer.refer_by)
+    return '' if refer.nil?
 
     case refer.state
     when ReferFriendConstants::REFER_FRIEND_STATE_WAITING
