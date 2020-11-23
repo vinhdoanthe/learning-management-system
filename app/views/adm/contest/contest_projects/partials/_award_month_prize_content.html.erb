@@ -1,8 +1,8 @@
 <div class="card">
   <div class="card-header">
-    <select id="select_month_to_award">
+    <select id="select_month_to_award" class='form-control'>
       <% month_topics.each do |m_y, m| %>
-        <% next if m_y == Time.now.strftime('%m %Y') %>
+        <%# next if m_y == Time.now.strftime('%m %Y') %>
         <% if m_y == active_award_month %>
           <option value="<%= m_y %>" selected>Tháng <%= m %></option>
         <% else %>
