@@ -1,4 +1,5 @@
 //=require contest/js/jquery-3.4.1.min.js
+//=require jquery_ujs
 //=require contest/js/jquery-migrate-1.4.1.js
 //=require jquery.remotipart
 //=require contest/js/popper.min.js
