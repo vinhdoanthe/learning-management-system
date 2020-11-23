@@ -126,6 +126,7 @@ namespace :adm do
       get '', action: 'index', as: 'index'
       get 'index_content', action: 'index_content', as: 'index_content'
       post 'calculate_point', action: 'calculate_point', as: 'calculate_point'
+      post 'award_week_projects', action: 'award_week_projects', as: 'award_week_projects'
       post 'update', action: 'update', as: 'update'
     end
 

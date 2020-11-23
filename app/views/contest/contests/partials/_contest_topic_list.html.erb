@@ -34,7 +34,7 @@
   <!--end container-->
   <div class="c-road-slider">
     <div class="owl-carousel" id="road-slider-id">
-      <% week_index = get_week_of_month Time.now %>
+      <% week_index = topic.start_time.day / 7 + 1 %>
       <% (1..3).each do |index| %>
         <% class_status = if index == 1
                             'is-last'

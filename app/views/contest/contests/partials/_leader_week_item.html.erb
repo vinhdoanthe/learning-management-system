@@ -1,9 +1,14 @@
 <%# user = c_project.user %>
+<% mb = Contest::Constant::Region::MB %>
 <% if c_project.present? %>
   <% user = User::Account::User.where(id: c_project.user_id).first %>
   <div class="c-board-item">
     <div class="c-board-item__inner">
-      <!-- <div class="c-board-item__tag is-warning-dark"><span>Miền bắc</span></div> -->
+      <% if mb.include? c_project.company_id %>
+        <div class="c-board-item__tag is-warning-dark"><span>Miền bắc</span></div>
+      <% else %>
+        <div class="c-board-item__tag is-purple"><span>Miền nam</span></div>
+      <% end %>
       <div class="c-board-item__thumb">
         <div class="c-board-item__avatar">
           <% if user.avatar.present? && user.avatar.thumbnail.present? %>
@@ -36,7 +41,7 @@
 <% else %>
   <div class="c-board-item">
     <div class="c-board-item__inner">
-      <!-- <div class="c-board-item__tag is-warning-dark"><span>Miền bắc</span></div> -->
+      <div class="c-board-item__tag is-warning-dark"><span>Miền bắc</span></div>
       <div class="c-board-item__thumb">
         <div class="c-board-item__avatar">
           <img src='/contest/images/face-default.png'>

@@ -4,7 +4,7 @@ class Adm::Contest::ContestProjectsController < Adm::AdmController
   def index
     @contests = Contest::Contest.where(is_publish: true)
     @contest = @contests.where(default: true).first
-    @topics = @contest.contest_topics
+    @topics = @contest.contest_topics.order(start_time: :DESC)
   end
 
   def index_content
@@ -44,10 +44,35 @@ class Adm::Contest::ContestProjectsController < Adm::AdmController
 
   def calculate_point
     topic = Contest::ContestTopic.where(id: params[:topic_id]).first
-    result = Adm::Contest::ContestTopicsService.new.calculate_criterions_point topic
+
+    result = { type: 'success', message: 'Tính điểm thành công' }
+
+    #begin
+    Adm::Contest::ContestTopicsService.new.calculate_criterions_point topic, 'MB'
+    Adm::Contest::ContestTopicsService.new.calculate_criterions_point topic, 'MN'
+    #rescue StandardError => e
+    #  result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+    #  puts "CONTEST CALCULATE WEEK POINT ERRORS: #{ e } "
+    #end
+
+    render json: result
+  end
+
+  def award_week_projects
+    topic = Contest::ContestTopic.where(id: params[:topic_id]).first
+
+    result = { type: 'success', message: 'Trao giải thành công' }
+    result = Adm::Contest::ContestTopicsService.new.calculate_criterions_point topic, 'MB'
+    if result[:type] == 'success'
+      result = Adm::Contest::ContestTopicsService.new.calculate_criterions_point topic, 'MN'
+    end
 
     if result[:type] == 'success'
-      result = Adm::Contest::ContestTopicsService.new.awarded_project topic, params[:type]
+      result = Adm::Contest::ContestTopicsService.new.awarded_project topic, params[:type], 'MB'
+    end
+
+    if result[:type] == 'success'
+      result = Adm::Contest::ContestTopicsService.new.awarded_project topic, params[:type], 'MN'
     end
 
     render json: result
