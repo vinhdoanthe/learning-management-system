@@ -1,5 +1,5 @@
   <% if project_details.present? %>
-    $('#award_month_prize_content').html(`<%= escape_javascript( render partial: "adm/contest/contest_projects/partials/award_month_prize_content", locals: { topics: topic_details, projects: project_details } ) %>`)
+    $('#award_month_prize_content').html(`<%= escape_javascript( render partial: "adm/contest/contest_projects/partials/award_month_prize_content", locals: { topics: topic_details, projects: project_details, month_topics: month_topics, active_award_month: active_award_month } ) %>`)
   <% else %>
     $('#award_month_prize_content').html(`<p>Chưa có sản phẩm đạt giải tuần</p>`)
   <% end %>

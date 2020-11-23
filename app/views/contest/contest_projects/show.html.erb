@@ -107,7 +107,7 @@
                       <% else %>
                         <%= t('Contest.Prize.won_prize_prize') %>
                       <% end %>
-                      &nbsp; <%= @c_project.created_at.strftime('%m/%Y') %>
+                      &nbsp; <%= @c_project.contest_topic.start_time.strftime('%m/%Y') %>
                   </span>
                   </span>
                   <i class="icon-medium-arrow-right"></i>

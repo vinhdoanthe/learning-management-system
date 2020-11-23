@@ -91,15 +91,18 @@ class Adm::Contest::ContestTopicsService
     end
   end
 
-  def calculate_criterions_point topic
-    validate = validate_week_award topic
+  def calculate_criterions_point topic, region
+    topic.contest_projects.update_all(score: 0)
+    company_id = Object.const_get("Contest::Constant::Region::#{ region }")
 
-    return validate if validate[:type] == 'danger'
     #begin
     qry = " SELECT a.id, SUM(b.point_exchange) AS point_max
             FROM tk_contest_projects AS a
             LEFT JOIN tk_project_criterions AS b ON a.id = b.contest_project_id
+            INNER JOIN sc_student_projects as project ON a.project_id = project.id
+            INNER JOIN op_student as student ON project.student_id = student.id
             WHERE a.contest_topic_id = #{ topic.id }
+            AND student.company_id IN (#{ company_id.join(',')})
             GROUP BY a.id
             ORDER BY point_max DESC "
 
@@ -126,8 +129,10 @@ class Adm::Contest::ContestTopicsService
 
   end
 
-  def awarded_project topic, type
-    topic_prizes = topic.contest_prizes.where(prize_type: type).
+  def awarded_project topic, type, region
+    validate = validate_week_award topic
+    return validate if validate[:type] == 'danger'
+    topic_prizes = topic.contest_prizes.where(prize_type: type, region: region).
     #topic_prizes = Contest::ContestPrize.
       order(prize: 'asc').
       select('tk_topic_prizes.id, prize, number_awards').
@@ -136,6 +141,7 @@ class Adm::Contest::ContestTopicsService
     total_awards = topic_prizes.sum(&:number_awards)
 
     awarded_projects = Contest::ContestProject.
+      joins(student_project: { op_student: :res_company }).where(res_company: { id: Object.const_get("Contest::Constant::Region::" + region)}).
       select("tk_contest_projects.id, score * #{ Contest::Constant::ScoreRatio::SCORE_RATIO } + judges_score * #{ Contest::Constant::ScoreRatio::JUDGES_RATIO } as point").
       # group('id').
       order(point: 'desc').

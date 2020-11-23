@@ -17,7 +17,7 @@
 <!--end c-block-->
 <%= render 'contest/contests/partials/contest_prizes', { month_prize: @month_prize, week_prize: @prize } %>
 <!--end c-block-->
-<%= render 'contest/contests/partials/contest_topic_list',{ month_topics: [ @result[:last_month_topics], @result[:current_month_topics], @result[:next_month_topics]], active_topic: @result[:active_topic], active_topic_index: @result[:active_topic_index] } %>
+<%= render 'contest/contests/partials/contest_topic_list',{ month_topics: [ @result[:last_month_topics], @result[:current_month_topics], @result[:next_month_topics]], active_topic: @result[:active_topic], active_topic_index: @result[:active_topic_index], topic: @topic } %>
 <!--end c-block-->
 <div id="contest-leader-board">
   <%#= render 'contest/contests/partials/leader_board' %>
@@ -35,8 +35,8 @@
       </div>
       <div class="c-box__desc"><b>TOP</b>
         <%= t('Contest.Products.like') %> <%= t('Contest.Time.In') %>
-        <b><%= t('Contest.Time.Week') %> <%= get_week_of_month Time.now %></b>
-        <%= t('Contest.Time.Month') %> <%= Time.now.strftime('%m/%Y') %>
+        <b><%= t('Contest.Time.Week') %><%= @topic.start_time.day / 7 + 1 %> </b>
+        <%= t('Contest.Time.Month') %> <%= @topic.start_time.month %>
       </div>
       <div id="current-week-projects">
       </div>
@@ -49,8 +49,8 @@
       </div>
       <div class="c-box__desc">
         <%= t('Contest.Products.like') %> <%= t('Contest.Time.In') %>
-        <b><%= t('Contest.Time.Week') %> <%= get_week_of_month (Time.now - 1.week) %></b>
-        <%= t('Contest.Time.Month') %> <%= (Time.now - 1.week).strftime("%m/%Y") %>
+        <b><%= t('Contest.Time.Week') %> <%= (@topic.start_time - 1.week).day / 7 + 1 %></b>
+        <%= t('Contest.Time.Month') %> <%= (@topic.start_time - 1.week).month %>
       </div>
       <div id="last-week-projects">
       </div>
