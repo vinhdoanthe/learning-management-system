@@ -27,6 +27,7 @@
               <th><%= t('config.center') %></th>
               <th><%= t('Contest.Products.Submit time') %></th>
               <th><%= t('Contest.Products.Reaction Point') %></th>
+              <th>Total point</th>
               <th><%= t('Contest.Products.Valid') %></th>
               <th>Action</th>
             </tr>
@@ -40,6 +41,7 @@
                 <td><%= project.course_name %></td>
                 <td><%= project.company_name %></td>
                 <td><%= c_projects[project.id][:created_at].to_time.strftime('%H:%M %d/%m/%Y') %>
+                <td><%= c_projects[project.id][:reaction_point].to_i %></td>
                 <td><%= c_projects[project.id][:score] * score_ratio + c_projects[project.id][:judges_score] * judges_ratio %></td>
                 <td style="text-align: center">
                   <input type="checkbox" class="form-check-input" id="contest_project_state" <%= c_projects[project.id][:is_valid] ? 'checked' : '' %>>

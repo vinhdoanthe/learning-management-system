@@ -214,6 +214,27 @@ class Redeem::RedeemTransactionService
     Redeem::RedeemTransaction.group(:status).count
   end
 
+  def redeem_history user_id
+   # transaction = Redeem::RedeemTransaction.where(student_id: user_id).to_a
+    transactions = Redeem::RedeemTransaction.
+                  joins(:redeem_product).
+                  joins(:redeem_product_size).
+                  joins(:redeem_product_color).
+                  where(student_id: user_id).
+                  select(:id, :product_id,
+                         :amount, :total_paid,
+                         :status, :admin_note,
+                         :student_delivery_date,
+                         :operator_delivery_date,
+                         :created_at,
+                         'redeem_products.name as product_name',
+                         'redeem_product_sizes.name as size',
+                         'redeem_product_colors.color_code as color',
+                        ).to_a
+
+    transactions
+  end
+
   private
 
   def update_coin transaction, type

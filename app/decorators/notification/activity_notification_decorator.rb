@@ -28,6 +28,7 @@ class Notification::ActivityNotificationDecorator < SimpleDelegator
     #user = User::Account::User.where(id: refer.refer_by)
     return '' if refer.nil?
 
+    return '' if refer.blank?
     case refer.state
     when ReferFriendConstants::REFER_FRIEND_STATE_WAITING
       "Cảm ơn con đã giới thiệu bạn #{ refer.student_name } vào học!"
