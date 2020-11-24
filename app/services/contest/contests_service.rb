@@ -122,12 +122,11 @@ class Contest::ContestsService
       response = https.request(request)
       puts response.read_body
       data = JSON.parse(response.read_body)
-      # TODO: update project here...
-      #
-      Contest::ContestProjectsService.new.update_project_criterion project, data
       rescue StandardError => e
         puts "#{ project.id }: #{ e }"
       end
+
+      Contest::ContestProjectsService.new.update_project_criterion project, data
     end
   end
 

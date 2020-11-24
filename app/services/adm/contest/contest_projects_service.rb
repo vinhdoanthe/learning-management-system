@@ -23,11 +23,21 @@ class Adm::Contest::ContestProjectsService
 
     c_projects_detail = {}
     c_projects.each do |cp|
+      reaction_point = cp.project_criterions.pluck(:point_exchange).map(&:to_i).sum
       c_projects_detail.merge! ({ cp.project_id => cp.as_json.symbolize_keys })
+      c_projects_detail[cp.project_id].merge! ({ reaction_point: reaction_point.to_i })
     end
 
     project_ids = c_projects.pluck(:project_id)
-    projects_detail = SocialCommunity::ScStudentProject.joins(:op_course).joins(op_student: :res_company).where(id: project_ids).where(query).select(:id, :name, "op_course.name as course_name", :student_id, "op_student.full_name as student_name", "res_company.name as company_name")
+    projects_detail = SocialCommunity::ScStudentProject.
+                      joins(:op_course).
+                      joins(op_student: :res_company).
+                      where(id: project_ids).where(query).
+                      select(:id, :name,
+                             "op_course.name as course_name",
+                             :student_id,
+                             "op_student.full_name as student_name",
+                             "res_company.name as company_name")
     
     projects_detail = (projects_detail.sort_by { |detail| c_projects_detail[detail.id][:score] }).reverse
     [contest, topic, c_projects_detail, projects_detail]
