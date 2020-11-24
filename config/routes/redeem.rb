@@ -8,5 +8,6 @@ namespace :redeem do
   namespace :redeem_transactions do
     post 'create_transaction', action: 'create_transaction', as: 'create_transaction'
     get 'company_product', action: 'company_product', as: 'company_product'
+    get 'redeem_history', action: 'redeem_history', as: 'redeem_history'
   end
 end

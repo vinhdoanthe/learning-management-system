@@ -16,8 +16,13 @@
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div class="ra-detail">
-              <h2 class="number-coin"><%= number_with_delimiter(current_user.coin.to_i, delimiter: ".")%></h2>
-              <p><span class="teky-coin-text"><%= t('reward.coin') %></span></p>
+              <div class='col-md-6 redeem_history'>
+                <a data-toggle='modal' data-target="#modal_redeem_history" data-backdrop='true' id='show_modal_redeem_history' data-student="<%= current_user.id %>">Quà đã đổi</a>
+              </div>
+              <div class='col-md-6 coin_info'>
+                <h2 class="number-coin"><%= number_with_delimiter(current_user.coin.to_i, delimiter: ".")%></h2>
+                <p><span class="teky-coin-text"><%= t('reward.coin') %></span></p>
+              </div>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -181,118 +186,27 @@
 <div id='confirm_redeem_modal' class="modal fade" role="dialog">
 </div>
 
+<div id='modal_redeem_history' class='modal fade' role='dialog'>
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Lịch sử đổi quà!</h4>
+        </div>
+        <div class="modal-body" id='redeem_history_content'>
+        </div>
+        <div class="modal-footer  bg-D7DFE9">
+          <button type="submit" class="btn btn-primary btn-embossed bg-5DC2A7" data-dismiss="modal"><%= t('button.text_ok')%></button>
+        </div>
+      </div>
+    </div>
+</div>
+
 <style>
 .product-description {
   overflow: hidden;
 }
 </style>
 
-<script>
-  function changeQuantity(target, count){
-    current_val = target.val()
-    new_val = parseInt(current_val) + count
-    if (new_val >= 0){
-      target.val(new_val);
-    }else{
-      target.val(0);
-    }
-  }
-
-  $(document).ready(function() {
-    $('.product_categories').on('change', function(){
-      $('.product_item').hide();
-      category_id = $(this).val();
-      if (category_id == '-1'){
-        $('.product_item').show()
-      }
-      else{
-        $('.product_category_' + category_id).show();
-      }
-    });
-
-    $('.minus_quantity').on('click', function(){
-      target = $(this).parent().find('input[name="product_amount"]');
-      changeQuantity(target, -1)
-    })
-    $('.plus_quantity').on('click', function(){
-      target = $(this).parent().find('input[name="product_amount"]');
-      changeQuantity(target, 1)
-    })
-  });
-</script>
-<style>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-  /* Firefox */
-  input[type=number] {
-    -moz-appearance: textfield;
-  }
-  .product_infomation {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .product-option .form-control {
-    padding: 5px 10px;
-  }
-  select.product_size {
-    width: 90px;
-  }
-  .quantity_div {
-    width: 90px;
-    display: grid;
-    grid-template-columns: 33.3% 33.3% 33.3%;
-    border: 1px solid #ECEDEE;
-  }
-  .quantity_div div {
-    display: flex;
-  }
-  .quantity_div i {
-    padding: 0 !important;
-    margin: auto;
-    font-size: 10px;
-  }
-
-  .redeem-product-submit-disabled {
-    width: 100%;
-    height: 57px !important;
-    color: #2F2F3E;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 700;
-    padding-top: 17px;
-  }
-  .product-box {
-    min-width: 115px;
-    border-radius: 0 !important;
-  }
-  .redeem_product_submit {
-    padding: 0 !important;
-  }
-  .redeem_product_submit span:after{
-    content: ' \002B';
-    font-size: 18px;
-    color: #2F2F3E;
-  }
-  .rtd-img {
-    height: auto !important;
-  }
-  .product-name {
-    font-size: 26px !important;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 500;
-    text-transform: none !important;
-  }
-  .rtd-text {
-    margin-top: 0 !important;
-  }
-  .product_item:hover {
-    background-color: #f0f2f5;
-  }
-</style>
+<%= javascript_include_tag ('redeem/index.js') %>
+<%= stylesheet_link_tag ('redeem/index.css' ) %>

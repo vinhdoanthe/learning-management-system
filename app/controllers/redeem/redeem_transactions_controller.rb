@@ -32,6 +32,15 @@ class Redeem::RedeemTransactionsController < ApplicationController
     render json: result
   end
 
+  def redeem_history
+    @redeems = Redeem::RedeemTransactionService.new.redeem_history params[:user_id]
+
+    respond_to do |format|
+      format.html
+      format.js { render 'redeem/redeem_history' }
+    end
+  end
+
   private
 
   def find_transaction
