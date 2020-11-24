@@ -78,8 +78,6 @@ class Contest::ContestsController < ApplicationController
   end
 
   def award
-    #name = params[:contest_id].gsub('_', '')
-    #@contest = Contest::Contest.where(name: name).first
     @month_projects = Contest::ContestsService.new.awarded_projects @contest, 'm', ''
     @month_details = {}
     @month_projects.each do |project|

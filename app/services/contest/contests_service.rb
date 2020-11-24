@@ -66,10 +66,11 @@ class Contest::ContestsService
 
   def awarded_projects contest, type, page
     if type == 'w'
-      awarded_projects = contest.contest_projects
-        .joins(:contest_prize)
-        .where(tk_contest_prizes: { prize: '1', prize_type: type })
-
+      awarded_projects = contest.contest_projects.
+                           joins(:contest_prize).
+                           joins(:contest_topic).
+                           where(tk_contest_prizes: { prize: '1', prize_type: type }).
+                           order('tk_contest_topics.start_time ASC')
       awarded_projects = awarded_projects.page(page).per(20)
     else
       awarded_projects = contest.contest_projects.where.not(month_prize: nil)
@@ -137,9 +138,9 @@ class Contest::ContestsService
     contest = Contest::Contest.where(id: params[:contest_id]).first
 
     if params[:topic_id].blank?
-      projects  = contest.contest_projects.where(contest_id: contest.id, created_at: start_time..end_time)
+      projects  = contest.contest_projects.where(contest_id: contest.id, created_at: start_time..end_time).order(created_at: :DESC)
     else
-      projects  = contest.contest_projects.where(contest_id: contest.id, contest_topic_id: params[:topic_id])
+      projects  = contest.contest_projects.where(contest_id: contest.id, contest_topic_id: params[:topic_id]).order(created_at: :DESC)
     end
 
     projects = projects.joins(student_project: { op_student: :res_company }).where(res_company: { id: params[:company_id] }) if params[:company_id] != 'all'
