@@ -32,10 +32,19 @@ class Adm::Learning::SessionsController < Adm::AdmController
 
   def session_photos
     photos = @session.photos
+    
+    images = []
+    if photos.present?
+      photos.each do |photo|
+        if photo.image.attached?
+          images << photo.image
+        end
+      end
+    end
 
     respond_to do |format|
       format.html
-      format.js { render 'adm/learning/sessions/js/session_photos', locals: { photos: photos } }
+      format.js { render 'adm/learning/sessions/js/session_photos', locals: { photos: images } }
     end
   end
 
