@@ -1,0 +1,44 @@
+<div class='table-responsive'>
+  <table class='table table-striped'>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tên sản phẩm</th>
+        <th>Số lượng</th>
+        <th>Màu sắc</th>
+        <th>Kích cỡ</th>
+        <th>Giá</th>
+        <th>Trạng thái</th>
+        <th>Ngày đổi quà</th>
+        <th>Ghi chú</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @redeems.each_with_index do |redeem, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= redeem.product_name %></td>
+          <td><%= redeem.amount %></td>
+          <td>
+            <div style='width: 20px; height: 20px; background-color: <%= redeem.color %>'></div>
+          </td>
+          <td><%= redeem.size %></td>
+          <td><%= redeem.total_paid %></td>
+          <td>
+            <% if redeem.status == REDEEM_TRANSACTION_STATE_NEW %>
+              Yêu cầu mới
+            <% elsif redeem.status == REDEEM_TRANSACTION_STATE_READY %>
+              Chờ nhận quà
+            <% elsif redeem.status == REDEEM_TRANSACTION_STATE_CANCEL %>
+              Bị huỷ
+            <% elsif redeem.status == REDEEM_TRANSACTION_STATE_DONE %>
+              Đổi quà thành công
+            <% end %>
+          </td>
+          <td><%= redeem.created_at.strftime('%H:%M %d/%m/%Y') %></td>
+          <td><%= redeem.admin_note %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

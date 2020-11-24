@@ -1,0 +1,5 @@
+<% if @redeems.present? %>
+    $('#redeem_history_content').html(` <%= escape_javascript ( render partial: 'redeem/partials/redeem_history_content' ) %> `)
+<% else %>
+    $('#redeem_history_content').html(`<p>Bạn chưa có yêu cầu đổi quà nào! </p>`)
+<% end %>

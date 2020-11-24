@@ -1,0 +1,97 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+  .product_infomation {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .product-option .form-control {
+    padding: 5px 10px;
+  }
+  select.product_size {
+    width: 90px;
+  }
+  .quantity_div {
+    width: 90px;
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    border: 1px solid #ECEDEE;
+  }
+  .quantity_div div {
+    display: flex;
+  }
+  .quantity_div i {
+    padding: 0 !important;
+    margin: auto;
+    font-size: 10px;
+  }
+
+  .redeem-product-submit-disabled {
+    width: 100%;
+    height: 57px !important;
+    color: #2F2F3E;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    padding-top: 17px;
+  }
+  .product-box {
+    min-width: 115px;
+    border-radius: 0 !important;
+  }
+  .redeem_product_submit {
+    padding: 0 !important;
+  }
+  .redeem_product_submit span:after{
+    content: ' \002B';
+    font-size: 18px;
+    color: #2F2F3E;
+  }
+  .rtd-img {
+    height: auto !important;
+  }
+  .product-name {
+    font-size: 26px !important;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    text-transform: none !important;
+  }
+  .rtd-text {
+    margin-top: 0 !important;
+  }
+  .product_item:hover {
+    background-color: #f0f2f5;
+  }
+  .coin_info {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .redeem_history {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+      border-right: 2px solid;
+  }
+  #show_modal_redeem_history {
+    cursor: pointer;
+    color: #0654BA;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
