@@ -92,19 +92,19 @@ class Adm::Contest::ContestTopicsService
   end
 
   def calculate_criterions_point topic, region
-    topic.contest_projects.update_all(score: 0)
     company_id = Object.const_get("Contest::Constant::Region::#{ region }")
+    topic.contest_projects.joins(user: { op_student: :res_company }).where(res_company: { id: company_id }).update_all(score: 0)
 
     #begin
-    qry = " SELECT a.id, SUM(b.point_exchange) AS point_max
-            FROM tk_contest_projects AS a
-            LEFT JOIN tk_project_criterions AS b ON a.id = b.contest_project_id
-            INNER JOIN sc_student_projects as project ON a.project_id = project.id
-            INNER JOIN op_student as student ON project.student_id = student.id
-            WHERE a.contest_topic_id = #{ topic.id }
-            AND student.company_id IN (#{ company_id.join(',')})
-            GROUP BY a.id
-            ORDER BY point_max DESC "
+    #qry = " SELECT a.id, SUM(b.point_exchange) AS point_max
+    #        FROM tk_contest_projects AS a
+    #        LEFT JOIN tk_project_criterions AS b ON a.id = b.contest_project_id
+    #        INNER JOIN sc_student_projects as project ON a.project_id = project.id
+    #        INNER JOIN op_student as student ON project.student_id = student.id
+    #        WHERE a.contest_topic_id = #{ topic.id }
+    #        AND student.company_id IN (#{ company_id.join(',')})
+    #        GROUP BY a.id
+    #        ORDER BY point_max DESC "
 
     contest_exchanges = Contest::ContestExchange.where(status: 'active').pluck(:id, :top_from, :top_end, :point).sort_by{|e| e[2] }
     exchange_hash = {}
@@ -114,12 +114,21 @@ class Adm::Contest::ContestTopicsService
 
     limit = contest_exchanges[-1][2]
 
-    qry += " LIMIT #{ limit } "
-    prize_projects = ActiveRecord::Base.connection.execute(qry).values
+    #qry += " LIMIT #{ limit } "
+    #prize_projects = ActiveRecord::Base.connection.execute(qry).values
+    prize_projects = topic.contest_projects.
+                      joins(:project_criterions).
+                      joins(user: { op_student: :res_company}).
+                      where(res_company: { id: company_id }).
+                      select(:id,
+                             'sum(tk_project_criterions.point_exchange) as max_point').
+                      group(:id).
+                      order('max_point DESC').
+                      limit(limit)
 
     exchange_hash.each do |key, val|
       project_ids = []
-      prize_projects[val[0]]&.each{ |p| project_ids << p[0] }
+      prize_projects[val[0]]&.each{ |p| project_ids << p.id }
       Contest::ContestProject.where(id: project_ids).update_all(score: val[1])
     end
 
