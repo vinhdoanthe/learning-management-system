@@ -19,7 +19,7 @@ let calculateWeekPrize = (topic_id, type) => {
       success: function(res){
         display_response_noti(res);
         if (res.type == 'success'){
-        location.reload();
+          $('#filter-contest-project').click();
         }
       }
     })
@@ -34,7 +34,7 @@ let calculateWeekPoint = (topic_id) => {
     success: function(res){
       display_response_noti(res);
       if (res.type === 'success'){
-      location.reload();
+          $('#filter-contest-project').click();
       }
     }
   })
