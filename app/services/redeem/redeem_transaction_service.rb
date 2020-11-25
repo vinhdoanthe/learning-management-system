@@ -231,8 +231,17 @@ class Redeem::RedeemTransactionService
                          'redeem_product_sizes.name as size',
                          'redeem_product_colors.color_code as color',
                         ).to_a
+    images = {}
+    product_ids = transactions.pluck(:product_id)
+    product_ids.each do |id|
+      product = Redeem::RedeemProduct.where(id: id).first
+      next if product.blank?
+      if product.images.attached?
+        images.merge! ( { id => product.images[0] } )
+      end
+    end
 
-    transactions
+    [transactions, images]
   end
 
   private
