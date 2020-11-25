@@ -4,7 +4,7 @@ class SocialCommunity::ScStudentProjectsService
     @params = handling_params params
     result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
     project = ''
-  #  sc_student_service = SocialCommunity::ScStudentProjectsService.new
+    #  sc_student_service = SocialCommunity::ScStudentProjectsService.new
     user = User::Account::User.where(student_id: @params[:student_id]).first
     student = user.op_student
 
@@ -165,25 +165,25 @@ class SocialCommunity::ScStudentProjectsService
   end
 
   def create_student_project params, video_link, teacher, thumbnail_url
-      project = SocialCommunity::ScStudentProject.new
-      project.description = params[:description]
-      project.name = params[:name]
-      project.presentation = params[:presentation]
-      project.project_show_video = params[:project_show_video]
-      project.introduction_video = video_link
-      project.batch_id = params[:batch_id]
-      project.thumbnail = thumbnail_url
-      project.subject_id = params[:subject_id]
-      project.student_id = params[:student_id]
-      project.created_by = teacher.id
-      project.project_type = params[:project_type]
-      project.image = params[:image]
+    project = SocialCommunity::ScStudentProject.new
+    project.description = params[:description]
+    project.name = params[:name]
+    project.presentation = params[:presentation]
+    project.project_show_video = params[:project_show_video]
+    project.introduction_video = video_link
+    project.batch_id = params[:batch_id]
+    project.thumbnail = thumbnail_url
+    project.subject_id = params[:subject_id]
+    project.student_id = params[:student_id]
+    project.created_by = teacher.id
+    project.project_type = params[:project_type]
+    project.image = params[:image]
 
-      user = User::Account::User.where(student_id: params[:student_id]).first
-      batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
-      course = batch.op_course
-      project.course_id = course.id
-      project.user_id = user.id 
+    user = User::Account::User.where(student_id: params[:student_id]).first
+    batch = Learning::Batch::OpBatch.where(id: params[:batch_id]).first
+    course = batch.op_course
+    project.course_id = course.id
+    project.user_id = user.id 
 
     ActiveRecord::Base.transaction do
       post = create_project_post teacher, params[:batch_id]
@@ -222,7 +222,7 @@ class SocialCommunity::ScStudentProjectsService
     if user.is_student?
       projects = SocialCommunity::ScStudentProject.where(user_id: user.id).all
       student_projects = (get_course_projects_hash projects)
-      
+
     elsif user.is_teacher?
       student_projects = []
     else
@@ -246,7 +246,7 @@ class SocialCommunity::ScStudentProjectsService
       courses.each { |c| course_info.merge!({ c[0] => c[1] })}
       subjects = []
     end
-    
+
     query = ''
     query += "project_show_video IS NOT NULL AND project_show_video <> '' AND " if filter_params[:project_show_video] == '1'
     query += "introduction_video IS NOT NULL AND introduction_video <> '' AND " if filter_params[:introduction_video] == '1'
@@ -326,18 +326,18 @@ class SocialCommunity::ScStudentProjectsService
     end
 
     @params['state'] = if @params['state'] == '1'
-                              SocialCommunity::Constant::ScStudentProject::State::PUBLISH
-                            else
-                              SocialCommunity::Constant::ScStudentProject::State::DRAFT
-                            end
+                         SocialCommunity::Constant::ScStudentProject::State::PUBLISH
+                       else
+                         SocialCommunity::Constant::ScStudentProject::State::DRAFT
+                       end
 
     @params.select! { |k, v| v.present? }
     @params.symbolize_keys!
   end
 end
 
-  private
+private
 
-  def validate_youtube_upload_params params
-    (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present? || params[:project_show_video].present? )
-  end
+def validate_youtube_upload_params params
+  (params[:batch_id].present? && params[:student_id].present? && params[:subject_id].present?) && ((params[:introduction_video].present? && params[:name].present?) || params[:presentation].present? || params[:project_show_video].present? )
+end
