@@ -82,7 +82,6 @@ input::-webkit-inner-spin-button {
     display: flex;
     justify-content: center;
     align-items: center;
-      border-right: 2px solid;
   }
   #show_modal_redeem_history {
     cursor: pointer;
@@ -94,4 +93,8 @@ input::-webkit-inner-spin-button {
     margin-top: 14px;
     font-size: 15px;
     text-transform: uppercase;
+  }
+  .product_img img {
+    width: 50px;
+    height: 50px;
   }
