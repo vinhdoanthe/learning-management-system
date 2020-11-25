@@ -33,7 +33,7 @@ class Redeem::RedeemTransactionsController < ApplicationController
   end
 
   def redeem_history
-    @redeems = Redeem::RedeemTransactionService.new.redeem_history params[:user_id]
+    @redeems, @images = Redeem::RedeemTransactionService.new.redeem_history params[:user_id]
 
     respond_to do |format|
       format.html

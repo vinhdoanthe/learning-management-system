@@ -333,6 +333,19 @@ en:
     coming_soon: "Page is in developing"
   redeem:
     no_products: "Redeem products are in developing"
+    product_image: "Product's Image"
+    product_name: "Product's Name"
+    product_amount: "Amount"
+    product_color: "Color"
+    product_size: 'Size'
+    status: 'Status'
+    note: 'Note'
+    state:
+      new: 'New request'
+      waiting: 'Waiting'
+      reject: 'Reject'
+      success: 'Success'
+      ready: 'Ready'
   attachment:
     download: 'Download'
   flash_notice:
