@@ -32,12 +32,14 @@ class Adm::Learning::SessionsController < Adm::AdmController
 
   def session_photos
     photos = @session.photos
-    
     images = []
-    if photos.present?
-      photos.each do |photo|
-        if photo.image.attached?
-          images << photo.image
+
+    if @session.present?
+      if photos.present?
+        photos.each do |photo|
+          if photo.image.attached?
+            images << photo.image
+          end
         end
       end
     end
