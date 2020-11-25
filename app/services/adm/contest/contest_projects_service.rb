@@ -5,10 +5,12 @@ class Adm::Contest::ContestProjectsService
 
     if params[:topic_id].to_i != 0
       topic = Contest::ContestTopic.where(id: params[:topic_id]).first
-      c_projects = topic.contest_projects.order(score: :DESC)
+      #c_projects = topic.contest_projects.order(score: :DESC)
+      c_projects = topic.contest_projects.joins(:project_criterions).order('sum(tk_project_criterions.point_exchange) DESC', score: :DESC).group(:id)
     elsif params[:topic_id] == 'active'
       topic = contest.contest_topics.where(status: 'active').first
-      c_projects = topic.contest_projects.order(score: :DESC)
+      #c_projects = topic.contest_projects.order(score: :DESC)
+      c_projects = topic.contest_projects.joins(:project_criterions).order('sum(tk_project_criterions.point_exchange) DESC', score: :DESC).group(:id)
     else
       c_projects = contest.contest_projects.order(score: :DESC)
     end
@@ -39,7 +41,7 @@ class Adm::Contest::ContestProjectsService
                              "op_student.full_name as student_name",
                              "res_company.name as company_name")
     
-    projects_detail = (projects_detail.sort_by { |detail| c_projects_detail[detail.id][:score] }).reverse
+    projects_detail = (projects_detail.sort_by { |detail| c_projects_detail[detail.id][:reaction_point]}).reverse
     [contest, topic, c_projects_detail, projects_detail]
   end
 
