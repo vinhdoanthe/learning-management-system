@@ -3,39 +3,37 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Tên sản phẩm</th>
-        <th>Số lượng</th>
-        <th>Màu sắc</th>
-        <th>Kích cỡ</th>
-        <th>Giá</th>
-        <th>Trạng thái</th>
-        <th>Ngày đổi quà</th>
-        <th>Ghi chú</th>
+        <th><%= t('redeem.product_image') %></th>
+        <th><%= t('redeem.product_name') %></th>
+        <th><%= t('redeem.product_amount') %></th>
+        <th><%= t('redeem.product_color') %></th>
+        <th><%= t('redeem.product_size') %></th>
+        <th><%= t('redeem.status') %></th>
+        <th><%= t('redeem.note') %></th>
       </tr>
     </thead>
     <tbody>
       <% @redeems.each_with_index do |redeem, index| %>
         <tr>
           <td><%= index + 1 %></td>
+          <td class='product_img'><%= image_tag @images[redeem.product_id] %></td>
           <td><%= redeem.product_name %></td>
-          <td><%= redeem.amount %></td>
+          <td><%= redeem.amount.to_i %></td>
           <td>
             <div style='width: 20px; height: 20px; background-color: <%= redeem.color %>'></div>
           </td>
           <td><%= redeem.size %></td>
-          <td><%= redeem.total_paid %></td>
           <td>
             <% if redeem.status == REDEEM_TRANSACTION_STATE_NEW %>
-              Yêu cầu mới
+              <%= t('redeem.state.new') %>
             <% elsif redeem.status == REDEEM_TRANSACTION_STATE_READY %>
-              Chờ nhận quà
+              <%= t('redeem.state.ready') %>
             <% elsif redeem.status == REDEEM_TRANSACTION_STATE_CANCEL %>
-              Bị huỷ
+              <%= t('redeem.state.reject') %>
             <% elsif redeem.status == REDEEM_TRANSACTION_STATE_DONE %>
-              Đổi quà thành công
+              <%= t('redeem.state.success') %>
             <% end %>
           </td>
-          <td><%= redeem.created_at.strftime('%H:%M %d/%m/%Y') %></td>
           <td><%= redeem.admin_note %></td>
         </tr>
       <% end %>

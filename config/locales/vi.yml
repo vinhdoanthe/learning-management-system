@@ -393,6 +393,19 @@ vi:
     coming_soon: 'Trang đang trong quá trình phát triển'
   redeem:
     no_products: 'Kho quà đang trong quá trình xây dựng'
+    product_image: 'Ảnh sản phẩm'
+    product_name: 'Tên sản phẩm'
+    product_amount: 'Số lượng'
+    product_color: 'Màu sắc'
+    product_size: 'Kích cỡ'
+    status: 'Trạng thái'
+    note: 'Ghi chú mới'
+    state:
+      new: 'Yêu cầu mới'
+      waiting: 'Chờ nhận quà'
+      reject: 'Bị huỷ'
+      success: 'Đổi quà thành công'
+      ready: 'Đang giao'
   attachment:
     download: 'Tải về'
   flash_notice:

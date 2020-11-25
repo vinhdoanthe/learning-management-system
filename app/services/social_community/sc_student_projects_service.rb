@@ -22,7 +22,7 @@ class SocialCommunity::ScStudentProjectsService
         end
 
         begin
-          project = create_student_project @params, embed_link, user, thumbnail_video
+          project = create_student_project @params, embed_link, current_user, thumbnail_video
           result = {type: 'success', message: 'Upload thành công'}
         rescue StandardError
           result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
