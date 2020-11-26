@@ -2,6 +2,7 @@ class SocialCommunity::ScStudentProjectsService
 
   def create_new_student_project params, user
     @params = handling_params params
+    current_user = user
     result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
     project = ''
   #  sc_student_service = SocialCommunity::ScStudentProjectsService.new
@@ -28,7 +29,7 @@ class SocialCommunity::ScStudentProjectsService
           result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
         end
 
-        User::Reward::CoinStarsService.new.reward_coin_star project, user.id, user.id if (user.present? && project.project_type == SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT )
+        User::Reward::CoinStarsService.new.reward_coin_star project, user.id, user.id if (user.present? && project&.project_type == SocialCommunity::Constant::ScStudentProject::ProjectType::SUBJECT_PROJECT )
       end
     else
       result = {type: 'danger', message: 'Thiếu thông tin sản phẩm! Vui lòng kiểm tra lại!'}
