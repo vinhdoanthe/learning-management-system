@@ -154,10 +154,13 @@ class User::OpenEducat::OpTeachersController < ApplicationController
           lines.append line
         else
           # puts "not exist"
-          begin
-            errs << Api::Odoo.evaluate(session_id: params[:session_id].to_s, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: [{ present: ActiveModel::Type::Boolean.new.cast(student_params['check']), student_id: student_id }])
-          rescue StandardError => e
-            puts e
+          #begin
+          #  errs << Api::Odoo.evaluate(session_id: params[:session_id].to_s, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: [{ present: ActiveModel::Type::Boolean.new.cast(student_params['check']), student_id: student_id }])
+          #rescue StandardError => e
+          #  puts e
+          #  result = { noti: {type: 'danger', message: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"} }
+          #end
+          unless @attendance.update(present: ActiveModel::Type::Boolean.new.cast(student_params['check']), write_date: Time.now)
             result = { noti: {type: 'danger', message: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"} }
           end
         end
@@ -326,6 +329,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def validate_attendance student_id, session_id
-    Learning::Batch::OpAttendanceLine.where(student_id: student_id, session_id: session_id).first.present?
+    @attendance = Learning::Batch::OpAttendanceLine.where(student_id: student_id, session_id: session_id).first
+    @attendance.present?
   end
 end
