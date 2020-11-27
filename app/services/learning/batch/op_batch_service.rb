@@ -69,28 +69,8 @@ module Learning
         cancel_sessions = find_cancel_sessions(all_sessions)
         # Find last_done_lesson
         done_sessions = pair_session_lessons(done_sessions)
-        done_lessons = done_sessions.map {|done_session| done_session[:lesson]}
-        done_lessons = done_lessons.compact
-        last_done_lesson = done_lessons.empty? ? nil : done_lessons[-1]
-        # Find tobe_lessions
-        all_lessons = Learning::Course::OpLession.where(subject_id: subject_ids).to_a.compact
-        sorted_lessons = all_lessons.sort_by{|lesson| [lesson[:subject_id].to_i, lesson[:lession_number].to_i]}
-        tobe_lessons = []
-        if last_done_lesson.nil?
-          current_index = -1
-        else
-          current_index = sorted_lessons.index{|lesson| lesson[:id] == last_done_lesson.id}
-        end
-        if current_index.nil?
-          current_index = -1
-        end
-        start_index = current_index + 1
-        end_index = sorted_lessons.size - 1
-        for index in start_index..end_index
-          tobe_lessons << sorted_lessons[index]
-        end
         # Matching
-        tobe_sessions = match_tobe_session_lessons(tobe_sessions, tobe_lessons)
+        tobe_sessions = match_tobe_session_lessons(tobe_sessions)
         cancel_sessions = pair_session_lessons(cancel_sessions)
         if !coming_soon_session.nil?
           active_subject = coming_soon_session.subject_id
@@ -165,24 +145,16 @@ module Learning
         paired_sessions
       end
 
-      def self.match_tobe_session_lessons(tobe_sessions, tobe_lessons)
-        sessions = []
-        s_size = tobe_sessions.size
-        l_size = tobe_lessons.size
-        if s_size > l_size
-          for index in 0..(l_size-1)
-            sessions << {session: tobe_sessions[index], lesson: tobe_lessons[index]}
-          end
-          for index in l_size..(s_size-1)
-            sessions << {session: tobe_sessions[index], lesson: nil}
-          end
-        else
-          for index in 0..(s_size-1)
-            sessions << {session: tobe_sessions[index], lesson: tobe_lessons[index]}
+      def self.match_tobe_session_lessons(tobe_sessions)
+        session_ids = tobe_sessions.map(&:id).uniq
+        sessions = Learning::Batch::OpSession.includes(:op_lession).where(id: session_ids)
+        result = []
 
-          end
+        sessions.each do |session|
+          result << { session: session, lesson: session.op_lession }
         end
-        sessions
+
+        result
       end
 
       def self.find_coming_soon_session(sessions)
