@@ -121,20 +121,27 @@ class User::OpenEducat::OpTeachersService
       record[7] = record[0]
 
       case time.hour.to_i
-      when 8..9
-        schedule_hash['s1'].merge!(record)
-      when 10..12
-        schedule_hash['s2'].merge!(record)
-      when 13..14
-        schedule_hash['c1'].merge!(record)
-      when 15..17
-        schedule_hash['c2'].merge!(record)
-      when 18..19
-        schedule_hash['t1'].merge!(record)
-      when 20..24
-        schedule_hash['t2'].merge!(record)
-      else
-        # type code here
+      when 8..12
+        si = 1
+        while schedule_hash['s' + si.to_s][time.wday].present? do
+          si += 1
+        end
+        schedule_hash['s' + si.to_s] = {} if schedule_hash['s' + si.to_s].blank?
+        schedule_hash['s' + si.to_s].merge!(record)
+      when 13..17
+        c1 = 1
+        while schedule_hash['c' + c1.to_s][time.wday].present? do
+          c1 += 1
+        end
+        schedule_hash['c' + c1.to_s] = {} if schedule_hash['c' + c1.to_s].blank?
+        schedule_hash['c' + c1.to_s].merge!(record)
+      when 18..22
+        t1 = 1
+        while schedule_hash['t' + t1.to_s][time.wday].present? do
+          t1 += 1
+        end
+        schedule_hash['t' + t1.to_s] = {} if schedule_hash['t' + t1.to_s].blank?
+        schedule_hash['t' + t1.to_s].merge!(record)
       end
     end
     
