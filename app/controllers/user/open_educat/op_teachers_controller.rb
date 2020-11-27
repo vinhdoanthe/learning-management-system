@@ -211,7 +211,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
   end
 
   def teaching_schedule_content
-    @sessions = @teacher.op_sessions.where.not(op_session: { state: 'cancel' }).joins(:op_batch).where(op_batch: { state: Learning::Constant::Batch::STATE_APPROVE })
+    @sessions = @teacher.op_sessions.where.not(op_session: { state: 'cancel' }).joins(:op_batch).where(op_batch: { state: Learning::Constant::Batch::STATE_APPROVE }).order(start_datetime: :ASC)
     schedules = User::OpenEducat::OpTeachersService.teaching_schedule(@sessions, params)
 
     render json: {schedules: schedules}
