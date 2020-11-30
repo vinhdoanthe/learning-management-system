@@ -16,7 +16,7 @@
       </li>
       <% if ['confirm', 'done'].include? active_session.state %>
         <li>
-          <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance_new" data-toggle="modal" data-target="#modal_attendance" ><span><%= image_tag('wishlist.png') %></span><%= t('teacher_class.session_control.attendance') %>
+          <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance_new" data-session-id='<%= active_session.id %>' data-toggle="modal" data-target="#modal_attendance" ><span><%= image_tag('wishlist.png') %></span><%= t('teacher_class.session_control.attendance') %>
           </button>
         </li>
         <li id="btn_view_materials">
@@ -29,7 +29,7 @@
         </li>
     <% else %>
       <li>
-        <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance_new" disabled data-toggle="modal" data-target="#modal_attendance" ><span><%= image_tag('wishlist.png') %></span><%= t('teacher_class.session_control.attendance') %>
+        <button type="button" class="btn btn-default btn-embossed" id="teacher_attendance_new" data-session-id='<%= active_session.id %>' disabled data-toggle="modal" data-target="#modal_attendance" ><span><%= image_tag('wishlist.png') %></span><%= t('teacher_class.session_control.attendance') %>
         </button>
       </li>
       <li id="btn_view_materials">
