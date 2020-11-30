@@ -149,7 +149,8 @@ $(document).ready(function(){
   })
 
   $('#session_control').on('click', '#teacher_attendance_new', function(){
-    session_id = $('input[name="active_session_id"]').val();
+    session_id = $(this).data('session-id')
+    //session_id = $('input[name="active_session_id"]').val();
     $.ajax({
       url: '/learning/subject_lesson?session_id=' + session_id,
       method: 'get',

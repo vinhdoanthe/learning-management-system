@@ -57,8 +57,8 @@ class User::Reward::CoinStarsService
 
   def update_coin_star_user user_id, amount, type
     user = User::Account::User.where(id: user_id).first
-    coin = user.coin + amount
-    star = user.star + amount
+    coin = user.coin.to_i + amount
+    star = user.star.to_i + amount
     
     if type == TEKY_COIN
       user.coin = coin if coin > 0

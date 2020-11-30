@@ -25,9 +25,10 @@ class Adm::Contest::ContestProjectsService
 
     c_projects_detail = {}
     c_projects.each do |cp|
+      teacher_name = User::OpenEducat::OpFaculty.where(id: cp.teacher_id).first&.full_name
       reaction_point = cp.project_criterions.pluck(:point_exchange).map(&:to_i).sum
       c_projects_detail.merge! ({ cp.project_id => cp.as_json.symbolize_keys })
-      c_projects_detail[cp.project_id].merge! ({ reaction_point: reaction_point.to_i })
+      c_projects_detail[cp.project_id].merge! ({ reaction_point: reaction_point.to_i, teacher_name: teacher_name })
     end
 
     project_ids = c_projects.pluck(:project_id)

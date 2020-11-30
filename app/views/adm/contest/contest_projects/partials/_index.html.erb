@@ -23,6 +23,7 @@
               <th>#</th>
               <th><%= t('Contest.Products.Project name') %></th>
               <th><%= t('dashboard.leaders.name') %></th>
+              <th>Tên giáo viên</th>
               <th><%= t('sidebar.courses') %></th>
               <th><%= t('config.center') %></th>
               <th><%= t('Contest.Products.Submit time') %></th>
@@ -36,8 +37,9 @@
             <% projects.each do |project| %>
               <tr>
                 <td><%= project.id %></td>
-                <td><%= project.name %></td>
-                <td><%= project.student_name %></td>
+                <th><%= project.name %></th>
+                <th><%= project.student_name %></th>
+                <th><%= c_projects[project.id][:teacher_name] %></th>
                 <td><%= project.course_name %></td>
                 <td><%= project.company_name %></td>
                 <td><%= c_projects[project.id][:created_at].to_time.strftime('%H:%M %d/%m/%Y') %>

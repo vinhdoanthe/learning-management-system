@@ -19,6 +19,15 @@ class Learning::Course::OpSubjectsController < ApplicationController
 
   def subject_lesson
     session = Learning::Batch::OpSession.where(id: params[:session_id]).first
+
+    if session.blank?
+      respond_to do |format|
+        format.html
+        format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/chosen_lesson', locals: { success: false, noti: { type: 'danger', message: 'Đã có lỗi xảy ra! Thử lại sau nhé!' } } }
+      end
+      return
+    end
+
     all_student = {}
     batch = session.op_batch
     student_courses = batch.op_student_courses.where(state: 'on')
@@ -49,7 +58,7 @@ class Learning::Course::OpSubjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/chosen_lesson', locals: { lessons: lessons, all_student: all_student } }
+      format.js { render 'user/open_educat/op_teachers/js/teacher_class_details/chosen_lesson', locals: { lessons: lessons, all_student: all_student, success: true } }
     end
   end
 end
