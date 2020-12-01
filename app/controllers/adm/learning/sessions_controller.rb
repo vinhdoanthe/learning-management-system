@@ -90,6 +90,15 @@ class Adm::Learning::SessionsController < Adm::AdmController
       else
         render json: { type: 'success', message: 'Cập nhật đánh giá không đạt yêu cầu thành công' }
       end
+
+      session = Learning::Batch::OpSession.where(id: att.session_id).first
+      if session.present?
+        att_log = session.evaluation_log.to_s
+        student_name = User::OpenEducat::OpStudent.where(id: att.student_id).first&.full_name
+        att_log += "#{ Time.now.strftime('%H:%M %d/%m/%Y') }: Vận hành duyệt đánh giá của học sinh #{ student_name }\n"
+        session.evaluation_log = att_log
+        session.save
+      end
     else
       render json: { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
     end

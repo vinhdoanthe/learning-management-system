@@ -204,6 +204,15 @@ class User::OpenEducat::OpTeachersService
 
       if errors == true
         attendance.update(attendance_state: OpAttendanceLineConstant::State::STATE_COMPLETED, evaluate_completed_time: Time.now )
+        session = Learning::Batch::OpSession.where(id: session_id).first
+        if session.present?
+          att_log = session.evaluation_log.to_s
+          student_name = User::OpenEducat::OpStudent.where(id: evaluate_content['student_id']).first&.full_name
+          att_log += "#{ Time.now.strftime('%H:%M %d/%m/%Y') }: #{ teacher.full_name } đánh giá học sinh #{ student_name } \n"
+          session.evaluation_log = att_log
+          session.save
+        end
+
         { type: 'success', message: 'Đánh giá thành công' }
       else
         { type: 'danger', message: errors[1] }
