@@ -26,6 +26,7 @@ class Adm::Contest::ContestProjectsController < Adm::AdmController
       result = { type: 'danger', message: 'Topic không tồn tại! Vui lòng thử lại sau!' }
     else
       attributes = project.attribute_names
+      attributes.delete('project_id')
       attributes.each do |att|
         if params[att].present?
           project.send(att + '=', params[att])
