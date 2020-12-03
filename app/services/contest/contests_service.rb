@@ -19,7 +19,8 @@ class Contest::ContestsService
                              'tk_contest_topics.week_number as week_number',
                              'tk_contest_topics.start_time as topic_start',
                              'res_company.id as company_id').
-                      order('tk_contest_topics.start_time ASC').limit(8).to_a
+                      order('tk_contest_topics.start_time DESC').limit(8).to_a
+    week_projects.reverse!
 
     month_project = contest.contest_projects.
                       joins(:contest_topic).
@@ -184,12 +185,16 @@ class Contest::ContestsService
 
     project = Contest::ContestProject.where(id: params[:project_id]).first
     month_prizes = contest.contest_prizes.where(prize: 1, prize_type: 'm').pluck(:id, :month_active)
-    prize = month_prizes.select{|prize| prize[1].include? (Time.now.strftime('%m')) }
+    prize = month_prizes.select{|prize| prize[1].include? (Time.parse(params[:award_month]).strftime('%m')) }
 
-    if project.update(month_prize: prize[0][0])
-      { type: "success", message: "Trao giải thành công" }
+    if prize.present?
+      if project.update(month_prize: prize[0][0])
+        { type: "success", message: "Trao giải thành công" }
+      else
+        { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+      end
     else
-      { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
+        { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau!' }
     end
   end
 

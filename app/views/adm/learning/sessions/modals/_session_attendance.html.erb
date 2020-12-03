@@ -140,6 +140,18 @@
           </table>
         </div>
       </div>
+      <div style="margin-top: 30px">
+        <div class="fc-header">
+          <h3><span class="color-F16357 text-uppercase" style="padding: 5px 0 5px 0px;">Lịch sử đánh giá:</span></h3>
+        </div>
+        <div>
+          <% if session.evaluation_log.present? %>
+            <p><%= session.evaluation_log.gsub(/\R+/, '<br>').html_safe %></p>
+          <% else %>
+            <p>Chưa ghi nhận lich sử đánh giá</p>
+          <% end %>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

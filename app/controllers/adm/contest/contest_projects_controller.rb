@@ -68,13 +68,8 @@ class Adm::Contest::ContestProjectsController < Adm::AdmController
       result = Adm::Contest::ContestTopicsService.new.calculate_criterions_point topic, 'MN'
     end
 
-    if result[:type] == 'success'
       result = Adm::Contest::ContestTopicsService.new.awarded_project topic, params[:type], 'MB'
-    end
-
-    if result[:type] == 'success'
       result = Adm::Contest::ContestTopicsService.new.awarded_project topic, params[:type], 'MN'
-    end
 
     render json: result
   end
