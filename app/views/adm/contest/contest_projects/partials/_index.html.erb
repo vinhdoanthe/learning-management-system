@@ -7,12 +7,12 @@
         <input type='hidden' value='' name="active-contest" >
         <input type='hidden' value='' name="active-topic" >
         <% if topic.present? %>
-          <a class="btn btn-info float-right" id="calculate_week_point">Tính điểm tuần</a>
+          <a class="btn btn-info float-right" id="calculate_week_point" style="margin-right: 20px;">Tính điểm tuần</a>
         <% end %>
         <% if topic.present? && (Time.now > topic.end_time) %>
-          <a class="btn btn-info float-right" id="calculate_week_prize">Trao giải tuần</a>
+          <a class="btn btn-info float-right" id="calculate_week_prize" style="margin-right: 20px;">Trao giải tuần</a>
         <% end %>
-          <a class="btn btn-info float-right" data-toggle='modal' id="award_month_prize" data-target="#modal_award_month_prize" data-backdrop="true">Trao giải tháng</a>
+          <a class="btn btn-info float-right" data-toggle='modal' id="award_month_prize" style="margin-right: 20px;" data-target="#modal_award_month_prize" data-backdrop="true">Trao giải tháng</a>
       </div>
     </div>
     <div class="card-body">
@@ -105,12 +105,13 @@ $('#award_month_prize_project').click(function(){
   checked_project = $('input[name="month_project_awarded"]:checked').closest('tr');
   project_name = checked_project.find('.project_name').html();
   student_name = checked_project.find('.student_name').html();
+  award_month = $('#select_month_to_award').val();
 
   if (confirm(`Bạn chắc chắn sản phẩm ${ project_name } của học sinh ${ student_name } đạt giải tháng?`)){
     $.ajax({
       method: 'POST',
       url: '/contest/contests/award_month_prize',
-      data: { project_id: project_id, contest_id: contest_id },
+      data: { project_id: project_id, contest_id: contest_id, award_month: award_month },
       success: function(res){
         display_response_noti(res)
       }

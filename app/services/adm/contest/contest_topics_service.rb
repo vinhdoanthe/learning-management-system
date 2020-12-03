@@ -142,10 +142,8 @@ class Adm::Contest::ContestTopicsService
     validate = validate_week_award topic
     return validate if validate[:type] == 'danger'
     topic_prizes = topic.contest_prizes.where(prize_type: type, region: region).
-    #topic_prizes = Contest::ContestPrize.
-      order(prize: 'asc').
-      select('tk_topic_prizes.id, prize, number_awards').
-      to_a
+                                        order(prize: 'asc').
+                                        select('tk_contest_prizes.id, prize, number_awards').to_a
 
     total_awards = topic_prizes.sum(&:number_awards)
 
