@@ -5,9 +5,9 @@ class Contest::ContestProjectsService
     return { type: 'danger', message: 'san pham k ton tai hoac da bi xoa' } if c_project.blank?
 
     if c_project.update(judges_score: params[:point])
-      { type: 'success', message: 'cham diem thanh cong' }
+      { type: 'success', message: 'cham diem thanh cong', point: params[:point], id: c_project.id }
     else
-      { type:'danger', message: 'da co loi xay ra! thu lai sau' }
+      { type: 'danger', message: 'da co loi xay ra! thu lai sau', point: '' }
     end
   end
 

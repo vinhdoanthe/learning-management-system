@@ -5,6 +5,9 @@ class Adm::Contest::ContestProjectsController < Adm::AdmController
     @contests = Contest::Contest.where(is_publish: true)
     @contest = @contests.where(default: true).first
     @topics = @contest.contest_topics.order(start_time: :DESC)
+    @month_topics = {}
+    month_data = @contest.contest_topics.pluck(:start_time)
+    month_data.each{ |time| @month_topics.merge! ({ time.strftime('%m/%Y') => time.strftime('%m') }) }
   end
 
   def index_content

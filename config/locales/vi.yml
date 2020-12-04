@@ -463,6 +463,7 @@ vi:
       w: "Tuần"
       m: "Tháng"
       Introduction: 'Giới thiệu cuộc thi'
+      Awarded project: "Sản phẩm đạt giải"
     Topic:
       sort_name: 'Chủ đề'
       List: "Danh sách chủ đề"
