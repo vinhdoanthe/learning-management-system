@@ -35,10 +35,11 @@ class Adm::Contest::ContestPrizesController < Adm::AdmController
     prize = Contest::ContestPrize.where(id: params[:id]).first
     contest = Contest::Contest.where(id: params[:contest_id]).first
     prizes = contest.contest_prizes
+    update = params[:update].present? ? false : true
 
     respond_to do |format|
       format.html
-      format.js { render 'adm/contest/contest_prizes/contest_prize_detail', locals: { prize: prize, contest: contest, prizes: prizes }}
+      format.js { render 'adm/contest/contest_prizes/contest_prize_detail', locals: { prize: prize, contest: contest, prizes: prizes, update: update }}
     end
   end
 end

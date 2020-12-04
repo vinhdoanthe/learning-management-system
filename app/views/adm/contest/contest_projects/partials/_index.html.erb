@@ -28,7 +28,9 @@
               <th><%= t('config.center') %></th>
               <th><%= t('Contest.Products.Submit time') %></th>
               <th><%= t('Contest.Products.Reaction Point') %></th>
+              <th>Điểm giám khảo chấm</th>
               <th>Total point</th>
+              <th>Giải thưởng</th>
               <th><%= t('Contest.Products.Valid') %></th>
               <th>Action</th>
             </tr>
@@ -44,12 +46,21 @@
                 <td><%= project.company_name %></td>
                 <td><%= c_projects[project.id][:created_at].to_time.strftime('%H:%M %d/%m/%Y') %>
                 <td><%= c_projects[project.id][:reaction_point].to_i %></td>
+                <td class='marking-point-<%= c_projects[project.id][:id] %>'><%= c_projects[project.id][:judge_point].to_i %></td>
                 <td><%= c_projects[project.id][:score] * score_ratio + c_projects[project.id][:judges_score] * judges_ratio %></td>
+                <td>
+                  <% if c_projects[project.id][:week_award] %>
+                    <span class="badge badge-primary">Giải tuần</span>
+                  <% end %>
+                  <% if c_projects[project.id][:month_award] %>
+                    <span class="badge badge-success">Giải tháng</span>
+                  <% end %>
+                </td>
                 <td style="text-align: center">
                   <input type="checkbox" class="form-check-input" id="contest_project_state" <%= c_projects[project.id][:is_valid] ? 'checked' : '' %>>
                 </td>
                 <td>
-                  <a data-toggle='modal' data-project="<%= c_projects[project.id][:id] %>" data-target="#studentProjectDetail" class="btn btn-primary contest_project_show"><i class="fas fa-pencil-alt"></i> </a>
+                  <a data-toggle='modal' data-project="<%= c_projects[project.id][:id] %>" data-target="#studentProjectDetail" class="btn btn-primary contest_project_show open_modal_project_detail"><i class="fas fa-pencil-alt"></i> </a>
                   </span>
                 </td>
               </tr>
@@ -84,6 +95,11 @@
     </div>
   </div>
 </div>
+<style>
+.form-check-input {
+  position: relative;
+}
+</style>
 <script>
   var getAwardMonthProjects = (data) => {
     $.ajax({
@@ -124,5 +140,10 @@ $('#modal_award_month_prize').on('change', '#select_month_to_award', function(){
   time = $(this).val();
   data = { contest_id: contest_id, time: time }
   getAwardMonthProjects(data);
+})
+
+$('.open_modal_project_detail').on('click', function(){
+  $('#studentProjectDetail').html(`<div id="content_loading" style="height: 50px; display: flex; align-items: center; justify-content: center; color: white; height: 100%;"><i class="fa fa-spinner fa-2x fa-spin text-primary" style="padding: 3px;"></i><%= t('button.Loading')%>
+</div>`)
 })
 </script>

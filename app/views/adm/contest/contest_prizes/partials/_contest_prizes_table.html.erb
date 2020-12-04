@@ -84,15 +84,19 @@
 
   <script>
     $(document).ready(function(){
-      //$('.contest-prize-detail').on('click', function(){
-      //  id = $(this).data('prize')
-      //  contest_id = $('input[name="contest_id"]').val();
-      //  $.ajax({
-      //    method: 'get',
-      //    url: '/adm/contest/contest_prizes/contest_prize_detail',
-      //    data: { id: id, contest_id: contest_id },
-      //    dataType: 'script'
-      //  })
-      //})
+      $('.contest-prize-detail').unbind().on('click', function(){
+        id = $(this).data('prize')
+        contest_id = $('input[name="contest_id"]').val();
+        $.ajax({
+          method: 'get',
+          url: '/adm/contest/contest_prizes/contest_prize_detail',
+          data: { id: id, contest_id: contest_id, update: true },
+          dataType: 'script'
+        })
+      })
+
+      $('#update-contest-prize-confirm').unbind().on('click', function(){
+        $('#submit-create-new-prize').click();
+      })
     })
   </script>
