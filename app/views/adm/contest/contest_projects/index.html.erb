@@ -38,6 +38,17 @@
         </select>
       </div>
     </div>
+    <div class='col-md-6'>
+      <div class="form-group">
+        <label><%= t('Contest.Content.Awarded project') %></label>
+        <select id="select_month_award" class="form-control select2" style="width: 100%;">
+          <option value='all'><%= t('Contest.all') %></option>
+          <% @month_topics.each do |m_y, m| %>
+            <option value="<%= m_y %>">Tháng <%= m_y %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
   </div>
   <div class='card-footer'>
     <button type="button" class="btn btn-primary float-right" id="filter-contest-project"><%= t('button.filter') %></button>

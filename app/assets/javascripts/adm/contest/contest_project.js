@@ -2,7 +2,9 @@ let getIndexContent = () => {
   contest_id = $('#select_contest').val();
   topic_id = $('#select_topic').val();
   region = $('#select_region').val();
-  data = { contest_id: contest_id, topic_id: topic_id, region: region }
+  month_award = $('#select_month_award').val();
+
+  data = { contest_id: contest_id, topic_id: topic_id, region: region, month_award: month_award }
   $.ajax({
     url: `/adm/contest/contest_projects/index_content`,
     method: "GET",
@@ -90,7 +92,8 @@ $(document).ready(function(){
       method: 'POST',
       data: { id: id, point: point },
       success: function(res){
-        display_response_noti(res)
+        display_response_noti(res);
+        $(`.marking-point-${ res.id }`).html(res.point);
       }
     })
   })

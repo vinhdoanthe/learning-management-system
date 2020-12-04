@@ -15,6 +15,14 @@ class Adm::Contest::ContestProjectsService
       c_projects = contest.contest_projects.order(score: :DESC)
     end
 
+    if params[:month_award] == 'all'
+    else
+      month_award = Time.parse(params[:month_award])
+      query_time = month_award.beginning_of_month..month_award.end_of_month
+      c_projects = c_projects.joins(:contest_topic).where( tk_contest_topics: {start_time: query_time}).or(c_projects.joins(:contest_topic).where(tk_contest_topics: {end_time: query_time}))
+      c_projects = c_projects.where.not(contest_prize_id: nil).or(c_projects.where.not(month_prize: nil))
+    end
+
     query = ''
 
     if params[:region] == 'MB'
@@ -28,7 +36,7 @@ class Adm::Contest::ContestProjectsService
       teacher_name = User::OpenEducat::OpFaculty.where(id: cp.teacher_id).first&.full_name
       reaction_point = cp.project_criterions.pluck(:point_exchange).map(&:to_i).sum
       c_projects_detail.merge! ({ cp.project_id => cp.as_json.symbolize_keys })
-      c_projects_detail[cp.project_id].merge! ({ reaction_point: reaction_point.to_i, teacher_name: teacher_name })
+      c_projects_detail[cp.project_id].merge! ({ reaction_point: reaction_point.to_i, teacher_name: teacher_name, judge_point: cp.judges_score.to_i, week_award: cp.contest_prize_id.present?, month_award: cp.month_prize.present? })
     end
 
     project_ids = c_projects.pluck(:project_id)
@@ -43,6 +51,7 @@ class Adm::Contest::ContestProjectsService
                              "res_company.name as company_name")
     
     projects_detail = (projects_detail.sort_by { |detail| c_projects_detail[detail.id][:reaction_point]}).reverse
+
     [contest, topic, c_projects_detail, projects_detail]
   end
 

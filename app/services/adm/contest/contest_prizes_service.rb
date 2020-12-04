@@ -15,13 +15,23 @@ class Adm::Contest::ContestPrizesService
   def create params
     contest = Contest::Contest.where(id: params[:contest_id]).first
     if can_create? contest, params
-      atts = [:contest_id, :name, :student_price, :teacher_price, :prize_type, :month_active, :contest_id, :description, :number_awards, :prize]
+      atts = ['contest_id', 'name', 'student_price', 'teacher_price', 'prize_type', 'month_active', 'contest_id', 'description', 'number_awards', 'prize']
       create_params = {}
       atts.each do |att|
         create_params.merge! ({ att => params[att]}) if params[att].present?
       end
 
-      prize = Contest::ContestPrize.new(create_params)
+      if params[:prize_id].present?
+        prize = Contest::ContestPrize.where(id: params[:prize_id]).first
+
+        atts.each do |att|
+          if params[att].present? && params[att] != prize.send(att)
+            prize.send(att + '=', params[att])
+          end
+        end
+      else
+        prize = Contest::ContestPrize.new(create_params)
+      end
       prizes = contest.contest_prizes.where(prize_type: 'w')
 
       if prize.save
@@ -38,6 +48,7 @@ class Adm::Contest::ContestPrizesService
 
   def can_create? contest, params
     return true if params[:prize_type] != 'm'
+    return true if params[:prize_id].present?
     result = true
 
     months = contest.contest_prizes.where(prize: params[:prize]).pluck(:month_active)
