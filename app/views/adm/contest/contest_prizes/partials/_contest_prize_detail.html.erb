@@ -3,7 +3,9 @@
 <!-- Thông tin giải -->
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Them giai thuong</h3>
+    <% if add_new %>
+      <h3 class="card-title">Them giai thuong</h3>
+    <% end %>
   </div>
   <div class="card-body">
     <div class="form">
@@ -28,13 +30,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="contest_student_price">Student_price(Nghìn đồng)</label>
-            <input type="number" min='0' value='0' value="<%= prize.student_price %>" class="form-control price" <%= option %> id="contest_student_price" placeholder="0">
+            <input type="number" min='0' value="<%= prize.student_price %>" class="form-control price" <%= option %> id="contest_student_price" placeholder="0">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="contest_teacher_price">Teacher_price(Nghìn đồng)</label>
-            <input type="number" value='0' min='0' value="<%= prize.student_price %>" class="form-control price" <%= option %> id="contest_teacher_price" placeholder="0">
+            <input type="number" min='0' value="<%= prize.teacher_price %>" class="form-control price" <%= option %> id="contest_teacher_price" placeholder="0">
           </div>
         </div>
         <div class="col-md-4">
@@ -72,7 +74,7 @@
           </div>
         </div>
       </div>
-      <div class="row contest_month_award" style="display: none">
+      <div class="row contest_month_award" style="display: <%= prize&.prize_type == 'm' ? '' : 'none' %>">
         <%= Contest::ContestDecorator.new(contest).display_month_active.html_safe %>
       </div>
       <div class='row'>
@@ -82,11 +84,9 @@
       </div>
     </div>
   </div>
-  <% if add_new %>
-    <div class="card-footer">
-      <button type="button" id="submit-create-new-prize" class="btn btn-info float-right"><i class="fas fa-plus"></i>Tạo mới</button>
+  <div class="card-footer" style="display: <%= add_new ? '' : 'none' %>">
+    <button type="button" data-prize-id="<%= prize&.id %>" id="submit-create-new-prize" class="btn btn-info float-right"><i class="fas fa-plus"></i>Tạo mới</button>
     </div>
-  <% end %>
 </div>
 
 <style>

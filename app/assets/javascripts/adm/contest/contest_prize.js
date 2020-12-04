@@ -38,8 +38,9 @@ $(document).ready(function(){
     number_awards = $('#contest_prize_number_award').val();
     description = $('.contest-prize-description-textarea').val();
     month_active = $('input[name="contest_prize_month[]"]:checked').map(function(){return $(this).val();}).get();
+    prize_id = $(this).data('prize-id')
 
-    data = { name: name, student_price: student_price, teacher_price: teacher_price, prize_type: type, prize: prize, number_awards: number_awards, description: description, month_active: month_active, contest_id: contest_id }
+    data = { name: name, student_price: student_price, teacher_price: teacher_price, prize_type: type, prize: prize, number_awards: number_awards, description: description, month_active: month_active, contest_id: contest_id, prize_id: prize_id }
 
     $.ajax({
       url: "/adm/contest/contest_prizes/create_prize",
