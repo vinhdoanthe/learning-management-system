@@ -139,7 +139,7 @@ class Adm::Contest::ContestTopicsService
   end
 
   def awarded_project topic, type, region
-    validate = validate_week_award topic
+    validate = validate_week_award topic, region
     return validate if validate[:type] == 'danger'
     topic_prizes = topic.contest_prizes.where(prize_type: type, region: region).
                                         order(prize: 'asc').
@@ -147,11 +147,7 @@ class Adm::Contest::ContestTopicsService
 
     total_awards = topic_prizes.sum(&:number_awards)
 
-    awarded_projects = Contest::ContestProject.
-      joins(student_project: { op_student: :res_company }).where(res_company: { id: Object.const_get("Contest::Constant::Region::" + region)}).
-      select("tk_contest_projects.id, score * #{ Contest::Constant::ScoreRatio::SCORE_RATIO } + judges_score * #{ Contest::Constant::ScoreRatio::JUDGES_RATIO } as point").
-      # group('id').
-      order(point: 'desc').
+    awarded_projects = topic.contest_projects.  joins(student_project: { op_student: :res_company }).where(res_company: { id: Object.const_get("Contest::Constant::Region::" + region)}).  select("tk_contest_projects.id, score * #{ Contest::Constant::ScoreRatio::SCORE_RATIO } + judges_score * #{ Contest::Constant::ScoreRatio::JUDGES_RATIO } as point").  group('id').  order(point: 'desc').
       limit(total_awards).
       to_a
 
@@ -191,13 +187,16 @@ class Adm::Contest::ContestTopicsService
   def validate_update_topic params
   end
 
-  def validate_week_award topic
+  def validate_week_award topic, region
     return { type: 'danger', message: 'Chủ đề vẫn đang diễn ra! Chưa thể trao giải!' } if Time.now < topic.end_time
 
-    if topic.contest_projects.where.not(contest_prize_id: nil).first.present?
+    if topic.contest_projects.where.not(contest_prize_id: nil).count >= 2
       return { type: 'danger', message: 'Chủ đề này đã trao giải thưởng! Không thể trao giải lại' }
     end
 
+    if topic.contest_projects.joins(:contest_prize).where(tk_contest_prizes: { region: region }).present?
+      return { type: 'danger', message: '' }
+    end
     { type: 'success' }
   end
 end
