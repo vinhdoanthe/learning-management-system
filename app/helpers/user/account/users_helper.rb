@@ -98,11 +98,11 @@ module User
            'title' => "#{ t('sidebar.marking') }", 
            'right_content' => '<span class="left-badge">' << count_mark_question(current_user.op_faculty) << '</span>'
           },
-          {'path' => coming_soon_page_path, 
-           'icon' => 'ico-BaiTapOnBai.png',
-           'title' => "#{ t('sidebar.review_student') }", 
-           'right_content' => ''
-          },
+          #{'path' => coming_soon_page_path, 
+          # 'icon' => 'ico-BaiTapOnBai.png',
+          # 'title' => "#{ t('sidebar.review_student') }", 
+          # 'right_content' => ''
+          #},
           {'path' => social_community_question_answer_my_threads_path, 
            'icon' => 'Icon-Inbox.png',
            'title' => "#{ t('sidebar.question_answer') }", 

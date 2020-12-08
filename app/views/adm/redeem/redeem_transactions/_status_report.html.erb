@@ -3,7 +3,7 @@
     <!-- small card -->
     <div class="small-box bg-success">
       <div class="inner">
-        <h3><%= status_report[RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_NEW] %></h3>
+        <h3><%= status_report[RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_NEW] || 0 %></h3>
 
         <p><%= t('adm.redeem.transaction_new_lbl') %></p>
       </div>
@@ -19,7 +19,7 @@
     <!-- small card -->
     <div class="small-box bg-info">
       <div class="inner">
-        <h3><%= status_report[RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_READY] %></h3>
+        <h3><%= status_report[RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_READY] || 0 %></h3>
 
         <p><%= t('adm.redeem.transaction_ready_lbl') %></p>
       </div>
@@ -35,7 +35,7 @@
     <!-- small card -->
     <div class="small-box bg-danger">
       <div class="inner">
-        <h3><%= status_report[RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_CANCEL] %></h3>
+        <h3><%= status_report[RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_CANCEL] || 0 %></h3>
 
         <p><%= t('adm.redeem.transaction_cancel_lbl') %></p>
       </div>
@@ -51,7 +51,7 @@
     <!-- small card -->
     <div class="small-box bg-secondary">
       <div class="inner">
-        <h3><%= status_report[RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_DONE] %></h3>
+        <h3><%= status_report[RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_DONE] || 0 %></h3>
 
         <p><%= t('adm.redeem.transaction_done_lbl') %></p>
       </div>
