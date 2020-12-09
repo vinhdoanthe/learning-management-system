@@ -56,7 +56,7 @@
           <label><%= t('adm.user.company') %>:</label>
         </div>
         <div class='col-md-9'>
-          <select class='form-control' name="user_company">
+          <select class="select2" name="user_company" multiple="multiple" data-placeholder="Chọn công ty" style="width: 100%;">
             <%= @companies.each do |company| %>
               <option value='<%= company[0] %>'><%= company[1] %></option>
             <% end %>
@@ -73,6 +73,7 @@
   display: table;
   margin: auto;
   padding-top: 30px;
+  width: 100%;
 }
 
 .new_user_form input {
