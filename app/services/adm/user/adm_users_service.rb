@@ -105,7 +105,9 @@ class Adm::User::AdmUsersService
         user.account_role = params[:account_role]
 
         if user.save
-          Common::UserCompaniesService.new.create user.id, params[:company]
+          params[:company].each do |c_id|
+            Common::UserCompaniesService.new.create user.id, c_id
+          end
           result = { type: 'success', message: "#{ I18n.t 'adm.user.message.create_success'}" }
         else
           result = { type: 'danger', message: "#{ I18n.t 'adm.user.message.errors'}" }
