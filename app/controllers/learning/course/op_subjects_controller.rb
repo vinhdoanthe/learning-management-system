@@ -29,16 +29,22 @@ class Learning::Course::OpSubjectsController < ApplicationController
     end
 
     batch = session.op_batch
-    start_time = session.start_datetime.utc
-    end_time = session.end_datetime.utc
-    sql = " SELECT student_id
+
+    unless session.is_offset
+      start_time = session.start_datetime.utc
+      end_time = session.end_datetime.utc
+      sql = " SELECT student_id
             FROM op_student_report_off
             WHERE batch_id = #{ batch.id }
             AND start_datetime <= '#{ start_time }'
             AND end_datetime >= '#{ end_time }'
             AND state = 'on'"
-    total_student = ActiveRecord::Base.connection.execute(sql).values
-    student_ids = total_student.flatten
+      total_student = ActiveRecord::Base.connection.execute(sql).values
+      student_ids = total_student.flatten
+    else
+      student_ids = session.op_session_students.pluck(:student_id)
+    end
+
     students = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:id, :code, :full_name)
 
     all_student = {}
