@@ -28,15 +28,22 @@ class Learning::Course::OpSubjectsController < ApplicationController
       return
     end
 
-    all_student = {}
     batch = session.op_batch
-    student_courses = batch.op_student_courses.where(state: 'on')
+    start_time = session.start_datetime.utc
+    end_time = session.end_datetime.utc
+    sql = " SELECT student_id
+            FROM op_student_report_off
+            WHERE batch_id = #{ batch.id }
+            AND start_datetime <= '#{ start_time }'
+            AND end_datetime >= '#{ end_time }'
+            AND state = 'on'"
+    total_student = ActiveRecord::Base.connection.execute(sql).values
+    student_ids = total_student.flatten
+    students = User::OpenEducat::OpStudent.where(id: student_ids).pluck(:id, :code, :full_name)
 
-    student_courses.each do |sc|
-      student = sc.op_student
-      next if student.blank?
-      student_info = {student.id => {:status => 'on', :code => student.code || '', :name => student.full_name}}
-      all_student.merge!(student_info)
+    all_student = {}
+    students.each do |s|
+      all_student.merge!({ s[0] => { status: 'on', code: s[1], name: s[2] }})
     end
 
     if session.state == 'done'
