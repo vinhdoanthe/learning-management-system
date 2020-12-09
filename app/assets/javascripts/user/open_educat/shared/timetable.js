@@ -69,7 +69,18 @@ function get_schedule(date) {
             html = '<td class="schedule_info"></td>'
           }
 
+          prefix = key[0];
+          position = parseInt(key[1]);
+          exist_tr = $('.' + prefix + (position - 1).toString());
+
+          if ($('.' + key).length == 0 ){
+            $(`.${ prefix }1`).find($("td:first-child")).attr('rowspan', position.toString());
+            $(`<tr class='${ key }'></tr>`).insertAfter(exist_tr);
+          }
+
           $('.' + key).append(html);
+          //exist_tr.find($('.schedule_info')).css('border-bottom', '0 !important');
+          //$(`.${ key } .schedule_info`).css('border-top', '0 !important');
         }
       })
       $('[data-toggle="popover"]').popover();
