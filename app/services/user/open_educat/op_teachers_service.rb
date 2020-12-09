@@ -123,21 +123,21 @@ class User::OpenEducat::OpTeachersService
       case time.hour.to_i
       when 8..12
         si = 1
-        while schedule_hash['s' + si.to_s][time.wday].present? do
+        while schedule_hash['s' + si.to_s].present? && schedule_hash['s' + si.to_s][time.wday].present? do
           si += 1
         end
         schedule_hash['s' + si.to_s] = {} if schedule_hash['s' + si.to_s].blank?
         schedule_hash['s' + si.to_s].merge!(record)
       when 13..17
         c1 = 1
-        while schedule_hash['c' + c1.to_s][time.wday].present? do
+        while schedule_hash['s' + si.to_s].present? && schedule_hash['c' + c1.to_s][time.wday].present? do
           c1 += 1
         end
         schedule_hash['c' + c1.to_s] = {} if schedule_hash['c' + c1.to_s].blank?
         schedule_hash['c' + c1.to_s].merge!(record)
       when 18..22
         t1 = 1
-        while schedule_hash['t' + t1.to_s][time.wday].present? do
+        while schedule_hash['s' + si.to_s].present? && schedule_hash['t' + t1.to_s][time.wday].present? do
           t1 += 1
         end
         schedule_hash['t' + t1.to_s] = {} if schedule_hash['t' + t1.to_s].blank?
