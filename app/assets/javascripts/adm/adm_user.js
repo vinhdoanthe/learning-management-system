@@ -28,7 +28,10 @@ $(document).ready(function () {
   data = get_filter_params()
   data['page'] = 0
   data['index'] = 1
-  get_data_index(data);
+
+  if (window.location.href.includes('index')){
+    get_data_index(data);
+  }
 
   $('#paginator').on('click', '.previous_page', function () {
     data = get_filter_params();
