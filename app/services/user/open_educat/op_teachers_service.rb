@@ -129,19 +129,19 @@ class User::OpenEducat::OpTeachersService
         schedule_hash['s' + si.to_s] = {} if schedule_hash['s' + si.to_s].blank?
         schedule_hash['s' + si.to_s].merge!(record)
       when 13..17
-        c1 = 1
-        while schedule_hash['s' + si.to_s].present? && schedule_hash['c' + c1.to_s][time.wday].present? do
-          c1 += 1
+        ci = 1
+        while schedule_hash['c' + ci.to_s].present? && schedule_hash['c' + ci.to_s][time.wday].present? do
+          ci += 1
         end
-        schedule_hash['c' + c1.to_s] = {} if schedule_hash['c' + c1.to_s].blank?
-        schedule_hash['c' + c1.to_s].merge!(record)
+        schedule_hash['c' + ci.to_s] = {} if schedule_hash['c' + ci.to_s].blank?
+        schedule_hash['c' + ci.to_s].merge!(record)
       when 18..22
-        t1 = 1
-        while schedule_hash['s' + si.to_s].present? && schedule_hash['t' + t1.to_s][time.wday].present? do
-          t1 += 1
+        ti = 1
+        while schedule_hash['t' + ti.to_s].present? && schedule_hash['t' + ti.to_s][time.wday].present? do
+          ti += 1
         end
-        schedule_hash['t' + t1.to_s] = {} if schedule_hash['t' + t1.to_s].blank?
-        schedule_hash['t' + t1.to_s].merge!(record)
+        schedule_hash['t' + ti.to_s] = {} if schedule_hash['t' + ti.to_s].blank?
+        schedule_hash['t' + ti.to_s].merge!(record)
       end
     end
     
