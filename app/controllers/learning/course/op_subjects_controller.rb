@@ -32,7 +32,7 @@ class Learning::Course::OpSubjectsController < ApplicationController
 
     unless session.is_offset
       start_time = session.start_datetime.utc
-      end_time = session.end_datetime.utc
+      end_time = (session.end_datetime + 3.days).utc
       sql = " SELECT student_id
             FROM op_student_report_off
             WHERE batch_id = #{ batch.id }
