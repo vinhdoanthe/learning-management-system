@@ -1,0 +1,126 @@
+<div class='claim-body'>
+  <div>
+    <div class='row'>
+      <div class='col-md-12 col-md-push-1'>
+        <h3>Thông tin Cơ sở/Khóa học/Lớp học hiện tại:</h3>
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Cơ sở hiện tại:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 form-group'>
+        <input class='form-control noborder font-bold white-input' readonly name='active_session' value="<%= @company.name %>" >
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Khoá học:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 form-group'>
+        <select id="select_course" name="course" class='select2 select2-index form-control white-input white-input'>
+          <% @courses.each do |course| %>
+            <option value="<%= course.id %>"><%= course.name %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Lop hoc:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 form-group'>
+        <select id="select_batch" name="batch" class='select2 select2-index form-control white-input white-input'>
+          <% @batches.each do |batch| %>
+            <option value="<%= batch.id %>"><%= batch.name %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class='input_field row  form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Số buổi học đã hoàn thành:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 '>
+        <input class='form-control  noborder font-bold white-input' readonly name='done_session' value="<%= @count_done_session %>" >
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Số buổi học còn lại:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 '>
+        <input readonly class='form-control noborder font-bold white-input' name='coming_session' value="<%= @count_incoming_session %>" >
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 50px">
+    <div class='row'>
+      <div class='col-md-12 col-md-push-1'>
+        <h3>Thông tin cơ sở chuyển tới: </h3>
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Cơ sở đề xuất chuyển tới:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 form-group'>
+        <select id="select_company" name="company" class='select2 select2-index form-control white-input white-input'>
+          <% @companies.each do |company| %>
+            <option value="<%= company.id %>"><%= company.name %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Loại điều chuyển:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 form-group'>
+        <select id="select_admission_mode" name="admission_mode" class='select2 select2-index form-control white-input white-input'>
+          <% @admission_mode.each do |k, v| %>
+            <option value="<%= k %>"><%= v %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1'>
+        <label>Lý do đề nghị chuyển:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 '>
+        <textarea class='reason_reserve form-control white-input' name='reason' rows='5'></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog"id='modal_claim_content'>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Quy định về việc Chuyển lớp/Chuyển khóa học /Chuyển cơ sở</h5>
+        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p>1. Học sinh được phép yêu cầu thay đổi lớp học, khoá học, cơ sở học tối đa 01 lần trong 01 học phần.</p>
+          <p>2. Học sinh có thể chuyển lớp trong Cơ sở hoặc giữa các Cơ sở trong hệ thống TEKY với điều kiện cơ sở có các lớp học phù hợp và còn chỗ trống.</p>
+          <p>3. Để được chuyển lớp/chuyển khóa học/chuyển cơ sở, Phụ huynh/Học sinh hoàn thiện mẫu "​ Đơn đề nghị chuyển lớp/ Chuyển khóa/Chuyển cơ sở ” trực tiếp tại Cơ sở TEKY hoặc trực tuyến theo yêu cầu.</p>
+        </div>
+        <hr>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="agree-check">
+          <label class="form-check-label font-bold" for="agree-check">Tôi hoàn toàn đồng ý với các quy định trên</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" data-disable-with='Đang xử lý...' id="submit-claim-form" disabled form='claim-form' class="btn btn-primary">Gửi yêu cầu</button>
+      </div>
+    </div>
+  </div>
+</div>

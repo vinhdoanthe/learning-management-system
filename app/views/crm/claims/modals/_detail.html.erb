@@ -1,0 +1,32 @@
+<%
+		attributes = {
+			'Tên học sinh' => @student.full_name,
+			'Tên phụ huynh' => @parent&.full_name,
+			'Số điện thoại' => @claim.partner_phone,
+			'Email' => @parent&.email,
+			'Học viện' => @company.name,
+			'Khoá học hiện tại' => @course&.name,
+			'Lớp học hiện tại' => @batch&.name,
+			'Khoá học chuyển tới' => @to_course&.name,
+			'Lớp học chuyển tới' => @to_batch&.name,
+			'Học viện chuyển tới' => @to_company&.name,
+			'Số tiền' => @claim.refund_amount_total,
+			'Trạng thái' => @stage[@claim.stage_id],
+			'Lý do' => @claim.description,
+			'Ghi chú' => @claim.note,
+}
+%>
+<% atts = {} %>
+<% attributes.each do |k, v| %>
+	<% atts.merge!({ k => v }) if v.present? %>
+<% end %>
+<div class='table-responsive'>
+	<table class='table table-hover'>
+		<% atts.each do |k, v| %>
+			<tr>
+				<td><%= k %></td>
+				<td><%= v %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>

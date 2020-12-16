@@ -1,0 +1,52 @@
+<div class='reverse_claim'>
+  <div class='header-img'>
+    <div>
+      <div class='img'>
+        <img src=''>
+      </div>
+      <div class='phone'>
+      </div>
+      <div class='right'>
+      </div>
+    </div>
+  </div>
+  <div class='title'>
+    <div>
+      <h3></h3>
+    </div>
+    <div>
+      <h4>Kính gửi: Ban Giám đốc Học viện sáng tạo Công nghệ TEKY</h4>
+    </div>
+  </div>
+  <div class='content content-body'>
+    <div class='student-info'>
+        <%= render 'crm/claims/components/input_line_dot', { label: 'Tôi tên:', name: 'parent_name', value: '' } %>
+      <div class='parent_phone name'>
+        <%= render 'crm/claims/components/input_line_dot', { label: 'Số điện thoại:', value: '', name: 'parent_mobile' } %>
+        <%= render 'crm/claims/components/input_line_dot', { label: 'Email:', value: '', name: 'parent_email' } %>
+      </div>
+      <div class='student_info name'>
+        <%= render 'crm/claims/components/input_line_dot', { label: 'Là phụ huynh học viên:', value: '', name: 'student_name' } %>
+        <div class='student_birth name'>
+          <div class='text-label' style="white-space: nowrap">
+            <label>Sinh ngay:</label>
+          </div>
+          <div class='input-birth-day name'>
+            <div>
+              <input type='text' class="input_text" style='width: 100%'>
+            </div><span>/</span>
+            <div>
+              <input type='text' class="input_text" style='width: 100%'>
+            </div><span>/</span>
+            <div>
+              <input type='text' class="input_text" style='width: 100%'>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p>Nay tôi làm đơn này kính đề nghị Ban Giám đốc Học viện xem xét và giải quyết Bảo lưu khóa học cho con tôi với nội dung cụ thể:</p>
+  </div>
+</div>
+
+

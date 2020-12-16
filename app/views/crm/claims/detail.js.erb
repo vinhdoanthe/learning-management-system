@@ -1,0 +1,6 @@
+<% if @claim.present? %>
+		$('#claim-detail').html(`<%= escape_javascript( render partial: 'crm/claims/modals/detail' ) %>`)
+		$('.claim_name').html(`<%= @claim.name %>`)
+<% else %>
+		$('#claim-detail').html('Đã có lỗi xảy ra! Vui lòng thử lại sau')
+<% end %>

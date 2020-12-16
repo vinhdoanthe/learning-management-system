@@ -1,0 +1,92 @@
+<link rel="stylesheet" href="/AdminLTE-3.0.5/plugins/select2/css/select2.min.css">
+<script src="/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js"></script>
+<%= stylesheet_link_tag ('crm/claim.css') %>
+<div class="page-content page-thin">
+  <div class="panel panel-edits bg-232837">
+    <div class="panel-heading">
+      <div class="ph-text">
+      </div>
+    </div>
+  </div>
+  <div class="panel m-t--70">
+    <div class='claim-title'>
+      <h2><%= @title %></h2>
+    </div>
+    <form id='claim-form' action='/crm/claim' method="POST" data-remote='true'>
+      <input type='hidden' name='claim_form_type' value='<%= @form %>'>
+      <input type='hidden' name='claim_form_img' value=''>
+      <div id='claim-form-content' class='claim-content'>
+        <div>
+          <div class='row'>
+            <div class='col-md-12 col-md-push-1'>
+              <h3>Thông tin học sinh:</h3>
+            </div>
+          </div>
+          <div class='input_field'>
+            <div class='row input_field form-group'>
+              <div class='col-md-3 col-md-push-1 '>
+                <label>Tên phụ huynh:</label>
+              </div>
+              <div class='col-md-7 col-md-push-1 '>
+                <input readonly class='form-control white-input noborder font-bold' name='parent_name' value="<%= @parent.full_name %>" >
+              </div>
+            </div>
+          </div>
+          <div class='input_field'>
+            <div class='row form-group input_field '>
+              <div class='col-md-3 col-md-push-1 '>
+                <label>Tên hoc sinh:</label>
+              </div>
+              <div class='col-md-7 col-md-push-1 '>
+                <input class='form-control white-input noborder font-bold' readonly name='student_name' value="<%= @student.full_name %>" >
+                <input type='hidden' name='student_id' value="<%= @student.id %>" >
+              </div>
+            </div>
+          </div>
+          <div class='input_field row form-group'>
+            <div class='col-md-3 col-md-push-1 '>
+              <label>Ngày sinh:</label>
+            </div>
+            <div class='col-md-7 col-md-push-1 '>
+              <input class='form-control white-input noborder font-bold' readonly name='student_birth' value="<%= @student.birth_date.strftime('%d/%m/%Y') %>" >
+            </div>
+          </div>
+          <div class='input_field row form-group'>
+            <div class='col-md-3 col-md-push-1 '>
+              <label>Email:</label>
+            </div>
+            <div class='col-md-7 col-md-push-1 '>
+              <input class='form-control white-input noborder font-bold' readonly name='parent_email' value="<%= @parent.email %>" >
+            </div>
+          </div>
+          <div class='input_field row form-group'>
+            <div class='col-md-3 col-md-push-1 '>
+              <label>Mobile:</label>
+            </div>
+            <div class='col-md-7 col-md-push-1 '>
+              <input class='form-control white-input noborder font-bold' readonly name='parent_mobile' value="<%= @parent.mobile %>" >
+            </div>
+          </div>
+        </div>
+        <% if @form == 'reserve' %>
+          <%= render 'crm/claims/forms/reserve' %>
+        <% elsif @form == 'refund' %>
+          <%= render 'crm/claims/forms/refund' %>
+        <% elsif @form == 'change_company' %>
+          <%= render 'crm/claims/forms/change_company' %>
+        <% elsif @form == 'transfer' %>
+          <%= render 'crm/claims/forms/transfer' %>
+        <% end %>
+      </div>
+      <div class='form-submit'>
+        <button type='button' class='btn btn-primary' id='claim-rule-button' data-toggle='modal' data-target='#modal_claim_content' style="margin-top: 30px;">Sumit form</button>
+      </div>
+    </form>
+  </div>
+</div>
+<%= javascript_include_tag 'crm/claim.js' %>
+<script>
+</script>
+
+<style>
+</style>

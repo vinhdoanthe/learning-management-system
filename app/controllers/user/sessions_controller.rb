@@ -5,6 +5,7 @@ module User
 
     def new
       session[:contest] = params[:contest_alias]
+      session[:next_page] = params[:next_page] if params[:next_page].present?
       if logged_in?
         redirect_to root_path
       end
@@ -23,7 +24,12 @@ module User
           if session[:contest].present? && session[:contest].to_i != 0
             redirect_to contest_new_project_path(contest_alias: session[:contest])
           else
+            if session[:next_page] == 'claim'
+              session[:next_page] = ''
+              redirect_to new_crm_claim_path
+            else
             redirect_to root_path
+            end
           end
         else
           flash.now[:danger] = 'Mật khẩu không đúng'
