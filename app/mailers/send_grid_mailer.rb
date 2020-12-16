@@ -16,7 +16,8 @@ class SendGridMailer
       send_reset_password_email data
     elsif type == MailType::SEND_REFER_FRIEND_CONFIRM_EMAIL
       send_refer_friend_email data
-    else
+    elsif type == MailType::SEND_CLAIM_EMAIL_NOTI
+      send_claim_email_noti data
     end
   end
 
@@ -77,8 +78,38 @@ class SendGridMailer
     }
   end
 
+  def parse_claim_data claim
+    {
+      "personalizations": [
+        {
+          "to": [
+            {
+              "email": Settings.sendgrid.to[:email]
+            }
+          ],
+          "dynamic_template_data": {
+            "claim_type": claim[:type],
+            "parent_name": claim[:student_name],
+            "student_name": claim[:parent_name],
+            "odoo_link": claim[:odoo_url]
+          }
+        }
+      ],
+      "from": {
+        "email": Settings.sendgrid.from[:email],
+        "name": Settings.sendgrid.from[:name]
+      },
+      "template_id": Settings.sendgrid.template[:send_claim]
+    }
+  end
+
+  def send_claim_email_noti data
+    data = parse_claim_data(data)
+    execute_send(data)
+  end
+
   def send_faculty_account_email teacher_user
-    data = parse_faculty_account_data(teacher_user)
+    data = parse_claim_data(claim)
     execute_send(data)
   end
 

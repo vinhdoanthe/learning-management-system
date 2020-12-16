@@ -1,0 +1,90 @@
+<div class='claim-body' style="margin-top: -40px">
+  <div class='input_field row'>
+    <div class='col-md-3 col-md-push-1 '>
+      <label>Khoá học:</label>
+    </div>
+    <div class='col-md-7 col-md-push-1 form-group'>
+      <select id="select_course" name="course" class='select2 select2-index form-control white-input'>
+        <% @courses.each do |course| %>
+          <option value="<%= course.id %>"><%= course.name %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+  <div class='input_field row'>
+    <div class='col-md-3 col-md-push-1 '>
+      <label>Lớp học:</label>
+    </div>
+    <div class='col-md-7 col-md-push-1 form-group'>
+      <select id="select_batch" name="batch" class='select2 select2-index form-control white-input'>
+        <% @batches.each do |batch| %>
+          <option value="<%= batch.id %>"><%= batch.name %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+  <div class='input_field row form-group'>
+    <div class='col-md-3 col-md-push-1 '>
+      <label>Số buổi học đã hoàn thành:</label>
+    </div>
+    <div class='col-md-7 col-md-push-1 '>
+      <input class='form-control noborder font-bold white-input' readonly name='done_session' value="<%= @count_done_session %>" >
+    </div>
+  </div>
+  <div class='input_field row form-group'>
+    <div class='col-md-3 col-md-push-1 '>
+      <label>Số buổi học còn lại:</label>
+    </div>
+    <div class='col-md-7 col-md-push-1 '>
+      <input readonly class='form-control noborder font-bold white-input' name='coming_session' value="<%= @count_incoming_session %>" >
+    </div>
+  </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Thời gian:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 '>
+        <input name='start_reserve' class='form-control white-input  white-input'>
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1'>
+        <label>Lý do bảo lưu:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 '>
+        <textarea class='reason_reserve form-control white-input white-input' name='reason' rows='5' value=''></textarea>
+      </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog"id='modal_claim_content'>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Quy định về việc Bảo lưu khoá học</h5>
+        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p>1. Chính sách bảo lưu khoá học được áp dụng đối với:</p>
+          <p>   a. Các trường hợp được xét bảo lưu với lý do bất khả kháng.</p>
+          <p>   b. Các Học sinh đã đóng đủ học phí.</p>
+          <p>   c. Các trường hợp khác với sự phê duyệt của BGĐ.</p>
+          <p>2. Thời hạn bảo lưu: tối đa 06 (sáu) tháng từ ngày đề nghị Bảo lưu.</p>
+          <p>3. Để thực hiện bảo lưu khoá học, Phụ huynh/Học sinh hoàn thiện mẫu “Đơn đề nghị Bảo lưu” trực tiếp tại Cơ sở TEKY hoặc trực tuyến theo yêu cầu.</p>
+          <p>4. Khi Học sinh có mong muốn trở lại học tập sau Bảo lưu, Phụ huynh/Học sinh liên hệ với bộ phận Chăm sóc khách hàng tại Cơ sở TEKY tối thiểu trước 05 (năm) ngày làm việc, để được tư vấn và sắp xếp vào lớp phù hợp (là các lớp hiện phù hợp về chương trình học tập và còn chỗ trống, lớp được sắp xếp có cùng số buổi học trước thời điểm bảo lưu, theo lịch học của TEKY).  Số tiền học phí đã xin bảo lưu của Học sinh không được hoàn phí trong bất kì trường hợp nào.</p>
+        </div>
+        <hr>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="agree-check">
+          <label class="form-check-label font-bold" for="agree-check">Tôi hoàn toàn đồng ý với các quy định trên</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" data-disable-with='Đang xử lý...' id='submit-claim-form' disabled form='claim-form' class="btn btn-primary">Gửi yêu cầu</button>
+      </div>
+    </div>
+  </div>
+</div>
