@@ -30,14 +30,14 @@ function setTimeFormat(time, value){
   return `${ day }/${ month }/${ year }`
 }
 
-$('#select_course').select2({ });
-$('#select_batch').select2({ });
-$('#select_company').select2({ });
-$('#select_admission_mode').select2({ });
+  $('#select_course').select2({ });
+  $('#select_batch').select2({ });
+  $('#select_company').select2({ });
+  $('#select_admission_mode').select2({ });
 $(document).ready(function(){
   setDateRangePicker('input[name="start_reserve"]');
 })
-$('#agree-check').on("change", function(){
+$('#fill_content').on("change", "#agree-check", function(){
   if ($('#agree-check').is(':checked')){
     $('#submit-claim-form').prop('disabled', false);
   }

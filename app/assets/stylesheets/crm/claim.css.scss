@@ -7,9 +7,11 @@ button.select2-selection__choice__remove {
 	background-color: #e4e4e4;
 	color: black !important;
 }
+#claim-rule-button{
+  display: none;
+}
 #claim-form{
   margin: 30px;
-  margin-top: 50px;
 }
 .close-modal {
   position: absolute;
@@ -18,7 +20,6 @@ button.select2-selection__choice__remove {
   font-size: 25px;
 }
 .claim-body {
-  margin-top: 50px;
 }
 .form-submit{
   display: flex;

@@ -1,7 +1,16 @@
 <div class="bg-view bo-table giaoan-content">
   <% if plan_link.present? %>
-  <%= plan_link.html_safe %>
-<% else %>
-  <p style="text-align: center">Chưa có giáo án</p>
-<% end %>
+    <% regex = /(?<=src=").*?(?=[\?"])/ %>
+    <% href = plan_link.match(regex).to_s %>
+    <%= plan_link.html_safe %>
+    <a href="<%= href %>" target="blank" style="position: absolute; bottom: 20px; right: 20px;" class='btn btn-primary font-bold text-uppercase'>Xem chi tiết</a>
+  <% else %>
+    <p style="text-align: center">Chưa có giáo án</p>
+  <% end %>
 </div>
+<style>
+.giaoan-content iframe{
+  width: 100%;
+  min-height: 200px;
+}
+</style>
