@@ -1,0 +1,86 @@
+<div class='claim-body' style="margin-top: 0px;">
+  <div class='input_field form-group'>
+    <div class='col-md-3 col-md-push-1'>
+      <label>Lý do hoàn học phí:</label>
+    </div>
+    <div class='col-md-7 col-md-push-1 '>
+      <textarea class='reason_reserve form-control white-input' name='reason' rows='5' value=''></textarea>
+    </div>
+  </div>
+  <div class='refund-info' style='margin-top: 50px;'>
+    <div class='row'>
+      <div class='col-md-12 col-md-push-1'>
+        <h3>Thông tin nhận tiền hoàn học phí:</h3>
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Tên chủ tài khoản:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 '>
+        <input class='form-control white-input' name='account_name' type='text' >
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Số tài khoản:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 '>
+        <input class='form-control white-input' name='account_number' type='text'>
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Tại ngân hàng:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 '>
+        <input class='form-control white-input' name='bank' type='text' >
+      </div>
+    </div>
+    <div class='input_field row form-group'>
+      <div class='col-md-3 col-md-push-1 '>
+        <label>Chi nhánh:</label>
+      </div>
+      <div class='col-md-7 col-md-push-1 '>
+        <input class='form-control white-input' name='branch' type='text' >
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog"id='modal_claim_content'>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Quy định về hoàn học phí</h5>
+        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+        <p>1. TEKY chỉ thực hiện hoàn trả học phí đối với các lớp
+        học bị hủy, không thể tổ chức vì lý do từ phía TEKY và
+        không giải quyết yêu cầu hoàn phí vì bất kì lý do nào
+        khác ngoài nhóm lý do nêu trên.</p>
+        <p>2. Để thực hiện việc hoàn trả học phí, Phụ huynh/Học
+        sinh hoàn thiện mẫu “​ Đơn đề nghị hoàn phí​ ” trực
+        tiếp tại Cơ sở TEKY hoặc trực tuyến theo yêu cầu.</p>
+        <p>3. Trong thời gian ​ 14 (mười bốn) ngày (không tính
+        ngày nghỉ lễ), kể từ ngày nhận đầy đủ thông tin về
+        thủ tục hoàn trả học phí, TEKY sẽ tiến hành chuyển
+        khoản số học phí còn lại tới tài khoản ngân hàng do
+        Phụ huynh cung cấp.</p>
+        </div>
+        <hr>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="agree-check">
+          <label class="form-check-label font-bold" for="agree-check">Tôi hoàn toàn đồng ý với các quy định trên</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" data-disable-with='Đang xử lý...' id='submit-claim-form' disabled form='claim-form' class="btn btn-primary">Gửi yêu cầu</button>
+      </div>
+    </div>
+  </div>
+</div>
