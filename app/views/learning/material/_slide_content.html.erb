@@ -1,9 +1,6 @@
 <div class="bg-view bo-table baigiang-content" >
-  <% regex = /(?<=src=").*?(?=[\?"])/ %>
-  <% href = link.match(regex).to_s %>
   <% if link.present? %>
     <%= link.html_safe %>
-    <a href="<%= href %>" target="blank" style="position: absolute; bottom: 20px; right: 20px;" class='btn btn-primary font-bold text-uppercase'>Xem chi tiết</a>
   <% else %>
     <p style="text-align: center">Chưa có bài giảng</p>
   <% end %>

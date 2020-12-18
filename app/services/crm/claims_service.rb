@@ -57,8 +57,8 @@ class Crm::ClaimsService
     claim.attachment_link = ActiveStorage::Blob.service.send(:path_for, claim.image.key)
     claim.save
 
-    #data = { student_name: student.full_name, parent_name: parent.full_name, odoo_url: claim.odoo_url, type: claim.name }
-    #SendGridMailer.new.send_email(EmailConstants::MailType::SEND_CLAIM_EMAIL_NOTI, data)
+    data = { student_name: student.full_name, parent_name: parent.full_name, odoo_url: claim.odoo_url, type: claim.name }
+    SendGridMailer.new.send_email(EmailConstants::MailType::SEND_CLAIM_EMAIL_NOTI, data)
     
     { type: 'success', message: 'Gửi yêu cầu thành công! Yêu cầu của bạn sẽ được xử lý trong thời gian ngắn nhất có thể!' }
   end

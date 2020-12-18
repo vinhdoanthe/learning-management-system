@@ -8,85 +8,138 @@
       </div>
     </div>
   </div>
-  <div class="panel m-t--70">
-    <div class='claim-title'>
-      <h2><%= @title %></h2>
-    </div>
-    <form id='claim-form' action='/crm/claim' method="POST" data-remote='true'>
-      <input type='hidden' name='claim_form_type' value='<%= @form %>'>
-      <input type='hidden' name='claim_form_img' value=''>
-      <div id='claim-form-content' class='claim-content'>
-        <div>
-          <div class='row'>
-            <div class='col-md-12 col-md-push-1'>
-              <h3>Thông tin học sinh:</h3>
+  <div class="panel m-t--70" style="padding: 40px">
+    <div style='border: 2px solid'>
+      <div class='claim-title'>
+        <h2>Đơn đề nghị / yêu cầu</h2>
+      </div>
+      <hr style="border: 1px solid; width: 60%; margin-top: 50px">
+      <form id='claim-form' action='/crm/claim' method="POST" data-remote='true'>
+        <input type='hidden' name='claim_form_img' value=''>
+        <div id='claim-form-content' class='claim-content'>
+          <div>
+            <div class='row'>
+              <div class='col-md-10 col-md-push-2'>
+                <h3>Thông tin học sinh:</h3>
+              </div>
             </div>
-          </div>
-          <div class='input_field'>
-            <div class='row input_field form-group'>
+            <div class='input_field'>
+              <div class='row input_field form-group'>
+                <div class='col-md-3 col-md-push-1 '>
+                  <label>Tên phụ huynh:</label>
+                </div>
+                <div class='col-md-7 col-md-push-1 '>
+                  <input readonly class='form-control white-input noborder font-bold' name='parent_name' value="<%= @parent.full_name %>" >
+                </div>
+              </div>
+            </div>
+            <div class='input_field'>
+              <div class='row form-group input_field '>
+                <div class='col-md-3 col-md-push-1 '>
+                  <label>Tên hoc sinh:</label>
+                </div>
+                <div class='col-md-7 col-md-push-1 '>
+                  <input class='form-control white-input noborder font-bold' readonly name='student_name' value="<%= @student.full_name %>" >
+                  <input type='hidden' name='student_id' value="<%= @student.id %>" >
+                </div>
+              </div>
+            </div>
+            <div class='input_field row form-group'>
               <div class='col-md-3 col-md-push-1 '>
-                <label>Tên phụ huynh:</label>
+                <label>Ngày sinh:</label>
               </div>
               <div class='col-md-7 col-md-push-1 '>
-                <input readonly class='form-control white-input noborder font-bold' name='parent_name' value="<%= @parent.full_name %>" >
+                <input class='form-control white-input noborder font-bold' readonly name='student_birth' value="<%= @student.birth_date.strftime('%d/%m/%Y') %>" >
               </div>
             </div>
-          </div>
-          <div class='input_field'>
-            <div class='row form-group input_field '>
+            <div class='input_field row form-group'>
               <div class='col-md-3 col-md-push-1 '>
-                <label>Tên hoc sinh:</label>
+                <label>Email:</label>
               </div>
               <div class='col-md-7 col-md-push-1 '>
-                <input class='form-control white-input noborder font-bold' readonly name='student_name' value="<%= @student.full_name %>" >
-                <input type='hidden' name='student_id' value="<%= @student.id %>" >
+                <input class='form-control white-input noborder font-bold' readonly name='parent_email' value="<%= @parent.email %>" >
+              </div>
+            </div>
+            <div class='input_field row form-group'>
+              <div class='col-md-3 col-md-push-1 '>
+                <label>Mobile:</label>
+              </div>
+              <div class='col-md-7 col-md-push-1 '>
+                <input class='form-control white-input noborder font-bold' readonly name='parent_mobile' value="<%= @parent.mobile %>" >
               </div>
             </div>
           </div>
-          <div class='input_field row form-group'>
-            <div class='col-md-3 col-md-push-1 '>
-              <label>Ngày sinh:</label>
-            </div>
-            <div class='col-md-7 col-md-push-1 '>
-              <input class='form-control white-input noborder font-bold' readonly name='student_birth' value="<%= @student.birth_date.strftime('%d/%m/%Y') %>" >
+          <div style="margin-top: 30px;">
+            <div class="input_field row form-group">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Chọn loại đề nghị/yêu cầu:</h3>
+                </div>
+              </div>
+              <div class='col-md-7 col-md-push-1 form-group'>
+                <select id="select_form" name="claim_form_type" class='form-control white-input text-uppercase font-bold'>
+                  <option value="" class='not_select' disabled selected>Chọn loại đề nghị</option>
+                  <% @titles.each do |k, v| %>
+                    <option value="<%= k %>"><%= v %></option>
+                  <% end %>
+                </select>
+              </div>
             </div>
           </div>
-          <div class='input_field row form-group'>
-            <div class='col-md-3 col-md-push-1 '>
-              <label>Email:</label>
-            </div>
-            <div class='col-md-7 col-md-push-1 '>
-              <input class='form-control white-input noborder font-bold' readonly name='parent_email' value="<%= @parent.email %>" >
-            </div>
-          </div>
-          <div class='input_field row form-group'>
-            <div class='col-md-3 col-md-push-1 '>
-              <label>Mobile:</label>
-            </div>
-            <div class='col-md-7 col-md-push-1 '>
-              <input class='form-control white-input noborder font-bold' readonly name='parent_mobile' value="<%= @parent.mobile %>" >
-            </div>
+          <div id='fill_content'>
           </div>
         </div>
-        <% if @form == 'reserve' %>
-          <%= render 'crm/claims/forms/reserve' %>
-        <% elsif @form == 'refund' %>
-          <%= render 'crm/claims/forms/refund' %>
-        <% elsif @form == 'change_company' %>
-          <%= render 'crm/claims/forms/change_company' %>
-        <% elsif @form == 'transfer' %>
-          <%= render 'crm/claims/forms/transfer' %>
-        <% end %>
-      </div>
-      <div class='form-submit'>
-        <button type='button' class='btn btn-primary' id='claim-rule-button' data-toggle='modal' data-target='#modal_claim_content' style="margin-top: 30px;">Sumit form</button>
-      </div>
-    </form>
+        <div class='form-submit'>
+          <button type='button' disabled class='btn btn-primary' id='claim-rule-button' data-toggle='modal' data-target='#modal_claim_content' style="margin-top: 30px;">Sumit form</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 <%= javascript_include_tag 'crm/claim.js' %>
 <script>
-</script>
+  $('#select_form').on('change', function(){
+      $('#claim-rule-button').show();
+      $('#claim-rule-button').prop('disabled', true);
+      form = $(this).val();
 
-<style>
-</style>
+      if (form === 'reserve'){
+          $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/reserve') %>`);
+      }else if (form === 'refund'){
+          $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/refund') %>`);
+      }else if (form === 'change_company'){
+          $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/change_company') %>`);
+      }else if (form === 'transfer'){
+          $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/transfer') %>`);
+      }
+    })
+
+    $('#fill_content').on('keyup', 'textarea[name="reason"]', function(){
+        if ($(this).val().length > 0){
+            $('#claim-rule-button').prop('disabled', false);
+          }else{
+              $('#claim-rule-button').prop('disabled', true);
+            }
+      })
+    data = JSON.parse('<%= raw(@data.to_json) %>');
+    batch = JSON.parse('<%= raw(@batch.to_json) %>');
+
+    $('#select_course').on('change', function(){
+        course_id = $(this).val();
+        html = ''
+        $.each(data[course_id], function(key, val){
+            html += `<option value=${ key }>${ batch[key] }</option>`
+          })
+
+        $('#select_batch').html(html)
+        batch_id = $('#select_batch').val();
+        $('input[name="done_session"]').val(data[course_id][batch_id]['done_ss']);
+        $('input[name="coming_session"]').val(data[course_id][batch_id]['incoming_ss']);
+      })
+    $('#select_batch').on('change', function(){
+        batch_id = $(this).val();
+        course_id = $('#select_course').val();
+        $('input[name="done_session"]').val(data[course_id][batch_id]['done_ss']);
+        $('input[name="coming_session"]').val(data[course_id][batch_id]['incoming_ss']);
+      })
+</script>

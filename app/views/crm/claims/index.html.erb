@@ -4,7 +4,7 @@
 		<h3 class='claim-title'>Danh sách yêu cầu đã gửi</h3>
 		</div>
 		<div style='margin-left: auto'>
-			<a href='/crm/claim/new' class='btn btn-primary font-bold text-uppercase'>Tạo yêu cầu mới</a>
+			<a href='/crm/claims/new_claim' class='btn btn-primary font-bold text-uppercase'>Tạo yêu cầu mới</a>
 		</div>
 	</div>
 	<div class="panel claim-list">
@@ -21,7 +21,7 @@
 					<% @claims.each do |claim| %>
 						<tr class='show_claim_detail' data-toggle="modal" data-id="<%= claim.id %>" data-target="#modal_claim_detail">
 							<td><%= claim.name %></td>
-							<td><%= claim.create_date %></td>
+							<td><%= claim.create_date.strftime('%H:%M %d/%m/%Y') %></td>
 							<td><%= @stage[claim.stage_id] %></td>
 						</tr>
 					<% end %>
