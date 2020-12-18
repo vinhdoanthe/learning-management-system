@@ -1,5 +1,8 @@
 class Crm::ClaimsController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :authenticate_user!
+  before_action :authenticate_student!
+
   def new
     titles = {
       'reserve' => 'Đơn đề nghị bảo lưu',
@@ -16,7 +19,7 @@ class Crm::ClaimsController < ApplicationController
   end
 
   def index
-    @claims = Crm::Claim.where(student_id: current_user.op_student.id).to_a
+    @claims = Crm::Claim.where(student_id: current_user.op_student.id).order(create_date: :DESC).to_a
     @stage = {
       1 => 'Chờ xử lý',
       3 => 'Được chập nhận',
@@ -65,22 +68,41 @@ class Crm::ClaimsController < ApplicationController
       40	=> "Chuyển nhượng học phí"
     }
 
-    @courses = @student.op_courses
-    @batches = @student.op_batches
     @list_company = Common::ResCompany.all.to_a
     @company = @student.res_company
-    @count_done_session = @student.op_sessions.where(state: 'done').count
-    @count_incoming_session = @student.op_sessions.where.not(state: ['done', 'cancel']).count
     @form = params[:form]
     @companies = Common::ResCompany.all.to_a
-    title = {
+    @titles = {
       'reserve' => 'Đơn đề nghị bảo lưu',
       'refund' => 'Đơn đề nghị hoàn học phí',
       'change_company' => 'Đơn đề nghị chuyển lớp/ khoá/ cơ sở',
       'transfer' => 'Đơn đề nghị chuyển nhượng học phí'
     }
-    @title = title[params[:form]]
+    @title = @titles[params[:form]]
     @admission_mode = { 'batch' => 'Chuyển lớp học', 'course' => 'Chuyển khoá học', 'center' => 'Chuyển cơ sở' }
+
+    c_b = @student.op_sessions.pluck(:course_id, :batch_id).uniq
+    @data = {}
+    @course = {}
+    @batch = {}
+    c_b.each do |c, b|
+      course = Learning::Course::OpCourse.where(id: c).first
+      @course.merge!({ course.id => course.name })
+      @data[course.id] = {} if @data[course.id].blank?
+
+      batch = Learning::Batch::OpBatch.where(id: b).first
+      @batch.merge!({ batch.id => batch.code })
+      @data[course.id].merge!( { batch.id => {} })
+    end
+
+    @data.each do |k, v|
+      v.each do |batch, _|
+        done_ss = Learning::Batch::OpSession.where(batch_id: batch, course_id: k, state: 'done').count
+        incoming_ss = Learning::Batch::OpSession.where(batch_id: batch, course_id: k).where.not( state: ['done', 'cancel']).count
+
+        @data[k][batch] = { :done_ss => done_ss, :incoming_ss => incoming_ss }
+      end
+    end
   end
 
   def create

@@ -1,24 +1,29 @@
-<div class='claim-body' style="margin-top: -40px">
-  <div class='input_field row'>
+<div class='claim-body' style="">
+  <div class='row'>
+    <div class='col-md-12 col-md-push-2'>
+      <h3>Thông tin bảo lưu</h3>
+    </div>
+  </div>
+  <div class='input_field row form-group'>
     <div class='col-md-3 col-md-push-1 '>
       <label>Khoá học:</label>
     </div>
     <div class='col-md-7 col-md-push-1 form-group'>
       <select id="select_course" name="course" class='select2 select2-index form-control white-input'>
-        <% @courses.each do |course| %>
-          <option value="<%= course.id %>"><%= course.name %></option>
+        <% @course.each do |k, v| %>
+          <option value="<%= k %>"><%= v %></option>
         <% end %>
       </select>
     </div>
   </div>
-  <div class='input_field row'>
+  <div class='input_field row form-group'>
     <div class='col-md-3 col-md-push-1 '>
       <label>Lớp học:</label>
     </div>
     <div class='col-md-7 col-md-push-1 form-group'>
       <select id="select_batch" name="batch" class='select2 select2-index form-control white-input'>
-        <% @batches.each do |batch| %>
-          <option value="<%= batch.id %>"><%= batch.name %></option>
+        <% @data[@course.first[0]].each do |k, _| %>
+          <option value="<%= k %>"><%= @batch[k] %></option>
         <% end %>
       </select>
     </div>
@@ -28,7 +33,7 @@
       <label>Số buổi học đã hoàn thành:</label>
     </div>
     <div class='col-md-7 col-md-push-1 '>
-      <input class='form-control noborder font-bold white-input' readonly name='done_session' value="<%= @count_done_session %>" >
+      <input class='form-control noborder font-bold white-input' readonly name='done_session' value="<%= @data[@course.first[0]].first[1][:done_ss] %>" >
     </div>
   </div>
   <div class='input_field row form-group'>
@@ -36,7 +41,7 @@
       <label>Số buổi học còn lại:</label>
     </div>
     <div class='col-md-7 col-md-push-1 '>
-      <input readonly class='form-control noborder font-bold white-input' name='coming_session' value="<%= @count_incoming_session %>" >
+      <input readonly class='form-control noborder font-bold white-input' name='coming_session' value="<%= @data[@course.first[0]].first[1][:incoming_ss] %>" >
     </div>
   </div>
     <div class='input_field row form-group'>
@@ -49,7 +54,7 @@
     </div>
     <div class='input_field row form-group'>
       <div class='col-md-3 col-md-push-1'>
-        <label>Lý do bảo lưu:</label>
+        <label>Lý do bảo lưu<span style="color: red">*</span>:</label>
       </div>
       <div class='col-md-7 col-md-push-1 '>
         <textarea class='reason_reserve form-control white-input white-input' name='reason' rows='5' value=''></textarea>
@@ -88,3 +93,5 @@
     </div>
   </div>
 </div>
+<script>
+</script>
