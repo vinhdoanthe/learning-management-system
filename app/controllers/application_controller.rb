@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   # Validated user!
   def authenticate_user!
     unless logged_in? || ((request.original_fullpath.include? 'contest') && (request.original_fullpath.include? 'home'))
-      redirect_to user_login_path
+      redirect_to user_login_path(next_page: params[:next_page])
     end
   end
 
