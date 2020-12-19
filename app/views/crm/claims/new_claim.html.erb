@@ -9,11 +9,11 @@
     </div>
   </div>
   <div class="panel m-t--70" style="padding: 40px">
-    <div style='border: 2px solid'>
+    <div style='border: 1px solid'>
       <div class='claim-title'>
-        <h2>Đơn đề nghị / yêu cầu</h2>
+        <h2 class='text-uppercase'>Đơn đề nghị / yêu cầu</h2>
       </div>
-      <hr style="border: 1px solid; width: 60%; margin-top: 50px">
+      <hr style=" width: 60%; margin-top: 20px">
       <form id='claim-form' action='/crm/claim' method="POST" data-remote='true'>
         <input type='hidden' name='claim_form_img' value=''>
         <div id='claim-form-content' class='claim-content'>
@@ -71,12 +71,10 @@
           </div>
           <div style="margin-top: 30px;">
             <div class="input_field row form-group">
-              <div class="row">
-                <div class="col-md-12">
-                  <h3>Chọn loại đề nghị/yêu cầu:</h3>
-                </div>
+              <div class="col-md-3 col-md-push-1 ">
+                <h3>Chọn loại đề nghị/yêu cầu:</h3>
               </div>
-              <div class='col-md-7 col-md-push-1 form-group'>
+              <div class='col-md-7 col-md-push-1 form-group' style="padding-left: 5px;">
                 <select id="select_form" name="claim_form_type" class='form-control white-input text-uppercase font-bold'>
                   <option value="" class='not_select' disabled selected>Chọn loại đề nghị</option>
                   <% @titles.each do |k, v| %>
@@ -90,7 +88,7 @@
           </div>
         </div>
         <div class='form-submit'>
-          <button type='button' disabled class='btn btn-primary' id='claim-rule-button' data-toggle='modal' data-target='#modal_claim_content' style="margin-top: 30px;">Sumit form</button>
+          <button type='button' disabled class='btn btn-primary text-uppercase font-bold' id='claim-rule-button' data-toggle='modal' data-target='#modal_claim_content' style="margin-top: 30px; background-color: #5DC2A7;">Gửi đơn</button>
         </div>
       </form>
     </div>
@@ -124,7 +122,7 @@
     data = JSON.parse('<%= raw(@data.to_json) %>');
     batch = JSON.parse('<%= raw(@batch.to_json) %>');
 
-    $('#select_course').on('change', function(){
+    $('#fill_content').on('change','#select_course', function(){
         course_id = $(this).val();
         html = ''
         $.each(data[course_id], function(key, val){
@@ -136,7 +134,7 @@
         $('input[name="done_session"]').val(data[course_id][batch_id]['done_ss']);
         $('input[name="coming_session"]').val(data[course_id][batch_id]['incoming_ss']);
       })
-    $('#select_batch').on('change', function(){
+    $('#fill_content').on('change','#select_batch', function(){
         batch_id = $(this).val();
         course_id = $('#select_course').val();
         $('input[name="done_session"]').val(data[course_id][batch_id]['done_ss']);
