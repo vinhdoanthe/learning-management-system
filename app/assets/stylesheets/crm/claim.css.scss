@@ -12,6 +12,13 @@ button.select2-selection__choice__remove {
 }
 #claim-form{
   margin: 30px;
+  color: black !important;
+}
+#claim-form input {
+  color: black !important;
+}
+#claim-form select {
+  color: black !important;
 }
 .close-modal {
   position: absolute;
@@ -62,4 +69,7 @@ button.select2-selection__choice__remove {
   justify-content: center;
   align-items: center;
   margin-top: 40px;
+}
+.reason-label {
+  align-self: flex-start;
 }
