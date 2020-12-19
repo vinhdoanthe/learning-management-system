@@ -109,7 +109,7 @@ class SendGridMailer
   end
 
   def send_faculty_account_email teacher_user
-    data = parse_claim_data(claim)
+    data = parse_faculty_account_data(teacher_user)
     execute_send(data)
   end
 

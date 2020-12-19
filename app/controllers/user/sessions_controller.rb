@@ -26,7 +26,7 @@ module User
           else
             if session[:next_page] == 'claim'
               session[:next_page] = ''
-              redirect_to new_crm_claim_path
+              redirect_to crm_claims_new_claim_path
             else
             redirect_to root_path
             end
