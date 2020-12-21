@@ -71,7 +71,7 @@ class Contest::ContestsService
                            joins(:contest_prize).
                            joins(:contest_topic).
                            where(tk_contest_prizes: { prize: '1', prize_type: type }).
-                           order('tk_contest_topics.start_time ASC')
+                           order('tk_contest_topics.start_time DESC')
       awarded_projects = awarded_projects.page(page).per(20)
     else
       awarded_projects = contest.contest_projects.where.not(month_prize: nil)

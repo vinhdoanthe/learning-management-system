@@ -10,7 +10,7 @@
           </a>
         </div>
         <div class="c-product-small__content">
-          <div class="c-product-small__inside"><a class="c-product-small__title" href="/contest/contest_projects/show/<%= project['id'] %>"><%= c_project.project_name %></a><span class="c-product-small__author"><%= c_project.student_name %></span></div>
+          <div class="c-product-small__inside"><a class="c-product-small__title" href="/contest/contest_projects/show/<%= c_project['id'] %>"><%= c_project.project_name %></a><span class="c-product-small__author"><%= c_project.student_name %></span></div>
           <div class="c-product-small__count">
             <ul>
               <% project = Contest::ContestProject.where(id: c_project.id).first %>
