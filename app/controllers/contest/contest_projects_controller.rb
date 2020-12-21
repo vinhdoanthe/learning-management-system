@@ -94,7 +94,6 @@ class Contest::ContestProjectsController < ApplicationController
 
     month_projects = contest.contest_projects.
       joins(:contest_topic).
-      joins(:contest_prize).
       joins(user: { op_student: :res_company }).
       joins(:student_project).
       joins(:project_criterions).
