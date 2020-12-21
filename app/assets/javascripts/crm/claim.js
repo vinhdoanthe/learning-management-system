@@ -36,7 +36,6 @@ $('#select_company').select2({ });
 $('#select_admission_mode').select2({ });
 
 $(document).ready(function(){
-  setDateRangePicker('input[name="start_reserve"]');
 })
 $('#fill_content').on("change", "#agree-check", function(){
   if ($('#agree-check').is(':checked')){
