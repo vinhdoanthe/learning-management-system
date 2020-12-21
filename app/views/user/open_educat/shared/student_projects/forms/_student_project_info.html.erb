@@ -42,6 +42,16 @@
       <%= f.text_field :name, class: 'project_detail', placeholder: "#{ t('student_project.project_name') }" %>
     </div>
   </div>
+  <div class="project_thumbnail row">
+    <div class='col-md-3'>
+      <label><%= t('student_project.thumbnail') %> <span style='color: red'>*</span></label>
+    </div>
+    <div class='col-md-8'>
+      <%= f.file_field :image, id: "upload_project_thumbnail" %>
+      <div id='upload_project_thumbnail_preview' style="max-width: 200px; max-height: 200px;">
+      </div>
+    </div>
+  </div>
   <div class='row'>
     <div class='col-md-12'>
       <label><%= t('student_project.description') %></label>
@@ -276,6 +286,7 @@
   }
 </style>
 <script>
+  var iframe_regex = /(?:<iframe[^>]*)(?:(?:\/>)|(?:>.*?<\/iframe>))/
   $("#edit_video_infomation").ready(function() {
     //subject_id = $('input[name="active_subject_project"]').val();
     //$('#student_project_subject').val(subject_id);
@@ -336,8 +347,15 @@
           $('.no_link_file').show();
         }
       } else {
-        $('#upload_project_file').show();
-        $('.no_link_file').hide();
+        if (iframe_regex.test($('#upload_project_file').val())){
+            $('#upload_project_file').show();
+            $('.no_link_file').hide();
+          }else{
+            $(this).val('');
+            $('#upload_project_file').hide();
+            $('.no_link_file').show();
+              alert("Sai đường dẫn! Đường dẫn phải là iframe!")
+            }
       }
     })
   })
