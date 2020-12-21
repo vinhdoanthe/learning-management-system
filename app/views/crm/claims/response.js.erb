@@ -1,4 +1,8 @@
 res = JSON.parse('<%= raw(noti.to_json) %>');
 display_response_noti(res);
 
-window.location.href = '/crm/claims'
+<% if noti[:type] == 'success' %>
+		setTimeout(function() {
+			window.location.href = '/crm/claims'
+		}, 2000);
+<% end %>

@@ -15,7 +15,6 @@ class Crm::ClaimsService
     student = user.op_student
     company = student.res_company
     parent = student&.op_parents.first
-    make_claim_attachment params[:claim_form_img]
 
     claim = Crm::Claim.new
     code = generate_claim_code
@@ -52,23 +51,36 @@ class Crm::ClaimsService
       end
     end
 
-    claim.save
-    claim.image.attach(io: File.open(Rails.root.join("app", "assets", "images", "claim.png")), filename: 'claim.png')
-    claim.attachment_link = ActiveStorage::Blob.service.send(:path_for, claim.image.key)
-    claim.save
+    begin
+      claim.save
 
-    data = { student_name: student.full_name, parent_name: parent.full_name, odoo_url: claim.odoo_url, type: claim.name }
-    SendGridMailer.new.send_email(EmailConstants::MailType::SEND_CLAIM_EMAIL_NOTI, data)
-    
-    { type: 'success', message: 'Gửi yêu cầu thành công! Yêu cầu của bạn sẽ được xử lý trong thời gian ngắn nhất có thể!' }
+      make_claim_attachment params[:claim_form_img], claim
+      claim.image.attach(io: File.open(Rails.root.join("app", "assets", "images", "claim#{ claim.id }.png")), filename: 'claim.png')
+
+      if claim.attachment_link = ActiveStorage::Blob.service.send(:path_for, claim.image.key)
+        File.open("app/assets/images/claim#{ claim.id }.png", 'r') do |f|
+          File.delete(f)
+        end
+      end
+
+      data = { student_name: student.full_name, parent_name: parent.full_name, odoo_url: claim.odoo_url, type: claim.name }
+      SendGridMailer.new.send_email(EmailConstants::MailType::SEND_CLAIM_EMAIL_NOTI, data)
+
+      result = { type: 'success', message: 'Gửi yêu cầu thành công! Yêu cầu của bạn sẽ được xử lý trong thời gian ngắn nhất có thể!' }
+    rescue StandardError => e
+      puts e
+      result = { type: 'danger', message: 'Đã có lỗi xảy ra! Vui lòng thử lại sau' }
+    end
+
+    result
   end
 
   private
 
-  def make_claim_attachment img_str
+  def make_claim_attachment img_str, claim
     png = Base64.decode64(img_str['data:image/png;base64,'.length .. -1])
 
-    File.open('app/assets/images/claim.png', 'wb') { |f| f.write(png) }
+    File.open("app/assets/images/claim#{ claim.id }.png", 'wb') { |f| f.write(png) }
   end
 
   def generate_claim_code
