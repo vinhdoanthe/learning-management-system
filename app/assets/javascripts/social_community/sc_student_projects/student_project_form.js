@@ -11,6 +11,8 @@ function readURL(input, target) {
   }
 }
 
+var iframe_regex = /(?:<iframe[^>]*)(?:(?:\/>)|(?:>.*?<\/iframe>))/
+
 var getBatchSubject = () => {
   batch_id = $('#student_project_batch').val();
   $.ajax({
@@ -84,8 +86,15 @@ $("#edit_video_infomation").ready(function() {
         $('.no_link_file').show();
       }
     } else {
-      $('#upload_project_file').show();
-      $('.no_link_file').hide();
+      if (iframe_regex.test($('#upload_project_file').val())){
+        $('#upload_project_file').show();
+        $('.no_link_file').hide();
+      }else{
+        $(this).val('');
+        $('#upload_project_file').hide();
+        $('.no_link_file').show();
+        alert("Sai đường dẫn! Đường dẫn phải là iframe!")
+      }
     }
   })
 })
