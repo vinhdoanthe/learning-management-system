@@ -55,8 +55,8 @@
   <div class='row'>
     <div class='col-md-12'>
       <label><%= t('student_project.description') %></label>
-      <%= f.text_area :description, class: 'tinymce', :rows => 6 %>
-      <%= tinymce :simple %>
+      <%= f.text_area :description, class: 'tinymce tinymce_student_description', :rows => 6 %>
+      <%#= tinymce :simple %>
     </div>
   </div>
   <div class='row' style='margin-top: 30px; margin-bottom: 0px; display: flex'>
@@ -154,209 +154,29 @@
     </div>
   </div>
 <% end %>
-<style>
-.project_detail {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-  .project_detail_select .project_detail {
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
-  }
-
-  #edit_student_project_form select:hover {
-    -webkit-appearance: auto;
-  }
-
-  #edit_student_project_form select {
-    padding: 10px;
-  }
-
-  #edit_upload_project_subject:hover {
-    -webkit-appearance: auto;
-  }
-
-  #edit_upload_project_subject {
-    width: 100% !important;
-    margin: 10px 0;
-    padding: 5px 1px;
-  }
-
-  #edit_upload_project_student {
-    width: 100% !important;
-    padding: 5px 1px;
-  }
-
-  #edit_upload_project_student:hover {
-    -webkit-appearance: auto;
-  }
-
-  .project_name {
-    margin-bottom: 10px
-  }
-
-  .project_name input {
-    padding: 10px
-  }
-
-  .upload_layer {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-    background-color: #e3e3e3;
-    padding: 20px;
-  }
-
-  .upload_image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .upload_image img {
-    width: 30%
-  }
-
-  #upload_project_video {
-    display: none;
-  }
-
-  .blank_show_video {
-    display: none;
-  }
-
-  .present_show_video {
-    display: block;
-  }
-
-  #upload_project_presentation {
-    display: none;
-  }
-
-  .upload_project_video iframe {
-    width: 100%;
-    height: 100%;
-  }
-
-  #upload_project_file {
-    font-size: 16px;
-    font-weight: 700;
-    border: none;
-    background-color: #e3e3e3;
-  }
-
-  .upload_project_file .upload_info {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .upload_info p {
-    text-align: center;
-  }
-
-  .progress {
-    height: 20px;
-    display: none;
-    margin-top: 20px !important;
-  }
-
-  .progress div {
-    line-height: 20px;
-    font-size: 12px;
-    height: 100%;
-    font-weight: 700;
-  }
-
-  #download-presentation img {
-    width: 20px;
-  }
-
-  .click_to_update {
-    font-size: 14px;
-    font-family: 'Monsterrat';
-    font-weight: 600;
-    text-decoration: underline;
-    color: #5DC2A7;
-    cursor: pointer;
-  }
-</style>
+<%= stylesheet_link_tag 'social_community/user_student_project.css' %>
+<%= javascript_include_tag 'social_community/sc_student_projects/user_student_project' %>
 <script>
-  var iframe_regex = /(?:<iframe[^>]*)(?:(?:\/>)|(?:>.*?<\/iframe>))/
   $("#edit_video_infomation").ready(function() {
-    //subject_id = $('input[name="active_subject_project"]').val();
-    //$('#student_project_subject').val(subject_id);
-    $('.project_detail_select').append('<span class="fa fa-caret-down" style="position: absolute; right: 30px; top: 30%"></span>');
-    $('.upload_project_presentation').on('click', function(e) {
-      if ((e.target !== this) && ($(e.target).is($('#download-presentation'))))
-        return;
-
-      $('#upload_project_presentation').trigger('click');
-      $('#upload_project_presentation').on('change', function() {
-        var ext = this.value.match(/\.(.+)$/)[1];
-        if (['ppt', 'pptx', 'pdf'].includes(ext)) {
-          if ($('#upload_project_presentation').get(0).files.length > 0) {
-            $('#presentation_had_change').val('1');
-            $('.project_presentation_file_name').html("<span style='font-size: 16px; font-weight: 600'>" + $('#upload_project_presentation')[0].files[0].name.substring(0, 20) + "...<span>")
-          }
-        } else {
-          $('#upload_project_presentation').val('');
-          alert('File không phù hợp! Chỉ hỗ trợ file đuôi "ppt", "pptx", "pdf"')
-        };
-      })
+      $('.upload_project_video').on('click', function(e) {
+          $('#upload_project_video').trigger('click');
+          $('#upload_project_video').on('change', function() {
+              var ext = this.value.match(/\.(.+)$/)[1];
+              if (['m4v', 'avi', 'mpg', 'mp4', 'webm'].includes(ext)) {
+                  $('#video_had_change').val('1');
+                  if ($('#upload_project_video').get(0).files.length > 0) {
+                      <% if project.introduction_video.present? %>
+                          html = '<div class="upload_image"><%= image_tag("global/images/button-youtube.png") %></div><div class="upload_info"><p style="font-size: 16px; font-weight: 700">Video giới thiệu về dự án</p><p id="project_video_name" style="text-align: center"><span class="project_presentation_state" style="font-size: 16px; font-weight: 600>">' + $('#upload_project_video')[0].files[0].name.substring(0, 20) + '...</span></p></div>'
+                      $('#project_video_name').html(html) 
+                      <% else %>
+                          $('.project_video_name_blank').html("<span style='font-size: 16px; font-weight: 600'>" + $('#upload_project_video')[0].files[0].name.substring(0, 20) + "...<span>") 
+                      <% end %>
+                    }
+                } else {
+                    $('#upload_project_video').val('');
+                    alert('File không phù hợp! Chỉ hỗ trợ file đuôi "m4v", "avi","mpg","mp4", "webm"')
+                  }
+            })
+        })
     })
-    $('.upload_project_video').on('click', function(e) {
-      $('#upload_project_video').trigger('click');
-      $('#upload_project_video').on('change', function() {
-        var ext = this.value.match(/\.(.+)$/)[1];
-        if (['m4v', 'avi', 'mpg', 'mp4', 'webm'].includes(ext)) {
-          $('#video_had_change').val('1');
-          if ($('#upload_project_video').get(0).files.length > 0) {
-            <% if project.introduction_video.present? %>
-                html = '<div class="upload_image"><%= image_tag("global/images/button-youtube.png") %></div><div class="upload_info"><p style="font-size: 16px; font-weight: 700">Video giới thiệu về dự án</p><p id="project_video_name" style="text-align: center"><span class="project_presentation_state" style="font-size: 16px; font-weight: 600>">' + $('#upload_project_video')[0].files[0].name.substring(0, 20) + '...</span></p></div>'
-            $('#project_video_name').html(html) 
-            <% else %>
-                $('.project_video_name_blank').html("<span style='font-size: 16px; font-weight: 600'>" + $('#upload_project_video')[0].files[0].name.substring(0, 20) + "...<span>") 
-            <% end %>
-          }
-        } else {
-          $('#upload_project_video').val('');
-          alert('File không phù hợp! Chỉ hỗ trợ file đuôi "m4v", "avi","mpg","mp4", "webm"')
-        }
-      })
-    })
-    $('.upload_project_file').on('click', function() {
-      $('#upload_project_file').data('val', $('#upload_project_file').val());
-      $('#upload_project_file').show();
-      $("#upload_project_file").attr("readonly", false);
-      $('#upload_project_file').select();
-      $('#upload_project_file').focus();
-      $('.no_link_file').hide();
-    })
-
-    $('#upload_project_file').blur(function() {
-      if ($('#upload_project_file').val().length === 0) {
-        if ($('#upload_project_file').data('val').length > 0) {
-          $('#upload_project_file').val($('#upload_project_file').data('val'));
-        } else {
-          $('#upload_project_file').hide();
-          $('.no_link_file').show();
-        }
-      } else {
-        if (iframe_regex.test($('#upload_project_file').val())){
-            $('#upload_project_file').show();
-            $('.no_link_file').hide();
-          }else{
-            $(this).val('');
-            $('#upload_project_file').hide();
-            $('.no_link_file').show();
-              alert("Sai đường dẫn! Đường dẫn phải là iframe!")
-            }
-      }
-    })
-  })
 </script>

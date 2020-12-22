@@ -66,8 +66,7 @@
       <div class='row'>
         <div class='col-md-12'>
           <label><%= t('student_project.description') %></label>
-          <%= f.text_area :description, class: 'tinymce', :rows => 6 %>
-          <%= tinymce :simple %>
+          <%= f.text_area :description, class: 'tinymce tinymce_student_description', :rows => 6 %>
         </div>
       </div>
       <div class='row' style='margin-top: 30px; margin-bottom: 0px; display: flex'>

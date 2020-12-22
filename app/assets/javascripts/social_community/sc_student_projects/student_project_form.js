@@ -13,6 +13,23 @@ function readURL(input, target) {
 
 var iframe_regex = /(?:<iframe[^>]*)(?:(?:\/>)|(?:>.*?<\/iframe>))/
 
+tinymce.remove();
+tinymce.init({
+  menubar: false,
+  toolbar:  'undo bold | italic redo' ,
+  selector: '.tinymce_student_description',
+  plugins: "paste",
+  paste_as_text: true,
+  setup: function (editor) {
+    editor.on('blur', function (e) {
+      if (editor.getContent().length < 200){
+        alert("Mô tả sản phẩm phải dài hơn 200 ký tự!")
+        tinyMCE.activeEditor.focus();
+      }
+    });
+  }
+})
+
 var getBatchSubject = () => {
   batch_id = $('#student_project_batch').val();
   $.ajax({
