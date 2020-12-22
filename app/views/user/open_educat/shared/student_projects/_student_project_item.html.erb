@@ -4,7 +4,9 @@
   <div class="" style='height: 100%'>
     <div class="prod-detail" style='height: 100%; margin-bottom: 0'>
       <div class="prod-img" style="height: 175px;">
-        <% if project.thumbnail.present? %>
+        <% if project.image.attached? %>
+          <span style="max-height: 100%"><%= image_tag project.image, class: "project_image" %></span>
+        <% elsif project.thumbnail.present? %>
           <span style="max-height: 100%"><img src="<%= project.thumbnail %>" alt="" class="project_image"></span>
         <% else %>
           <span style="max-height: 100%"><%= image_tag('global/images/Bitmap3.png', class:"project_image") %>
