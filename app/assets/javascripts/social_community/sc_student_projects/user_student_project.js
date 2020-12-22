@@ -1,0 +1,73 @@
+
+var iframe_regex = /(?:<iframe[^>]*)(?:(?:\/>)|(?:>.*?<\/iframe>))/
+$(document).ready(function(){
+  tinymce.remove();
+  tinymce.init({
+    menubar: false,
+    toolbar:  'undo bold | italic redo' ,
+    selector: '.tinymce_student_description',
+    plugins: "paste",
+    paste_as_text: true,
+    setup: function (editor) {
+      editor.on('blur', function (e) {
+        if (editor.getContent().length < 200){
+          alert("Mô tả sản phẩm phải dài hơn 200 ký tự!")
+          tinyMCE.activeEditor.focus();
+        }
+      });
+    }
+  })
+})
+$("#edit_video_infomation").ready(function() {
+
+  //subject_id = $('input[name="active_subject_project"]').val();
+  //$('#student_project_subject').val(subject_id);
+  $('.project_detail_select').append('<span class="fa fa-caret-down" style="position: absolute; right: 30px; top: 30%"></span>');
+  $('.upload_project_presentation').on('click', function(e) {
+    if ((e.target !== this) && ($(e.target).is($('#download-presentation'))))
+      return;
+
+    $('#upload_project_presentation').trigger('click');
+    $('#upload_project_presentation').on('change', function() {
+      var ext = this.value.match(/\.(.+)$/)[1];
+      if (['ppt', 'pptx', 'pdf'].includes(ext)) {
+        if ($('#upload_project_presentation').get(0).files.length > 0) {
+          $('#presentation_had_change').val('1');
+          $('.project_presentation_file_name').html("<span style='font-size: 16px; font-weight: 600'>" + $('#upload_project_presentation')[0].files[0].name.substring(0, 20) + "...<span>")
+        }
+      } else {
+        $('#upload_project_presentation').val('');
+        alert('File không phù hợp! Chỉ hỗ trợ file đuôi "ppt", "pptx", "pdf"')
+      };
+    })
+  })
+  $('.upload_project_file').on('click', function() {
+    $('#upload_project_file').data('val', $('#upload_project_file').val());
+    $('#upload_project_file').show();
+    $("#upload_project_file").attr("readonly", false);
+    $('#upload_project_file').select();
+    $('#upload_project_file').focus();
+    $('.no_link_file').hide();
+  })
+
+  $('#upload_project_file').blur(function() {
+    if ($('#upload_project_file').val().length === 0) {
+      if ($('#upload_project_file').data('val').length > 0) {
+        $('#upload_project_file').val($('#upload_project_file').data('val'));
+      } else {
+        $('#upload_project_file').hide();
+        $('.no_link_file').show();
+      }
+    } else {
+      if (iframe_regex.test($('#upload_project_file').val())){
+        $('#upload_project_file').show();
+        $('.no_link_file').hide();
+      }else{
+        $(this).val('');
+        $('#upload_project_file').hide();
+        $('.no_link_file').show();
+        alert("Sai đường dẫn! Đường dẫn phải là iframe!")
+      }
+    }
+  })
+})
