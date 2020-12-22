@@ -1,6 +1,6 @@
 <!-- Render list slides of a lesson -->
 
-<div class="modal-dialog modal-lg" role="document" style='position: relative; display: table;overflow-y: auto;overflow-x: auto;width: auto;'>
+<div class="modal-dialog modal-lg" role="document" style='position: relative; display: table;overflow-y: auto;overflow-x: auto;width: auto; min-width: 60%'>
   <div class="modal-content">
     <div class="modal-body">
       <div class="redem-tab class-tab">
@@ -8,6 +8,7 @@
         <ul class="nav nav-tabs" role="tablist">
           <li class="active"><a href="#baigiang" data-toggle="tab">Bài giảng</a></li>
           <li id='giaoan_tab' style='display:none'><a href="#giaoan" data-toggle="tab">Giáo án</a></li>
+          <li id='video_tab' style='display:none'><a href="#video_review" data-toggle="tab">Video bài học</a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -21,6 +22,8 @@
             </ul>
           </div>
           <div class="tab-pane in" id="giaoan">
+          </div>
+          <div class="tab-pane in" id="video_review">
           </div>
         </div>
       </div>
@@ -36,4 +39,7 @@
     min-width: 900px;
   }
 }
+  #video_review iframe{
+    width: 100%;
+  }
 </style>
