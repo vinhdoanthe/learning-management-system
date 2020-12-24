@@ -2,7 +2,7 @@
   <iframe  src="<%= Learning::Constant::Material::VIMEO_PLAYER_PREFIX + video_id.to_s %>" frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 <% else %>
   <div class='video_has_thumbnail'>
-    <% if video.thumbnail_image.attached? %>
+    <% if video&.thumbnail_image&.attached? %>
       <%= image_tag video.thumbnail_image %>
     <% end %>
   </div>

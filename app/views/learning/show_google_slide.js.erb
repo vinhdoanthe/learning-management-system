@@ -2,4 +2,4 @@ $("#baigiang").html("<%= escape_javascript(render partial: 'learning/material/sl
 $('#giaoan_tab').show();
 $("#giaoan").html("<%= escape_javascript(render partial: 'learning/material/lesson_plan_content', locals: { link: link, plan_link: plan_link } ) %>");
 $('#video_tab').show();
-$("#video_review").html("<%= escape_javascript(render partial: 'learning/material/learning_materials/vimeo', locals: { video_id: video_id } ) %>");
+$("#video_review").html("<%= escape_javascript(render partial: 'learning/material/learning_materials/vimeo', locals: { video_id: video_id, video: video } ) %>");
