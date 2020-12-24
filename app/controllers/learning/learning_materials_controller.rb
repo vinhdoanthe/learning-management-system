@@ -32,6 +32,8 @@ module Learning
 
     def show_google_slide
       lesson = Learning::Course::OpLession.where(id: params[:lesson_id]).first
+      video = lesson.learning_materials.where(material_type: 'video').first
+      video_id = video&.ziggeo_file_id
       link, plan_link = '',''
 
       if lesson.present?
@@ -58,7 +60,7 @@ module Learning
       end
 
       respond_to do |format|
-        format.js {render 'learning/show_google_slide', locals: {link: link, plan_link: plan_link}}
+        format.js {render 'learning/show_google_slide', locals: { link: link, plan_link: plan_link, video_id: video_id, video: video }}
       end
     end
 
