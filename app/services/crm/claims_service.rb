@@ -36,7 +36,12 @@ class Crm::ClaimsService
     claim.to_company_id = params[:company]
     claim.create_uid = 1
     claim.write_uid = 1
-    claim.note = params[:transfer_student_name] + ' - ' + params[:count_transfer].to_s + ' buổi' if params[:transfer_student_name].present? && params[:count_transfer].present?
+
+    if params[:claim_form_type] == 'transfer'
+      claim.note = params[:transfer_student_name] + ' - ' + params[:count_transfer].to_s + ' buổi' if params[:transfer_student_name].present? && params[:count_transfer].present?
+    elsif params[:claim_form_type] == 'reserve'
+      claim.note = "Thời gian bảo lưu" + params[:start_reserve]
+    end
 
     if params[:course].present? && params[:batch].present?
       batch = student.op_batches.where(id: params[:batch]).first
@@ -53,16 +58,16 @@ class Crm::ClaimsService
 
     claim.save
 
-    make_claim_attachment params[:claim_form_img], claim
-    claim.image.attach(io: File.open(Rails.root.join("app", "assets", "images", "claim#{ claim.id }.png")), filename: 'claim.png')
+    #make_claim_attachment params[:claim_form_img], claim
+    #claim.image.attach(io: File.open(Rails.root.join("app", "assets", "images", "claim#{ claim.id }.png")), filename: 'claim.png')
 
-    if claim.attachment_link = ActiveStorage::Blob.service.send(:path_for, claim.image.key)
-      claim.save
+    #if claim.attachment_link = ActiveStorage::Blob.service.send(:path_for, claim.image.key)
+    #  claim.save
 
-      File.open("app/assets/images/claim#{ claim.id }.png", 'r') do |f|
-        File.delete(f)
-      end
-    end
+    #  File.open("app/assets/images/claim#{ claim.id }.png", 'r') do |f|
+    #    File.delete(f)
+    #  end
+    #end
 
     data = { student_name: student.full_name, parent_name: parent.full_name, odoo_url: claim.odoo_url, type: claim.name }
 
