@@ -51,19 +51,22 @@ class Crm::ClaimsService
       end
     end
 
-    begin
+    claim.save
+
+    make_claim_attachment params[:claim_form_img], claim
+    claim.image.attach(io: File.open(Rails.root.join("app", "assets", "images", "claim#{ claim.id }.png")), filename: 'claim.png')
+
+    if claim.attachment_link = ActiveStorage::Blob.service.send(:path_for, claim.image.key)
       claim.save
 
-      make_claim_attachment params[:claim_form_img], claim
-      claim.image.attach(io: File.open(Rails.root.join("app", "assets", "images", "claim#{ claim.id }.png")), filename: 'claim.png')
-
-      if claim.attachment_link = ActiveStorage::Blob.service.send(:path_for, claim.image.key)
-        File.open("app/assets/images/claim#{ claim.id }.png", 'r') do |f|
-          File.delete(f)
-        end
+      File.open("app/assets/images/claim#{ claim.id }.png", 'r') do |f|
+        File.delete(f)
       end
+    end
 
-      data = { student_name: student.full_name, parent_name: parent.full_name, odoo_url: claim.odoo_url, type: claim.name }
+    data = { student_name: student.full_name, parent_name: parent.full_name, odoo_url: claim.odoo_url, type: claim.name }
+
+    begin
       SendGridMailer.new.send_email(EmailConstants::MailType::SEND_CLAIM_EMAIL_NOTI, data)
 
       result = { type: 'success', message: 'Gửi yêu cầu thành công! Yêu cầu của bạn sẽ được xử lý trong thời gian ngắn nhất có thể!' }
