@@ -102,5 +102,33 @@ module Api
 
     end
 
+    def self.claim_attachment claim_id, base64_img
+      uid, models = odoo_xml_authenticate()
+
+      begin
+        id = models.execute_kw(@@odoo_db, uid, @@odoo_password, 'ir.attachment', 'create', {
+          'res_model'=>'op.admission.claim',
+          'name' => 'image',
+          'res_field' => 'image',
+          'res_id'=> claim_id,
+          'res_name' => 'op_admission_claim',
+          'type' => 'binary',
+          'datas' => base64_img
+        })
+
+        return {
+          success: true,
+          crm_lead_id: id,
+          message: nil
+        }
+      rescue XMLRPC::FaultException => exception
+
+        return {
+          success: false,
+          crm_lead_id: nil,
+          message: get_error(exception)
+        }
+      end
+    end
   end
 end

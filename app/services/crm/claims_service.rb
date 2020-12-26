@@ -4,13 +4,15 @@ class Crm::ClaimsService
       'reserve'         => 1,
       'change_company'  => 2,
       'refund'	        => 4,
-      'transfer'	      => 40
+      'transfer'	      => 40,
+      'other'           => 3
     }
     name = {
       'reserve' => 'Đơn đề nghị bảo lưu',
       'refund' => 'Đơn đề nghị hoàn học phí',
       'change_company' => 'Đơn đề nghị chuyển lớp/ khoá/ cơ sở',
-      'transfer' => 'Đơn đề nghị chuyển nhượng học phí'
+      'transfer' => 'Đơn đề nghị chuyển nhượng học phí',
+      'other' => 'Đề nghị/ Yêu cầu khác'
     }
     student = user.op_student
     company = student.res_company
@@ -40,7 +42,7 @@ class Crm::ClaimsService
     if params[:claim_form_type] == 'transfer'
       claim.note = params[:transfer_student_name] + ' - ' + params[:count_transfer].to_s + ' buổi' if params[:transfer_student_name].present? && params[:count_transfer].present?
     elsif params[:claim_form_type] == 'reserve'
-      claim.note = "Thời gian bảo lưu" + params[:start_reserve]
+      claim.note = "Thời gian bảo lưu " + params[:start_reserve]
     end
 
     if params[:course].present? && params[:batch].present?
@@ -57,16 +59,10 @@ class Crm::ClaimsService
     end
 
     claim.save
-
-    #make_claim_attachment params[:claim_form_img], claim
-    #claim.image.attach(io: File.open(Rails.root.join("app", "assets", "images", "claim#{ claim.id }.png")), filename: 'claim.png')
-
-    #if claim.attachment_link = ActiveStorage::Blob.service.send(:path_for, claim.image.key)
+    #if claim.save
+    #  result = Api::Odoo.claim_attachment claim.id, params[:claim_form_img]
+    #  claim.attachmen_link = result[:message]
     #  claim.save
-
-    #  File.open("app/assets/images/claim#{ claim.id }.png", 'r') do |f|
-    #    File.delete(f)
-    #  end
     #end
 
     data = { student_name: student.full_name, parent_name: parent.full_name, odoo_url: claim.odoo_url, type: claim.name }

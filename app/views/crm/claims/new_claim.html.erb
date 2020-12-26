@@ -109,6 +109,12 @@
           $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/change_company') %>`);
       }else if (form === 'transfer'){
           $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/transfer') %>`);
+      }else if (form === 'other'){
+          $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/other') %>`);
+          $('#claim-rule-button').on('click', function(){
+              $('#claim-form').submit();
+              window.location.href = '/crm/claims'
+          })
       }
     })
 
