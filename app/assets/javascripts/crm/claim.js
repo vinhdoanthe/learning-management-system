@@ -13,6 +13,15 @@ function setDateRangePicker(target){
   });
 
   $(target).on('apply.daterangepicker', function(ev, picker) {
+    start = picker.startDate;
+    end = picker.endDate;
+
+    days = end.diff(start, 'days')
+    if (days > 180){
+      alert('Thời gian bảo lưu tối đa 6 tháng! Vui lòng xem lại thời gian bảo lưu!')
+      return null
+    }
+
     $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
   });
 

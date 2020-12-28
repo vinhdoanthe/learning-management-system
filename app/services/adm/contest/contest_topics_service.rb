@@ -181,7 +181,7 @@ class Adm::Contest::ContestTopicsService
       return { result: { type: 'danger', message: 'Chọn trùng giải thưởng! Vui lòng kiểm tra laị' }, success: false }
     end
 
-    true
+    { result: {}, success: true }
   end
 
   def validate_update_topic params

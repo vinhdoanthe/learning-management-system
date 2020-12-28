@@ -22,6 +22,7 @@
       <th><%= t('Contest.Topic.Description') %></th>
       <th class="text-center"><%= t('Contest.Topic.Date time') %></th>
       <th class="text-center"><%= t('Contest.Topic.Region') %></th>
+      <th class="text-center"><%= t('Contest.Topic.Status' ) %></th>
       <th class="text-center"><%= t('Contest.Content.Action') %></th>
     </tr>
   </thead>
@@ -32,7 +33,7 @@ $(document).ready(function() {
     $('.table-contest-topic').on('click', '.delete_contest_topic', function() {
       button = $(this)
       id = $(this).data('topic');
-      if (confirm("<%= t("Contest.Topic.Are you sure want to delete this topic?")%>")) {
+      if (confirm("<%= t('Contest.Topic.Are you sure want to delete this topic?')%>")) {
         $.ajax({
           method: 'POST',
           url: '/adm/contest/contest_topics/delete_topic',
