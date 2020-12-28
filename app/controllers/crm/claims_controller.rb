@@ -25,7 +25,7 @@ class Crm::ClaimsController < ApplicationController
       3 => 'Được chập nhận',
       5 => 'Đang xử lý',
       6 => 'Hoàn thành',
-      7 => 'Bị từ chối'
+      7 => 'Không hợp lệ'
     }
   end
 
@@ -76,7 +76,8 @@ class Crm::ClaimsController < ApplicationController
       'reserve' => 'Đơn đề nghị bảo lưu',
       'refund' => 'Đơn đề nghị hoàn học phí',
       'change_company' => 'Đơn đề nghị chuyển lớp/ khoá/ cơ sở',
-      'transfer' => 'Đơn đề nghị chuyển nhượng học phí'
+      'transfer' => 'Đơn đề nghị chuyển nhượng học phí',
+      'other' => 'Đề nghị/ Yêu cầu khác'
     }
     @title = @titles[params[:form]]
     @admission_mode = { 'batch' => 'Chuyển lớp học', 'course' => 'Chuyển khoá học', 'center' => 'Chuyển cơ sở' }
