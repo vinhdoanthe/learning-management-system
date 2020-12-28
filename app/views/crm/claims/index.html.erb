@@ -15,6 +15,7 @@
 						<th>Tiêu đề</th>
 						<th>Ngày tạo</th>
 						<th>Trạng thái</th>
+						<th>Ngày hoàn thành</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -23,6 +24,7 @@
 							<td><%= claim.name %></td>
 							<td><%= claim.create_date.strftime('%H:%M %d/%m/%Y') %></td>
 							<td><%= @stage[claim.stage_id] %></td>
+							<td></td>
 						</tr>
 					<% end %>
 				</tbody>
