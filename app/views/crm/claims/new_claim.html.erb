@@ -113,8 +113,7 @@
           $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/other') %>`);
           $('#claim-form').ready(function(){
               $('#claim-rule-button').on('click', function(){
-                  $('#claim-form')[0].submit();
-                  window.location.href = '/crm/claims'
+                  $('#submit-claim-form').click();
                 })
             })
       }
