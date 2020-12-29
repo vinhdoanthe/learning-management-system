@@ -1,0 +1,38 @@
+<% report.each do |session_id, data| %>
+    $(".session_student_homework_modal[data-session-id='<%= session_id %>'] .total_homework").html(<%= data[:total_question] %>)
+    $(".session_student_homework_modal[data-session-id='<%= session_id %>'] .done_homework").html(<%= data[:total_right_answer] %>)
+    $(".session_student_homework_modal[data-session-id='<%= session_id %>'] .not_done_homework").html(<%= data[:inventory_question] %>)
+<% end %>
+
+    detail = JSON.parse('<%= raw(detail.to_json) %>');
+    $(document).ready(function(){
+        $('.session_student_homework_modal').on('click', function(){
+            session_id = $(this).data('session-id')
+            html = ''
+            $.each(detail[session_id], function( index, value){
+                data = value[0];
+                html += `
+                            <tr>
+                                <td>${ data.student_name }</td>
+                                <td>${ data.right_question }</td>
+                                <td>${ data.total_question }</td>
+                            </tr>
+                        `
+            })
+
+            $('.session_homework_information').html(`
+                <table class="table table-striped table-bordered" style="width:100%">
+                  <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Done Homework</th>
+                        <th>Total Homework</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${ html }
+                  </tbody>
+                </table>
+            `)
+        })
+    })
