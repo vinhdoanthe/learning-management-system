@@ -50,7 +50,7 @@
         <label>Số buổi học còn lại:</label>
       </div>
       <div class='col-md-7 col-md-push-1 '>
-        <input readonly class='form-control noborder font-bold white-input' name='coming_session' value="<%= @data[@course.first[0]].first[1][:incoming_ss] %>" >
+        <input readonly class='form-control noborder font-bold white-input' name='coming_session' value=<%= @data[@course.first[0]].first[1][:incoming_ss] %> >
       </div>
     </div>
     <div class='input_field row form-group'>
@@ -58,7 +58,7 @@
         <label>Số buổi học sẽ chuyển nhượng:</label>
       </div>
       <div class='col-md-7 col-md-push-1 '>
-        <input class='form-control white-input' name='count_transfer' type='number'>
+        <input class='form-control white-input' name='count_transfer' type='number' data-min="1" data-max="<%= @data[@course.first[0]].first[1][:incoming_ss] %>">
       </div>
     </div>
   </div>
