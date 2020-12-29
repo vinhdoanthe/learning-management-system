@@ -111,16 +111,19 @@
           $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/transfer') %>`);
       }else if (form === 'other'){
           $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/other') %>`);
-          $('#claim-rule-button').on('click', function(){
-              $('#claim-form').submit();
-              window.location.href = '/crm/claims'
-          })
+          $('#claim-form').ready(function(){
+              $('#claim-rule-button').on('click', function(){
+                  $('#submit-claim-form').click();
+                })
+            })
       }
     })
 
     $('#fill_content').on('keyup', 'textarea[name="reason"]', function(){
         if ($(this).val().length > 0){
-            $('#claim-rule-button').prop('disabled', false);
+            if (($('.start_reserve').length === 0) || (($('.start_reserve').length > 0) && (typeof startDate !== 'undefined') && (typeof startDate !== 'undefined'))){
+                $('#claim-rule-button').prop('disabled', false);
+              }
           }else{
               $('#claim-rule-button').prop('disabled', true);
             }
@@ -139,11 +142,22 @@
         batch_id = $('#select_batch').val();
         $('input[name="done_session"]').val(data[course_id][batch_id]['done_ss']);
         $('input[name="coming_session"]').val(data[course_id][batch_id]['incoming_ss']);
+        $('input[name="count_transfer"]').attr('data-max', parseInt(data[course_id][batch_id]['incoming_ss']));
       })
     $('#fill_content').on('change','#select_batch', function(){
         batch_id = $(this).val();
         course_id = $('#select_course').val();
         $('input[name="done_session"]').val(data[course_id][batch_id]['done_ss']);
         $('input[name="coming_session"]').val(data[course_id][batch_id]['incoming_ss']);
+        $('input[name="count_transfer"]').attr('data-max', parseInt(data[course_id][batch_id]['incoming_ss']));
       })
+    $('#fill_content').on('blur', 'input[name="count_transfer"]', function(){
+        min = $(this).data('min')
+        max = $(this).data('max')
+
+        if (parseInt($(this).val()) < min || parseInt($(this).val()) > max) {
+            $(this).val('');
+            alert("Số buổi học chuyển nhượng không đúng! Vui lòng kiểm tra lại!");
+          }
+     })
 </script>

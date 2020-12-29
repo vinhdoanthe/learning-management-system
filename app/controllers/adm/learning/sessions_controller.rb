@@ -3,7 +3,7 @@ class Adm::Learning::SessionsController < Adm::AdmController
   include Learning::Batch::OpSessionsHelper
 
   skip_before_action :verify_authenticity_token
-  before_action :find_session, only: [:session_photos, :session_attendances, :session_videos, :session_info, :student_attendance_detail]
+  before_action :find_session, only: [:session_photos, :session_attendances, :session_videos, :session_info, :student_attendance_detail, :session_student_homework]
 
  rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_path, alert: exception.message
@@ -52,6 +52,15 @@ class Adm::Learning::SessionsController < Adm::AdmController
 
   def session_videos
 
+  end
+
+  def session_student_homework
+    detail, report  = Adm::Learning::SessionsService.new.session_student_homework params
+
+    respond_to do |format|
+      format.html
+      format.js { render "adm/learning/sessions/homework_state", locals: { report: report, detail: detail } }
+    end
   end
 
   def session_info

@@ -10,8 +10,8 @@
       <th><%= t("adm.learning.session.start_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
-      <th>GVDD</th>
-      <th>VHDD</th>
+      <th>Bài tập học sinh</th>
+      <th>GVĐD/VHĐD</th>
       <th><%= t("adm.learning.session.academy") %></th>
     </tr>
   </thead>
@@ -29,8 +29,18 @@
         <td align="center">
           <%= render :partial => "review_stats", :locals => {session: session} %>
         </td>
-        <td><%= session[:count_attendance_line].to_i %></td>
-        <td><%= session[:count_session_student].to_i %></td>
+        <td style='vertical-align: middle;'>
+          <% if session[:question] && session[:state] == 'done' %>
+            <a class="session_student_homework_modal" data-toggle="modal" data-target="#modal_adm_student_homework" data-session-id="<%= session[:id] %>">
+            <button type="button" class="btn btn-primary homework_number total_homework"><i class="fa fa-spinner fa-2x fa-spin text-white"></i></button>
+            <button type="button" class="btn btn-success homework_number done_homework"><i class="fa fa-spinner fa-2x fa-spin text-white"></i></button>
+            <button type="button" class="btn btn-secondary homework_number not_done_homework"><i class="fa fa-spinner fa-2x fa-spin text-white"></i></button>
+            </a>
+          <% else %>
+            <%= image_tag 'global/images/exam-3.png', style: "width: 20px; height: 25px; opacity: 0.4" %>
+          <% end %>
+        </td>
+        <td style="text-align: center"><%= session[:count_attendance_line].to_i %> / <%= session[:count_session_student].to_i %></td>
         <td><%= session[:company_name] %></td>
       </tr>
     <% end %>
@@ -52,3 +62,48 @@
     </tr>
   </tfoot>
 </table>
+
+<div class="modal fade" id="modal_adm_student_homework">
+  <div class="modal-dialog" style="min-width: 60%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Thông tin bài tập về nhà</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class='session_homework_information bo-table'>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.homework_status {
+  display: flex;
+  flex-direction: column;
+}
+.homework_number{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  min-width: 40px;
+}
+.badge_number {
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  vertical-align: center;
+}
+.homework_number i{
+  padding: 3px;
+  font-size: 10px;
+}
+</style>

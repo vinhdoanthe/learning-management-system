@@ -123,6 +123,11 @@ $(document).ready(function(){
     getSessionInfo(session_id);
   })
 
+  //$('#session_data_table').on('click', '.session_student_homework_modal', function(){
+  //  session_id = $(this).data('session')
+  //  getSessionInfo(session_id);
+  //})
+
   $('#modal_adm_session_attendance').on('click', '.view_attendance_detail', function(){
     session_id = $(this).data('session')
     attendance_id = $(this).data('attendance')

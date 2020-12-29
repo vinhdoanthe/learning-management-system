@@ -4,8 +4,11 @@ function setDefaultDatePicker(target, month_value){
   $(target).datepicker('autoHide', true).datepicker('setDate', date);
 }
 
+var startDate;
+var endDate;
 function setDateRangePicker(target){
   $(target).daterangepicker({
+    minDate: new Date(),
     autoUpdateInput: false,
     locale: {
       format: 'DD/MM/YYYY'
@@ -13,6 +16,18 @@ function setDateRangePicker(target){
   });
 
   $(target).on('apply.daterangepicker', function(ev, picker) {
+    startDate = picker.startDate;
+    endDate = picker.endDate;
+    if ($('textarea[name="reason"]').val().length > 0){
+      $('#claim-rule-button').prop('disabled', false);
+    }
+
+    days = endDate.diff(startDate, 'days')
+    if (days > 180){
+      alert('Thời gian bảo lưu tối đa 6 tháng! Vui lòng xem lại thời gian bảo lưu!')
+      return null
+    }
+
     $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
   });
 
