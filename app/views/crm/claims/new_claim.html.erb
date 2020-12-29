@@ -111,16 +111,20 @@
           $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/transfer') %>`);
       }else if (form === 'other'){
           $('#fill_content').html(`<%= escape_javascript( render partial: 'crm/claims/forms/other') %>`);
-          $('#claim-rule-button').on('click', function(){
-              $('#claim-form').submit();
-              window.location.href = '/crm/claims'
-          })
+          $('#claim-form').ready(function(){
+              $('#claim-rule-button').on('click', function(){
+                  $('#claim-form')[0].submit();
+                  window.location.href = '/crm/claims'
+                })
+            })
       }
     })
 
     $('#fill_content').on('keyup', 'textarea[name="reason"]', function(){
         if ($(this).val().length > 0){
-            $('#claim-rule-button').prop('disabled', false);
+            if (($('.start_reserve').length === 0) || (($('.start_reserve').length > 0) && (typeof startDate !== 'undefined') && (typeof startDate !== 'undefined'))){
+                $('#claim-rule-button').prop('disabled', false);
+              }
           }else{
               $('#claim-rule-button').prop('disabled', true);
             }
