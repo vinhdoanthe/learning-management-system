@@ -142,11 +142,22 @@
         batch_id = $('#select_batch').val();
         $('input[name="done_session"]').val(data[course_id][batch_id]['done_ss']);
         $('input[name="coming_session"]').val(data[course_id][batch_id]['incoming_ss']);
+        $('input[name="count_transfer"]').attr('data-max', parseInt(data[course_id][batch_id]['incoming_ss']));
       })
     $('#fill_content').on('change','#select_batch', function(){
         batch_id = $(this).val();
         course_id = $('#select_course').val();
         $('input[name="done_session"]').val(data[course_id][batch_id]['done_ss']);
         $('input[name="coming_session"]').val(data[course_id][batch_id]['incoming_ss']);
+        $('input[name="count_transfer"]').attr('data-max', parseInt(data[course_id][batch_id]['incoming_ss']));
       })
+    $('#fill_content').on('blur', 'input[name="count_transfer"]', function(){
+        min = $(this).data('min')
+        max = $(this).data('max')
+
+        if (parseInt($(this).val()) < min || parseInt($(this).val()) > max) {
+            $(this).val('');
+            alert("Số buổi học chuyển nhượng không đúng! Vui lòng kiểm tra lại!");
+          }
+     })
 </script>
