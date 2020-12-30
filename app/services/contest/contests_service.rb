@@ -24,7 +24,6 @@ class Contest::ContestsService
 
     month_project = contest.contest_projects.
                       joins(:contest_topic).
-                      joins(:contest_prize).
                       joins(:student_project).
                       joins(user: { op_student: :res_company }).
                       where(contest_id: contest.id).
@@ -42,10 +41,12 @@ class Contest::ContestsService
   end
 
   def week_projects contest, time_type
+    current_topic = contest.contest_topics.where(status: "active").first
+
     if time_type == 'current'
-      topic = contest.contest_topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
+      topic = current_topic
     elsif time_type == 'last_week'
-      topic = contest.contest_topics.where(start_time: (Time.now - 7.days).beginning_of_week..(Time.now - 7.days).end_of_week).first
+      topic = contest.contest_topics.where("start_time < ?", current_topic.start_time).order(created_at: :DESC).first
     end
 
     return [ [], {} ] if topic.blank?

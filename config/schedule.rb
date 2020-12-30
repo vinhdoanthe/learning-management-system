@@ -33,3 +33,7 @@ every 1.hour do
   rake "social_community:add_reactions_to_posts[15,15]"
   rake "contest:update_like_share"
 end
+
+every 3.hours do
+  rake "contest:update_active_topic"
+end
