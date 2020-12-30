@@ -5,26 +5,50 @@ namespace :contest do
     active_contests = Contest::Contest.where(is_publish: true, default: true).to_a
     active_contests.each do |active_contest|
       topics = active_contest.contest_topics
+      active_topic = topics.where(status: 'active').first
+      #if topics.present?
+      #  active_topic = active_contest.contest_topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
 
-      if topics.present?
-        active_topic = active_contest.contest_topics.where(start_time: Time.now.beginning_of_week..Time.now.end_of_week).first
+      #  c_active_topics = active_contest.contest_topics.where(status: 'active').to_a
+      #  c_active_topics.each do |c_active_topic|
+      #    if c_active_topic.id != active_topic.id
+      #      c_active_topic.update(status: 'inactive')
+      #    end
+      #  end
 
-        c_active_topics = active_contest.contest_topics.where(status: 'active').to_a
-        c_active_topics.each do |c_active_topic|
-          if c_active_topic.id != active_topic.id
-            c_active_topic.update(status: 'inactive')
-          end
-        end
+      #  if active_topic.present?
+      #    active_topic.update(status: 'active')
+      #  end
 
-        if active_topic.present?
-          active_topic.update(status: 'active')
-        end
-
-      end
+      #end
 
       projects = active_topic.contest_projects.where(is_valid: true)
 
       Contest::ContestsService.new.update_fb_social_count projects
+    end
+  end
+
+  desc 'Update active topic'
+  task :update_active_topic, [] => :environment do |t, args|
+    active_contests = Contest::Contest.where(is_publish: true).to_a
+
+    active_contests.each do |active_contest|
+      topics = active_contest.contest_topics
+      current_topic = topics.where(status: 'active').first
+      if current_topic.present?
+        next_topic = topics.where("start_time > ?", current_topic.end_time).order(created_at: :ASC).first
+
+        if next_topic.present?
+        if current_topic.end_time < Time.now && next_topic.start_time <= Time.now
+          current_topic.status = 'inactive'
+          next_topic.status = 'active'
+          ActiveRecord::Base.transaction do
+            current_topic.save
+            next_topic.save
+          end
+        end
+        end
+      end
     end
   end
 
