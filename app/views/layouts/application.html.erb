@@ -94,6 +94,13 @@ var  DAY_IN_WEEK        = <%= text_day_in_week %>;
       <% if current_user && !current_user.is_parent? %>
 
         <body class='fixed-topbar fixed-sidebar theme-sdtl color-default dashboard' style="background:#f2f2f2">
+          <div>
+            <a class="fixed-claim-button" title='Đề nghị/ Yêu cầu' href='/crm/claims/new_claim'>
+              <span>
+                <%= image_tag "/global/images/professions-and-jobs.png" %>
+              </span>
+            </a>
+          </div>
 
           <% if current_user.is_student? %>
             <%= render "partials/student_sidenav"%>
@@ -192,6 +199,7 @@ $(document).on('click', '.topnav', function() {
 
 $(document).ready(function() {
   updateOwlCarousel();
+  $('.fixed-claim-button').tooltip();
 });
           </script>
 
