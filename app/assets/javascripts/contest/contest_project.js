@@ -9,6 +9,11 @@ function setTimeFormat(time, value){
   month = time.getMonth() + value;
   year = time.getFullYear();
 
+  if (month === 13){
+    month = 1;
+    year = year + 1;
+  }
+
   return `${ day }/${ month }/${ year }`
 }
 
@@ -21,8 +26,8 @@ function getProjectsContent(option, topic_id){
 
   if (option === 'month'){
     time = new Date();
-    start_time = setTimeFormat(time, 0);
-    end_time = setTimeFormat(time, 1);
+    start_time = setTimeFormat(time, 1);
+    end_time = setTimeFormat(time, 2);
   }else{
     start_time = $('input.start-date').datepicker('getDate', true);
     end_time = $('input.end-date').datepicker('getDate', true);
