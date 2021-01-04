@@ -18,6 +18,10 @@ class SendGridMailer
       send_refer_friend_email data
     elsif type == MailType::SEND_CLAIM_EMAIL_NOTI
       send_claim_email_noti data
+    elsif type == MailType::SEND_STUDENT_REDEEM_EMAIL
+      send_student_redeem_email data
+    elsif type == MailType::SEND_ADMIN_REDEEM_EMAIL
+      send_admin_redeem_email data
     end
   end
 
@@ -101,6 +105,67 @@ class SendGridMailer
       },
       "template_id": Settings.sendgrid.template[:send_claim]
     }
+  end
+
+  def parse_redeem_data redeem, email, template
+    product = redeem.redeem_product
+    user = redeem.user
+
+    {
+      "personalizations": [
+        {
+          "to": [
+            {
+              "email": email
+            }
+          ],
+          "dynamic_template_data":
+          {
+            "student_name": user.full_name,
+            "product_name": product.name,
+            "product_count": redeem.amount.to_i,
+            "total_teky_coin": redeem.total_paid.to_i
+          }
+        }
+      ],
+      "from": { "email": Settings.sendgrid.from[:email],
+                "name": Settings.sendgrid.from[:name]
+      },
+      "template_id": template
+    }
+  end
+
+  def send_student_redeem_email redeem
+    user = redeem.user
+    email = user.email
+    status = redeem.status
+
+    if status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_NEW
+      template = Settings.sendgrid.template[:send_student_new_redeem]
+    elsif status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_CANCEL
+      template = Settings.sendgrid.template[:send_student_cancel_redeem]
+    elsif status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_DONE
+      template = Settings.sendgrid.template[:send_student_done_redeem]
+    end
+
+    data = parse_redeem_data redeem, email, template
+    execute_send(data)
+  end
+
+  def send_admin_redeem_email redeem
+    email = Settings.sendgrid.to[:redeem_email]
+    template = Settings.sendgrid.template[:send_admin_redeem]
+    data = parse_redeem_data redeem, email, template
+
+    if Rails.env.development?
+      request_link = "http://stagging.lms.teky.vn/"
+    else
+      request_link = "https://lms.teky.online/"
+    end
+
+    request_link += "adm/redeem/redeem_transactions/show/#{ redeem.id }"
+    data[:personalizations][0][:dynamic_template_data].merge!({request_link: request_link })
+    execute_send(data)
   end
 
   def send_claim_email_noti data

@@ -28,6 +28,26 @@ body {
   padding-right: 0 !important
 }
 
+.fixed-claim-button {
+  width: 60px;
+    height: 40px;
+    position: fixed;
+    right: 0;
+    top: 150px;
+    z-index: 100;
+    background-image: linear-gradient(131deg, #5DC2A7 , #FCF055);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-left-radius: 100px;
+    border-top-left-radius: 100px;
+}
+
+.fixed-claim-button img {
+  width: 30px;
+  height: 30px;
+}
+
 span.subject_id.active{
 	background-color: #5DC2A7;
 }

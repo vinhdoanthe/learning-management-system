@@ -46,7 +46,7 @@ class Contest::ContestsService
     if time_type == 'current'
       topic = current_topic
     elsif time_type == 'last_week'
-      topic = contest.contest_topics.where("start_time < ?", current_topic.start_time).order(created_at: :DESC).first
+      topic = contest.contest_topics.where("start_time < ?", current_topic.start_time).order(start_time: :DESC).first
     end
 
     return [ [], {} ] if topic.blank?

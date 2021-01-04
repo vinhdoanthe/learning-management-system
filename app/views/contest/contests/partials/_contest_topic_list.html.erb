@@ -16,13 +16,13 @@
       <div class="c-box__content">
         <div class="c-calender-slider">
           <div class="owl-carousel" id="calendar-slider-id">
-            <div class="c-calendar-item" data-number="1" data-month="9">
+            <div class="c-calendar-item" data-number="1" data-month="<%= (Time.now - 1.month).month - 1%>">
               <div class="icon16-calendar-primary"></div>Tháng <%= (Time.now - 1.month).strftime('%m/%Y') %>
             </div>
-            <div class="c-calendar-item" data-number="2" data-month="10">
+            <div class="c-calendar-item" data-number="2" data-month="<%= Time.now.month - 1%>">
               <div class="icon16-calendar-primary"></div>Tháng <%= Time.now.strftime("%m/%Y") %>
             </div>
-            <div class="c-calendar-item" data-number="3" data-month="11">
+            <div class="c-calendar-item" data-number="3" data-month="<%= (Time.now + 1.month).month - 1 %>">
               <div class="icon16-calendar-primary"></div>Tháng <%= (Time.now + 1.month).strftime('%m/%Y') %>
             </div>
           </div>

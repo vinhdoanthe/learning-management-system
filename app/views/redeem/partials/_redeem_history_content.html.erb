@@ -34,7 +34,7 @@
               <%= t('redeem.state.success') %>
             <% end %>
           </td>
-          <td><%= redeem.admin_note %></td>
+          <td><%= redeem.admin_note&.html_safe %></td>
         </tr>
       <% end %>
     </tbody>

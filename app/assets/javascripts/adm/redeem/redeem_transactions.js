@@ -51,7 +51,7 @@ $(document).ready(() => {
   })
 })
 
-let show_cancel_confirm_modal = (transaction_id) => {
+var show_cancel_confirm_modal = (transaction_id) => {
   $("#cancelTransactionBody").html(`
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
@@ -61,7 +61,7 @@ let show_cancel_confirm_modal = (transaction_id) => {
   get_transaction(transaction_id, 'cancel');
 }
 
-let show_approve_confirm_modal = (transaction_id) => {
+var show_approve_confirm_modal = (transaction_id) => {
   $("#approveTransactionBody").html(`
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
@@ -71,7 +71,7 @@ let show_approve_confirm_modal = (transaction_id) => {
   get_transaction(transaction_id, 'approve');
 }
 
-let show_complete_confirm_modal = (transaction_id) => {
+var show_complete_confirm_modal = (transaction_id) => {
   $("#completeTransactionBody").html(`
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
@@ -81,7 +81,7 @@ let show_complete_confirm_modal = (transaction_id) => {
   get_transaction(transaction_id, 'complete');
 }
 
-let get_transaction = (transaction_id, mode) => {
+var get_transaction = (transaction_id, mode) => {
   $.ajax({
     url: '/adm/redeem/redeem_transactions/show/' + transaction_id + '?mode=' + mode,
     type: "GET",

@@ -1,5 +1,7 @@
 class Contest::ProjectCriterion < ApplicationRecord
   self.table_name = "tk_project_criterions"
+  attribute :number, :integer, default: 0
+  attribute :point_exchange, :integer, default: 0
 
   belongs_to :contest_project, class_name: "Contest::ContestProject", foreign_key: 'contest_project_id'
 
