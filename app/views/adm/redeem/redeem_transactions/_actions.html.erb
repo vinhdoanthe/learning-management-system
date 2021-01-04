@@ -13,3 +13,9 @@
 <% else %>
   <%= link_to "<i class='far fa-eye'></i>&nbsp;#{t('adm.redeem.actions_view_transaction')}".html_safe, adm_redeem_redeem_transactions_show_path(transaction.id), class: "btn btn-sm btn-info" %>
 <% end %>
+
+<script>
+  if (window.location.href.includes('show')){
+      $('.btn-info').hide();
+    }
+</script>

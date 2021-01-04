@@ -8,3 +8,4 @@
   $('#completeTransactionBody').html('<%= j(render :partial => 'transaction', :locals => {transaction: transaction}) %>')
   $('#completeTransactionBody').attr("data-transaction-id", <%= transaction.id %>);
 <% end %>
+$('.item-detail-action').hide();
