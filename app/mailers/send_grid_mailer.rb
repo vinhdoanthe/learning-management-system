@@ -138,7 +138,16 @@ class SendGridMailer
   def send_student_redeem_email redeem
     user = redeem.user
     email = user.email
-    template = Settings.sendgrid.template[:send_student_redeem]
+    status = redeem.status
+
+    if status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_NEW
+      template = Settings.sendgrid.template[:send_student_new_redeem]
+    elsif status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_CANCEL
+      template = Settings.sendgrid.template[:send_student_cancel_redeem]
+    elsif status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_DONE
+      template = Settings.sendgrid.template[:send_student_done_redeem]
+    end
+
     data = parse_redeem_data redeem, email, template
     execute_send(data)
   end
@@ -147,8 +156,14 @@ class SendGridMailer
     email = Settings.sendgrid.to[:redeem_email]
     template = Settings.sendgrid.template[:send_admin_redeem]
     data = parse_redeem_data redeem, email, template
-    request_link = "http://lms.teky.online/adm/redeem/redeem_transactions/show/#{ redeem.id }"
 
+    if Rails.env.development?
+      request_link = "http://stagging.lms.teky.vn/"
+    else
+      request_link = "https://lms.teky.online/"
+    end
+
+    request_link += "adm/redeem/redeem_transactions/show/#{ redeem.id }"
     data[:personalizations][0][:dynamic_template_data].merge!({request_link: request_link })
     execute_send(data)
   end

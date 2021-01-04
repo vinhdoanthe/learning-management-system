@@ -142,7 +142,7 @@
                             </div>
                             <div class="col-md-7">
                               <input type='hidden' name="redeem_product_id" value='<%= product.id %>'>
-                              <% if !Rails.env.production? && (current_user.coin > product.price) %>
+                              <% if current_user.coin > product.price %>
                                 <button data-toggle="modal" data-target="#confirm_redeem_modal" id="btn_redeem_product_confirm" data-product="<%= product.id %>" class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('adm.redeem.redeem_button')%></button>
                               <% else %>
                                 <button data-product="<%= product.id %>" class='btn btn-secondary btn-embossed redeem-product-submit-disabled text-uppercase' disabled  ><%= t('adm.redeem.redeem_button')%></button>
