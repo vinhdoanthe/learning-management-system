@@ -1,4 +1,6 @@
 <% transaction_decorated = Redeem::TransactionDecorator.new(transaction) %>
+<%= tinymce_assets %>
+<%= javascript_include_tag('adm/redeem/redeem_transactions') %>
 
 <div class="card">
   <div class="card-header">
@@ -102,7 +104,22 @@
       </table>
     </div>
   </div>
-  <div class="card-footer">
+  <div class="card-footer item-detail-action">
     <%= link_to "<i class='fas fa-angle-double-left'></i>&nbsp;#{t('button.see_all')}".html_safe, adm_redeem_redeem_transactions_path, class: 'btn btn-secondary' %>
+    <%= render :partial => "actions", :locals => {transaction: transaction} %>
   </div>
 </div>
+<div id="cancelTransactionModal" class="modal" tabindex="-1" role="dialog" data-transaction-id="">
+  <%= render 'cancel_transaction' %>
+</div>
+
+<!-- approve transaction confirm modal -->
+<div id="approveTransactionModal" class="modal" tabindex="-1" role="dialog" data-transaction-id="">
+  <%= render 'approve_transaction' %>
+</div>
+
+<!-- complete transaction confirm modal -->
+<div id="completeTransactionModal" class="modal" tabindex="-1" role="dialog" data-transaction-id="">
+  <%= render 'complete_transaction' %>
+</div>
+<%= tinymce :simple %>

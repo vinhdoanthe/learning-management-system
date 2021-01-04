@@ -120,16 +120,16 @@ class SendGridMailer
             }
           ],
           "dynamic_template_data":
-            {
-              "student_name": user.full_name,
-              "product_name": product.name,
-              "product_count": redeem.amount.to_i,
-              "total_teky_coin": redeem.total_paid.to_i
-            }
+          {
+            "student_name": user.full_name,
+            "product_name": product.name,
+            "product_count": redeem.amount.to_i,
+            "total_teky_coin": redeem.total_paid.to_i
+          }
         }
       ],
       "from": { "email": Settings.sendgrid.from[:email],
-        "name": Settings.sendgrid.from[:name]
+                "name": Settings.sendgrid.from[:name]
       },
       "template_id": template
     }
@@ -147,6 +147,9 @@ class SendGridMailer
     email = Settings.sendgrid.to[:redeem_email]
     template = Settings.sendgrid.template[:send_admin_redeem]
     data = parse_redeem_data redeem, email, template
+    request_link = "http://lms.teky.online/adm/redeem/redeem_transactions/show/#{ redeem.id }"
+
+    data[:personalizations][0][:dynamic_template_data].merge!({request_link: request_link })
     execute_send(data)
   end
 
