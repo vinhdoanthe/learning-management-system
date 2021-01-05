@@ -1,12 +1,26 @@
 function changeQuantity(target, count){
-  current_val = target.val()
-  new_val = parseInt(current_val) + count
+  current_val = target.val();
+  new_val = parseInt(current_val) + count;
+  max = target.attr('max');
+
   if (new_val >= 0){
-    target.val(new_val);
+    if (max > new_val){
+      target.val(new_val);
+    }else{
+      target.val(max);
+    }
   }else{
     target.val(0);
   }
 }
+
+$('input[name="product_amount"]').on('blur', function(){
+  max = parseInt($(this).attr('max'));
+
+  if (parseInt($(this).val()) > max){
+    $(this).val(max);
+  }
+})
 
 let getRedeemHistory = (user_id) => {
   $.ajax({

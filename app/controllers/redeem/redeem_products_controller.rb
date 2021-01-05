@@ -2,7 +2,7 @@ class Redeem::RedeemProductsController < ApplicationController
   
   def index
     @page_title 	 = t('adm.redeem.redeem_points')
-    @redeem_products = Redeem::RedeemProduct.order(price: :ASC).all
+    @redeem_products = Redeem::RedeemProduct.order(price: :ASC).page(params[:page]).per(20)
   end
 
   def product_detail
