@@ -2,6 +2,7 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "redeem/redeem_product.js" %>
 <% end %>
+<% total_coin = current_user.coin.to_i %>
 <div class="page-content page-thin">
   <div class="panel panel-edits bg-232837">
     <div class="panel-heading">
@@ -56,6 +57,9 @@
         <!-- Tab panes -->
         <div class="tab-content row">
           <div class="tab-pane active" id="messages">
+            <div class="paginate_div">
+            <%= paginate @redeem_products %>
+            </div>
             <div class="row" style="display: flex; flex-wrap: wrap">
               <% @redeem_products.each_with_index do |product, index| %>
                 <div class="col-sm-4 product_item product_category_<%= product.redeem_product_category.id %>">
@@ -106,7 +110,7 @@
                                       <div class="minus_quantity">
                                         <i class="fa fa-minus"></i>
                                       </div>
-                                      <input type='number' style="text-align: center; font-weight: 700;" class="form-control" name='product_amount' value="1" min='0'>
+                                      <input type='number' style="text-align: center; font-weight: 700;" class="form-control" name='product_amount' value="1" min='0' max="<%= total_coin / product.price.to_i %>">
                                       <div class="plus_quantity">
                                         <i class="fa fa-plus"></i>
                                       </div>
@@ -142,7 +146,7 @@
                             </div>
                             <div class="col-md-7">
                               <input type='hidden' name="redeem_product_id" value='<%= product.id %>'>
-                              <% if current_user.coin > product.price %>
+                              <% if current_user.coin > product.price && product.redeem_product_items.count > 0 %>
                                 <button data-toggle="modal" data-target="#confirm_redeem_modal" id="btn_redeem_product_confirm" data-product="<%= product.id %>" class='btn btn-primary btn-embossed bg-5DC2A7 redeem_product_submit text-uppercase'  ><%= t('adm.redeem.redeem_button')%></button>
                               <% else %>
                                 <button data-product="<%= product.id %>" class='btn btn-secondary btn-embossed redeem-product-submit-disabled text-uppercase' disabled  ><%= t('adm.redeem.redeem_button')%></button>
@@ -155,6 +159,9 @@
                   </div>
                 </div>
               <% end %>
+            </div>
+            <div class="paginate_div">
+            <%= paginate @redeem_products %>
             </div>
           </div>
         </div>
@@ -205,6 +212,12 @@
 <style>
 .product-description {
   overflow: hidden;
+}
+.paginate_div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 </style>
 
