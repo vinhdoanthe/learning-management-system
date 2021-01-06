@@ -1,5 +1,4 @@
 <% transaction_decorated = Redeem::TransactionDecorator.new(transaction) %>
-<%= tinymce_assets %>
 <%= javascript_include_tag('adm/redeem/redeem_transactions') %>
 
 <div class="card">
@@ -122,4 +121,3 @@
 <div id="completeTransactionModal" class="modal" tabindex="-1" role="dialog" data-transaction-id="">
   <%= render 'complete_transaction' %>
 </div>
-<%= tinymce :simple %>

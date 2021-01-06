@@ -149,6 +149,11 @@ class SendGridMailer
     end
 
     data = parse_redeem_data redeem, email, template
+
+    if redeem.status == RedeemConstants::TransactionState::REDEEM_TRANSACTION_STATE_CANCEL
+      data[:personalizations][0][:dynamic_template_data].merge!({ cancel_reason: "Sản phẩm bạn đổi đã hết " })
+    end
+
     execute_send(data)
   end
 
@@ -165,6 +170,7 @@ class SendGridMailer
 
     request_link += "adm/redeem/redeem_transactions/show/#{ redeem.id }"
     data[:personalizations][0][:dynamic_template_data].merge!({request_link: request_link })
+
     execute_send(data)
   end
 
