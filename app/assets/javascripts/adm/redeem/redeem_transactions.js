@@ -1,23 +1,23 @@
 $(document).ready(() => {
-  $('.btn-cancel-transaction').click((event) => {
+  $('.btn-cancel-transaction').unbind().click((event) => {
     event.preventDefault();
     let transaction_id = $(event.currentTarget).data('transaction-id');
     show_cancel_confirm_modal(transaction_id);
   })
 
-  $('.btn-approve-transaction').click((event) => {
+  $('.btn-approve-transaction').unbind().click((event) => {
     event.preventDefault();
     let transaction_id = $(event.currentTarget).data('transaction-id');
     show_approve_confirm_modal(transaction_id);
   })
 
-  $('.btn-complete-transaction').click((event) => {
+  $('.btn-complete-transaction').unbind().click((event) => {
     event.preventDefault();
     let transaction_id = $(event.currentTarget).data('transaction-id');
     show_complete_confirm_modal(transaction_id);
   })
 
-  $('.btn-confirm-cancel-transaction').click((event) => {
+  $('.btn-confirm-cancel-transaction').unbind().click((event) => {
     let transaction_id = $('#cancelTransactionBody').data('transaction-id');
     let reason_cancel = tinymce.get("reasonCancel").getContent();
 
@@ -28,7 +28,7 @@ $(document).ready(() => {
     }
   })
 
-  $('.btn-confirm-approve-transaction').click((event) => {
+  $('.btn-confirm-approve-transaction').unbind().click((event) => {
     let transaction_id = $('#approveTransactionBody').data('transaction-id');
     let note = tinymce.get("noteApprove").getContent();
 
@@ -39,7 +39,7 @@ $(document).ready(() => {
     }
   })
 
-  $('.btn-confirm-complete-transaction').click((event) => {
+  $('.btn-confirm-complete-transaction').unbind().click((event) => {
     let transaction_id = $('#completeTransactionBody').data('transaction-id');
     let note = tinymce.get("noteComplete").getContent();
 
