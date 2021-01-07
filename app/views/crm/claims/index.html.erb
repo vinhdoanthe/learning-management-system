@@ -1,34 +1,41 @@
 <div class="page-content page-thin">
-	<div class='title-div'>
-		<div>
-		<h3 class='claim-title'>Danh sách yêu cầu đã gửi</h3>
+		<div class='title-div'>
+			<div>
+				<h3 class='claim-title'>Đề nghị, yêu cầu</h3>
+			</div>
+			<!--<div style='margin-left: auto'>
+				<a href='/crm/claims/new_claim' class='btn btn-primary font-bold text-uppercase'>Tạo yêu cầu mới</a>
+			</div> -->
 		</div>
-		<div style='margin-left: auto'>
-			<a href='/crm/claims/new_claim' class='btn btn-primary font-bold text-uppercase'>Tạo yêu cầu mới</a>
-		</div>
-	</div>
-	<div class="panel claim-list">
-		<div class="table-responsive">
-			<table class='table'>
-				<thead>
-					<tr class='claim_header'>
-						<th>Tiêu đề</th>
-						<th>Ngày tạo</th>
-						<th>Trạng thái</th>
-						<th>Ngày hoàn thành</th>
-					</tr>
-				</thead>
-				<tbody>
-					<% @claims.each do |claim| %>
-						<tr class='show_claim_detail' data-toggle="modal" data-id="<%= claim.id %>" data-target="#modal_claim_detail">
-							<td><%= claim.name %></td>
-							<td><%= claim.create_date.strftime('%H:%M %d/%m/%Y') %></td>
-							<td><%= @stage[claim.stage_id] %></td>
-							<td></td>
+	<% if @claims.present? %>
+		<div class="panel claim-list">
+			<div class="table-responsive claim-list-table">
+				<table class='table'>
+					<thead>
+						<tr class='claim_header'>
+							<th>Tiêu đề</th>
+							<th>Ngày tạo</th>
+							<th>Trạng thái</th>
+							<th>Ngày hoàn thành</th>
 						</tr>
-					<% end %>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<% @claims.each do |claim| %>
+							<tr class='show_claim_detail' data-toggle="modal" data-id="<%= claim.id %>" data-target="#modal_claim_detail">
+								<td><%= claim.name %></td>
+								<td><%= claim.create_date.strftime('%H:%M %d/%m/%Y') %></td>
+								<td><%= @stage[claim.stage_id] %></td>
+								<td></td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	<% end %>
+	<div class='panel' style='margin-top: 20px'>
+		<div class='create_new_claim'>
+			<p>Bạn có yêu cầu, đề nghị muốn gửi tới Teky?<%= link_to 'Gửi yêu cầu, đề nghị', crm_claims_new_claim_path %></p>
 		</div>
 	</div>
 </div>
@@ -52,10 +59,7 @@
 <style>
 .title-div{
 	margin-top: 30px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: row;
+	text-align: left;
 }
 .close-modal {
   position: absolute;
@@ -71,11 +75,29 @@
 	padding: 15px !important;
 }
 .claim-title {
+	margin-left: 10px !important;
 	font-size: 18px !important;
 	font-weight: 700;
 }
 .claim_header th{
 	padding: 15px !important;
+}
+.create_new_claim {
+	font-size: 15px;
+	padding: 20px;
+	padding-left: 35px;
+}
+.create_new_claim a {
+	display: inline-block;
+	margin-left: 10px;
+	text-decoration: underline;
+}
+.claim-list-table{
+	padding: 20px
+}
+.claim-list-table tbody tr:hover {
+	background-color: #f5f5f5;
+	cursor: pointer;
 }
 </style>
 <script>
