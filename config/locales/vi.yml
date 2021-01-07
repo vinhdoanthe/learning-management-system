@@ -90,6 +90,7 @@ vi:
     my_projects: 'Sản phẩm cuối khoá'
     top_achievement: 'Top thành tích'
     refer_friend: 'Giới thiệu bạn bè'
+    claim: 'Yêu cầu / Đề nghị'
     contest: 'Cuộc thi'
   config:
     general_info: "Thông tin chung"
