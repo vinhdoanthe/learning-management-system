@@ -250,7 +250,13 @@ module User
            'icon' => 'game.png',
             'title' => "#{t('sidebar.refer_friend')}", 
             'right_content' => ''
-          },             
+          },
+
+          {'path' => crm_claims_new_claim_path,
+           'icon' => 'top.png',
+            'title' => "#{t('sidebar.claim')}",
+            'right_content' => ''
+          },
           #{'path' => social_community_question_answer_my_threads_path, 
           #  'icon' => 'Icon-Inbox.png',
           #  'title' => "#{t('sidebar.question_answer')}", 
