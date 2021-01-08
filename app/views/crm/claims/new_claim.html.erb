@@ -18,8 +18,8 @@
         <input type='hidden' name='claim_form_img' value=''>
         <div id='claim-form-content' class='claim-content'>
           <div>
-            <div class='row'>
-              <div class='col-md-10 col-md-push-2'>
+            <div class='row mg-bottom-20'>
+              <div class='col-md-10 col-md-push-1'>
                 <h3>Thông tin học sinh:</h3>
               </div>
             </div>
@@ -74,7 +74,7 @@
               <div class="col-md-3 col-md-push-1 ">
                 <h3>Chọn loại đề nghị/yêu cầu:</h3>
               </div>
-              <div class='col-md-7 col-md-push-1 form-group' style="padding-left: 5px;">
+              <div class='col-md-7 col-md-push-1 form-group'>
                 <select id="select_form" name="claim_form_type" class='form-control white-input text-uppercase font-bold'>
                   <option value="" class='not_select' disabled selected>Chọn loại đề nghị</option>
                   <% @titles.each do |k, v| %>
@@ -87,7 +87,7 @@
           <div id='fill_content'>
           </div>
         </div>
-        <div class='form-submit'>
+        <div class='form-submit claim-content'>
           <button type='button' disabled class='btn btn-primary text-uppercase font-bold' id='claim-rule-button' data-toggle='modal' data-target='#modal_claim_content' style="margin-top: 30px; background-color: #5DC2A7;">Gửi đơn</button>
         </div>
       </form>

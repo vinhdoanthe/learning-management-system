@@ -252,7 +252,7 @@ module User
             'right_content' => ''
           },
 
-          {'path' => crm_claims_new_claim_path,
+          {'path' => crm_claims_path,
            'icon' => 'top.png',
             'title' => "#{t('sidebar.claim')}",
             'right_content' => ''
