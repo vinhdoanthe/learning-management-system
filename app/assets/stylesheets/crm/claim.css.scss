@@ -16,6 +16,7 @@ button.select2-selection__choice__remove {
 }
 #claim-form input {
   color: black !important;
+  padding-left: 0;
 }
 #claim-form select {
   color: black !important;
@@ -36,7 +37,7 @@ button.select2-selection__choice__remove {
   margin-top: 30px;
   margin-right: 30px;
 }
-.input_field.form-group {
+/*.input_field.form-group {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -47,7 +48,7 @@ button.select2-selection__choice__remove {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
+}*/
 .noborder {
   border: 0;
 }
@@ -72,4 +73,16 @@ button.select2-selection__choice__remove {
 }
 .reason-label {
   align-self: flex-start;
+}
+.mg-left-10 {
+  margin-left: 10px;
+}
+.claim-part-title{
+  margin-top: 40px;
+}
+.form-group{
+  margin-bottom: 0;
+}
+.mg-bottom-20 {
+  margin-bottom: 20px;
 }
