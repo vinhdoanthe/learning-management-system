@@ -8,9 +8,9 @@
 			</div>
 		</div>
 	</div>
-	<% if @claims.present? %>
-		<div class="panel m-t--70">
-			<div class="panel-content">
+	<div class="panel m-t--70">
+		<div class="panel-content">
+			<% if @claims.present? %>
 				<div class="panel claim-list">
 					<div class="table-responsive claim-list-table">
 						<div class="fc-header">
@@ -39,30 +39,26 @@
 					</div>
 				</div>
 			<% end %>
-			<div class='panel' style='margin-top: 20px'>
-				<div class='create_new_claim'>
-					<p>Bạn có yêu cầu, đề nghị muốn gửi tới Teky?<%= link_to 'Gửi yêu cầu, đề nghị', crm_claims_new_claim_path %></p>
-				</div>
-			</div>
-			</div>
-			<div class="modal" tabindex="-1" role="dialog" id="modal_claim_detail">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title claim_name">Chi tiết yêu cầu</h5>
-							<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body" id='claim-detail'>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						</div>
+			<p class='create_new_claim'>Bạn có yêu cầu, đề nghị muốn gửi tới Teky?<%= link_to 'Gửi yêu cầu, đề nghị', crm_claims_new_claim_path %></p>
+		</div>
+		<div class="modal" tabindex="-1" role="dialog" id="modal_claim_detail">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title claim_name">Chi tiết yêu cầu</h5>
+						<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" id='claim-detail'>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 </div>
 <style>
 .title-div{
@@ -94,7 +90,7 @@
 .create_new_claim {
 	font-size: 15px;
 	padding: 20px;
-	padding-left: 35px;
+	padding-left: 0px;
 }
 .create_new_claim a {
 	display: inline-block;
@@ -104,6 +100,7 @@
 .claim-list-table{
 	padding: 20px;
 	padding-bottom: 0px;
+	font-weight: 500;
 }
 .claim-list-table tbody tr:hover {
 	background-color: #f5f5f5;
