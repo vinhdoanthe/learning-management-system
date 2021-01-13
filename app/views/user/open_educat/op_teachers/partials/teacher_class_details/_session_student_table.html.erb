@@ -56,6 +56,9 @@
               <%= image_tag('global/images/icon-Comment.png', style: 'width: 32px; min-width: 32px;margin-right: 10px; cursor: pointer;') %>
             </a>
           </td>
+          <script>
+            $(".student_evaluate[data-code='<%= student[:code] %>']").closest('tr').removeClass('unresponse_student');
+          </script>
         <% else %>
           <td class="attendance_state" align="center" data-code="<%= student[:code] %>"></td>
           <td class="text-center">
