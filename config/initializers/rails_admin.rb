@@ -384,6 +384,9 @@ RailsAdmin.config do |config|
       field :introduction_video
       field :presentation
       field :project_show_video
+      field :description, :ck_editor do
+        config_js ActionController::Base.helpers.asset_path('ckeditor/config.js')
+      end
     end
   end
 
