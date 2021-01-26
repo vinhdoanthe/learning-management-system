@@ -62,6 +62,20 @@
           </div>
         </div>
       </div>
+      <div class='row'>
+        <div class='col-md-4'>
+          <label class="custom-checkbox">Buổi cuối khoá
+            <input type="checkbox" class="student_project_info_show">
+            <span class="checkmark-sc"></span>
+          </label>
+        </div>
+        <div class='col-md-4'>
+          <label class="custom-checkbox">Show thông tin sản phẩm cuối khóa
+            <input type="checkbox" class="student_project_info_show">
+            <span class="checkmark-sc"></span>
+          </label>
+        </div>
+      </div>
       <div class="row">
         <div class='offset-10 col-md-2'>
           <button type="submit" class="btn btn-primary" id="submit_filter_sessions"><%= t("adm.user.filter") %></button>
@@ -70,3 +84,70 @@
     </div>
   </div>
 </div>
+<style>
+.custom-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark-sc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.custom-checkbox:hover input ~ .checkmark-sc {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.custom-checkbox input:checked ~ .checkmark-sc {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark-sc/indicator (hidden when not checked) */
+.checkmark-sc:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark-sc when checked */
+.custom-checkbox input:checked ~ .checkmark-sc:after {
+  display: block;
+}
+
+/* Style the checkmark-sc/indicator */
+.custom-checkbox .checkmark-sc:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+</style>

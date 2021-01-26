@@ -15,6 +15,7 @@ namespace :adm do
     get 'sessions/session_info' => 'sessions#session_info'
     get 'sessions/student_attendance_detail' => 'sessions#student_attendance_detail'
     get 'sessions/session_student_homework' => 'sessions#session_student_homework'
+    get 'sessions/session_student_project_info' => 'sessions#session_student_project_info'
     post 'sessions/update_attendance_line' => 'sessions#update_attendance_line'
 
     #Quan ly khoa hoc

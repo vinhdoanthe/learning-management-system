@@ -40,6 +40,12 @@ function getDataFilter(){
   photo_state = $('#filter-photo').val();
   attendance = $('#filter-attendance').val();
 
+  if ($('.student_project_info_show').is(':checked')){
+    last_session = 1
+  }else{
+    last_session = 0
+  }
+
   return { batch_id: batch_id, company: company, state: state, start_time: start_time, end_time: end_time, photo_state: photo_state, attendance: attendance }
 }
 
