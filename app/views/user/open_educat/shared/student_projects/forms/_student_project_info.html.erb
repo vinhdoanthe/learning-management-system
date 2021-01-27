@@ -54,7 +54,7 @@
   </div>
   <div class='row'>
     <div class='col-md-12'>
-      <label><%= t('student_project.description') %></label>
+      <label><%= t('student_project.description').html_safe %></label>
       <%= f.text_area :description, class: 'tinymce tinymce_student_description', :rows => 6 %>
       <%#= tinymce :simple %>
     </div>

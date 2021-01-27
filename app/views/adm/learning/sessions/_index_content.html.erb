@@ -11,6 +11,7 @@
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
       <th>Bài tập học sinh</th>
+      <th>Buổi cuối khóa</th>
       <th>GVĐD/VHĐD</th>
       <th><%= t("adm.learning.session.academy") %></th>
     </tr>
@@ -40,6 +41,7 @@
             <%= image_tag 'global/images/exam-3.png', style: "width: 20px; height: 25px; opacity: 0.4" %>
           <% end %>
         </td>
+        <td class='student_project_info' data-session-id='<%= session[:id] %>'></td>
         <td style="text-align: center"><%= session[:count_attendance_line].to_i %> / <%= session[:count_session_student].to_i %></td>
         <td><%= session[:company_name] %></td>
       </tr>
@@ -56,8 +58,9 @@
       <th><%= t("adm.learning.session.start_datetime") %></th>
       <th><%= t("adm.learning.session.state") %></th>
       <th><%= t("adm.learning.session.information") %></th>
-      <th>GVDD</th>
-      <th>VHDD</th>
+      <th>Bài tập học sinh</th>
+      <th>Buổi cuối khóa</th>
+      <th>GVĐD/VHĐD</th>
       <th><%= t("adm.learning.session.academy") %></th>
     </tr>
   </tfoot>
@@ -106,4 +109,10 @@
   padding: 3px;
   font-size: 10px;
 }
+.student_project_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 </style>

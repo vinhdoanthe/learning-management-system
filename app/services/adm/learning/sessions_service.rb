@@ -32,12 +32,23 @@ class Adm::Learning::SessionsService
       query += "op_attendance_line.attendance_state = '#{ OpAttendanceLineConstant::State::STATE_REJECTED }' AND "
     end
 
-    query = query[0..-5]
-
     if query.blank?
       params[:start_time] = Time.now.beginning_of_day
       params[:end_time] = Time.now.end_of_day
     end
+
+    if params[:last_session] == '1'
+      last_done_sql = "SELECT (ARRAY_AGG(ss.id ORDER BY ss.start_datetime DESC))[1] as end_session_id
+      from op_session  as ss
+      GROUP BY ss.subject_id, ss.batch_id"
+
+      ss_ids = ActiveRecord::Base.connection.execute(last_done_sql).values.flatten.uniq
+      if ss_ids.count > 0
+        query += "op_session.id IN (#{ ss_ids.join(',')}) AND "
+      end
+    end
+
+    query = query[0..-5]
 
     if params[:start_time].present?
       sessions = Learning::Batch::OpSession.
@@ -48,29 +59,7 @@ class Adm::Learning::SessionsService
                     :op_faculty,
                     :op_attendance_lines).
                   where(query).
-                  where(start_datetime: (params[:start_time].to_datetime..params[:end_time].to_datetime)).
-                  distinct.
-                  order(start_datetime: :DESC).
-                  limit(25).
-                  offset(offset).
-                  pluck(
-                    :id,
-                    :state,
-                    :start_datetime,
-                    :end_datetime,
-                    'op_batch.code',
-                    'op_batch.id',
-                    'op_batch.company_id',
-                    'res_company.name',
-                    'op_lession.name',
-                    'op_lession.id',
-                    'op_session.count',
-                    'op_lession.lession_number',
-                    'op_faculty.full_name',
-                    'op_faculty.id',
-                    'op_course.name',
-                    "CASE WHEN EXISTS (SELECT id FROM questions WHERE questions.op_lession_id = op_lession.id) THEN 'true' ELSE 'false' END AS question"
-                  )
+                  where(start_datetime: (params[:start_time].to_datetime..params[:end_time].to_datetime))
     else
       sessions = Learning::Batch::OpSession.
                   includes(
@@ -81,30 +70,32 @@ class Adm::Learning::SessionsService
                     :op_faculty,
                     :op_attendance_lines).
                   where(query).
-                  where(start_datetime: Time.at(0)..Time.now).
-                  distinct.
-                  order(start_datetime: :DESC).
-                  limit(25).
-                  offset(offset).
-                  pluck(
-                    :id,
-                    :state,
-                    :start_datetime,
-                    :end_datetime,
-                    'op_batch.code',
-                    'op_batch.id',
-                    'op_batch.company_id',
-                    'res_company.name',
-                    'op_lession.name',
-                    'op_lession.id',
-                    'op_session.count',
-                    'op_lession.lession_number',
-                    'op_faculty.full_name',
-                    'op_faculty.id',
-                    'op_course.name',
-                    "CASE WHEN EXISTS (SELECT id FROM questions WHERE questions.op_lession_id = op_lession.id) THEN 'true' ELSE 'false' END AS question"
-                  )
+                  where(start_datetime: Time.at(0)..Time.now)
     end
+
+    sessions = sessions.
+      distinct.
+      order(start_datetime: :DESC).
+      limit(25).
+      offset(offset).
+      pluck(
+        :id,
+        :state,
+        :start_datetime,
+        :end_datetime,
+        'op_batch.code',
+        'op_batch.id',
+        'op_batch.company_id',
+        'res_company.name',
+        'op_lession.name',
+        'op_lession.id',
+        'op_session.count',
+        'op_lession.lession_number',
+        'op_faculty.full_name',
+        'op_faculty.id',
+        'op_course.name',
+        "CASE WHEN EXISTS (SELECT id FROM questions WHERE questions.op_lession_id = op_lession.id) THEN 'true' ELSE 'false' END AS question"
+    )
 
     sessions.map!{ |info| { id: info[0], state: info[1], start_datetime: info[2], end_datetime: info[3], batch_id: info[5], batch_code: info[4], company_id: info[6], company_name: info[7], lesson_name: info[8], lesson_id: info[9], session_count: info[10], lesson_number: info[11], faculty_name: info[12], faculty_id: info[13], course_name: info[14], question: info[15].to_boolean } }
 
@@ -113,19 +104,102 @@ class Adm::Learning::SessionsService
     count_ss_student = Learning::Batch::OpSessionStudent.where(session_id: session_ids).group(:session_id).count
     count_photo = SocialCommunity::Photo.where(session_id: session_ids).group(:session_id).count
 
-    sessions.each do |session|
-      session.merge! ( { count_attendance_line: count_att_line[session[:id]], count_session_student: count_ss_student[session[:id]], count_photo: count_photo[session[:id]] })
+    sessions.each do |session| session.merge! ( { count_attendance_line: count_att_line[session[:id]], count_session_student: count_ss_student[session[:id]], count_photo: count_photo[session[:id]] })
     end
 
     sessions
   end
 
+  def session_student_project_info session_ids
+    project_info = {}
+    info = Learning::Batch::OpSession.where(id: session_ids).pluck(:id, :batch_id, :subject_id, :end_datetime)
+
+    p_hash = {}
+    subject_ids = []
+    batch_ids = []
+    session_times = {}
+    info.each do |s|
+      p_hash.merge!({s[0] => [s[1], s[2]]})
+      batch_ids << s[1]
+      subject_ids << s[2]
+      session_times.merge!({ s[0] => s[3] })
+    end
+
+    sql = "SELECT (ARRAY_AGG(sp.created_at ORDER BY sp.created_at DESC))[1] as last_create_time,
+            COUNT(*) AS total,
+            sp.subject_id,
+            sp.batch_id
+            FROM sc_student_projects AS sp
+            WHERE sp.project_type = 'SUBJECT_PROJECT'
+            AND sp.subject_id IN (#{ subject_ids.join(', ') })
+            AND sp.batch_id IN (#{ batch_ids.join(', ') })
+            GROUP BY sp.subject_id, sp.batch_id"
+    student_project_info = ActiveRecord::Base.connection.execute(sql).as_json
+    project_result = {}
+
+    student_project_info.each do |p|
+      project_result.merge!({ [p['batch_id'], p['subject_id']] => [p['last_create_time'], p['total']] })
+    end
+
+    attendance_info = []
+    att_sql = " SELECT COUNT(*), att.session_id FROM op_attendance_line as att
+                WHERE att.session_id IN (#{ session_ids.join(', ') })
+                GROUP BY att.session_id
+              "
+    att_info = ActiveRecord::Base.connection.execute(att_sql).as_json
+    att_result = {}
+    att_info.each{ |att| att_result.merge!({ att['session_id'] => att['count']}) }
+
+    result = {}
+    p_hash.invert.each do |info, session_id|
+      time_session = session_times[session_id]
+
+      if project_result[info].present?
+        time_submit = project_result[info][0]
+        count_project = project_result[info][1]
+        count_att = att_result[session_id]
+        count_time = (Time.parse(time_submit) - time_session)
+      else
+        count_project = 0
+        count_att = att_result[session_id] || 0
+        state = 'None'
+        count_time = Time.now - time_session
+      end
+
+      if count_time < 24*3600
+        state = 'Ontime'
+      elsif count_time > 24*3600 && count_time < 48*3600
+        state = 'Overdue 24h'
+      elsif count_time > 48*3600
+        state = 'Overdue 48h'
+      else
+        state = 'None'
+      end
+
+      count_student_project = count_project.to_s + '/' + count_att.to_s
+
+        result.merge!({ session_id => { count: count_student_project, state: state }})
+    end
+
+    #p_hash.each do |session_id, info|
+    #  session = Learning::Batch::OpSession.where(id: session_id).first
+    #  next if session.blank?
+
+    #  count_project = SocialCommunity::ScStudentProject.where(subject_id: info[1], batch_id: info[0], project_type: 'SUBJECT_PROJECT').count
+    #  count_student = Learning::Batch::OpAttendanceLine.where(session_id: session_id, present: true).count
+    #  project_info.merge!({ session_id => "#{ count_project.to_s}/#{ count_student.to_s }"})
+    #end
+
+    result
+  end
+
   def session_student_homework params
     session_ids = params[:sessions]
 
+    return [{}, {}] if session_ids.blank?
     total_student_query = "SELECT session.id, COUNT(att) AS total_student, array_agg(student.id) AS student_ids
                             FROM op_session AS session
-                            JOIN op_attendance_line AS att ON att.session_id = session.id
+                            LEFT JOIN op_attendance_line AS att ON att.session_id = session.id
                             JOIN op_student as student ON att.student_id = student.id
                             WHERE session_id IN (#{ session_ids.join(', ')})
                             AND att.present = true

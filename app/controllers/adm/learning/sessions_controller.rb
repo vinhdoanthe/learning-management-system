@@ -113,6 +113,15 @@ class Adm::Learning::SessionsController < Adm::AdmController
     end
   end
 
+  def session_student_project_info
+    result = Adm::Learning::SessionsService.new.session_student_project_info(params[:session_ids])
+
+    respond_to do |format|
+      format.html
+      format.js { render 'adm/learning/sessions/js/session_student_project_info', locals:{ session_student_projects: result }}
+    end
+  end
+
   private
 
   def find_session
