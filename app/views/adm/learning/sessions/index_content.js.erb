@@ -1,3 +1,12 @@
+function getSessionStudentProjectInfo(sesison_ids){
+  $.ajax({
+    url: '/adm/learning/sessions/session_student_project_info',
+    method: 'GET',
+    dataType: 'script',
+    data: { session_ids: session_ids }
+  })
+}
+
 $("#session_data_table").html("<%= j render('adm/learning/sessions/index_content', { sessions: sessions }) %>");
 $(".paginator").html("<%= j render('adm/user/adm_users/paginator', { page: page, users: sessions } ) %>");
 $('#session_data_table').ready(function(){
@@ -10,7 +19,7 @@ $('#session_data_table').ready(function(){
   session_ids = []
 
   for (i = 0; i < sessions.length; i++ ){
-    if ( sessions[i].question && sessions[i].state == 'done'){
+    if ( sessions[i].question && sessions[i].state === 'done'){
       session_ids.push(sessions[i].id);
     }
   }
@@ -23,4 +32,18 @@ $('#session_data_table').ready(function(){
       dataType: 'script'
     })
   }
+
+  done_session_ids = []
+  if ($('.student_project_info_show').is(':checked')){
+    for (i = 0; i < sessions.length; i++ ){
+      if (sessions[i].state === 'done'){
+        done_session_ids.push(sessions[i].id);
+      }
+    }
+  }
+
+  if (done_session_ids.length > 0){
+    getSessionStudentProjectInfo(done_session_ids)
+  }
+
 })

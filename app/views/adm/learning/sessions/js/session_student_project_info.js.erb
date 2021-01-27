@@ -1,0 +1,3 @@
+<% session_student_projects.each do |session_id, state| %>
+    $(".student_project_info[data-session-id='<%= session_id %>").html(" <div> <label class='custom-checkbox'><input type='checkbox' readonly checked class='student_project_info_show'> <span class='checkmark-sc'></span> </label></div> <div style='margin-top: 15px'> <p><%= state %></p> </div>")
+<% end %>

@@ -325,7 +325,7 @@ vi:
   student_project:
     name: "Sản phẩm học sinh"
     project_name: "Tên sản phẩm"
-    description: "Mô tả sản phẩm"
+    description: "Mô tả sản phẩm (Tối thiểu 3 câu, 200 ký tự)<span style='color: red'>*</span>:"
     presentation: "Slide trình bày dự án"
     no_presentation: "Chưa có slide"
     video: "Video giới thiệu về dự án"
