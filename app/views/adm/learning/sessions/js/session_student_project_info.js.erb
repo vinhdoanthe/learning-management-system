@@ -1,3 +1,14 @@
 <% session_student_projects.each do |session_id, state| %>
-    $(".student_project_info[data-session-id='<%= session_id %>").html(" <div> <label class='custom-checkbox'><input type='checkbox' readonly checked class='student_project_info_show'> <span class='checkmark-sc'></span> </label></div> <div style='margin-top: 15px'> <p><%= state %></p> </div>")
+    html = " <div> <label class='custom-checkbox'><input type='checkbox' readonly checked class='student_project_info_show'> <span class='checkmark-sc'></span> </label></div> <div style='margin-top: 15px'><p class='text-center'><%= state[:count] %></p>"
+
+  <% if state[:state] == 'Ontime' %>
+    html += '<p><span class="badge badge-primary"><%= state[:state] %></span></p></div>'
+  <% elsif state[:state] == 'Overdue 24h' %>
+      html += '<p><span class="badge badge-warning"><%= state[:state] %></span></p></div>'
+  <% elsif state[:state] == 'Overdue 48h' %>
+      html += '<p><span class="badge badge-danger"><%= state[:state] %></span></p></div>'
+  <% else %>
+      html += "</div>"
+  <% end %>
+    $(".student_project_info[data-session-id='<%= session_id %>").html(html)
 <% end %>

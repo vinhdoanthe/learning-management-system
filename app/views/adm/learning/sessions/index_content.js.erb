@@ -1,9 +1,9 @@
-function getSessionStudentProjectInfo(sesison_ids){
+function getSessionStudentProjectInfo(ss_ids){
   $.ajax({
     url: '/adm/learning/sessions/session_student_project_info',
     method: 'GET',
     dataType: 'script',
-    data: { session_ids: session_ids }
+    data: { session_ids: ss_ids }
   })
 }
 
@@ -34,6 +34,7 @@ $('#session_data_table').ready(function(){
   }
 
   done_session_ids = []
+
   if ($('.student_project_info_show').is(':checked')){
     for (i = 0; i < sessions.length; i++ ){
       if (sessions[i].state === 'done'){
