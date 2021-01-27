@@ -46,7 +46,7 @@ function getDataFilter(){
     last_session = 0
   }
 
-  return { batch_id: batch_id, company: company, state: state, start_time: start_time, end_time: end_time, photo_state: photo_state, attendance: attendance }
+  return { batch_id: batch_id, company: company, state: state, start_time: start_time, end_time: end_time, photo_state: photo_state, attendance: attendance, last_session: last_session }
 }
 
 let updateTeacherEvaluate = (attendance_id, state, note) => {

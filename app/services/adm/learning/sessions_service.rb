@@ -43,7 +43,9 @@ class Adm::Learning::SessionsService
       GROUP BY ss.subject_id, ss.batch_id"
 
       ss_ids = ActiveRecord::Base.connection.execute(last_done_sql).values.flatten.uniq
-      query += "op_session.id IN (#{ ss_ids.join(',')}) AND "
+      if ss_ids.count > 0
+        query += "op_session.id IN (#{ ss_ids.join(',')}) AND "
+      end
     end
 
     query = query[0..-5]
@@ -102,8 +104,7 @@ class Adm::Learning::SessionsService
     count_ss_student = Learning::Batch::OpSessionStudent.where(session_id: session_ids).group(:session_id).count
     count_photo = SocialCommunity::Photo.where(session_id: session_ids).group(:session_id).count
 
-    sessions.each do |session|
-      session.merge! ( { count_attendance_line: count_att_line[session[:id]], count_session_student: count_ss_student[session[:id]], count_photo: count_photo[session[:id]] })
+    sessions.each do |session| session.merge! ( { count_attendance_line: count_att_line[session[:id]], count_session_student: count_ss_student[session[:id]], count_photo: count_photo[session[:id]] })
     end
 
     sessions
@@ -111,18 +112,85 @@ class Adm::Learning::SessionsService
 
   def session_student_project_info session_ids
     project_info = {}
-    info = Learning::Batch::OpSession.where(id: session_ids).pluck(:id, :batch_id, :subject_id)
+    info = Learning::Batch::OpSession.where(id: session_ids).pluck(:id, :batch_id, :subject_id, :end_datetime)
 
     p_hash = {}
-    info.each{|s| p_hash.merge!({s[0] => [s[1], s[2]]})}
-
-    p_hash.each do |session_id, info|
-      count_project = SocialCommunity::ScStudentProject.where(subject_id: info[1], batch_id: info[0], project_type: 'SUBJECT_PROJECT').count
-      count_student = Learning::Batch::OpAttendanceLine.where(session_id: session_id, present: true).count
-      project_info.merge!({ session_id => "#{ count_project.to_s}/#{ count_student.to_s }"})
+    subject_ids = []
+    batch_ids = []
+    session_times = {}
+    info.each do |s|
+      p_hash.merge!({s[0] => [s[1], s[2]]})
+      batch_ids << s[1]
+      subject_ids << s[2]
+      session_times.merge!({ s[0] => s[3] })
     end
 
-    project_info
+    sql = "SELECT (ARRAY_AGG(sp.created_at ORDER BY sp.created_at DESC))[1] as last_create_time,
+            COUNT(*) AS total,
+            sp.subject_id,
+            sp.batch_id
+            FROM sc_student_projects AS sp
+            WHERE sp.project_type = 'SUBJECT_PROJECT'
+            AND sp.subject_id IN (#{ subject_ids.join(', ') })
+            AND sp.batch_id IN (#{ batch_ids.join(', ') })
+            GROUP BY sp.subject_id, sp.batch_id"
+    student_project_info = ActiveRecord::Base.connection.execute(sql).as_json
+    project_result = {}
+
+    student_project_info.each do |p|
+      project_result.merge!({ [p['batch_id'], p['subject_id']] => [p['last_create_time'], p['total']] })
+    end
+
+    attendance_info = []
+    att_sql = " SELECT COUNT(*), att.session_id FROM op_attendance_line as att
+                WHERE att.session_id IN (#{ session_ids.join(', ') })
+                GROUP BY att.session_id
+              "
+    att_info = ActiveRecord::Base.connection.execute(att_sql).as_json
+    att_result = {}
+    att_info.each{ |att| att_result.merge!({ att['session_id'] => att['count']}) }
+
+    result = {}
+    p_hash.invert.each do |info, session_id|
+      time_session = session_times[session_id]
+
+      if project_result[info].present?
+        time_submit = project_result[info][0]
+        count_project = project_result[info][1]
+        count_att = att_result[session_id]
+        count_time = (Time.parse(time_submit) - time_session)
+      else
+        count_project = 0
+        count_att = att_result[session_id] || 0
+        state = 'None'
+        count_time = Time.now - time_session
+      end
+
+      if count_time < 24*3600
+        state = 'Ontime'
+      elsif count_time > 24*3600 && count_time < 48*3600
+        state = 'Overdue 24h'
+      elsif count_time > 48*3600
+        state = 'Overdue 48h'
+      else
+        state = 'None'
+      end
+
+      count_student_project = count_project.to_s + '/' + count_att.to_s
+
+        result.merge!({ session_id => { count: count_student_project, state: state }})
+    end
+
+    #p_hash.each do |session_id, info|
+    #  session = Learning::Batch::OpSession.where(id: session_id).first
+    #  next if session.blank?
+
+    #  count_project = SocialCommunity::ScStudentProject.where(subject_id: info[1], batch_id: info[0], project_type: 'SUBJECT_PROJECT').count
+    #  count_student = Learning::Batch::OpAttendanceLine.where(session_id: session_id, present: true).count
+    #  project_info.merge!({ session_id => "#{ count_project.to_s}/#{ count_student.to_s }"})
+    #end
+
+    result
   end
 
   def session_student_homework params
