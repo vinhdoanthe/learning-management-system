@@ -25,7 +25,9 @@
 <script>
   $('#edit_student_project_form').ready(function(){
     $('.edit_student_project_form_submit').on('click', function(){
-      $('.progress').show()
+      if ($(tinyMCE.get('social_community_sc_student_project_description').getBody()).text().length > 0){
+        $('.progress').show()
+      }
     })
   })
 </script>
