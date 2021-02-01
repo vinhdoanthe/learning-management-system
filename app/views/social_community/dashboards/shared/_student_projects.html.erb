@@ -1,15 +1,17 @@
 <div class="bnd-img" style="text-align: center">
-  <% if project.introduction_video.present? %>
-    <div class='intro_project'>
-      <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
-    </div>
-  <% elsif project.introduction_video.blank? && project.project_show_video.present? %>
-    <div class='show_project'>
-      <%= project.project_show_video.html_safe %>
-    </div>
-  <% elsif project.presentation.present? %>
-    <div class='presentation_project'>
-      <%= link_to image_tag('/global/images/downloadinvoice.png') + t('attachment.download'), rails_blob_path(project.presentation, disposition: "attachment") %>
-    </div>
+  <% if project.present? %>
+    <% if project.introduction_video.present? %>
+      <div class='intro_project'>
+        <%= SocialCommunity::StudentProject::StudentProjectDecorator.new(project).youtube_embed_link.html_safe %>
+      </div>
+    <% elsif project.introduction_video.blank? && project.project_show_video.present? %>
+      <div class='show_project'>
+        <%= project.project_show_video.html_safe %>
+      </div>
+    <% elsif project.presentation.present? %>
+      <div class='presentation_project'>
+        <%= link_to image_tag('/global/images/downloadinvoice.png') + t('attachment.download'), rails_blob_path(project.presentation, disposition: "attachment") %>
+      </div>
+    <% end %>
   <% end %>
 </div>
