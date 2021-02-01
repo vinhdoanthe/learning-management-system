@@ -18,6 +18,7 @@ class AdminAbility
       can :show, SocialCommunity::ScStudentProject
       can :edit, SocialCommunity::ScStudentProject
       can :update, SocialCommunity::ScStudentProject
+      can :destroy, SocialCommunity::ScStudentProject
     end
     #
     # The first argument to `can` is the action you are giving the user
