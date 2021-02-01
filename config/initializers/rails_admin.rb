@@ -418,7 +418,8 @@ RailsAdmin.config do |config|
     delete do
       only %w(Common::RewardType Common::FeelingType
               Learning::Material::LearningMaterial Learning::Material::Question Learning::Material::QuestionChoice
-              Utility::PublicCourse)
+              Utility::PublicCourse
+              SocialCommunity::ScStudentProject)
     end
 
     export do
