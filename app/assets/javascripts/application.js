@@ -9,7 +9,6 @@
 //=require custom_js/custom_ui.js
 //= require activestorage
 //= require cropper.min.js
-//=require html2canvas/dist/html2canvas.js
 
 var waitingdialog = waitingdialog || (function ($) {
   'use strict';
