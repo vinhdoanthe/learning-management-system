@@ -17,8 +17,10 @@ module User
       if user.nil?
         flash.now[:danger] = 'Tên đăng nhập không tồn tại'
         render 'new'
+      elsif user.is_teacher? && user&.op_faculty&.status == '0'
+        flash.now[:danger] = 'Tài khoản của bạn đã bị khóa!'
+        render 'new'
       else
-
         if user.authenticate(params[:session][:password])
           log_in(user)
           if session[:contest].present? && session[:contest].to_i != 0

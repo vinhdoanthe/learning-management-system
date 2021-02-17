@@ -82,7 +82,6 @@ class Contest::ContestProjectsController < ApplicationController
       result, c_project = Adm::Contest::ContestProjectsService.new.create_contest_project topic, project, params[:social_community_sc_student_project][:teacher_id]
     end
 
-    student
     respond_to do |format|
       format.html
       format.js { render '/contest/contest_projects/response_submit_project', locals: { result: result, c_project: c_project}}

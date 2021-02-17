@@ -11,4 +11,3 @@
 //=require contest/js/style.js
 
 //=require activestorage
-//=require html2canvas/dist/html2canvas.js
