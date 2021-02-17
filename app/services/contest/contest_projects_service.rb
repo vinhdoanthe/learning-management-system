@@ -15,7 +15,7 @@ class Contest::ContestProjectsService
     like_criterion = project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: { name: 'like' }).first
     share_criterion = project.project_criterions.joins(:contest_criterion).where(tk_contest_criterions: { name: 'share' }).first
 
-    next if data['engagement'].blank?
+    return if data['engagement'].blank?
 
     like = data['engagement']['reaction_count']
     share = data['engagement']['share_count']
