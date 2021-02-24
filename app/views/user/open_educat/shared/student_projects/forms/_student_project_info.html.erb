@@ -162,7 +162,7 @@
           $('#upload_project_video').trigger('click');
           $('#upload_project_video').on('change', function() {
               var ext = this.value.match(/\.(.+)$/)[1];
-              if (['m4v', 'avi', 'mpg', 'mp4', 'webm'].includes(ext)) {
+              if (['m4v', 'avi', 'mpg', 'mp4', 'webm', 'mov', '.3gp'].includes(ext)) {
                   $('#video_had_change').val('1');
                   if ($('#upload_project_video').get(0).files.length > 0) {
                       <% if project.introduction_video.present? %>
@@ -174,7 +174,7 @@
                     }
                 } else {
                     $('#upload_project_video').val('');
-                    alert('File không phù hợp! Chỉ hỗ trợ file đuôi "m4v", "avi","mpg","mp4", "webm"')
+                    alert('File không phù hợp! Chỉ hỗ trợ file đuôi "m4v", "avi","mpg","mp4", "webm", "mov", "3gp"')
                   }
             })
         })
