@@ -68,21 +68,15 @@
               <button type="button" class="close button-close-modal" data-dismiss="modal">&times;</button>
               <label>Mời bạn bè</label>
             </div>
-            <% if !Rails.env.production? %>
               <% refer = SocialCommunity::ReferFriend.new %>
               <div class="filter-box FlowupLabels" id='formBody'>
                 <%= render 'social_community/refer_friends/forms/refer_form', { refer: refer, url: social_community_refer_friends_create_new_refer_request_path }%>
               </div>
-            <% else %>
-              <p style="text-align: center; text-transform: uppercase;"><%= t('page.coming_soon') %></p>
-            <% end %>
           </div>
           <div class="modal-footer text-right" style="background-color: #D7DFE9">
-            <% if !Rails.env.production? %>
               <span data-dissmiss='modal'>
                 <input type="submit" id="submit_refer_friend_btn" form="student_refer_friend_form" class="btn btn-primary btn-embossed bg-5DC2A7 text-uppercase" value='Giới thiệu'>
               </span>
-            <% end %>
             <button type="button" id="close_refer_form" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
