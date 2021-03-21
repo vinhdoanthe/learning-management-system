@@ -34,7 +34,7 @@ class Learning::Course::OpSubjectsController < ApplicationController
       start_time = session.start_datetime.utc
       end_time = (session.end_datetime - 3.days).utc
       sql = " SELECT student_id
-            FROM op_student_report_off
+            FROM op.student.batch.report
             WHERE batch_id = #{ batch.id }
             AND start_datetime <= '#{ start_time }'
             AND end_datetime >= '#{ end_time }'
