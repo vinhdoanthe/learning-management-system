@@ -38,7 +38,7 @@ class Learning::Course::OpSubjectsController < ApplicationController
             WHERE batch_id = #{ batch.id }
             AND start_datetime <= '#{ start_time }'
             AND end_datetime >= '#{ end_time }'
-            AND state = 'on'"
+            AND student_course_state = 'on'"
       total_student = ActiveRecord::Base.connection.execute(sql).values
       student_ids = total_student.flatten
     else
