@@ -16,7 +16,7 @@ class Adm::Learning::SessionsController < Adm::AdmController
                         Common::ResCompany.all
                       end
     allow_company_ids = @allow_companies.pluck(:id)
-    @allow_batches = Learning::Batch::OpBatch.where(company_id: allow_company_ids, state: [Learning::Constant::Batch::STATE_APPROVE, Learning::Constant::Batch::STATE_CONFIRM])
+    @allow_batches = Learning::Batch::OpBatch.where(company_id: allow_company_ids)
     @session_states = Learning::Batch::OpSession.pluck(:state).uniq
   end
 
