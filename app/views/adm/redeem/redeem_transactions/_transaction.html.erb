@@ -11,7 +11,7 @@
         <label><%= t('adm.redeem.transaction_student') %></label> 
       </div>
       <div class="col-md-9 col-sm-12">
-        <p><%= transaction.user&.full_name %></p>
+        <p><a href="/adm/user/user_info/<%= transaction.user&.id %>"><%= transaction.user&.full_name %></a></p>
       </div>
     </div>
     <div class="row">
