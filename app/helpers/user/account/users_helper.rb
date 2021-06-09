@@ -594,6 +594,11 @@ module User
               'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user.name') <<'</p></a></li>',
               'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_user_index_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< t('adm.user.name') <<'</p></a></li>'
             },
+            {
+              'path'          => adm_redeem_redeem_transactions_path,
+              'title'         => '<li class="nav-item"><a class="nav-link" href="'<< adm_redeem_redeem_transactions_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< "Đổi quà" <<'</p></a></li>',
+              'title_active'  => '<li class="nav-item"><a class="nav-link active" href="'<< adm_redeem_redeem_transactions_path << '"><i class="nav-icon fas fa-chart-pie"></i><p>'<< "Đổi quà" <<'</p></a></li>'
+            },
           ]
 
           tag_html = '<ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat" data-widget="treeview" role="menu" data-accordion="false">'
