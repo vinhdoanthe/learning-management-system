@@ -86,7 +86,7 @@ class Adm::User::AdmUsersController < ApplicationController
 
   def new_user
     @companies = Common::ResCompany.pluck(:id, :name)
-    @available_roles = [Constant::OPERATION_ADMIN]
+    @available_roles = [Constant::OPERATION_ADMIN, Constant::CONTENT_ADMIN]
   end
 
   def create_user

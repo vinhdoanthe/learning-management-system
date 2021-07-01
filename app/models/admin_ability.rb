@@ -14,12 +14,11 @@ class AdminAbility
       can :dashboard, :all
       can :access, :rails_admin
       can :read, :dashboard
-      can :index, SocialCommunity::ScStudentProject
-      can :show, SocialCommunity::ScStudentProject
       can :edit, SocialCommunity::ScStudentProject
       can :update, SocialCommunity::ScStudentProject
       can :destroy, SocialCommunity::ScStudentProject
-      can :manage, [Learning::Course::OpCourse, Learning::Course::CourseDescription, Learning::Course::OpLession, Learning::Material::Question, Learning::Material::QuestionChoice]
+      can :index, [SocialCommunity::ScStudentProject, Learning::Course::OpCourse, Learning::Course::CourseDescription, Learning::Course::OpLession, Learning::Material::Question, Learning::Material::QuestionChoice]
+      can :show, [SocialCommunity::ScStudentProject, Learning::Course::OpCourse, Learning::Course::CourseDescription, Learning::Course::OpLession, Learning::Material::Question, Learning::Material::QuestionChoice]
     end
     #
     # The first argument to `can` is the action you are giving the user
