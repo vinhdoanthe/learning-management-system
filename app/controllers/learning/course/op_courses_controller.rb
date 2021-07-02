@@ -1,5 +1,6 @@
 class Learning::Course::OpCoursesController < ApplicationController
-  before_action :authenticate_admin!, except: [:public_courses, :public_course_detail]
+  before_action :authenticate_admin!, except: [:public_courses, :public_course_detail, :show]
+  before_action :authenticate_content_admin!, only: :show
   before_action :set_course, only: [:show]
 
   def index

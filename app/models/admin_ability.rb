@@ -14,7 +14,7 @@ class AdminAbility
       can :dashboard, :all
       can :access, :rails_admin
       can :read, :dashboard
-      can :edit, SocialCommunity::ScStudentProject
+      can :edit, [SocialCommunity::ScStudentProject, Learning::Material::Question, Learning::Material::QuestionChoice]
       can :update, SocialCommunity::ScStudentProject
       can :destroy, SocialCommunity::ScStudentProject
       can :index, [SocialCommunity::ScStudentProject, Learning::Course::OpCourse, Learning::Course::CourseDescription, Learning::Course::OpLession, Learning::Material::Question, Learning::Material::QuestionChoice]
