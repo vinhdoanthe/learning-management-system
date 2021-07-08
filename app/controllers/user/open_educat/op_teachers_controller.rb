@@ -173,6 +173,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
       errors = Api::Odoo.attendance(session_id: params[:session_id].to_i, faculty_id: @teacher.id, attendance_time: Time.now, attendance_lines: lines, lession_id: params[:lesson_id].to_i, name: lesson_name) if lines.present?
     rescue StandardError => e
       result = { noti: {type: 'danger', message: "Đã có lỗi xảy ra! Vui lòng thử lại sau!"} }
+      puts "ATTENDANCE CALL ODOO ERRORS #{ e }"
     end
 
     if errors.present? && ( (errors[0] == true) || (errors.is_a? Integer) )
@@ -192,6 +193,7 @@ class User::OpenEducat::OpTeachersController < ApplicationController
 
       result = { noti: {type: 'success', message: 'Điểm danh thành công!'}, data: response_values}
     else
+      puts "ATTENDANCE RESPONSE ERRORS #{ errors }"
       message = errors[1] if errors[1].present?
       message = 'Đã có lỗi xảy ra! Thử lại sau' if message.blank?
 
