@@ -27,7 +27,11 @@ class SocialCommunity::ScStudentProject < ApplicationRecord
   end
 
   def presentation_link
-    url_for(presentation)
+    if presentation.attached?
+      url_for(presentation)
+    else
+      ''
+    end
   end
 
   def youtube_video_link
