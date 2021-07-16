@@ -19,6 +19,7 @@ class AdminAbility
       can :destroy, SocialCommunity::ScStudentProject
       can :index, [SocialCommunity::ScStudentProject, Learning::Course::OpCourse, Learning::Course::CourseDescription, Learning::Course::OpLession, Learning::Material::Question, Learning::Material::QuestionChoice]
       can :show, [SocialCommunity::ScStudentProject, Learning::Course::OpCourse, Learning::Course::CourseDescription, Learning::Course::OpLession, Learning::Material::Question, Learning::Material::QuestionChoice]
+      can :manage, SocialCommunity::ScStudentProject
     end
     #
     # The first argument to `can` is the action you are giving the user
