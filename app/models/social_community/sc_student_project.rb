@@ -1,4 +1,6 @@
 class SocialCommunity::ScStudentProject < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   extend Enumerize
   self.table_name = 'sc_student_projects'
   paginates_per 20
@@ -22,5 +24,24 @@ class SocialCommunity::ScStudentProject < ApplicationRecord
   def student_name
     '' if op_student.nil?
     op_student.full_name
+  end
+
+  def presentation_link
+    url_for(presentation)
+  end
+
+  def youtube_video_link
+    return '' if introduction_video.blank?
+
+    account = Yt::Account.new refresh_token: Settings.youtube['refresh_token']
+    video = Yt::Video.new id: introduction_video, auth: account
+    embed_link = ''
+    begin
+      embed_link = video.embed_html
+    rescue Yt::Errors::NoItems => error
+      Rails.logger.error(error.to_s)
+      embed_link = ''
+    ensure
+    end
   end
 end
