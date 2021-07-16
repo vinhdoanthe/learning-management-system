@@ -388,6 +388,20 @@ RailsAdmin.config do |config|
         config_js ActionController::Base.helpers.asset_path('ckeditor/config.js')
       end
     end
+
+    export do
+      field :student_name
+      field :student_id
+      field :name
+      field :state
+      field :permission
+      field :youtube_video_link
+      field :presentation_link
+      field :project_show_video
+      field :description
+      field :batch_id
+      field :subject_id
+    end
   end
 
   config.actions do
@@ -424,7 +438,8 @@ RailsAdmin.config do |config|
 
     export do
       only %w(User::Account::User User::OpenEducat::OpStudent
-              Learning::Batch::OpSession)
+              Learning::Batch::OpSession
+              SocialCommunity::ScStudentProject)
     end
   end
 end
