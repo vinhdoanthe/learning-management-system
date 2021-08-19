@@ -168,7 +168,7 @@ module User
 
       def student_evaluate
         student = User::OpenEducat::OpStudent.where(code: params[:code]).first
-        attendance = Learning::Batch::OpAttendanceLine.joins(:op_attendance_sheet).where(student_id: student.id).where(op_attendance_sheet: { session_id: params[:session_id] }).first
+        attendance = Learning::Batch::OpAttendanceLine.where( student_id: student.id, session_id: params[:session_id] ).first
 
         respond_to do |format|
           format.html
