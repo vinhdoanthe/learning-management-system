@@ -1,7 +1,1 @@
-<% unless op_att_line.nil? %>
-  <% if op_att_line.state_evaluate == User::Constant::SessionEvaluation::StateEvaluate::SESSION %>
-    <%= render :partial => "user/open_educat/op_students/evaluation/s_evaluation", :locals => {op_att_line: op_att_line} %>
-  <% else %>
-    <%= render :partial => "user/open_educat/op_students/evaluation/subject_evaluation", :locals => {op_att_line: op_att_line} %>
-  <% end %>
-<% end %>
+<%= render :partial => "user/open_educat/op_students/evaluation/s_evaluation", :locals => {evaluation_content: evaluation_content} %>
