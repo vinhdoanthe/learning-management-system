@@ -22,7 +22,7 @@ class Learning::Batch::OpSessionDecorator < SimpleDelegator
         "<div class='tooltip-span' data-toggle='tooltip' data-html='true' title='Chưa tới giờ Check-in'><button type='button' class='btn btn-default btn-embossed'  disabled><span>#{ image_tag(ActionController::Base.helpers.asset_path('hotel-2.png')) }</span>Check-in</button></div>"
       end
     else
-      if check_in_state == 'none'
+      if check_in_state == 'none' || check_in_state.blank?
         if start_datetime > Time.now
           "<button type='button' class='btn btn-default btn-embossed'  disabled><span>#{ image_tag(ActionController::Base.helpers.asset_path('hotel-2.png')) }</span>Check-in</button>"
         elsif end_datetime < Time.now
@@ -32,7 +32,6 @@ class Learning::Batch::OpSessionDecorator < SimpleDelegator
         "<div class='tooltip-span' data-toggle='tooltip' data-html='true' title='Check-in đúng giờ'><button type='button' class='btn btn-success'  disabled><span>#{ image_tag(ActionController::Base.helpers.asset_path('hotel-2.png')) }</span>Check-in</button></div>"
       elsif check_in_state == 'late'
         "<div class='tooltip-span' data-toggle='tooltip' data-html='true' title='Check-in muộn'><button type='button' class='btn btn-warning' disabled><span>#{ image_tag(ActionController::Base.helpers.asset_path('hotel-2.png')) }</span>Check-in</button></div>"
-      else
       end
     end
   end
