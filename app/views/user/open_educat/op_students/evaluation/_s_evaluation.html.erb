@@ -32,7 +32,7 @@
       <ul class="bmrd-content">
         <li>
           <label>Giảng viên nhận xét</label>
-          <p><%= evaluation_content[:note] %></p>
+          <p><%= evaluation_content[:note].html_safe if evaluation_content[:note] %></p>
         </li>
       </ul>
     </div>
