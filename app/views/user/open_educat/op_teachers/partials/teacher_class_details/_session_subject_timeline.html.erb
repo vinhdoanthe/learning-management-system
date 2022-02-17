@@ -37,7 +37,7 @@
                 <a style="text-decoration: none; color: #5b5b5b">
                   <p class="lesson_timeline other_teacher">
                   <input type='hidden' name="lession_id" value="<%= session.id %>">
-                  <span class="tooltip-span" data-toggle="tooltip" data-html="true" title="<%= session.op_faculty.full_name %> <br><%= Learning::Batch::OpSessionDecorator.new(session).display_tooltip_session_timeline %>">
+                  <span class="tooltip-span" data-toggle="tooltip" data-html="true" title="<%= session.op_faculty&.full_name %> <br><%= Learning::Batch::OpSessionDecorator.new(session).display_tooltip_session_timeline %>">
                     <% if lesson_number.present? %>
                       <span class="tag-time <%= (session.start_datetime > Time.now) ? 'comming_session' : 'had_passed_session' %> "><%= lesson_number %></span>
                     <% else %>
