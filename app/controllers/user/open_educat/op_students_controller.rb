@@ -93,7 +93,7 @@ module User
             if evaluation.present?
               question = evaluation.question
               criterias = []
-              evaluation.evaluation_lines.each do |line|
+              evaluation.evaluation_lines.order(sequence: :ASC).each do |line|
                 info = {
                   name: line.name,
                   sequence: line.sequence,
