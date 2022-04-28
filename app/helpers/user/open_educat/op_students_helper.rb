@@ -240,11 +240,11 @@ module User
           #   'right_content' => ''
           # },
 
-          {'path' => redeem_redeem_products_path, 
-            'icon' => 'ico-Redem.png',
-            'title' => "#{t('sidebar.redeem')}", 
-            'right_content' => ''
-          },
+          #{'path' => redeem_redeem_products_path,
+          #  'icon' => 'ico-Redem.png',
+          #  'title' => "#{t('sidebar.redeem')}",
+          #  'right_content' => ''
+          #},
 
           {'path' => social_community_refer_friends_path, 
            'icon' => 'game.png',
